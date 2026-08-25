@@ -1,199 +1,706 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Aladag - Telegram Çiftlik Oyunu</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #7FB069 100%);
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+.mountain-bg {
+    background: linear-gradient(180deg, 
+        rgba(135, 206, 235, 0.3) 0%, 
+        rgba(152, 216, 200, 0.2) 50%,
+        rgba(127, 176, 105, 0.3) 100%),
+    repeating-linear-gradient(90deg, 
+        #7FB069 0px, 
+        #8BC34A 2px, 
+        #7FB069 4px);
+    min-height: 100vh;
+    position: relative;
+}
+.mountain-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200"><path d="M0,200 L200,100 L400,150 L600,80 L800,120 L1000,90 L1200,130 L1200,200 Z" fill="%235D7B3A" opacity="0.5"/></svg>');
+    background-size: cover;
+    pointer-events: none;
+}
 
-}
-.bucks-option:active { transform: scale(0.95); }
-.bucks-option .amount { font-size: 18px; font-weight: bold; }
-.bucks-option .price { font-size: 12px; opacity: 0.9; }
-.bucks-option .coins-info { font-size: 11px; margin-top: 4px; opacity: 0.9; }
-
-}
-.payment-content {
-    background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%);
-    border: 3px solid #2a1810;
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-}
-.payment-title {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 16px;
-}
-.payment-methods {
+.top-bar {
+    background: linear-gradient(180deg, rgba(93, 123, 58, 0.95) 0%, rgba(75, 100, 45, 0.95) 100%);
+    padding: 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 16px 0;
+    gap: 8px;
+    border-bottom: 3px solid #4A6B2A;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
 }
-.payment-method {
-    background: rgba(0,0,0,0.3);
-    border: 2px solid #5a3a20;
-    border-radius: 10px;
-    padding: 12px;
-    cursor: pointer;
+
+.player-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+}
 
-    font-weight: bold;
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-radius: 50%;
+    border: 2px solid #FF8C00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.player-level {
+    flex: 1;
+}
+
+.player-name {
     font-size: 14px;
+    font-weight: bold;
+}
 
-                <span id="bucks-display">0.39</span>
-            </div>
-            <div class="currency-item">
-                <div class="coin-icon">🪙</div>
-                <span id="coin-display">3,875</span>
+.player-xp {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.energy-bar {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    border: 2px solid #4A6B2A;
+    position: relative;
+}
+
+.energy-fill {
+    background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+    height: 100%;
+    transition: width 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #4A6B2A;
+}
+
+.currency-bar {
+    display: flex;
+    gap: 8px;
+}
+
+.currency-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,0,0,0.3);
+    padding: 6px 10px;
+    border-radius: 15px;
+    border: 2px solid #4A6B2A;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tl-icon {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #E30A17 0%, #C41E3A 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #8B0000;
+}
+
+.crystal-icon {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #00CED1 0%, #20B2AA 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 1px solid #008B8B;
+}
+
+.main-content { padding: 16px; max-width: 500px; margin: 0 auto; position: relative; z-index: 1; }
+
+.farm-area {
+    background: linear-gradient(180deg, rgba(127, 176, 105, 0.9) 0%, rgba(107, 142, 80, 0.9) 100%);
+    border-radius: 20px;
+    border: 3px solid #4A6B2A;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    padding: 20px;
+    margin-bottom: 16px;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.farm-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.farm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.farm-plot {
+    background: linear-gradient(180deg, #8B6F47 0%, #6B5340 100%);
+    border: 2px solid #4A3728;
+    border-radius: 12px;
+    padding: 16px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.farm-plot:active {
+    transform: scale(0.95);
+}
+
+.farm-plot.ready {
+    background: linear-gradient(180deg, #90EE90 0%, #7CFC00 100%);
+    border-color: #228B22;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 252, 0, 0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(124, 252, 0, 0); }
+}
+
+.plot-icon {
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.plot-label {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.plot-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+
+.plot-progress-fill {
+    height: 100%;
+    background: #FFD700;
+    transition: width 1s linear;
+}
+
+.tap-area {
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+    border: 3px dashed #FFD700;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s;
+    margin-bottom: 16px;
+}
+
+.tap-area:active {
+    transform: scale(0.98);
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.5) 0%, rgba(255, 165, 0, 0.5) 100%);
+}
+
+.tap-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.tap-text {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.tap-count {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.wood-panel {
+    background: linear-gradient(180deg, rgba(139, 111, 71, 0.95) 0%, rgba(107, 83, 64, 0.95) 100%);
+    border-radius: 16px;
+    border: 3px solid #4A3728;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.panel-header {
+    background: linear-gradient(180deg, rgba(93, 123, 58, 0.95) 0%, rgba(75, 100, 45, 0.95) 100%);
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #4A6B2A;
+}
+
+.panel-title { 
+    font-size: 18px; 
+    font-weight: bold; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+}
+
+.panel-close { 
+    width: 32px; 
+    height: 32px; 
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); 
+    border-radius: 50%; 
+    border: 2px solid #922B21; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 18px; 
+    cursor: pointer; 
+}
+
+.shop-item { 
+    background: linear-gradient(180deg, rgba(139, 111, 71, 0.8) 0%, rgba(107, 83, 64, 0.8) 100%); 
+    border: 2px solid #4A3728; 
+    border-radius: 12px; 
+    padding: 12px; 
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+.shop-item-icon { font-size: 36px; width: 50px; text-align: center; }
+.shop-item-info { flex: 1; }
+.shop-item-name { font-size: 14px; font-weight: bold; }
+.shop-item-desc { font-size: 11px; opacity: 0.8; margin: 2px 0; }
+.shop-item-price { font-size: 12px; font-weight: bold; color: #FFD700; }
+
+.buy-btn { 
+    background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); 
+    border: 2px solid #1E8449; 
+    border-radius: 8px; 
+    padding: 6px 12px; 
+    color: white; 
+    font-weight: bold; 
+    cursor: pointer; 
+    font-size: 11px; 
+}
+
+.buy-btn:active { transform: scale(0.95); }
+
+.btn-primary { 
+    width: 100%; 
+    padding: 14px; 
+    background: linear-gradient(180deg, #5DADE2 0%, #2E86C1 100%); 
+    border: 2px solid #1B4F72; 
+    border-radius: 12px; 
+    color: white; 
+    font-size: 16px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+    margin-top: 10px; 
+    transition: all 0.2s; 
+}
+
+.btn-primary:active { transform: translateY(2px); }
+.btn-green { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); border-color: #1E8449; }
+.btn-yellow { background: linear-gradient(180deg, #F4D03F 0%, #F39C12 100%); border-color: #B7950B; color: #2a1810; }
+
+.bottom-nav {
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    right: 0;
+    background: linear-gradient(180deg, rgba(93, 123, 58, 0.98) 0%, rgba(75, 100, 45, 0.98) 100%);
+    border-top: 3px solid #4A6B2A; 
+    padding: 10px;
+    display: flex; 
+    justify-content: space-around; 
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+
+.nav-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 2px; 
+    cursor: pointer; 
+    opacity: 0.6; 
+    transition: all 0.2s; 
+}
+
+.nav-item.active { opacity: 1; transform: scale(1.1); }
+.nav-icon { font-size: 22px; }
+.nav-label { font-size: 10px; font-weight: bold; }
+
+.page { display: none; animation: fadeIn 0.3s; }
+.page.active { display: block; }
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.toast {
+    position: fixed; 
+    bottom: 100px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9); 
+    color: white; 
+    padding: 10px 20px;
+    border-radius: 25px; 
+    font-size: 13px; 
+    z-index: 1000;
+    opacity: 0; 
+    transition: opacity 0.3s; 
+    pointer-events: none; 
+    text-align: center; 
+    max-width: 80%;
+}
+
+.toast.show { opacity: 1; }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 16px;
+}
+
+.stat-box {
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.stat-label {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+.clan-card {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+}
+
+.clan-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 8px;
+}
+
+.clan-members {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.payment-package {
+    background: linear-gradient(180deg, rgba(139, 111, 71, 0.9) 0%, rgba(107, 83, 64, 0.9) 100%);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.payment-package:active {
+    transform: scale(0.98);
+}
+
+.package-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 4px;
+}
+
+.package-price {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.package-content {
+    font-size: 11px;
+    opacity: 0.9;
+}
+</style>
+</head>
+<body>
+<div class="mountain-bg">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="player-info">
+            <div class="player-avatar">👨‍🌾</div>
+            <div class="player-level">
+                <div class="player-name" id="player-name">Çiftçi</div>
+                <div class="player-xp">Seviye <span id="player-level">1</span> • <span id="player-xp">0</span>/1000 XP</div>
             </div>
         </div>
-        <div class="conversion-info">💡 1 Buck = 10,000 Coins</div>
-        <button class="btn-primary btn-yellow" onclick="showPage('buy-bucks')" style="margin: 0;">💵 Buy Bucks</button>
+        
+        <div class="energy-bar">
+            <div class="energy-fill" id="energy-fill" style="width: 100%">
+                <span id="energy-text">1000/1000</span>
+            </div>
+        </div>
+        
+        <div class="currency-bar">
+            <div class="currency-item">
+                <div class="tl-icon">₺</div>
+                <span id="tl-display">0</span>
+            </div>
+            <div class="currency-item">
+                <div class="crystal-icon">💎</div>
+                <span id="crystal-display">0</span>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
         
-        <!-- Warehouse/Home Page -->
-        <div id="page-warehouse" class="page active">
-            <div class="tabs">
-                <div class="tab active" onclick="switchTab('warehouse', this)">📊 Dashboard</div>
-                <div class="tab" onclick="switchTab('shop', this)">🏪 Shop</div>
-            </div>
-
-            <!-- Production Dashboard -->
-       
-                    <div style="font-size: 24px;" id="wheat-count">0</div>
+        <!-- Farm Page -->
+        <div id="page-farm" class="page active">
+            <div class="farm-area">
+                <div class="farm-title">🏔️ Aladağ Çiftliği</div>
+                
+                <div class="tap-area" onclick="tapFarm()">
+                    <div class="tap-icon"></div>
+                    <div class="tap-text">Tarlaya Dokun!</div>
+                    <div class="tap-count">+<span id="tap-power">1</span> Toprak</div>
                 </div>
 
-                <div class="production-item">
-                    <div class="prod-icon"></div>
-                    <div class="prod-details">
-                        <div class="prod-name">Chickens</div>
-                        <div class="prod-rate-info">
-                            <span id="egg-rate-sec">0</span>/sec | 
-                            <span id="egg-rate-min">0</span>/min
-                        </div>
-                    </div>
-                    <div style="font-size: 24px;" id="chicken-count">0</div>
-                </div>
-
-                <div class="production-item">
-                    <div class="prod-icon"></div>
-                    <div class="prod-details">
-                        <div class="prod-name">Cows</div>
-                        <div class="prod-rate-info">
-                            <span id="cow-rate-sec">0</span>/sec | 
-                            <span id="cow-rate-min">0</span>/min
-                        </div>
-                    </div>
-                    <div style="font-size: 24px;" id="cow-count">0</div>
-                </div>
-
-                <div class="production-item">
-                    <div class="prod-icon">🐐</div>
-                    <div class="prod-details">
-                        <div class="prod-name">Goats</div>
-                        <div class="prod-rate-info">
-                            <span id="goat-rate-sec">0</span>/sec | 
-                            <span id="goat-rate-min">0</span>/min
-                        </div>
-                    </div>
-                    <div style="font-size: 24px;" id="goat-count">0</div>
-                </div>
-
-                <div class="production-item">
-                    <div class="prod-icon">🐑</div>
-                    <div class="prod-details">
-                        <div class="prod-name">Sheep</div>
-                        <div class="prod-rate-info">
-                            <span id="sheep-rate-sec">0</span>/sec | 
-                            <span id="sheep-rate-min">0</span>/min
-                        </div>
-                    </div>
-                    <div style="font-size: 24px;" id="sheep-count">0</div>
-                </div>
-
-                <div class="total-production">
-                    Total Production: <span id="total-rate-min">0</span> products/min
+                <div class="farm-grid" id="farm-grid">
+                    <!-- Dinamik parseller -->
                 </div>
             </div>
 
-            <!-- Advanced Warehouse -->
             <div class="wood-panel">
                 <div class="panel-header">
-                    <button class="help-btn" onclick="showHelp()">❓</button>
-                    <div class="panel-title">📦 Warehouse</div>
-                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
+                    <div class="panel-title"> İstatistikler</div>
                 </div>
-                
-                <div class="warehouse-grid">
-                    <div class="warehouse-item">
-                        <div class="warehouse-icon">🌾</div>
-                        <div class="warehouse-amount"><span id="wheat-volume">0</span> m³</div>
-                        <div class="warehouse-label">Wheat</div>
-                        <div class="warehouse-pcs"><span id="wheat-pcs">0</span> pcs</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-soil">0</div>
+                        <div class="stat-label">Toprak</div>
                     </div>
-                    <div class="warehouse-item">
-                        <div class="warehouse-icon">🥚</div>
-                        <div class="warehouse-amount"><span id="egg-volume">0</span> m³</div>
-                        <div class="warehouse-label">Eggs</div>
-                        <div class="warehouse-pcs"><span id="egg-pcs">0</span> pcs</div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-water">0</div>
+                        <div class="stat-label">Su</div>
                     </div>
-                    <div class="warehouse-item">
-                        <div class="warehouse-icon">🥛</div>
-                        <div class="warehouse-amount"><span id="milk-volume">0</span> m³</div>
-                        <div class="warehouse-label">Milk</div>
-                        <div class="warehouse-pcs"><span id="milk-pcs">0</span> pcs</div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-apples">0</div>
+                        <div class="stat-label">Elma</div>
                     </div>
-                    <div class="warehouse-item">
-                        <div class="warehouse-icon"></div>
-                        <div class="warehouse-amount"><span id="cheese-volume">0</span> m³</div>
-                        <div class="warehouse-label">Cheese</div>
-                        <div class="warehouse-pcs"><span id="cheese-pcs">0</span> pcs</div>
-                    </div>
-                    <div class="warehouse-item">
-                        <div class="warehouse-icon"></div>
-                        <div class="warehouse-amount"><span id="wool-volume">0</span> m³</div>
-                        <div class="warehouse-label">Wool</div>
-                        <div class="warehouse-pcs"><span id="wool-pcs">0</span> pcs</div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-milk">0</div>
+                        <div class="stat-label">Keçi Sütü</div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="fullness-section">
-                    <div class="fullness-title">Storage Capacity</div>
-                    <div class="fullness-bar">
-                        <div class="fullness-fill" id="fullness-fill" style="width: 0%">
-                            <span id="fullness-percent">0%</span>
+        <!-- Market Page -->
+        <div id="page-market" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title">🧺 Pazar</div>
+                    <button class="panel-close" onclick="showPage('farm')">✕</button>
+                </div>
+                <div style="padding: 16px;">
+                    <div class="shop-item">
+                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Buğday Tarlası</div>
+                            <div class="shop-item-desc">1 buğday/dk</div>
+                            <div class="shop-item-price">1,000 ₺</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyPlot('wheat', 1000)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Elma Ağacı</div>
+                            <div class="shop-item-desc">2 elma/dk</div>
+                            <div class="shop-item-price">5,000 ₺</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyPlot('apple', 5000)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">🐐</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Keçi Ağılı</div>
+                            <div class="shop-item-desc">4 süt/dk</div>
+                            <div class="shop-item-price">25,000 ₺</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyPlot('goat', 25000)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">🐑</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Koyun Ağılı</div>
+                            <div class="shop-item-desc">8 yün/dk</div>
+                            <div class="shop-item-price">100,000 ₺</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyPlot('sheep', 100000)">Al</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boost Page -->
+        <div id="page-boost" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title">⚡ Geliştir</div>
+                    <button class="panel-close" onclick="showPage('farm')">✕</button>
+                </div>
+                <div style="padding: 16px;">
+                    <div class="shop-item">
+                        <div class="shop-item-icon">👆</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Tıklama Gücü</div>
+                            <div class="shop-item-desc">+1 Toprak/dokunuş</div>
+                            <div class="shop-item-price">500 💎</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyBoost('tap', 500)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">⚡</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Enerji Deposu</div>
+                            <div class="shop-item-desc">+500 Max Enerji</div>
+                            <div class="shop-item-price">1,000 </div>
+                        </div>
+                        <button class="buy-btn" onclick="buyBoost('energy', 1000)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">🐕</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Çoban Köpeği</div>
+                            <div class="shop-item-desc">Otomatik toplama</div>
+                            <div class="shop-item-price">5,000 💎</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyBoost('auto', 5000)">Al</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">🚜</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Otomatik Traktör</div>
+                            <div class="shop-item-desc">2x Üretim hızı</div>
+                            <div class="shop-item-price">10,000 💎</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyBoost('speed', 10000)">Al</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends Page -->
+        <div id="page-friends" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title"> Arkadaşlar</div>
+                    <button class="panel-close" onclick="showPage('farm')">✕</button>
+                </div>
+                <div style="padding: 16px; text-align: center;">
+                    <div style="font-size: 48px; margin: 16px 0;">👥</div>
+                    <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">Davet Et Kazan</div>
+                    <div style="font-size: 12px; opacity: 0.9; margin-bottom: 16px;">
+                        Her arkadaş için +5,000 ₺ ve +10 💎<br>
+                        Premium üye için +25,000 ₺
+                    </div>
+                    <button class="btn-primary btn-green" onclick="inviteFriend()">
+                        Arkadaş Davet Et
+                    </button>
+                    <div class="stats-grid" style="margin-top: 16px;">
+                        <div class="stat-box">
+                            <div class="stat-value" id="referral-count">0</div>
+                            <div class="stat-label">Davetler</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="referral-earnings">0 ₺</div>
+                            <div class="stat-label">Kazanç</div>
                         </div>
                     </div>
-                    <div class="fullness-text">
-                        <span id="fullness-current">0</span> / <span id="fullness-max">750,000</span> m³
-                    </div>
-                </div>
-                
-                <div style="padding: 0 16px 16px;">
-                    <button class="btn-primary" onclick="sendProducts()"> Sell All Products</button>
                 </div>
             </div>
 
-            <div class="upgrade-section">
-                <div class="upgrade-title">🏗️ Warehouse Upgrade</div>
-                <div class="upgrade-bar">
-                    <div class="upgrade-fill" id="upgrade-fill"></div>
+            <div class="clan-card">
+                <div class="clan-name">🏕️ Yörük Obası</div>
+                <div class="clan-members">
+                    <div style="margin-bottom: 8px;">Klan Sistemi</div>
+                    <div style="font-size: 11px;">Oba kur, arkadaşlarınla birleş, haftalık sıralamada yarış!</div>
+                    <button class="btn-primary btn-yellow" style="margin-top: 12px;" onclick="createClan()">
+                        Oba Kur
+                    </button>
                 </div>
-                <div class="fullness-text">
-                    <span id="upgrade-current">0</span> / <span id="upgrade-max">750,000</span> m³
-                </div>
-                <div style="color: #FFD700; margin-top: 8px; font-size: 13px;">
-                    After upgrade: 1,500,000 m³
-                </div>
-                <button class="btn-primary btn-green" onclick="upgradeWarehouse()">
-                    Upgrade - 500,000 
-                </button>
             </div>
         </div>
 
@@ -201,115 +708,37 @@
         <div id="page-shop" class="page">
             <div class="wood-panel">
                 <div class="panel-header">
-                    <button class="help-btn" onclick="showHelp()">❓</button>
-                    <div class="panel-title"> Shop</div>
-                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
+                    <div class="panel-title"> Mağaza</div>
+                    <button class="panel-close" onclick="showPage('farm')">✕</button>
                 </div>
                 <div style="padding: 16px;">
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🌾</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Wheat Field</div>
-                            <div class="shop-item-desc">1 wheat/min • ROI: 90 days</div>
-                            <div class="shop-item-price">1,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyBuilding('wheat', 1000)">Buy</button>
+                    <div style="text-align: center; margin-bottom: 16px;">
+                        <div style="font-size: 14px; opacity: 0.9;">Telegram Stars ile satın al</div>
                     </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🐔</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Chicken</div>
-                            <div class="shop-item-desc">2 eggs/min • ROI: 90 days</div>
-                            <div class="shop-item-price">5,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyAnimal('chicken', 5000)">Buy</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🐄</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Cow</div>
-                            <div class="shop-item-desc">4 milk/min • ROI: 90 days</div>
-                            <div class="shop-item-price">25,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyAnimal('cow', 25000)">Buy</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🐐</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Goat</div>
-                            <div class="shop-item-desc">8 goat milk/min • ROI: 90 days</div>
-                            <div class="shop-item-price">100,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyAnimal('goat', 100000)">Buy</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🐑</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Sheep</div>
-                            <div class="shop-item-desc">16 sheep milk/min • ROI: 90 days</div>
-                            <div class="shop-item-price">500,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyAnimal('sheep', 500000)">Buy</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon"></div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Cheese Factory</div>
-                            <div class="shop-item-desc">Converts milk to cheese</div>
-                            <div class="shop-item-price">1,000,000 🪙</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyBuilding('cheese', 1000000)">Buy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Buy Bucks Page -->
-        <div id="page-buy-bucks" class="page">
-            <div class="wood-panel">
-                <div class="panel-header">
-                    <div class="panel-title">💵 Buy Bucks</div>
-                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
-                </div>
-                <div style="padding: 16px; text-align: center;">
-                    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); color: #2a1810; padding: 16px; border-radius: 12px; margin-bottom: 16px; font-weight: bold;">
-                        💡 Exchange Rate<br>
-                        <span style="font-size: 24px;">1 Buck = 10,000 Coins</span>
+                    <div class="payment-package" onclick="buyPackage('starter')">
+                        <div class="package-name"> Yayla Başlangıç</div>
+                        <div class="package-price">29,99 ₺ veya 75 Stars</div>
+                        <div class="package-content">10,000 ₺ + 50 💎 + Çoban Köpeği</div>
                     </div>
-                    <div class="buy-bucks-options">
-                        <div class="bucks-option" onclick="buyBucks(3)">
-                            <div class="amount">3 Bucks</div>
-                            <div class="price">$3.00</div>
-                            <div class="coins-info">= 30,000 🪙</div>
-                        </div>
-                        <div class="bucks-option" onclick="buyBucks(10)">
-                            <div class="amount">10 Bucks</div>
-                            <div class="price">$10.00</div>
-                            <div class="coins-info">= 100,000 🪙</div>
-                        </div>
-                        <div class="bucks-option" onclick="buyBucks(50)">
-                            <div class="amount">50 Bucks</div>
-                            <div class="price">$50.00</div>
-                            <div class="coins-info">= 500,000 </div>
-                        </div>
-                        <div class="bucks-option" onclick="buyBucks(100)">
-                            <div class="amount">100 Bucks</div>
-                            <div class="price">$100.00</div>
-                            <div class="coins-info">= 1,000,000 🪙</div>
-                        </div>
-                        <div class="bucks-option" onclick="buyBucks(500)">
-                            <div class="amount">500 Bucks</div>
-                            <div class="price">$500.00</div>
-                            <div class="coins-info">= 5,000,000 🪙</div>
-                        </div>
-                        <div class="bucks-option" onclick="buyBucks(9999)">
-                            <div class="amount">9,999 Bucks</div>
-                            <div class="price">$9,999.00</div>
-                            <div class="coins-info">= 99,990,000 </div>
-                        </div>
+
+                    <div class="payment-package" onclick="buyPackage('energy')">
+                        <div class="package-name"> Enerji Deposu</div>
+                        <div class="package-price">49,99  veya 125 Stars</div>
+                        <div class="package-content">+500 Max Enerji + 2x Hızlı Dolum</div>
                     </div>
-                    <button class="btn-primary" onclick="showPaymentModal()">💳 Pay with TON</button>
-                    <button class="btn-primary" onclick="showPage('warehouse')" style="background: linear-gradient(180deg, #666 0%, #333 100%); border-color: #222;">Go Back</button>
+
+                    <div class="payment-package" onclick="buyPackage('pass')">
+                        <div class="package-name">️ Yayla Pass (Aylık)</div>
+                        <div class="package-price">149,99 ₺ veya 375 Stars</div>
+                        <div class="package-content">Günlük 💎 + Reklamsız + %20 Bonus</div>
+                    </div>
+
+                    <div class="payment-package" onclick="buyPackage('crystal')">
+                        <div class="package-name">💎 Kristal Kasa</div>
+                        <div class="package-price">299,99 ₺ veya 750 Stars</div>
+                        <div class="package-content">1,000 Toros Kristali</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -318,203 +747,261 @@
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="showPage('warehouse')" data-page="warehouse">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Home</div>
+        <div class="nav-item active" onclick="showPage('farm')" data-page="farm">
+            <div class="nav-icon">🌾</div>
+            <div class="nav-label">Çiftlik</div>
+        </div>
+        <div class="nav-item" onclick="showPage('market')" data-page="market">
+            <div class="nav-icon">🧺</div>
+            <div class="nav-label">Pazar</div>
+        </div>
+        <div class="nav-item" onclick="showPage('boost')" data-page="boost">
+            <div class="nav-icon">⚡</div>
+            <div class="nav-label">Geliştir</div>
+        </div>
+        <div class="nav-item" onclick="showPage('friends')" data-page="friends">
+            <div class="nav-icon"></div>
+            <div class="nav-label">Arkadaş</div>
         </div>
         <div class="nav-item" onclick="showPage('shop')" data-page="shop">
-            <div class="nav-icon">🏪</div>
-            <div class="nav-label">Shop</div>
-        </div>
-        <div class="nav-item" onclick="showPage('farm')" data-page="farm">
-            <div class="nav-icon">🚜</div>
-            <div class="nav-label">Farm</div>
-        </div>
-        <div class="nav-item" onclick="showPage('payout')" data-page="payout">
-            <div class="nav-icon">💰</div>
-            <div class="nav-label">Payout</div>
+            <div class="nav-icon">👛</div>
+            <div class="nav-label">Mağaza</div>
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="payment-modal" id="payment-modal">
-        <div class="payment-content">
-            <div class="payment-title">💳 Select Payment Method</div>
-            <div class="payment-methods">
-                <div class="payment-method" onclick="processPayment('TON')">
-                    <div class="payment-method-icon">💎</div>
-                    <div class="payment-method-info">
-                        <div class="payment-method-name">TON (Toncoin)</div>
-                        <div class="payment-method-desc">Fast & Low fees</div>
-                    </div>
-                </div>
-                <div class="payment-method" onclick="processPayment('USDT')">
-                    <div class="payment-method-icon">💵</div>
-                    <div class="payment-method-info">
-                        <div class="payment-method-name">USDT (Tether)</div>
-                        <div class="payment-method-desc">Stablecoin</div>
-                    </div>
-                </div>
-                <div class="payment-method" onclick="processPayment('Card')">
-                    <div class="payment-method-icon">💳</div>
-                    <div class="payment-method-info">
-                        <div class="payment-method-name">Credit Card</div>
-                        <div class="payment-method-desc">Visa/Mastercard</div>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-primary btn-red" onclick="closePaymentModal()">Cancel</button>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div class="toast" id="toast"></div>
 </div>
 
 <script>
-// --- TELEGRAM WEBAPP INIT ---
 const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();
 
-// --- ADMIN CONFIG ---
-let adminConfig = {
-    prices: {
-        wheat: 1000,
-        chicken: 5000,
-        cow: 25000,
-        goat: 100000,
-        sheep: 500000,
-        cheese: 1000000
-    },
-    production: {
-        wheat: 1,
-        chicken: 2,
-        cow: 4,
-        goat: 8,
-        sheep: 16
-    },
-    // 90 gün ROI için birim fiyatlar (coin/m³)
-    sellPrices: {
-        wheat: 0.01,      // 1,000 coin / 129,600 m³
-        egg: 0.02,        // 5,000 coin / 259,200 m³
-        milk: 0.05,       // 25,000 coin / 518,400 m³
-        goatMilk: 0.10,   // 100,000 coin / 1,036,800 m³
-        sheepMilk: 0.25   // 500,000 coin / 2,073,600 m³
-    },
-    bucksToCoins: 10000
-};
-
-// --- GAME STATE ---
 let state = {
-    bucks: 0.3875,
-    coins: 3875,
-    warehouse: {
-        wheat: { volume: 0, pcs: 0, volumePerPcs: 2 },
-        egg: { volume: 0, pcs: 0, volumePerPcs: 5 },
-        milk: { volume: 0, pcs: 0, volumePerPcs: 12 },
-        cheese: { volume: 0, pcs: 0, volumePerPcs: 15 },
-        wool: { volume: 0, pcs: 0, volumePerPcs: 8 }
+    tl: 0,
+    crystals: 0,
+    energy: 1000,
+    maxEnergy: 1000,
+    tapPower: 1,
+    soil: 0,
+    water: 0,
+    apples: 0,
+    milk: 0,
+    wool: 0,
+    plots: {
+        wheat: 0,
+        apple: 0,
+        goat: 0,
+        sheep: 0
     },
-    capacity: 750000,
-    animals: { chicken: 0, sheep: 0, goat: 0, cow: 0 },
-    buildings: { wheat: 0, cheese: 0 },
-    production: { wheat: 0, egg: 0, milk: 0, goatMilk: 0, sheepMilk: 0 },
-    lastSave: Date.now()
+    boosts: {
+        tap: 1,
+        energy: 1,
+        auto: false,
+        speed: 1
+    },
+    referrals: 0,
+    referralEarnings: 0,
+    clan: null,
+    level: 1,
+    xp: 0
 };
 
-// --- STATE MANAGEMENT ---
 function loadState() {
-    const saved = localStorage.getItem('farmState');
+    const saved = localStorage.getItem('aladagState');
     if (saved) {
         state = JSON.parse(saved);
-        const now = Date.now();
-        const secondsOffline = (now - state.lastSave) / 1000;
-        if (secondsOffline > 0) {
-            const prod = adminConfig.production;
-            if (state.buildings.wheat > 0) {
-                state.production.wheat += (state.buildings.wheat * prod.wheat * secondsOffline) / 60;
-            }
-            if (state.animals.chicken > 0) {
-                state.production.egg += (state.animals.chicken * prod.chicken * secondsOffline) / 60;
-            }
-            if (state.animals.cow > 0) {
-                state.production.milk += (state.animals.cow * prod.cow * secondsOffline) / 60;
-            }
-            if (state.animals.goat > 0) {
-                state.production.milk += (state.animals.goat * prod.goat * secondsOffline) / 60;
-            }
-            if (state.animals.sheep > 0) {
-                state.production.milk += (state.animals.sheep * prod.sheep * secondsOffline) / 60;
-            }
-        }
     }
     updateUI();
+    renderFarm();
 }
 
 function saveState() {
-    state.lastSave = Date.now();
-    localStorage.setItem('farmState', JSON.stringify(state));
+    localStorage.setItem('aladagState', JSON.stringify(state));
 }
 
-// --- UI UPDATES ---
 function updateUI() {
-    document.getElementById('bucks-display').textContent = state.bucks.toFixed(4);
-    document.getElementById('coin-display').textContent = Math.floor(state.coins).toLocaleString();
-
-    ['wheat', 'egg', 'milk', 'cheese', 'wool'].forEach(item => {
-        document.getElementById(`${item}-volume`).textContent = Math.floor(state.warehouse[item].volume).toLocaleString();
-        document.getElementById(`${item}-pcs`).textContent = Math.floor(state.warehouse[item].pcs).toLocaleString();
-    });
-
-    const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
-    const percent = Math.min(100, ((totalVolume / state.capacity) * 100)).toFixed(1);
+    document.getElementById('tl-display').textContent = Math.floor(state.tl).toLocaleString();
+    document.getElementById('crystal-display').textContent = Math.floor(state.crystals).toLocaleString();
+    document.getElementById('energy-text').textContent = `${state.energy}/${state.maxEnergy}`;
+    document.getElementById('energy-fill').style.width = `${(state.energy / state.maxEnergy) * 100}%`;
+    document.getElementById('player-level').textContent = state.level;
+    document.getElementById('player-xp').textContent = state.xp;
+    document.getElementById('tap-power').textContent = state.tapPower;
     
-    document.getElementById('fullness-current').textContent = Math.floor(totalVolume).toLocaleString();
-    document.getElementById('fullness-max').textContent = state.capacity.toLocaleString();
-    document.getElementById('fullness-fill').style.width = percent + '%';
-    document.getElementById('fullness-percent').textContent = percent + '%';
-    document.getElementById('upgrade-current').textContent = Math.floor(totalVolume).toLocaleString();
-    document.getElementById('upgrade-max').textContent = state.capacity.toLocaleString();
-    document.getElementById('upgrade-fill').style.width = percent + '%';
-
-    const prod = adminConfig.production;
+    document.getElementById('stat-soil').textContent = Math.floor(state.soil).toLocaleString();
+    document.getElementById('stat-water').textContent = Math.floor(state.water).toLocaleString();
+    document.getElementById('stat-apples').textContent = Math.floor(state.apples).toLocaleString();
+    document.getElementById('stat-milk').textContent = Math.floor(state.milk).toLocaleString();
     
-    const wheatPerMin = state.buildings.wheat * prod.wheat;
-    const wheatPerSec = wheatPerMin / 60;
-    document.getElementById('wheat-rate-sec').textContent = wheatPerSec.toFixed(2);
-    document.getElementById('wheat-rate-min').textContent = wheatPerMin;
-    document.getElementById('wheat-count').textContent = state.buildings.wheat;
-
-    const eggPerMin = state.animals.chicken * prod.chicken;
-    const eggPerSec = eggPerMin / 60;
-    document.getElementById('egg-rate-sec').textContent = eggPerSec.toFixed(2);
-    document.getElementById('egg-rate-min').textContent = eggPerMin;
-    document.getElementById('chicken-count').textContent = state.animals.chicken;
-
-    const cowPerMin = state.animals.cow * prod.cow;
-    const cowPerSec = cowPerMin / 60;
-    document.getElementById('cow-rate-sec').textContent = cowPerSec.toFixed(2);
-    document.getElementById('cow-rate-min').textContent = cowPerMin;
-    document.getElementById('cow-count').textContent = state.animals.cow;
-
-    const goatPerMin = state.animals.goat * prod.goat;
-    const goatPerSec = goatPerMin / 60;
-    document.getElementById('goat-rate-sec').textContent = goatPerSec.toFixed(2);
-    document.getElementById('goat-rate-min').textContent = goatPerMin;
-    document.getElementById('goat-count').textContent = state.animals.goat;
-
-    const sheepPerMin = state.animals.sheep * prod.sheep;
-    const sheepPerSec = sheepPerMin / 60;
-    document.getElementById('sheep-rate-sec').textContent = sheepPerSec.toFixed(2);
-    document.getElementById('sheep-rate-min').textContent = sheepPerMin;
-    document.getElementById('sheep-count').textContent = state.animals.sheep;
-
-    const totalPerMin = wheatPerMin + eggPerMin + cowPerMin + goatPerMin + sheepPerMin;
-    document.getElementById('total-rate-min').textContent = totalPerMin;
+    document.getElementById('referral-count').textContent = state.referrals;
+    document.getElementById('referral-earnings').textContent = `${state.referralEarnings.toLocaleString()} `;
 }
 
-// --- NAVIGATION ---
+function renderFarm() {
+    const grid = document.getElementById('farm-grid');
+    let html = '';
+    
+    const plotTypes = [
+        { type: 'wheat', icon: '🌾', label: 'Buğday', count: state.plots.wheat },
+        { type: 'apple', icon: '', label: 'Elma', count: state.plots.apple },
+        { type: 'goat', icon: '🐐', label: 'Keçi', count: state.plots.goat },
+        { type: 'sheep', icon: '', label: 'Koyun', count: state.plots.sheep }
+    ];
+    
+    plotTypes.forEach(plot => {
+        for (let i = 0; i < Math.min(plot.count, 9); i++) {
+            html += `
+                <div class="farm-plot ready" onclick="collectPlot('${plot.type}')">
+                    <div class="plot-icon">${plot.icon}</div>
+                    <div class="plot-label">${plot.label}</div>
+                    <div class="plot-progress">
+                        <div class="plot-progress-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+            `;
+        }
+    });
+    
+    if (html === '') {
+        html = '<div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; opacity: 0.7;"><div style="font-size: 48px; margin-bottom: 12px;">🏚️</div><div>Henüz parsel yok<br>Pazar\'dan satın al!</div></div>';
+    }
+    
+    grid.innerHTML = html;
+}
+
+function tapFarm() {
+    if (state.energy <= 0) {
+        showToast('❌ Enerji bitti! Bekle veya geliştir.');
+        return;
+    }
+    
+    state.soil += state.tapPower;
+    state.energy -= 1;
+    state.xp += 1;
+    
+    if (state.xp >= state.level * 1000) {
+        state.level++;
+        state.xp = 0;
+        showToast(` Seviye ${state.level}!`);
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+    
+    updateUI();
+    saveState();
+    
+    tg.HapticFeedback.impactOccurred('light');
+}
+
+function collectPlot(type) {
+    const amounts = { wheat: 1, apple: 2, goat: 4, sheep: 8 };
+    const amount = amounts[type] * state.boosts.speed;
+    
+    if (type === 'wheat') state.soil += amount;
+    else if (type === 'apple') state.apples += amount;
+    else if (type === 'goat') state.milk += amount;
+    else if (type === 'sheep') state.wool += amount;
+    
+    showToast(`+${amount} ${type === 'wheat' ? 'Toprak' : type === 'apple' ? 'Elma' : type === 'goat' ? 'Süt' : 'Yün'}!`);
+    tg.HapticFeedback.notificationOccurred('success');
+    updateUI();
+    saveState();
+}
+
+function buyPlot(type, price) {
+    if (state.tl >= price) {
+        state.tl -= price;
+        state.plots[type]++;
+        showToast(`✅ ${type === 'wheat' ? 'Buğday Tarlası' : type === 'apple' ? 'Elma Ağacı' : type === 'goat' ? 'Keçi Ağılı' : 'Koyun Ağılı'} alındı!`);
+        tg.HapticFeedback.notificationOccurred('success');
+        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+        updateUI();
+        renderFarm();
+        saveState();
+    } else {
+        showToast('❌ Yeterli ₺ yok!');
+        tg.HapticFeedback.notificationOccurred('error');
+    }
+}
+
+function buyBoost(type, price) {
+    if (state.crystals >= price) {
+        state.crystals -= price;
+        if (type === 'tap') {
+            state.tapPower++;
+            showToast(`👆 Tıklama gücü: ${state.tapPower}`);
+        } else if (type === 'energy') {
+            state.maxEnergy += 500;
+            state.energy += 500;
+            showToast(`⚡ Max enerji: ${state.maxEnergy}`);
+        } else if (type === 'auto') {
+            state.boosts.auto = true;
+            showToast('🐕 Çoban Köpeği aktif!');
+        } else if (type === 'speed') {
+            state.boosts.speed *= 2;
+            showToast(`🚜 Üretim hızı: ${state.boosts.speed}x`);
+        }
+        tg.HapticFeedback.notificationOccurred('success');
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        updateUI();
+        saveState();
+    } else {
+        showToast('❌ Yeterli  yok!');
+        tg.HapticFeedback.notificationOccurred('error');
+    }
+}
+
+function inviteFriend() {
+    if (tg.openTelegramLink) {
+        tg.openTelegramLink('https://t.me/share/url?url=https://t.me/AladagBot&text=Aladağ çiftliğime katıl!');
+    }
+    state.referrals++;
+    const bonus = 5000;
+    const crystalBonus = 10;
+    state.tl += bonus;
+    state.crystals += crystalBonus;
+    state.referralEarnings += bonus;
+    showToast(`👥 Arkadaş davet edildi! +${bonus} ₺ +${crystalBonus} 💎`);
+    tg.HapticFeedback.notificationOccurred('success');
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    updateUI();
+    saveState();
+}
+
+function createClan() {
+    if (!state.clan) {
+        state.clan = 'Yörük Obası #' + Math.floor(Math.random() * 1000);
+        showToast(`🏕️ Oba kuruldu: ${state.clan}`);
+        tg.HapticFeedback.notificationOccurred('success');
+        saveState();
+    } else {
+        showToast(`Zaten bir oban var: ${state.clan}`);
+    }
+}
+
+function buyPackage(type) {
+    const packages = {
+        starter: { tl: 10000, crystals: 50, auto: true },
+        energy: { maxEnergy: 500, energy: 500 },
+        pass: { crystals: 100, bonus: 0.2 },
+        crystal: { crystals: 1000 }
+    };
+    
+    const pkg = packages[type];
+    if (pkg.tl) state.tl += pkg.tl;
+    if (pkg.crystals) state.crystals += pkg.crystals;
+    if (pkg.maxEnergy) state.maxEnergy += pkg.maxEnergy;
+    if (pkg.energy) state.energy += pkg.energy;
+    if (pkg.auto) state.boosts.auto = true;
+    
+    showToast(`✅ Paket satın alındı!`);
+    tg.HapticFeedback.notificationOccurred('success');
+    confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+    updateUI();
+    saveState();
+}
+
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + pageId).classList.add('active');
@@ -522,153 +1009,9 @@ function showPage(pageId) {
     document.querySelectorAll('.nav-item').forEach(n => {
         n.classList.toggle('active', n.dataset.page === pageId);
     });
-
+    
     tg.HapticFeedback.selectionChanged();
     window.scrollTo(0, 0);
-}
-
-function switchTab(tab, element) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    element.classList.add('active');
-    showPage(tab === 'shop' ? 'shop' : 'warehouse');
-}
-
-// --- GAME LOGIC ---
-function buyAnimal(type, price) {
-    if (state.coins >= price) {
-        state.coins -= price;
-        state.animals[type]++;
-        saveState(); 
-        updateUI();
-        showToast(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} purchased!`);
-        tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 }, colors: ['#FFD700', '#52BE80', '#5DADE2'] });
-    } else {
-        showToast('❌ Not enough coins!');
-        tg.HapticFeedback.notificationOccurred('error');
-    }
-}
-
-function buyBuilding(type, price) {
-    if (state.coins >= price) {
-        state.coins -= price;
-        state.buildings[type]++;
-        saveState(); 
-        updateUI();
-        showToast(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} building purchased!`);
-        tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 }, colors: ['#FFD700', '#52BE80', '#5DADE2'] });
-    } else {
-        showToast('❌ Not enough coins!');
-        tg.HapticFeedback.notificationOccurred('error');
-    }
-}
-
-function startProduction() {
-    setInterval(() => {
-        const prod = adminConfig.production;
-        if (state.animals.chicken > 0) state.production.egg += (state.animals.chicken * prod.chicken) / 60;
-        if (state.animals.sheep > 0) state.production.milk += (state.animals.sheep * prod.sheep) / 60;
-        if (state.animals.goat > 0) state.production.milk += (state.animals.goat * prod.goat) / 60;
-        if (state.animals.cow > 0) state.production.milk += (state.animals.cow * prod.cow) / 60;
-        if (state.buildings.wheat > 0) state.production.wheat += (state.buildings.wheat * prod.wheat) / 60;
-        updateUI();
-    }, 1000);
-}
-
-function sendProducts() {
-    const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
-    if (totalVolume > 0) {
-        // ROI bazlı satış fiyatları
-        let earnings = 0;
-        earnings += state.warehouse.wheat.volume * adminConfig.sellPrices.wheat;
-        earnings += state.warehouse.egg.volume * adminConfig.sellPrices.egg;
-        earnings += state.warehouse.milk.volume * adminConfig.sellPrices.milk;
-        
-        earnings = Math.floor(earnings);
-        state.coins += earnings;
-        Object.keys(state.warehouse).forEach(key => {
-            state.warehouse[key].volume = 0;
-            state.warehouse[key].pcs = 0;
-        });
-        saveState(); 
-        updateUI();
-        showToast(`🚚 Products sold! +${earnings.toLocaleString()} 🪙`);
-        tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    } else {
-        showToast('📦 Warehouse is empty!');
-        tg.HapticFeedback.notificationOccurred('warning');
-    }
-}
-
-function upgradeWarehouse() {
-    if (state.coins >= 500000) {
-        state.coins -= 500000;
-        state.capacity = 1500000;
-        saveState(); 
-        updateUI();
-        showToast('🏗️ Warehouse upgraded to 1,500,000 m³!');
-        tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-    } else {
-        showToast('❌ Need 500,000 !');
-        tg.HapticFeedback.notificationOccurred('error');
-    }
-}
-
-// --- BUY BUCKS ---
-function buyBucks(amount) {
-    if (amount < 3 || amount > 9999) {
-        showToast('❌ Min: 3, Max: 9,999 bucks!');
-        return;
-    }
-    const coinsEarned = amount * adminConfig.bucksToCoins;
-    state.bucks += amount;
-    state.coins += coinsEarned;
-    saveState(); 
-    updateUI();
-    showToast(`💰 ${amount} bucks added! +${coinsEarned.toLocaleString()} 🪙`);
-    tg.HapticFeedback.notificationOccurred('success');
-    confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-}
-
-// --- PAYMENT SYSTEM ---
-function showPaymentModal() {
-    document.getElementById('payment-modal').classList.add('show');
-}
-
-function closePaymentModal() {
-    document.getElementById('payment-modal').classList.remove('show');
-}
-
-function processPayment(method) {
-    // Gerçek ödeme entegrasyonu için backend gerekli
-    // Şimdilik simülasyon
-    closePaymentModal();
-    
-    if (method === 'TON') {
-        showToast('💎 TON payment processing... (Demo)');
-        // Gerçek uygulamada: TON Connect API
-    } else if (method === 'USDT') {
-        showToast('💵 USDT payment processing... (Demo)');
-    } else if (method === 'Card') {
-        showToast('💳 Card payment processing... (Demo)');
-    }
-    
-    setTimeout(() => {
-        showToast('✅ Payment successful! (Demo mode)');
-        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-    }, 2000);
-}
-
-// --- EXTRAS ---
-function openSettings() { 
-    showToast('⚙️ Settings: Sound ON, Notifications ON');
-}
-
-function showHelp() { 
-    showToast('💡 Buy animals → Produce → Collect → Sell!');
 }
 
 function showToast(msg) {
@@ -678,10 +1021,34 @@ function showToast(msg) {
     setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// --- INIT ---
+// Energy regeneration
+setInterval(() => {
+    if (state.energy < state.maxEnergy) {
+        state.energy = Math.min(state.maxEnergy, state.energy + 10);
+        updateUI();
+        saveState();
+    }
+}, 60000); // Her dakika 10 enerji
+
+// Auto collect
+setInterval(() => {
+    if (state.boosts.auto) {
+        Object.keys(state.plots).forEach(type => {
+            if (state.plots[type] > 0) {
+                const amounts = { wheat: 1, apple: 2, goat: 4, sheep: 8 };
+                const amount = amounts[type] * state.plots[type] * state.boosts.speed;
+                if (type === 'wheat') state.soil += amount;
+                else if (type === 'apple') state.apples += amount;
+                else if (type === 'goat') state.milk += amount;
+                else if (type === 'sheep') state.wool += amount;
+            }
+        });
+        updateUI();
+        saveState();
+    }
+}, 60000); // Her dakika otomatik toplama
+
 loadState();
-startProduction();
-setInterval(saveState, 5000);
 </script>
 </body>
 </html>
