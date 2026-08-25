@@ -7,7 +7,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 <title>BTC Mining Platform</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   :root {
     --tg-theme-bg-color: #f5f7fa;
@@ -69,7 +68,6 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* SIDEBAR MENU */
   .sidebar {
     width: 280px;
     background: var(--bg-sidebar);
@@ -105,20 +103,10 @@
     box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
   }
 
-  .sidebar-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
+  .sidebar-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .sidebar-subtitle { font-size: 11px; color: var(--text-secondary); }
 
-  .sidebar-subtitle {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-
-  .menu-section {
-    margin-bottom: 20px;
-  }
+  .menu-section { margin-bottom: 20px; }
 
   .menu-label {
     font-size: 11px;
@@ -145,27 +133,10 @@
     font-size: 14px;
   }
 
-  .menu-item:active {
-    transform: scale(0.98);
-  }
-
-  .menu-item:hover {
-    background: var(--bg-card);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-  }
-
-  .menu-item.active {
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  }
-
-  .menu-icon {
-    font-size: 20px;
-    width: 24px;
-    text-align: center;
-  }
+  .menu-item:active { transform: scale(0.98); }
+  .menu-item:hover { background: var(--bg-card); color: var(--text-primary); border-color: var(--border-color); }
+  .menu-item.active { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
+  .menu-icon { font-size: 20px; width: 24px; text-align: center; }
 
   .menu-badge {
     margin-left: auto;
@@ -177,11 +148,8 @@
     font-weight: 700;
   }
 
-  .menu-item.active .menu-badge {
-    background: rgba(255, 255, 255, 0.3);
-  }
+  .menu-item.active .menu-badge { background: rgba(255, 255, 255, 0.3); }
 
-  /* Language Selector */
   .language-selector {
     display: flex;
     gap: 8px;
@@ -202,21 +170,10 @@
     transition: all 0.2s;
   }
 
-  .lang-btn:active {
-    transform: scale(0.95);
-  }
+  .lang-btn:active { transform: scale(0.95); }
+  .lang-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-  .lang-btn.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-
-  .sidebar-footer {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-  }
+  .sidebar-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); }
 
   .user-info {
     display: flex;
@@ -240,18 +197,9 @@
     font-size: 16px;
   }
 
-  .user-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .user-level { font-size: 11px; color: var(--text-secondary); }
 
-  .user-level {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-
-  /* MAIN CONTENT */
   .main-content {
     margin-left: 280px;
     flex: 1;
@@ -261,14 +209,8 @@
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
   }
 
-  .page {
-    display: none;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .page.active {
-    display: block;
-  }
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -294,25 +236,10 @@
     box-shadow: var(--shadow);
   }
 
-  /* PAGE HEADER */
-  .page-header {
-    margin-bottom: 25px;
-    padding-top: 10px;
-  }
+  .page-header { margin-bottom: 25px; padding-top: 10px; }
+  .page-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .page-subtitle { font-size: 14px; color: var(--text-secondary); }
 
-  .page-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-
-  .page-subtitle {
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-
-  /* CARDS */
   .card {
     background: var(--bg-card-solid);
     backdrop-filter: blur(20px);
@@ -356,17 +283,8 @@
     font-size: 20px;
   }
 
-  .stat-card-value {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .stat-card-label {
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
+  .stat-card-value { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .stat-card-label { font-size: 12px; color: var(--text-secondary); }
 
   .stat-card.live .stat-card-value {
     font-family: 'Courier New', monospace;
@@ -378,7 +296,6 @@
     50% { opacity: 0.7; }
   }
 
-  /* LEVEL BAR */
   .level-bar {
     display: flex;
     align-items: center;
@@ -427,14 +344,8 @@
     transition: width 0.5s ease;
   }
 
-  .xp-text {
-    font-size: 11px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-    text-align: right;
-  }
+  .xp-text { font-size: 11px; color: var(--text-secondary); margin-top: 4px; text-align: right; }
 
-  /* PACKAGES */
   .packages-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -453,45 +364,13 @@
     position: relative;
   }
 
-  .package:active {
-    transform: scale(0.96);
-  }
-
-  .package:hover {
-    border-color: var(--accent);
-  }
-
-  .package.selected {
-    border-color: var(--accent);
-    background: rgba(74, 158, 255, 0.15);
-  }
-
-  .package.popular::before {
-    content: '⭐';
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 16px;
-  }
-
-  .package-price {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-
-  .package-roi {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .package-daily {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
+  .package:active { transform: scale(0.96); }
+  .package:hover { border-color: var(--accent); }
+  .package.selected { border-color: var(--accent); background: rgba(74, 158, 255, 0.15); }
+  .package.popular::before { content: '⭐'; position: absolute; top: 8px; right: 8px; font-size: 16px; }
+  .package-price { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .package-roi { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+  .package-daily { font-size: 11px; color: var(--text-secondary); }
 
   .calc-input {
     width: 100%;
@@ -506,10 +385,7 @@
     -webkit-appearance: none;
   }
 
-  .calc-input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
+  .calc-input:focus { outline: none; border-color: var(--accent); }
 
   .calc-results {
     display: grid;
@@ -525,18 +401,8 @@
     text-align: center;
   }
 
-  .calc-result-item .label {
-    font-size: 10px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .calc-result-item .value {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
+  .calc-result-item .label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px; }
+  .calc-result-item .value { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 
   .btn-primary {
     width: 100%;
@@ -551,11 +417,8 @@
     transition: transform 0.2s;
   }
 
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
+  .btn-primary:active { transform: scale(0.98); }
 
-  /* PRODUCTION LINE */
   .factory-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -578,23 +441,8 @@
     border-bottom: 2px solid var(--border-color);
   }
 
-  .conveyor-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .conveyor-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--success);
-    font-weight: 600;
-  }
+  .conveyor-title { font-size: 16px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+  .conveyor-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--success); font-weight: 600; }
 
   .status-indicator {
     width: 8px;
@@ -616,12 +464,7 @@
     position: relative;
   }
 
-  .station {
-    flex: 1;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
+  .station { flex: 1; text-align: center; position: relative; z-index: 2; }
 
   .station-icon {
     width: 45px;
@@ -636,17 +479,8 @@
     box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
   }
 
-  .station-name {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 2px;
-  }
-
-  .station-desc {
-    font-size: 9px;
-    color: var(--text-secondary);
-  }
+  .station-name { font-size: 11px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+  .station-desc { font-size: 9px; color: var(--text-secondary); }
 
   .station-connector {
     position: absolute;
@@ -730,11 +564,7 @@
     100% { transform: translateX(calc(100vw + 100px)); }
   }
 
-  .product-item .product-amount {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
+  .product-item .product-amount { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
 
   .product-item .product-speed {
     font-size: 8px;
@@ -745,11 +575,7 @@
     border-radius: 6px;
   }
 
-  .product-item .product-earned {
-    font-size: 10px;
-    color: #4ade80;
-    font-weight: 700;
-  }
+  .product-item .product-earned { font-size: 10px; color: #4ade80; font-weight: 700; }
 
   .product-item .product-badge {
     position: absolute;
@@ -802,23 +628,9 @@
   .summary-item.hourly { background: linear-gradient(135deg, #f093fb, #f5576c); }
   .summary-item.monthly { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
 
-  .summary-label {
-    font-size: 9px;
-    opacity: 0.9;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-  }
-
-  .summary-value {
-    font-size: 18px;
-    font-weight: 700;
-    font-family: 'Courier New', monospace;
-  }
-
-  .summary-value.live {
-    animation: livePulse 1.5s ease-in-out infinite;
-  }
+  .summary-label { font-size: 9px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .summary-value { font-size: 18px; font-weight: 700; font-family: 'Courier New', monospace; }
+  .summary-value.live { animation: livePulse 1.5s ease-in-out infinite; }
 
   .stats-panel {
     background: var(--bg-card-solid);
@@ -827,15 +639,7 @@
     border: 1px solid var(--border-color);
   }
 
-  .stats-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .stats-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
 
   .stat-item {
     background: rgba(74, 158, 255, 0.1);
@@ -844,69 +648,12 @@
     margin-bottom: 10px;
   }
 
-  .stat-item:last-child {
-    margin-bottom: 0;
-  }
+  .stat-item:last-child { margin-bottom: 0; }
+  .stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .stat-value { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .stat-value.live { font-family: 'Courier New', monospace; font-size: 16px; }
+  .stat-value.success { color: var(--success); }
 
-  .stat-label {
-    font-size: 10px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-  }
-
-  .stat-value {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-
-  .stat-value.live {
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-  }
-
-  .stat-value.success {
-    color: var(--success);
-  }
-
-  /* CHART */
-  .chart-container {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-  }
-
-  .chart-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-  }
-
-  .chart-tab {
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: rgba(74, 158, 255, 0.1);
-    color: var(--text-secondary);
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 12px;
-  }
-
-  .chart-tab:active {
-    transform: scale(0.95);
-  }
-
-  .chart-tab.active {
-    background: var(--accent);
-    color: white;
-  }
-
-  /* LEADERBOARD */
   .leaderboard-list {
     background: var(--bg-card-solid);
     border-radius: 16px;
@@ -923,10 +670,7 @@
     background: rgba(74, 158, 255, 0.05);
   }
 
-  .leaderboard-item:last-child {
-    margin-bottom: 0;
-  }
-
+  .leaderboard-item:last-child { margin-bottom: 0; }
   .leaderboard-item.top-1 { background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent); }
   .leaderboard-item.top-2 { background: linear-gradient(90deg, rgba(192, 192, 192, 0.2), transparent); }
   .leaderboard-item.top-3 { background: linear-gradient(90deg, rgba(205, 127, 50, 0.2), transparent); }
@@ -953,7 +697,6 @@
   .leaderboard-earned { font-size: 11px; color: var(--text-secondary); }
   .leaderboard-amount { font-size: 18px; font-weight: 700; color: var(--accent); }
 
-  /* REFERRAL */
   .referral-card {
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 16px;
@@ -991,7 +734,6 @@
   .referral-stat .value { font-size: 20px; font-weight: 700; }
   .referral-stat .label { font-size: 10px; opacity: 0.9; margin-top: 4px; }
 
-  /* WITHDRAWAL */
   .balance-display {
     background: linear-gradient(135deg, var(--success), #22c55e);
     border-radius: 16px;
@@ -1001,17 +743,8 @@
     margin-bottom: 20px;
   }
 
-  .balance-label {
-    font-size: 13px;
-    opacity: 0.9;
-    margin-bottom: 8px;
-  }
-
-  .balance-amount {
-    font-size: 36px;
-    font-weight: 700;
-    font-family: 'Courier New', monospace;
-  }
+  .balance-label { font-size: 13px; opacity: 0.9; margin-bottom: 8px; }
+  .balance-amount { font-size: 36px; font-weight: 700; font-family: 'Courier New', monospace; }
 
   .withdrawal-form {
     background: var(--bg-card-solid);
@@ -1020,19 +753,9 @@
     border: 1px solid var(--border-color);
   }
 
-  .form-group {
-    margin-bottom: 15px;
-  }
+  .form-group { margin-bottom: 15px; }
+  .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary); font-size: 13px; }
 
-  .form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 13px;
-  }
-
-  /* LIVE FEED */
   .live-feed {
     position: fixed;
     bottom: 20px;
@@ -1057,25 +780,13 @@
     animation: slideIn 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
   }
 
-  @keyframes slideIn {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-
-  @keyframes fadeOut {
-    to { opacity: 0; transform: translateY(-20px); }
-  }
+  @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
 
   .feed-item .feed-icon { margin-right: 6px; }
   .feed-item .feed-user { font-weight: 700; color: var(--accent); }
 
-  /* SUPPORT */
-  .support-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 998;
-  }
+  .support-widget { position: fixed; bottom: 20px; right: 20px; z-index: 998; }
 
   .support-btn {
     width: 50px;
@@ -1089,9 +800,7 @@
     box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
   }
 
-  .support-btn:active {
-    transform: scale(0.95);
-  }
+  .support-btn:active { transform: scale(0.95); }
 
   .support-chat {
     position: absolute;
@@ -1109,29 +818,15 @@
   }
 
   .support-chat.active { display: block; }
-
-  .support-header {
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    padding: 12px 15px;
-    font-weight: 700;
-    font-size: 14px;
-  }
-
+  .support-header { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); padding: 12px 15px; font-weight: 700; font-size: 14px; }
   .support-body { padding: 15px; max-height: 250px; overflow-y: auto; }
 
-  .faq-item {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-color);
-  }
-
+  .faq-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
   .faq-item:last-child { border-bottom: none; }
   .faq-question { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; cursor: pointer; font-size: 13px; }
   .faq-answer { font-size: 12px; color: var(--text-secondary); display: none; line-height: 1.4; }
   .faq-item.active .faq-answer { display: block; }
 
-  /* NOTIFICATION */
   .notification {
     position: fixed;
     top: 20px;
@@ -1154,7 +849,6 @@
   .notification.error { background: var(--danger); }
   .notification.bonus { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
 
-  /* MODAL */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -1184,17 +878,9 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-  .modal h2 {
-    color: var(--text-primary);
-    margin-bottom: 15px;
-    font-size: 20px;
-    padding-right: 40px;
-  }
+  .modal h2 { color: var(--text-primary); margin-bottom: 15px; font-size: 20px; padding-right: 40px; }
 
   .modal-close {
     position: absolute;
@@ -1224,20 +910,10 @@
     border-top: 1px solid var(--border-color);
   }
 
-  .modal-actions button {
-    flex: 1;
-    padding: 14px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    font-size: 14px;
-  }
-
+  .modal-actions button { flex: 1; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
   .btn-cancel { background: rgba(100, 140, 180, 0.15); color: var(--text-secondary); }
   .btn-confirm { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); }
 
-  /* BTC PAYMENT BOX */
   .btc-payment-box {
     background: linear-gradient(135deg, #f7931a, #e8850f);
     border-radius: 12px;
@@ -1246,14 +922,7 @@
     margin: 15px 0;
   }
 
-  .btc-payment-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 700;
-  }
+  .btc-payment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 16px; font-weight: 700; }
 
   .btc-amount-display {
     background: rgba(0, 0, 0, 0.2);
@@ -1309,14 +978,7 @@
     margin-bottom: 10px;
   }
 
-  .btc-address-label {
-    font-size: 9px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
+  .btc-address-label { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600; }
 
   .btc-address {
     font-family: 'Courier New', monospace;
@@ -1332,13 +994,7 @@
     line-height: 1.3;
   }
 
-  .btc-address .copy-icon {
-    position: absolute;
-    top: 50%;
-    right: 6px;
-    transform: translateY(-50%);
-    font-size: 14px;
-  }
+  .btc-address .copy-icon { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); font-size: 14px; }
 
   .btn-copy-address {
     width: 100%;
@@ -1365,11 +1021,7 @@
     margin-top: 6px;
   }
 
-  .payment-timer .timer-value {
-    font-family: 'Courier New', monospace;
-    font-weight: 700;
-    font-size: 13px;
-  }
+  .payment-timer .timer-value { font-family: 'Courier New', monospace; font-weight: 700; font-size: 13px; }
 
   .payment-status {
     display: flex;
@@ -1382,31 +1034,9 @@
     font-size: 11px;
   }
 
-  .status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #ffd700;
-    animation: blink 1s infinite;
-  }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #ffd700; animation: blink 1s infinite; }
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .btn-confirm-payment {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #4ade80, #22c55e);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 10px;
-  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .payment-instructions {
     background: rgba(255, 255, 255, 0.1);
@@ -1443,13 +1073,7 @@
     margin-bottom: 15px;
     box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
   }
-  .welcome-bonus-features {
-    text-align: left;
-    background: rgba(74, 158, 255, 0.1);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 15px;
-  }
+  .welcome-bonus-features { text-align: left; background: rgba(74, 158, 255, 0.1); border-radius: 10px; padding: 12px; margin-bottom: 15px; }
   .welcome-bonus-features div { padding: 5px 0; color: var(--text-primary); font-size: 12px; }
   .welcome-bonus-features div::before { content: '✅ '; }
   .btn-claim-bonus {
@@ -1464,23 +1088,11 @@
     cursor: pointer;
   }
 
-  /* RESPONSIVE */
   @media (max-width: 768px) {
-    .sidebar {
-      transform: translateX(-100%);
-      width: 260px;
-    }
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    .main-content {
-      margin-left: 0;
-      padding: 15px;
-      padding-top: calc(15px + env(safe-area-inset-top));
-    }
-    .mobile-menu-btn {
-      display: flex;
-    }
+    .sidebar { transform: translateX(-100%); width: 260px; }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; padding: 15px; padding-top: calc(15px + env(safe-area-inset-top)); }
+    .mobile-menu-btn { display: flex; }
     .page-title { font-size: 24px; }
     .packages-grid { grid-template-columns: repeat(2, 1fr); }
     .hero-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1498,9 +1110,8 @@
 </style>
 </head>
 <body>
-  <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+  <button class="mobile-menu-btn" onclick="toggleSidebar()"></button>
 
-  <!-- SIDEBAR MENU -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">₿</div>
@@ -1521,7 +1132,7 @@
         <span data-i18n="menu_buy">Satın Al</span>
       </div>
       <div class="menu-item" onclick="showPage('production', this)">
-        <span class="menu-icon">⚡</span>
+        <span class="menu-icon"></span>
         <span data-i18n="menu_production">Üretim Hattı</span>
         <span class="menu-badge" id="productCount">0</span>
       </div>
@@ -1529,10 +1140,6 @@
 
     <div class="menu-section">
       <div class="menu-label" data-i18n="menu_stats">İstatistik</div>
-      <div class="menu-item" onclick="showPage('chart', this)">
-        <span class="menu-icon">📊</span>
-        <span data-i18n="menu_chart">Grafik</span>
-      </div>
       <div class="menu-item" onclick="showPage('leaderboard', this)">
         <span class="menu-icon">🏆</span>
         <span data-i18n="menu_leaderboard">Liderlik</span>
@@ -1551,7 +1158,6 @@
       </div>
     </div>
 
-    <!-- Language Selector -->
     <div class="language-selector">
       <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇷 TR</button>
       <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
@@ -1568,9 +1174,7 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="main-content">
-    <!-- HOME PAGE -->
     <div class="page active" id="page-home">
       <div class="page-header">
         <h1 class="page-title" data-i18n="home_title">👋 Hoş Geldin!</h1>
@@ -1619,7 +1223,7 @@
       </div>
 
       <div class="card">
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="quick_start"> Hızlı Başlangıç</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="quick_start">🚀 Hızlı Başlangıç</h3>
         <p style="color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; font-size: 13px;" data-i18n="quick_start_desc">
           Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. 
           Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!
@@ -1628,7 +1232,6 @@
       </div>
     </div>
 
-    <!-- BUY PAGE -->
     <div class="page" id="page-buy">
       <div class="page-header">
         <h1 class="page-title" data-i18n="buy_title">💎 Mining Gücü Satın Al</h1>
@@ -1687,7 +1290,7 @@
         <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;" data-i18n="custom_amount">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="calculation">📊 Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="calculation"> Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
             <div class="label" data-i18n="calc_daily">Günlük</div>
@@ -1707,11 +1310,10 @@
           </div>
         </div>
 
-        <button class="btn-primary" onclick="openModal()" data-i18n="btn_buy_now"> Şimdi Satın Al</button>
+        <button class="btn-primary" onclick="openModal()" data-i18n="btn_buy_now">🚀 Şimdi Satın Al</button>
       </div>
     </div>
 
-    <!-- PRODUCTION PAGE -->
     <div class="page" id="page-production">
       <div class="page-header">
         <h1 class="page-title" data-i18n="production_title">⚡ Üretim Hattı</h1>
@@ -1726,7 +1328,7 @@
           </div>
           <div class="stations-container">
             <div class="station-connector"></div>
-            <div class="station"><div class="station-icon">🔍</div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
+            <div class="station"><div class="station-icon"></div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
             <div class="station"><div class="station-icon">✓</div><div class="station-name" data-i18n="station_verify">Doğrulama</div><div class="station-desc">Verify</div></div>
             <div class="station"><div class="station-icon">⛓️</div><div class="station-name" data-i18n="station_chain">Zincir</div><div class="station-desc">Chain</div></div>
             <div class="station"><div class="station-icon">💰</div><div class="station-name" data-i18n="station_reward">Ödül</div><div class="station-desc">Reward</div></div>
@@ -1737,7 +1339,7 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label" data-i18n="summary_total"> Toplam</div>
+              <div class="summary-label" data-i18n="summary_total">💰 Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
@@ -1749,14 +1351,14 @@
               <div class="summary-value live" id="summaryHour">$0</div>
             </div>
             <div class="summary-item monthly">
-              <div class="summary-label" data-i18n="summary_month"> Ay</div>
+              <div class="summary-label" data-i18n="summary_month">📅 Ay</div>
               <div class="summary-value live" id="summaryMonth">$0</div>
             </div>
           </div>
         </div>
 
         <div class="stats-panel">
-          <div class="stats-title"><span></span><span data-i18n="stats_title">İstatistikler</span></div>
+          <div class="stats-title"><span>📊</span><span data-i18n="stats_title">İstatistikler</span></div>
           <div class="stat-item"><div class="stat-label" data-i18n="stat_active_products">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
           <div class="stat-item"><div class="stat-label" data-i18n="stat_total_earn">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
           <div class="stat-item"><div class="stat-label" data-i18n="stat_per_second">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
@@ -1765,32 +1367,14 @@
       </div>
     </div>
 
-    <!-- CHART PAGE -->
-    <div class="page" id="page-chart">
-      <div class="page-header">
-        <h1 class="page-title" data-i18n="chart_title">📊 Kazanç Grafiği</h1>
-        <p class="page-subtitle" data-i18n="chart_subtitle">Kazançlarını takip et</p>
-      </div>
-      <div class="chart-container">
-        <div class="chart-tabs">
-          <button class="chart-tab active" onclick="switchChart('daily', this)" data-i18n="chart_daily">Günlük</button>
-          <button class="chart-tab" onclick="switchChart('weekly', this)" data-i18n="chart_weekly">Haftalık</button>
-          <button class="chart-tab" onclick="switchChart('monthly', this)" data-i18n="chart_monthly">Aylık</button>
-        </div>
-        <canvas id="earningsChart" height="100"></canvas>
-      </div>
-    </div>
-
-    <!-- LEADERBOARD PAGE -->
     <div class="page" id="page-leaderboard">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="leaderboard_title"> Liderlik</h1>
+        <h1 class="page-title" data-i18n="leaderboard_title">🏆 Liderlik</h1>
         <p class="page-subtitle" data-i18n="leaderboard_subtitle">En çok kazananlar</p>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
     </div>
 
-    <!-- REFERRAL PAGE -->
     <div class="page" id="page-referral">
       <div class="page-header">
         <h1 class="page-title" data-i18n="referral_title">👥 Referans</h1>
@@ -1808,7 +1392,6 @@
       </div>
     </div>
 
-    <!-- WITHDRAW PAGE -->
     <div class="page" id="page-withdraw">
       <div class="page-header">
         <h1 class="page-title" data-i18n="withdraw_title">💸 Çekim</h1>
@@ -1824,24 +1407,22 @@
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
         <div class="form-group">
-          <label class="form-label" data-i18n="withdraw_address"> BTC Adresi</label>
+          <label class="form-label" data-i18n="withdraw_address">₿ BTC Adresi</label>
           <input type="text" class="calc-input" id="walletAddress" placeholder="bc1q...">
         </div>
-        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);" data-i18n="btn_withdraw"> Çekim Yap</button>
+        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);" data-i18n="btn_withdraw">💸 Çekim Yap</button>
       </div>
     </div>
   </main>
 
-  <!-- LIVE FEED -->
   <div class="live-feed" id="liveFeed"></div>
 
-  <!-- SUPPORT -->
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
       <div class="support-header" data-i18n="support_title"> Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question" data-i18n="faq_bonus"> Bonus nedir?</div>
+          <div class="faq-question" data-i18n="faq_bonus">❓ Bonus nedir?</div>
           <div class="faq-answer" data-i18n="faq_bonus_answer">İlk girişte $1 ücretsiz mining gücü!</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
@@ -1854,17 +1435,16 @@
         </div>
       </div>
     </div>
-    <button class="support-btn" onclick="toggleSupport()"></button>
+    <button class="support-btn" onclick="toggleSupport()">💬</button>
   </div>
 
-  <!-- WELCOME BONUS MODAL -->
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
       <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
       <div class="welcome-bonus-icon"></div>
       <div class="welcome-bonus-title" data-i18n="welcome_title">HOŞ GELDİN!</div>
       <div class="welcome-bonus-desc" data-i18n="welcome_desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
-      <div class="welcome-bonus-amount">🎁 $1.00 ÜCRETSİZ</div>
+      <div class="welcome-bonus-amount"> $1.00 ÜCRETSİZ</div>
       <div class="welcome-bonus-features">
         <div data-i18n="welcome_feat1">Anında ekleme</div>
         <div data-i18n="welcome_feat2">Saniyelik kazanç</div>
@@ -1875,11 +1455,10 @@
     </div>
   </div>
 
-  <!-- BTC PAYMENT MODAL -->
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
-      <h2 data-i18n="payment_title"> Bitcoin Ödeme</h2>
+      <h2 data-i18n="payment_title">₿ Bitcoin Ödeme</h2>
       
       <div class="btc-payment-box">
         <div class="btc-payment-header">
@@ -1937,7 +1516,6 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    // TRANSLATIONS
     const translations = {
       tr: {
         sidebar_title: 'BTC Mining',
@@ -1947,7 +1525,6 @@
         menu_buy: 'Satın Al',
         menu_production: 'Üretim Hattı',
         menu_stats: 'İstatistik',
-        menu_chart: 'Grafik',
         menu_leaderboard: 'Liderlik',
         menu_account: 'Hesap',
         menu_referral: 'Referans',
@@ -1958,9 +1535,9 @@
         stat_invested: 'Toplam Yatırım',
         stat_earned: 'Toplam Kazanç',
         stat_persecond: 'Saniyelik',
-        quick_start: '🚀 Hızlı Başlangıç',
+        quick_start: ' Hızlı Başlangıç',
         quick_start_desc: 'Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!',
-        btn_first_invest: '💎 İlk Yatırımını Yap',
+        btn_first_invest: ' İlk Yatırımını Yap',
         buy_title: '💎 Mining Gücü Satın Al',
         buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al',
         info_minimum: 'Minimum',
@@ -1970,12 +1547,12 @@
         select_package: 'Paket Seç',
         package_roi: '3 Ayda Geri',
         custom_amount: '💰 Özel Miktar',
-        calculation: '📊 Hesaplama',
+        calculation: ' Hesaplama',
         calc_daily: 'Günlük',
         calc_monthly: 'Aylık',
         calc_3month: '3 Aylık',
         calc_roi: 'ROI',
-        btn_buy_now: ' Şimdi Satın Al',
+        btn_buy_now: '🚀 Şimdi Satın Al',
         production_title: '⚡ Üretim Hattı',
         production_subtitle: 'Mining operasyonlarınız gerçek zamanlı',
         active_production: 'Aktif Üretim',
@@ -1983,23 +1560,18 @@
         station_verify: 'Doğrulama',
         station_chain: 'Zincir',
         station_reward: 'Ödül',
-        summary_total: ' Toplam',
+        summary_total: '💰 Toplam',
         summary_minute: '⏱️ Dakika',
         summary_hour: '🕐 Saat',
-        summary_month: ' Ay',
+        summary_month: '📅 Ay',
         stats_title: 'İstatistikler',
         stat_active_products: 'Aktif Ürün',
         stat_total_earn: 'Toplam Kazanç',
         stat_per_second: 'Saniyelik',
         stat_roi_time: 'ROI Süre',
-        chart_title: '📊 Kazanç Grafiği',
-        chart_subtitle: 'Kazançlarını takip et',
-        chart_daily: 'Günlük',
-        chart_weekly: 'Haftalık',
-        chart_monthly: 'Aylık',
         leaderboard_title: ' Liderlik',
         leaderboard_subtitle: 'En çok kazananlar',
-        referral_title: '👥 Referans',
+        referral_title: ' Referans',
         referral_subtitle: 'Arkadaşlarını davet et, %10 kazan',
         referral_code: 'Referans Kodun',
         referral_click: 'Kopyalamak için tıkla!',
@@ -2009,11 +1581,11 @@
         withdraw_title: '💸 Çekim',
         withdraw_subtitle: 'Minimum çekim: $0.01',
         balance_current: 'Mevcut Bakiye',
-        withdraw_amount: ' Çekilecek Miktar ($)',
+        withdraw_amount: '💰 Çekilecek Miktar ($)',
         withdraw_address: '₿ BTC Adresi',
         btn_withdraw: '💸 Çekim Yap',
-        support_title: ' Destek',
-        faq_bonus: ' Bonus nedir?',
+        support_title: '💬 Destek',
+        faq_bonus: '❓ Bonus nedir?',
         faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!',
         faq_how: '❓ Nasıl alınır?',
         faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.',
@@ -2025,8 +1597,8 @@
         welcome_feat2: 'Saniyelik kazanç',
         welcome_feat3: '3 ay ROI',
         welcome_feat4: 'Ödeme yok!',
-        btn_start: ' BAŞLA',
-        payment_title: ' Bitcoin Ödeme',
+        btn_start: '🚀 BAŞLA',
+        payment_title: '₿ Bitcoin Ödeme',
         payment_make: 'Ödeme Yap',
         payment_amount: 'Gönderilecek Tutar',
         payment_copy: 'BTC Adresini Kopyala',
@@ -2040,24 +1612,14 @@
         btn_cancel: 'İptal',
         btn_confirm: '✓ Onayla',
         notif_min: '❌ Min $1!',
-        notif_copied: ' Adres kopyalandı!',
+        notif_copied: '📋 Adres kopyalandı!',
         notif_bonus: '🎉 $1 bonus kazandın!',
         notif_confirmed: '✅ Ödeme onaylandı!',
         notif_timeout: '⏰ Süre doldu!',
         notif_success: '✅ Çekim başarılı!',
-        notif_invalid: ' Geçersiz!',
-        notif_required: ' Adres gerekli!',
+        notif_invalid: '❌ Geçersiz!',
+        notif_required: '❌ Adres gerekli!',
         notif_code_copied: '📋 Kod kopyalandı!',
-        level_bronze: 'Bronz Madenci',
-        level_silver: 'Gümüş Madenci',
-        level_gold: 'Altın Madenci',
-        level_diamond: 'Elmas Madenci',
-        level_master: 'Usta Madenci',
-        level_desc_start: 'İlk adımlarını atıyorsun!',
-        level_desc_progress: 'İlerleme kaydediyorsun!',
-        level_desc_great: 'Harika!',
-        level_desc_legend: 'Efsane!',
-        level_desc_peak: 'Zirve!',
         roi_days: '90 gün'
       },
       en: {
@@ -2068,7 +1630,6 @@
         menu_buy: 'Buy',
         menu_production: 'Production',
         menu_stats: 'Statistics',
-        menu_chart: 'Chart',
         menu_leaderboard: 'Leaderboard',
         menu_account: 'Account',
         menu_referral: 'Referral',
@@ -2091,12 +1652,12 @@
         select_package: 'Select Package',
         package_roi: '3 Month ROI',
         custom_amount: '💰 Custom Amount',
-        calculation: ' Calculation',
+        calculation: '📊 Calculation',
         calc_daily: 'Daily',
         calc_monthly: 'Monthly',
         calc_3month: '3 Months',
         calc_roi: 'ROI',
-        btn_buy_now: ' Buy Now',
+        btn_buy_now: '🚀 Buy Now',
         production_title: '⚡ Production Line',
         production_subtitle: 'Your mining operations in real-time',
         active_production: 'Active Production',
@@ -2107,18 +1668,13 @@
         summary_total: ' Total',
         summary_minute: '⏱️ Minute',
         summary_hour: '🕐 Hour',
-        summary_month: ' Month',
+        summary_month: '📅 Month',
         stats_title: 'Statistics',
         stat_active_products: 'Active Products',
         stat_total_earn: 'Total Earnings',
         stat_per_second: 'Per Second',
         stat_roi_time: 'ROI Time',
-        chart_title: '📊 Earnings Chart',
-        chart_subtitle: 'Track your earnings',
-        chart_daily: 'Daily',
-        chart_weekly: 'Weekly',
-        chart_monthly: 'Monthly',
-        leaderboard_title: ' Leaderboard',
+        leaderboard_title: '🏆 Leaderboard',
         leaderboard_subtitle: 'Top earners',
         referral_title: '👥 Referral',
         referral_subtitle: 'Invite friends, earn 10%',
@@ -2130,10 +1686,10 @@
         withdraw_title: '💸 Withdraw',
         withdraw_subtitle: 'Minimum withdrawal: $0.01',
         balance_current: 'Current Balance',
-        withdraw_amount: ' Withdrawal Amount ($)',
+        withdraw_amount: '💰 Withdrawal Amount ($)',
         withdraw_address: '₿ BTC Address',
-        btn_withdraw: ' Withdraw',
-        support_title: ' Support',
+        btn_withdraw: '💸 Withdraw',
+        support_title: '💬 Support',
         faq_bonus: ' What is the bonus?',
         faq_bonus_answer: '$1 free mining power on first login!',
         faq_how: '❓ How to buy?',
@@ -2146,8 +1702,8 @@
         welcome_feat2: 'Per-second earnings',
         welcome_feat3: '3 month ROI',
         welcome_feat4: 'No payment!',
-        btn_start: ' START',
-        payment_title: ' Bitcoin Payment',
+        btn_start: '🚀 START',
+        payment_title: '₿ Bitcoin Payment',
         payment_make: 'Make Payment',
         payment_amount: 'Amount to Send',
         payment_copy: 'Copy BTC Address',
@@ -2160,49 +1716,30 @@
         payment_step3: 'Confirm payment',
         btn_cancel: 'Cancel',
         btn_confirm: '✓ Confirm',
-        notif_min: ' Min $1!',
+        notif_min: '❌ Min $1!',
         notif_copied: ' Address copied!',
         notif_bonus: ' You earned $1 bonus!',
         notif_confirmed: '✅ Payment confirmed!',
         notif_timeout: '⏰ Time expired!',
         notif_success: '✅ Withdrawal successful!',
         notif_invalid: '❌ Invalid!',
-        notif_required: ' Address required!',
+        notif_required: '❌ Address required!',
         notif_code_copied: '📋 Code copied!',
-        level_bronze: 'Bronze Miner',
-        level_silver: 'Silver Miner',
-        level_gold: 'Gold Miner',
-        level_diamond: 'Diamond Miner',
-        level_master: 'Master Miner',
-        level_desc_start: 'Taking your first steps!',
-        level_desc_progress: 'Making progress!',
-        level_desc_great: 'Great!',
-        level_desc_legend: 'Legendary!',
-        level_desc_peak: 'Peak!',
         roi_days: '90 days'
       }
     };
 
     let currentLang = 'tr';
-
-    // Telegram WebApp
     const tg = window.Telegram.WebApp;
     
-    // Initialize Telegram WebApp
     tg.ready();
     tg.expand();
-    
-    // Set header color
     tg.setHeaderColor(getComputedStyle(document.documentElement).getPropertyValue('--tg-theme-bg-color'));
     
-    // Enable back button
     tg.BackButton.onClick(() => {
-      if (document.querySelector('.sidebar.open')) {
-        toggleSidebar();
-      }
+      if (document.querySelector('.sidebar.open')) toggleSidebar();
     });
     
-    // Haptic feedback helper
     function haptic(type = 'impact') {
       if (tg.HapticFeedback) {
         if (type === 'impact') tg.HapticFeedback.impactOccurred('light');
@@ -2225,75 +1762,40 @@
       referralCode: '',
       referrals: 0,
       referralEarnings: 0,
-      earningsHistory: [],
       theme: tg.colorScheme === 'dark' ? 'dark' : 'light',
       welcomeBonusClaimed: false,
       language: 'tr'
     };
 
     let lastUpdate = Date.now();
-    let earningsChart = null;
     let currentPaymentAmount = 0;
     let currentBTCAddress = '';
     let paymentTimerInterval = null;
     let paymentTimeLeft = 900;
 
-    // LANGUAGE FUNCTIONS
     function changeLanguage(lang) {
       currentLang = lang;
       state.language = lang;
       saveState();
       
-      // Update buttons
       document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
       document.getElementById('lang-en').classList.toggle('active', lang === 'en');
       
-      // Update all elements with data-i18n attribute
       document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
-          if (element.tagName === 'INPUT' && element.type === 'text') {
-            element.placeholder = translations[lang][key];
-          } else {
-            element.innerHTML = translations[lang][key];
-          }
+          element.innerHTML = translations[lang][key];
         }
       });
       
-      // Update page titles
-      updatePageTitles();
-      
-      // Update notifications
-      updateNotificationTexts();
-      
+      updateLevel();
       haptic('impact');
-    }
-
-    function updatePageTitles() {
-      // Update level names
-      const levels = [
-        { tr: 'Bronz Madenci', en: 'Bronze Miner' },
-        { tr: 'Gümüş Madenci', en: 'Silver Miner' },
-        { tr: 'Altın Madenci', en: 'Gold Miner' },
-        { tr: 'Elmas Madenci', en: 'Diamond Miner' },
-        { tr: 'Usta Madenci', en: 'Master Miner' }
-      ];
-      
-      const levelIndex = state.level - 1;
-      if (levelIndex >= 0 && levelIndex < levels.length) {
-        document.getElementById('levelName').textContent = levels[levelIndex][currentLang];
-      }
-    }
-
-    function updateNotificationTexts() {
-      // Notification texts are updated dynamically in showNotification function
     }
 
     function t(key) {
       return translations[currentLang][key] || key;
     }
 
-    // MENU NAVIGATION
     function showPage(pageId, menuItem) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + pageId).classList.add('active');
@@ -2310,18 +1812,15 @@
     }
 
     function init() {
-      // Load language from state
       if (state.language) {
         currentLang = state.language;
         document.getElementById('lang-tr').classList.toggle('active', currentLang === 'tr');
         document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
       }
       
-      // Get user info from Telegram if available
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
-        const userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-        document.getElementById('userName').textContent = userName;
+        document.getElementById('userName').textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
       }
 
       loadState();
@@ -2331,12 +1830,9 @@
       }
       document.getElementById('referralCode').textContent = state.referralCode;
       
-      // Apply initial translations
       changeLanguage(currentLang);
-      
       restoreConveyorProducts();
       updateLevel();
-      initChart();
       renderLeaderboard();
       startLiveFeed();
       setInterval(updateEarnings, 100);
@@ -2352,12 +1848,8 @@
 
     function loadState() {
       const saved = localStorage.getItem('btcMiningState');
-      if (saved) {
-        state = { ...state, ...JSON.parse(saved) };
-      }
-      if (state.theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+      if (saved) state = { ...state, ...JSON.parse(saved) };
+      if (state.theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     }
 
     function saveState() {
@@ -2372,9 +1864,7 @@
       closeWelcomeBonus();
       showNotification('notif_bonus', 'bonus');
       haptic('success');
-      setTimeout(() => {
-        showPage('production', document.querySelectorAll('.menu-item')[2]);
-      }, 500);
+      setTimeout(() => showPage('production', document.querySelectorAll('.menu-item')[2]), 500);
       saveState();
     }
 
@@ -2385,9 +1875,7 @@
     function generateBTCAddress() {
       const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
       let address = 'bc1q';
-      for (let i = 0; i < 38; i++) {
-        address += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
+      for (let i = 0; i < 38; i++) address += chars.charAt(Math.floor(Math.random() * chars.length));
       return address;
     }
 
@@ -2402,9 +1890,7 @@
     function restoreConveyorProducts() {
       const conveyorContainer = document.getElementById('conveyorProducts');
       conveyorContainer.innerHTML = '';
-      state.purchasedProducts.forEach(product => {
-        renderConveyorProduct(product);
-      });
+      state.purchasedProducts.forEach(product => renderConveyorProduct(product));
       updateStats();
     }
 
@@ -2458,9 +1944,7 @@
       
       document.getElementById('productCount').textContent = state.purchasedProducts.length;
       
-      if (state.totalInvested > 0) {
-        document.getElementById('roiTimeLeft').textContent = t('roi_days');
-      }
+      if (state.totalInvested > 0) document.getElementById('roiTimeLeft').textContent = t('roi_days');
     }
 
     function updateLevel() {
@@ -2483,7 +1967,8 @@
       }
       document.getElementById('levelBadge').textContent = state.level;
       document.getElementById('levelBadge').className = 'level-badge ' + currentLevel.class;
-      document.getElementById('levelName').textContent = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
+      const levelName = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
+      document.getElementById('levelName').textContent = levelName;
       document.getElementById('levelDesc').textContent = currentLevel['desc_' + currentLang];
       document.getElementById('currentXP').textContent = state.xp;
       document.getElementById('nextLevelXP').textContent = nextLevel.xp;
@@ -2491,7 +1976,7 @@
       document.getElementById('xpFill').style.width = Math.min(progress, 100) + '%';
       
       document.getElementById('userAvatar').textContent = state.level;
-      document.getElementById('userName').textContent = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
+      document.getElementById('userName').textContent = levelName;
       document.getElementById('userXP').textContent = state.xp + ' XP';
     }
 
@@ -2519,11 +2004,9 @@
         return;
       }
       const daily = amount * DAILY_RATE;
-      const monthly = daily * 30;
-      const threeMonth = daily * 90;
       document.getElementById('dailyEarning').textContent = '$' + daily.toFixed(3);
-      document.getElementById('monthlyEarning').textContent = '$' + monthly.toFixed(0);
-      document.getElementById('threeMonthEarning').textContent = '$' + threeMonth.toFixed(0);
+      document.getElementById('monthlyEarning').textContent = '$' + (daily * 30).toFixed(0);
+      document.getElementById('threeMonthEarning').textContent = '$' + (daily * 90).toFixed(0);
       const roiDate = new Date();
       roiDate.setDate(roiDate.getDate() + 90);
       document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'short' });
@@ -2564,8 +2047,7 @@
     function updateTimerDisplay() {
       const minutes = Math.floor(paymentTimeLeft / 60);
       const seconds = paymentTimeLeft % 60;
-      document.getElementById('paymentTimer').textContent = 
-        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      document.getElementById('paymentTimer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     function copyBTCAddress() {
@@ -2609,57 +2091,9 @@
       document.getElementById('balanceDisplay').textContent = '$' + state.totalEarned.toFixed(2);
       document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
 
-      updateChartData();
       validateWithdraw();
       
-      if (Math.floor(now / 5000) !== Math.floor((now - 100) / 5000)) {
-        saveState();
-      }
-    }
-
-    function initChart() {
-      const ctx = document.getElementById('earningsChart').getContext('2d');
-      earningsChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: currentLang === 'tr' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-          datasets: [{
-            label: currentLang === 'tr' ? 'Kazanç ($)' : 'Earnings ($)',
-            data: [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3],
-            borderColor: tg.themeParams.button_color || '#4a9eff',
-            backgroundColor: 'rgba(74, 158, 255, 0.1)',
-            fill: true,
-            tension: 0.4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false } },
-            y: { grid: { color: 'rgba(100,140,180,0.1)' } }
-          }
-        }
-      });
-    }
-
-    function switchChart(type, btn) {
-      document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      const labels = type === 'daily' ? (currentLang === 'tr' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7']) : type === 'weekly' ? (currentLang === 'tr' ? ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'] : ['Week 1', 'Week 2', 'Week 3', 'Week 4']) : (currentLang === 'tr' ? ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']);
-      const data = type === 'daily' ? [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3] : type === 'weekly' ? [1, 3, 6, 10] : [5, 12, 20, 30, 42, 55];
-      earningsChart.data.labels = labels;
-      earningsChart.data.datasets[0].data = data;
-      earningsChart.update();
-      haptic('impact');
-    }
-
-    function updateChartData() {
-      if (!earningsChart) return;
-      const data = earningsChart.data.datasets[0].data;
-      data[data.length - 1] = state.totalEarned;
-      earningsChart.update('none');
+      if (Math.floor(now / 5000) !== Math.floor((now - 100) / 5000)) saveState();
     }
 
     function renderLeaderboard() {
@@ -2672,12 +2106,13 @@
         { name: 'User789', earned: 432.10 }
       ];
       const list = document.getElementById('leaderboardList');
+      const productText = currentLang === 'tr' ? 'ürün' : 'products';
       list.innerHTML = fakeUsers.map((user, i) => `
         <div class="leaderboard-item ${i < 3 ? 'top-' + (i+1) : ''}">
           <div class="rank ${i < 3 ? 'rank-' + (i+1) : ''}">${i + 1}</div>
           <div class="leaderboard-info">
             <div class="leaderboard-name">${user.name}</div>
-            <div class="leaderboard-earned">${Math.floor(Math.random() * 30) + 1} ${currentLang === 'tr' ? 'ürün' : 'products'}</div>
+            <div class="leaderboard-earned">${Math.floor(Math.random() * 30) + 1} ${productText}</div>
           </div>
           <div class="leaderboard-amount">$${user.earned.toFixed(0)}</div>
         </div>
@@ -2699,16 +2134,17 @@
         btn.textContent = `Min $${MIN_WITHDRAW}`;
       } else if (amount > state.totalEarned) {
         btn.disabled = true;
-        btn.textContent = currentLang === 'tr' ? 'Yetersiz' : 'Insufficient';
+        btn.textContent = currentLang === 'tr' ? ' Yetersiz Bakiye' : '❌ Insufficient';
       } else {
         btn.disabled = false;
-        btn.textContent = `💸 $${amount.toFixed(2)} ` + (currentLang === 'tr' ? 'Çek' : 'Withdraw');
+        btn.textContent = '💸 $' + amount.toFixed(2) + ' ' + (currentLang === 'tr' ? 'Çek' : 'Withdraw');
       }
     }
 
     function processWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const walletAddress = document.getElementById('walletAddress').value.trim();
+      
       if (amount < MIN_WITHDRAW || amount > state.totalEarned) {
         showNotification('notif_invalid', true);
         haptic('error');
@@ -2719,19 +2155,36 @@
         haptic('error');
         return;
       }
-      state.totalEarned -= amount;
+      
+      const totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
+      
+      if (totalEarned > 0) {
+        state.purchasedProducts.forEach(product => {
+          const ratio = (product.earned || 0) / totalEarned;
+          const deduct = amount * ratio;
+          product.earned = Math.max(0, (product.earned || 0) - deduct);
+          
+          const conveyorElement = document.getElementById(`earned-${product.id}`);
+          if (conveyorElement) conveyorElement.textContent = '$' + product.earned.toFixed(4);
+        });
+      }
+      
+      state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
+      
       addXP(50);
       showNotification('notif_success');
       haptic('success');
+      
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('walletAddress').value = '';
+      
+      updateStats();
+      validateWithdraw();
       saveState();
     }
 
     function startLiveFeed() {
-      for (let i = 0; i < 2; i++) {
-        setTimeout(() => generateFeedItem(), i * 2000);
-      }
+      for (let i = 0; i < 2; i++) setTimeout(() => generateFeedItem(), i * 2000);
     }
 
     function generateFeedItem() {
