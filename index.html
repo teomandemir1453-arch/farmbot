@@ -36,19 +36,19 @@ body {
 .currency-bar {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     flex: 1;
-    margin: 0 16px;
+    margin: 0 8px;
     background: rgba(0,0,0,0.3);
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 25px;
     border: 2px solid #5a3a20;
 }
-.currency-item { display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px; }
-.bucks-icon { width: 28px; height: 20px; background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid #1B5E20; }
-.coin-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid #FF8F00; }
-.plus-btn { width: 32px; height: 32px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; border: 2px solid #FF8F00; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: white; cursor: pointer; }
-.settings-btn { width: 40px; height: 40px; background: linear-gradient(135deg, #666 0%, #333 100%); border-radius: 50%; border: 2px solid #222; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
+.currency-item { display: flex; align-items: center; gap: 4px; font-weight: bold; font-size: 13px; }
+.bucks-icon { width: 24px; height: 18px; background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 1px solid #1B5E20; }
+.coin-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 2px solid #FF8F00; }
+.plus-btn { width: 28px; height: 28px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; border: 2px solid #FF8F00; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; color: white; cursor: pointer; }
+.settings-btn { width: 36px; height: 36px; background: linear-gradient(135deg, #666 0%, #333 100%); border-radius: 50%; border: 2px solid #222; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
 .main-content { padding: 16px; max-width: 500px; margin: 0 auto; }
 .wood-panel {
     background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 50%, #3d2415 100%);
@@ -66,77 +66,81 @@ body {
     align-items: center;
     border-bottom: 2px solid #2a1810;
 }
-.panel-title { font-size: 22px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-.panel-close { width: 36px; height: 36px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border-radius: 50%; border: 2px solid #922B21; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
-.help-btn { width: 36px; height: 36px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; border: 2px solid #FF8F00; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
+.panel-title { font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.panel-close { width: 32px; height: 32px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border-radius: 50%; border: 2px solid #922B21; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+.help-btn { width: 32px; height: 32px; background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); border-radius: 50%; border: 2px solid #FF8F00; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
 .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-.tab { flex: 1; padding: 14px; background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; text-align: center; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+.tab { flex: 1; padding: 12px; background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; text-align: center; font-weight: bold; font-size: 14px; cursor: pointer; transition: all 0.3s; }
 .tab.active { background: linear-gradient(180deg, #8B5A2B 0%, #6b4226 100%); border-color: #FFD700; transform: scale(1.05); }
-.product-row { display: flex; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(0,0,0,0.3); gap: 12px; transition: background 0.2s; }
-.product-row:hover { background: rgba(255,255,255,0.05); }
+.product-row { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.3); gap: 12px; }
 .product-row:last-child { border-bottom: none; }
-.product-icon { font-size: 36px; width: 50px; text-align: center; }
+.product-icon { font-size: 32px; width: 45px; text-align: center; }
 .product-info { flex: 1; }
-.product-volume { font-size: 20px; font-weight: bold; }
-.product-volume span { font-size: 14px; opacity: 0.8; }
-.product-pcs { font-size: 14px; opacity: 0.8; }
+.product-volume { font-size: 18px; font-weight: bold; }
+.product-volume span { font-size: 12px; opacity: 0.8; }
+.product-pcs { font-size: 12px; opacity: 0.8; }
 .fullness-section { padding: 16px; text-align: center; }
-.fullness-bar { background: rgba(0,0,0,0.4); border-radius: 20px; height: 32px; overflow: hidden; border: 2px solid #2a1810; position: relative; margin-bottom: 8px; }
-.fullness-fill { background: linear-gradient(180deg, #FFD700 0%, #FFA000 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; color: #2a1810; transition: width 0.5s ease; }
-.fullness-text { font-size: 16px; font-weight: bold; }
-.btn-primary { width: 100%; padding: 16px; background: linear-gradient(180deg, #5DADE2 0%, #2E86C1 100%); border: 2px solid #1B4F72; border-radius: 12px; color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); margin-top: 12px; transition: all 0.2s; }
-.btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.fullness-bar { background: rgba(0,0,0,0.4); border-radius: 20px; height: 28px; overflow: hidden; border: 2px solid #2a1810; margin-bottom: 8px; }
+.fullness-fill { background: linear-gradient(180deg, #FFD700 0%, #FFA000 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; color: #2a1810; transition: width 0.5s ease; }
+.fullness-text { font-size: 14px; font-weight: bold; }
+.btn-primary { width: 100%; padding: 14px; background: linear-gradient(180deg, #5DADE2 0%, #2E86C1 100%); border: 2px solid #1B4F72; border-radius: 12px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); margin-top: 10px; transition: all 0.2s; }
+.btn-primary:active { transform: translateY(2px); }
 .btn-green { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); border-color: #1E8449; }
 .btn-yellow { background: linear-gradient(180deg, #F4D03F 0%, #F39C12 100%); border-color: #B7950B; color: #2a1810; }
-.upgrade-section { background: linear-gradient(180deg, #27AE60 0%, #1E8449 100%); border: 3px solid #145A32; border-radius: 16px; padding: 20px; text-align: center; margin-top: 16px; }
-.upgrade-bar { background: rgba(0,0,0,0.4); border-radius: 20px; height: 24px; overflow: hidden; border: 2px solid #145A32; margin: 12px 0; }
+.btn-red { background: linear-gradient(180deg, #e74c3c 0%, #c0392b 100%); border-color: #922B21; }
+.upgrade-section { background: linear-gradient(180deg, #27AE60 0%, #1E8449 100%); border: 3px solid #145A32; border-radius: 16px; padding: 16px; text-align: center; margin-top: 16px; }
+.upgrade-bar { background: rgba(0,0,0,0.4); border-radius: 20px; height: 20px; overflow: hidden; border: 2px solid #145A32; margin: 10px 0; }
 .upgrade-fill { background: linear-gradient(180deg, #AED6F1 0%, #5DADE2 100%); height: 100%; width: 28%; transition: width 0.5s; }
-.shop-item, .farm-building { background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; transition: transform 0.2s; }
-.shop-item:active, .farm-building:active { transform: scale(0.98); }
-.shop-item-icon, .farm-building-icon { font-size: 40px; width: 60px; text-align: center; }
+.shop-item, .farm-building { background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.shop-item-icon, .farm-building-icon { font-size: 36px; width: 50px; text-align: center; }
 .shop-item-info { flex: 1; }
-.shop-item-name { font-size: 16px; font-weight: bold; }
-.shop-item-desc { font-size: 12px; opacity: 0.8; margin: 4px 0; }
-.shop-item-price { font-size: 14px; font-weight: bold; color: #52BE80; }
-.buy-btn { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); border: 2px solid #1E8449; border-radius: 8px; padding: 8px 16px; color: white; font-weight: bold; cursor: pointer; font-size: 13px; transition: all 0.2s; }
-.buy-btn:active { transform: scale(0.95); }
-.production-bar { background: rgba(0,0,0,0.4); border-radius: 10px; height: 20px; overflow: hidden; border: 2px solid #2a1810; margin-top: 8px; }
-.production-fill { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); height: 100%; width: 0%; transition: width 1s linear; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
-.payout-option { background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; }
-.payout-option:active { transform: translateY(2px); }
-.payout-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; border: 2px solid rgba(0,0,0,0.3); }
+.shop-item-name { font-size: 14px; font-weight: bold; }
+.shop-item-desc { font-size: 11px; opacity: 0.8; margin: 2px 0; }
+.shop-item-price { font-size: 12px; font-weight: bold; color: #FFD700; }
+.buy-btn { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); border: 2px solid #1E8449; border-radius: 8px; padding: 6px 12px; color: white; font-weight: bold; cursor: pointer; font-size: 11px; }
+.buy-btn:disabled { background: #666; border-color: #444; opacity: 0.5; cursor: not-allowed; }
+.production-bar { background: rgba(0,0,0,0.4); border-radius: 10px; height: 18px; overflow: hidden; border: 2px solid #2a1810; margin-top: 6px; }
+.production-fill { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); height: 100%; width: 0%; transition: width 1s linear; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
+.payout-option { background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%); border: 2px solid #2a1810; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.payout-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border: 2px solid rgba(0,0,0,0.3); }
 .payout-info { flex: 1; }
-.payout-name { font-size: 16px; font-weight: bold; }
-.payout-min { font-size: 13px; opacity: 0.8; }
+.payout-name { font-size: 14px; font-weight: bold; }
+.payout-min { font-size: 11px; opacity: 0.8; }
 .payout-min span { color: #52BE80; font-weight: bold; }
-.input-group { margin-bottom: 16px; }
-.input-label { font-size: 16px; font-weight: bold; margin-bottom: 8px; text-align: center; }
-.input-field { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 2px solid #2a1810; border-radius: 10px; color: white; font-size: 16px; text-align: center; font-weight: bold; }
+.input-group { margin-bottom: 14px; }
+.input-label { font-size: 14px; font-weight: bold; margin-bottom: 6px; text-align: center; }
+.input-field { width: 100%; padding: 12px; background: rgba(0,0,0,0.4); border: 2px solid #2a1810; border-radius: 10px; color: white; font-size: 14px; text-align: center; font-weight: bold; }
 .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: linear-gradient(180deg, #3d2415 0%, #2a1810 100%);
-    border-top: 3px solid #5a3a20; padding: 12px;
+    border-top: 3px solid #5a3a20; padding: 10px;
     display: flex; justify-content: space-around; z-index: 100;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
 }
-.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: 0.6; transition: all 0.2s; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; opacity: 0.6; transition: all 0.2s; }
 .nav-item.active { opacity: 1; transform: scale(1.1); }
-.nav-icon { font-size: 24px; }
-.nav-label { font-size: 10px; font-weight: bold; }
+.nav-icon { font-size: 20px; }
+.nav-label { font-size: 9px; font-weight: bold; }
 .page { display: none; animation: fadeIn 0.3s; }
 .page.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .toast {
     position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,0.9); color: white; padding: 12px 24px;
-    border-radius: 25px; font-size: 14px; z-index: 1000;
+    background: rgba(0,0,0,0.9); color: white; padding: 10px 20px;
+    border-radius: 25px; font-size: 13px; z-index: 1000;
     opacity: 0; transition: opacity 0.3s; pointer-events: none; text-align: center; max-width: 80%;
 }
 .toast.show { opacity: 1; }
-.game-section { text-align: center; padding: 20px; }
-.game-icon { font-size: 64px; margin: 20px 0; }
-.stat-box { background: rgba(0,0,0,0.3); padding: 16px; border-radius: 12px; margin: 12px 0; text-align: center; }
-.stat-value { font-size: 24px; font-weight: bold; color: #FFD700; }
+.game-section { text-align: center; padding: 16px; }
+.game-icon { font-size: 50px; margin: 16px 0; }
+.stat-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; margin: 10px 0; text-align: center; }
+.stat-value { font-size: 20px; font-weight: bold; color: #FFD700; }
+#tetris-canvas { border: 2px solid #5a3a20; border-radius: 8px; background: #1a1a1a; display: block; margin: 10px auto; }
+.buy-bucks-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+.bucks-option { background: linear-gradient(180deg, #52BE80 0%, #27AE60 100%); border: 2px solid #1E8449; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; }
+.bucks-option:active { transform: scale(0.95); }
+.bucks-option .amount { font-size: 18px; font-weight: bold; }
+.bucks-option .price { font-size: 12px; opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -146,15 +150,15 @@ body {
         <div class="currency-bar">
             <div class="currency-item">
                 <div class="bucks-icon"></div>
-                <span id="bucks-display">3,875</span>
+                <span id="bucks-display">0.39</span>
             </div>
             <div class="currency-item">
                 <div class="coin-icon">🪙</div>
-                <span id="coin-display">215</span>
+                <span id="coin-display">3,875</span>
             </div>
-            <button class="plus-btn" onclick="addFunds()">+</button>
+            <button class="plus-btn" onclick="showPage('buy-bucks')">+</button>
         </div>
-        <button class="settings-btn" onclick="openSettings()">️</button>
+        <button class="settings-btn" onclick="openSettings()">⚙️</button>
     </div>
 
     <!-- Main Content -->
@@ -174,7 +178,7 @@ body {
                     <button class="panel-close" onclick="showPage('warehouse')">✕</button>
                 </div>
                 <div class="product-row">
-                    <div class="product-icon">🌾</div>
+                    <div class="product-icon"></div>
                     <div class="product-info"><div class="product-volume"><span id="wheat-volume">0</span> <span>m³</span></div></div>
                     <div class="product-pcs"><span id="wheat-pcs">0</span> pcs</div>
                 </div>
@@ -216,7 +220,7 @@ body {
                 <div class="upgrade-bar"><div class="upgrade-fill" id="upgrade-fill"></div></div>
                 <div class="fullness-text"><span id="upgrade-current">0</span> / <span id="upgrade-max">750,000</span></div>
                 <div class="fullness-text" style="color: #FFD700; margin-top: 8px;">After upgrade: 1,500,000 m³</div>
-                <button class="btn-primary btn-green" onclick="upgradeWarehouse()">Upgrade - 50,000 💵</button>
+                <button class="btn-primary btn-green" onclick="upgradeWarehouse()">Upgrade - 500,000 🪙</button>
             </div>
         </div>
 
@@ -224,64 +228,64 @@ body {
         <div id="page-shop" class="page">
             <div class="wood-panel">
                 <div class="panel-header">
-                    <button class="help-btn" onclick="showHelp()">❓</button>
+                    <button class="help-btn" onclick="showHelp()"></button>
                     <div class="panel-title">Shop</div>
                     <button class="panel-close" onclick="showPage('warehouse')">✕</button>
                 </div>
                 <div style="padding: 16px;">
                     <div class="shop-item">
-                        <div class="shop-item-icon">🐔</div>
+                        <div class="shop-item-icon">🌾</div>
                         <div class="shop-item-info">
-                            <div class="shop-item-name">Chicken</div>
-                            <div class="shop-item-desc">Produces eggs • 5s</div>
-                            <div class="shop-item-price">8,000 💵</div>
+                            <div class="shop-item-name">Wheat Field</div>
+                            <div class="shop-item-desc">1 wheat/min</div>
+                            <div class="shop-item-price">1,000 🪙</div>
                         </div>
-                        <button class="buy-btn" onclick="buyAnimal('chicken', 8000)">Buy</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-item-icon">🐑</div>
-                        <div class="shop-item-info">
-                            <div class="shop-item-name">Sheep</div>
-                            <div class="shop-item-desc">Produces wool • 8s</div>
-                            <div class="shop-item-price">25,000 💵</div>
-                        </div>
-                        <button class="buy-btn" onclick="buyAnimal('sheep', 25000)">Buy</button>
+                        <button class="buy-btn" onclick="buyBuilding('wheat', 1000)">Buy</button>
                     </div>
                     <div class="shop-item">
                         <div class="shop-item-icon"></div>
                         <div class="shop-item-info">
-                            <div class="shop-item-name">Goat</div>
-                            <div class="shop-item-desc">Produces milk • 6s</div>
-                            <div class="shop-item-price">30,000 💵</div>
+                            <div class="shop-item-name">Chicken</div>
+                            <div class="shop-item-desc">2 eggs/min</div>
+                            <div class="shop-item-price">5,000 🪙</div>
                         </div>
-                        <button class="buy-btn" onclick="buyAnimal('goat', 30000)">Buy</button>
+                        <button class="buy-btn" onclick="buyAnimal('chicken', 5000)">Buy</button>
                     </div>
                     <div class="shop-item">
                         <div class="shop-item-icon">🐄</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Cow</div>
-                            <div class="shop-item-desc">Produces milk • 10s</div>
-                            <div class="shop-item-price">50,000 💵</div>
+                            <div class="shop-item-desc">4 milk/min</div>
+                            <div class="shop-item-price">25,000 🪙</div>
                         </div>
-                        <button class="buy-btn" onclick="buyAnimal('cow', 50000)">Buy</button>
+                        <button class="buy-btn" onclick="buyAnimal('cow', 25000)">Buy</button>
                     </div>
                     <div class="shop-item">
-                        <div class="shop-item-icon">🌾</div>
+                        <div class="shop-item-icon">🐐</div>
                         <div class="shop-item-info">
-                            <div class="shop-item-name">Wheat Field</div>
-                            <div class="shop-item-desc">Produces wheat • 15s</div>
-                            <div class="shop-item-price">15,000 💵</div>
+                            <div class="shop-item-name">Goat</div>
+                            <div class="shop-item-desc">8 goat milk/min</div>
+                            <div class="shop-item-price">100,000 🪙</div>
                         </div>
-                        <button class="buy-btn" onclick="buyBuilding('wheat', 15000)">Buy</button>
+                        <button class="buy-btn" onclick="buyAnimal('goat', 100000)">Buy</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon">🐑</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Sheep</div>
+                            <div class="shop-item-desc">16 sheep milk/min</div>
+                            <div class="shop-item-price">500,000 🪙</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyAnimal('sheep', 500000)">Buy</button>
                     </div>
                     <div class="shop-item">
                         <div class="shop-item-icon">🧀</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Cheese Factory</div>
                             <div class="shop-item-desc">Converts milk to cheese</div>
-                            <div class="shop-item-price">100,000 💵</div>
+                            <div class="shop-item-price">1,000,000 🪙</div>
                         </div>
-                        <button class="buy-btn" onclick="buyBuilding('cheese', 100000)">Buy</button>
+                        <button class="buy-btn" onclick="buyBuilding('cheese', 1000000)">Buy</button>
                     </div>
                 </div>
             </div>
@@ -327,7 +331,7 @@ body {
             <div class="wood-panel">
                 <div class="panel-header">
                     <div class="panel-title">Tasks</div>
-                    <button class="panel-close" onclick="showPage('warehouse')"></button>
+                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
                 </div>
                 <div style="padding: 16px;">
                     <div class="shop-item">
@@ -335,25 +339,34 @@ body {
                         <div class="shop-item-info">
                             <div class="shop-item-name">Daily Check-in</div>
                             <div class="shop-item-desc">Login every day</div>
-                            <div class="shop-item-price">+100 💵</div>
+                            <div class="shop-item-price">+500 🪙</div>
                         </div>
-                        <button class="buy-btn" id="daily-btn" onclick="completeTask('daily', 100)">Claim</button>
+                        <button class="buy-btn" id="daily-btn" onclick="completeTask('daily', 500)">Claim</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Follow Telegram Channel</div>
+                            <div class="shop-item-desc" id="telegram-task-desc">Follow our channel</div>
+                            <div class="shop-item-price">+1,000 🪙</div>
+                        </div>
+                        <button class="buy-btn" id="telegram-btn" onclick="followTelegram()">Follow</button>
                     </div>
                     <div class="shop-item">
                         <div class="shop-item-icon">👥</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Invite 3 Friends</div>
                             <div class="shop-item-desc" id="invite-progress">0/3 completed</div>
-                            <div class="shop-item-price">+500 💵</div>
+                            <div class="shop-item-price">+5,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="inviteFriend()">Invite</button>
                     </div>
                     <div class="shop-item">
-                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-icon">🏆</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Reach Level 10</div>
                             <div class="shop-item-desc">Current: Level <span id="user-level">1</span></div>
-                            <div class="shop-item-price">+1,000 💵</div>
+                            <div class="shop-item-price">+10,000 🪙</div>
                         </div>
                         <button class="buy-btn" id="level-btn" onclick="checkLevelTask()">Locked</button>
                     </div>
@@ -370,65 +383,16 @@ body {
                 </div>
                 <div style="padding: 16px; text-align: center;">
                     <div class="game-icon">👥</div>
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 12px;">Invite Friends</div>
-                    <div style="opacity: 0.8; margin-bottom: 20px;">Earn 10% of your friends' earnings!</div>
-                    <button class="btn-primary btn-green" onclick="inviteFriend()">
-                        Invite Friend
-                    </button>
+                    <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">Invite Friends</div>
+                    <div style="opacity: 0.8; margin-bottom: 16px; font-size: 13px;">Earn 10% of your friends' earnings!</div>
+                    <button class="btn-primary btn-green" onclick="inviteFriend()">Invite Friend</button>
                     <div class="stat-box">
-                        <div style="font-size: 14px; opacity: 0.8;">Your referrals</div>
+                        <div style="font-size: 12px; opacity: 0.8;">Your referrals</div>
                         <div class="stat-value" id="referral-count">0</div>
                     </div>
                     <div class="stat-box">
-                        <div style="font-size: 14px; opacity: 0.8;">Total earned from referrals</div>
-                        <div class="stat-value" id="referral-earnings">0 💵</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payout Page -->
-        <div id="page-payout" class="page">
-            <div class="wood-panel">
-                <div class="panel-header">
-                    <div class="panel-title">Payout</div>
-                    <button class="panel-close" onclick="showPage('warehouse')"></button>
-                </div>
-                <div style="padding: 16px;">
-                    <div class="payout-option" onclick="showPayout('TON')">
-                        <div class="payout-icon" style="background: linear-gradient(135deg, #0088cc, #005f8c);">◇</div>
-                        <div class="payout-info">
-                            <div class="payout-name">Toncoin (TON)</div>
-                            <div class="payout-min">Min. amount: <span>3 bucks</span></div>
-                        </div>
-                    </div>
-                    <div class="payout-option" onclick="showPayout('BNB')">
-                        <div class="payout-icon" style="background: linear-gradient(135deg, #F3BA2F, #B8860B);">◆</div>
-                        <div class="payout-info">
-                            <div class="payout-name">BNB - BEP20</div>
-                            <div class="payout-min">Min. amount: <span>18 bucks</span></div>
-                        </div>
-                    </div>
-                    <div class="payout-option" onclick="showPayout('USDT')">
-                        <div class="payout-icon" style="background: linear-gradient(135deg, #26A17B, #1a7a5c);">₮</div>
-                        <div class="payout-info">
-                            <div class="payout-name">Tether USDt - BEP20</div>
-                            <div class="payout-min">Min. amount: <span>56 bucks</span></div>
-                        </div>
-                    </div>
-                    <div class="payout-option" onclick="showPayout('TRON')">
-                        <div class="payout-icon" style="background: linear-gradient(135deg, #FF0000, #CC0000);">▲</div>
-                        <div class="payout-info">
-                            <div class="payout-name">TRON (TRX)</div>
-                            <div class="payout-min">Min. amount: <span>2 bucks</span></div>
-                        </div>
-                    </div>
-                    <div class="payout-option" onclick="reinvest()" style="background: linear-gradient(180deg, #27AE60 0%, #1E8449 100%); border-color: #145A32;">
-                        <div class="payout-icon"></div>
-                        <div class="payout-info">
-                            <div class="payout-name">REINVEST +10%</div>
-                            <div class="payout-min">Get extra profit instantly</div>
-                        </div>
+                        <div style="font-size: 12px; opacity: 0.8;">Total earned from referrals</div>
+                        <div class="stat-value" id="referral-earnings">0 🪙</div>
                     </div>
                 </div>
             </div>
@@ -442,28 +406,132 @@ body {
                     <button class="panel-close" onclick="showPage('warehouse')">✕</button>
                 </div>
                 <div class="game-section">
-                    <div class="game-icon">🎮</div>
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 12px;">Mini Games</div>
-                    <div style="opacity: 0.8; margin-bottom: 20px;">Play games to earn extra coins!</div>
-                    
                     <div class="shop-item" style="text-align: left;">
                         <div class="shop-item-icon">🎡</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Lucky Spin</div>
                             <div class="shop-item-desc">Spin the wheel</div>
-                            <div class="shop-item-price">Cost: 50 💵</div>
+                            <div class="shop-item-price">Cost: 500 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="playGame('spin')">Play</button>
                     </div>
-                    
                     <div class="shop-item" style="text-align: left;">
-                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-icon">🎲</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Dice Roll</div>
                             <div class="shop-item-desc">Roll the dice</div>
-                            <div class="shop-item-price">Cost: 100 💵</div>
+                            <div class="shop-item-price">Cost: 1,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="playGame('dice')">Play</button>
+                    </div>
+                    <div class="shop-item" style="text-align: left;">
+                        <div class="shop-item-icon">🎮</div>
+                        <div class="shop-item-info">
+                            <div class="shop-item-name">Tetris</div>
+                            <div class="shop-item-desc">Play & earn coins!</div>
+                            <div class="shop-item-price">Free</div>
+                        </div>
+                        <button class="buy-btn" onclick="playTetris()">Play</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tetris Page -->
+        <div id="page-tetris" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Tetris</div>
+                    <button class="panel-close" onclick="stopTetris(); showPage('games')">✕</button>
+                </div>
+                <div style="padding: 16px; text-align: center;">
+                    <div style="font-size: 14px; margin-bottom: 10px;">Score: <span id="tetris-score" style="color: #FFD700; font-weight: bold;">0</span></div>
+                    <canvas id="tetris-canvas" width="240" height="400"></canvas>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;">
+                        <button class="btn-primary" onclick="tetrisMove('left')" style="margin: 0;"></button>
+                        <button class="btn-primary" onclick="tetrisRotate()" style="margin: 0;">↻</button>
+                        <button class="btn-primary" onclick="tetrisMove('right')" style="margin: 0;">▶</button>
+                    </div>
+                    <button class="btn-primary btn-green" onclick="tetrisMove('down')" style="margin-top: 8px;">▼ Drop</button>
+                    <button class="btn-primary btn-red" onclick="stopTetris(); showPage('games')" style="margin-top: 8px;">Exit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buy Bucks Page -->
+        <div id="page-buy-bucks" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Buy Bucks</div>
+                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
+                </div>
+                <div style="padding: 16px; text-align: center;">
+                    <div style="font-size: 14px; opacity: 0.8; margin-bottom: 16px;">1 Buck = 10,000 Coins</div>
+                    <div class="buy-bucks-options">
+                        <div class="bucks-option" onclick="buyBucks(3)">
+                            <div class="amount">3 Bucks</div>
+                            <div class="price">$3.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 30,000 🪙</div>
+                        </div>
+                        <div class="bucks-option" onclick="buyBucks(10)">
+                            <div class="amount">10 Bucks</div>
+                            <div class="price">$10.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 100,000 🪙</div>
+                        </div>
+                        <div class="bucks-option" onclick="buyBucks(50)">
+                            <div class="amount">50 Bucks</div>
+                            <div class="price">$50.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 500,000 🪙</div>
+                        </div>
+                        <div class="bucks-option" onclick="buyBucks(100)">
+                            <div class="amount">100 Bucks</div>
+                            <div class="price">$100.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 1,000,000 🪙</div>
+                        </div>
+                        <div class="bucks-option" onclick="buyBucks(500)">
+                            <div class="amount">500 Bucks</div>
+                            <div class="price">$500.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 5,000,000 🪙</div>
+                        </div>
+                        <div class="bucks-option" onclick="buyBucks(9999)">
+                            <div class="amount">9,999 Bucks</div>
+                            <div class="price">$9,999.00</div>
+                            <div style="font-size: 11px; margin-top: 4px;">= 99,990,000 🪙</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="showPage('warehouse')">Go Back</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payout Page -->
+        <div id="page-payout" class="page">
+            <div class="wood-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Payout</div>
+                    <button class="panel-close" onclick="showPage('warehouse')">✕</button>
+                </div>
+                <div style="padding: 16px;">
+                    <div class="payout-option" onclick="showPayout('TON')">
+                        <div class="payout-icon" style="background: linear-gradient(135deg, #0088cc, #005f8c);">◇</div>
+                        <div class="payout-info">
+                            <div class="payout-name">Toncoin (TON)</div>
+                            <div class="payout-min">Min. amount: <span>30,000 🪙</span></div>
+                        </div>
+                    </div>
+                    <div class="payout-option" onclick="showPayout('TRON')">
+                        <div class="payout-icon" style="background: linear-gradient(135deg, #FF0000, #CC0000);">▲</div>
+                        <div class="payout-info">
+                            <div class="payout-name">TRON (TRX)</div>
+                            <div class="payout-min">Min. amount: <span>20,000 🪙</span></div>
+                        </div>
+                    </div>
+                    <div class="payout-option" onclick="reinvest()" style="background: linear-gradient(180deg, #27AE60 0%, #1E8449 100%); border-color: #145A32;">
+                        <div class="payout-icon">💼</div>
+                        <div class="payout-info">
+                            <div class="payout-name">REINVEST +10%</div>
+                            <div class="payout-min">Get extra profit instantly</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -482,8 +550,8 @@ body {
                         <input type="text" class="input-field" id="tron-wallet" placeholder="T...">
                     </div>
                     <div class="input-group">
-                        <div class="input-label">Amount (Bucks):</div>
-                        <input type="number" class="input-field" id="payout-amount" value="100" oninput="calculateTron()">
+                        <div class="input-label">Amount (Coins):</div>
+                        <input type="number" class="input-field" id="payout-amount" value="100000" oninput="calculateTron()">
                     </div>
                     <div class="input-group">
                         <div class="input-label">You will receive (TRX):</div>
@@ -491,7 +559,7 @@ body {
                     </div>
                     <button class="btn-primary btn-yellow" onclick="withdrawTron()">WITHDRAW</button>
                     <button class="btn-primary" onclick="showPage('payout')" style="background: linear-gradient(180deg, #666 0%, #333 100%); border-color: #222;">Go Back</button>
-                    <div style="text-align: center; margin-top: 16px; opacity: 0.8; font-size: 14px;">Network fee: 2 Bucks</div>
+                    <div style="text-align: center; margin-top: 16px; opacity: 0.8; font-size: 12px;">Network fee: 20,000 </div>
                 </div>
             </div>
         </div>
@@ -501,7 +569,7 @@ body {
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showPage('warehouse')" data-page="warehouse">
-            <div class="nav-icon">🏠</div>
+            <div class="nav-icon"></div>
             <div class="nav-label">Home</div>
         </div>
         <div class="nav-item" onclick="showPage('shop')" data-page="shop">
@@ -520,13 +588,13 @@ body {
             <div class="nav-icon">👥</div>
             <div class="nav-label">Friends</div>
         </div>
+        <div class="nav-item" onclick="showPage('games')" data-page="games">
+            <div class="nav-icon">🎮</div>
+            <div class="nav-label">Games</div>
+        </div>
         <div class="nav-item" onclick="showPage('payout')" data-page="payout">
             <div class="nav-icon">💰</div>
             <div class="nav-label">Payout</div>
-        </div>
-        <div class="nav-item" onclick="showPage('games')" data-page="games">
-            <div class="nav-icon"></div>
-            <div class="nav-label">Games</div>
         </div>
     </div>
 
@@ -541,10 +609,31 @@ tg.expand();
 tg.ready();
 tg.enableClosingConfirmation();
 
+// --- ADMIN CONFIG (Admin panelden güncellenir) ---
+let adminConfig = {
+    prices: {
+        wheat: 1000,
+        chicken: 5000,
+        cow: 25000,
+        goat: 100000,
+        sheep: 500000,
+        cheese: 1000000
+    },
+    production: {
+        wheat: 1,      // per minute
+        chicken: 2,    // eggs per minute
+        cow: 4,        // milk per minute
+        goat: 8,       // goat milk per minute
+        sheep: 16      // sheep milk per minute
+    },
+    telegramChannel: 'https://t.me/YourChannel',
+    bucksToCoins: 10000
+};
+
 // --- GAME STATE ---
 let state = {
-    bucks: 3875,
-    coins: 215,
+    bucks: 0.3875,
+    coins: 3875,
     warehouse: {
         wheat: { volume: 0, pcs: 0, volumePerPcs: 2 },
         egg: { volume: 0, pcs: 0, volumePerPcs: 5 },
@@ -555,12 +644,13 @@ let state = {
     capacity: 750000,
     animals: { chicken: 0, sheep: 0, goat: 0, cow: 0 },
     buildings: { wheat: 0, cheese: 0 },
-    production: { wheat: 0, egg: 0, milk: 0 },
-    tasksCompleted: { daily: false, invite: 0 },
+    production: { wheat: 0, egg: 0, milk: 0, goatMilk: 0, sheepMilk: 0 },
+    tasksCompleted: { daily: false, telegram: false, invite: 0 },
     referrals: 0,
     referralEarnings: 0,
     level: 1,
-    lastLogin: null
+    lastLogin: null,
+    totalEarned: 0
 };
 
 // --- STATE MANAGEMENT ---
@@ -568,11 +658,15 @@ function loadState() {
     const saved = localStorage.getItem('farmState');
     if (saved) {
         state = JSON.parse(saved);
-        // Check daily reset
         const today = new Date().toDateString();
         if (state.lastLogin !== today) {
             state.tasksCompleted.daily = false;
         }
+    }
+    // Load admin config
+    const savedConfig = localStorage.getItem('adminConfig');
+    if (savedConfig) {
+        adminConfig = JSON.parse(savedConfig);
     }
     updateUI();
 }
@@ -584,41 +678,44 @@ function saveState() {
 
 // --- UI UPDATES ---
 function updateUI() {
-    document.getElementById('bucks-display').textContent = state.bucks.toLocaleString();
-    document.getElementById('coin-display').textContent = state.coins.toLocaleString();
+    document.getElementById('bucks-display').textContent = state.bucks.toFixed(2);
+    document.getElementById('coin-display').textContent = Math.floor(state.coins).toLocaleString();
 
     ['wheat', 'egg', 'milk', 'cheese', 'wool'].forEach(item => {
-        document.getElementById(`${item}-volume`).textContent = state.warehouse[item].volume.toLocaleString();
-        document.getElementById(`${item}-pcs`).textContent = state.warehouse[item].pcs.toLocaleString();
+        document.getElementById(`${item}-volume`).textContent = Math.floor(state.warehouse[item].volume).toLocaleString();
+        document.getElementById(`${item}-pcs`).textContent = Math.floor(state.warehouse[item].pcs).toLocaleString();
     });
 
     const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
     const percent = Math.min(100, ((totalVolume / state.capacity) * 100)).toFixed(1);
     
-    document.getElementById('fullness-current').textContent = totalVolume.toLocaleString();
+    document.getElementById('fullness-current').textContent = Math.floor(totalVolume).toLocaleString();
     document.getElementById('fullness-max').textContent = state.capacity.toLocaleString();
     document.getElementById('fullness-fill').style.width = percent + '%';
     document.getElementById('fullness-percent').textContent = percent + '%';
-    document.getElementById('upgrade-current').textContent = totalVolume.toLocaleString();
+    document.getElementById('upgrade-current').textContent = Math.floor(totalVolume).toLocaleString();
     document.getElementById('upgrade-max').textContent = state.capacity.toLocaleString();
     document.getElementById('upgrade-fill').style.width = percent + '%';
 
     ['wheat', 'egg', 'milk'].forEach(item => {
         const vol = state.production[item];
         const perPcs = state.warehouse[item].volumePerPcs;
-        document.getElementById(`prod-${item}`).textContent = vol.toLocaleString();
-        document.getElementById(`prod-${item}-pcs`).textContent = Math.floor(vol / perPcs);
+        document.getElementById(`prod-${item}`).textContent = Math.floor(vol).toLocaleString();
+        document.getElementById(`prod-${item}-pcs`).textContent = Math.floor(vol / perPcs).toLocaleString();
     });
 
     // Tasks
     document.getElementById('daily-btn').textContent = state.tasksCompleted.daily ? 'Claimed ✓' : 'Claim';
     document.getElementById('daily-btn').disabled = state.tasksCompleted.daily;
+    document.getElementById('telegram-btn').textContent = state.tasksCompleted.telegram ? 'Followed ✓' : 'Follow';
+    document.getElementById('telegram-btn').disabled = state.tasksCompleted.telegram;
+    document.getElementById('telegram-task-desc').textContent = state.tasksCompleted.telegram ? 'Completed!' : 'Follow our channel';
     document.getElementById('invite-progress').textContent = `${state.tasksCompleted.invite}/3 completed`;
     document.getElementById('user-level').textContent = state.level;
     
     // Friends
     document.getElementById('referral-count').textContent = state.referrals;
-    document.getElementById('referral-earnings').textContent = `${state.referralEarnings} 💵`;
+    document.getElementById('referral-earnings').textContent = `${Math.floor(state.referralEarnings).toLocaleString()} 🪙`;
 
     renderFarm();
 }
@@ -632,8 +729,8 @@ function showPage(pageId) {
         n.classList.toggle('active', n.dataset.page === pageId);
     });
 
-    if (pageId === 'warehouse' || pageId === 'shop' || pageId === 'farm' || 
-        pageId === 'tasks' || pageId === 'friends' || pageId === 'payout' || pageId === 'games') {
+    const mainPages = ['warehouse', 'shop', 'farm', 'tasks', 'friends', 'payout', 'games'];
+    if (mainPages.includes(pageId)) {
         tg.BackButton.hide();
     } else {
         tg.BackButton.show();
@@ -652,52 +749,42 @@ function switchTab(tab, element) {
 
 // --- GAME LOGIC ---
 function buyAnimal(type, price) {
-    if (state.bucks >= price) {
-        state.bucks -= price;
+    if (state.coins >= price) {
+        state.coins -= price;
         state.animals[type]++;
         saveState(); updateUI();
         showToast(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} purchased!`);
         tg.HapticFeedback.notificationOccurred('success');
-        
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#FFD700', '#52BE80', '#5DADE2']
-        });
+        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 }, colors: ['#FFD700', '#52BE80', '#5DADE2'] });
     } else {
-        showToast('❌ Not enough bucks!');
+        showToast('❌ Not enough coins!');
         tg.HapticFeedback.notificationOccurred('error');
     }
 }
 
 function buyBuilding(type, price) {
-    if (state.bucks >= price) {
-        state.bucks -= price;
+    if (state.coins >= price) {
+        state.coins -= price;
         state.buildings[type]++;
         saveState(); updateUI();
         showToast(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} building purchased!`);
         tg.HapticFeedback.notificationOccurred('success');
-        
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#FFD700', '#52BE80', '#5DADE2']
-        });
+        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 }, colors: ['#FFD700', '#52BE80', '#5DADE2'] });
     } else {
-        showToast('❌ Not enough bucks!');
+        showToast('❌ Not enough coins!');
         tg.HapticFeedback.notificationOccurred('error');
     }
 }
 
 function startProduction() {
+    // Her saniye üretim (dakika bazlı / 60)
     setInterval(() => {
-        if (state.animals.chicken > 0) state.production.egg += state.animals.chicken * 5;
-        if (state.animals.sheep > 0) state.production.milk += state.animals.sheep * 3;
-        if (state.animals.goat > 0) state.production.milk += state.animals.goat * 4;
-        if (state.animals.cow > 0) state.production.milk += state.animals.cow * 8;
-        if (state.buildings.wheat > 0) state.production.wheat += state.buildings.wheat * 10;
+        const prod = adminConfig.production;
+        if (state.animals.chicken > 0) state.production.egg += (state.animals.chicken * prod.chicken) / 60;
+        if (state.animals.sheep > 0) state.production.milk += (state.animals.sheep * prod.sheep) / 60;
+        if (state.animals.goat > 0) state.production.milk += (state.animals.goat * prod.goat) / 60;
+        if (state.animals.cow > 0) state.production.milk += (state.animals.cow * prod.cow) / 60;
+        if (state.buildings.wheat > 0) state.production.wheat += (state.buildings.wheat * prod.wheat) / 60;
         updateUI();
     }, 1000);
 }
@@ -706,7 +793,11 @@ function collectAll() {
     let collected = 0;
     Object.keys(state.production).forEach(key => {
         if (state.production[key] > 0) {
-            const product = key === 'wheat' ? 'wheat' : key === 'egg' ? 'egg' : 'milk';
+            let product = key;
+            if (key === 'egg') product = 'egg';
+            else if (key === 'wheat') product = 'wheat';
+            else if (key === 'milk') product = 'milk';
+            
             state.warehouse[product].volume += state.production[key];
             state.warehouse[product].pcs += Math.floor(state.production[key] / state.warehouse[product].volumePerPcs);
             collected += state.production[key];
@@ -716,10 +807,10 @@ function collectAll() {
     
     if (collected > 0) {
         saveState(); updateUI();
-        showToast(` Collected ${collected} m³ of products!`);
+        showToast(`🧺 Collected ${Math.floor(collected)} m³ of products!`);
         tg.HapticFeedback.notificationOccurred('success');
     } else {
-        showToast(' Nothing to collect yet!');
+        showToast('⏳ Nothing to collect yet!');
         tg.HapticFeedback.notificationOccurred('warning');
     }
 }
@@ -731,7 +822,7 @@ function renderFarm() {
         chicken: { name: 'Chicken Coop', emoji: '🐔', count: state.animals.chicken },
         sheep: { name: 'Sheep Barn', emoji: '🐑', count: state.animals.sheep },
         goat: { name: 'Goat Shed', emoji: '🐐', count: state.animals.goat },
-        cow: { name: 'Cow Barn', emoji: '🐄', count: state.animals.cow },
+        cow: { name: 'Cow Barn', emoji: '', count: state.animals.cow },
         wheat: { name: 'Wheat Field', emoji: '🌾', count: state.buildings.wheat },
         cheese: { name: 'Cheese Factory', emoji: '🧀', count: state.buildings.cheese }
     };
@@ -743,7 +834,7 @@ function renderFarm() {
                     <div class="farm-building-icon">${animalData[key].emoji}</div>
                     <div style="flex:1">
                         <div style="font-weight:bold">${animalData[key].name}</div>
-                        <div style="font-size:12px; opacity:0.8">${animalData[key].count} units</div>
+                        <div style="font-size:11px; opacity:0.8">${animalData[key].count} units</div>
                         <div class="production-bar">
                             <div class="production-fill" style="width: ${Math.random() * 80 + 10}%">Producing...</div>
                         </div>
@@ -754,7 +845,7 @@ function renderFarm() {
     });
 
     if (html === '') {
-        html = '<div style="text-align: center; padding: 40px 20px; opacity: 0.6;"><div style="font-size: 48px; margin-bottom: 12px;">🏚️</div><div>No buildings yet.<br>Visit the Shop!</div></div>';
+        html = '<div style="text-align: center; padding: 30px 20px; opacity: 0.6;"><div style="font-size: 40px; margin-bottom: 10px;">🏚️</div><div>No buildings yet.<br>Visit the Shop!</div></div>';
     }
     container.innerHTML = html;
 }
@@ -763,30 +854,31 @@ function sendProducts() {
     const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
     if (totalVolume > 0) {
         const earnings = Math.floor(totalVolume / 100);
-        state.bucks += earnings;
+        state.coins += earnings;
+        state.totalEarned += earnings;
         Object.keys(state.warehouse).forEach(key => {
             state.warehouse[key].volume = 0;
             state.warehouse[key].pcs = 0;
         });
         saveState(); updateUI();
-        showToast(` Products sent! +${earnings} 💵`);
+        showToast(`🚚 Products sent! +${earnings.toLocaleString()} 🪙`);
         tg.HapticFeedback.notificationOccurred('success');
     } else {
-        showToast(' Warehouse is empty!');
+        showToast('📦 Warehouse is empty!');
         tg.HapticFeedback.notificationOccurred('warning');
     }
 }
 
 function upgradeWarehouse() {
-    if (state.bucks >= 50000) {
-        state.bucks -= 50000;
+    if (state.coins >= 500000) {
+        state.coins -= 500000;
         state.capacity = 1500000;
         saveState(); updateUI();
         showToast('🏗️ Warehouse upgraded to 1,500,000 m³!');
         tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
     } else {
-        showToast('❌ Need 50,000 💵!');
+        showToast('❌ Need 500,000 🪙!');
         tg.HapticFeedback.notificationOccurred('error');
     }
 }
@@ -794,12 +886,29 @@ function upgradeWarehouse() {
 // --- TASKS ---
 function completeTask(task, reward) {
     if (task === 'daily' && !state.tasksCompleted.daily) {
-        state.bucks += reward;
+        state.coins += reward;
         state.tasksCompleted.daily = true;
         saveState(); updateUI();
-        showToast(`✅ Daily check-in! +${reward} 💵`);
+        showToast(`✅ Daily check-in! +${reward.toLocaleString()} 🪙`);
         tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+    }
+}
+
+function followTelegram() {
+    if (!state.tasksCompleted.telegram) {
+        if (adminConfig.telegramChannel) {
+            tg.openTelegramLink(adminConfig.telegramChannel);
+        }
+        // Kullanıcı takip ettikten sonra claim edebilir (simülasyon)
+        setTimeout(() => {
+            state.coins += 1000;
+            state.tasksCompleted.telegram = true;
+            saveState(); updateUI();
+            showToast('✅ Telegram followed! +1,000 ');
+            tg.HapticFeedback.notificationOccurred('success');
+            confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+        }, 3000);
     }
 }
 
@@ -807,11 +916,10 @@ function inviteFriend() {
     if (tg.openTelegramLink) {
         tg.openTelegramLink('https://t.me/share/url?url=https://t.me/YourBot&text=Join my farm!');
     }
-    // Simulate invite for demo
     state.tasksCompleted.invite = Math.min(3, state.tasksCompleted.invite + 1);
     if (state.tasksCompleted.invite >= 3) {
-        state.bucks += 500;
-        showToast('✅ 3 friends invited! +500 ');
+        state.coins += 5000;
+        showToast('✅ 3 friends invited! +5,000 🪙');
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     } else {
         showToast(`📤 Invite link shared! ${state.tasksCompleted.invite}/3`);
@@ -821,9 +929,9 @@ function inviteFriend() {
 
 function checkLevelTask() {
     if (state.level >= 10) {
-        state.bucks += 1000;
-        showToast('✅ Level 10 reached! +1,000 💵');
-        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+        state.coins += 10000;
+        showToast('✅ Level 10 reached! +10,000 🪙');
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         saveState(); updateUI();
     } else {
         showToast(` Current level: ${state.level}. Keep playing!`);
@@ -832,28 +940,203 @@ function checkLevelTask() {
 
 // --- GAMES ---
 function playGame(game) {
-    const cost = game === 'spin' ? 50 : 100;
-    if (state.bucks < cost) {
-        showToast('❌ Not enough bucks!');
+    const cost = game === 'spin' ? 500 : 1000;
+    if (state.coins < cost) {
+        showToast(' Not enough coins!');
         tg.HapticFeedback.notificationOccurred('error');
         return;
     }
     
-    state.bucks -= cost;
+    state.coins -= cost;
     const win = Math.random() > 0.5;
     const prize = win ? cost * (2 + Math.random() * 3) : 0;
-    state.bucks += Math.floor(prize);
+    state.coins += Math.floor(prize);
     
     saveState(); updateUI();
     
     if (win) {
-        showToast(`🎉 You won ${Math.floor(prize)} 💵!`);
+        showToast(`🎉 You won ${Math.floor(prize).toLocaleString()} 🪙!`);
         tg.HapticFeedback.notificationOccurred('success');
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
     } else {
-        showToast(' Better luck next time!');
+        showToast('😔 Better luck next time!');
         tg.HapticFeedback.notificationOccurred('error');
     }
+}
+
+// --- TETRIS GAME ---
+let tetrisInterval;
+let tetrisBoard, tetrisPiece, tetrisScore, tetrisGameOver;
+const TETROMINOS = {
+    I: { shape: [[1,1,1,1]], color: '#00f0f0' },
+    O: { shape: [[1,1],[1,1]], color: '#f0f000' },
+    T: { shape: [[0,1,0],[1,1,1]], color: '#a000f0' },
+    S: { shape: [[0,1,1],[1,1,0]], color: '#00f000' },
+    Z: { shape: [[1,1,0],[0,1,1]], color: '#f00000' },
+    J: { shape: [[1,0,0],[1,1,1]], color: '#0000f0' },
+    L: { shape: [[0,0,1],[1,1,1]], color: '#f0a000' }
+};
+
+function playTetris() {
+    showPage('tetris');
+    initTetris();
+}
+
+function initTetris() {
+    const canvas = document.getElementById('tetris-canvas');
+    const ctx = canvas.getContext('2d');
+    tetrisBoard = Array(20).fill().map(() => Array(10).fill(0));
+    tetrisScore = 0;
+    tetrisGameOver = false;
+    document.getElementById('tetris-score').textContent = '0';
+    spawnPiece();
+    
+    if (tetrisInterval) clearInterval(tetrisInterval);
+    tetrisInterval = setInterval(() => tetrisLoop(), 500);
+}
+
+function spawnPiece() {
+    const keys = Object.keys(TETROMINOS);
+    const type = keys[Math.floor(Math.random() * keys.length)];
+    tetrisPiece = {
+        shape: TETROMINOS[type].shape,
+        color: TETROMINOS[type].color,
+        x: 3,
+        y: 0
+    };
+}
+
+function tetrisLoop() {
+    if (tetrisGameOver) return;
+    if (!collide(0, 1)) {
+        tetrisPiece.y++;
+    } else {
+        mergePiece();
+        clearLines();
+        spawnPiece();
+        if (collide(0, 0)) {
+            tetrisGameOver = true;
+            clearInterval(tetrisInterval);
+            const reward = tetrisScore * 10;
+            state.coins += reward;
+            saveState(); updateUI();
+            showToast(` Game Over! +${reward.toLocaleString()} `);
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            setTimeout(() => showPage('games'), 2000);
+        }
+    }
+    drawTetris();
+}
+
+function collide(dx, dy) {
+    for (let y = 0; y < tetrisPiece.shape.length; y++) {
+        for (let x = 0; x < tetrisPiece.shape[y].length; x++) {
+            if (tetrisPiece.shape[y][x]) {
+                const newX = tetrisPiece.x + x + dx;
+                const newY = tetrisPiece.y + y + dy;
+                if (newX < 0 || newX >= 10 || newY >= 20) return true;
+                if (newY >= 0 && tetrisBoard[newY][newX]) return true;
+            }
+        }
+    }
+    return false;
+}
+
+function mergePiece() {
+    tetrisPiece.shape.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value) {
+                const boardY = tetrisPiece.y + y;
+                const boardX = tetrisPiece.x + x;
+                if (boardY >= 0) tetrisBoard[boardY][boardX] = tetrisPiece.color;
+            }
+        });
+    });
+}
+
+function clearLines() {
+    let linesCleared = 0;
+    for (let y = tetrisBoard.length - 1; y >= 0; y--) {
+        if (tetrisBoard[y].every(cell => cell !== 0)) {
+            tetrisBoard.splice(y, 1);
+            tetrisBoard.unshift(Array(10).fill(0));
+            linesCleared++;
+            y++;
+        }
+    }
+    if (linesCleared > 0) {
+        tetrisScore += linesCleared * 100;
+        document.getElementById('tetris-score').textContent = tetrisScore;
+    }
+}
+
+function drawTetris() {
+    const canvas = document.getElementById('tetris-canvas');
+    const ctx = canvas.getContext('2d');
+    const blockSize = 20;
+    
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw board
+    tetrisBoard.forEach((row, y) => {
+        row.forEach((cell, x) => {
+            if (cell) {
+                ctx.fillStyle = cell;
+                ctx.fillRect(x * blockSize, y * blockSize, blockSize - 1, blockSize - 1);
+            }
+        });
+    });
+    
+    // Draw piece
+    if (tetrisPiece) {
+        ctx.fillStyle = tetrisPiece.color;
+        tetrisPiece.shape.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value) {
+                    ctx.fillRect((tetrisPiece.x + x) * blockSize, (tetrisPiece.y + y) * blockSize, blockSize - 1, blockSize - 1);
+                }
+            });
+        });
+    }
+}
+
+function tetrisMove(dir) {
+    if (tetrisGameOver) return;
+    if (dir === 'left' && !collide(-1, 0)) tetrisPiece.x--;
+    if (dir === 'right' && !collide(1, 0)) tetrisPiece.x++;
+    if (dir === 'down') {
+        while (!collide(0, 1)) tetrisPiece.y++;
+    }
+    drawTetris();
+}
+
+function tetrisRotate() {
+    if (tetrisGameOver) return;
+    const rotated = tetrisPiece.shape[0].map((_, i) => tetrisPiece.shape.map(row => row[i]).reverse());
+    const oldShape = tetrisPiece.shape;
+    tetrisPiece.shape = rotated;
+    if (collide(0, 0)) tetrisPiece.shape = oldShape;
+    drawTetris();
+}
+
+function stopTetris() {
+    if (tetrisInterval) clearInterval(tetrisInterval);
+}
+
+// --- BUY BUCKS ---
+function buyBucks(amount) {
+    if (amount < 3 || amount > 9999) {
+        showToast('❌ Min: 3, Max: 9,999 bucks!');
+        return;
+    }
+    // Simülasyon - gerçek uygulamada ödeme entegrasyonu gerekir
+    state.bucks += amount;
+    state.coins += amount * adminConfig.bucksToCoins;
+    saveState(); updateUI();
+    showToast(`💰 ${amount} bucks added! +${(amount * adminConfig.bucksToCoins).toLocaleString()} 🪙`);
+    tg.HapticFeedback.notificationOccurred('success');
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 }
 
 // --- PAYOUT ---
@@ -867,7 +1150,7 @@ function showPayout(type) {
 
 function calculateTron() {
     const amount = parseFloat(document.getElementById('payout-amount').value) || 0;
-    const rate = 0.000291; 
+    const rate = 0.00001; 
     document.getElementById('tron-receive').textContent = (amount * rate).toFixed(6);
 }
 
@@ -876,10 +1159,10 @@ function withdrawTron() {
     const amount = parseFloat(document.getElementById('payout-amount').value);
     
     if (!wallet || !wallet.startsWith('T')) { showToast('❌ Invalid TRON address!'); return; }
-    if (amount < 2) { showToast('❌ Minimum 2 bucks!'); return; }
-    if (amount > state.bucks) { showToast('❌ Not enough bucks!'); return; }
+    if (amount < 20000) { showToast('❌ Minimum 20,000 🪙!'); return; }
+    if (amount > state.coins) { showToast('❌ Not enough coins!'); return; }
     
-    state.bucks -= (amount + 2);
+    state.coins -= (amount + 20000);
     saveState(); updateUI();
     showToast(`✅ Withdrawal request sent!`);
     tg.HapticFeedback.notificationOccurred('success');
@@ -887,29 +1170,22 @@ function withdrawTron() {
 }
 
 function reinvest() {
-    const bonus = Math.floor(state.bucks * 0.1);
-    if (bonus === 0) { showToast('❌ Need more bucks to reinvest!'); return; }
-    state.bucks += bonus;
+    const bonus = Math.floor(state.coins * 0.1);
+    if (bonus === 0) { showToast('❌ Need more coins to reinvest!'); return; }
+    state.coins += bonus;
     saveState(); updateUI();
-    showToast(`💼 Reinvested! +${bonus} 💵 bonus!`);
+    showToast(`💼 Reinvested! +${bonus.toLocaleString()} 🪙 bonus!`);
     tg.HapticFeedback.notificationOccurred('success');
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
 }
 
 // --- EXTRAS ---
-function addFunds() {
-    state.bucks += 1000;
-    saveState(); updateUI();
-    showToast('💰 +1,000 bucks added! (Demo)');
-    tg.HapticFeedback.notificationOccurred('success');
-}
-
 function openSettings() { 
     showToast('⚙️ Settings: Sound ON, Notifications ON');
 }
 
 function showHelp() { 
-    showToast(' Buy animals → Produce → Collect → Sell!');
+    showToast('💡 Buy animals → Produce → Collect → Sell!');
 }
 
 function showToast(msg) {
