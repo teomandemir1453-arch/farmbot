@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   :root {
-    /* Telegram Theme Colors - Fallback */
     --tg-theme-bg-color: #f5f7fa;
     --tg-theme-text-color: #1a2a3a;
     --tg-theme-hint-color: #5a6a7a;
@@ -19,7 +18,6 @@
     --tg-theme-button-text-color: #ffffff;
     --tg-theme-secondary-bg-color: #e8f1f8;
     
-    /* Custom Colors */
     --bg-primary: var(--tg-theme-bg-color);
     --bg-card: rgba(255, 255, 255, 0.6);
     --bg-card-solid: rgba(255, 255, 255, 0.5);
@@ -181,6 +179,37 @@
 
   .menu-item.active .menu-badge {
     background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Language Selector */
+  .language-selector {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .lang-btn {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+
+  .lang-btn:active {
+    transform: scale(0.95);
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
   }
 
   .sidebar-footer {
@@ -1145,13 +1174,14 @@
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
     border-radius: 20px 20px 0 0;
-    padding: 25px;
+    padding: 20px;
     width: 100%;
     max-width: 100%;
     animation: slideUp 0.3s ease;
     position: relative;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   @keyframes slideUp {
@@ -1163,6 +1193,7 @@
     color: var(--text-primary);
     margin-bottom: 15px;
     font-size: 20px;
+    padding-right: 40px;
   }
 
   .modal-close {
@@ -1171,7 +1202,7 @@
     right: 15px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
     color: var(--text-secondary);
     width: 40px;
@@ -1179,17 +1210,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
   }
 
   .modal-actions {
     display: flex;
     gap: 10px;
     margin-top: 15px;
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-card);
+    padding: 10px 0 0 0;
+    border-top: 1px solid var(--border-color);
   }
 
   .modal-actions button {
     flex: 1;
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
@@ -1200,10 +1237,11 @@
   .btn-cancel { background: rgba(100, 140, 180, 0.15); color: var(--text-secondary); }
   .btn-confirm { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); }
 
+  /* BTC PAYMENT BOX */
   .btc-payment-box {
     background: linear-gradient(135deg, #f7931a, #e8850f);
-    border-radius: 14px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 18px;
     color: white;
     margin: 15px 0;
   }
@@ -1219,70 +1257,33 @@
 
   .btc-amount-display {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 12px;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
     text-align: center;
   }
 
-  .btc-amount-display .label { font-size: 11px; opacity: 0.9; margin-bottom: 4px; }
-  .btc-amount-display .value { font-size: 24px; font-weight: 700; font-family: 'Courier New', monospace; }
-
-  .btc-address-box {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 12px;
-  }
-
-  .btc-address-label {
-    font-size: 10px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-
-  .btc-address {
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    color: #1a2a3a;
-    word-break: break-all;
-    padding: 8px;
-    background: #f5f5f5;
-    border-radius: 6px;
-    border: 2px dashed #f7931a;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .btc-address .copy-icon {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    font-size: 16px;
-  }
+  .btc-amount-display .label { font-size: 10px; opacity: 0.9; margin-bottom: 3px; }
+  .btc-amount-display .value { font-size: 22px; font-weight: 700; font-family: 'Courier New', monospace; }
 
   .btc-qr-code {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     background: white;
-    border-radius: 10px;
-    margin: 12px auto;
+    border-radius: 8px;
+    margin: 10px auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 6px;
   }
 
   .qr-placeholder {
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(0deg, #000 0px, #000 4px, transparent 4px, transparent 8px),
-                repeating-linear-gradient(90deg, #000 0px, #000 4px, transparent 4px, transparent 8px);
-    background-size: 8px 8px;
+    background: repeating-linear-gradient(0deg, #000 0px, #000 3px, transparent 3px, transparent 6px),
+                repeating-linear-gradient(90deg, #000 0px, #000 3px, transparent 3px, transparent 6px);
+    background-size: 6px 6px;
     border-radius: 6px;
     position: relative;
   }
@@ -1293,46 +1294,97 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 32px;
+    font-size: 28px;
     color: #f7931a;
     background: white;
-    padding: 4px 8px;
+    padding: 3px 6px;
     border-radius: 6px;
     font-weight: 700;
   }
 
+  .btc-address-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btc-address-label {
+    font-size: 9px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .btc-address {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #1a2a3a;
+    word-break: break-all;
+    padding: 6px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    border: 2px dashed #f7931a;
+    cursor: pointer;
+    position: relative;
+    line-height: 1.3;
+  }
+
+  .btc-address .copy-icon {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    font-size: 14px;
+  }
+
+  .btn-copy-address {
+    width: 100%;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
   .payment-timer {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 12px;
+    border-radius: 6px;
+    padding: 6px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    font-size: 13px;
-    margin-top: 8px;
+    gap: 5px;
+    font-size: 12px;
+    margin-top: 6px;
   }
 
   .payment-timer .timer-value {
     font-family: 'Courier New', monospace;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .payment-status {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px;
+    gap: 6px;
+    padding: 8px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    margin-top: 8px;
-    font-size: 12px;
+    border-radius: 6px;
+    margin-top: 6px;
+    font-size: 11px;
   }
 
   .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #ffd700;
     animation: blink 1s infinite;
@@ -1343,42 +1395,30 @@
     50% { opacity: 0.3; }
   }
 
-  .btn-copy-address {
-    width: 100%;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 8px;
-    font-size: 13px;
-  }
-
   .btn-confirm-payment {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: linear-gradient(135deg, #4ade80, #22c55e);
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 15px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 12px;
+    margin-top: 10px;
   }
 
   .payment-instructions {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 12px;
-    font-size: 11px;
-    line-height: 1.5;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 10px;
+    line-height: 1.4;
   }
 
-  .payment-instructions ol { margin-left: 18px; margin-top: 6px; }
+  .payment-instructions ol { margin-left: 16px; margin-top: 5px; }
+  .payment-instructions li { margin-bottom: 3px; }
 
   .welcome-bonus-modal { text-align: center; }
   .welcome-bonus-icon { font-size: 60px; margin-bottom: 12px; animation: bounceIn 0.6s ease; }
@@ -1465,50 +1505,56 @@
     <div class="sidebar-header">
       <div class="sidebar-logo">₿</div>
       <div>
-        <div class="sidebar-title">BTC Mining</div>
-        <div class="sidebar-subtitle">Pro Platform</div>
+        <div class="sidebar-title" data-i18n="sidebar_title">BTC Mining</div>
+        <div class="sidebar-subtitle" data-i18n="sidebar_subtitle">Pro Platform</div>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label">Ana Menü</div>
+      <div class="menu-label" data-i18n="menu_main">Ana Menü</div>
       <div class="menu-item active" onclick="showPage('home', this)">
-        <span class="menu-icon"></span>
-        <span>Ana Sayfa</span>
+        <span class="menu-icon">🏠</span>
+        <span data-i18n="menu_home">Ana Sayfa</span>
       </div>
       <div class="menu-item" onclick="showPage('buy', this)">
         <span class="menu-icon">💎</span>
-        <span>Satın Al</span>
+        <span data-i18n="menu_buy">Satın Al</span>
       </div>
       <div class="menu-item" onclick="showPage('production', this)">
         <span class="menu-icon">⚡</span>
-        <span>Üretim Hattı</span>
+        <span data-i18n="menu_production">Üretim Hattı</span>
         <span class="menu-badge" id="productCount">0</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label">İstatistik</div>
+      <div class="menu-label" data-i18n="menu_stats">İstatistik</div>
       <div class="menu-item" onclick="showPage('chart', this)">
         <span class="menu-icon">📊</span>
-        <span>Grafik</span>
+        <span data-i18n="menu_chart">Grafik</span>
       </div>
       <div class="menu-item" onclick="showPage('leaderboard', this)">
-        <span class="menu-icon"></span>
-        <span>Liderlik</span>
+        <span class="menu-icon">🏆</span>
+        <span data-i18n="menu_leaderboard">Liderlik</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label">Hesap</div>
+      <div class="menu-label" data-i18n="menu_account">Hesap</div>
       <div class="menu-item" onclick="showPage('referral', this)">
         <span class="menu-icon">👥</span>
-        <span>Referans</span>
+        <span data-i18n="menu_referral">Referans</span>
       </div>
       <div class="menu-item" onclick="showPage('withdraw', this)">
-        <span class="menu-icon"></span>
-        <span>Çekim</span>
+        <span class="menu-icon">💸</span>
+        <span data-i18n="menu_withdraw">Çekim</span>
       </div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇷 TR</button>
+      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
     </div>
 
     <div class="sidebar-footer">
@@ -1527,8 +1573,8 @@
     <!-- HOME PAGE -->
     <div class="page active" id="page-home">
       <div class="page-header">
-        <h1 class="page-title">👋 Hoş Geldin!</h1>
-        <p class="page-subtitle">BTC Mining platformuna hoş geldin. İşte genel bakış.</p>
+        <h1 class="page-title" data-i18n="home_title">👋 Hoş Geldin!</h1>
+        <p class="page-subtitle" data-i18n="home_subtitle">BTC Mining platformuna hoş geldin. İşte genel bakış.</p>
       </div>
 
       <div class="level-bar">
@@ -1547,143 +1593,143 @@
             <div class="stat-card-icon" style="background: linear-gradient(135deg, #4a9eff, #2a6acc);">📦</div>
           </div>
           <div class="stat-card-value" id="homeActiveProducts">0</div>
-          <div class="stat-card-label">Aktif Ürün</div>
+          <div class="stat-card-label" data-i18n="stat_active">Aktif Ürün</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-header">
             <div class="stat-card-icon" style="background: linear-gradient(135deg, #f7931a, #e8850f);">💰</div>
           </div>
           <div class="stat-card-value" id="homeTotalInvested">$0</div>
-          <div class="stat-card-label">Toplam Yatırım</div>
+          <div class="stat-card-label" data-i18n="stat_invested">Toplam Yatırım</div>
         </div>
         <div class="stat-card live">
           <div class="stat-card-header">
             <div class="stat-card-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">💵</div>
           </div>
           <div class="stat-card-value" id="homeTotalEarned">$0.00</div>
-          <div class="stat-card-label">Toplam Kazanç</div>
+          <div class="stat-card-label" data-i18n="stat_earned">Toplam Kazanç</div>
         </div>
         <div class="stat-card live">
           <div class="stat-card-header">
             <div class="stat-card-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">⚡</div>
           </div>
           <div class="stat-card-value" id="homePerSecond">$0/s</div>
-          <div class="stat-card-label">Saniyelik</div>
+          <div class="stat-card-label" data-i18n="stat_persecond">Saniyelik</div>
         </div>
       </div>
 
       <div class="card">
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">🚀 Hızlı Başlangıç</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; font-size: 13px;">
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="quick_start"> Hızlı Başlangıç</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; font-size: 13px;" data-i18n="quick_start_desc">
           Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. 
           Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!
         </p>
-        <button class="btn-primary" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])">💎 İlk Yatırımını Yap</button>
+        <button class="btn-primary" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])" data-i18n="btn_first_invest">💎 İlk Yatırımını Yap</button>
       </div>
     </div>
 
     <!-- BUY PAGE -->
     <div class="page" id="page-buy">
       <div class="page-header">
-        <h1 class="page-title">💎 Mining Gücü Satın Al</h1>
-        <p class="page-subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
+        <h1 class="page-title" data-i18n="buy_title">💎 Mining Gücü Satın Al</h1>
+        <p class="page-subtitle" data-i18n="buy_subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
       </div>
 
       <div class="card">
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px;">
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$1</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Minimum</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_minimum">Minimum</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">3 Ay</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">ROI</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_roi">ROI</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">100%</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Getiri</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_return">Getiri</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$0.011</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Günlük</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_daily">Günlük</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">Paket Seç</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="select_package">Paket Seç</h3>
         <div class="packages-grid">
           <div class="package" data-price="1" onclick="selectPackage(this)">
             <div class="package-price">$1</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.011/gün</div>
           </div>
           <div class="package" data-price="5" onclick="selectPackage(this)">
             <div class="package-price">$5</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.056/gün</div>
           </div>
           <div class="package popular" data-price="10" onclick="selectPackage(this)">
             <div class="package-price">$10</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.111/gün</div>
           </div>
           <div class="package" data-price="50" onclick="selectPackage(this)">
             <div class="package-price">$50</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.556/gün</div>
           </div>
           <div class="package" data-price="100" onclick="selectPackage(this)">
             <div class="package-price">$100</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$1.111/gün</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;">💰 Özel Miktar</h3>
+        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;" data-i18n="custom_amount">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">📊 Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="calculation">📊 Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
-            <div class="label">Günlük</div>
+            <div class="label" data-i18n="calc_daily">Günlük</div>
             <div class="value" id="dailyEarning">$0.111</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">Aylık</div>
+            <div class="label" data-i18n="calc_monthly">Aylık</div>
             <div class="value" id="monthlyEarning">$3.33</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">3 Aylık</div>
+            <div class="label" data-i18n="calc_3month">3 Aylık</div>
             <div class="value" id="threeMonthEarning">$10.00</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">ROI</div>
+            <div class="label" data-i18n="calc_roi">ROI</div>
             <div class="value" id="roiDate" style="font-size: 12px;">-</div>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="openModal()"> Şimdi Satın Al</button>
+        <button class="btn-primary" onclick="openModal()" data-i18n="btn_buy_now"> Şimdi Satın Al</button>
       </div>
     </div>
 
     <!-- PRODUCTION PAGE -->
     <div class="page" id="page-production">
       <div class="page-header">
-        <h1 class="page-title">⚡ Üretim Hattı</h1>
-        <p class="page-subtitle">Mining operasyonlarınız gerçek zamanlı</p>
+        <h1 class="page-title" data-i18n="production_title">⚡ Üretim Hattı</h1>
+        <p class="page-subtitle" data-i18n="production_subtitle">Mining operasyonlarınız gerçek zamanlı</p>
       </div>
 
       <div class="factory-layout">
         <div class="conveyor-system">
           <div class="conveyor-header">
-            <div class="conveyor-title"><span>🏭</span><span>Aktif Üretim</span></div>
-            <div class="conveyor-status"><div class="status-indicator"></div><span>ÇALIŞIYOR</span></div>
+            <div class="conveyor-title"><span>🏭</span><span data-i18n="active_production">Aktif Üretim</span></div>
+            <div class="conveyor-status"><div class="status-indicator"></div><span data-i18n="status_working">ÇALIŞIYOR</span></div>
           </div>
           <div class="stations-container">
             <div class="station-connector"></div>
             <div class="station"><div class="station-icon">🔍</div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
-            <div class="station"><div class="station-icon">✓</div><div class="station-name">Doğrulama</div><div class="station-desc">Verify</div></div>
-            <div class="station"><div class="station-icon">⛓️</div><div class="station-name">Zincir</div><div class="station-desc">Chain</div></div>
-            <div class="station"><div class="station-icon">💰</div><div class="station-name">Ödül</div><div class="station-desc">Reward</div></div>
+            <div class="station"><div class="station-icon">✓</div><div class="station-name" data-i18n="station_verify">Doğrulama</div><div class="station-desc">Verify</div></div>
+            <div class="station"><div class="station-icon">⛓️</div><div class="station-name" data-i18n="station_chain">Zincir</div><div class="station-desc">Chain</div></div>
+            <div class="station"><div class="station-icon">💰</div><div class="station-name" data-i18n="station_reward">Ödül</div><div class="station-desc">Reward</div></div>
           </div>
           <div class="conveyor-belt-wrapper">
             <div class="conveyor-products" id="conveyorProducts"></div>
@@ -1691,30 +1737,30 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label"> Toplam</div>
+              <div class="summary-label" data-i18n="summary_total"> Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
-              <div class="summary-label">⏱️ Dakika</div>
+              <div class="summary-label" data-i18n="summary_minute">⏱️ Dakika</div>
               <div class="summary-value live" id="summaryMinute">$0</div>
             </div>
             <div class="summary-item hourly">
-              <div class="summary-label">🕐 Saat</div>
+              <div class="summary-label" data-i18n="summary_hour">🕐 Saat</div>
               <div class="summary-value live" id="summaryHour">$0</div>
             </div>
             <div class="summary-item monthly">
-              <div class="summary-label"> Ay</div>
+              <div class="summary-label" data-i18n="summary_month"> Ay</div>
               <div class="summary-value live" id="summaryMonth">$0</div>
             </div>
           </div>
         </div>
 
         <div class="stats-panel">
-          <div class="stats-title"><span>📊</span><span>İstatistikler</span></div>
-          <div class="stat-item"><div class="stat-label">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
-          <div class="stat-item"><div class="stat-label">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
-          <div class="stat-item"><div class="stat-label">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
-          <div class="stat-item"><div class="stat-label">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
+          <div class="stats-title"><span></span><span data-i18n="stats_title">İstatistikler</span></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_active_products">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_total_earn">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_per_second">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_roi_time">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
         </div>
       </div>
     </div>
@@ -1722,14 +1768,14 @@
     <!-- CHART PAGE -->
     <div class="page" id="page-chart">
       <div class="page-header">
-        <h1 class="page-title">📊 Kazanç Grafiği</h1>
-        <p class="page-subtitle">Kazançlarını takip et</p>
+        <h1 class="page-title" data-i18n="chart_title">📊 Kazanç Grafiği</h1>
+        <p class="page-subtitle" data-i18n="chart_subtitle">Kazançlarını takip et</p>
       </div>
       <div class="chart-container">
         <div class="chart-tabs">
-          <button class="chart-tab active" onclick="switchChart('daily', this)">Günlük</button>
-          <button class="chart-tab" onclick="switchChart('weekly', this)">Haftalık</button>
-          <button class="chart-tab" onclick="switchChart('monthly', this)">Aylık</button>
+          <button class="chart-tab active" onclick="switchChart('daily', this)" data-i18n="chart_daily">Günlük</button>
+          <button class="chart-tab" onclick="switchChart('weekly', this)" data-i18n="chart_weekly">Haftalık</button>
+          <button class="chart-tab" onclick="switchChart('monthly', this)" data-i18n="chart_monthly">Aylık</button>
         </div>
         <canvas id="earningsChart" height="100"></canvas>
       </div>
@@ -1738,8 +1784,8 @@
     <!-- LEADERBOARD PAGE -->
     <div class="page" id="page-leaderboard">
       <div class="page-header">
-        <h1 class="page-title"> Liderlik</h1>
-        <p class="page-subtitle">En çok kazananlar</p>
+        <h1 class="page-title" data-i18n="leaderboard_title"> Liderlik</h1>
+        <p class="page-subtitle" data-i18n="leaderboard_subtitle">En çok kazananlar</p>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
     </div>
@@ -1747,17 +1793,17 @@
     <!-- REFERRAL PAGE -->
     <div class="page" id="page-referral">
       <div class="page-header">
-        <h1 class="page-title">👥 Referans</h1>
-        <p class="page-subtitle">Arkadaşlarını davet et, %10 kazan</p>
+        <h1 class="page-title" data-i18n="referral_title">👥 Referans</h1>
+        <p class="page-subtitle" data-i18n="referral_subtitle">Arkadaşlarını davet et, %10 kazan</p>
       </div>
       <div class="referral-card">
-        <h3 style="margin-bottom: 8px;">Referans Kodun</h3>
+        <h3 style="margin-bottom: 8px;" data-i18n="referral_code">Referans Kodun</h3>
         <div class="referral-code" id="referralCode" onclick="copyReferral()">BTC-XXXXXX</div>
-        <p style="font-size: 12px; opacity: 0.9; text-align: center;">Kopyalamak için tıkla!</p>
+        <p style="font-size: 12px; opacity: 0.9; text-align: center;" data-i18n="referral_click">Kopyalamak için tıkla!</p>
         <div class="referral-stats">
-          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label">Davet</div></div>
-          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label">Kazanç</div></div>
-          <div class="referral-stat"><div class="value">%10</div><div class="label">Oran</div></div>
+          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label" data-i18n="ref_invited">Davet</div></div>
+          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label" data-i18n="ref_earnings">Kazanç</div></div>
+          <div class="referral-stat"><div class="value">%10</div><div class="label" data-i18n="ref_rate">Oran</div></div>
         </div>
       </div>
     </div>
@@ -1765,23 +1811,23 @@
     <!-- WITHDRAW PAGE -->
     <div class="page" id="page-withdraw">
       <div class="page-header">
-        <h1 class="page-title">💸 Çekim</h1>
-        <p class="page-subtitle">Minimum çekim: $0.01</p>
+        <h1 class="page-title" data-i18n="withdraw_title">💸 Çekim</h1>
+        <p class="page-subtitle" data-i18n="withdraw_subtitle">Minimum çekim: $0.01</p>
       </div>
       <div class="balance-display">
-        <div class="balance-label">Mevcut Bakiye</div>
+        <div class="balance-label" data-i18n="balance_current">Mevcut Bakiye</div>
         <div class="balance-amount" id="balanceDisplay">$0</div>
       </div>
       <div class="withdrawal-form">
         <div class="form-group">
-          <label class="form-label"> Çekilecek Miktar ($)</label>
+          <label class="form-label" data-i18n="withdraw_amount"> Çekilecek Miktar ($)</label>
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
         <div class="form-group">
-          <label class="form-label">₿ BTC Adresi</label>
+          <label class="form-label" data-i18n="withdraw_address"> BTC Adresi</label>
           <input type="text" class="calc-input" id="walletAddress" placeholder="bc1q...">
         </div>
-        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);">💸 Çekim Yap</button>
+        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);" data-i18n="btn_withdraw"> Çekim Yap</button>
       </div>
     </div>
   </main>
@@ -1792,40 +1838,40 @@
   <!-- SUPPORT -->
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
-      <div class="support-header"> Destek</div>
+      <div class="support-header" data-i18n="support_title"> Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ Bonus nedir?</div>
-          <div class="faq-answer">İlk girişte $1 ücretsiz mining gücü!</div>
+          <div class="faq-question" data-i18n="faq_bonus"> Bonus nedir?</div>
+          <div class="faq-answer" data-i18n="faq_bonus_answer">İlk girişte $1 ücretsiz mining gücü!</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ Nasıl alınır?</div>
-          <div class="faq-answer">Satın Al'dan paket seç, öde, onayla.</div>
+          <div class="faq-question" data-i18n="faq_how">❓ Nasıl alınır?</div>
+          <div class="faq-answer" data-i18n="faq_how_answer">Satın Al'dan paket seç, öde, onayla.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ ROI süresi?</div>
-          <div class="faq-answer">Tüm yatırımlar 3 ayda geri döner.</div>
+          <div class="faq-question" data-i18n="faq_roi">❓ ROI süresi?</div>
+          <div class="faq-answer" data-i18n="faq_roi_answer">Tüm yatırımlar 3 ayda geri döner.</div>
         </div>
       </div>
     </div>
-    <button class="support-btn" onclick="toggleSupport()">💬</button>
+    <button class="support-btn" onclick="toggleSupport()"></button>
   </div>
 
   <!-- WELCOME BONUS MODAL -->
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
       <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
-      <div class="welcome-bonus-icon">🎉</div>
-      <div class="welcome-bonus-title">HOŞ GELDİN!</div>
-      <div class="welcome-bonus-desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
+      <div class="welcome-bonus-icon"></div>
+      <div class="welcome-bonus-title" data-i18n="welcome_title">HOŞ GELDİN!</div>
+      <div class="welcome-bonus-desc" data-i18n="welcome_desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
       <div class="welcome-bonus-amount">🎁 $1.00 ÜCRETSİZ</div>
       <div class="welcome-bonus-features">
-        <div>Anında ekleme</div>
-        <div>Saniyelik kazanç</div>
-        <div>3 ay ROI</div>
-        <div>Ödeme yok!</div>
+        <div data-i18n="welcome_feat1">Anında ekleme</div>
+        <div data-i18n="welcome_feat2">Saniyelik kazanç</div>
+        <div data-i18n="welcome_feat3">3 ay ROI</div>
+        <div data-i18n="welcome_feat4">Ödeme yok!</div>
       </div>
-      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()">🚀 BAŞLA</button>
+      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()" data-i18n="btn_start"> BAŞLA</button>
     </div>
   </div>
 
@@ -1833,38 +1879,312 @@
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
-      <h2>₿ Ödeme</h2>
+      <h2 data-i18n="payment_title"> Bitcoin Ödeme</h2>
+      
       <div class="btc-payment-box">
-        <div class="btc-payment-header"><span style="font-size: 24px;">₿</span><span>Ödeme Yap</span></div>
-        <div class="btc-amount-display"><div class="label">Tutar</div><div class="value" id="btcPaymentAmount">$10</div></div>
-        <div class="btc-qr-code"><div class="qr-placeholder"></div></div>
+        <div class="btc-payment-header">
+          <span style="font-size: 24px;">₿</span>
+          <span data-i18n="payment_make">Ödeme Yap</span>
+        </div>
+        
+        <div class="btc-amount-display">
+          <div class="label" data-i18n="payment_amount">Gönderilecek Tutar</div>
+          <div class="value" id="btcPaymentAmount">$10</div>
+        </div>
+        
+        <div class="btc-qr-code">
+          <div class="qr-placeholder"></div>
+        </div>
+        
         <div class="btc-address-box">
-          <div class="btc-address-label">BTC Adresi</div>
+          <div class="btc-address-label" data-i18n="payment_copy">BTC Adresini Kopyala</div>
           <div class="btc-address" id="btcAddress" onclick="copyBTCAddress()">
             <span id="btcAddressText">bc1q...</span>
             <span class="copy-icon">📋</span>
           </div>
         </div>
-        <button class="btn-copy-address" onclick="copyBTCAddress()">📋 Kopyala</button>
-        <div class="payment-timer"><span>⏱️</span><span>Kalan:</span><span class="timer-value" id="paymentTimer">15:00</span></div>
-        <div class="payment-status"><div class="status-dot"></div><span>Bekliyor...</span></div>
+        
+        <button class="btn-copy-address" onclick="copyBTCAddress()" data-i18n="btn_copy"> Adresi Kopyala</button>
+        
+        <div class="payment-timer">
+          <span>⏱️</span>
+          <span data-i18n="payment_time">Kalan Süre:</span>
+          <span class="timer-value" id="paymentTimer">15:00</span>
+        </div>
+        
+        <div class="payment-status">
+          <div class="status-dot"></div>
+          <span data-i18n="payment_waiting">Ödeme Bekleniyor...</span>
+        </div>
+        
         <div class="payment-instructions">
-          <strong>Nasıl?</strong>
+          <strong data-i18n="payment_how">Nasıl Yapılır?</strong>
           <ol>
-            <li>Adresi kopyala</li>
-            <li>BTC gönder</li>
-            <li>Onayla</li>
+            <li data-i18n="payment_step1">Yukarıdaki adresi kopyala</li>
+            <li data-i18n="payment_step2">BTC cüzdanından gönder</li>
+            <li data-i18n="payment_step3">Ödemeyi onayla</li>
           </ol>
         </div>
-        <button class="btn-confirm-payment" onclick="confirmPayment()">✓ Onayla</button>
       </div>
-      <div class="modal-actions"><button class="btn-cancel" onclick="closeModal()">İptal</button></div>
+      
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()" data-i18n="btn_cancel">İptal</button>
+        <button class="btn-confirm" onclick="confirmPayment()" data-i18n="btn_confirm">✓ Onayla</button>
+      </div>
     </div>
   </div>
 
   <div class="notification" id="notification"></div>
 
   <script>
+    // TRANSLATIONS
+    const translations = {
+      tr: {
+        sidebar_title: 'BTC Mining',
+        sidebar_subtitle: 'Pro Platform',
+        menu_main: 'Ana Menü',
+        menu_home: 'Ana Sayfa',
+        menu_buy: 'Satın Al',
+        menu_production: 'Üretim Hattı',
+        menu_stats: 'İstatistik',
+        menu_chart: 'Grafik',
+        menu_leaderboard: 'Liderlik',
+        menu_account: 'Hesap',
+        menu_referral: 'Referans',
+        menu_withdraw: 'Çekim',
+        home_title: '👋 Hoş Geldin!',
+        home_subtitle: 'BTC Mining platformuna hoş geldin. İşte genel bakış.',
+        stat_active: 'Aktif Ürün',
+        stat_invested: 'Toplam Yatırım',
+        stat_earned: 'Toplam Kazanç',
+        stat_persecond: 'Saniyelik',
+        quick_start: '🚀 Hızlı Başlangıç',
+        quick_start_desc: 'Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!',
+        btn_first_invest: '💎 İlk Yatırımını Yap',
+        buy_title: '💎 Mining Gücü Satın Al',
+        buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al',
+        info_minimum: 'Minimum',
+        info_roi: 'ROI',
+        info_return: 'Getiri',
+        info_daily: 'Günlük',
+        select_package: 'Paket Seç',
+        package_roi: '3 Ayda Geri',
+        custom_amount: '💰 Özel Miktar',
+        calculation: '📊 Hesaplama',
+        calc_daily: 'Günlük',
+        calc_monthly: 'Aylık',
+        calc_3month: '3 Aylık',
+        calc_roi: 'ROI',
+        btn_buy_now: ' Şimdi Satın Al',
+        production_title: '⚡ Üretim Hattı',
+        production_subtitle: 'Mining operasyonlarınız gerçek zamanlı',
+        active_production: 'Aktif Üretim',
+        status_working: 'ÇALIŞIYOR',
+        station_verify: 'Doğrulama',
+        station_chain: 'Zincir',
+        station_reward: 'Ödül',
+        summary_total: ' Toplam',
+        summary_minute: '⏱️ Dakika',
+        summary_hour: '🕐 Saat',
+        summary_month: ' Ay',
+        stats_title: 'İstatistikler',
+        stat_active_products: 'Aktif Ürün',
+        stat_total_earn: 'Toplam Kazanç',
+        stat_per_second: 'Saniyelik',
+        stat_roi_time: 'ROI Süre',
+        chart_title: '📊 Kazanç Grafiği',
+        chart_subtitle: 'Kazançlarını takip et',
+        chart_daily: 'Günlük',
+        chart_weekly: 'Haftalık',
+        chart_monthly: 'Aylık',
+        leaderboard_title: ' Liderlik',
+        leaderboard_subtitle: 'En çok kazananlar',
+        referral_title: '👥 Referans',
+        referral_subtitle: 'Arkadaşlarını davet et, %10 kazan',
+        referral_code: 'Referans Kodun',
+        referral_click: 'Kopyalamak için tıkla!',
+        ref_invited: 'Davet',
+        ref_earnings: 'Kazanç',
+        ref_rate: 'Oran',
+        withdraw_title: '💸 Çekim',
+        withdraw_subtitle: 'Minimum çekim: $0.01',
+        balance_current: 'Mevcut Bakiye',
+        withdraw_amount: ' Çekilecek Miktar ($)',
+        withdraw_address: '₿ BTC Adresi',
+        btn_withdraw: '💸 Çekim Yap',
+        support_title: ' Destek',
+        faq_bonus: ' Bonus nedir?',
+        faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!',
+        faq_how: '❓ Nasıl alınır?',
+        faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.',
+        faq_roi: '❓ ROI süresi?',
+        faq_roi_answer: 'Tüm yatırımlar 3 ayda geri döner.',
+        welcome_title: 'HOŞ GELDİN!',
+        welcome_desc: '<strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!',
+        welcome_feat1: 'Anında ekleme',
+        welcome_feat2: 'Saniyelik kazanç',
+        welcome_feat3: '3 ay ROI',
+        welcome_feat4: 'Ödeme yok!',
+        btn_start: ' BAŞLA',
+        payment_title: ' Bitcoin Ödeme',
+        payment_make: 'Ödeme Yap',
+        payment_amount: 'Gönderilecek Tutar',
+        payment_copy: 'BTC Adresini Kopyala',
+        btn_copy: '📋 Adresi Kopyala',
+        payment_time: 'Kalan Süre:',
+        payment_waiting: 'Ödeme Bekleniyor...',
+        payment_how: 'Nasıl Yapılır?',
+        payment_step1: 'Yukarıdaki adresi kopyala',
+        payment_step2: 'BTC cüzdanından gönder',
+        payment_step3: 'Ödemeyi onayla',
+        btn_cancel: 'İptal',
+        btn_confirm: '✓ Onayla',
+        notif_min: '❌ Min $1!',
+        notif_copied: ' Adres kopyalandı!',
+        notif_bonus: '🎉 $1 bonus kazandın!',
+        notif_confirmed: '✅ Ödeme onaylandı!',
+        notif_timeout: '⏰ Süre doldu!',
+        notif_success: '✅ Çekim başarılı!',
+        notif_invalid: ' Geçersiz!',
+        notif_required: ' Adres gerekli!',
+        notif_code_copied: '📋 Kod kopyalandı!',
+        level_bronze: 'Bronz Madenci',
+        level_silver: 'Gümüş Madenci',
+        level_gold: 'Altın Madenci',
+        level_diamond: 'Elmas Madenci',
+        level_master: 'Usta Madenci',
+        level_desc_start: 'İlk adımlarını atıyorsun!',
+        level_desc_progress: 'İlerleme kaydediyorsun!',
+        level_desc_great: 'Harika!',
+        level_desc_legend: 'Efsane!',
+        level_desc_peak: 'Zirve!',
+        roi_days: '90 gün'
+      },
+      en: {
+        sidebar_title: 'BTC Mining',
+        sidebar_subtitle: 'Pro Platform',
+        menu_main: 'Main Menu',
+        menu_home: 'Home',
+        menu_buy: 'Buy',
+        menu_production: 'Production',
+        menu_stats: 'Statistics',
+        menu_chart: 'Chart',
+        menu_leaderboard: 'Leaderboard',
+        menu_account: 'Account',
+        menu_referral: 'Referral',
+        menu_withdraw: 'Withdraw',
+        home_title: '👋 Welcome!',
+        home_subtitle: 'Welcome to BTC Mining platform. Here\'s an overview.',
+        stat_active: 'Active Products',
+        stat_invested: 'Total Investment',
+        stat_earned: 'Total Earnings',
+        stat_persecond: 'Per Second',
+        quick_start: '🚀 Quick Start',
+        quick_start_desc: 'No products yet! Go to "Buy" from the left menu and make your first investment. Every $1 investment earns you $1 in 3 months. Minimum purchase is only $1!',
+        btn_first_invest: '💎 Make First Investment',
+        buy_title: '💎 Buy Mining Power',
+        buy_subtitle: 'Start with minimum $1, get ROI in 3 months',
+        info_minimum: 'Minimum',
+        info_roi: 'ROI',
+        info_return: 'Return',
+        info_daily: 'Daily',
+        select_package: 'Select Package',
+        package_roi: '3 Month ROI',
+        custom_amount: '💰 Custom Amount',
+        calculation: ' Calculation',
+        calc_daily: 'Daily',
+        calc_monthly: 'Monthly',
+        calc_3month: '3 Months',
+        calc_roi: 'ROI',
+        btn_buy_now: ' Buy Now',
+        production_title: '⚡ Production Line',
+        production_subtitle: 'Your mining operations in real-time',
+        active_production: 'Active Production',
+        status_working: 'RUNNING',
+        station_verify: 'Verify',
+        station_chain: 'Chain',
+        station_reward: 'Reward',
+        summary_total: ' Total',
+        summary_minute: '⏱️ Minute',
+        summary_hour: '🕐 Hour',
+        summary_month: ' Month',
+        stats_title: 'Statistics',
+        stat_active_products: 'Active Products',
+        stat_total_earn: 'Total Earnings',
+        stat_per_second: 'Per Second',
+        stat_roi_time: 'ROI Time',
+        chart_title: '📊 Earnings Chart',
+        chart_subtitle: 'Track your earnings',
+        chart_daily: 'Daily',
+        chart_weekly: 'Weekly',
+        chart_monthly: 'Monthly',
+        leaderboard_title: ' Leaderboard',
+        leaderboard_subtitle: 'Top earners',
+        referral_title: '👥 Referral',
+        referral_subtitle: 'Invite friends, earn 10%',
+        referral_code: 'Your Referral Code',
+        referral_click: 'Click to copy!',
+        ref_invited: 'Invited',
+        ref_earnings: 'Earnings',
+        ref_rate: 'Rate',
+        withdraw_title: '💸 Withdraw',
+        withdraw_subtitle: 'Minimum withdrawal: $0.01',
+        balance_current: 'Current Balance',
+        withdraw_amount: ' Withdrawal Amount ($)',
+        withdraw_address: '₿ BTC Address',
+        btn_withdraw: ' Withdraw',
+        support_title: ' Support',
+        faq_bonus: ' What is the bonus?',
+        faq_bonus_answer: '$1 free mining power on first login!',
+        faq_how: '❓ How to buy?',
+        faq_how_answer: 'Select package from Buy, pay, confirm.',
+        faq_roi: '❓ ROI period?',
+        faq_roi_answer: 'All investments return in 3 months.',
+        welcome_title: 'WELCOME!',
+        welcome_desc: '<strong>Free bonus</strong> ready!<br>Start now!',
+        welcome_feat1: 'Instant addition',
+        welcome_feat2: 'Per-second earnings',
+        welcome_feat3: '3 month ROI',
+        welcome_feat4: 'No payment!',
+        btn_start: ' START',
+        payment_title: ' Bitcoin Payment',
+        payment_make: 'Make Payment',
+        payment_amount: 'Amount to Send',
+        payment_copy: 'Copy BTC Address',
+        btn_copy: '📋 Copy Address',
+        payment_time: 'Time Left:',
+        payment_waiting: 'Waiting for Payment...',
+        payment_how: 'How to?',
+        payment_step1: 'Copy the address above',
+        payment_step2: 'Send from BTC wallet',
+        payment_step3: 'Confirm payment',
+        btn_cancel: 'Cancel',
+        btn_confirm: '✓ Confirm',
+        notif_min: ' Min $1!',
+        notif_copied: ' Address copied!',
+        notif_bonus: ' You earned $1 bonus!',
+        notif_confirmed: '✅ Payment confirmed!',
+        notif_timeout: '⏰ Time expired!',
+        notif_success: '✅ Withdrawal successful!',
+        notif_invalid: '❌ Invalid!',
+        notif_required: ' Address required!',
+        notif_code_copied: '📋 Code copied!',
+        level_bronze: 'Bronze Miner',
+        level_silver: 'Silver Miner',
+        level_gold: 'Gold Miner',
+        level_diamond: 'Diamond Miner',
+        level_master: 'Master Miner',
+        level_desc_start: 'Taking your first steps!',
+        level_desc_progress: 'Making progress!',
+        level_desc_great: 'Great!',
+        level_desc_legend: 'Legendary!',
+        level_desc_peak: 'Peak!',
+        roi_days: '90 days'
+      }
+    };
+
+    let currentLang = 'tr';
+
     // Telegram WebApp
     const tg = window.Telegram.WebApp;
     
@@ -1907,7 +2227,8 @@
       referralEarnings: 0,
       earningsHistory: [],
       theme: tg.colorScheme === 'dark' ? 'dark' : 'light',
-      welcomeBonusClaimed: false
+      welcomeBonusClaimed: false,
+      language: 'tr'
     };
 
     let lastUpdate = Date.now();
@@ -1916,6 +2237,61 @@
     let currentBTCAddress = '';
     let paymentTimerInterval = null;
     let paymentTimeLeft = 900;
+
+    // LANGUAGE FUNCTIONS
+    function changeLanguage(lang) {
+      currentLang = lang;
+      state.language = lang;
+      saveState();
+      
+      // Update buttons
+      document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          if (element.tagName === 'INPUT' && element.type === 'text') {
+            element.placeholder = translations[lang][key];
+          } else {
+            element.innerHTML = translations[lang][key];
+          }
+        }
+      });
+      
+      // Update page titles
+      updatePageTitles();
+      
+      // Update notifications
+      updateNotificationTexts();
+      
+      haptic('impact');
+    }
+
+    function updatePageTitles() {
+      // Update level names
+      const levels = [
+        { tr: 'Bronz Madenci', en: 'Bronze Miner' },
+        { tr: 'Gümüş Madenci', en: 'Silver Miner' },
+        { tr: 'Altın Madenci', en: 'Gold Miner' },
+        { tr: 'Elmas Madenci', en: 'Diamond Miner' },
+        { tr: 'Usta Madenci', en: 'Master Miner' }
+      ];
+      
+      const levelIndex = state.level - 1;
+      if (levelIndex >= 0 && levelIndex < levels.length) {
+        document.getElementById('levelName').textContent = levels[levelIndex][currentLang];
+      }
+    }
+
+    function updateNotificationTexts() {
+      // Notification texts are updated dynamically in showNotification function
+    }
+
+    function t(key) {
+      return translations[currentLang][key] || key;
+    }
 
     // MENU NAVIGATION
     function showPage(pageId, menuItem) {
@@ -1934,6 +2310,13 @@
     }
 
     function init() {
+      // Load language from state
+      if (state.language) {
+        currentLang = state.language;
+        document.getElementById('lang-tr').classList.toggle('active', currentLang === 'tr');
+        document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+      }
+      
       // Get user info from Telegram if available
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
@@ -1947,6 +2330,9 @@
         saveState();
       }
       document.getElementById('referralCode').textContent = state.referralCode;
+      
+      // Apply initial translations
+      changeLanguage(currentLang);
       
       restoreConveyorProducts();
       updateLevel();
@@ -1984,7 +2370,7 @@
       state.welcomeBonusClaimed = true;
       addXP(50);
       closeWelcomeBonus();
-      showNotification('🎉 $1 bonus kazandın!', 'bonus');
+      showNotification('notif_bonus', 'bonus');
       haptic('success');
       setTimeout(() => {
         showPage('production', document.querySelectorAll('.menu-item')[2]);
@@ -2073,17 +2459,17 @@
       document.getElementById('productCount').textContent = state.purchasedProducts.length;
       
       if (state.totalInvested > 0) {
-        document.getElementById('roiTimeLeft').textContent = '90 gün';
+        document.getElementById('roiTimeLeft').textContent = t('roi_days');
       }
     }
 
     function updateLevel() {
       const levels = [
-        { name: 'Bronz', desc: 'Başlangıç', xp: 0, class: 'level-bronze' },
-        { name: 'Gümüş', desc: 'İlerleme', xp: 100, class: 'level-silver' },
-        { name: 'Altın', desc: 'Harika!', xp: 500, class: 'level-gold' },
-        { name: 'Elmas', desc: 'Efsane!', xp: 2000, class: 'level-diamond' },
-        { name: 'Usta', desc: 'Zirve!', xp: 10000, class: 'level-master' }
+        { tr: 'Bronz', en: 'Bronze', desc_tr: 'İlk adımlarını atıyorsun!', desc_en: 'Taking your first steps!', xp: 0, class: 'level-bronze' },
+        { tr: 'Gümüş', en: 'Silver', desc_tr: 'İlerleme kaydediyorsun!', desc_en: 'Making progress!', xp: 100, class: 'level-silver' },
+        { tr: 'Altın', en: 'Gold', desc_tr: 'Harika!', desc_en: 'Great!', xp: 500, class: 'level-gold' },
+        { tr: 'Elmas', en: 'Diamond', desc_tr: 'Efsane!', desc_en: 'Legendary!', xp: 2000, class: 'level-diamond' },
+        { tr: 'Usta', en: 'Master', desc_tr: 'Zirve!', desc_en: 'Peak!', xp: 10000, class: 'level-master' }
       ];
       let currentLevel = levels[0];
       let nextLevel = levels[1];
@@ -2097,15 +2483,15 @@
       }
       document.getElementById('levelBadge').textContent = state.level;
       document.getElementById('levelBadge').className = 'level-badge ' + currentLevel.class;
-      document.getElementById('levelName').textContent = currentLevel.name + ' Madenci';
-      document.getElementById('levelDesc').textContent = currentLevel.desc;
+      document.getElementById('levelName').textContent = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
+      document.getElementById('levelDesc').textContent = currentLevel['desc_' + currentLang];
       document.getElementById('currentXP').textContent = state.xp;
       document.getElementById('nextLevelXP').textContent = nextLevel.xp;
       const progress = ((state.xp - currentLevel.xp) / (nextLevel.xp - currentLevel.xp)) * 100;
       document.getElementById('xpFill').style.width = Math.min(progress, 100) + '%';
       
       document.getElementById('userAvatar').textContent = state.level;
-      document.getElementById('userName').textContent = currentLevel.name + ' Madenci';
+      document.getElementById('userName').textContent = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
       document.getElementById('userXP').textContent = state.xp + ' XP';
     }
 
@@ -2140,13 +2526,13 @@
       document.getElementById('threeMonthEarning').textContent = '$' + threeMonth.toFixed(0);
       const roiDate = new Date();
       roiDate.setDate(roiDate.getDate() + 90);
-      document.getElementById('roiDate').textContent = roiDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+      document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'short' });
     }
 
     function openModal() {
       const amount = parseFloat(document.getElementById('amountInput').value) || 0;
       if (amount < 1) {
-        showNotification('❌ Min $1!', true);
+        showNotification('notif_min', true);
         haptic('error');
         return;
       }
@@ -2168,7 +2554,7 @@
         updateTimerDisplay();
         if (paymentTimeLeft <= 0) {
           clearInterval(paymentTimerInterval);
-          showNotification('⏰ Süre doldu!', true);
+          showNotification('notif_timeout', true);
           haptic('error');
           closeModal();
         }
@@ -2178,12 +2564,13 @@
     function updateTimerDisplay() {
       const minutes = Math.floor(paymentTimeLeft / 60);
       const seconds = paymentTimeLeft % 60;
-      document.getElementById('paymentTimer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      document.getElementById('paymentTimer').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     function copyBTCAddress() {
       navigator.clipboard.writeText(currentBTCAddress).then(() => {
-        showNotification(' Adres kopyalandı!');
+        showNotification('notif_copied');
         haptic('success');
       });
     }
@@ -2200,7 +2587,7 @@
       if (currentPaymentAmount < 1) return;
       addProduct(currentPaymentAmount, false);
       addXP(Math.floor(currentPaymentAmount));
-      showNotification('✅ Ödeme onaylandı!');
+      showNotification('notif_confirmed');
       haptic('success');
       closeModal();
       saveState();
@@ -2235,9 +2622,9 @@
       earningsChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'],
+          labels: currentLang === 'tr' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
           datasets: [{
-            label: 'Kazanç ($)',
+            label: currentLang === 'tr' ? 'Kazanç ($)' : 'Earnings ($)',
             data: [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3],
             borderColor: tg.themeParams.button_color || '#4a9eff',
             backgroundColor: 'rgba(74, 158, 255, 0.1)',
@@ -2260,7 +2647,7 @@
     function switchChart(type, btn) {
       document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
-      const labels = type === 'daily' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : type === 'weekly' ? ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'] : ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'];
+      const labels = type === 'daily' ? (currentLang === 'tr' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7']) : type === 'weekly' ? (currentLang === 'tr' ? ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'] : ['Week 1', 'Week 2', 'Week 3', 'Week 4']) : (currentLang === 'tr' ? ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']);
       const data = type === 'daily' ? [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3] : type === 'weekly' ? [1, 3, 6, 10] : [5, 12, 20, 30, 42, 55];
       earningsChart.data.labels = labels;
       earningsChart.data.datasets[0].data = data;
@@ -2290,7 +2677,7 @@
           <div class="rank ${i < 3 ? 'rank-' + (i+1) : ''}">${i + 1}</div>
           <div class="leaderboard-info">
             <div class="leaderboard-name">${user.name}</div>
-            <div class="leaderboard-earned">${Math.floor(Math.random() * 30) + 1} ürün</div>
+            <div class="leaderboard-earned">${Math.floor(Math.random() * 30) + 1} ${currentLang === 'tr' ? 'ürün' : 'products'}</div>
           </div>
           <div class="leaderboard-amount">$${user.earned.toFixed(0)}</div>
         </div>
@@ -2299,7 +2686,7 @@
 
     function copyReferral() {
       navigator.clipboard.writeText(state.referralCode).then(() => {
-        showNotification('📋 Kod kopyalandı!');
+        showNotification('notif_code_copied');
         haptic('success');
       });
     }
@@ -2312,10 +2699,10 @@
         btn.textContent = `Min $${MIN_WITHDRAW}`;
       } else if (amount > state.totalEarned) {
         btn.disabled = true;
-        btn.textContent = 'Yetersiz';
+        btn.textContent = currentLang === 'tr' ? 'Yetersiz' : 'Insufficient';
       } else {
         btn.disabled = false;
-        btn.textContent = `💸 $${amount.toFixed(2)} Çek`;
+        btn.textContent = `💸 $${amount.toFixed(2)} ` + (currentLang === 'tr' ? 'Çek' : 'Withdraw');
       }
     }
 
@@ -2323,18 +2710,18 @@
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       if (amount < MIN_WITHDRAW || amount > state.totalEarned) {
-        showNotification('❌ Geçersiz!', true);
+        showNotification('notif_invalid', true);
         haptic('error');
         return;
       }
       if (!walletAddress) {
-        showNotification('❌ Adres gerekli!', true);
+        showNotification('notif_required', true);
         haptic('error');
         return;
       }
       state.totalEarned -= amount;
       addXP(50);
-      showNotification('✅ Çekim başarılı!');
+      showNotification('notif_success');
       haptic('success');
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('walletAddress').value = '';
@@ -2349,9 +2736,9 @@
 
     function generateFeedItem() {
       const actions = [
-        { icon: '💰', text: '$<amount> yatırdı', users: ['User234', 'User891', 'User456'] },
-        { icon: '💸', text: '$<amount> çekti', users: ['User345', 'User678', 'User901'] },
-        { icon: '🎯', text: 'seviye atladı', users: ['User847', 'User234'] }
+        { icon: '💰', text: currentLang === 'tr' ? '$<amount> yatırdı' : 'deposited $<amount>', users: ['User234', 'User891', 'User456'] },
+        { icon: '💸', text: currentLang === 'tr' ? '$<amount> çekti' : 'withdrew $<amount>', users: ['User345', 'User678', 'User901'] },
+        { icon: '🎯', text: currentLang === 'tr' ? 'seviye atladı' : 'leveled up', users: ['User847', 'User234'] }
       ];
       const action = actions[Math.floor(Math.random() * actions.length)];
       const user = action.users[Math.floor(Math.random() * action.users.length)];
@@ -2370,9 +2757,9 @@
       haptic('impact');
     }
 
-    function showNotification(message, type = '') {
+    function showNotification(key, type = '') {
       const notification = document.getElementById('notification');
-      notification.textContent = message;
+      notification.textContent = t(key);
       notification.className = 'notification show ' + type;
       setTimeout(() => notification.classList.remove('show'), 3000);
     }
