@@ -393,7 +393,6 @@ body {
 .stat-value { font-size: 20px; font-weight: bold; color: #FFD700; }
 .stat-label { font-size: 11px; opacity: 0.8; margin-top: 4px; }
 
-/* Production Dashboard */
 .production-dashboard {
     background: linear-gradient(180deg, rgba(82, 190, 128, 0.2) 0%, rgba(39, 174, 96, 0.1) 100%);
     border: 2px solid #27AE60;
@@ -440,7 +439,6 @@ body {
     font-weight: bold;
 }
 
-/* Warehouse Grid */
 .warehouse-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -486,16 +484,82 @@ body {
 .bucks-option .amount { font-size: 18px; font-weight: bold; }
 .bucks-option .price { font-size: 12px; opacity: 0.9; }
 .bucks-option .coins-info { font-size: 11px; margin-top: 4px; opacity: 0.9; }
+
+/* Payment Modal */
+.payment-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.payment-modal.show {
+    display: flex;
+}
+.payment-content {
+    background: linear-gradient(180deg, #6b4226 0%, #4a2c1a 100%);
+    border: 3px solid #2a1810;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.payment-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 16px;
+}
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0;
+}
+.payment-method {
+    background: rgba(0,0,0,0.3);
+    border: 2px solid #5a3a20;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.payment-method:active {
+    transform: scale(0.98);
+}
+.payment-method-icon {
+    font-size: 24px;
+}
+.payment-method-info {
+    flex: 1;
+}
+.payment-method-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+.payment-method-desc {
+    font-size: 11px;
+    opacity: 0.8;
+}
 </style>
 </head>
 <body>
 <div class="wood-bg">
     <!-- Top Bar -->
     <div class="top-bar">
-        <button class="settings-btn" onclick="openSettings()">️</button>
+        <button class="settings-btn" onclick="openSettings()">⚙️</button>
         <div class="currency-bar">
             <div class="currency-item">
-                <div class="bucks-icon"></div>
+                <div class="bucks-icon">💵</div>
                 <span id="bucks-display">0.39</span>
             </div>
             <div class="currency-item">
@@ -513,7 +577,7 @@ body {
         <!-- Warehouse/Home Page -->
         <div id="page-warehouse" class="page active">
             <div class="tabs">
-                <div class="tab active" onclick="switchTab('warehouse', this)"> Dashboard</div>
+                <div class="tab active" onclick="switchTab('warehouse', this)">📊 Dashboard</div>
                 <div class="tab" onclick="switchTab('shop', this)">🏪 Shop</div>
             </div>
 
@@ -522,7 +586,7 @@ body {
                 <div class="dashboard-title">⚡ Live Production Rates</div>
                 
                 <div class="production-item">
-                    <div class="prod-icon"></div>
+                    <div class="prod-icon">🌾</div>
                     <div class="prod-details">
                         <div class="prod-name">Wheat Fields</div>
                         <div class="prod-rate-info">
@@ -546,7 +610,7 @@ body {
                 </div>
 
                 <div class="production-item">
-                    <div class="prod-icon">🥛</div>
+                    <div class="prod-icon"></div>
                     <div class="prod-details">
                         <div class="prod-name">Cows</div>
                         <div class="prod-rate-info">
@@ -602,25 +666,25 @@ body {
                         <div class="warehouse-pcs"><span id="wheat-pcs">0</span> pcs</div>
                     </div>
                     <div class="warehouse-item">
-                        <div class="warehouse-icon"></div>
+                        <div class="warehouse-icon">🥚</div>
                         <div class="warehouse-amount"><span id="egg-volume">0</span> m³</div>
                         <div class="warehouse-label">Eggs</div>
                         <div class="warehouse-pcs"><span id="egg-pcs">0</span> pcs</div>
                     </div>
                     <div class="warehouse-item">
-                        <div class="warehouse-icon"></div>
+                        <div class="warehouse-icon">🥛</div>
                         <div class="warehouse-amount"><span id="milk-volume">0</span> m³</div>
                         <div class="warehouse-label">Milk</div>
                         <div class="warehouse-pcs"><span id="milk-pcs">0</span> pcs</div>
                     </div>
                     <div class="warehouse-item">
-                        <div class="warehouse-icon">🧀</div>
+                        <div class="warehouse-icon"></div>
                         <div class="warehouse-amount"><span id="cheese-volume">0</span> m³</div>
                         <div class="warehouse-label">Cheese</div>
                         <div class="warehouse-pcs"><span id="cheese-pcs">0</span> pcs</div>
                     </div>
                     <div class="warehouse-item">
-                        <div class="warehouse-icon">🧶</div>
+                        <div class="warehouse-icon"></div>
                         <div class="warehouse-amount"><span id="wool-volume">0</span> m³</div>
                         <div class="warehouse-label">Wool</div>
                         <div class="warehouse-pcs"><span id="wool-pcs">0</span> pcs</div>
@@ -640,12 +704,12 @@ body {
                 </div>
                 
                 <div style="padding: 0 16px 16px;">
-                    <button class="btn-primary" onclick="sendProducts()">🚚 Sell All Products</button>
+                    <button class="btn-primary" onclick="sendProducts()"> Sell All Products</button>
                 </div>
             </div>
 
             <div class="upgrade-section">
-                <div class="upgrade-title">️ Warehouse Upgrade</div>
+                <div class="upgrade-title">🏗️ Warehouse Upgrade</div>
                 <div class="upgrade-bar">
                     <div class="upgrade-fill" id="upgrade-fill"></div>
                 </div>
@@ -656,7 +720,7 @@ body {
                     After upgrade: 1,500,000 m³
                 </div>
                 <button class="btn-primary btn-green" onclick="upgradeWarehouse()">
-                    Upgrade - 500,000 🪙
+                    Upgrade - 500,000 
                 </button>
             </div>
         </div>
@@ -666,7 +730,7 @@ body {
             <div class="wood-panel">
                 <div class="panel-header">
                     <button class="help-btn" onclick="showHelp()">❓</button>
-                    <div class="panel-title">🏪 Shop</div>
+                    <div class="panel-title"> Shop</div>
                     <button class="panel-close" onclick="showPage('warehouse')">✕</button>
                 </div>
                 <div style="padding: 16px;">
@@ -674,16 +738,16 @@ body {
                         <div class="shop-item-icon">🌾</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Wheat Field</div>
-                            <div class="shop-item-desc">1 wheat/min</div>
+                            <div class="shop-item-desc">1 wheat/min • ROI: 90 days</div>
                             <div class="shop-item-price">1,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="buyBuilding('wheat', 1000)">Buy</button>
                     </div>
                     <div class="shop-item">
-                        <div class="shop-item-icon"></div>
+                        <div class="shop-item-icon">🐔</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Chicken</div>
-                            <div class="shop-item-desc">2 eggs/min</div>
+                            <div class="shop-item-desc">2 eggs/min • ROI: 90 days</div>
                             <div class="shop-item-price">5,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="buyAnimal('chicken', 5000)">Buy</button>
@@ -692,7 +756,7 @@ body {
                         <div class="shop-item-icon">🐄</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Cow</div>
-                            <div class="shop-item-desc">4 milk/min</div>
+                            <div class="shop-item-desc">4 milk/min • ROI: 90 days</div>
                             <div class="shop-item-price">25,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="buyAnimal('cow', 25000)">Buy</button>
@@ -701,7 +765,7 @@ body {
                         <div class="shop-item-icon">🐐</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Goat</div>
-                            <div class="shop-item-desc">8 goat milk/min</div>
+                            <div class="shop-item-desc">8 goat milk/min • ROI: 90 days</div>
                             <div class="shop-item-price">100,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="buyAnimal('goat', 100000)">Buy</button>
@@ -710,13 +774,13 @@ body {
                         <div class="shop-item-icon">🐑</div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Sheep</div>
-                            <div class="shop-item-desc">16 sheep milk/min</div>
+                            <div class="shop-item-desc">16 sheep milk/min • ROI: 90 days</div>
                             <div class="shop-item-price">500,000 🪙</div>
                         </div>
                         <button class="buy-btn" onclick="buyAnimal('sheep', 500000)">Buy</button>
                     </div>
                     <div class="shop-item">
-                        <div class="shop-item-icon">🧀</div>
+                        <div class="shop-item-icon"></div>
                         <div class="shop-item-info">
                             <div class="shop-item-name">Cheese Factory</div>
                             <div class="shop-item-desc">Converts milk to cheese</div>
@@ -754,7 +818,7 @@ body {
                         <div class="bucks-option" onclick="buyBucks(50)">
                             <div class="amount">50 Bucks</div>
                             <div class="price">$50.00</div>
-                            <div class="coins-info">= 500,000 🪙</div>
+                            <div class="coins-info">= 500,000 </div>
                         </div>
                         <div class="bucks-option" onclick="buyBucks(100)">
                             <div class="amount">100 Bucks</div>
@@ -769,10 +833,11 @@ body {
                         <div class="bucks-option" onclick="buyBucks(9999)">
                             <div class="amount">9,999 Bucks</div>
                             <div class="price">$9,999.00</div>
-                            <div class="coins-info">= 99,990,000 🪙</div>
+                            <div class="coins-info">= 99,990,000 </div>
                         </div>
                     </div>
-                    <button class="btn-primary" onclick="showPage('warehouse')">Go Back</button>
+                    <button class="btn-primary" onclick="showPaymentModal()">💳 Pay with TON</button>
+                    <button class="btn-primary" onclick="showPage('warehouse')" style="background: linear-gradient(180deg, #666 0%, #333 100%); border-color: #222;">Go Back</button>
                 </div>
             </div>
         </div>
@@ -796,6 +861,37 @@ body {
         <div class="nav-item" onclick="showPage('payout')" data-page="payout">
             <div class="nav-icon">💰</div>
             <div class="nav-label">Payout</div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="payment-modal">
+        <div class="payment-content">
+            <div class="payment-title">💳 Select Payment Method</div>
+            <div class="payment-methods">
+                <div class="payment-method" onclick="processPayment('TON')">
+                    <div class="payment-method-icon">💎</div>
+                    <div class="payment-method-info">
+                        <div class="payment-method-name">TON (Toncoin)</div>
+                        <div class="payment-method-desc">Fast & Low fees</div>
+                    </div>
+                </div>
+                <div class="payment-method" onclick="processPayment('USDT')">
+                    <div class="payment-method-icon">💵</div>
+                    <div class="payment-method-info">
+                        <div class="payment-method-name">USDT (Tether)</div>
+                        <div class="payment-method-desc">Stablecoin</div>
+                    </div>
+                </div>
+                <div class="payment-method" onclick="processPayment('Card')">
+                    <div class="payment-method-icon">💳</div>
+                    <div class="payment-method-info">
+                        <div class="payment-method-name">Credit Card</div>
+                        <div class="payment-method-desc">Visa/Mastercard</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-primary btn-red" onclick="closePaymentModal()">Cancel</button>
         </div>
     </div>
 
@@ -826,7 +922,15 @@ let adminConfig = {
         goat: 8,
         sheep: 16
     },
-    bucksToCoins: 10000  // 1 buck = 10,000 coins
+    // 90 gün ROI için birim fiyatlar (coin/m³)
+    sellPrices: {
+        wheat: 0.01,      // 1,000 coin / 129,600 m³
+        egg: 0.02,        // 5,000 coin / 259,200 m³
+        milk: 0.05,       // 25,000 coin / 518,400 m³
+        goatMilk: 0.10,   // 100,000 coin / 1,036,800 m³
+        sheepMilk: 0.25   // 500,000 coin / 2,073,600 m³
+    },
+    bucksToCoins: 10000
 };
 
 // --- GAME STATE ---
@@ -852,7 +956,6 @@ function loadState() {
     const saved = localStorage.getItem('farmState');
     if (saved) {
         state = JSON.parse(saved);
-        // Calculate offline production
         const now = Date.now();
         const secondsOffline = (now - state.lastSave) / 1000;
         if (secondsOffline > 0) {
@@ -884,17 +987,14 @@ function saveState() {
 
 // --- UI UPDATES ---
 function updateUI() {
-    // Currency
     document.getElementById('bucks-display').textContent = state.bucks.toFixed(4);
     document.getElementById('coin-display').textContent = Math.floor(state.coins).toLocaleString();
 
-    // Warehouse
     ['wheat', 'egg', 'milk', 'cheese', 'wool'].forEach(item => {
         document.getElementById(`${item}-volume`).textContent = Math.floor(state.warehouse[item].volume).toLocaleString();
         document.getElementById(`${item}-pcs`).textContent = Math.floor(state.warehouse[item].pcs).toLocaleString();
     });
 
-    // Capacity
     const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
     const percent = Math.min(100, ((totalVolume / state.capacity) * 100)).toFixed(1);
     
@@ -906,45 +1006,38 @@ function updateUI() {
     document.getElementById('upgrade-max').textContent = state.capacity.toLocaleString();
     document.getElementById('upgrade-fill').style.width = percent + '%';
 
-    // Production Rates (per second and per minute)
     const prod = adminConfig.production;
     
-    // Wheat
     const wheatPerMin = state.buildings.wheat * prod.wheat;
     const wheatPerSec = wheatPerMin / 60;
     document.getElementById('wheat-rate-sec').textContent = wheatPerSec.toFixed(2);
     document.getElementById('wheat-rate-min').textContent = wheatPerMin;
     document.getElementById('wheat-count').textContent = state.buildings.wheat;
 
-    // Eggs (Chicken)
     const eggPerMin = state.animals.chicken * prod.chicken;
     const eggPerSec = eggPerMin / 60;
     document.getElementById('egg-rate-sec').textContent = eggPerSec.toFixed(2);
     document.getElementById('egg-rate-min').textContent = eggPerMin;
     document.getElementById('chicken-count').textContent = state.animals.chicken;
 
-    // Milk (Cow)
     const cowPerMin = state.animals.cow * prod.cow;
     const cowPerSec = cowPerMin / 60;
     document.getElementById('cow-rate-sec').textContent = cowPerSec.toFixed(2);
     document.getElementById('cow-rate-min').textContent = cowPerMin;
     document.getElementById('cow-count').textContent = state.animals.cow;
 
-    // Goat Milk
     const goatPerMin = state.animals.goat * prod.goat;
     const goatPerSec = goatPerMin / 60;
     document.getElementById('goat-rate-sec').textContent = goatPerSec.toFixed(2);
     document.getElementById('goat-rate-min').textContent = goatPerMin;
     document.getElementById('goat-count').textContent = state.animals.goat;
 
-    // Sheep Milk
     const sheepPerMin = state.animals.sheep * prod.sheep;
     const sheepPerSec = sheepPerMin / 60;
     document.getElementById('sheep-rate-sec').textContent = sheepPerSec.toFixed(2);
     document.getElementById('sheep-rate-min').textContent = sheepPerMin;
     document.getElementById('sheep-count').textContent = state.animals.sheep;
 
-    // Total
     const totalPerMin = wheatPerMin + eggPerMin + cowPerMin + goatPerMin + sheepPerMin;
     document.getElementById('total-rate-min').textContent = totalPerMin;
 }
@@ -1002,7 +1095,6 @@ function buyBuilding(type, price) {
 function startProduction() {
     setInterval(() => {
         const prod = adminConfig.production;
-        // Her saniye üretim (dakika bazlı / 60)
         if (state.animals.chicken > 0) state.production.egg += (state.animals.chicken * prod.chicken) / 60;
         if (state.animals.sheep > 0) state.production.milk += (state.animals.sheep * prod.sheep) / 60;
         if (state.animals.goat > 0) state.production.milk += (state.animals.goat * prod.goat) / 60;
@@ -1015,7 +1107,13 @@ function startProduction() {
 function sendProducts() {
     const totalVolume = Object.values(state.warehouse).reduce((sum, item) => sum + item.volume, 0);
     if (totalVolume > 0) {
-        const earnings = Math.floor(totalVolume / 100);
+        // ROI bazlı satış fiyatları
+        let earnings = 0;
+        earnings += state.warehouse.wheat.volume * adminConfig.sellPrices.wheat;
+        earnings += state.warehouse.egg.volume * adminConfig.sellPrices.egg;
+        earnings += state.warehouse.milk.volume * adminConfig.sellPrices.milk;
+        
+        earnings = Math.floor(earnings);
         state.coins += earnings;
         Object.keys(state.warehouse).forEach(key => {
             state.warehouse[key].volume = 0;
@@ -1063,13 +1161,42 @@ function buyBucks(amount) {
     confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
 }
 
+// --- PAYMENT SYSTEM ---
+function showPaymentModal() {
+    document.getElementById('payment-modal').classList.add('show');
+}
+
+function closePaymentModal() {
+    document.getElementById('payment-modal').classList.remove('show');
+}
+
+function processPayment(method) {
+    // Gerçek ödeme entegrasyonu için backend gerekli
+    // Şimdilik simülasyon
+    closePaymentModal();
+    
+    if (method === 'TON') {
+        showToast('💎 TON payment processing... (Demo)');
+        // Gerçek uygulamada: TON Connect API
+    } else if (method === 'USDT') {
+        showToast('💵 USDT payment processing... (Demo)');
+    } else if (method === 'Card') {
+        showToast('💳 Card payment processing... (Demo)');
+    }
+    
+    setTimeout(() => {
+        showToast('✅ Payment successful! (Demo mode)');
+        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+    }, 2000);
+}
+
 // --- EXTRAS ---
 function openSettings() { 
     showToast('⚙️ Settings: Sound ON, Notifications ON');
 }
 
 function showHelp() { 
-    showToast(' Buy animals → Produce → Collect → Sell!');
+    showToast('💡 Buy animals → Produce → Collect → Sell!');
 }
 
 function showToast(msg) {
