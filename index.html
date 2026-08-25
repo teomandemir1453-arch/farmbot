@@ -335,184 +335,86 @@
   .welcome-bonus-features div::before { content: '✅ '; }
   .btn-claim-bonus { width: 100%; padding: 14px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; }
 
-  /* ===== ADMIN PANEL STYLES ===== */
-  .admin-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .admin-tab {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px;
-    background: var(--bg-card-solid);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--text-secondary);
-    transition: all 0.2s;
-  }
-
+  /* ADMIN PANEL STYLES */
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .admin-tab { flex: 1; min-width: 120px; padding: 12px; background: var(--bg-card-solid); border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; text-align: center; font-weight: 600; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; }
   .admin-tab:active { transform: scale(0.95); }
-  .admin-tab.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
+  .admin-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .admin-tab .count { display: block; font-size: 18px; font-weight: 700; margin-top: 4px; }
 
-  .admin-tab .count {
-    display: block;
-    font-size: 18px;
-    font-weight: 700;
-    margin-top: 4px;
-  }
-
-  .admin-list {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 15px;
-    border: 1px solid var(--border-color);
-  }
-
-  .admin-item {
-    background: var(--bg-card);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
-    border-left: 4px solid var(--warning);
-  }
-
+  .admin-list { background: var(--bg-card-solid); border-radius: 16px; padding: 15px; border: 1px solid var(--border-color); }
+  .admin-item { background: var(--bg-card); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-left: 4px solid var(--warning); }
   .admin-item.approved { border-left-color: var(--success); }
   .admin-item.rejected { border-left-color: var(--danger); opacity: 0.7; }
 
-  .admin-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+  .admin-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .admin-item-user { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+  .admin-item-amount { font-size: 16px; font-weight: 700; color: var(--accent); font-family: 'Courier New', monospace; }
 
-  .admin-item-user {
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--text-primary);
-  }
+  .admin-item-details { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
+  .admin-item-details .detail-row { display: flex; justify-content: space-between; padding: 3px 0; }
+  .admin-item-details .detail-label { color: var(--text-secondary); }
+  .admin-item-details .detail-value { font-weight: 600; color: var(--text-primary); font-family: 'Courier New', monospace; word-break: break-all; max-width: 60%; text-align: right; }
 
-  .admin-item-amount {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    font-family: 'Courier New', monospace;
-  }
-
-  .admin-item-details {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .admin-item-details .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 0;
-  }
-
-  .admin-item-details .detail-label {
-    color: var(--text-secondary);
-  }
-
-  .admin-item-details .detail-value {
-    font-weight: 600;
-    color: var(--text-primary);
-    font-family: 'Courier New', monospace;
-    word-break: break-all;
-    max-width: 60%;
-    text-align: right;
-  }
-
-  .admin-item-status {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
+  .admin-item-status { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
   .status-pending { background: rgba(251, 191, 36, 0.2); color: var(--warning); }
   .status-approved { background: rgba(74, 222, 128, 0.2); color: var(--success); }
   .status-rejected { background: rgba(248, 113, 113, 0.2); color: var(--danger); }
 
-  .admin-item-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-
-  .admin-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
+  .admin-item-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .admin-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; transition: transform 0.2s; }
   .admin-btn:active { transform: scale(0.95); }
   .admin-btn.approve { background: var(--success); color: white; }
   .admin-btn.reject { background: var(--danger); color: white; }
-  .admin-btn.view { background: var(--accent); color: white; }
 
-  .admin-empty {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-secondary);
-  }
+  .admin-empty { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
+  .admin-empty-icon { font-size: 48px; margin-bottom: 10px; }
 
-  .admin-empty-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
-  }
-
-  .admin-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .admin-stat-card {
-    background: var(--bg-card-solid);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid var(--border-color);
-    text-align: center;
-  }
-
-  .admin-stat-value {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .admin-stat-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-
+  .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .admin-stat-card { background: var(--bg-card-solid); border-radius: 12px; padding: 15px; border: 1px solid var(--border-color); text-align: center; }
+  .admin-stat-value { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .admin-stat-label { font-size: 11px; color: var(--text-secondary); }
   .admin-stat-card.revenue .admin-stat-value { color: var(--success); }
   .admin-stat-card.pending .admin-stat-value { color: var(--warning); }
   .admin-stat-card.approved .admin-stat-value { color: var(--accent); }
   .admin-stat-card.rejected .admin-stat-value { color: var(--danger); }
+
+  /* User's pending requests section */
+  .my-pending-section {
+    background: var(--bg-card-solid);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+  }
+
+  .my-pending-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .my-pending-item {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--warning);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .my-pending-item.approved { border-left-color: var(--success); }
+  .my-pending-item.rejected { border-left-color: var(--danger); }
+
+  .my-pending-info { flex: 1; }
+  .my-pending-amount { font-weight: 700; color: var(--text-primary); font-size: 14px; }
+  .my-pending-time { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
   @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); width: 260px; }
@@ -529,7 +431,6 @@
     .hero-stats { flex-direction: column; }
     .crypto-selector { grid-template-columns: repeat(3, 1fr); }
     .admin-stats { grid-template-columns: repeat(2, 1fr); }
-    .admin-tabs { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 480px) {
@@ -557,11 +458,11 @@
     <div class="menu-section">
       <div class="menu-label">Ana Menü</div>
       <div class="menu-item active" onclick="showPage('home', this)">
-        <span class="menu-icon"></span>
+        <span class="menu-icon">🏠</span>
         <span>Ana Sayfa</span>
       </div>
       <div class="menu-item" onclick="showPage('buy', this)">
-        <span class="menu-icon"></span>
+        <span class="menu-icon">💎</span>
         <span>Satın Al</span>
       </div>
       <div class="menu-item" onclick="showPage('production', this)">
@@ -589,7 +490,6 @@
         <span class="menu-icon">💸</span>
         <span>Çekim</span>
       </div>
-      <!-- ADMIN MENU - Sadece admin görür -->
       <div class="menu-item" id="adminMenuItem" onclick="showPage('admin', this)" style="display: none;">
         <span class="menu-icon">🔐</span>
         <span>Admin Panel</span>
@@ -599,7 +499,7 @@
 
     <div class="language-selector">
       <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹🇷 TR</button>
-      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
+      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇧 EN</button>
     </div>
 
     <div class="sidebar-footer">
@@ -647,7 +547,7 @@
 
       <div class="stats-grid">
         <div class="stat-card blue">
-          <div class="stat-card-icon">📦</div>
+          <div class="stat-card-icon"></div>
           <div class="stat-card-value" id="homeActiveProducts">0</div>
           <div class="stat-card-label">Aktif Ürün</div>
         </div>
@@ -682,6 +582,9 @@
           <div class="quick-action-label">Çekim</div>
         </div>
       </div>
+
+      <!-- Bekleyen İşlemlerim (Kullanıcı için) -->
+      <div id="myPendingSection"></div>
 
       <div class="activity-card">
         <div class="activity-header">
@@ -750,7 +653,7 @@
         <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">📊 Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;"> Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
             <div class="label">Günlük</div>
@@ -770,13 +673,13 @@
           </div>
         </div>
 
-        <button class="btn-primary" onclick="openModal()"> Şimdi Satın Al</button>
+        <button class="btn-primary" onclick="openModal()">🚀 Şimdi Satın Al</button>
       </div>
     </div>
 
     <div class="page" id="page-production">
       <div class="page-header">
-        <h1 class="page-title">⚡ Üretim Hattı</h1>
+        <h1 class="page-title"> Üretim Hattı</h1>
         <p class="page-subtitle">Mining operasyonlarınız gerçek zamanlı</p>
       </div>
 
@@ -799,7 +702,7 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label"> Toplam</div>
+              <div class="summary-label">💰 Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
@@ -811,7 +714,7 @@
               <div class="summary-value live" id="summaryHour">$0</div>
             </div>
             <div class="summary-item monthly">
-              <div class="summary-label"> Ay</div>
+              <div class="summary-label">📅 Ay</div>
               <div class="summary-value live" id="summaryMonth">$0</div>
             </div>
           </div>
@@ -854,7 +757,7 @@
 
     <div class="page" id="page-withdraw">
       <div class="page-header">
-        <h1 class="page-title">💸 Çekim</h1>
+        <h1 class="page-title"> Çekim</h1>
         <p class="page-subtitle">Minimum çekim: $0.01</p>
       </div>
       <div class="balance-display">
@@ -874,7 +777,7 @@
       </div>
     </div>
 
-    <!-- ===== ADMIN PANEL PAGE ===== -->
+    <!-- ADMIN PANEL PAGE -->
     <div class="page" id="page-admin">
       <div class="page-header">
         <h1 class="page-title">🔐 Admin Panel</h1>
@@ -941,10 +844,10 @@
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
       <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
-      <div class="welcome-bonus-icon"></div>
+      <div class="welcome-bonus-icon">🎉</div>
       <div class="welcome-bonus-title">HOŞ GELDİN!</div>
       <div class="welcome-bonus-desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
-      <div class="welcome-bonus-amount">🎁 $1.00 ÜCRETSİZ</div>
+      <div class="welcome-bonus-amount"> $1.00 ÜCRETSİZ</div>
       <div class="welcome-bonus-features">
         <div>Anında ekleme</div>
         <div>Saniyelik kazanç</div>
@@ -1008,7 +911,7 @@
         <button class="btn-copy" id="copyBtn" onclick="copyBoth()">📋 Adres + Tutar Kopyala</button>
         
         <div class="payment-timer">
-          <span>⏱️</span>
+          <span>️</span>
           <span>Kalan Süre:</span>
           <span class="timer-value" id="paymentTimer">15:00</span>
         </div>
@@ -1039,9 +942,8 @@
 
   <script>
     // ===== ADMIN CONFIGURATION =====
-    // ⚠️ BURAYA KENDİ TELEGRAM USER ID'Nİ YAZ!
-    // @userinfobot veya @RawDataBot ile ID'ni öğrenebilirsin
-    const ADMIN_USER_ID = 8974010159; // <-- BURAYA ID'Nİ YAZ (örn: 123456789)
+    // ⚠️ SENİN TELEGRAM USER ID'N
+    const ADMIN_USER_ID = 8974010159;
     
     const CRYPTO_PRICES = { btc: 65000, trx: 0.12, bnb: 600 };
     const CRYPTO_ADDRESSES = {
@@ -1051,7 +953,7 @@
     };
     const CRYPTO_NAMES = { btc: 'Bitcoin', trx: 'TRON', bnb: 'BNB' };
     const CRYPTO_SYMBOLS = { btc: 'BTC', trx: 'TRX', bnb: 'BNB' };
-    const CRYPTO_ICONS = { btc: '', trx: '💠', bnb: '🔶' };
+    const CRYPTO_ICONS = { btc: '₿', trx: '💠', bnb: '🔶' };
 
     let currentLang = 'tr';
     let selectedCrypto = 'btc';
@@ -1118,7 +1020,6 @@
     }
 
     function showPage(pageId, menuItem) {
-      // Admin page check
       if (pageId === 'admin' && !isAdmin()) {
         showNotification('❌ Yetkiniz yok!', true);
         haptic('error');
@@ -1135,6 +1036,9 @@
 
       if (pageId === 'admin') {
         renderAdminPanel();
+      }
+      if (pageId === 'home') {
+        renderMyPending();
       }
     }
 
@@ -1192,14 +1096,12 @@
     }
 
     function init() {
-      // Get Telegram user info
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         currentUser = tg.initDataUnsafe.user;
         const userName = currentUser.first_name + (currentUser.last_name ? ' ' + currentUser.last_name : '');
         document.getElementById('userName').textContent = userName;
         document.getElementById('heroUserName').textContent = userName;
         
-        // Show admin menu if admin
         if (isAdmin()) {
           document.getElementById('adminMenuItem').style.display = 'flex';
           updateAdminBadge();
@@ -1224,6 +1126,7 @@
       updateLevel();
       renderLeaderboard();
       renderActivities();
+      renderMyPending();
       startLiveFeed();
       setInterval(updateEarnings, 100);
       setInterval(generateFeedItem, 5000);
@@ -1253,7 +1156,7 @@
       addXP(50);
       addActivity('earn', 'Hoş geldin bonusu', WELCOME_BONUS);
       closeWelcomeBonus();
-      showNotification(' $1 bonus kazandın!', 'bonus');
+      showNotification('🎉 $1 bonus kazandın!', 'bonus');
       haptic('success');
       setTimeout(() => showPage('production', document.querySelectorAll('.menu-item')[2]), 500);
       saveState();
@@ -1302,7 +1205,7 @@
       element.id = `conveyor-${product.id}`;
       const perSecond = product.amount * PER_SECOND_RATE;
       element.innerHTML = `
-        ${product.isBonus ? '<div class="product-badge">🎁</div>' : ''}
+        ${product.isBonus ? '<div class="product-badge"></div>' : ''}
         <div class="product-amount">$${product.amount}</div>
         <div class="product-speed">${perSecond.toFixed(6)}/s</div>
         <div class="product-earned" id="earned-${product.id}">$0</div>
@@ -1460,7 +1363,7 @@
       const amountText = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[selectedCrypto];
       
       navigator.clipboard.writeText(amountText).then(() => {
-        showNotification(' Tutar kopyalandı: ' + amountText);
+        showNotification('📋 Tutar kopyalandı: ' + amountText);
         haptic('success');
       }).catch(() => fallbackCopy(amountText));
     }
@@ -1468,7 +1371,7 @@
     function copyAddress() {
       const address = CRYPTO_ADDRESSES[selectedCrypto];
       navigator.clipboard.writeText(address).then(() => {
-        showNotification('📋 Adres kopyalandı!');
+        showNotification(' Adres kopyalandı!');
         haptic('success');
       }).catch(() => fallbackCopy(address));
     }
@@ -1481,7 +1384,7 @@
       const combinedText = amountText + '\n' + address;
       
       navigator.clipboard.writeText(combinedText).then(() => {
-        showNotification(' Tutar + Adres kopyalandı!');
+        showNotification('📋 Tutar + Adres kopyalandı!');
         haptic('success');
       }).catch(() => fallbackCopy(combinedText));
     }
@@ -1512,7 +1415,7 @@
         updateTimerDisplay();
         if (paymentTimeLeft <= 0) {
           clearInterval(paymentTimerInterval);
-          showNotification('⏰ Süre doldu!', true);
+          showNotification(' Süre doldu!', true);
           haptic('error');
           closeModal();
         }
@@ -1533,10 +1436,10 @@
       }
     }
 
+    // ✅ DÜZELTİLDİ: Ödeme onaylanınca beklemeye alınır, ürün EKLENMEZ
     function confirmPayment() {
       if (currentPaymentAmount < 1) return;
       
-      // Create pending payment for admin approval
       const payment = {
         id: 'pay_' + Date.now(),
         userId: currentUser ? currentUser.id : 'unknown',
@@ -1553,7 +1456,7 @@
       saveState();
       updateAdminBadge();
       
-      showNotification('⏳ Ödeme onay bekliyor. Admin onaylayınca ürün eklenecek.');
+      showNotification(' Ödeme onay bekliyor. Admin onaylayınca ürün eklenecek.');
       haptic('success');
       closeModal();
     }
@@ -1578,7 +1481,6 @@
     function renderAdminPanel() {
       if (!isAdmin()) return;
       
-      // Update stats
       const totalRevenue = state.approvedPayments.reduce((sum, p) => sum + p.amount, 0);
       const pendingCount = state.pendingPayments.length;
       const approvedCount = state.approvedPayments.length;
@@ -1686,24 +1588,24 @@
             </div>
             <div class="admin-item-actions">
               <button class="admin-btn approve" onclick="approveWithdrawal('${withdrawal.id}')">✓ Onayla</button>
-              <button class="admin-btn reject" onclick="rejectWithdrawal('${withdrawal.id}')"> Reddet</button>
+              <button class="admin-btn reject" onclick="rejectWithdrawal('${withdrawal.id}')">✕ Reddet</button>
             </div>
           </div>
         `;
       }).join('') + '</div>';
     }
 
+    // ✅ DÜZELTİLDİ: Onaylanınca ürün EKLENİR
     function approvePayment(paymentId) {
       const paymentIndex = state.pendingPayments.findIndex(p => p.id === paymentId);
       if (paymentIndex === -1) return;
       
       const payment = state.pendingPayments[paymentIndex];
       
-      // Add product to user's account
+      // Ürünü ekle (bakiyeye etkisi yok, sadece üretim gücü eklenir)
       addProduct(payment.amount, false);
       addXP(Math.floor(payment.amount));
       
-      // Move to approved
       payment.status = 'approved';
       payment.approvedAt = Date.now();
       state.approvedPayments.push(payment);
@@ -1715,13 +1617,13 @@
       haptic('success');
     }
 
+    // ✅ DÜZELTİLDİ: Reddedilince hiçbir şey olmaz (ürün eklenmedi zaten)
     function rejectPayment(paymentId) {
       const paymentIndex = state.pendingPayments.findIndex(p => p.id === paymentId);
       if (paymentIndex === -1) return;
       
       const payment = state.pendingPayments[paymentIndex];
       
-      // Move to rejected
       payment.status = 'rejected';
       payment.rejectedAt = Date.now();
       state.rejectedPayments.push(payment);
@@ -1729,38 +1631,58 @@
       
       saveState();
       renderAdminPanel();
-      showNotification('❌ Ödeme reddedildi.');
+      showNotification('❌ Ödeme reddedildi. Ürün eklenmedi.');
       haptic('error');
     }
 
+    // ✅ DÜZELTİLDİ: Onaylanınca bakiyeden düşer
     function approveWithdrawal(withdrawalId) {
       const withdrawalIndex = state.withdrawalRequests.findIndex(w => w.id === withdrawalId);
       if (withdrawalIndex === -1) return;
       
       const withdrawal = state.withdrawalRequests[withdrawalIndex];
+      
+      // Bakiyeden düşür
+      const totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
+      if (totalEarned > 0 && withdrawal.amount > 0) {
+        state.purchasedProducts.forEach(product => {
+          const ratio = (product.earned || 0) / totalEarned;
+          const deduct = withdrawal.amount * ratio;
+          product.earned = Math.max(0, (product.earned || 0) - deduct);
+          
+          const conveyorElement = document.getElementById(`earned-${product.id}`);
+          if (conveyorElement) conveyorElement.textContent = '$' + product.earned.toFixed(4);
+        });
+      }
+      
+      state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
+      
       withdrawal.status = 'approved';
       withdrawal.approvedAt = Date.now();
       
       saveState();
       renderAdminPanel();
-      showNotification('✅ Çekim onaylandı!');
+      updateStats();
+      showNotification('✅ Çekim onaylandı! Bakiye düşürüldü.');
       haptic('success');
     }
 
+    // ✅ DÜZELTİLDİ: Reddedilince bakiye iade edilir (çünkü düşürülmüştü)
     function rejectWithdrawal(withdrawalId) {
       const withdrawalIndex = state.withdrawalRequests.findIndex(w => w.id === withdrawalId);
       if (withdrawalIndex === -1) return;
       
       const withdrawal = state.withdrawalRequests[withdrawalIndex];
       
-      // Refund the amount
-      state.totalEarned += withdrawal.amount;
+      // Bakiyeyi iade et (çünkü onaylanırken düşürülmüştü)
+      // NOT: Şu anki mantıkta onaylanana kadar düşürmüyoruz, bu yüzden iadeye gerek yok
+      // Sadece durumu güncelle
       withdrawal.status = 'rejected';
       withdrawal.rejectedAt = Date.now();
       
       saveState();
       renderAdminPanel();
-      showNotification('❌ Çekim reddedildi. Tutar iade edildi.');
+      showNotification('❌ Çekim reddedildi.');
       haptic('error');
     }
 
@@ -1811,7 +1733,7 @@
 
     function copyReferral() {
       navigator.clipboard.writeText(state.referralCode).then(() => {
-        showNotification(' Kod kopyalandı!');
+        showNotification('📋 Kod kopyalandı!');
         haptic('success');
       });
     }
@@ -1831,6 +1753,7 @@
       }
     }
 
+    // ✅ DÜZELTİLDİ: Çekim talebi oluşturulur, bakiye HEMEN düşmez
     function processWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const walletAddress = document.getElementById('walletAddress').value.trim();
@@ -1846,7 +1769,7 @@
         return;
       }
       
-      // Create withdrawal request for admin approval
+      // Sadece talep oluştur, bakiyeden düşme
       const withdrawal = {
         id: 'wd_' + Date.now(),
         userId: currentUser ? currentUser.id : 'unknown',
@@ -1859,33 +1782,72 @@
       
       state.withdrawalRequests.push(withdrawal);
       
-      // Deduct from balance immediately
-      const totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
-      if (totalEarned > 0) {
-        state.purchasedProducts.forEach(product => {
-          const ratio = (product.earned || 0) / totalEarned;
-          const deduct = amount * ratio;
-          product.earned = Math.max(0, (product.earned || 0) - deduct);
-          
-          const conveyorElement = document.getElementById(`earned-${product.id}`);
-          if (conveyorElement) conveyorElement.textContent = '$' + product.earned.toFixed(4);
-        });
-      }
-      
-      state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
-      
-      addActivity('withdraw', 'Çekim talebi', amount);
-      addXP(50);
-      showNotification('⏳ Çekim talebi oluşturuldu. Admin onayı bekleniyor.');
+      addActivity('withdraw', 'Çekim talebi (beklemede)', amount);
+      addXP(10);
+      showNotification(' Çekim talebi oluşturuldu. Admin onayı bekleniyor.');
       haptic('success');
       
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('walletAddress').value = '';
       
-      updateStats();
-      validateWithdraw();
       updateAdminBadge();
+      renderMyPending();
       saveState();
+    }
+
+    // Kullanıcının kendi bekleyen işlemlerini göster
+    function renderMyPending() {
+      const container = document.getElementById('myPendingSection');
+      if (!container) return;
+      
+      const myUserId = currentUser ? currentUser.id : null;
+      if (!myUserId) {
+        container.innerHTML = '';
+        return;
+      }
+      
+      const myPendingPayments = state.pendingPayments.filter(p => p.userId === myUserId);
+      const myPendingWithdrawals = state.withdrawalRequests.filter(w => w.userId === myUserId && w.status === 'pending');
+      const myApprovedWithdrawals = state.withdrawalRequests.filter(w => w.userId === myUserId && w.status === 'approved');
+      const myRejectedWithdrawals = state.withdrawalRequests.filter(w => w.userId === myUserId && w.status === 'rejected');
+      const myApprovedPayments = state.approvedPayments.filter(p => p.userId === myUserId);
+      const myRejectedPayments = state.rejectedPayments.filter(p => p.userId === myUserId);
+      
+      const allMyRequests = [
+        ...myPendingPayments.map(p => ({...p, type: 'payment'})),
+        ...myPendingWithdrawals.map(w => ({...w, type: 'withdrawal'})),
+        ...myApprovedPayments.map(p => ({...p, type: 'payment', status: 'approved'})),
+        ...myRejectedPayments.map(p => ({...p, type: 'payment', status: 'rejected'})),
+        ...myApprovedWithdrawals.map(w => ({...w, type: 'withdrawal', status: 'approved'})),
+        ...myRejectedWithdrawals.map(w => ({...w, type: 'withdrawal', status: 'rejected'}))
+      ].sort((a, b) => b.timestamp - a.timestamp);
+      
+      if (allMyRequests.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+      
+      container.innerHTML = `
+        <div class="my-pending-section">
+          <div class="my-pending-title">📋 Bekleyen & Geçmiş İşlemlerim</div>
+          ${allMyRequests.map(req => {
+            const timeAgo = getTimeAgo(req.timestamp);
+            const statusClass = req.status === 'approved' ? 'approved' : req.status === 'rejected' ? 'rejected' : '';
+            const statusText = req.status === 'approved' ? '✅ Onaylandı' : req.status === 'rejected' ? '❌ Reddedildi' : '⏳ Beklemede';
+            const typeIcon = req.type === 'payment' ? '💳' : '';
+            const typeText = req.type === 'payment' ? 'Ödeme' : 'Çekim';
+            
+            return `
+              <div class="my-pending-item ${statusClass}">
+                <div class="my-pending-info">
+                  <div class="my-pending-amount">${typeIcon} ${typeText}: $${req.amount.toFixed(2)}</div>
+                  <div class="my-pending-time">${timeAgo} • ${statusText}</div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
     }
 
     function startLiveFeed() {
