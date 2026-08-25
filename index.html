@@ -3,367 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <title>BTC Mining Platform</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root {
-    --tg-theme-bg-color: #f5f7fa;
-    --tg-theme-text-color: #1a2a3a;
-    --tg-theme-hint-color: #5a6a7a;
-    --tg-theme-link-color: #4a9eff;
-    --tg-theme-button-color: #4a9eff;
-    --tg-theme-button-text-color: #ffffff;
-    --tg-theme-secondary-bg-color: #e8f1f8;
-    
-    --bg-primary: var(--tg-theme-bg-color);
+    --bg-primary: #f5f7fa;
     --bg-card: rgba(255, 255, 255, 0.6);
     --bg-card-solid: rgba(255, 255, 255, 0.5);
     --bg-sidebar: rgba(255, 255, 255, 0.7);
-    --text-primary: var(--tg-theme-text-color);
-    --text-secondary: var(--tg-theme-hint-color);
+    --text-primary: #1a2a3a;
+    --text-secondary: #5a6a7a;
     --border-color: rgba(255, 255, 255, 0.6);
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    --accent: var(--tg-theme-link-color);
+    --accent: #4a9eff;
     --accent-dark: #2a6acc;
     --success: #4ade80;
     --danger: #f87171;
     --warning: #fbbf24;
     --btc-orange: #f7931a;
+    --trx-red: #eb0029;
+    --bnb-yellow: #f3ba2f;
   }
 
   [data-theme="dark"] {
-    --tg-theme-bg-color: #0f172a;
-    --tg-theme-text-color: #f1f5f9;
-    --tg-theme-hint-color: #94a3b8;
-    --tg-theme-link-color: #4a9eff;
-    --tg-theme-button-color: #4a9eff;
-    --tg-theme-button-text-color: #ffffff;
-    --tg-theme-secondary-bg-color: #1e293b;
-    
+    --bg-primary: #0f172a;
     --bg-card: rgba(30, 41, 59, 0.7);
     --bg-card-solid: rgba(30, 41, 59, 0.6);
     --bg-sidebar: rgba(15, 23, 42, 0.9);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
     --border-color: rgba(148, 163, 184, 0.2);
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-    transition: background-color 0.3s, color 0.3s; 
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: background-color 0.3s, color 0.3s; -webkit-tap-highlight-color: transparent; user-select: none; }
+  body { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); display: flex; overflow-x: hidden; }
 
-  body { 
-    min-height: 100vh; 
-    background: var(--bg-primary); 
-    color: var(--text-primary); 
-    display: flex; 
-    overflow-x: hidden;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .sidebar {
-    width: 280px;
-    background: var(--bg-sidebar);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid var(--border-color);
-    padding: 20px 15px;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
-    z-index: 100;
-    transition: transform 0.3s;
-    padding-top: calc(20px + env(safe-area-inset-top));
-  }
-
-  .sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .sidebar-logo {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  }
-
+  .sidebar { width: 280px; background: var(--bg-sidebar); backdrop-filter: blur(20px); border-right: 1px solid var(--border-color); padding: 20px 15px; position: fixed; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.3s; }
+  .sidebar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+  .sidebar-logo { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
   .sidebar-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
   .sidebar-subtitle { font-size: 11px; color: var(--text-secondary); }
-
   .menu-section { margin-bottom: 20px; }
-
-  .menu-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    padding-left: 12px;
-    font-weight: 600;
-  }
-
-  .menu-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-bottom: 4px;
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-    font-size: 14px;
-  }
-
+  .menu-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 8px; padding-left: 12px; font-weight: 600; }
+  .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 12px; cursor: pointer; margin-bottom: 4px; color: var(--text-secondary); font-weight: 500; transition: all 0.2s; border: 1px solid transparent; font-size: 14px; }
   .menu-item:active { transform: scale(0.98); }
   .menu-item:hover { background: var(--bg-card); color: var(--text-primary); border-color: var(--border-color); }
-  .menu-item.active { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
+  .menu-item.active { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
   .menu-icon { font-size: 20px; width: 24px; text-align: center; }
-
-  .menu-badge {
-    margin-left: auto;
-    background: var(--danger);
-    color: white;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-weight: 700;
-  }
-
+  .menu-badge { margin-left: auto; background: var(--danger); color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
   .menu-item.active .menu-badge { background: rgba(255, 255, 255, 0.3); }
-
-  .language-selector {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-  }
-
-  .lang-btn {
-    flex: 1;
-    padding: 8px;
-    border: 2px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 12px;
-    transition: all 0.2s;
-  }
-
-  .lang-btn:active { transform: scale(0.95); }
+  .language-selector { display: flex; gap: 8px; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+  .lang-btn { flex: 1; padding: 8px; border: 2px solid var(--border-color); background: var(--bg-card); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 12px; }
   .lang-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
   .sidebar-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    border-radius: 12px;
-    background: var(--bg-card);
-  }
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--success), #22c55e);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: white;
-    font-size: 16px;
-  }
-
+  .user-info { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; background: var(--bg-card); }
+  .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--success), #22c55e); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 16px; }
   .user-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
   .user-level { font-size: 11px; color: var(--text-secondary); }
 
-  .main-content {
-    margin-left: 280px;
-    flex: 1;
-    padding: 20px;
-    padding-top: calc(20px + env(safe-area-inset-top));
-    min-height: 100vh;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
-  }
-
+  .main-content { margin-left: 280px; flex: 1; padding: 20px; min-height: 100vh; }
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .mobile-menu-btn {
-    display: none;
-    position: fixed;
-    top: calc(10px + env(safe-area-inset-top));
-    left: 15px;
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    z-index: 999;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow);
-  }
+  .mobile-menu-btn { display: none; position: fixed; top: 10px; left: 15px; width: 45px; height: 45px; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; z-index: 999; font-size: 20px; align-items: center; justify-content: center; box-shadow: var(--shadow); }
 
   .page-header { margin-bottom: 25px; padding-top: 10px; }
   .page-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
   .page-subtitle { font-size: 14px; color: var(--text-secondary); }
 
-  .card {
-    background: var(--bg-card-solid);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 20px;
-  }
+  .card { background: var(--bg-card-solid); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
-  }
+  .hero-banner { background: linear-gradient(135deg, #4a9eff 0%, #2a6acc 50%, #1a4a9c 100%); border-radius: 20px; padding: 25px; color: white; position: relative; overflow: hidden; margin-bottom: 20px; box-shadow: 0 10px 40px rgba(74, 158, 255, 0.3); }
+  .hero-banner::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero-banner::after { content: '₿'; position: absolute; top: 15px; right: 20px; font-size: 80px; opacity: 0.15; font-weight: 700; animation: floatCoin 3s ease-in-out infinite; }
+  @keyframes floatCoin { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-greeting { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }
+  .hero-title { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .hero-subtitle { font-size: 13px; opacity: 0.85; line-height: 1.4; }
+  .hero-stats { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+  .hero-stat { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 12px; padding: 12px 15px; flex: 1; min-width: 120px; }
+  .hero-stat-label { font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .hero-stat-value { font-size: 20px; font-weight: 700; font-family: 'Courier New', monospace; }
 
-  .stat-card {
-    background: var(--bg-card-solid);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: var(--shadow);
-  }
-
-  .stat-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-
-  .stat-card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-  }
-
-  .stat-card-value { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
-  .stat-card-label { font-size: 12px; color: var(--text-secondary); }
-
-  .stat-card.live .stat-card-value {
-    font-family: 'Courier New', monospace;
-    animation: livePulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes livePulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-  }
-
-  .level-bar {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 18px;
-    background: var(--bg-card-solid);
-    border-radius: 14px;
-    margin-bottom: 20px;
-  }
-
-  .level-badge {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 700;
-    color: white;
-    flex-shrink: 0;
-  }
-
+  .level-card { background: var(--bg-card-solid); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+  .level-card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+  .level-badge-large { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: white; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   .level-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); }
   .level-silver { background: linear-gradient(135deg, #c0c0c0, #808080); }
   .level-gold { background: linear-gradient(135deg, #ffd700, #b8860b); }
   .level-diamond { background: linear-gradient(135deg, #b9f2ff, #00bfff); }
   .level-master { background: linear-gradient(135deg, #ff00ff, #8b00ff); }
-
   .level-info { flex: 1; }
-  .level-name { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
-  .level-desc { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; }
+  .level-name { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .level-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  .xp-bar { width: 100%; height: 10px; background: rgba(100, 140, 180, 0.2); border-radius: 10px; overflow: hidden; margin-bottom: 5px; }
+  .xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 10px; transition: width 0.5s ease; }
+  .xp-text { font-size: 11px; color: var(--text-secondary); text-align: right; }
 
-  .xp-bar {
-    width: 100%;
-    height: 8px;
-    background: rgba(100, 140, 180, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: var(--bg-card-solid); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); }
+  .stat-card.blue::before { background: linear-gradient(90deg, #4a9eff, #2a6acc); }
+  .stat-card.orange::before { background: linear-gradient(90deg, #f7931a, #e8850f); }
+  .stat-card.green::before { background: linear-gradient(90deg, #4ade80, #22c55e); }
+  .stat-card.purple::before { background: linear-gradient(90deg, #f093fb, #f5576c); }
+  .stat-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 10px; }
+  .stat-card.blue .stat-card-icon { background: linear-gradient(135deg, #4a9eff, #2a6acc); }
+  .stat-card.orange .stat-card-icon { background: linear-gradient(135deg, #f7931a, #e8850f); }
+  .stat-card.green .stat-card-icon { background: linear-gradient(135deg, #4ade80, #22c55e); }
+  .stat-card.purple .stat-card-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .stat-card-value { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .stat-card.live .stat-card-value { font-family: 'Courier New', monospace; animation: livePulse 1.5s ease-in-out infinite; }
+  .stat-card-label { font-size: 11px; color: var(--text-secondary); }
+  @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-  .xp-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-    border-radius: 10px;
-    transition: width 0.5s ease;
-  }
+  .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .quick-action { background: var(--bg-card-solid); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 14px; padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow); }
+  .quick-action:active { transform: scale(0.95); }
+  .quick-action-icon { font-size: 28px; margin-bottom: 6px; }
+  .quick-action-label { font-size: 11px; font-weight: 600; color: var(--text-primary); }
 
-  .xp-text { font-size: 11px; color: var(--text-secondary); margin-top: 4px; text-align: right; }
+  .activity-card { background: var(--bg-card-solid); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+  .activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  .activity-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .activity-badge { background: rgba(74, 158, 255, 0.15); color: var(--accent); padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .activity-icon.buy { background: linear-gradient(135deg, #4a9eff, #2a6acc); }
+  .activity-icon.earn { background: linear-gradient(135deg, #4ade80, #22c55e); }
+  .activity-icon.withdraw { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .activity-info { flex: 1; }
+  .activity-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+  .activity-time { font-size: 11px; color: var(--text-secondary); }
+  .activity-amount { font-size: 14px; font-weight: 700; color: var(--accent); }
 
-  .packages-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
-  }
-
-  .package {
-    background: var(--bg-card-solid);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 20px 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-
+  .packages-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+  .package { background: var(--bg-card-solid); border: 2px solid var(--border-color); border-radius: 16px; padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
   .package:active { transform: scale(0.96); }
   .package:hover { border-color: var(--accent); }
   .package.selected { border-color: var(--accent); background: rgba(74, 158, 255, 0.15); }
@@ -372,559 +151,204 @@
   .package-roi { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
   .package-daily { font-size: 11px; color: var(--text-secondary); }
 
-  .calc-input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid rgba(74, 158, 255, 0.3);
-    border-radius: 12px;
-    background: var(--bg-card);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 15px;
-    -webkit-appearance: none;
-  }
-
+  .calc-input { width: 100%; padding: 14px 16px; border: 2px solid rgba(74, 158, 255, 0.3); border-radius: 12px; background: var(--bg-card); font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 15px; }
   .calc-input:focus { outline: none; border-color: var(--accent); }
-
-  .calc-results {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .calc-result-item {
-    background: rgba(74, 158, 255, 0.1);
-    border-radius: 12px;
-    padding: 12px;
-    text-align: center;
-  }
-
+  .calc-results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  .calc-result-item { background: rgba(74, 158, 255, 0.1); border-radius: 12px; padding: 12px; text-align: center; }
   .calc-result-item .label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px; }
   .calc-result-item .value { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 
-  .btn-primary {
-    width: 100%;
-    padding: 16px;
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
+  .btn-primary { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
   .btn-primary:active { transform: scale(0.98); }
 
-  .factory-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .conveyor-system {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-  }
-
-  .conveyor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--border-color);
-  }
-
+  .factory-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .conveyor-system { background: var(--bg-card-solid); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); }
+  .conveyor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
   .conveyor-title { font-size: 16px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
   .conveyor-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--success); font-weight: 600; }
-
-  .status-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--success);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .stations-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    position: relative;
-  }
-
+  .status-indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .stations-container { display: flex; justify-content: space-between; margin-bottom: 20px; position: relative; }
   .station { flex: 1; text-align: center; position: relative; z-index: 2; }
-
-  .station-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin: 0 auto 6px;
-    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  }
-
+  .station-icon { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 6px; box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
   .station-name { font-size: 11px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
   .station-desc { font-size: 9px; color: var(--text-secondary); }
-
-  .station-connector {
-    position: absolute;
-    top: 22px;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent) 0%, var(--success) 33%, var(--warning) 66%, var(--btc-orange) 100%);
-    z-index: 1;
-    border-radius: 2px;
-  }
-
-  .conveyor-belt-wrapper {
-    position: relative;
-    height: 140px;
-    background: linear-gradient(180deg, #2a3a4a 0%, #1a2a3a 100%);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid #3a4a5a;
-    margin-bottom: 15px;
-  }
-
-  .conveyor-belt {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(180deg, #4a5a6a 0%, #3a4a5a 100%);
-    overflow: hidden;
-  }
-
-  .conveyor-belt::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, #2a3a4a 0px, #2a3a4a 15px, transparent 15px, transparent 30px);
-    animation: beltMove 1.5s linear infinite;
-  }
-
-  @keyframes beltMove {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-30px); }
-  }
-
-  .conveyor-products {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
-    height: 110px;
-    display: flex;
-    align-items: flex-end;
-    padding: 0 15px;
-    gap: 12px;
-    overflow: hidden;
-  }
-
-  .product-item {
-    min-width: 85px;
-    height: 100px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    text-align: center;
-    color: white;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    animation: productMove 25s linear infinite;
-  }
-
-  @keyframes productMove {
-    0% { transform: translateX(-100px); }
-    100% { transform: translateX(calc(100vw + 100px)); }
-  }
-
+  .station-connector { position: absolute; top: 22px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg, var(--accent) 0%, var(--success) 33%, var(--warning) 66%, var(--btc-orange) 100%); z-index: 1; border-radius: 2px; }
+  .conveyor-belt-wrapper { position: relative; height: 140px; background: linear-gradient(180deg, #2a3a4a 0%, #1a2a3a 100%); border-radius: 12px; overflow: hidden; border: 2px solid #3a4a5a; margin-bottom: 15px; }
+  .conveyor-belt { position: absolute; bottom: 0; left: 0; right: 0; height: 30px; background: linear-gradient(180deg, #4a5a6a 0%, #3a4a5a 100%); overflow: hidden; }
+  .conveyor-belt::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: repeating-linear-gradient(90deg, #2a3a4a 0px, #2a3a4a 15px, transparent 15px, transparent 30px); animation: beltMove 1.5s linear infinite; }
+  @keyframes beltMove { 0% { transform: translateX(0); } 100% { transform: translateX(-30px); } }
+  .conveyor-products { position: absolute; bottom: 30px; left: 0; right: 0; height: 110px; display: flex; align-items: flex-end; padding: 0 15px; gap: 12px; overflow: hidden; }
+  .product-item { min-width: 85px; height: 100px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center; color: white; position: relative; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); flex-shrink: 0; animation: productMove 25s linear infinite; }
+  @keyframes productMove { 0% { transform: translateX(-100px); } 100% { transform: translateX(calc(100vw + 100px)); } }
   .product-item .product-amount { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-
-  .product-item .product-speed {
-    font-size: 8px;
-    opacity: 0.9;
-    margin-bottom: 4px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2px 5px;
-    border-radius: 6px;
-  }
-
+  .product-item .product-speed { font-size: 8px; opacity: 0.9; margin-bottom: 4px; background: rgba(0, 0, 0, 0.3); padding: 2px 5px; border-radius: 6px; }
   .product-item .product-earned { font-size: 10px; color: #4ade80; font-weight: 700; }
-
-  .product-item .product-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--success);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    border: 2px solid white;
-  }
-
+  .product-item .product-badge { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--success); display: flex; align-items: center; justify-content: center; font-size: 10px; border: 2px solid white; }
   .product-tier-1 { background: linear-gradient(135deg, #667eea, #764ba2); }
   .product-tier-2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
   .product-tier-3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
   .product-tier-4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
   .product-tier-5 { background: linear-gradient(135deg, #fa709a, #fee140); }
-  .product-bonus {
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-    animation: productMove 25s linear infinite, bonusGlow 2s ease-in-out infinite;
-  }
-
-  @keyframes bonusGlow {
-    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-    50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1); }
-  }
-
-  .production-summary {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .summary-item {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  }
-
+  .product-bonus { background: linear-gradient(135deg, #ffd700, #ff8c00); box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); animation: productMove 25s linear infinite, bonusGlow 2s ease-in-out infinite; }
+  @keyframes bonusGlow { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); } 50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1); } }
+  .production-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .summary-item { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 10px; padding: 12px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
   .summary-item.total { background: linear-gradient(135deg, #f7931a, #e8850f); }
   .summary-item.daily { background: linear-gradient(135deg, #4ade80, #22c55e); }
   .summary-item.hourly { background: linear-gradient(135deg, #f093fb, #f5576c); }
   .summary-item.monthly { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
-
   .summary-label { font-size: 9px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
   .summary-value { font-size: 18px; font-weight: 700; font-family: 'Courier New', monospace; }
   .summary-value.live { animation: livePulse 1.5s ease-in-out infinite; }
-
-  .stats-panel {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-  }
-
+  .stats-panel { background: var(--bg-card-solid); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); }
   .stats-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
-
-  .stat-item {
-    background: rgba(74, 158, 255, 0.1);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-
+  .stat-item { background: rgba(74, 158, 255, 0.1); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
   .stat-item:last-child { margin-bottom: 0; }
   .stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
   .stat-value { font-size: 18px; font-weight: 700; color: var(--accent); }
   .stat-value.live { font-family: 'Courier New', monospace; font-size: 16px; }
   .stat-value.success { color: var(--success); }
 
-  .leaderboard-list {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 15px;
-    border: 1px solid var(--border-color);
-  }
-
-  .leaderboard-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    background: rgba(74, 158, 255, 0.05);
-  }
-
+  .leaderboard-list { background: var(--bg-card-solid); border-radius: 16px; padding: 15px; border: 1px solid var(--border-color); }
+  .leaderboard-item { display: flex; align-items: center; padding: 12px; border-radius: 10px; margin-bottom: 8px; background: rgba(74, 158, 255, 0.05); }
   .leaderboard-item:last-child { margin-bottom: 0; }
   .leaderboard-item.top-1 { background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent); }
   .leaderboard-item.top-2 { background: linear-gradient(90deg, rgba(192, 192, 192, 0.2), transparent); }
   .leaderboard-item.top-3 { background: linear-gradient(90deg, rgba(205, 127, 50, 0.2), transparent); }
-
-  .rank {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    margin-right: 12px;
-    background: var(--bg-card);
-    font-size: 14px;
-  }
-
+  .rank { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 12px; background: var(--bg-card); font-size: 14px; }
   .rank-1 { background: linear-gradient(135deg, #ffd700, #b8860b); color: white; }
   .rank-2 { background: linear-gradient(135deg, #c0c0c0, #808080); color: white; }
   .rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: white; }
-
   .leaderboard-info { flex: 1; }
   .leaderboard-name { font-weight: 600; color: var(--text-primary); margin-bottom: 2px; font-size: 14px; }
   .leaderboard-earned { font-size: 11px; color: var(--text-secondary); }
   .leaderboard-amount { font-size: 18px; font-weight: 700; color: var(--accent); }
 
-  .referral-card {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    border-radius: 16px;
-    padding: 25px;
-    color: white;
-  }
-
-  .referral-code {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    padding: 12px 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-    margin: 15px 0;
-    letter-spacing: 2px;
-    cursor: pointer;
-  }
-
-  .referral-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 15px;
-  }
-
-  .referral-stat {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-  }
-
+  .referral-card { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 16px; padding: 25px; color: white; }
+  .referral-code { background: rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 12px 15px; font-family: 'Courier New', monospace; font-size: 20px; font-weight: 700; text-align: center; margin: 15px 0; letter-spacing: 2px; cursor: pointer; }
+  .referral-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+  .referral-stat { background: rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 12px; text-align: center; }
   .referral-stat .value { font-size: 20px; font-weight: 700; }
   .referral-stat .label { font-size: 10px; opacity: 0.9; margin-top: 4px; }
 
-  .balance-display {
-    background: linear-gradient(135deg, var(--success), #22c55e);
-    border-radius: 16px;
-    padding: 25px;
-    color: white;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
+  .balance-display { background: linear-gradient(135deg, var(--success), #22c55e); border-radius: 16px; padding: 25px; color: white; text-align: center; margin-bottom: 20px; }
   .balance-label { font-size: 13px; opacity: 0.9; margin-bottom: 8px; }
   .balance-amount { font-size: 36px; font-weight: 700; font-family: 'Courier New', monospace; }
-
-  .withdrawal-form {
-    background: var(--bg-card-solid);
-    border-radius: 16px;
-    padding: 25px;
-    border: 1px solid var(--border-color);
-  }
-
+  .withdrawal-form { background: var(--bg-card-solid); border-radius: 16px; padding: 25px; border: 1px solid var(--border-color); }
   .form-group { margin-bottom: 15px; }
   .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary); font-size: 13px; }
 
-  .live-feed {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 998;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    pointer-events: none;
-    max-width: 280px;
-  }
-
-  .feed-item {
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 10px 14px;
-    box-shadow: var(--shadow);
-    font-size: 12px;
-    color: var(--text-primary);
-    animation: slideIn 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
-  }
-
+  .live-feed { position: fixed; bottom: 20px; left: 20px; z-index: 998; display: flex; flex-direction: column; gap: 8px; pointer-events: none; max-width: 280px; }
+  .feed-item { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 14px; box-shadow: var(--shadow); font-size: 12px; color: var(--text-primary); animation: slideIn 0.5s ease, fadeOut 0.5s ease 4.5s forwards; }
   @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
   @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
-
   .feed-item .feed-icon { margin-right: 6px; }
   .feed-item .feed-user { font-weight: 700; color: var(--accent); }
 
   .support-widget { position: fixed; bottom: 20px; right: 20px; z-index: 998; }
-
-  .support-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--tg-theme-button-color);
-    border: none;
-    cursor: pointer;
-    font-size: 22px;
-    color: var(--tg-theme-button-text-color);
-    box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
-  }
-
-  .support-btn:active { transform: scale(0.95); }
-
-  .support-chat {
-    position: absolute;
-    bottom: 65px;
-    right: 0;
-    width: 280px;
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    display: none;
-    overflow: hidden;
-    max-height: 300px;
-  }
-
+  .support-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; font-size: 22px; color: white; box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4); }
+  .support-chat { position: absolute; bottom: 65px; right: 0; width: 280px; background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: var(--shadow); display: none; overflow: hidden; max-height: 300px; }
   .support-chat.active { display: block; }
-  .support-header { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); padding: 12px 15px; font-weight: 700; font-size: 14px; }
+  .support-header { background: var(--accent); color: white; padding: 12px 15px; font-weight: 700; font-size: 14px; }
   .support-body { padding: 15px; max-height: 250px; overflow-y: auto; }
-
   .faq-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
   .faq-item:last-child { border-bottom: none; }
   .faq-question { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; cursor: pointer; font-size: 13px; }
   .faq-answer { font-size: 12px; color: var(--text-secondary); display: none; line-height: 1.4; }
   .faq-item.active .faq-answer { display: block; }
 
-  .notification {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    padding: 14px 24px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    transition: transform 0.4s;
-    z-index: 1001;
-    font-weight: 600;
-    font-size: 13px;
-    max-width: 90%;
-    text-align: center;
-  }
-
+  .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--accent); color: white; padding: 14px 24px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); transition: transform 0.4s; z-index: 1001; font-weight: 600; font-size: 13px; max-width: 90%; text-align: center; }
   .notification.show { transform: translateX(-50%) translateY(0); }
   .notification.error { background: var(--danger); }
   .notification.bonus { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
 
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-    z-index: 1000;
-    padding: 0;
-  }
-
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; z-index: 1000; padding: 0; }
   .modal-overlay.active { display: flex; }
-
-  .modal {
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 20px 20px 0 0;
-    padding: 20px;
-    width: 100%;
-    max-width: 100%;
-    animation: slideUp 0.3s ease;
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
+  .modal { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 20px 20px 0 0; padding: 20px; width: 100%; max-width: 100%; animation: slideUp 0.3s ease; position: relative; max-height: 85vh; overflow-y: auto; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
   .modal h2 { color: var(--text-primary); margin-bottom: 15px; font-size: 20px; padding-right: 40px; }
-
-  .modal-close {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--text-secondary);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-
-  .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    position: sticky;
-    bottom: 0;
-    background: var(--bg-card);
-    padding: 10px 0 0 0;
-    border-top: 1px solid var(--border-color);
-  }
-
+  .modal-close { position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 28px; cursor: pointer; color: var(--text-secondary); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 15px; position: sticky; bottom: 0; background: var(--bg-card); padding: 10px 0 0 0; border-top: 1px solid var(--border-color); }
   .modal-actions button { flex: 1; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
   .btn-cancel { background: rgba(100, 140, 180, 0.15); color: var(--text-secondary); }
-  .btn-confirm { background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color); }
+  .btn-confirm { background: var(--accent); color: white; }
 
-  .btc-payment-box {
-    background: linear-gradient(135deg, #f7931a, #e8850f);
+  /* ===== KRIPTO ÖDEME SEÇENEKLERİ ===== */
+  .crypto-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .crypto-option {
+    background: var(--bg-card-solid);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .crypto-option:active {
+    transform: scale(0.95);
+  }
+
+  .crypto-option:hover {
+    border-color: var(--accent);
+  }
+
+  .crypto-option.selected {
+    border-color: var(--accent);
+    background: rgba(74, 158, 255, 0.15);
+  }
+
+  .crypto-option.btc.selected { border-color: var(--btc-orange); background: rgba(247, 147, 26, 0.15); }
+  .crypto-option.trx.selected { border-color: var(--trx-red); background: rgba(235, 0, 41, 0.15); }
+  .crypto-option.bnb.selected { border-color: var(--bnb-yellow); background: rgba(243, 186, 47, 0.15); }
+
+  .crypto-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .crypto-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .crypto-amount {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+  }
+
+  .payment-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 12px;
     padding: 18px;
     color: white;
     margin: 15px 0;
   }
 
-  .btc-payment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 16px; font-weight: 700; }
+  .payment-box.btc { background: linear-gradient(135deg, #f7931a, #e8850f); }
+  .payment-box.trx { background: linear-gradient(135deg, #eb0029, #c40022); }
+  .payment-box.bnb { background: linear-gradient(135deg, #f3ba2f, #d4a017); color: #1a2a3a; }
 
-  .btc-amount-display {
+  .payment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .payment-amount-display {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 10px;
@@ -932,10 +356,10 @@
     text-align: center;
   }
 
-  .btc-amount-display .label { font-size: 10px; opacity: 0.9; margin-bottom: 3px; }
-  .btc-amount-display .value { font-size: 22px; font-weight: 700; font-family: 'Courier New', monospace; }
+  .payment-amount-display .label { font-size: 10px; opacity: 0.9; margin-bottom: 3px; }
+  .payment-amount-display .value { font-size: 22px; font-weight: 700; font-family: 'Courier New', monospace; }
 
-  .btc-qr-code {
+  .qr-code {
     width: 100px;
     height: 100px;
     background: white;
@@ -958,208 +382,132 @@
   }
 
   .qr-placeholder::after {
-    content: '₿';
+    content: attr(data-crypto);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
-    color: #f7931a;
+    font-size: 20px;
+    font-weight: 700;
     background: white;
     padding: 3px 6px;
     border-radius: 6px;
-    font-weight: 700;
   }
 
-  .btc-address-box {
+  .address-box {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
   }
 
-  .btc-address-label { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600; }
+  .address-label { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600; }
+  .address-text { font-family: 'Courier New', monospace; font-size: 11px; color: #1a2a3a; word-break: break-all; padding: 6px; background: #f5f5f5; border-radius: 5px; border: 2px dashed var(--accent); cursor: pointer; position: relative; line-height: 1.3; }
+  .address-text.btc { border-color: var(--btc-orange); }
+  .address-text.trx { border-color: var(--trx-red); }
+  .address-text.bnb { border-color: var(--bnb-yellow); }
 
-  .btc-address {
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    color: #1a2a3a;
-    word-break: break-all;
-    padding: 6px;
-    background: #f5f5f5;
-    border-radius: 5px;
-    border: 2px dashed #f7931a;
-    cursor: pointer;
-    position: relative;
-    line-height: 1.3;
-  }
+  .btn-copy { width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.25); color: white; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px; font-size: 12px; }
+  .btn-copy.bnb { color: #1a2a3a; border-color: rgba(26, 42, 58, 0.3); }
 
-  .btc-address .copy-icon { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); font-size: 14px; }
-
-  .btn-copy-address {
-    width: 100%;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 6px;
-    font-size: 12px;
-  }
-
-  .payment-timer {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 12px;
-    margin-top: 6px;
-  }
-
+  .payment-timer { background: rgba(0, 0, 0, 0.2); border-radius: 6px; padding: 6px 10px; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px; margin-top: 6px; }
   .payment-timer .timer-value { font-family: 'Courier New', monospace; font-weight: 700; font-size: 13px; }
-
-  .payment-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    margin-top: 6px;
-    font-size: 11px;
-  }
-
+  .payment-status { display: flex; align-items: center; gap: 6px; padding: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 6px; margin-top: 6px; font-size: 11px; }
   .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #ffd700; animation: blink 1s infinite; }
-
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  .payment-instructions {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 10px;
-    line-height: 1.4;
-  }
-
+  .payment-instructions { background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 10px; margin-top: 10px; font-size: 10px; line-height: 1.4; }
   .payment-instructions ol { margin-left: 16px; margin-top: 5px; }
   .payment-instructions li { margin-bottom: 3px; }
 
   .welcome-bonus-modal { text-align: center; }
   .welcome-bonus-icon { font-size: 60px; margin-bottom: 12px; animation: bounceIn 0.6s ease; }
   @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-  .welcome-bonus-title {
-    font-size: 24px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
+  .welcome-bonus-title { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #ffd700, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
   .welcome-bonus-desc { color: var(--text-secondary); margin-bottom: 15px; font-size: 13px; line-height: 1.4; }
-  .welcome-bonus-amount {
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-    color: #1a2a3a;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-  }
+  .welcome-bonus-amount { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; padding: 15px; border-radius: 12px; font-size: 24px; font-weight: 700; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); }
   .welcome-bonus-features { text-align: left; background: rgba(74, 158, 255, 0.1); border-radius: 10px; padding: 12px; margin-bottom: 15px; }
   .welcome-bonus-features div { padding: 5px 0; color: var(--text-primary); font-size: 12px; }
   .welcome-bonus-features div::before { content: '✅ '; }
-  .btn-claim-bonus {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-    color: #1a2a3a;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-  }
+  .btn-claim-bonus { width: 100%; padding: 14px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; }
 
   @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); width: 260px; }
     .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 15px; padding-top: calc(15px + env(safe-area-inset-top)); }
+    .main-content { margin-left: 0; padding: 15px; }
     .mobile-menu-btn { display: flex; }
     .page-title { font-size: 24px; }
     .packages-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .quick-actions { grid-template-columns: repeat(3, 1fr); }
     .calc-results { grid-template-columns: repeat(2, 1fr); }
     .referral-stats { grid-template-columns: repeat(3, 1fr); }
     .production-summary { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { flex-direction: column; }
+    .crypto-selector { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (max-width: 480px) {
     .packages-grid { grid-template-columns: 1fr; }
-    .hero-grid { grid-template-columns: 1fr; }
-    .calc-results { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .quick-actions { grid-template-columns: repeat(3, 1fr); }
+    .calc-results { grid-template-columns: 1fr 1fr; }
     .referral-stats { grid-template-columns: 1fr; }
+    .crypto-selector { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-  <button class="mobile-menu-btn" onclick="toggleSidebar()"></button>
+  <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
 
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">₿</div>
       <div>
-        <div class="sidebar-title" data-i18n="sidebar_title">BTC Mining</div>
-        <div class="sidebar-subtitle" data-i18n="sidebar_subtitle">Pro Platform</div>
+        <div class="sidebar-title">BTC Mining</div>
+        <div class="sidebar-subtitle">Pro Platform</div>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label" data-i18n="menu_main">Ana Menü</div>
+      <div class="menu-label">Ana Menü</div>
       <div class="menu-item active" onclick="showPage('home', this)">
         <span class="menu-icon">🏠</span>
-        <span data-i18n="menu_home">Ana Sayfa</span>
+        <span>Ana Sayfa</span>
       </div>
       <div class="menu-item" onclick="showPage('buy', this)">
         <span class="menu-icon">💎</span>
-        <span data-i18n="menu_buy">Satın Al</span>
+        <span>Satın Al</span>
       </div>
       <div class="menu-item" onclick="showPage('production', this)">
-        <span class="menu-icon"></span>
-        <span data-i18n="menu_production">Üretim Hattı</span>
+        <span class="menu-icon">⚡</span>
+        <span>Üretim Hattı</span>
         <span class="menu-badge" id="productCount">0</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label" data-i18n="menu_stats">İstatistik</div>
+      <div class="menu-label">İstatistik</div>
       <div class="menu-item" onclick="showPage('leaderboard', this)">
         <span class="menu-icon">🏆</span>
-        <span data-i18n="menu_leaderboard">Liderlik</span>
+        <span>Liderlik</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label" data-i18n="menu_account">Hesap</div>
+      <div class="menu-label">Hesap</div>
       <div class="menu-item" onclick="showPage('referral', this)">
-        <span class="menu-icon">👥</span>
-        <span data-i18n="menu_referral">Referans</span>
+        <span class="menu-icon"></span>
+        <span>Referans</span>
       </div>
       <div class="menu-item" onclick="showPage('withdraw', this)">
-        <span class="menu-icon">💸</span>
-        <span data-i18n="menu_withdraw">Çekim</span>
+        <span class="menu-icon"></span>
+        <span>Çekim</span>
       </div>
     </div>
 
     <div class="language-selector">
-      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇷 TR</button>
+      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹🇷 TR</button>
       <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
     </div>
 
@@ -1176,162 +524,192 @@
 
   <main class="main-content">
     <div class="page active" id="page-home">
-      <div class="page-header">
-        <h1 class="page-title" data-i18n="home_title">👋 Hoş Geldin!</h1>
-        <p class="page-subtitle" data-i18n="home_subtitle">BTC Mining platformuna hoş geldin. İşte genel bakış.</p>
-      </div>
-
-      <div class="level-bar">
-        <div class="level-badge level-bronze" id="levelBadge">1</div>
-        <div class="level-info">
-          <div class="level-name" id="levelName">Bronz Madenci</div>
-          <div class="level-desc" id="levelDesc">İlk adımlarını atıyorsun!</div>
-          <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width: 0%"></div></div>
-          <div class="xp-text"><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="hero-greeting">👋 Hoş Geldin</div>
+          <div class="hero-title" id="heroUserName">Madenci</div>
+          <div class="hero-subtitle">BTC Mining ile pasif gelir kazanmaya başla</div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-label">Toplam Kazanç</div>
+              <div class="hero-stat-value" id="heroTotalEarned">$0.00</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-label">Aktif Ürün</div>
+              <div class="hero-stat-value" id="heroActiveProducts">0</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="hero-grid">
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon" style="background: linear-gradient(135deg, #4a9eff, #2a6acc);">📦</div>
+      <div class="level-card">
+        <div class="level-card-header">
+          <div class="level-badge-large level-bronze" id="levelBadge">1</div>
+          <div class="level-info">
+            <div class="level-name" id="levelName">Bronz Madenci</div>
+            <div class="level-desc" id="levelDesc">İlk adımlarını atıyorsun!</div>
           </div>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width: 0%"></div></div>
+        <div class="xp-text"><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-card-icon">📦</div>
           <div class="stat-card-value" id="homeActiveProducts">0</div>
-          <div class="stat-card-label" data-i18n="stat_active">Aktif Ürün</div>
+          <div class="stat-card-label">Aktif Ürün</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon" style="background: linear-gradient(135deg, #f7931a, #e8850f);">💰</div>
-          </div>
+        <div class="stat-card orange">
+          <div class="stat-card-icon">💰</div>
           <div class="stat-card-value" id="homeTotalInvested">$0</div>
-          <div class="stat-card-label" data-i18n="stat_invested">Toplam Yatırım</div>
+          <div class="stat-card-label">Toplam Yatırım</div>
         </div>
-        <div class="stat-card live">
-          <div class="stat-card-header">
-            <div class="stat-card-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">💵</div>
-          </div>
+        <div class="stat-card green live">
+          <div class="stat-card-icon">💵</div>
           <div class="stat-card-value" id="homeTotalEarned">$0.00</div>
-          <div class="stat-card-label" data-i18n="stat_earned">Toplam Kazanç</div>
+          <div class="stat-card-label">Toplam Kazanç</div>
         </div>
-        <div class="stat-card live">
-          <div class="stat-card-header">
-            <div class="stat-card-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">⚡</div>
-          </div>
+        <div class="stat-card purple live">
+          <div class="stat-card-icon">⚡</div>
           <div class="stat-card-value" id="homePerSecond">$0/s</div>
-          <div class="stat-card-label" data-i18n="stat_persecond">Saniyelik</div>
+          <div class="stat-card-label">Saniyelik</div>
         </div>
       </div>
 
-      <div class="card">
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="quick_start">🚀 Hızlı Başlangıç</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; font-size: 13px;" data-i18n="quick_start_desc">
-          Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. 
-          Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!
-        </p>
-        <button class="btn-primary" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])" data-i18n="btn_first_invest">💎 İlk Yatırımını Yap</button>
+      <div class="quick-actions">
+        <div class="quick-action" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])">
+          <div class="quick-action-icon">💎</div>
+          <div class="quick-action-label">Satın Al</div>
+        </div>
+        <div class="quick-action" onclick="showPage('production', document.querySelectorAll('.menu-item')[2])">
+          <div class="quick-action-icon">⚡</div>
+          <div class="quick-action-label">Üretim</div>
+        </div>
+        <div class="quick-action" onclick="showPage('withdraw', document.querySelectorAll('.menu-item')[5])">
+          <div class="quick-action-icon">💸</div>
+          <div class="quick-action-label">Çekim</div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-header">
+          <div class="activity-title">Son Aktiviteler</div>
+          <div class="activity-badge" id="activityCount">0</div>
+        </div>
+        <div id="activityList">
+          <div class="activity-item">
+            <div class="activity-icon earn">🎁</div>
+            <div class="activity-info">
+              <div class="activity-name">Hoş geldin bonusu</div>
+              <div class="activity-time">Az önce</div>
+            </div>
+            <div class="activity-amount">+$1.00</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="page" id="page-buy">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="buy_title">💎 Mining Gücü Satın Al</h1>
-        <p class="page-subtitle" data-i18n="buy_subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
+        <h1 class="page-title">💎 Mining Gücü Satın Al</h1>
+        <p class="page-subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
       </div>
 
       <div class="card">
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px;">
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$1</div>
-            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_minimum">Minimum</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Minimum</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">3 Ay</div>
-            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_roi">ROI</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">ROI</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">100%</div>
-            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_return">Getiri</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Getiri</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$0.011</div>
-            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_daily">Günlük</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Günlük</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="select_package">Paket Seç</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">Paket Seç</h3>
         <div class="packages-grid">
           <div class="package" data-price="1" onclick="selectPackage(this)">
             <div class="package-price">$1</div>
-            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
+            <div class="package-roi">3 Ayda Geri</div>
             <div class="package-daily">$0.011/gün</div>
           </div>
           <div class="package" data-price="5" onclick="selectPackage(this)">
             <div class="package-price">$5</div>
-            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
+            <div class="package-roi">3 Ayda Geri</div>
             <div class="package-daily">$0.056/gün</div>
           </div>
           <div class="package popular" data-price="10" onclick="selectPackage(this)">
             <div class="package-price">$10</div>
-            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
+            <div class="package-roi">3 Ayda Geri</div>
             <div class="package-daily">$0.111/gün</div>
           </div>
           <div class="package" data-price="50" onclick="selectPackage(this)">
             <div class="package-price">$50</div>
-            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
+            <div class="package-roi">3 Ayda Geri</div>
             <div class="package-daily">$0.556/gün</div>
           </div>
           <div class="package" data-price="100" onclick="selectPackage(this)">
             <div class="package-price">$100</div>
-            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
+            <div class="package-roi">3 Ayda Geri</div>
             <div class="package-daily">$1.111/gün</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;" data-i18n="custom_amount">💰 Özel Miktar</h3>
+        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="calculation"> Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">📊 Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
-            <div class="label" data-i18n="calc_daily">Günlük</div>
+            <div class="label">Günlük</div>
             <div class="value" id="dailyEarning">$0.111</div>
           </div>
           <div class="calc-result-item">
-            <div class="label" data-i18n="calc_monthly">Aylık</div>
+            <div class="label">Aylık</div>
             <div class="value" id="monthlyEarning">$3.33</div>
           </div>
           <div class="calc-result-item">
-            <div class="label" data-i18n="calc_3month">3 Aylık</div>
+            <div class="label">3 Aylık</div>
             <div class="value" id="threeMonthEarning">$10.00</div>
           </div>
           <div class="calc-result-item">
-            <div class="label" data-i18n="calc_roi">ROI</div>
+            <div class="label">ROI</div>
             <div class="value" id="roiDate" style="font-size: 12px;">-</div>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="openModal()" data-i18n="btn_buy_now">🚀 Şimdi Satın Al</button>
+        <button class="btn-primary" onclick="openModal()">🚀 Şimdi Satın Al</button>
       </div>
     </div>
 
     <div class="page" id="page-production">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="production_title">⚡ Üretim Hattı</h1>
-        <p class="page-subtitle" data-i18n="production_subtitle">Mining operasyonlarınız gerçek zamanlı</p>
+        <h1 class="page-title">⚡ Üretim Hattı</h1>
+        <p class="page-subtitle">Mining operasyonlarınız gerçek zamanlı</p>
       </div>
 
       <div class="factory-layout">
         <div class="conveyor-system">
           <div class="conveyor-header">
-            <div class="conveyor-title"><span>🏭</span><span data-i18n="active_production">Aktif Üretim</span></div>
-            <div class="conveyor-status"><div class="status-indicator"></div><span data-i18n="status_working">ÇALIŞIYOR</span></div>
+            <div class="conveyor-title"><span>🏭</span><span>Aktif Üretim</span></div>
+            <div class="conveyor-status"><div class="status-indicator"></div><span>ÇALIŞIYOR</span></div>
           </div>
           <div class="stations-container">
             <div class="station-connector"></div>
             <div class="station"><div class="station-icon"></div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
-            <div class="station"><div class="station-icon">✓</div><div class="station-name" data-i18n="station_verify">Doğrulama</div><div class="station-desc">Verify</div></div>
-            <div class="station"><div class="station-icon">⛓️</div><div class="station-name" data-i18n="station_chain">Zincir</div><div class="station-desc">Chain</div></div>
-            <div class="station"><div class="station-icon">💰</div><div class="station-name" data-i18n="station_reward">Ödül</div><div class="station-desc">Reward</div></div>
+            <div class="station"><div class="station-icon">✓</div><div class="station-name">Doğrulama</div><div class="station-desc">Verify</div></div>
+            <div class="station"><div class="station-icon">⛓️</div><div class="station-name">Zincir</div><div class="station-desc">Chain</div></div>
+            <div class="station"><div class="station-icon">💰</div><div class="station-name">Ödül</div><div class="station-desc">Reward</div></div>
           </div>
           <div class="conveyor-belt-wrapper">
             <div class="conveyor-products" id="conveyorProducts"></div>
@@ -1339,78 +717,78 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label" data-i18n="summary_total">💰 Toplam</div>
+              <div class="summary-label">💰 Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
-              <div class="summary-label" data-i18n="summary_minute">⏱️ Dakika</div>
+              <div class="summary-label">⏱️ Dakika</div>
               <div class="summary-value live" id="summaryMinute">$0</div>
             </div>
             <div class="summary-item hourly">
-              <div class="summary-label" data-i18n="summary_hour">🕐 Saat</div>
+              <div class="summary-label">🕐 Saat</div>
               <div class="summary-value live" id="summaryHour">$0</div>
             </div>
             <div class="summary-item monthly">
-              <div class="summary-label" data-i18n="summary_month">📅 Ay</div>
+              <div class="summary-label">📅 Ay</div>
               <div class="summary-value live" id="summaryMonth">$0</div>
             </div>
           </div>
         </div>
 
         <div class="stats-panel">
-          <div class="stats-title"><span>📊</span><span data-i18n="stats_title">İstatistikler</span></div>
-          <div class="stat-item"><div class="stat-label" data-i18n="stat_active_products">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
-          <div class="stat-item"><div class="stat-label" data-i18n="stat_total_earn">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
-          <div class="stat-item"><div class="stat-label" data-i18n="stat_per_second">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
-          <div class="stat-item"><div class="stat-label" data-i18n="stat_roi_time">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
+          <div class="stats-title"><span>📊</span><span>İstatistikler</span></div>
+          <div class="stat-item"><div class="stat-label">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
+          <div class="stat-item"><div class="stat-label">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
+          <div class="stat-item"><div class="stat-label">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
+          <div class="stat-item"><div class="stat-label">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
         </div>
       </div>
     </div>
 
     <div class="page" id="page-leaderboard">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="leaderboard_title">🏆 Liderlik</h1>
-        <p class="page-subtitle" data-i18n="leaderboard_subtitle">En çok kazananlar</p>
+        <h1 class="page-title">🏆 Liderlik</h1>
+        <p class="page-subtitle">En çok kazananlar</p>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
     </div>
 
     <div class="page" id="page-referral">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="referral_title">👥 Referans</h1>
-        <p class="page-subtitle" data-i18n="referral_subtitle">Arkadaşlarını davet et, %10 kazan</p>
+        <h1 class="page-title"> Referans</h1>
+        <p class="page-subtitle">Arkadaşlarını davet et, %10 kazan</p>
       </div>
       <div class="referral-card">
-        <h3 style="margin-bottom: 8px;" data-i18n="referral_code">Referans Kodun</h3>
+        <h3 style="margin-bottom: 8px;">Referans Kodun</h3>
         <div class="referral-code" id="referralCode" onclick="copyReferral()">BTC-XXXXXX</div>
-        <p style="font-size: 12px; opacity: 0.9; text-align: center;" data-i18n="referral_click">Kopyalamak için tıkla!</p>
+        <p style="font-size: 12px; opacity: 0.9; text-align: center;">Kopyalamak için tıkla!</p>
         <div class="referral-stats">
-          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label" data-i18n="ref_invited">Davet</div></div>
-          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label" data-i18n="ref_earnings">Kazanç</div></div>
-          <div class="referral-stat"><div class="value">%10</div><div class="label" data-i18n="ref_rate">Oran</div></div>
+          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label">Davet</div></div>
+          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label">Kazanç</div></div>
+          <div class="referral-stat"><div class="value">%10</div><div class="label">Oran</div></div>
         </div>
       </div>
     </div>
 
     <div class="page" id="page-withdraw">
       <div class="page-header">
-        <h1 class="page-title" data-i18n="withdraw_title">💸 Çekim</h1>
-        <p class="page-subtitle" data-i18n="withdraw_subtitle">Minimum çekim: $0.01</p>
+        <h1 class="page-title">💸 Çekim</h1>
+        <p class="page-subtitle">Minimum çekim: $0.01</p>
       </div>
       <div class="balance-display">
-        <div class="balance-label" data-i18n="balance_current">Mevcut Bakiye</div>
+        <div class="balance-label">Mevcut Bakiye</div>
         <div class="balance-amount" id="balanceDisplay">$0</div>
       </div>
       <div class="withdrawal-form">
         <div class="form-group">
-          <label class="form-label" data-i18n="withdraw_amount"> Çekilecek Miktar ($)</label>
+          <label class="form-label">💰 Çekilecek Miktar ($)</label>
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
         <div class="form-group">
-          <label class="form-label" data-i18n="withdraw_address">₿ BTC Adresi</label>
+          <label class="form-label">₿ BTC Adresi</label>
           <input type="text" class="calc-input" id="walletAddress" placeholder="bc1q...">
         </div>
-        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);" data-i18n="btn_withdraw">💸 Çekim Yap</button>
+        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);">💸 Çekim Yap</button>
       </div>
     </div>
   </main>
@@ -1419,19 +797,19 @@
 
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
-      <div class="support-header" data-i18n="support_title"> Destek</div>
+      <div class="support-header">💬 Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question" data-i18n="faq_bonus">❓ Bonus nedir?</div>
-          <div class="faq-answer" data-i18n="faq_bonus_answer">İlk girişte $1 ücretsiz mining gücü!</div>
+          <div class="faq-question"> Bonus nedir?</div>
+          <div class="faq-answer">İlk girişte $1 ücretsiz mining gücü!</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question" data-i18n="faq_how">❓ Nasıl alınır?</div>
-          <div class="faq-answer" data-i18n="faq_how_answer">Satın Al'dan paket seç, öde, onayla.</div>
+          <div class="faq-question"> Nasıl alınır?</div>
+          <div class="faq-answer">Satın Al'dan paket seç, öde, onayla.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question" data-i18n="faq_roi">❓ ROI süresi?</div>
-          <div class="faq-answer" data-i18n="faq_roi_answer">Tüm yatırımlar 3 ayda geri döner.</div>
+          <div class="faq-question">❓ ROI süresi?</div>
+          <div class="faq-answer">Tüm yatırımlar 3 ayda geri döner.</div>
         </div>
       </div>
     </div>
@@ -1440,75 +818,99 @@
 
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
-      <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
-      <div class="welcome-bonus-icon"></div>
-      <div class="welcome-bonus-title" data-i18n="welcome_title">HOŞ GELDİN!</div>
-      <div class="welcome-bonus-desc" data-i18n="welcome_desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
+      <button class="modal-close" onclick="closeWelcomeBonus()"></button>
+      <div class="welcome-bonus-icon">🎉</div>
+      <div class="welcome-bonus-title">HOŞ GELDİN!</div>
+      <div class="welcome-bonus-desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
       <div class="welcome-bonus-amount"> $1.00 ÜCRETSİZ</div>
       <div class="welcome-bonus-features">
-        <div data-i18n="welcome_feat1">Anında ekleme</div>
-        <div data-i18n="welcome_feat2">Saniyelik kazanç</div>
-        <div data-i18n="welcome_feat3">3 ay ROI</div>
-        <div data-i18n="welcome_feat4">Ödeme yok!</div>
+        <div>Anında ekleme</div>
+        <div>Saniyelik kazanç</div>
+        <div>3 ay ROI</div>
+        <div>Ödeme yok!</div>
       </div>
-      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()" data-i18n="btn_start"> BAŞLA</button>
+      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()"> BAŞLA</button>
     </div>
   </div>
 
+  <!-- KRIPTO ÖDEME MODALI -->
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
-      <h2 data-i18n="payment_title">₿ Bitcoin Ödeme</h2>
+      <h2>💳 Ödeme Yöntemi Seç</h2>
       
-      <div class="btc-payment-box">
-        <div class="btc-payment-header">
-          <span style="font-size: 24px;">₿</span>
-          <span data-i18n="payment_make">Ödeme Yap</span>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
+        Toplam: <strong id="modalUsdAmount">$10.00</strong> - Kripto para birimi seçin
+      </p>
+
+      <!-- Kripto Seçenekleri -->
+      <div class="crypto-selector">
+        <div class="crypto-option btc selected" onclick="selectCrypto('btc')">
+          <div class="crypto-icon">₿</div>
+          <div class="crypto-name">Bitcoin</div>
+          <div class="crypto-amount" id="btcAmount">0.000154 BTC</div>
+        </div>
+        <div class="crypto-option trx" onclick="selectCrypto('trx')">
+          <div class="crypto-icon"></div>
+          <div class="crypto-name">TRON</div>
+          <div class="crypto-amount" id="trxAmount">83.33 TRX</div>
+        </div>
+        <div class="crypto-option bnb" onclick="selectCrypto('bnb')">
+          <div class="crypto-icon"></div>
+          <div class="crypto-name">BNB</div>
+          <div class="crypto-amount" id="bnbAmount">0.01667 BNB</div>
+        </div>
+      </div>
+
+      <!-- Ödeme Kutusu -->
+      <div class="payment-box btc" id="paymentBox">
+        <div class="payment-header">
+          <span style="font-size: 24px;" id="paymentIcon">₿</span>
+          <span id="paymentTitle">Bitcoin Ödeme</span>
         </div>
         
-        <div class="btc-amount-display">
-          <div class="label" data-i18n="payment_amount">Gönderilecek Tutar</div>
-          <div class="value" id="btcPaymentAmount">$10</div>
+        <div class="payment-amount-display">
+          <div class="label">Gönderilecek Tutar</div>
+          <div class="value" id="cryptoAmountDisplay">0.000154 BTC</div>
         </div>
         
-        <div class="btc-qr-code">
-          <div class="qr-placeholder"></div>
+        <div class="qr-code">
+          <div class="qr-placeholder" data-crypto="BTC" id="qrCrypto"></div>
         </div>
         
-        <div class="btc-address-box">
-          <div class="btc-address-label" data-i18n="payment_copy">BTC Adresini Kopyala</div>
-          <div class="btc-address" id="btcAddress" onclick="copyBTCAddress()">
-            <span id="btcAddressText">bc1q...</span>
-            <span class="copy-icon">📋</span>
+        <div class="address-box">
+          <div class="address-label" id="addressLabel">BTC Adresini Kopyala</div>
+          <div class="address-text btc" id="cryptoAddress" onclick="copyAddress()">
+            <span id="addressText">bc1q...</span>
           </div>
         </div>
         
-        <button class="btn-copy-address" onclick="copyBTCAddress()" data-i18n="btn_copy"> Adresi Kopyala</button>
+        <button class="btn-copy" id="copyBtn" onclick="copyAddress()">📋 Adresi Kopyala</button>
         
         <div class="payment-timer">
           <span>⏱️</span>
-          <span data-i18n="payment_time">Kalan Süre:</span>
+          <span>Kalan Süre:</span>
           <span class="timer-value" id="paymentTimer">15:00</span>
         </div>
         
         <div class="payment-status">
           <div class="status-dot"></div>
-          <span data-i18n="payment_waiting">Ödeme Bekleniyor...</span>
+          <span id="paymentStatus">Ödeme Bekleniyor...</span>
         </div>
         
         <div class="payment-instructions">
-          <strong data-i18n="payment_how">Nasıl Yapılır?</strong>
+          <strong>Nasıl Yapılır?</strong>
           <ol>
-            <li data-i18n="payment_step1">Yukarıdaki adresi kopyala</li>
-            <li data-i18n="payment_step2">BTC cüzdanından gönder</li>
-            <li data-i18n="payment_step3">Ödemeyi onayla</li>
+            <li>Yukarıdaki adresi kopyala</li>
+            <li id="step2">BTC cüzdanından gönder</li>
+            <li>Ödemeyi onayla</li>
           </ol>
         </div>
       </div>
       
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()" data-i18n="btn_cancel">İptal</button>
-        <button class="btn-confirm" onclick="confirmPayment()" data-i18n="btn_confirm">✓ Onayla</button>
+        <button class="btn-cancel" onclick="closeModal()">İptal</button>
+        <button class="btn-confirm" onclick="confirmPayment()">✓ Ödemeyi Onayla</button>
       </div>
     </div>
   </div>
@@ -1516,230 +918,48 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    const translations = {
-      tr: {
-        sidebar_title: 'BTC Mining',
-        sidebar_subtitle: 'Pro Platform',
-        menu_main: 'Ana Menü',
-        menu_home: 'Ana Sayfa',
-        menu_buy: 'Satın Al',
-        menu_production: 'Üretim Hattı',
-        menu_stats: 'İstatistik',
-        menu_leaderboard: 'Liderlik',
-        menu_account: 'Hesap',
-        menu_referral: 'Referans',
-        menu_withdraw: 'Çekim',
-        home_title: '👋 Hoş Geldin!',
-        home_subtitle: 'BTC Mining platformuna hoş geldin. İşte genel bakış.',
-        stat_active: 'Aktif Ürün',
-        stat_invested: 'Toplam Yatırım',
-        stat_earned: 'Toplam Kazanç',
-        stat_persecond: 'Saniyelik',
-        quick_start: ' Hızlı Başlangıç',
-        quick_start_desc: 'Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!',
-        btn_first_invest: ' İlk Yatırımını Yap',
-        buy_title: '💎 Mining Gücü Satın Al',
-        buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al',
-        info_minimum: 'Minimum',
-        info_roi: 'ROI',
-        info_return: 'Getiri',
-        info_daily: 'Günlük',
-        select_package: 'Paket Seç',
-        package_roi: '3 Ayda Geri',
-        custom_amount: '💰 Özel Miktar',
-        calculation: ' Hesaplama',
-        calc_daily: 'Günlük',
-        calc_monthly: 'Aylık',
-        calc_3month: '3 Aylık',
-        calc_roi: 'ROI',
-        btn_buy_now: '🚀 Şimdi Satın Al',
-        production_title: '⚡ Üretim Hattı',
-        production_subtitle: 'Mining operasyonlarınız gerçek zamanlı',
-        active_production: 'Aktif Üretim',
-        status_working: 'ÇALIŞIYOR',
-        station_verify: 'Doğrulama',
-        station_chain: 'Zincir',
-        station_reward: 'Ödül',
-        summary_total: '💰 Toplam',
-        summary_minute: '⏱️ Dakika',
-        summary_hour: '🕐 Saat',
-        summary_month: '📅 Ay',
-        stats_title: 'İstatistikler',
-        stat_active_products: 'Aktif Ürün',
-        stat_total_earn: 'Toplam Kazanç',
-        stat_per_second: 'Saniyelik',
-        stat_roi_time: 'ROI Süre',
-        leaderboard_title: ' Liderlik',
-        leaderboard_subtitle: 'En çok kazananlar',
-        referral_title: ' Referans',
-        referral_subtitle: 'Arkadaşlarını davet et, %10 kazan',
-        referral_code: 'Referans Kodun',
-        referral_click: 'Kopyalamak için tıkla!',
-        ref_invited: 'Davet',
-        ref_earnings: 'Kazanç',
-        ref_rate: 'Oran',
-        withdraw_title: '💸 Çekim',
-        withdraw_subtitle: 'Minimum çekim: $0.01',
-        balance_current: 'Mevcut Bakiye',
-        withdraw_amount: '💰 Çekilecek Miktar ($)',
-        withdraw_address: '₿ BTC Adresi',
-        btn_withdraw: '💸 Çekim Yap',
-        support_title: '💬 Destek',
-        faq_bonus: '❓ Bonus nedir?',
-        faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!',
-        faq_how: '❓ Nasıl alınır?',
-        faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.',
-        faq_roi: '❓ ROI süresi?',
-        faq_roi_answer: 'Tüm yatırımlar 3 ayda geri döner.',
-        welcome_title: 'HOŞ GELDİN!',
-        welcome_desc: '<strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!',
-        welcome_feat1: 'Anında ekleme',
-        welcome_feat2: 'Saniyelik kazanç',
-        welcome_feat3: '3 ay ROI',
-        welcome_feat4: 'Ödeme yok!',
-        btn_start: '🚀 BAŞLA',
-        payment_title: '₿ Bitcoin Ödeme',
-        payment_make: 'Ödeme Yap',
-        payment_amount: 'Gönderilecek Tutar',
-        payment_copy: 'BTC Adresini Kopyala',
-        btn_copy: '📋 Adresi Kopyala',
-        payment_time: 'Kalan Süre:',
-        payment_waiting: 'Ödeme Bekleniyor...',
-        payment_how: 'Nasıl Yapılır?',
-        payment_step1: 'Yukarıdaki adresi kopyala',
-        payment_step2: 'BTC cüzdanından gönder',
-        payment_step3: 'Ödemeyi onayla',
-        btn_cancel: 'İptal',
-        btn_confirm: '✓ Onayla',
-        notif_min: '❌ Min $1!',
-        notif_copied: '📋 Adres kopyalandı!',
-        notif_bonus: '🎉 $1 bonus kazandın!',
-        notif_confirmed: '✅ Ödeme onaylandı!',
-        notif_timeout: '⏰ Süre doldu!',
-        notif_success: '✅ Çekim başarılı!',
-        notif_invalid: '❌ Geçersiz!',
-        notif_required: '❌ Adres gerekli!',
-        notif_code_copied: '📋 Kod kopyalandı!',
-        roi_days: '90 gün'
-      },
-      en: {
-        sidebar_title: 'BTC Mining',
-        sidebar_subtitle: 'Pro Platform',
-        menu_main: 'Main Menu',
-        menu_home: 'Home',
-        menu_buy: 'Buy',
-        menu_production: 'Production',
-        menu_stats: 'Statistics',
-        menu_leaderboard: 'Leaderboard',
-        menu_account: 'Account',
-        menu_referral: 'Referral',
-        menu_withdraw: 'Withdraw',
-        home_title: '👋 Welcome!',
-        home_subtitle: 'Welcome to BTC Mining platform. Here\'s an overview.',
-        stat_active: 'Active Products',
-        stat_invested: 'Total Investment',
-        stat_earned: 'Total Earnings',
-        stat_persecond: 'Per Second',
-        quick_start: '🚀 Quick Start',
-        quick_start_desc: 'No products yet! Go to "Buy" from the left menu and make your first investment. Every $1 investment earns you $1 in 3 months. Minimum purchase is only $1!',
-        btn_first_invest: '💎 Make First Investment',
-        buy_title: '💎 Buy Mining Power',
-        buy_subtitle: 'Start with minimum $1, get ROI in 3 months',
-        info_minimum: 'Minimum',
-        info_roi: 'ROI',
-        info_return: 'Return',
-        info_daily: 'Daily',
-        select_package: 'Select Package',
-        package_roi: '3 Month ROI',
-        custom_amount: '💰 Custom Amount',
-        calculation: '📊 Calculation',
-        calc_daily: 'Daily',
-        calc_monthly: 'Monthly',
-        calc_3month: '3 Months',
-        calc_roi: 'ROI',
-        btn_buy_now: '🚀 Buy Now',
-        production_title: '⚡ Production Line',
-        production_subtitle: 'Your mining operations in real-time',
-        active_production: 'Active Production',
-        status_working: 'RUNNING',
-        station_verify: 'Verify',
-        station_chain: 'Chain',
-        station_reward: 'Reward',
-        summary_total: ' Total',
-        summary_minute: '⏱️ Minute',
-        summary_hour: '🕐 Hour',
-        summary_month: '📅 Month',
-        stats_title: 'Statistics',
-        stat_active_products: 'Active Products',
-        stat_total_earn: 'Total Earnings',
-        stat_per_second: 'Per Second',
-        stat_roi_time: 'ROI Time',
-        leaderboard_title: '🏆 Leaderboard',
-        leaderboard_subtitle: 'Top earners',
-        referral_title: '👥 Referral',
-        referral_subtitle: 'Invite friends, earn 10%',
-        referral_code: 'Your Referral Code',
-        referral_click: 'Click to copy!',
-        ref_invited: 'Invited',
-        ref_earnings: 'Earnings',
-        ref_rate: 'Rate',
-        withdraw_title: '💸 Withdraw',
-        withdraw_subtitle: 'Minimum withdrawal: $0.01',
-        balance_current: 'Current Balance',
-        withdraw_amount: '💰 Withdrawal Amount ($)',
-        withdraw_address: '₿ BTC Address',
-        btn_withdraw: '💸 Withdraw',
-        support_title: '💬 Support',
-        faq_bonus: ' What is the bonus?',
-        faq_bonus_answer: '$1 free mining power on first login!',
-        faq_how: '❓ How to buy?',
-        faq_how_answer: 'Select package from Buy, pay, confirm.',
-        faq_roi: '❓ ROI period?',
-        faq_roi_answer: 'All investments return in 3 months.',
-        welcome_title: 'WELCOME!',
-        welcome_desc: '<strong>Free bonus</strong> ready!<br>Start now!',
-        welcome_feat1: 'Instant addition',
-        welcome_feat2: 'Per-second earnings',
-        welcome_feat3: '3 month ROI',
-        welcome_feat4: 'No payment!',
-        btn_start: '🚀 START',
-        payment_title: '₿ Bitcoin Payment',
-        payment_make: 'Make Payment',
-        payment_amount: 'Amount to Send',
-        payment_copy: 'Copy BTC Address',
-        btn_copy: '📋 Copy Address',
-        payment_time: 'Time Left:',
-        payment_waiting: 'Waiting for Payment...',
-        payment_how: 'How to?',
-        payment_step1: 'Copy the address above',
-        payment_step2: 'Send from BTC wallet',
-        payment_step3: 'Confirm payment',
-        btn_cancel: 'Cancel',
-        btn_confirm: '✓ Confirm',
-        notif_min: '❌ Min $1!',
-        notif_copied: ' Address copied!',
-        notif_bonus: ' You earned $1 bonus!',
-        notif_confirmed: '✅ Payment confirmed!',
-        notif_timeout: '⏰ Time expired!',
-        notif_success: '✅ Withdrawal successful!',
-        notif_invalid: '❌ Invalid!',
-        notif_required: '❌ Address required!',
-        notif_code_copied: '📋 Code copied!',
-        roi_days: '90 days'
-      }
+    // Kripto fiyatları (USD)
+    const CRYPTO_PRICES = {
+      btc: 65000,
+      trx: 0.12,
+      bnb: 600
+    };
+
+    // Kripto adresleri (örnek)
+    const CRYPTO_ADDRESSES = {
+      btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+      trx: 'TXYZ1234567890abcdefghijklmnopqrstuvwxyz',
+      bnb: '0x1234567890abcdef1234567890abcdef12345678'
+    };
+
+    const CRYPTO_NAMES = {
+      btc: 'Bitcoin',
+      trx: 'TRON',
+      bnb: 'BNB'
+    };
+
+    const CRYPTO_SYMBOLS = {
+      btc: 'BTC',
+      trx: 'TRX',
+      bnb: 'BNB'
+    };
+
+    const CRYPTO_ICONS = {
+      btc: '',
+      trx: '💠',
+      bnb: '🔶'
     };
 
     let currentLang = 'tr';
+    let selectedCrypto = 'btc';
+    let currentPaymentAmount = 0;
+    let paymentTimerInterval = null;
+    let paymentTimeLeft = 900;
+
     const tg = window.Telegram.WebApp;
-    
     tg.ready();
     tg.expand();
-    tg.setHeaderColor(getComputedStyle(document.documentElement).getPropertyValue('--tg-theme-bg-color'));
-    
-    tg.BackButton.onClick(() => {
-      if (document.querySelector('.sidebar.open')) toggleSidebar();
-    });
-    
+
     function haptic(type = 'impact') {
       if (tg.HapticFeedback) {
         if (type === 'impact') tg.HapticFeedback.impactOccurred('light');
@@ -1764,36 +984,21 @@
       referralEarnings: 0,
       theme: tg.colorScheme === 'dark' ? 'dark' : 'light',
       welcomeBonusClaimed: false,
-      language: 'tr'
+      language: 'tr',
+      activities: []
     };
 
     let lastUpdate = Date.now();
-    let currentPaymentAmount = 0;
-    let currentBTCAddress = '';
-    let paymentTimerInterval = null;
-    let paymentTimeLeft = 900;
 
     function changeLanguage(lang) {
       currentLang = lang;
       state.language = lang;
       saveState();
-      
       document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
       document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-      
-      document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-          element.innerHTML = translations[lang][key];
-        }
-      });
-      
       updateLevel();
+      renderActivities();
       haptic('impact');
-    }
-
-    function t(key) {
-      return translations[currentLang][key] || key;
     }
 
     function showPage(pageId, menuItem) {
@@ -1811,6 +1016,54 @@
       haptic('impact');
     }
 
+    function addActivity(type, name, amount) {
+      state.activities.unshift({ type, name, amount, time: Date.now() });
+      if (state.activities.length > 5) state.activities.pop();
+      renderActivities();
+    }
+
+    function renderActivities() {
+      const list = document.getElementById('activityList');
+      const count = document.getElementById('activityCount');
+      count.textContent = state.activities.length;
+      
+      if (state.activities.length === 0) {
+        list.innerHTML = `<div class="activity-item">
+          <div class="activity-icon earn">🎁</div>
+          <div class="activity-info">
+            <div class="activity-name">Hoş geldin bonusu</div>
+            <div class="activity-time">Az önce</div>
+          </div>
+          <div class="activity-amount">+$1.00</div>
+        </div>`;
+        return;
+      }
+      
+      list.innerHTML = state.activities.map(act => {
+        const iconClass = act.type === 'buy' ? 'buy' : act.type === 'earn' ? 'earn' : 'withdraw';
+        const icon = act.type === 'buy' ? '' : act.type === 'earn' ? '' : '💸';
+        const timeAgo = getTimeAgo(act.time);
+        return `<div class="activity-item">
+          <div class="activity-icon ${iconClass}">${icon}</div>
+          <div class="activity-info">
+            <div class="activity-name">${act.name}</div>
+            <div class="activity-time">${timeAgo}</div>
+          </div>
+          <div class="activity-amount" style="color: ${act.type === 'withdraw' ? 'var(--danger)' : 'var(--success)'}">
+            ${act.type === 'withdraw' ? '-' : '+'}$${act.amount.toFixed(2)}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function getTimeAgo(timestamp) {
+      const seconds = Math.floor((Date.now() - timestamp) / 1000);
+      if (seconds < 60) return 'Az önce';
+      if (seconds < 3600) return Math.floor(seconds / 60) + ' dk önce';
+      if (seconds < 86400) return Math.floor(seconds / 3600) + ' saat önce';
+      return Math.floor(seconds / 86400) + ' gün önce';
+    }
+
     function init() {
       if (state.language) {
         currentLang = state.language;
@@ -1820,7 +1073,9 @@
       
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
-        document.getElementById('userName').textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+        const userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+        document.getElementById('userName').textContent = userName;
+        document.getElementById('heroUserName').textContent = userName;
       }
 
       loadState();
@@ -1834,6 +1089,7 @@
       restoreConveyorProducts();
       updateLevel();
       renderLeaderboard();
+      renderActivities();
       startLiveFeed();
       setInterval(updateEarnings, 100);
       setInterval(generateFeedItem, 5000);
@@ -1861,8 +1117,9 @@
       addProduct(WELCOME_BONUS, true);
       state.welcomeBonusClaimed = true;
       addXP(50);
+      addActivity('earn', 'Hoş geldin bonusu', WELCOME_BONUS);
       closeWelcomeBonus();
-      showNotification('notif_bonus', 'bonus');
+      showNotification('🎉 $1 bonus kazandın!', 'bonus');
       haptic('success');
       setTimeout(() => showPage('production', document.querySelectorAll('.menu-item')[2]), 500);
       saveState();
@@ -1870,13 +1127,6 @@
 
     function closeWelcomeBonus() {
       document.getElementById('welcomeBonusModal').classList.remove('active');
-    }
-
-    function generateBTCAddress() {
-      const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
-      let address = 'bc1q';
-      for (let i = 0; i < 38; i++) address += chars.charAt(Math.floor(Math.random() * chars.length));
-      return address;
     }
 
     function getTier(amount) {
@@ -1930,6 +1180,8 @@
     function updateStats() {
       const totalPerSecond = state.purchasedProducts.reduce((sum, p) => sum + (p.amount * PER_SECOND_RATE), 0);
       
+      document.getElementById('heroActiveProducts').textContent = state.purchasedProducts.length;
+      document.getElementById('heroTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
       document.getElementById('homeActiveProducts').textContent = state.purchasedProducts.length;
       document.getElementById('homeTotalInvested').textContent = '$' + state.totalInvested.toFixed(0);
       document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
@@ -1944,7 +1196,7 @@
       
       document.getElementById('productCount').textContent = state.purchasedProducts.length;
       
-      if (state.totalInvested > 0) document.getElementById('roiTimeLeft').textContent = t('roi_days');
+      if (state.totalInvested > 0) document.getElementById('roiTimeLeft').textContent = '90 gün';
     }
 
     function updateLevel() {
@@ -1966,7 +1218,7 @@
         }
       }
       document.getElementById('levelBadge').textContent = state.level;
-      document.getElementById('levelBadge').className = 'level-badge ' + currentLevel.class;
+      document.getElementById('levelBadge').className = 'level-badge-large ' + currentLevel.class;
       const levelName = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
       document.getElementById('levelName').textContent = levelName;
       document.getElementById('levelDesc').textContent = currentLevel['desc_' + currentLang];
@@ -2012,21 +1264,83 @@
       document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'short' });
     }
 
+    // ===== KRIPTO ÖDEME FONKSİYONLARI =====
     function openModal() {
       const amount = parseFloat(document.getElementById('amountInput').value) || 0;
       if (amount < 1) {
-        showNotification('notif_min', true);
+        showNotification('❌ Min $1!', true);
         haptic('error');
         return;
       }
       currentPaymentAmount = amount;
-      currentBTCAddress = generateBTCAddress();
-      document.getElementById('btcPaymentAmount').textContent = '$' + amount.toFixed(0);
-      document.getElementById('btcAddressText').textContent = currentBTCAddress;
+      document.getElementById('modalUsdAmount').textContent = '$' + amount.toFixed(2);
+      
+      // Kripto miktarlarını hesapla
+      updateCryptoAmounts(amount);
+      
+      // Varsayılan olarak BTC seç
+      selectCrypto('btc');
+      
       paymentTimeLeft = 900;
       startPaymentTimer();
       document.getElementById('purchaseModal').classList.add('active');
       haptic('impact');
+    }
+
+    function updateCryptoAmounts(usdAmount) {
+      const btcAmount = usdAmount / CRYPTO_PRICES.btc;
+      const trxAmount = usdAmount / CRYPTO_PRICES.trx;
+      const bnbAmount = usdAmount / CRYPTO_PRICES.bnb;
+      
+      document.getElementById('btcAmount').textContent = btcAmount.toFixed(6) + ' BTC';
+      document.getElementById('trxAmount').textContent = trxAmount.toFixed(2) + ' TRX';
+      document.getElementById('bnbAmount').textContent = bnbAmount.toFixed(5) + ' BNB';
+    }
+
+    function selectCrypto(crypto) {
+      selectedCrypto = crypto;
+      
+      // Seçili sınıfını güncelle
+      document.querySelectorAll('.crypto-option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelector('.crypto-option.' + crypto).classList.add('selected');
+      
+      // Ödeme kutusunu güncelle
+      const paymentBox = document.getElementById('paymentBox');
+      paymentBox.className = 'payment-box ' + crypto;
+      
+      // İkon ve başlık
+      document.getElementById('paymentIcon').textContent = CRYPTO_ICONS[crypto];
+      document.getElementById('paymentTitle').textContent = CRYPTO_NAMES[crypto] + ' Ödeme';
+      
+      // Miktar
+      const usdAmount = currentPaymentAmount;
+      const cryptoAmount = usdAmount / CRYPTO_PRICES[crypto];
+      document.getElementById('cryptoAmountDisplay').textContent = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[crypto];
+      
+      // QR kod
+      document.getElementById('qrCrypto').setAttribute('data-crypto', CRYPTO_SYMBOLS[crypto]);
+      
+      // Adres
+      document.getElementById('addressLabel').textContent = CRYPTO_SYMBOLS[crypto] + ' Adresini Kopyala';
+      document.getElementById('addressText').textContent = CRYPTO_ADDRESSES[crypto];
+      document.getElementById('cryptoAddress').className = 'address-text ' + crypto;
+      
+      // Kopyala butonu
+      const copyBtn = document.getElementById('copyBtn');
+      copyBtn.className = 'btn-copy' + (crypto === 'bnb' ? ' bnb' : '');
+      
+      // Adım 2
+      document.getElementById('step2').textContent = CRYPTO_NAMES[crypto] + ' cüzdanından gönder';
+      
+      haptic('impact');
+    }
+
+    function copyAddress() {
+      const address = CRYPTO_ADDRESSES[selectedCrypto];
+      navigator.clipboard.writeText(address).then(() => {
+        showNotification('📋 Adres kopyalandı!');
+        haptic('success');
+      });
     }
 
     function startPaymentTimer() {
@@ -2037,7 +1351,7 @@
         updateTimerDisplay();
         if (paymentTimeLeft <= 0) {
           clearInterval(paymentTimerInterval);
-          showNotification('notif_timeout', true);
+          showNotification('⏰ Süre doldu!', true);
           haptic('error');
           closeModal();
         }
@@ -2048,13 +1362,6 @@
       const minutes = Math.floor(paymentTimeLeft / 60);
       const seconds = paymentTimeLeft % 60;
       document.getElementById('paymentTimer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-
-    function copyBTCAddress() {
-      navigator.clipboard.writeText(currentBTCAddress).then(() => {
-        showNotification('notif_copied');
-        haptic('success');
-      });
     }
 
     function closeModal() {
@@ -2069,7 +1376,8 @@
       if (currentPaymentAmount < 1) return;
       addProduct(currentPaymentAmount, false);
       addXP(Math.floor(currentPaymentAmount));
-      showNotification('notif_confirmed');
+      addActivity('buy', CRYPTO_SYMBOLS[selectedCrypto] + ' ile satın alma', currentPaymentAmount);
+      showNotification('✅ Ödeme onaylandı!');
       haptic('success');
       closeModal();
       saveState();
@@ -2090,6 +1398,7 @@
       document.getElementById('totalEarned').textContent = '$' + state.totalEarned.toFixed(2);
       document.getElementById('balanceDisplay').textContent = '$' + state.totalEarned.toFixed(2);
       document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
+      document.getElementById('heroTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
 
       validateWithdraw();
       
@@ -2121,7 +1430,7 @@
 
     function copyReferral() {
       navigator.clipboard.writeText(state.referralCode).then(() => {
-        showNotification('notif_code_copied');
+        showNotification('📋 Kod kopyalandı!');
         haptic('success');
       });
     }
@@ -2134,10 +1443,10 @@
         btn.textContent = `Min $${MIN_WITHDRAW}`;
       } else if (amount > state.totalEarned) {
         btn.disabled = true;
-        btn.textContent = currentLang === 'tr' ? ' Yetersiz Bakiye' : '❌ Insufficient';
+        btn.textContent = '❌ Yetersiz Bakiye';
       } else {
         btn.disabled = false;
-        btn.textContent = '💸 $' + amount.toFixed(2) + ' ' + (currentLang === 'tr' ? 'Çek' : 'Withdraw');
+        btn.textContent = '💸 $' + amount.toFixed(2) + ' Çek';
       }
     }
 
@@ -2146,12 +1455,12 @@
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
       if (amount < MIN_WITHDRAW || amount > state.totalEarned) {
-        showNotification('notif_invalid', true);
+        showNotification('❌ Geçersiz!', true);
         haptic('error');
         return;
       }
       if (!walletAddress) {
-        showNotification('notif_required', true);
+        showNotification('❌ Adres gerekli!', true);
         haptic('error');
         return;
       }
@@ -2171,8 +1480,9 @@
       
       state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
       
+      addActivity('withdraw', 'Çekim', amount);
       addXP(50);
-      showNotification('notif_success');
+      showNotification('✅ Çekim başarılı!');
       haptic('success');
       
       document.getElementById('withdrawAmount').value = '';
@@ -2189,9 +1499,9 @@
 
     function generateFeedItem() {
       const actions = [
-        { icon: '💰', text: currentLang === 'tr' ? '$<amount> yatırdı' : 'deposited $<amount>', users: ['User234', 'User891', 'User456'] },
-        { icon: '💸', text: currentLang === 'tr' ? '$<amount> çekti' : 'withdrew $<amount>', users: ['User345', 'User678', 'User901'] },
-        { icon: '🎯', text: currentLang === 'tr' ? 'seviye atladı' : 'leveled up', users: ['User847', 'User234'] }
+        { icon: '', text: '$<amount> yatırdı', users: ['User234', 'User891', 'User456'] },
+        { icon: '💸', text: '$<amount> çekti', users: ['User345', 'User678', 'User901'] },
+        { icon: '', text: 'seviye atladı', users: ['User847', 'User234'] }
       ];
       const action = actions[Math.floor(Math.random() * actions.length)];
       const user = action.users[Math.floor(Math.random() * action.users.length)];
@@ -2210,9 +1520,9 @@
       haptic('impact');
     }
 
-    function showNotification(key, type = '') {
+    function showNotification(message, type = '') {
       const notification = document.getElementById('notification');
-      notification.textContent = t(key);
+      notification.textContent = message;
       notification.className = 'notification show ' + type;
       setTimeout(() => notification.classList.remove('show'), 3000);
     }
