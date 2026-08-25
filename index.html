@@ -274,133 +274,37 @@
   .btn-cancel { background: rgba(100, 140, 180, 0.15); color: var(--text-secondary); }
   .btn-confirm { background: var(--accent); color: white; }
 
-  /* ===== KRIPTO ÖDEME SEÇENEKLERİ ===== */
-  .crypto-selector {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .crypto-option {
-    background: var(--bg-card-solid);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    padding: 15px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .crypto-option:active {
-    transform: scale(0.95);
-  }
-
-  .crypto-option:hover {
-    border-color: var(--accent);
-  }
-
-  .crypto-option.selected {
-    border-color: var(--accent);
-    background: rgba(74, 158, 255, 0.15);
-  }
-
+  .crypto-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .crypto-option { background: var(--bg-card-solid); border: 2px solid var(--border-color); border-radius: 12px; padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .crypto-option:active { transform: scale(0.95); }
+  .crypto-option:hover { border-color: var(--accent); }
+  .crypto-option.selected { border-color: var(--accent); background: rgba(74, 158, 255, 0.15); }
   .crypto-option.btc.selected { border-color: var(--btc-orange); background: rgba(247, 147, 26, 0.15); }
   .crypto-option.trx.selected { border-color: var(--trx-red); background: rgba(235, 0, 41, 0.15); }
   .crypto-option.bnb.selected { border-color: var(--bnb-yellow); background: rgba(243, 186, 47, 0.15); }
+  .crypto-icon { font-size: 28px; margin-bottom: 6px; }
+  .crypto-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .crypto-amount { font-size: 11px; color: var(--text-secondary); font-family: 'Courier New', monospace; }
 
-  .crypto-icon {
-    font-size: 28px;
-    margin-bottom: 6px;
-  }
-
-  .crypto-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 3px;
-  }
-
-  .crypto-amount {
-    font-size: 11px;
-    color: var(--text-secondary);
-    font-family: 'Courier New', monospace;
-  }
-
-  .payment-box {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    border-radius: 12px;
-    padding: 18px;
-    color: white;
-    margin: 15px 0;
-  }
-
+  .payment-box { border-radius: 12px; padding: 18px; color: white; margin: 15px 0; }
   .payment-box.btc { background: linear-gradient(135deg, #f7931a, #e8850f); }
   .payment-box.trx { background: linear-gradient(135deg, #eb0029, #c40022); }
   .payment-box.bnb { background: linear-gradient(135deg, #f3ba2f, #d4a017); color: #1a2a3a; }
 
-  .payment-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 700;
-  }
+  .payment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 16px; font-weight: 700; }
 
-  .payment-amount-display {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
+  .payment-amount-display { background: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 10px; margin-bottom: 10px; text-align: center; position: relative; cursor: pointer; transition: all 0.2s; }
+  .payment-amount-display:hover { background: rgba(0, 0, 0, 0.3); }
+  .payment-amount-display:active { transform: scale(0.98); }
   .payment-amount-display .label { font-size: 10px; opacity: 0.9; margin-bottom: 3px; }
   .payment-amount-display .value { font-size: 22px; font-weight: 700; font-family: 'Courier New', monospace; }
+  .payment-amount-display .copy-hint { position: absolute; top: 8px; right: 8px; font-size: 14px; opacity: 0.7; }
 
-  .qr-code {
-    width: 100px;
-    height: 100px;
-    background: white;
-    border-radius: 8px;
-    margin: 10px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-  }
+  .qr-code { width: 100px; height: 100px; background: white; border-radius: 8px; margin: 10px auto; display: flex; align-items: center; justify-content: center; padding: 6px; }
+  .qr-placeholder { width: 100%; height: 100%; background: repeating-linear-gradient(0deg, #000 0px, #000 3px, transparent 3px, transparent 6px), repeating-linear-gradient(90deg, #000 0px, #000 3px, transparent 3px, transparent 6px); background-size: 6px 6px; border-radius: 6px; position: relative; }
+  .qr-placeholder::after { content: attr(data-crypto); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20px; font-weight: 700; background: white; padding: 3px 6px; border-radius: 6px; }
 
-  .qr-placeholder {
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(0deg, #000 0px, #000 3px, transparent 3px, transparent 6px),
-                repeating-linear-gradient(90deg, #000 0px, #000 3px, transparent 3px, transparent 6px);
-    background-size: 6px 6px;
-    border-radius: 6px;
-    position: relative;
-  }
-
-  .qr-placeholder::after {
-    content: attr(data-crypto);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    font-weight: 700;
-    background: white;
-    padding: 3px 6px;
-    border-radius: 6px;
-  }
-
-  .address-box {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
+  .address-box { background: rgba(255, 255, 255, 0.95); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
   .address-label { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600; }
   .address-text { font-family: 'Courier New', monospace; font-size: 11px; color: #1a2a3a; word-break: break-all; padding: 6px; background: #f5f5f5; border-radius: 5px; border: 2px dashed var(--accent); cursor: pointer; position: relative; line-height: 1.3; }
   .address-text.btc { border-color: var(--btc-orange); }
@@ -507,7 +411,7 @@
     </div>
 
     <div class="language-selector">
-      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹🇷 TR</button>
+      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹 TR</button>
       <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
     </div>
 
@@ -668,7 +572,7 @@
         <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">📊 Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;"> Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
             <div class="label">Günlük</div>
@@ -706,7 +610,7 @@
           </div>
           <div class="stations-container">
             <div class="station-connector"></div>
-            <div class="station"><div class="station-icon"></div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
+            <div class="station"><div class="station-icon">🔍</div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
             <div class="station"><div class="station-icon">✓</div><div class="station-name">Doğrulama</div><div class="station-desc">Verify</div></div>
             <div class="station"><div class="station-icon">⛓️</div><div class="station-name">Zincir</div><div class="station-desc">Chain</div></div>
             <div class="station"><div class="station-icon">💰</div><div class="station-name">Ödül</div><div class="station-desc">Reward</div></div>
@@ -717,7 +621,7 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label">💰 Toplam</div>
+              <div class="summary-label"> Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
@@ -747,7 +651,7 @@
 
     <div class="page" id="page-leaderboard">
       <div class="page-header">
-        <h1 class="page-title">🏆 Liderlik</h1>
+        <h1 class="page-title"> Liderlik</h1>
         <p class="page-subtitle">En çok kazananlar</p>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
@@ -755,7 +659,7 @@
 
     <div class="page" id="page-referral">
       <div class="page-header">
-        <h1 class="page-title"> Referans</h1>
+        <h1 class="page-title">👥 Referans</h1>
         <p class="page-subtitle">Arkadaşlarını davet et, %10 kazan</p>
       </div>
       <div class="referral-card">
@@ -800,11 +704,11 @@
       <div class="support-header">💬 Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question"> Bonus nedir?</div>
+          <div class="faq-question">❓ Bonus nedir?</div>
           <div class="faq-answer">İlk girişte $1 ücretsiz mining gücü!</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question"> Nasıl alınır?</div>
+          <div class="faq-question">❓ Nasıl alınır?</div>
           <div class="faq-answer">Satın Al'dan paket seç, öde, onayla.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
@@ -829,11 +733,10 @@
         <div>3 ay ROI</div>
         <div>Ödeme yok!</div>
       </div>
-      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()"> BAŞLA</button>
+      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()">🚀 BAŞLA</button>
     </div>
   </div>
 
-  <!-- KRIPTO ÖDEME MODALI -->
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -843,7 +746,6 @@
         Toplam: <strong id="modalUsdAmount">$10.00</strong> - Kripto para birimi seçin
       </p>
 
-      <!-- Kripto Seçenekleri -->
       <div class="crypto-selector">
         <div class="crypto-option btc selected" onclick="selectCrypto('btc')">
           <div class="crypto-icon">₿</div>
@@ -851,26 +753,26 @@
           <div class="crypto-amount" id="btcAmount">0.000154 BTC</div>
         </div>
         <div class="crypto-option trx" onclick="selectCrypto('trx')">
-          <div class="crypto-icon"></div>
+          <div class="crypto-icon">💠</div>
           <div class="crypto-name">TRON</div>
           <div class="crypto-amount" id="trxAmount">83.33 TRX</div>
         </div>
         <div class="crypto-option bnb" onclick="selectCrypto('bnb')">
-          <div class="crypto-icon"></div>
+          <div class="crypto-icon">🔶</div>
           <div class="crypto-name">BNB</div>
           <div class="crypto-amount" id="bnbAmount">0.01667 BNB</div>
         </div>
       </div>
 
-      <!-- Ödeme Kutusu -->
       <div class="payment-box btc" id="paymentBox">
         <div class="payment-header">
           <span style="font-size: 24px;" id="paymentIcon">₿</span>
           <span id="paymentTitle">Bitcoin Ödeme</span>
         </div>
         
-        <div class="payment-amount-display">
-          <div class="label">Gönderilecek Tutar</div>
+        <div class="payment-amount-display" onclick="copyAmount()" id="amountDisplay">
+          <div class="copy-hint">📋</div>
+          <div class="label">Gönderilecek Tutar (Tıkla: Kopyala)</div>
           <div class="value" id="cryptoAmountDisplay">0.000154 BTC</div>
         </div>
         
@@ -879,13 +781,13 @@
         </div>
         
         <div class="address-box">
-          <div class="address-label" id="addressLabel">BTC Adresini Kopyala</div>
+          <div class="address-label" id="addressLabel">BTC Adresini Kopyala (Tıkla)</div>
           <div class="address-text btc" id="cryptoAddress" onclick="copyAddress()">
             <span id="addressText">bc1q...</span>
           </div>
         </div>
         
-        <button class="btn-copy" id="copyBtn" onclick="copyAddress()">📋 Adresi Kopyala</button>
+        <button class="btn-copy" id="copyBtn" onclick="copyBoth()">📋 Adres + Tutar Kopyala</button>
         
         <div class="payment-timer">
           <span>⏱️</span>
@@ -901,7 +803,7 @@
         <div class="payment-instructions">
           <strong>Nasıl Yapılır?</strong>
           <ol>
-            <li>Yukarıdaki adresi kopyala</li>
+            <li>Tutarı kopyala</li>
             <li id="step2">BTC cüzdanından gönder</li>
             <li>Ödemeyi onayla</li>
           </ol>
@@ -918,37 +820,15 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    // Kripto fiyatları (USD)
-    const CRYPTO_PRICES = {
-      btc: 65000,
-      trx: 0.12,
-      bnb: 600
-    };
-
-    // Kripto adresleri (örnek)
+    const CRYPTO_PRICES = { btc: 65000, trx: 0.12, bnb: 600 };
     const CRYPTO_ADDRESSES = {
       btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
       trx: 'TXYZ1234567890abcdefghijklmnopqrstuvwxyz',
       bnb: '0x1234567890abcdef1234567890abcdef12345678'
     };
-
-    const CRYPTO_NAMES = {
-      btc: 'Bitcoin',
-      trx: 'TRON',
-      bnb: 'BNB'
-    };
-
-    const CRYPTO_SYMBOLS = {
-      btc: 'BTC',
-      trx: 'TRX',
-      bnb: 'BNB'
-    };
-
-    const CRYPTO_ICONS = {
-      btc: '',
-      trx: '💠',
-      bnb: '🔶'
-    };
+    const CRYPTO_NAMES = { btc: 'Bitcoin', trx: 'TRON', bnb: 'BNB' };
+    const CRYPTO_SYMBOLS = { btc: 'BTC', trx: 'TRX', bnb: 'BNB' };
+    const CRYPTO_ICONS = { btc: '', trx: '💠', bnb: '🔶' };
 
     let currentLang = 'tr';
     let selectedCrypto = 'btc';
@@ -1029,7 +909,7 @@
       
       if (state.activities.length === 0) {
         list.innerHTML = `<div class="activity-item">
-          <div class="activity-icon earn">🎁</div>
+          <div class="activity-icon earn"></div>
           <div class="activity-info">
             <div class="activity-name">Hoş geldin bonusu</div>
             <div class="activity-time">Az önce</div>
@@ -1041,7 +921,7 @@
       
       list.innerHTML = state.activities.map(act => {
         const iconClass = act.type === 'buy' ? 'buy' : act.type === 'earn' ? 'earn' : 'withdraw';
-        const icon = act.type === 'buy' ? '' : act.type === 'earn' ? '' : '💸';
+        const icon = act.type === 'buy' ? '💎' : act.type === 'earn' ? '💵' : '💸';
         const timeAgo = getTimeAgo(act.time);
         return `<div class="activity-item">
           <div class="activity-icon ${iconClass}">${icon}</div>
@@ -1264,7 +1144,6 @@
       document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'short' });
     }
 
-    // ===== KRIPTO ÖDEME FONKSİYONLARI =====
     function openModal() {
       const amount = parseFloat(document.getElementById('amountInput').value) || 0;
       if (amount < 1) {
@@ -1274,13 +1153,8 @@
       }
       currentPaymentAmount = amount;
       document.getElementById('modalUsdAmount').textContent = '$' + amount.toFixed(2);
-      
-      // Kripto miktarlarını hesapla
       updateCryptoAmounts(amount);
-      
-      // Varsayılan olarak BTC seç
       selectCrypto('btc');
-      
       paymentTimeLeft = 900;
       startPaymentTimer();
       document.getElementById('purchaseModal').classList.add('active');
@@ -1299,40 +1173,44 @@
 
     function selectCrypto(crypto) {
       selectedCrypto = crypto;
-      
-      // Seçili sınıfını güncelle
       document.querySelectorAll('.crypto-option').forEach(opt => opt.classList.remove('selected'));
       document.querySelector('.crypto-option.' + crypto).classList.add('selected');
       
-      // Ödeme kutusunu güncelle
       const paymentBox = document.getElementById('paymentBox');
       paymentBox.className = 'payment-box ' + crypto;
       
-      // İkon ve başlık
       document.getElementById('paymentIcon').textContent = CRYPTO_ICONS[crypto];
       document.getElementById('paymentTitle').textContent = CRYPTO_NAMES[crypto] + ' Ödeme';
       
-      // Miktar
       const usdAmount = currentPaymentAmount;
       const cryptoAmount = usdAmount / CRYPTO_PRICES[crypto];
-      document.getElementById('cryptoAmountDisplay').textContent = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[crypto];
+      const amountText = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[crypto];
+      document.getElementById('cryptoAmountDisplay').textContent = amountText;
       
-      // QR kod
       document.getElementById('qrCrypto').setAttribute('data-crypto', CRYPTO_SYMBOLS[crypto]);
-      
-      // Adres
-      document.getElementById('addressLabel').textContent = CRYPTO_SYMBOLS[crypto] + ' Adresini Kopyala';
+      document.getElementById('addressLabel').textContent = CRYPTO_SYMBOLS[crypto] + ' Adresini Kopyala (Tıkla)';
       document.getElementById('addressText').textContent = CRYPTO_ADDRESSES[crypto];
       document.getElementById('cryptoAddress').className = 'address-text ' + crypto;
       
-      // Kopyala butonu
       const copyBtn = document.getElementById('copyBtn');
       copyBtn.className = 'btn-copy' + (crypto === 'bnb' ? ' bnb' : '');
       
-      // Adım 2
       document.getElementById('step2').textContent = CRYPTO_NAMES[crypto] + ' cüzdanından gönder';
       
       haptic('impact');
+    }
+
+    function copyAmount() {
+      const usdAmount = currentPaymentAmount;
+      const cryptoAmount = usdAmount / CRYPTO_PRICES[selectedCrypto];
+      const amountText = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[selectedCrypto];
+      
+      navigator.clipboard.writeText(amountText).then(() => {
+        showNotification('📋 Tutar kopyalandı: ' + amountText);
+        haptic('success');
+      }).catch(() => {
+        fallbackCopy(amountText);
+      });
     }
 
     function copyAddress() {
@@ -1340,7 +1218,42 @@
       navigator.clipboard.writeText(address).then(() => {
         showNotification('📋 Adres kopyalandı!');
         haptic('success');
+      }).catch(() => {
+        fallbackCopy(address);
       });
+    }
+
+    function copyBoth() {
+      const usdAmount = currentPaymentAmount;
+      const cryptoAmount = usdAmount / CRYPTO_PRICES[selectedCrypto];
+      const amountText = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[selectedCrypto];
+      const address = CRYPTO_ADDRESSES[selectedCrypto];
+      const combinedText = amountText + '\n' + address;
+      
+      navigator.clipboard.writeText(combinedText).then(() => {
+        showNotification('📋 Tutar + Adres kopyalandı!');
+        haptic('success');
+      }).catch(() => {
+        fallbackCopy(combinedText);
+      });
+    }
+
+    function fallbackCopy(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showNotification('📋 Kopyalandı!');
+        haptic('success');
+      } catch (err) {
+        showNotification('❌ Kopyalama başarısız!', true);
+        haptic('error');
+      }
+      document.body.removeChild(textArea);
     }
 
     function startPaymentTimer() {
@@ -1501,7 +1414,7 @@
       const actions = [
         { icon: '', text: '$<amount> yatırdı', users: ['User234', 'User891', 'User456'] },
         { icon: '💸', text: '$<amount> çekti', users: ['User345', 'User678', 'User901'] },
-        { icon: '', text: 'seviye atladı', users: ['User847', 'User234'] }
+        { icon: '🎯', text: 'seviye atladı', users: ['User847', 'User234'] }
       ];
       const action = actions[Math.floor(Math.random() * actions.length)];
       const user = action.users[Math.floor(Math.random() * action.users.length)];
