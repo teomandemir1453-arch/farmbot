@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm My Country</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: Arial, sans-serif;
+    background: #2a1810;
+    color: white;
+    min-height: 100vh;
+}
+.top-bar {
+    background: #5a3a20;
+    padding: 15px;
+    text-align: center;
+}
+.currency { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    margin: 10px 0;
+}
+.currency-item {
+    background: rgba(0,0,0,0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.main-content { padding: 20px; }
+.wood-panel {
+    background: #6b4226;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+.btn {
+    background: #52BE80;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #3d2415;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+.nav-item {
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.nav-item.active { opacity: 1; }
+.page { display: none; }
+.page.active { display: block; }
+.toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9);
+    padding: 12px 24px;
+    border-radius: 25px;
+    display: none;
+}
+.toast.show { display: block; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+    <h1>🚜 Farm My Country</h1>
+    <div class="currency">
+        <div class="currency-item">💵 <span id="bucks">3,875</span></div>
+        <div class="currency-item">🪙 <span id="coins">215</span></div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div id="page-home" class="page active">
+        <div class="wood-panel">
+            <h2>📦 Warehouse</h2>
+            <p>Wheat: <span id="wheat">0</span> m³</p>
+            <p>Eggs: <span id="eggs">0</span> m³</p>
+            <p>Milk: <span id="milk">0</span> m³</p>
+            <button class="btn" onclick="collect()">🧺 Collect All</button>
+            <button class="btn" onclick="sell()">💰 Sell Products</button>
+        </div>
+    </div>
+
+    <div id="page-shop" class="page">
+        <div class="wood-panel">
+            <h2>🏪 Shop</h2>
+            <div style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                <strong>🐔 Chicken</strong><br>
+                <small>Produces eggs • 5s</small><br>
+                <strong style="color: #52BE80;">8,000 💵</strong>
+                <button class="btn" onclick="buy('chicken', 8000)">Buy</button>
+            </div>
+            <div style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                <strong>🐄 Cow</strong><br>
+                <small>Produces milk • 10s</small><br>
+                <strong style="color: #52BE80;">50,000 💵</strong>
+                <button class="btn" onclick="buy('cow', 50000)">Buy</button>
+            </div>
+            <div style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                <strong>🌾 Wheat Field</strong><br>
+                <small>Produces wheat • 15s</small><br>
+                <strong style="color: #52BE80;">15,000 💵</strong>
+                <button class="btn" onclick="buy('wheat', 15000)">Buy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-farm" class="page">
+        <div class="wood-panel">
+            <h2>🚜 My Farm</h2>
+            <div id="farm-items">
+                <p style="text-align: center; opacity: 0.6;">No animals yet. Visit the shop!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-payout" class="page">
+        <div class="wood-panel">
+            <h2>💰 Payout</h2>
+            <p>Withdraw your earnings to crypto!</p>
+            <button class="btn" onclick="alert('Coming soon!')">TRON (Min: 2 bucks)</button>
+            <button class="btn" onclick="alert('Coming soon!')">TON (Min: 3 bucks)</button>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="showPage('home', this)">
+        <div>🏠</div>
+        <small>Home</small>
+    </div>
+    <div class="nav-item" onclick="showPage('shop', this)">
+        <div>🏪</div>
+        <small>Shop</small>
+    </div>
+    <div class="nav-item" onclick="showPage('farm', this)">
+        <div>🚜</div>
+        <small>Farm</small>
+    </div>
+    <div class="nav-item" onclick="showPage('payout', this)">
+        <div>💰</div>
+        <small>Payout</small>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+tg.ready();
+
+let state = {
+    bucks: 3875,
+    coins: 215,
+    animals: { chicken: 0, cow: 0, wheat: 0 },
+    products: { wheat: 0, eggs: 0, milk: 0 }
+};
+
+function loadState() {
+    const saved = localStorage.getItem('farmState');
+    if (saved) state = JSON.parse(saved);
+    updateUI();
+}
+
+function saveState() {
+    localStorage.setItem('farmState', JSON.stringify(state));
+}
+
+function updateUI() {
+    document.getElementById('bucks').textContent = state.bucks.toLocaleString();
+    document.getElementById('coins').textContent = state.coins.toLocaleString();
+    document.getElementById('wheat').textContent = state.products.wheat.toLocaleString();
+    document.getElementById('eggs').textContent = state.products.eggs.toLocaleString();
+    document.getElementById('milk').textContent = state.products.milk.toLocaleString();
+    
+    let farmHTML = '';
+    if (state.animals.chicken > 0) farmHTML += `<div>🐔 Chicken: ${state.animals.chicken}</div>`;
+    if (state.animals.cow > 0) farmHTML += `<div>🐄 Cow: ${state.animals.cow}</div>`;
+    if (state.animals.wheat > 0) farmHTML += `<div>🌾 Wheat Field: ${state.animals.wheat}</div>`;
+    if (farmHTML === '') farmHTML = '<p style="text-align: center; opacity: 0.6;">No animals yet. Visit the shop!</p>';
+    document.getElementById('farm-items').innerHTML = farmHTML;
+}
+
+function showPage(page, element) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function buy(type, price) {
+    if (state.bucks >= price) {
+        state.bucks -= price;
+        state.animals[type]++;
+        saveState();
+        updateUI();
+        showToast(`✅ Purchased ${type}!`);
+    } else {
+        showToast('❌ Not enough money!');
+    }
+}
+
+function collect() {
+    if (state.animals.chicken > 0) state.products.eggs += state.animals.chicken * 5;
+    if (state.animals.cow > 0) state.products.milk += state.animals.cow * 8;
+    if (state.animals.wheat > 0) state.products.wheat += state.animals.wheat * 10;
+    saveState();
+    updateUI();
+    showToast(' Products collected!');
+}
+
+function sell() {
+    const total = state.products.wheat + state.products.eggs + state.products.milk;
+    if (total > 0) {
+        const earnings = Math.floor(total / 10);
+        state.bucks += earnings;
+        state.products = { wheat: 0, eggs: 0, milk: 0 };
+        saveState();
+        updateUI();
+        showToast(` Sold for ${earnings} bucks!`);
+    } else {
+        showToast('📦 Nothing to sell!');
+    }
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Production loop
+setInterval(() => {
+    if (state.animals.chicken > 0) state.products.eggs += state.animals.chicken;
+    if (state.animals.cow > 0) state.products.milk += state.animals.cow;
+    if (state.animals.wheat > 0) state.products.wheat += state.animals.wheat;
+    updateUI();
+}, 5000);
+
+loadState();
+</script>
+</body>
+</html>
