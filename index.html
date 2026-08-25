@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BTC Mining Platform - Ultimate</title>
+<title>BTC Mining Platform</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   :root {
     --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #e8f1f8 40%, #c9e0f0 100%);
     --bg-card: rgba(255, 255, 255, 0.45);
     --bg-card-solid: rgba(255, 255, 255, 0.35);
+    --bg-sidebar: rgba(255, 255, 255, 0.5);
     --text-primary: #1a2a3a;
     --text-secondary: #5a6a7a;
     --border-color: rgba(255, 255, 255, 0.6);
@@ -19,45 +20,190 @@
     --success: #4ade80;
     --danger: #f87171;
     --warning: #fbbf24;
+    --btc-orange: #f7931a;
   }
-
   [data-theme="dark"] {
     --bg-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%);
     --bg-card: rgba(30, 41, 59, 0.6);
     --bg-card-solid: rgba(30, 41, 59, 0.5);
+    --bg-sidebar: rgba(15, 23, 42, 0.8);
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
     --border-color: rgba(148, 163, 184, 0.2);
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: background-color 0.3s, color 0.3s; }
+  body { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); display: flex; }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
+  /* SIDEBAR MENU */
+  .sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-color);
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s;
   }
 
-  body {
-    min-height: 100vh;
-    background: var(--bg-primary);
-    padding: 40px 20px;
-    overflow-x: hidden;
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
     color: var(--text-primary);
   }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
+  .sidebar-subtitle {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .menu-section {
+    margin-bottom: 25px;
+  }
+
+  .menu-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-left: 12px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+
+  .menu-item:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  .menu-item.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  }
+
+  .menu-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+  }
+
+  .menu-badge {
+    margin-left: auto;
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .menu-item.active .menu-badge {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .sidebar-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success), #22c55e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+  }
+
+  .user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .user-level {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 40px;
+    min-height: 100vh;
+  }
+
+  .page {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .theme-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: var(--bg-card);
     backdrop-filter: blur(20px);
@@ -66,87 +212,132 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
     z-index: 999;
     box-shadow: var(--shadow);
-    transition: transform 0.3s;
   }
 
-  .theme-toggle:hover {
-    transform: rotate(180deg) scale(1.1);
-  }
-
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 60px;
-    flex-wrap: wrap;
-  }
-
-  .card {
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
     background: var(--bg-card);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: var(--shadow);
-    min-width: 240px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    z-index: 999;
+    font-size: 20px;
   }
 
-  .card:hover { transform: translateY(-5px); }
-  .card h3 { font-size: 18px; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
-
-  .center-section { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-
-  .bitcoin {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e8e8e8 20%, #c0c0c0 50%, #8a8a8a 80%, #5a5a5a 100%);
-    box-shadow: 0 20px 60px rgba(100, 140, 180, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: float 4s ease-in-out infinite;
+  /* PAGE HEADER */
+  .page-header {
+    margin-bottom: 30px;
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  .page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
   }
 
-  .bitcoin-symbol { font-size: 110px; font-weight: 700; color: #c0c0c0; font-family: 'Arial Black', sans-serif; }
-  .section-title { text-align: center; font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
-  .section-subtitle { text-align: center; font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; }
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
 
-  .level-bar {
+  /* CARDS */
+  .card {
     background: var(--bg-card-solid);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 30px 40px;
-    margin-bottom: 60px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .stat-card {
+    background: var(--bg-card-solid);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 25px;
     box-shadow: var(--shadow);
   }
 
-  .level-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-  .level-info { display: flex; align-items: center; gap: 15px; }
+  .stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .stat-card-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .stat-card-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+
+  .stat-card-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .stat-card.live .stat-card-value {
+    font-family: 'Courier New', monospace;
+    animation: livePulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* LEVEL BAR */
+  .level-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--bg-card-solid);
+    border-radius: 15px;
+    margin-bottom: 25px;
+  }
 
   .level-badge {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    flex-shrink: 0;
   }
 
   .level-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); }
@@ -155,19 +346,16 @@
   .level-diamond { background: linear-gradient(135deg, #b9f2ff, #00bfff); }
   .level-master { background: linear-gradient(135deg, #ff00ff, #8b00ff); }
 
-  .level-text h4 { font-size: 20px; color: var(--text-primary); }
-  .level-text p { font-size: 13px; color: var(--text-secondary); }
-  .xp-info { text-align: right; }
-  .xp-info .xp-text { font-size: 14px; color: var(--text-secondary); }
-  .xp-info .xp-value { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .level-info { flex: 1; }
+  .level-name { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .level-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
 
   .xp-bar {
     width: 100%;
-    height: 12px;
+    height: 10px;
     background: rgba(100, 140, 180, 0.2);
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 15px;
   }
 
   .xp-fill {
@@ -177,61 +365,23 @@
     transition: width 0.5s ease;
   }
 
-  .badges { display: flex; gap: 10px; flex-wrap: wrap; }
-
-  .badge {
-    padding: 6px 12px;
-    border-radius: 20px;
+  .xp-text {
     font-size: 12px;
-    font-weight: 600;
-    background: rgba(74, 158, 255, 0.15);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-  }
-
-  .badge.locked {
-    opacity: 0.4;
-    background: rgba(100, 140, 180, 0.1);
-    border-color: var(--text-secondary);
     color: var(--text-secondary);
+    margin-top: 5px;
+    text-align: right;
   }
 
-  .purchase-section, .production-section, .withdrawal-section,
-  .chart-section, .leaderboard-section, .referral-section, .goal-section {
-    background: var(--bg-card-solid);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 50px 40px;
-    box-shadow: var(--shadow);
-    margin-bottom: 60px;
-  }
-
-  .roi-banner {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    border-radius: 20px;
-    padding: 25px 30px;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-
-  .roi-item { text-align: center; }
-  .roi-item .value { font-size: 28px; font-weight: 700; display: block; }
-  .roi-item .label { font-size: 13px; opacity: 0.9; display: block; margin-top: 5px; }
-
+  /* PACKAGES */
   .packages-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   .package {
-    background: var(--bg-card);
+    background: var(--bg-card-solid);
     border: 2px solid var(--border-color);
     border-radius: 20px;
     padding: 30px 20px;
@@ -241,8 +391,16 @@
     position: relative;
   }
 
-  .package:hover { transform: translateY(-8px); border-color: var(--accent); }
-  .package.selected { border-color: var(--accent); background: rgba(74, 158, 255, 0.15); }
+  .package:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+  }
+
+  .package.selected {
+    border-color: var(--accent);
+    background: rgba(74, 158, 255, 0.15);
+  }
+
   .package.popular::before {
     content: '⭐ POPÜLER';
     position: absolute;
@@ -256,10 +414,24 @@
     transform: rotate(45deg);
   }
 
-  .package-price { font-size: 36px; font-weight: 700; color: var(--text-primary); }
-  .package-price span { font-size: 18px; color: var(--text-secondary); }
-  .package-roi { font-size: 14px; color: var(--accent); font-weight: 600; margin: 8px 0; }
-  .package-daily { font-size: 12px; color: var(--text-secondary); }
+  .package-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .package-roi {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .package-daily {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
 
   .calc-input {
     width: 100%;
@@ -270,15 +442,19 @@
     font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 20px;
   }
 
-  .calc-input:focus { outline: none; border-color: var(--accent); }
+  .calc-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
 
   .calc-results {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
-    margin-top: 25px;
+    margin-bottom: 25px;
   }
 
   .calc-result-item {
@@ -288,30 +464,152 @@
     text-align: center;
   }
 
-  .calc-result-item .label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px; }
-  .calc-result-item .value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+  .calc-result-item .label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .calc-result-item .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
 
   .btn-primary {
     width: 100%;
-    padding: 20px;
+    padding: 18px;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     color: white;
     border: none;
     border-radius: 15px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 20px;
     transition: transform 0.3s;
   }
 
-  .btn-primary:hover { transform: translateY(-3px); }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+  }
 
-  .conveyor-container {
+  /* PRODUCTION LINE */
+  .factory-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 25px;
+  }
+
+  @media (max-width: 1024px) {
+    .factory-layout { grid-template-columns: 1fr; }
+  }
+
+  .conveyor-system {
+    background: var(--bg-card-solid);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+  }
+
+  .conveyor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .conveyor-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .conveyor-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--success);
+    font-weight: 600;
+  }
+
+  .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .stations-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
     position: relative;
-    height: 220px;
-    margin: 40px 0;
+  }
+
+  .station {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .station-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 8px;
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  }
+
+  .station-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .station-desc {
+    font-size: 10px;
+    color: var(--text-secondary);
+  }
+
+  .station-connector {
+    position: absolute;
+    top: 27px;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--success) 33%, var(--warning) 66%, var(--btc-orange) 100%);
+    z-index: 1;
+    border-radius: 2px;
+  }
+
+  .conveyor-belt-wrapper {
+    position: relative;
+    height: 160px;
+    background: linear-gradient(180deg, #2a3a4a 0%, #1a2a3a 100%);
+    border-radius: 15px;
     overflow: hidden;
+    border: 3px solid #3a4a5a;
+    margin-bottom: 20px;
   }
 
   .conveyor-belt {
@@ -319,9 +617,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    background: linear-gradient(180deg, #8a9aa8, #6a7a88);
-    border-radius: 30px;
+    height: 35px;
+    background: linear-gradient(180deg, #4a5a6a 0%, #3a4a5a 100%);
     overflow: hidden;
   }
 
@@ -331,39 +628,85 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 4px;
-    background: repeating-linear-gradient(90deg, #4a5a68 0px, #4a5a68 20px, transparent 20px, transparent 40px);
-    animation: conveyorMove 2s linear infinite;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, #2a3a4a 0px, #2a3a4a 15px, transparent 15px, transparent 30px);
+    animation: beltMove 1.5s linear infinite;
   }
 
-  @keyframes conveyorMove {
+  @keyframes beltMove {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-40px); }
+    100% { transform: translateX(-30px); }
   }
 
-  .purchased-product {
+  .conveyor-products {
     position: absolute;
-    bottom: 60px;
-    min-width: 110px;
-    height: 100px;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    height: 125px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 20px;
+    gap: 15px;
+    overflow: hidden;
+  }
+
+  .product-item {
+    min-width: 95px;
+    height: 110px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
-    animation: moveProduct 12s linear infinite;
     color: white;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    animation: productMove 25s linear infinite;
   }
 
-  .purchased-product .amount { font-size: 16px; font-weight: 700; }
-  .purchased-product .speed { font-size: 10px; margin-top: 4px; background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 8px; }
-  .purchased-product .earned { font-size: 11px; color: #4ade80; margin-top: 4px; font-weight: 700; }
+  @keyframes productMove {
+    0% { transform: translateX(-120px); }
+    100% { transform: translateX(calc(100vw + 120px)); }
+  }
 
-  @keyframes moveProduct {
-    0% { left: -130px; }
-    100% { left: calc(100% + 130px); }
+  .product-item .product-amount {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .product-item .product-speed {
+    font-size: 9px;
+    opacity: 0.9;
+    margin-bottom: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+
+  .product-item .product-earned {
+    font-size: 11px;
+    color: #4ade80;
+    font-weight: 700;
+  }
+
+  .product-item .product-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid white;
   }
 
   .product-tier-1 { background: linear-gradient(135deg, #667eea, #764ba2); }
@@ -371,35 +714,124 @@
   .product-tier-3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
   .product-tier-4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
   .product-tier-5 { background: linear-gradient(135deg, #fa709a, #fee140); }
-
-  .production-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
+  .product-bonus {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    animation: productMove 25s linear infinite, bonusGlow 2s ease-in-out infinite;
   }
 
-  .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+  @keyframes bonusGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+    50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1); }
+  }
+
+  .production-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .production-summary { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .summary-item {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  }
+
+  .summary-item.total { background: linear-gradient(135deg, #f7931a, #e8850f); }
+  .summary-item.daily { background: linear-gradient(135deg, #4ade80, #22c55e); }
+  .summary-item.hourly { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .summary-item.monthly { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
+
+  .summary-label {
+    font-size: 10px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .summary-value {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+  }
+
+  .summary-value.live {
+    animation: livePulse 1.5s ease-in-out infinite;
+  }
+
+  .stats-panel {
+    background: var(--bg-card-solid);
     border-radius: 20px;
     padding: 25px;
-    text-align: center;
-  }
-
-  .stat-value { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-  .stat-value.live { font-family: 'Courier New', monospace; font-size: 22px; }
-  .stat-label { font-size: 13px; color: var(--text-secondary); }
-
-  .chart-container {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 30px;
     border: 1px solid var(--border-color);
-    margin-bottom: 30px;
   }
 
-  .chart-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stats-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-item {
+    background: rgba(74, 158, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+  }
+
+  .stat-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-value.live {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+  }
+
+  .stat-value.success {
+    color: var(--success);
+  }
+
+  /* CHART */
+  .chart-container {
+    background: var(--bg-card-solid);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+  }
+
+  .chart-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
 
   .chart-tab {
     padding: 8px 16px;
@@ -409,13 +841,17 @@
     border: none;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s;
+    font-size: 13px;
   }
 
-  .chart-tab.active { background: var(--accent); color: white; }
+  .chart-tab.active {
+    background: var(--accent);
+    color: white;
+  }
 
+  /* LEADERBOARD */
   .leaderboard-list {
-    background: var(--bg-card);
+    background: var(--bg-card-solid);
     border-radius: 20px;
     padding: 20px;
     border: 1px solid var(--border-color);
@@ -428,10 +864,12 @@
     border-radius: 12px;
     margin-bottom: 10px;
     background: rgba(74, 158, 255, 0.05);
-    transition: transform 0.3s;
   }
 
-  .leaderboard-item:hover { transform: translateX(5px); }
+  .leaderboard-item:last-child {
+    margin-bottom: 0;
+  }
+
   .leaderboard-item.top-1 { background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent); }
   .leaderboard-item.top-2 { background: linear-gradient(90deg, rgba(192, 192, 192, 0.2), transparent); }
   .leaderboard-item.top-3 { background: linear-gradient(90deg, rgba(205, 127, 50, 0.2), transparent); }
@@ -446,7 +884,6 @@
     font-weight: 700;
     margin-right: 15px;
     background: var(--bg-card);
-    color: var(--text-primary);
   }
 
   .rank-1 { background: linear-gradient(135deg, #ffd700, #b8860b); color: white; }
@@ -454,16 +891,16 @@
   .rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: white; }
 
   .leaderboard-info { flex: 1; }
-  .leaderboard-name { font-weight: 600; color: var(--text-primary); }
-  .leaderboard-earned { font-size: 13px; color: var(--text-secondary); }
+  .leaderboard-name { font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .leaderboard-earned { font-size: 12px; color: var(--text-secondary); }
   .leaderboard-amount { font-size: 20px; font-weight: 700; color: var(--accent); }
 
+  /* REFERRAL */
   .referral-card {
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 20px;
     padding: 30px;
     color: white;
-    margin-bottom: 30px;
   }
 
   .referral-code {
@@ -477,10 +914,7 @@
     margin: 20px 0;
     letter-spacing: 2px;
     cursor: pointer;
-    transition: all 0.3s;
   }
-
-  .referral-code:hover { background: rgba(255, 255, 255, 0.3); }
 
   .referral-stats {
     display: grid;
@@ -499,164 +933,48 @@
   .referral-stat .value { font-size: 24px; font-weight: 700; }
   .referral-stat .label { font-size: 12px; opacity: 0.9; margin-top: 5px; }
 
-  .daily-bonus {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  /* WITHDRAWAL */
+  .balance-display {
+    background: linear-gradient(135deg, var(--success), #22c55e);
     border-radius: 20px;
     padding: 30px;
     color: white;
     text-align: center;
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 25px;
   }
 
-  .daily-bonus::before {
-    content: '🎁';
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    font-size: 120px;
-    opacity: 0.2;
-  }
-
-  .streak-counter { display: flex; justify-content: center; gap: 8px; margin: 20px 0; }
-
-  .streak-day {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
+  .balance-label {
     font-size: 14px;
-  }
-
-  .streak-day.completed { background: rgba(255, 255, 255, 0.5); }
-  .streak-day.today { background: white; color: #f59e0b; animation: pulse 2s infinite; }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  .claim-bonus-btn {
-    padding: 15px 40px;
-    background: white;
-    color: #f59e0b;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
-
-  .claim-bonus-btn:hover { transform: scale(1.05); }
-  .claim-bonus-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .goal-card {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 30px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 20px;
-  }
-
-  .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-  .goal-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
-  .goal-amount { font-size: 18px; font-weight: 700; color: var(--accent); }
-
-  .goal-progress {
-    width: 100%;
-    height: 20px;
-    background: rgba(100, 140, 180, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
+    opacity: 0.9;
     margin-bottom: 10px;
   }
 
-  .goal-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--success), #22c55e);
-    border-radius: 10px;
-    transition: width 0.5s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
+  .balance-amount {
+    font-size: 48px;
     font-weight: 700;
+    font-family: 'Courier New', monospace;
   }
 
-  .goal-footer { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
-
-  .set-goal-form { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-
-  .set-goal-form input {
-    flex: 1;
-    min-width: 150px;
-    padding: 12px;
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--bg-card);
-    color: var(--text-primary);
-  }
-
-  .set-goal-form button {
-    padding: 12px 24px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .auto-reinvest {
-    background: var(--bg-card);
+  .withdrawal-form {
+    background: var(--bg-card-solid);
     border-radius: 20px;
-    padding: 25px;
+    padding: 30px;
     border: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 15px;
   }
 
-  .auto-reinvest-info h4 { color: var(--text-primary); margin-bottom: 5px; }
-  .auto-reinvest-info p { font-size: 13px; color: var(--text-secondary); }
-
-  .toggle-switch { position: relative; width: 60px; height: 30px; }
-  .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-  .toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: rgba(100, 140, 180, 0.3);
-    border-radius: 30px;
-    transition: 0.3s;
+  .form-group {
+    margin-bottom: 20px;
   }
 
-  .toggle-slider::before {
-    content: '';
-    position: absolute;
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background: white;
-    border-radius: 50%;
-    transition: 0.3s;
+  .form-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 14px;
   }
 
-  .toggle-switch input:checked + .toggle-slider { background: var(--success); }
-  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(30px); }
-
+  /* LIVE FEED */
   .live-feed {
     position: fixed;
     bottom: 20px;
@@ -693,22 +1011,25 @@
   .feed-item .feed-icon { margin-right: 8px; }
   .feed-item .feed-user { font-weight: 700; color: var(--accent); }
 
-  .support-widget { position: fixed; bottom: 20px; right: 80px; z-index: 998; }
+  /* SUPPORT */
+  .support-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 998;
+  }
 
   .support-btn {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border: none;
     cursor: pointer;
-    font-size: 28px;
+    font-size: 24px;
     color: white;
     box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
-    transition: transform 0.3s;
   }
-
-  .support-btn:hover { transform: scale(1.1); }
 
   .support-chat {
     position: absolute;
@@ -735,30 +1056,39 @@
 
   .support-body { padding: 20px; max-height: 300px; overflow-y: auto; }
 
-  .faq-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+  .faq-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
   .faq-item:last-child { border-bottom: none; }
-  .faq-question { font-weight: 600; color: var(--text-primary); margin-bottom: 5px; cursor: pointer; }
+  .faq-question { font-weight: 600; color: var(--text-primary); margin-bottom: 5px; cursor: pointer; font-size: 14px; }
   .faq-answer { font-size: 13px; color: var(--text-secondary); display: none; }
   .faq-item.active .faq-answer { display: block; }
 
+  /* NOTIFICATION */
   .notification {
     position: fixed;
     top: 20px;
     right: 80px;
     background: linear-gradient(135deg, var(--success), #22c55e);
     color: white;
-    padding: 20px 30px;
+    padding: 18px 28px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4);
     transform: translateX(400px);
     transition: transform 0.4s;
     z-index: 1001;
     font-weight: 600;
+    font-size: 14px;
   }
 
   .notification.show { transform: translateX(0); }
   .notification.error { background: linear-gradient(135deg, var(--danger), #ef4444); }
+  .notification.bonus { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a2a3a; }
 
+  /* MODAL */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -778,10 +1108,11 @@
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
     border-radius: 25px;
-    padding: 40px;
+    padding: 35px;
     max-width: 500px;
     width: 100%;
     animation: modalIn 0.3s ease;
+    position: relative;
   }
 
   @keyframes modalIn {
@@ -789,7 +1120,11 @@
     to { opacity: 1; transform: scale(1); }
   }
 
-  .modal h2 { color: var(--text-primary); margin-bottom: 20px; }
+  .modal h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
 
   .modal-close {
     position: absolute;
@@ -802,126 +1137,543 @@
     color: var(--text-secondary);
   }
 
-  .modal-actions { display: flex; gap: 15px; margin-top: 20px; }
+  .modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
 
   .modal-actions button {
     flex: 1;
-    padding: 15px;
+    padding: 14px;
     border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
     border: none;
+    font-size: 14px;
   }
 
   .btn-cancel { background: rgba(100, 140, 180, 0.15); color: var(--text-secondary); }
   .btn-confirm { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; }
 
+  .btc-payment-box {
+    background: linear-gradient(135deg, #f7931a, #e8850f);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    margin: 20px 0;
+  }
+
+  .btc-payment-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .btc-amount-display {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .btc-amount-display .label { font-size: 12px; opacity: 0.9; margin-bottom: 5px; }
+  .btc-amount-display .value { font-size: 28px; font-weight: 700; font-family: 'Courier New', monospace; }
+
+  .btc-address-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .btc-address-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .btc-address {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #1a2a3a;
+    word-break: break-all;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border: 2px dashed #f7931a;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .btc-address .copy-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+  }
+
+  .btc-qr-code {
+    width: 140px;
+    height: 140px;
+    background: white;
+    border-radius: 12px;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .qr-placeholder {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, #000 0px, #000 4px, transparent 4px, transparent 8px),
+                repeating-linear-gradient(90deg, #000 0px, #000 4px, transparent 4px, transparent 8px);
+    background-size: 8px 8px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .qr-placeholder::after {
+    content: '₿';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: #f7931a;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+
+  .payment-timer {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .payment-timer .timer-value {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .payment-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffd700;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .btn-copy-address {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .btn-confirm-payment {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  .payment-instructions {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .payment-instructions ol { margin-left: 20px; margin-top: 8px; }
+
+  .welcome-bonus-modal { text-align: center; }
+  .welcome-bonus-icon { font-size: 70px; margin-bottom: 15px; animation: bounceIn 0.6s ease; }
+  @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  .welcome-bonus-title {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .welcome-bonus-desc { color: var(--text-secondary); margin-bottom: 20px; font-size: 14px; line-height: 1.5; }
+  .welcome-bonus-amount {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #1a2a3a;
+    padding: 18px;
+    border-radius: 15px;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+  }
+  .welcome-bonus-features {
+    text-align: left;
+    background: rgba(74, 158, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  .welcome-bonus-features div { padding: 6px 0; color: var(--text-primary); font-size: 13px; }
+  .welcome-bonus-features div::before { content: '✅ '; }
+  .btn-claim-bonus {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #1a2a3a;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* RESPONSIVE */
   @media (max-width: 900px) {
-    .hero { flex-direction: column; }
-    .section-title { font-size: 24px; }
-    .purchase-section, .production-section, .withdrawal-section,
-    .chart-section, .leaderboard-section, .referral-section, .goal-section { padding: 30px 20px; }
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+      padding-top: 80px;
+    }
+    .mobile-menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .page-title { font-size: 24px; }
+    .factory-layout { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
+  <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
-  <div class="container">
-    <div class="hero">
-      <div class="card"><h3>Real-Time<br>Hashrate<br>Monitoring</h3></div>
-      <div class="center-section">
-        <div class="bitcoin"><span class="bitcoin-symbol">₿</span></div>
-        <div class="center-label">Energy Efficient Pool Integration</div>
+  <!-- SIDEBAR MENU -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">₿</div>
+      <div>
+        <div class="sidebar-title">BTC Mining</div>
+        <div class="sidebar-subtitle">Pro Platform</div>
       </div>
-      <div class="card"><h3>Enterprise-Grade<br>Security</h3></div>
     </div>
 
-    <div class="level-bar">
-      <div class="level-header">
+    <div class="menu-section">
+      <div class="menu-label">Ana Menü</div>
+      <div class="menu-item active" onclick="showPage('home', this)">
+        <span class="menu-icon">🏠</span>
+        <span>Ana Sayfa</span>
+      </div>
+      <div class="menu-item" onclick="showPage('buy', this)">
+        <span class="menu-icon">💎</span>
+        <span>Satın Al</span>
+      </div>
+      <div class="menu-item" onclick="showPage('production', this)">
+        <span class="menu-icon">⚡</span>
+        <span>Üretim Hattı</span>
+        <span class="menu-badge" id="productCount">0</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-label">İstatistik</div>
+      <div class="menu-item" onclick="showPage('chart', this)">
+        <span class="menu-icon">📊</span>
+        <span>Grafik</span>
+      </div>
+      <div class="menu-item" onclick="showPage('leaderboard', this)">
+        <span class="menu-icon">🏆</span>
+        <span>Liderlik</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-label">Hesap</div>
+      <div class="menu-item" onclick="showPage('referral', this)">
+        <span class="menu-icon">👥</span>
+        <span>Referans</span>
+      </div>
+      <div class="menu-item" onclick="showPage('withdraw', this)">
+        <span class="menu-icon">💸</span>
+        <span>Çekim</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">1</div>
+        <div>
+          <div class="user-name" id="userName">Bronz Madenci</div>
+          <div class="user-level" id="userXP">0 XP</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <div class="page-header">
+        <h1 class="page-title">👋 Hoş Geldin!</h1>
+        <p class="page-subtitle">BTC Mining platformuna hoş geldin. İşte genel bakış.</p>
+      </div>
+
+      <div class="level-bar">
+        <div class="level-badge level-bronze" id="levelBadge">1</div>
         <div class="level-info">
-          <div class="level-badge level-bronze" id="levelBadge">1</div>
-          <div class="level-text">
-            <h4 id="levelName">Bronz Madenci</h4>
-            <p id="levelDesc">İlk adımlarını atıyorsun!</p>
+          <div class="level-name" id="levelName">Bronz Madenci</div>
+          <div class="level-desc" id="levelDesc">İlk adımlarını atıyorsun!</div>
+          <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width: 0%"></div></div>
+          <div class="xp-text"><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-card-icon" style="background: linear-gradient(135deg, #4a9eff, #2a6acc);">📦</div>
+          </div>
+          <div class="stat-card-value" id="homeActiveProducts">0</div>
+          <div class="stat-card-label">Aktif Ürün</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-card-icon" style="background: linear-gradient(135deg, #f7931a, #e8850f);">💰</div>
+          </div>
+          <div class="stat-card-value" id="homeTotalInvested">$0</div>
+          <div class="stat-card-label">Toplam Yatırım</div>
+        </div>
+        <div class="stat-card live">
+          <div class="stat-card-header">
+            <div class="stat-card-icon" style="background: linear-gradient(135deg, #4ade80, #22c55e);">💵</div>
+          </div>
+          <div class="stat-card-value" id="homeTotalEarned">$0.00</div>
+          <div class="stat-card-label">Toplam Kazanç</div>
+        </div>
+        <div class="stat-card live">
+          <div class="stat-card-header">
+            <div class="stat-card-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">⚡</div>
+          </div>
+          <div class="stat-card-value" id="homePerSecond">$0/s</div>
+          <div class="stat-card-label">Saniyelik Üretim</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom: 15px; color: var(--text-primary);">🚀 Hızlı Başlangıç</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6;">
+          Henüz ürünün yok! Sol menüden "Satın Al" bölümüne git ve ilk yatırımını yap. 
+          Her $1 yatırım 3 ayda sana $1 kazandırır. Minimum alım sadece $1!
+        </p>
+        <button class="btn-primary" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])">💎 İlk Yatırımını Yap</button>
+      </div>
+    </div>
+
+    <!-- BUY PAGE -->
+    <div class="page" id="page-buy">
+      <div class="page-header">
+        <h1 class="page-title">💎 Mining Gücü Satın Al</h1>
+        <p class="page-subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
+      </div>
+
+      <div class="card">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px;">
+          <div style="text-align: center; padding: 15px; background: rgba(74, 158, 255, 0.1); border-radius: 12px;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--accent);">$1</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Minimum Alım</div>
+          </div>
+          <div style="text-align: center; padding: 15px; background: rgba(74, 158, 255, 0.1); border-radius: 12px;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--accent);">3 Ay</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">ROI Süresi</div>
+          </div>
+          <div style="text-align: center; padding: 15px; background: rgba(74, 158, 255, 0.1); border-radius: 12px;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--accent);">100%</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">ROI Oranı</div>
+          </div>
+          <div style="text-align: center; padding: 15px; background: rgba(74, 158, 255, 0.1); border-radius: 12px;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--accent);">$0.011</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Günlük / $1</div>
           </div>
         </div>
-        <div class="xp-info">
-          <div class="xp-text">Seviye İlerlemesi</div>
-          <div class="xp-value"><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+
+        <h3 style="margin-bottom: 15px; color: var(--text-primary);">Paket Seç</h3>
+        <div class="packages-grid">
+          <div class="package" data-price="1" onclick="selectPackage(this)">
+            <div class="package-price">$1</div>
+            <div class="package-roi">3 Ayda Geri Dönüş</div>
+            <div class="package-daily">$0.011 / gün</div>
+          </div>
+          <div class="package" data-price="5" onclick="selectPackage(this)">
+            <div class="package-price">$5</div>
+            <div class="package-roi">3 Ayda Geri Dönüş</div>
+            <div class="package-daily">$0.056 / gün</div>
+          </div>
+          <div class="package popular" data-price="10" onclick="selectPackage(this)">
+            <div class="package-price">$10</div>
+            <div class="package-roi">3 Ayda Geri Dönüş</div>
+            <div class="package-daily">$0.111 / gün</div>
+          </div>
+          <div class="package" data-price="50" onclick="selectPackage(this)">
+            <div class="package-price">$50</div>
+            <div class="package-roi">3 Ayda Geri Dönüş</div>
+            <div class="package-daily">$0.556 / gün</div>
+          </div>
+          <div class="package" data-price="100" onclick="selectPackage(this)">
+            <div class="package-price">$100</div>
+            <div class="package-roi">3 Ayda Geri Dönüş</div>
+            <div class="package-daily">$1.111 / gün</div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom: 10px; color: var(--text-primary);">💰 Özel Miktar</h3>
+        <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
+
+        <h3 style="margin-bottom: 15px; color: var(--text-primary);">📊 Hesaplama</h3>
+        <div class="calc-results">
+          <div class="calc-result-item">
+            <div class="label">Günlük Kazanç</div>
+            <div class="value" id="dailyEarning">$0.111</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="label">Aylık Kazanç</div>
+            <div class="value" id="monthlyEarning">$3.33</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="label">3 Aylık Toplam</div>
+            <div class="value" id="threeMonthEarning">$10.00</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="label">ROI Tarihi</div>
+            <div class="value" id="roiDate" style="font-size: 13px;">-</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="openModal()"> Şimdi Satın Al</button>
+      </div>
+    </div>
+
+    <!-- PRODUCTION PAGE -->
+    <div class="page" id="page-production">
+      <div class="page-header">
+        <h1 class="page-title"> Üretim Hattı</h1>
+        <p class="page-subtitle">Mining operasyonlarınız gerçek zamanlı takip ediliyor</p>
+      </div>
+
+      <div class="factory-layout">
+        <div class="conveyor-system">
+          <div class="conveyor-header">
+            <div class="conveyor-title"><span>🏭</span><span>Aktif Üretim Hattı</span></div>
+            <div class="conveyor-status"><div class="status-indicator"></div><span>ÇALIŞIYOR</span></div>
+          </div>
+          <div class="stations-container">
+            <div class="station-connector"></div>
+            <div class="station"><div class="station-icon">🔍</div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
+            <div class="station"><div class="station-icon">✓</div><div class="station-name">Doğrulama</div><div class="station-desc">Block Verify</div></div>
+            <div class="station"><div class="station-icon">⛓️</div><div class="station-name">Zincir</div><div class="station-desc">Blockchain</div></div>
+            <div class="station"><div class="station-icon">💰</div><div class="station-name">Ödül</div><div class="station-desc">BTC Reward</div></div>
+          </div>
+          <div class="conveyor-belt-wrapper">
+            <div class="conveyor-products" id="conveyorProducts"></div>
+            <div class="conveyor-belt"></div>
+          </div>
+          <div class="production-summary">
+            <div class="summary-item total">
+              <div class="summary-label">💰 Toplam Yatırım</div>
+              <div class="summary-value" id="summaryTotal">$0.00</div>
+            </div>
+            <div class="summary-item daily">
+              <div class="summary-label">️ Dakikalık</div>
+              <div class="summary-value live" id="summaryMinute">$0.0000</div>
+            </div>
+            <div class="summary-item hourly">
+              <div class="summary-label">🕐 Saatlik</div>
+              <div class="summary-value live" id="summaryHour">$0.0000</div>
+            </div>
+            <div class="summary-item monthly">
+              <div class="summary-label">📅 Aylık</div>
+              <div class="summary-value live" id="summaryMonth">$0.00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-panel">
+          <div class="stats-title"><span></span><span>Canlı İstatistikler</span></div>
+          <div class="stat-item"><div class="stat-label">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
+          <div class="stat-item"><div class="stat-label">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0.000000</div></div>
+          <div class="stat-item"><div class="stat-label">Saniyelik Üretim</div><div class="stat-value live" id="perSecond">$0.000000/s</div></div>
+          <div class="stat-item"><div class="stat-label">ROI Kalan Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
         </div>
       </div>
-      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width: 0%"></div></div>
-      <div class="badges" id="badgesContainer">
-        <div class="badge"> İlk Yatırım</div>
-        <div class="badge locked">💯 100$ Kulübü</div>
-        <div class="badge locked">📅 30 Gün Sadakat</div>
-        <div class="badge locked">👑 Elmas Madenci</div>
-        <div class="badge locked">🚀 10 Referans</div>
-      </div>
     </div>
 
-    <div class="daily-bonus">
-      <h2 style="font-size: 24px; margin-bottom: 10px;">🎁 Günlük Giriş Bonusu</h2>
-      <p style="opacity: 0.9;">Her gün giriş yap, bonus kazan! 7 gün seri = 10x bonus!</p>
-      <div class="streak-counter" id="streakCounter"></div>
-      <button class="claim-bonus-btn" id="claimBonusBtn" onclick="claimDailyBonus()">🎁 Bonusu Al ($0.01)</button>
-      <p style="margin-top: 10px; font-size: 13px; opacity: 0.9;">🔥 Seri: <span id="streakCount">0</span> gün</p>
-    </div>
-
-    <div class="purchase-section">
-      <h2 class="section-title">💎 Mining Gücü Satın Al</h2>
-      <p class="section-subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
-
-      <div class="roi-banner">
-        <div class="roi-item"><span class="value">$1</span><span class="label">Minimum Alım</span></div>
-        <div class="roi-item"><span class="value">3 Ay</span><span class="label">ROI Süresi</span></div>
-        <div class="roi-item"><span class="value">100%</span><span class="label">ROI Oranı</span></div>
-        <div class="roi-item"><span class="value">$0.011</span><span class="label">Günlük / $1</span></div>
+    <!-- CHART PAGE -->
+    <div class="page" id="page-chart">
+      <div class="page-header">
+        <h1 class="page-title">📊 Kazanç Grafiği</h1>
+        <p class="page-subtitle">Kazançlarını takip et</p>
       </div>
-
-      <div class="packages-grid">
-        <div class="package" data-price="1" onclick="selectPackage(this)"><div class="package-price">$1</div><div class="package-roi">3 Ayda Geri Dönüş</div><div class="package-daily">$0.011 / gün</div></div>
-        <div class="package" data-price="5" onclick="selectPackage(this)"><div class="package-price">$5</div><div class="package-roi">3 Ayda Geri Dönüş</div><div class="package-daily">$0.056 / gün</div></div>
-        <div class="package popular" data-price="10" onclick="selectPackage(this)"><div class="package-price">$10</div><div class="package-roi">3 Ayda Geri Dönüş</div><div class="package-daily">$0.111 / gün</div></div>
-        <div class="package" data-price="50" onclick="selectPackage(this)"><div class="package-price">$50</div><div class="package-roi">3 Ayda Geri Dönüş</div><div class="package-daily">$0.556 / gün</div></div>
-        <div class="package" data-price="100" onclick="selectPackage(this)"><div class="package-price">$100</div><div class="package-roi">3 Ayda Geri Dönüş</div><div class="package-daily">$1.111 / gün</div></div>
-      </div>
-
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-primary);">💰 Özel Miktar ($)</label>
-        <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
-      </div>
-
-      <div class="calc-results">
-        <div class="calc-result-item"><div class="label">Günlük Kazanç</div><div class="value" id="dailyEarning">$0.111</div></div>
-        <div class="calc-result-item"><div class="label">Aylık Kazanç</div><div class="value" id="monthlyEarning">$3.33</div></div>
-        <div class="calc-result-item"><div class="label">3 Aylık Toplam</div><div class="value" id="threeMonthEarning">$10.00</div></div>
-        <div class="calc-result-item"><div class="label">ROI Tarihi</div><div class="value" id="roiDate" style="font-size: 14px;">-</div></div>
-      </div>
-
-      <button class="btn-primary" onclick="openModal()">🚀 Şimdi Satın Al</button>
-    </div>
-
-    <div class="production-section">
-      <h2 class="section-title">⚡ Üretim Hattı</h2>
-      <p class="section-subtitle">Satın aldığın ürünler burada çalışıyor</p>
-
-      <div class="conveyor-container" id="conveyorContainer">
-        <div class="conveyor-belt"></div>
-      </div>
-
-      <div class="production-stats">
-        <div class="stat-card"><div class="stat-value" id="activeProducts">0</div><div class="stat-label">Aktif Ürün</div></div>
-        <div class="stat-card"><div class="stat-value" id="totalInvested">$0</div><div class="stat-label">Toplam Yatırım</div></div>
-        <div class="stat-card"><div class="stat-value live" id="totalEarned">$0.000000</div><div class="stat-label">Toplam Kazanılan</div></div>
-        <div class="stat-card"><div class="stat-value live" id="perSecond">$0.000000/s</div><div class="stat-label">Saniyelik Üretim</div></div>
-      </div>
-    </div>
-
-    <div class="chart-section">
-      <h2 class="section-title">📊 Kazanç Grafiği</h2>
-      <p class="section-subtitle">Kazançlarını takip et</p>
       <div class="chart-container">
         <div class="chart-tabs">
           <button class="chart-tab active" onclick="switchChart('daily', this)">Günlük</button>
@@ -932,19 +1684,25 @@
       </div>
     </div>
 
-    <div class="leaderboard-section">
-      <h2 class="section-title">🏆 Liderlik Tablosu</h2>
-      <p class="section-subtitle">En çok kazanan madenciler</p>
+    <!-- LEADERBOARD PAGE -->
+    <div class="page" id="page-leaderboard">
+      <div class="page-header">
+        <h1 class="page-title"> Liderlik Tablosu</h1>
+        <p class="page-subtitle">En çok kazanan madenciler</p>
+      </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
     </div>
 
-    <div class="referral-section">
-      <h2 class="section-title">👥 Referans Sistemi</h2>
-      <p class="section-subtitle">Arkadaşlarını davet et, %10 komisyon kazan</p>
+    <!-- REFERRAL PAGE -->
+    <div class="page" id="page-referral">
+      <div class="page-header">
+        <h1 class="page-title">👥 Referans Sistemi</h1>
+        <p class="page-subtitle">Arkadaşlarını davet et, %10 komisyon kazan</p>
+      </div>
       <div class="referral-card">
         <h3 style="margin-bottom: 10px;">Senin Referans Kodun</h3>
         <div class="referral-code" id="referralCode" onclick="copyReferral()">BTC-XXXXXX</div>
-        <p style="font-size: 13px; opacity: 0.9;">Kodu kopyalamak için tıkla!</p>
+        <p style="font-size: 13px; opacity: 0.9; text-align: center;">Kodu kopyalamak için tıkla!</p>
         <div class="referral-stats">
           <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label">Davet Edilen</div></div>
           <div class="referral-stat"><div class="value" id="refEarnings">$0.00</div><div class="label">Komisyon Kazancı</div></div>
@@ -953,92 +1711,103 @@
       </div>
     </div>
 
-    <div class="goal-section">
-      <h2 class="section-title">🎯 Kazanç Hedefleri</h2>
-      <p class="section-subtitle">Hedef belirle, motive ol</p>
-      <div id="goalsContainer"></div>
-      <div class="set-goal-form">
-        <input type="text" id="goalTitle" placeholder="Hedef adı (örn: İlk $100)">
-        <input type="number" id="goalAmount" placeholder="Hedef miktar ($)" min="1" step="1">
-        <button onclick="addGoal()">➕ Hedef Ekle</button>
+    <!-- WITHDRAW PAGE -->
+    <div class="page" id="page-withdraw">
+      <div class="page-header">
+        <h1 class="page-title">💸 Kazanç Çekimi</h1>
+        <p class="page-subtitle">Minimum çekim: $0.01</p>
       </div>
-    </div>
-
-    <div class="withdrawal-section">
-      <h2 class="section-title">💸 Kazanç Çekimi</h2>
-      <p class="section-subtitle">Minimum çekim: $0.01</p>
-
-      <div class="auto-reinvest">
-        <div class="auto-reinvest-info">
-          <h4> Otomatik Yeniden Yatırım</h4>
-          <p>Kazançlarını otomatik olarak yeni ürüne yatır</p>
-        </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="autoReinvestToggle" onchange="toggleAutoReinvest()">
-          <span class="toggle-slider"></span>
-        </label>
+      <div class="balance-display">
+        <div class="balance-label">Mevcut Bakiye</div>
+        <div class="balance-amount" id="balanceDisplay">$0.000000</div>
       </div>
-
-      <div style="background: linear-gradient(135deg, var(--success), #22c55e); border-radius: 20px; padding: 30px; color: white; text-align: center; margin-bottom: 30px;">
-        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">Mevcut Bakiye</div>
-        <div style="font-size: 48px; font-weight: 700; font-family: 'Courier New', monospace;" id="balanceDisplay">$0.000000</div>
-      </div>
-
-      <div style="background: var(--bg-card); border-radius: 20px; padding: 30px; border: 1px solid var(--border-color);">
-        <div style="margin-bottom: 20px;">
-          <label style="display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-primary);">💰 Çekilecek Miktar ($)</label>
+      <div class="withdrawal-form">
+        <div class="form-group">
+          <label class="form-label">💰 Çekilecek Miktar ($)</label>
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
-        <div style="margin-bottom: 20px;">
-          <label style="display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-primary);">₿ BTC Cüzdan Adresi</label>
+        <div class="form-group">
+          <label class="form-label">₿ BTC Cüzdan Adresi</label>
           <input type="text" class="calc-input" id="walletAddress" placeholder="bc1q... veya 1... veya 3...">
         </div>
         <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);">💸 Çekim Yap</button>
       </div>
     </div>
-  </div>
+  </main>
 
+  <!-- LIVE FEED -->
   <div class="live-feed" id="liveFeed"></div>
 
+  <!-- SUPPORT -->
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
       <div class="support-header">💬 Canlı Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
+          <div class="faq-question">❓ Yeni üye bonusu nedir?</div>
+          <div class="faq-answer">Her yeni üye siteye ilk girişinde otomatik olarak $1 değerinde ücretsiz mining gücü kazanır!</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('active')">
           <div class="faq-question">❓ Nasıl yatırım yapabilirim?</div>
-          <div class="faq-answer">Yukarıdaki "Satın Al" bölümünden istediğiniz paketi seçin ve ödeme yapın.</div>
+          <div class="faq-answer">Sol menüden "Satın Al" bölümüne git, paket seç ve BTC adresine ödeme yap.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
           <div class="faq-question">❓ ROI süresi ne kadar?</div>
           <div class="faq-answer">Tüm yatırımlar için ROI süresi 3 aydır (90 gün).</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ Minimum çekim ne kadar?</div>
-          <div class="faq-answer">Minimum çekim tutarı $0.01 (1 cent).</div>
         </div>
       </div>
     </div>
     <button class="support-btn" onclick="toggleSupport()">💬</button>
   </div>
 
+  <!-- WELCOME BONUS MODAL -->
+  <div class="modal-overlay" id="welcomeBonusModal">
+    <div class="modal welcome-bonus-modal">
+      <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
+      <div class="welcome-bonus-icon"></div>
+      <div class="welcome-bonus-title">HOŞ GELDİN!</div>
+      <div class="welcome-bonus-desc">Yeni üyemize özel <strong>ücretsiz başlangıç bonusu</strong> hazır!<br>Hemen kazanmaya başla!</div>
+      <div class="welcome-bonus-amount">🎁 $1.00 ÜCRETSİZ</div>
+      <div class="welcome-bonus-features">
+        <div>Anında üretim hattına eklenir</div>
+        <div>Saniyelik kazanç başlar</div>
+        <div>3 ayda ROI garantisi</div>
+        <div>Hiçbir ödeme gerekmez!</div>
+      </div>
+      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()">🚀 BONUSU ALMAYA BAŞLA</button>
+    </div>
+  </div>
+
+  <!-- BTC PAYMENT MODAL -->
   <div class="modal-overlay" id="purchaseModal">
-    <div class="modal" style="position: relative;">
-      <button class="modal-close" onclick="closeModal()"></button>
-      <h2> Satın Alma Onayı</h2>
-      <div style="background: rgba(74, 158, 255, 0.1); border-radius: 15px; padding: 20px; margin: 20px 0;">
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(74, 158, 255, 0.15);">
-          <span style="color: var(--text-secondary);">Yatırım Miktarı</span>
-          <span style="font-weight: 600; color: var(--text-primary);" id="modalAmount">$10.00</span>
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2>₿ Bitcoin Ödeme</h2>
+      <div class="btc-payment-box">
+        <div class="btc-payment-header"><span style="font-size: 28px;">₿</span><span>Ödeme Yap</span></div>
+        <div class="btc-amount-display"><div class="label">Gönderilecek Tutar</div><div class="value" id="btcPaymentAmount">$10.00</div></div>
+        <div class="btc-qr-code"><div class="qr-placeholder"></div></div>
+        <div class="btc-address-box">
+          <div class="btc-address-label">BTC Adresi (Kopyala & Gönder)</div>
+          <div class="btc-address" id="btcAddress" onclick="copyBTCAddress()">
+            <span id="btcAddressText">bc1q...</span>
+            <span class="copy-icon">📋</span>
+          </div>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-          <span style="color: var(--text-secondary);">ROI Süresi</span>
-          <span style="font-weight: 600; color: var(--text-primary);">3 Ay (90 gün)</span>
+        <button class="btn-copy-address" onclick="copyBTCAddress()"> Adresi Kopyala</button>
+        <div class="payment-timer"><span>️</span><span>Kalan Süre:</span><span class="timer-value" id="paymentTimer">15:00</span></div>
+        <div class="payment-status"><div class="status-dot"></div><span>Ödeme Bekleniyor...</span></div>
+        <div class="payment-instructions">
+          <strong>Nasıl Ödeme Yapılır?</strong>
+          <ol>
+            <li>Yukarıdaki BTC adresini kopyalayın</li>
+            <li>BTC cüzdanınızdan bu adrese <strong id="instructionAmount">$10.00</strong> gönderin</li>
+            <li>İşlem onaylandıktan sonra "Ödemeyi Onayla" butonuna tıklayın</li>
+          </ol>
         </div>
+        <button class="btn-confirm-payment" onclick="confirmPayment()">✓ Ödemeyi Onayla</button>
       </div>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">İptal</button>
-        <button class="btn-confirm" onclick="confirmPurchase()">✓ Onayla & Öde</button>
-      </div>
+      <div class="modal-actions"><button class="btn-cancel" onclick="closeModal()">İptal</button></div>
     </div>
   </div>
 
@@ -1048,6 +1817,7 @@
     const DAILY_RATE = 1 / 90;
     const PER_SECOND_RATE = DAILY_RATE / 86400;
     const MIN_WITHDRAW = 0.01;
+    const WELCOME_BONUS = 1.0;
 
     let state = {
       purchasedProducts: [],
@@ -1055,19 +1825,39 @@
       totalEarned: 0,
       xp: 0,
       level: 1,
-      streak: 0,
-      lastBonusDate: null,
       referralCode: '',
       referrals: 0,
       referralEarnings: 0,
-      goals: [],
-      autoReinvest: false,
       earningsHistory: [],
-      theme: 'light'
+      theme: 'light',
+      welcomeBonusClaimed: false
     };
 
     let lastUpdate = Date.now();
     let earningsChart = null;
+    let currentPaymentAmount = 0;
+    let currentBTCAddress = '';
+    let paymentTimerInterval = null;
+    let paymentTimeLeft = 900;
+
+    // MENU NAVIGATION
+    function showPage(pageId, menuItem) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      // Show selected page
+      document.getElementById('page-' + pageId).classList.add('active');
+      // Update menu
+      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+      if (menuItem) menuItem.classList.add('active');
+      // Close sidebar on mobile
+      document.getElementById('sidebar').classList.remove('open');
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
 
     function init() {
       loadState();
@@ -1076,20 +1866,21 @@
         saveState();
       }
       document.getElementById('referralCode').textContent = state.referralCode;
-      document.getElementById('autoReinvestToggle').checked = state.autoReinvest;
       
-      // Üretim hattını kaydedilmiş ürünlerden yeniden oluştur
       restoreConveyorProducts();
-      
       updateLevel();
-      updateStreak();
-      renderGoals();
       initChart();
       renderLeaderboard();
       startLiveFeed();
       setInterval(updateEarnings, 100);
       setInterval(generateFeedItem, 5000);
       calculateROI();
+
+      if (!state.welcomeBonusClaimed) {
+        setTimeout(() => {
+          document.getElementById('welcomeBonusModal').classList.add('active');
+        }, 1500);
+      }
     }
 
     function loadState() {
@@ -1107,20 +1898,105 @@
       localStorage.setItem('btcMiningState', JSON.stringify(state));
     }
 
-    // Üretim hattındaki ürünleri kayıttan geri yükle
+    function claimWelcomeBonus() {
+      if (state.welcomeBonusClaimed) return;
+      addProduct(WELCOME_BONUS, true);
+      state.welcomeBonusClaimed = true;
+      addXP(50);
+      closeWelcomeBonus();
+      showNotification('🎉 HOŞ GELDİN! $1 ücretsiz mining gücü kazandın!', 'bonus');
+      setTimeout(() => {
+        showPage('production', document.querySelectorAll('.menu-item')[2]);
+      }, 500);
+      saveState();
+    }
+
+    function closeWelcomeBonus() {
+      document.getElementById('welcomeBonusModal').classList.remove('active');
+    }
+
+    function generateBTCAddress() {
+      const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
+      let address = 'bc1q';
+      for (let i = 0; i < 38; i++) {
+        address += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return address;
+    }
+
+    function getTier(amount) {
+      if (amount >= 100) return 5;
+      if (amount >= 50) return 4;
+      if (amount >= 10) return 3;
+      if (amount >= 5) return 2;
+      return 1;
+    }
+
     function restoreConveyorProducts() {
-      const container = document.getElementById('conveyorContainer');
-      // Konveyer bandını koru, diğer ürünleri temizle
-      const belt = container.querySelector('.conveyor-belt');
-      container.innerHTML = '';
-      container.appendChild(belt);
-
-      // Kaydedilmiş ürünleri yeniden ekle
+      const conveyorContainer = document.getElementById('conveyorProducts');
+      conveyorContainer.innerHTML = '';
       state.purchasedProducts.forEach(product => {
-        addProductToConveyor(product.amount, product.earned || 0, true);
+        renderConveyorProduct(product);
       });
-
       updateStats();
+    }
+
+    function addProduct(amount, isBonus = false) {
+      const product = {
+        id: (isBonus ? 'welcome-' : '') + Date.now() + Math.random(),
+        amount: amount,
+        earned: 0,
+        startTime: Date.now(),
+        isBonus: isBonus,
+        tier: getTier(amount)
+      };
+      state.purchasedProducts.push(product);
+      state.totalInvested += amount;
+      renderConveyorProduct(product);
+      updateStats();
+      saveState();
+    }
+
+    function renderConveyorProduct(product) {
+      const container = document.getElementById('conveyorProducts');
+      const element = document.createElement('div');
+      const tierClass = product.isBonus ? 'product-bonus' : `product-tier-${product.tier}`;
+      element.className = `product-item ${tierClass}`;
+      element.id = `conveyor-${product.id}`;
+      const perSecond = product.amount * PER_SECOND_RATE;
+      element.innerHTML = `
+        ${product.isBonus ? '<div class="product-badge">🎁</div>' : ''}
+        <div class="product-amount">$${product.amount}</div>
+        <div class="product-speed">${perSecond.toFixed(8)} $/s</div>
+        <div class="product-earned" id="earned-${product.id}">$${(product.earned || 0).toFixed(6)}</div>
+      `;
+      element.style.animationDelay = `${Math.random() * -25}s`;
+      container.appendChild(element);
+    }
+
+    function updateStats() {
+      const totalPerSecond = state.purchasedProducts.reduce((sum, p) => sum + (p.amount * PER_SECOND_RATE), 0);
+      
+      // Home page
+      document.getElementById('homeActiveProducts').textContent = state.purchasedProducts.length;
+      document.getElementById('homeTotalInvested').textContent = '$' + state.totalInvested.toFixed(2);
+      document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
+      document.getElementById('homePerSecond').textContent = '$' + totalPerSecond.toFixed(6) + '/s';
+      
+      // Production page
+      document.getElementById('activeProducts').textContent = state.purchasedProducts.length;
+      document.getElementById('perSecond').textContent = '$' + totalPerSecond.toFixed(6) + '/s';
+      document.getElementById('summaryTotal').textContent = '$' + state.totalInvested.toFixed(2);
+      document.getElementById('summaryMinute').textContent = '$' + (totalPerSecond * 60).toFixed(4);
+      document.getElementById('summaryHour').textContent = '$' + (totalPerSecond * 3600).toFixed(4);
+      document.getElementById('summaryMonth').textContent = '$' + (totalPerSecond * 3600 * 24 * 30).toFixed(2);
+      
+      // Menu badge
+      document.getElementById('productCount').textContent = state.purchasedProducts.length;
+      
+      if (state.totalInvested > 0) {
+        document.getElementById('roiTimeLeft').textContent = '90 gün';
+      }
     }
 
     function toggleTheme() {
@@ -1143,10 +2019,8 @@
         { name: 'Elmas Madenci', desc: 'Efsanevi madenci!', xp: 2000, class: 'level-diamond' },
         { name: 'Usta Madenci', desc: 'Zirvedesin!', xp: 10000, class: 'level-master' }
       ];
-
       let currentLevel = levels[0];
       let nextLevel = levels[1];
-
       for (let i = levels.length - 1; i >= 0; i--) {
         if (state.xp >= levels[i].xp) {
           currentLevel = levels[i];
@@ -1155,89 +2029,24 @@
           break;
         }
       }
-
       document.getElementById('levelBadge').textContent = state.level;
       document.getElementById('levelBadge').className = 'level-badge ' + currentLevel.class;
       document.getElementById('levelName').textContent = currentLevel.name;
       document.getElementById('levelDesc').textContent = currentLevel.desc;
       document.getElementById('currentXP').textContent = state.xp;
       document.getElementById('nextLevelXP').textContent = nextLevel.xp;
-
       const progress = ((state.xp - currentLevel.xp) / (nextLevel.xp - currentLevel.xp)) * 100;
       document.getElementById('xpFill').style.width = Math.min(progress, 100) + '%';
-
-      updateBadges();
-    }
-
-    function updateBadges() {
-      const badges = document.querySelectorAll('.badge');
-      if (state.totalInvested >= 1) badges[0].classList.remove('locked');
-      if (state.totalInvested >= 100) badges[1].classList.remove('locked');
-      if (state.streak >= 30) badges[2].classList.remove('locked');
-      if (state.level >= 4) badges[3].classList.remove('locked');
-      if (state.referrals >= 10) badges[4].classList.remove('locked');
+      
+      // Sidebar user info
+      document.getElementById('userAvatar').textContent = state.level;
+      document.getElementById('userName').textContent = currentLevel.name;
+      document.getElementById('userXP').textContent = state.xp + ' XP';
     }
 
     function addXP(amount) {
       state.xp += amount;
       updateLevel();
-      saveState();
-    }
-
-    function updateStreak() {
-      const today = new Date().toDateString();
-      const lastBonus = state.lastBonusDate ? new Date(state.lastBonusDate).toDateString() : null;
-
-      if (lastBonus === today) {
-        document.getElementById('claimBonusBtn').disabled = true;
-        document.getElementById('claimBonusBtn').textContent = '✅ Bugün Aldın!';
-      } else if (lastBonus) {
-        const lastDate = new Date(state.lastBonusDate);
-        const diff = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
-        if (diff > 1) state.streak = 0;
-      }
-
-      document.getElementById('streakCount').textContent = state.streak;
-
-      const counter = document.getElementById('streakCounter');
-      counter.innerHTML = '';
-      for (let i = 1; i <= 7; i++) {
-        const day = document.createElement('div');
-        day.className = 'streak-day';
-        if (i <= state.streak) day.classList.add('completed');
-        if (i === state.streak + 1) day.classList.add('today');
-        day.textContent = i;
-        counter.appendChild(day);
-      }
-    }
-
-    function claimDailyBonus() {
-      const today = new Date().toDateString();
-      const lastBonus = state.lastBonusDate ? new Date(state.lastBonusDate).toDateString() : null;
-
-      if (lastBonus === today) {
-        showNotification('❌ Bugün zaten bonus aldın!', true);
-        return;
-      }
-
-      if (lastBonus) {
-        const diff = Math.floor((new Date() - new Date(state.lastBonusDate)) / (1000 * 60 * 60 * 24));
-        if (diff > 1) state.streak = 0;
-      }
-
-      state.streak++;
-      state.lastBonusDate = new Date().toISOString();
-
-      let bonus = 0.01;
-      if (state.streak >= 7) bonus = 0.10;
-      else if (state.streak >= 5) bonus = 0.05;
-      else if (state.streak >= 3) bonus = 0.02;
-
-      state.totalEarned += bonus;
-      addXP(10);
-
-      updateStreak();
-      showNotification(`🎉 $${bonus.toFixed(2)} bonus kazandın! (${state.streak} gün seri)`);
       saveState();
     }
 
@@ -1257,15 +2066,12 @@
         document.getElementById('roiDate').textContent = '-';
         return;
       }
-
       const daily = amount * DAILY_RATE;
       const monthly = daily * 30;
       const threeMonth = daily * 90;
-
       document.getElementById('dailyEarning').textContent = '$' + daily.toFixed(3);
       document.getElementById('monthlyEarning').textContent = '$' + monthly.toFixed(2);
       document.getElementById('threeMonthEarning').textContent = '$' + threeMonth.toFixed(2);
-
       const roiDate = new Date();
       roiDate.setDate(roiDate.getDate() + 90);
       document.getElementById('roiDate').textContent = roiDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -1277,72 +2083,65 @@
         showNotification('❌ Minimum $1!', true);
         return;
       }
-
-      document.getElementById('modalAmount').textContent = '$' + amount.toFixed(2);
+      currentPaymentAmount = amount;
+      currentBTCAddress = generateBTCAddress();
+      document.getElementById('btcPaymentAmount').textContent = '$' + amount.toFixed(2);
+      document.getElementById('instructionAmount').textContent = '$' + amount.toFixed(2);
+      document.getElementById('btcAddressText').textContent = currentBTCAddress;
+      paymentTimeLeft = 900;
+      startPaymentTimer();
       document.getElementById('purchaseModal').classList.add('active');
+    }
+
+    function startPaymentTimer() {
+      if (paymentTimerInterval) clearInterval(paymentTimerInterval);
+      updateTimerDisplay();
+      paymentTimerInterval = setInterval(() => {
+        paymentTimeLeft--;
+        updateTimerDisplay();
+        if (paymentTimeLeft <= 0) {
+          clearInterval(paymentTimerInterval);
+          showNotification(' Ödeme süresi doldu!', true);
+          closeModal();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(paymentTimeLeft / 60);
+      const seconds = paymentTimeLeft % 60;
+      document.getElementById('paymentTimer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function copyBTCAddress() {
+      navigator.clipboard.writeText(currentBTCAddress).then(() => {
+        showNotification('📋 BTC adresi kopyalandı!');
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = currentBTCAddress;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('📋 BTC adresi kopyalandı!');
+      });
     }
 
     function closeModal() {
       document.getElementById('purchaseModal').classList.remove('active');
+      if (paymentTimerInterval) {
+        clearInterval(paymentTimerInterval);
+        paymentTimerInterval = null;
+      }
     }
 
-    function confirmPurchase() {
-      const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-      if (amount < 1) return;
-
-      addProductToConveyor(amount, 0, false);
-      state.purchasedProducts.push({ 
-        id: Date.now() + Math.random(),
-        amount, 
-        earned: 0, 
-        startTime: Date.now() 
-      });
-      state.totalInvested += amount;
-      addXP(Math.floor(amount));
-
-      if (state.totalInvested >= 100 && !state.badges100) {
-        state.badges100 = true;
-        showNotification('🏆 100$ Kulübü rozeti kazandın!');
-      }
-
-      updateStats();
-      showNotification(`✅ $${amount} değerinde ürün eklendi! +${Math.floor(amount)} XP`);
+    function confirmPayment() {
+      if (currentPaymentAmount < 1) return;
+      addProduct(currentPaymentAmount, false);
+      addXP(Math.floor(currentPaymentAmount));
+      showNotification(`✅ $${currentPaymentAmount} ödeme onaylandı!`);
       closeModal();
       saveState();
-    }
-
-    function addProductToConveyor(amount, earned = 0, isRestored = false) {
-      const container = document.getElementById('conveyorContainer');
-      const product = document.createElement('div');
-
-      let tier = 1;
-      if (amount >= 100) tier = 5;
-      else if (amount >= 50) tier = 4;
-      else if (amount >= 10) tier = 3;
-      else if (amount >= 5) tier = 2;
-
-      product.className = `purchased-product product-tier-${tier}`;
-      
-      // Rastgele animasyon gecikmesi (geri yükleme için farklı)
-      const delay = isRestored ? Math.random() * -12 : Math.random() * -12;
-      product.style.animationDelay = `${delay}s`;
-
-      const perSecond = amount * PER_SECOND_RATE;
-      product.innerHTML = `
-        <div class="amount">$${amount}</div>
-        <div class="speed">${perSecond.toFixed(8)} $/s</div>
-        <div class="earned">$${earned.toFixed(6)}</div>
-      `;
-
-      container.insertBefore(product, container.firstChild);
-    }
-
-    function updateStats() {
-      document.getElementById('activeProducts').textContent = state.purchasedProducts.length;
-      document.getElementById('totalInvested').textContent = '$' + state.totalInvested.toFixed(2);
-
-      const totalPerSecond = state.purchasedProducts.reduce((sum, p) => sum + (p.amount * PER_SECOND_RATE), 0);
-      document.getElementById('perSecond').textContent = '$' + totalPerSecond.toFixed(6) + '/s';
     }
 
     function updateEarnings() {
@@ -1351,43 +2150,19 @@
       lastUpdate = now;
 
       state.purchasedProducts.forEach(product => {
-        product.earned += product.amount * PER_SECOND_RATE * elapsed;
+        product.earned = (product.earned || 0) + product.amount * PER_SECOND_RATE * elapsed;
+        const conveyorElement = document.getElementById(`earned-${product.id}`);
+        if (conveyorElement) conveyorElement.textContent = '$' + product.earned.toFixed(6);
       });
 
-      state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + p.earned, 0);
-
+      state.totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
       document.getElementById('totalEarned').textContent = '$' + state.totalEarned.toFixed(6);
       document.getElementById('balanceDisplay').textContent = '$' + state.totalEarned.toFixed(6);
-
-      const earnedElements = document.querySelectorAll('.purchased-product .earned');
-      earnedElements.forEach((el, index) => {
-        if (state.purchasedProducts[index]) {
-          el.textContent = '$' + state.purchasedProducts[index].earned.toFixed(6);
-        }
-      });
-
-      if (state.autoReinvest && state.totalEarned >= 1) {
-        const reinvestAmount = Math.floor(state.totalEarned);
-        state.totalEarned -= reinvestAmount;
-        addProductToConveyor(reinvestAmount, 0, false);
-        state.purchasedProducts.push({ 
-          id: Date.now() + Math.random(),
-          amount: reinvestAmount, 
-          earned: 0, 
-          startTime: Date.now() 
-        });
-        state.totalInvested += reinvestAmount;
-        addXP(Math.floor(reinvestAmount));
-        updateStats();
-        showNotification(`🔄 $${reinvestAmount} otomatik yeniden yatırıldı!`);
-        saveState();
-      }
+      document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
 
       updateChartData();
-      updateGoals();
       validateWithdraw();
       
-      // Her 5 saniyede bir kaydet (performans için)
       if (Math.floor(now / 5000) !== Math.floor((now - 100) / 5000)) {
         saveState();
       }
@@ -1398,10 +2173,10 @@
       earningsChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: generateLabels('daily'),
+          labels: ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'],
           datasets: [{
             label: 'Kazanç ($)',
-            data: state.earningsHistory.length ? state.earningsHistory : generateInitialData('daily'),
+            data: [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3],
             borderColor: '#4a9eff',
             backgroundColor: 'rgba(74, 158, 255, 0.1)',
             fill: true,
@@ -1410,9 +2185,7 @@
         },
         options: {
           responsive: true,
-          plugins: {
-            legend: { labels: { color: getComputedStyle(document.body).color } }
-          },
+          plugins: { legend: { labels: { color: getComputedStyle(document.body).color } } },
           scales: {
             x: { ticks: { color: getComputedStyle(document.body).color }, grid: { color: 'rgba(100,140,180,0.1)' } },
             y: { ticks: { color: getComputedStyle(document.body).color }, grid: { color: 'rgba(100,140,180,0.1)' } }
@@ -1421,23 +2194,13 @@
       });
     }
 
-    function generateLabels(type) {
-      if (type === 'daily') return Array.from({length: 7}, (_, i) => `Gün ${i+1}`);
-      if (type === 'weekly') return ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'];
-      return ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'];
-    }
-
-    function generateInitialData(type) {
-      if (type === 'daily') return [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3];
-      if (type === 'weekly') return [1, 3, 6, 10];
-      return [5, 12, 20, 30, 42, 55];
-    }
-
     function switchChart(type, btn) {
       document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
-      earningsChart.data.labels = generateLabels(type);
-      earningsChart.data.datasets[0].data = generateInitialData(type);
+      const labels = type === 'daily' ? ['Gün 1', 'Gün 2', 'Gün 3', 'Gün 4', 'Gün 5', 'Gün 6', 'Gün 7'] : type === 'weekly' ? ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'] : ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'];
+      const data = type === 'daily' ? [0.1, 0.25, 0.4, 0.6, 0.8, 1.1, 1.3] : type === 'weekly' ? [1, 3, 6, 10] : [5, 12, 20, 30, 42, 55];
+      earningsChart.data.labels = labels;
+      earningsChart.data.datasets[0].data = data;
       earningsChart.update();
     }
 
@@ -1455,11 +2218,8 @@
         { name: 'User***891', earned: 1456.20 },
         { name: 'User***456', earned: 987.40 },
         { name: 'User***123', earned: 654.90 },
-        { name: 'User***789', earned: 432.10 },
-        { name: 'User***345', earned: 298.60 },
-        { name: 'User***678', earned: 187.30 }
+        { name: 'User***789', earned: 432.10 }
       ];
-
       const list = document.getElementById('leaderboardList');
       list.innerHTML = fakeUsers.map((user, i) => `
         <div class="leaderboard-item ${i < 3 ? 'top-' + (i+1) : ''}">
@@ -1481,79 +2241,9 @@
       });
     }
 
-    function addGoal() {
-      const title = document.getElementById('goalTitle').value.trim();
-      const amount = parseFloat(document.getElementById('goalAmount').value);
-
-      if (!title || !amount || amount < 1) {
-        showNotification('❌ Geçerli bir hedef gir!', true);
-        return;
-      }
-
-      state.goals.push({ title, amount, createdAt: Date.now() });
-      document.getElementById('goalTitle').value = '';
-      document.getElementById('goalAmount').value = '';
-
-      renderGoals();
-      saveState();
-      showNotification(' Hedef eklendi!');
-    }
-
-    function renderGoals() {
-      const container = document.getElementById('goalsContainer');
-      if (state.goals.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Henüz hedef yok. Aşağıdan hedef ekle!</p>';
-        return;
-      }
-
-      container.innerHTML = state.goals.map((goal, i) => {
-        const progress = Math.min((state.totalEarned / goal.amount) * 100, 100);
-        return `
-          <div class="goal-card">
-            <div class="goal-header">
-              <div class="goal-title">${goal.title}</div>
-              <div class="goal-amount">$${state.totalEarned.toFixed(2)} / $${goal.amount}</div>
-            </div>
-            <div class="goal-progress">
-              <div class="goal-fill" style="width: ${progress}%">${progress.toFixed(1)}%</div>
-            </div>
-            <div class="goal-footer">
-              <span>Kalan: $${Math.max(goal.amount - state.totalEarned, 0).toFixed(2)}</span>
-              <button onclick="removeGoal(${i})" style="background: none; border: none; color: var(--danger); cursor: pointer; font-weight: 600;">🗑️ Sil</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function updateGoals() {
-      state.goals.forEach(goal => {
-        if (state.totalEarned >= goal.amount && !goal.completed) {
-          goal.completed = true;
-          addXP(100);
-          showNotification(`🎉 Hedef tamamlandı: ${goal.title}! +100 XP`);
-          saveState();
-        }
-      });
-      renderGoals();
-    }
-
-    function removeGoal(index) {
-      state.goals.splice(index, 1);
-      renderGoals();
-      saveState();
-    }
-
-    function toggleAutoReinvest() {
-      state.autoReinvest = document.getElementById('autoReinvestToggle').checked;
-      saveState();
-      showNotification(state.autoReinvest ? '🔄 Otomatik yeniden yatırım aktif!' : '⏸️ Otomatik yeniden yatırım kapalı');
-    }
-
     function validateWithdraw() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const btn = document.getElementById('withdrawBtn');
-
       if (amount < MIN_WITHDRAW) {
         btn.disabled = true;
         btn.textContent = `💸 Minimum $${MIN_WITHDRAW}`;
@@ -1569,21 +2259,17 @@
     function processWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const walletAddress = document.getElementById('walletAddress').value.trim();
-
       if (amount < MIN_WITHDRAW || amount > state.totalEarned) {
         showNotification('❌ Geçersiz miktar!', true);
         return;
       }
-
       if (!walletAddress || !walletAddress.match(/^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^bc1[a-zA-HJ-NP-Z0-9]{25,89}$/)) {
         showNotification('❌ Geçersiz BTC adresi!', true);
         return;
       }
-
       state.totalEarned -= amount;
       addXP(50);
       showNotification(`✅ $${amount.toFixed(2)} başarıyla çekildi!`);
-
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('walletAddress').value = '';
       saveState();
@@ -1600,21 +2286,17 @@
         { icon: '💰', text: 'az önce $<amount> yatırım yaptı', users: ['User***234', 'User***891', 'User***456'] },
         { icon: '💸', text: '$<amount> çekim yaptı', users: ['User***345', 'User***678', 'User***901'] },
         { icon: '🎯', text: 'seviye atladı!', users: ['User***847', 'User***234'] },
-        { icon: '🎁', text: 'günlük bonusunu aldı', users: ['User***456', 'User***123'] }
+        { icon: '🎁', text: 'hoş geldin bonusunu aldı!', users: ['User***456', 'User***123'] }
       ];
-
       const action = actions[Math.floor(Math.random() * actions.length)];
       const user = action.users[Math.floor(Math.random() * action.users.length)];
       const amount = (Math.random() * 100 + 1).toFixed(2);
-
       const feed = document.getElementById('liveFeed');
       const item = document.createElement('div');
       item.className = 'feed-item';
       item.innerHTML = `<span class="feed-icon">${action.icon}</span> <span class="feed-user">${user}</span> ${action.text.replace('<amount>', amount)}`;
-
       feed.appendChild(item);
       setTimeout(() => item.remove(), 5000);
-
       if (feed.children.length > 3) feed.removeChild(feed.firstChild);
     }
 
@@ -1622,11 +2304,11 @@
       document.getElementById('supportChat').classList.toggle('active');
     }
 
-    function showNotification(message, isError = false) {
+    function showNotification(message, type = '') {
       const notification = document.getElementById('notification');
       notification.textContent = message;
-      notification.className = 'notification show' + (isError ? ' error' : '');
-      setTimeout(() => notification.classList.remove('show'), 3000);
+      notification.className = 'notification show ' + type;
+      setTimeout(() => notification.classList.remove('show'), 3500);
     }
 
     init();
