@@ -473,11 +473,11 @@
         <span data-i18n="menu_profile">Profil</span>
       </div>
       <div class="menu-item" onclick="showPage('leaderboard', this)">
-        <span class="menu-icon">🏆</span>
+        <span class="menu-icon"></span>
         <span data-i18n="menu_leaderboard">Liderlik</span>
       </div>
       <div class="menu-item" onclick="showPage('referral', this)">
-        <span class="menu-icon">👥</span>
+        <span class="menu-icon"></span>
         <span data-i18n="menu_referral">Referans</span>
       </div>
       <div class="menu-item" onclick="showPage('withdraw', this)">
@@ -492,11 +492,11 @@
     </div>
     <div class="language-selector">
       <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹🇷 TR</button>
-      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇧 EN</button>
-      <button class="lang-btn" onclick="changeLanguage('ru')" id="lang-ru">🇷🇺 RU</button>
+      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
+      <button class="lang-btn" onclick="changeLanguage('ru')" id="lang-ru">🇺 RU</button>
       <button class="lang-btn" onclick="changeLanguage('ar')" id="lang-ar">🇸🇦 AR</button>
       <button class="lang-btn" onclick="changeLanguage('zh')" id="lang-zh">🇨🇳 ZH</button>
-      <button class="lang-btn" onclick="changeLanguage('ja')" id="lang-ja">🇯🇵 JA</button>
+      <button class="lang-btn" onclick="changeLanguage('ja')" id="lang-ja">🇵 JA</button>
     </div>
     <div class="sidebar-footer">
       <div class="user-info" onclick="showPage('profile', document.querySelectorAll('.menu-item')[3])">
@@ -540,22 +540,22 @@
       </div>
       <div class="stats-grid">
         <div class="stat-card blue">
-          <div class="stat-card-icon"></div>
+          <div class="stat-card-icon">📦</div>
           <div class="stat-card-value" id="homeActiveProducts">0</div>
           <div class="stat-card-label" data-i18n="stat_active">Aktif Ürün</div>
         </div>
         <div class="stat-card orange">
-          <div class="stat-card-icon">💰</div>
+          <div class="stat-card-icon"></div>
           <div class="stat-card-value" id="homeTotalInvested">$0</div>
           <div class="stat-card-label" data-i18n="stat_invested">Toplam Yatırım</div>
         </div>
         <div class="stat-card green live">
-          <div class="stat-card-icon"></div>
+          <div class="stat-card-icon">💵</div>
           <div class="stat-card-value" id="homeTotalEarned">$0.00</div>
           <div class="stat-card-label" data-i18n="stat_earned">Toplam Kazanç</div>
         </div>
         <div class="stat-card purple live">
-          <div class="stat-card-icon"></div>
+          <div class="stat-card-icon">⚡</div>
           <div class="stat-card-value" id="homePerSecond">$0/s</div>
           <div class="stat-card-label" data-i18n="stat_persecond">Saniyelik</div>
         </div>
@@ -798,7 +798,7 @@
             <span data-i18n="share_telegram">Telegram'da Paylaş</span>
           </button>
           <button class="share-btn instagram" onclick="shareInstagram()">
-            <span>📷</span>
+            <span></span>
             <span data-i18n="share_instagram">Instagram'da Paylaş</span>
           </button>
         </div>
@@ -815,7 +815,7 @@
       </div>
       <div class="withdrawal-form">
         <div class="form-group">
-          <label class="form-label" data-i18n="withdraw_amount"> Çekilecek Miktar ($)</label>
+          <label class="form-label" data-i18n="withdraw_amount">💰 Çekilecek Miktar ($)</label>
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
         <div class="form-group">
@@ -838,7 +838,7 @@
         </div>
         <div class="admin-stat-card pending">
           <div class="admin-stat-value" id="adminPending">0</div>
-        <div class="admin-stat-label" data-i18n="admin_pending">Bekleyen</div>
+          <div class="admin-stat-label" data-i18n="admin_pending">Bekleyen</div>
         </div>
         <div class="admin-stat-card approved">
           <div class="admin-stat-value" id="adminApproved">0</div>
@@ -855,7 +855,7 @@
           <span class="count" id="paymentsTabCount">0</span>
         </div>
         <div class="admin-tab" onclick="switchAdminTab('withdrawals', this)">
-           <span data-i18n="tab_withdrawals">Çekimler</span>
+          💸 <span data-i18n="tab_withdrawals">Çekimler</span>
           <span class="count" id="withdrawalsTabCount">0</span>
         </div>
       </div>
@@ -865,7 +865,7 @@
   <div class="live-feed" id="liveFeed"></div>
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
-      <div class="support-header" data-i18n="support_title">💬 Destek</div>
+      <div class="support-header" data-i18n="support_title"> Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
           <div class="faq-question" data-i18n="faq_bonus">❓ Bonus nedir?</div>
@@ -881,7 +881,7 @@
         </div>
       </div>
     </div>
-    <button class="support-btn" onclick="toggleSupport()">💬</button>
+    <button class="support-btn" onclick="toggleSupport()"></button>
   </div>
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
@@ -901,14 +901,14 @@
   </div>
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
-      <button class="modal-close" onclick="closeModal()"></button>
+      <button class="modal-close" onclick="closeModal()">✕</button>
       <h2 data-i18n="payment_title">💳 Ödeme Yöntemi Seç</h2>
       <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
         <span data-i18n="payment_total">Toplam</span>: <strong id="modalUsdAmount">$10.00</strong> - <span data-i18n="payment_select">Kripto seçin</span>
       </p>
       <div class="crypto-selector">
         <div class="crypto-option btc selected" onclick="selectCrypto('btc')">
-          <div class="crypto-icon"></div>
+          <div class="crypto-icon">₿</div>
           <div class="crypto-name">Bitcoin</div>
           <div class="crypto-amount" id="btcAmount">0.000154 BTC</div>
         </div>
@@ -925,11 +925,11 @@
       </div>
       <div class="payment-box btc" id="paymentBox">
         <div class="payment-header">
-          <span style="font-size: 24px;" id="paymentIcon"></span>
+          <span style="font-size: 24px;" id="paymentIcon">₿</span>
           <span id="paymentTitle">Bitcoin Ödeme</span>
         </div>
         <div class="payment-amount-display" onclick="copyAmount()" id="amountDisplay">
-          <div class="copy-hint">📋</div>
+          <div class="copy-hint"></div>
           <div class="label" data-i18n="payment_send_amount">Gönderilecek Tutar (Tıkla: Kopyala)</div>
           <div class="value" id="cryptoAmountDisplay">0.000154 BTC</div>
         </div>
@@ -1006,7 +1006,7 @@
     };
     const CRYPTO_NAMES = { btc: 'Bitcoin', trx: 'TRON', bnb: 'BNB' };
     const CRYPTO_SYMBOLS = { btc: 'BTC', trx: 'TRX', bnb: 'BNB' };
-    const CRYPTO_ICONS = { btc: '₿', trx: '💠', bnb: '' };
+    const CRYPTO_ICONS = { btc: '₿', trx: '💠', bnb: '🔶' };
     const BOT_USERS = [
       { name: 'Ahmet', gender: 'male', investment: 1500 },
       { name: 'Mehmet', gender: 'male', investment: 2300 },
@@ -1041,22 +1041,22 @@
     ];
     const translations = {
       tr: {
-        site_name: 'Hash Power Mining', site_subtitle: 'Pro Platform', menu_main: 'Ana Menü', menu_home: 'Ana Sayfa', menu_buy: 'Satın Al', menu_production: 'Üretim Hattı', menu_account: 'Hesap', menu_profile: 'Profil', menu_leaderboard: 'Liderlik', menu_referral: 'Referans', menu_withdraw: 'Çekim', menu_admin: 'Admin Panel', hero_greeting: '👋 Hoş Geldin', hero_subtitle: 'Hash Power Mining ile pasif gelir kazan', stat_earned: 'Toplam Kazanç', stat_active: 'Aktif Ürün', stat_invested: 'Toplam Yatırım', stat_persecond: 'Saniyelik', action_buy: 'Satın Al', action_production: 'Üretim', action_withdraw: 'Çekim', activity_title: 'Son Aktiviteler', profile_title: '👤 Profil Bilgisi', profile_subtitle: 'Hesap bilgilerini yönet', profile_personal: '📝 Kişisel Bilgiler', profile_nickname: 'Takma Adı', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Profil Fotoğrafı', profile_stats: '📊 İstatistiklerim', btn_save: '💾 Kaydet', buy_title: '💎 Mining Gücü Satın Al', buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al', info_minimum: 'Minimum', info_roi: 'ROI', info_return: 'Getiri', info_daily: 'Günlük', select_package: 'Paket Seç', package_roi: '3 Ayda Geri', custom_amount: '💰 Özel Miktar', calculation: '📊 Hesaplama', calc_daily: 'Günlük', calc_monthly: 'Aylık', calc_3month: '3 Aylık', calc_roi: 'ROI', btn_buy_now: '🚀 Şimdi Satın Al', production_title: '⚡ Üretim Hattı', production_subtitle: 'Mining operasyonlarınız gerçek zamanlı', active_production: 'Aktif Üretim', status_working: 'ÇALIŞIYOR', station_verify: 'Doğrulama', station_chain: 'Zincir', station_reward: 'Ödül', summary_total: '💰 Toplam', summary_minute: '⏱️ Dakika', summary_hour: '🕐 Saat', summary_month: '📅 Ay', stats_title: 'İstatistikler', stat_active_products: 'Aktif Ürün', stat_total_earn: 'Toplam Kazanç', stat_per_second: 'Saniyelik', stat_roi_time: 'ROI Süre', leaderboard_title: '🏆 Liderlik', leaderboard_subtitle: 'En çok kazananlar', referral_title: '👥 Referans', referral_subtitle: 'Arkadaşlarını davet et, %10 kazan', referral_code: 'Referans Kodun', referral_click: 'Kopyalamak için tıkla!', ref_invited: 'Davet', ref_earnings: 'Kazanç', ref_rate: 'Oran', share_telegram: 'Telegram\'da Paylaş', share_instagram: 'Instagram\'da Paylaş', withdraw_title: ' Çekim', withdraw_subtitle: 'Minimum çekim: $0.01', balance_current: 'Mevcut Bakiye', withdraw_amount: ' Çekilecek Miktar ($)', withdraw_address: '₿ BTC Adresi', btn_withdraw: '💸 Çekim Yap', admin_title: '🔐 Admin Panel', admin_subtitle: 'Ödeme ve çekim taleplerini yönet', admin_revenue: 'Toplam Gelir', admin_pending: 'Bekleyen', admin_approved: 'Onaylanan', admin_rejected: 'Reddedilen', tab_payments: 'Ödemeler', tab_withdrawals: 'Çekimler', admin_total_invested: 'Toplam Yatırım', admin_total_withdrawn: 'Toplam Çıkan', admin_total_pending: 'Toplam Bekleyen', admin_income_expense: 'Gelir/Gider', support_title: '💬 Destek', faq_bonus: '❓ Bonus nedir?', faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!', faq_how: '❓ Nasıl alınır?', faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.', faq_roi: '❓ ROI süresi?', faq_roi_answer: 'Tüm yatırımlar 3 ayda geri döner.', welcome_title: 'HOŞ GELDİN!', welcome_desc: '<strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!', welcome_amount: '🎁 $1.00 ÜCRETSİZ', welcome_feat1: 'Anında ekleme', welcome_feat2: 'Saniyelik kazanç', welcome_feat3: '3 ay ROI', welcome_feat4: 'Ödeme yok!', btn_start: '🚀 BAŞLA', payment_title: '💳 Ödeme Yöntemi Seç', payment_total: 'Toplam', payment_select: 'Kripto seçin', payment_send_amount: 'Gönderilecek Tutar (Tıkla: Kopyala)', btn_copy_both: '📋 Adres + Tutar Kopyala', payment_time: 'Kalan Süre:', payment_waiting: 'Ödeme Bekleniyor...', payment_how: 'Nasıl Yapılır?', payment_step1: 'Tutarı kopyala', payment_step3: 'Ödemeyi onayla', btn_cancel: 'İptal', btn_confirm: '✓ Ödemeyi Onayla', notif_min: '❌ Min $1!', notif_copied: '📋 Kopyalandı!', notif_bonus: '🎉 $1 bonus kazandın!', notif_confirmed: '✅ Ödeme onaylandı!', notif_timeout: '⏰ Süre doldu!', notif_success: '✅ Başarılı!', notif_invalid: ' Geçersiz!', notif_required: '❌ Adres gerekli!', notif_code_copied: ' Kod kopyalandı!', notif_saved: '✅ Kaydedildi!', roi_days: '90 gün', status_pending: 'Beklemede', status_approved: 'Onaylandı', status_rejected: 'Reddedildi', no_pending: 'Bekleyen işlem yok', my_requests: '📋 İşlemlerim', page: 'Sayfa'
+        site_name: 'Hash Power Mining', site_subtitle: 'Pro Platform', menu_main: 'Ana Menü', menu_home: 'Ana Sayfa', menu_buy: 'Satın Al', menu_production: 'Üretim Hattı', menu_account: 'Hesap', menu_profile: 'Profil', menu_leaderboard: 'Liderlik', menu_referral: 'Referans', menu_withdraw: 'Çekim', menu_admin: 'Admin Panel', hero_greeting: '👋 Hoş Geldin', hero_subtitle: 'Hash Power Mining ile pasif gelir kazan', stat_earned: 'Toplam Kazanç', stat_active: 'Aktif Ürün', stat_invested: 'Toplam Yatırım', stat_persecond: 'Saniyelik', action_buy: 'Satın Al', action_production: 'Üretim', action_withdraw: 'Çekim', activity_title: 'Son Aktiviteler', profile_title: '👤 Profil Bilgisi', profile_subtitle: 'Hesap bilgilerini yönet', profile_personal: ' Kişisel Bilgiler', profile_nickname: 'Takma Adı', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Profil Fotoğrafı', profile_stats: '📊 İstatistiklerim', btn_save: '💾 Kaydet', buy_title: '💎 Mining Gücü Satın Al', buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al', info_minimum: 'Minimum', info_roi: 'ROI', info_return: 'Getiri', info_daily: 'Günlük', select_package: 'Paket Seç', package_roi: '3 Ayda Geri', custom_amount: '💰 Özel Miktar', calculation: '📊 Hesaplama', calc_daily: 'Günlük', calc_monthly: 'Aylık', calc_3month: '3 Aylık', calc_roi: 'ROI', btn_buy_now: '🚀 Şimdi Satın Al', production_title: '⚡ Üretim Hattı', production_subtitle: 'Mining operasyonlarınız gerçek zamanlı', active_production: 'Aktif Üretim', status_working: 'ÇALIŞIYOR', station_verify: 'Doğrulama', station_chain: 'Zincir', station_reward: 'Ödül', summary_total: '💰 Toplam', summary_minute: '️ Dakika', summary_hour: ' Saat', summary_month: ' Ay', stats_title: 'İstatistikler', stat_active_products: 'Aktif Ürün', stat_total_earn: 'Toplam Kazanç', stat_per_second: 'Saniyelik', stat_roi_time: 'ROI Süre', leaderboard_title: ' Liderlik', leaderboard_subtitle: 'En çok kazananlar', referral_title: '👥 Referans', referral_subtitle: 'Arkadaşlarını davet et, %10 kazan', referral_code: 'Referans Kodun', referral_click: 'Kopyalamak için tıkla!', ref_invited: 'Davet', ref_earnings: 'Kazanç', ref_rate: 'Oran', share_telegram: 'Telegram\'da Paylaş', share_instagram: 'Instagram\'da Paylaş', withdraw_title: '💸 Çekim', withdraw_subtitle: 'Minimum çekim: $0.01', balance_current: 'Mevcut Bakiye', withdraw_amount: '💰 Çekilecek Miktar ($)', withdraw_address: '₿ BTC Adresi', btn_withdraw: '💸 Çekim Yap', admin_title: '🔐 Admin Panel', admin_subtitle: 'Ödeme ve çekim taleplerini yönet', admin_revenue: 'Toplam Gelir', admin_pending: 'Bekleyen', admin_approved: 'Onaylanan', admin_rejected: 'Reddedilen', tab_payments: 'Ödemeler', tab_withdrawals: 'Çekimler', admin_total_invested: 'Toplam Yatırım', admin_total_withdrawn: 'Toplam Çıkan', admin_total_pending: 'Toplam Bekleyen', admin_income_expense: 'Gelir/Gider', support_title: '💬 Destek', faq_bonus: '❓ Bonus nedir?', faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!', faq_how: '❓ Nasıl alınır?', faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.', faq_roi: '❓ ROI süresi?', faq_roi_answer: 'Tüm yatırımlar 3 ayda geri döner.', welcome_title: 'HOŞ GELDİN!', welcome_desc: '<strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!', welcome_amount: ' $1.00 ÜCRETSİZ', welcome_feat1: 'Anında ekleme', welcome_feat2: 'Saniyelik kazanç', welcome_feat3: '3 ay ROI', welcome_feat4: 'Ödeme yok!', btn_start: '🚀 BAŞLA', payment_title: ' Ödeme Yöntemi Seç', payment_total: 'Toplam', payment_select: 'Kripto seçin', payment_send_amount: 'Gönderilecek Tutar (Tıkla: Kopyala)', btn_copy_both: '📋 Adres + Tutar Kopyala', payment_time: 'Kalan Süre:', payment_waiting: 'Ödeme Bekleniyor...', payment_how: 'Nasıl Yapılır?', payment_step1: 'Tutarı kopyala', payment_step3: 'Ödemeyi onayla', btn_cancel: 'İptal', btn_confirm: '✓ Ödemeyi Onayla', notif_min: '❌ Min $1!', notif_copied: '📋 Kopyalandı!', notif_bonus: '🎉 $1 bonus kazandın!', notif_confirmed: '✅ Ödeme onaylandı!', notif_timeout: '⏰ Süre doldu!', notif_success: '✅ Başarılı!', notif_invalid: '❌ Geçersiz!', notif_required: '❌ Adres gerekli!', notif_code_copied: '📋 Kod kopyalandı!', notif_saved: '✅ Kaydedildi!', roi_days: '90 gün', status_pending: 'Beklemede', status_approved: 'Onaylandı', status_rejected: 'Reddedildi', no_pending: 'Bekleyen işlem yok', my_requests: '📋 İşlemlerim', page: 'Sayfa'
       },
       en: {
-        site_name: 'Hash Power Mining', site_subtitle: 'Pro Platform', menu_main: 'Main Menu', menu_home: 'Home', menu_buy: 'Buy', menu_production: 'Production', menu_account: 'Account', menu_profile: 'Profile', menu_leaderboard: 'Leaderboard', menu_referral: 'Referral', menu_withdraw: 'Withdraw', menu_admin: 'Admin Panel', hero_greeting: '👋 Welcome', hero_subtitle: 'Earn passive income with Hash Power Mining', stat_earned: 'Total Earnings', stat_active: 'Active Products', stat_invested: 'Total Investment', stat_persecond: 'Per Second', action_buy: 'Buy', action_production: 'Production', action_withdraw: 'Withdraw', activity_title: 'Recent Activities', profile_title: '👤 Profile', profile_subtitle: 'Manage your account', profile_personal: '📝 Personal Info', profile_nickname: 'Nickname', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Profile Photo', profile_stats: '📊 My Stats', btn_save: '💾 Save', buy_title: ' Buy Mining Power', buy_subtitle: 'Start with $1, get ROI in 3 months', info_minimum: 'Minimum', info_roi: 'ROI', info_return: 'Return', info_daily: 'Daily', select_package: 'Select Package', package_roi: '3 Month ROI', custom_amount: ' Custom Amount', calculation: '📊 Calculation', calc_daily: 'Daily', calc_monthly: 'Monthly', calc_3month: '3 Months', calc_roi: 'ROI', btn_buy_now: '🚀 Buy Now', production_title: ' Production Line', production_subtitle: 'Real-time mining operations', active_production: 'Active Production', status_working: 'RUNNING', station_verify: 'Verify', station_chain: 'Chain', station_reward: 'Reward', summary_total: '💰 Total', summary_minute: '⏱️ Minute', summary_hour: '🕐 Hour', summary_month: '📅 Month', stats_title: 'Statistics', stat_active_products: 'Active Products', stat_total_earn: 'Total Earnings', stat_per_second: 'Per Second', stat_roi_time: 'ROI Time', leaderboard_title: '🏆 Leaderboard', leaderboard_subtitle: 'Top earners', referral_title: '👥 Referral', referral_subtitle: 'Invite friends, earn 10%', referral_code: 'Your Referral Code', referral_click: 'Click to copy!', ref_invited: 'Invited', ref_earnings: 'Earnings', ref_rate: 'Rate', share_telegram: 'Share on Telegram', share_instagram: 'Share on Instagram', withdraw_title: '💸 Withdraw', withdraw_subtitle: 'Minimum withdrawal: $0.01', balance_current: 'Current Balance', withdraw_amount: '💰 Withdrawal Amount ($)', withdraw_address: '₿ BTC Address', btn_withdraw: '💸 Withdraw', admin_title: '🔐 Admin Panel', admin_subtitle: 'Manage payments and withdrawals', admin_revenue: 'Total Revenue', admin_pending: 'Pending', admin_approved: 'Approved', admin_rejected: 'Rejected', tab_payments: 'Payments', tab_withdrawals: 'Withdrawals', admin_total_invested: 'Total Invested', admin_total_withdrawn: 'Total Withdrawn', admin_total_pending: 'Total Pending', admin_income_expense: 'Income/Expense', support_title: '💬 Support', faq_bonus: '❓ What is the bonus?', faq_bonus_answer: '$1 free mining power on first login!', faq_how: '❓ How to buy?', faq_how_answer: 'Select package, pay, confirm.', faq_roi: '❓ ROI period?', faq_roi_answer: 'All investments return in 3 months.', welcome_title: 'WELCOME!', welcome_desc: '<strong>Free bonus</strong> ready!<br>Start now!', welcome_amount: ' $1.00 FREE', welcome_feat1: 'Instant addition', welcome_feat2: 'Per-second earnings', welcome_feat3: '3 month ROI', welcome_feat4: 'No payment!', btn_start: '🚀 START', payment_title: '💳 Select Payment Method', payment_total: 'Total', payment_select: 'Select crypto', payment_send_amount: 'Amount to Send (Tap to Copy)', btn_copy_both: '📋 Copy Address + Amount', payment_time: 'Time Left:', payment_waiting: 'Waiting for Payment...', payment_how: 'How to?', payment_step1: 'Copy amount', payment_step3: 'Confirm payment', btn_cancel: 'Cancel', btn_confirm: '✓ Confirm Payment', notif_min: '❌ Min $1!', notif_copied: '📋 Copied!', notif_bonus: '🎉 You earned $1 bonus!', notif_confirmed: '✅ Payment confirmed!', notif_timeout: '⏰ Time expired!', notif_success: '✅ Success!', notif_invalid: ' Invalid!', notif_required: '❌ Address required!', notif_code_copied: '📋 Code copied!', notif_saved: '✅ Saved!', roi_days: '90 days', status_pending: 'Pending', status_approved: 'Approved', status_rejected: 'Rejected', no_pending: 'No pending requests', my_requests: '📋 My Requests', page: 'Page'
+        site_name: 'Hash Power Mining', site_subtitle: 'Pro Platform', menu_main: 'Main Menu', menu_home: 'Home', menu_buy: 'Buy', menu_production: 'Production', menu_account: 'Account', menu_profile: 'Profile', menu_leaderboard: 'Leaderboard', menu_referral: 'Referral', menu_withdraw: 'Withdraw', menu_admin: 'Admin Panel', hero_greeting: '👋 Welcome', hero_subtitle: 'Earn passive income with Hash Power Mining', stat_earned: 'Total Earnings', stat_active: 'Active Products', stat_invested: 'Total Investment', stat_persecond: 'Per Second', action_buy: 'Buy', action_production: 'Production', action_withdraw: 'Withdraw', activity_title: 'Recent Activities', profile_title: ' Profile', profile_subtitle: 'Manage your account', profile_personal: '📝 Personal Info', profile_nickname: 'Nickname', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Profile Photo', profile_stats: '📊 My Stats', btn_save: '💾 Save', buy_title: ' Buy Mining Power', buy_subtitle: 'Start with $1, get ROI in 3 months', info_minimum: 'Minimum', info_roi: 'ROI', info_return: 'Return', info_daily: 'Daily', select_package: 'Select Package', package_roi: '3 Month ROI', custom_amount: '💰 Custom Amount', calculation: '📊 Calculation', calc_daily: 'Daily', calc_monthly: 'Monthly', calc_3month: '3 Months', calc_roi: 'ROI', btn_buy_now: ' Buy Now', production_title: ' Production Line', production_subtitle: 'Real-time mining operations', active_production: 'Active Production', status_working: 'RUNNING', station_verify: 'Verify', station_chain: 'Chain', station_reward: 'Reward', summary_total: ' Total', summary_minute: '⏱️ Minute', summary_hour: '🕐 Hour', summary_month: '📅 Month', stats_title: 'Statistics', stat_active_products: 'Active Products', stat_total_earn: 'Total Earnings', stat_per_second: 'Per Second', stat_roi_time: 'ROI Time', leaderboard_title: '🏆 Leaderboard', leaderboard_subtitle: 'Top earners', referral_title: ' Referral', referral_subtitle: 'Invite friends, earn 10%', referral_code: 'Your Referral Code', referral_click: 'Click to copy!', ref_invited: 'Invited', ref_earnings: 'Earnings', ref_rate: 'Rate', share_telegram: 'Share on Telegram', share_instagram: 'Share on Instagram', withdraw_title: ' Withdraw', withdraw_subtitle: 'Minimum withdrawal: $0.01', balance_current: 'Current Balance', withdraw_amount: '💰 Withdrawal Amount ($)', withdraw_address: '₿ BTC Address', btn_withdraw: '💸 Withdraw', admin_title: ' Admin Panel', admin_subtitle: 'Manage payments and withdrawals', admin_revenue: 'Total Revenue', admin_pending: 'Pending', admin_approved: 'Approved', admin_rejected: 'Rejected', tab_payments: 'Payments', tab_withdrawals: 'Withdrawals', admin_total_invested: 'Total Invested', admin_total_withdrawn: 'Total Withdrawn', admin_total_pending: 'Total Pending', admin_income_expense: 'Income/Expense', support_title: '💬 Support', faq_bonus: '❓ What is the bonus?', faq_bonus_answer: '$1 free mining power on first login!', faq_how: '❓ How to buy?', faq_how_answer: 'Select package, pay, confirm.', faq_roi: '❓ ROI period?', faq_roi_answer: 'All investments return in 3 months.', welcome_title: 'WELCOME!', welcome_desc: '<strong>Free bonus</strong> ready!<br>Start now!', welcome_amount: '🎁 $1.00 FREE', welcome_feat1: 'Instant addition', welcome_feat2: 'Per-second earnings', welcome_feat3: '3 month ROI', welcome_feat4: 'No payment!', btn_start: '🚀 START', payment_title: '💳 Select Payment Method', payment_total: 'Total', payment_select: 'Select crypto', payment_send_amount: 'Amount to Send (Tap to Copy)', btn_copy_both: '📋 Copy Address + Amount', payment_time: 'Time Left:', payment_waiting: 'Waiting for Payment...', payment_how: 'How to?', payment_step1: 'Copy amount', payment_step3: 'Confirm payment', btn_cancel: 'Cancel', btn_confirm: '✓ Confirm Payment', notif_min: '❌ Min $1!', notif_copied: '📋 Copied!', notif_bonus: '🎉 You earned $1 bonus!', notif_confirmed: '✅ Payment confirmed!', notif_timeout: '⏰ Time expired!', notif_success: '✅ Success!', notif_invalid: '❌ Invalid!', notif_required: '❌ Address required!', notif_code_copied: '📋 Code copied!', notif_saved: '✅ Saved!', roi_days: '90 days', status_pending: 'Pending', status_approved: 'Approved', status_rejected: 'Rejected', no_pending: 'No pending requests', my_requests: '📋 My Requests', page: 'Page'
       },
       ru: {
-        site_name: 'Hash Power Mining', site_subtitle: 'Pro Платформа', menu_main: 'Главное меню', menu_home: 'Главная', menu_buy: 'Купить', menu_production: 'Производство', menu_account: 'Аккаунт', menu_profile: 'Профиль', menu_leaderboard: 'Рейтинг', menu_referral: 'Реферал', menu_withdraw: 'Вывод', menu_admin: 'Админ Панель', hero_greeting: '👋 Добро пожаловать', hero_subtitle: 'Зарабатывай с Hash Power Mining', stat_earned: 'Всего заработано', stat_active: 'Активных продуктов', stat_invested: 'Всего вложено', stat_persecond: 'В секунду', action_buy: 'Купить', action_production: 'Производство', action_withdraw: 'Вывод', activity_title: 'Последние активности', profile_title: '👤 Профиль', profile_subtitle: 'Управление аккаунтом', profile_personal: ' Личные данные', profile_nickname: 'Никнейм', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Фото профиля', profile_stats: '📊 Моя статистика', btn_save: '💾 Сохранить', buy_title: '💎 Купить мощность', buy_subtitle: 'Начни с $1, ROI за 3 месяца', info_minimum: 'Минимум', info_roi: 'ROI', info_return: 'Доход', info_daily: 'В день', select_package: 'Выбрать пакет', package_roi: 'ROI за 3 мес', custom_amount: '💰 Своя сумма', calculation: '📊 Расчёт', calc_daily: 'В день', calc_monthly: 'В месяц', calc_3month: '3 месяца', calc_roi: 'ROI', btn_buy_now: '🚀 Купить сейчас', production_title: '⚡ Производство', production_subtitle: 'Майнинг в реальном времени', active_production: 'Активное производство', status_working: 'РАБОТАЕТ', station_verify: 'Проверка', station_chain: 'Цепочка', station_reward: 'Награда', summary_total: '💰 Всего', summary_minute: '⏱️ Минута', summary_hour: '🕐 Час', summary_month: '📅 Месяц', stats_title: 'Статистика', stat_active_products: 'Активных продуктов', stat_total_earn: 'Всего заработано', stat_per_second: 'В секунду', stat_roi_time: 'Время ROI', leaderboard_title: '🏆 Рейтинг', leaderboard_subtitle: 'Топ earners', referral_title: ' Реферал', referral_subtitle: 'Приглашай друзей, получай 10%', referral_code: 'Твой реферальный код', referral_click: 'Нажми чтобы скопировать!', ref_invited: 'Приглашено', ref_earnings: 'Заработок', ref_rate: 'Ставка', share_telegram: 'Поделиться в Telegram', share_instagram: 'Поделиться в Instagram', withdraw_title: ' Вывод', withdraw_subtitle: 'Минимум: $0.01', balance_current: 'Текущий баланс', withdraw_amount: ' Сумма вывода ($)', withdraw_address: ' BTC Адрес', btn_withdraw: '💸 Вывести', admin_title: '🔐 Админ Панель', admin_subtitle: 'Управление платежами', admin_revenue: 'Всего доход', admin_pending: 'Ожидает', admin_approved: 'Одобрено', admin_rejected: 'Отклонено', tab_payments: 'Платежи', tab_withdrawals: 'Выводы', admin_total_invested: 'Всего вложено', admin_total_withdrawn: 'Всего выведено', admin_total_pending: 'Всего ожидает', admin_income_expense: 'Доход/Расход', support_title: '💬 Поддержка', faq_bonus: '❓ Что такое бонус?', faq_bonus_answer: '$1 бесплатной мощности при первом входе!', faq_how: '❓ Как купить?', faq_how_answer: 'Выбери пакет, оплати, подтверди.', faq_roi: '❓ Период ROI?', faq_roi_answer: 'Все инвестиции возвращаются за 3 месяца.', welcome_title: 'ДОБРО ПОЖАЛОВАТЬ!', welcome_desc: '<strong>Бесплатный бонус</strong> готов!<br>Начни сейчас!', welcome_amount: '🎁 $1.00 БЕСПЛАТНО', welcome_feat1: 'Мгновенное добавление', welcome_feat2: 'Посекундный заработок', welcome_feat3: 'ROI за 3 месяца', welcome_feat4: 'Без оплаты!', btn_start: '🚀 НАЧАТЬ', payment_title: '💳 Выбери способ оплаты', payment_total: 'Всего', payment_select: 'Выбери крипто', payment_send_amount: 'Сумма к отправке (Нажми: Копировать)', btn_copy_both: '📋 Копировать адрес + сумму', payment_time: 'Осталось:', payment_waiting: 'Ожидание оплаты...', payment_how: 'Как?', payment_step1: 'Скопируй сумму', payment_step3: 'Подтверди оплату', btn_cancel: 'Отмена', btn_confirm: '✓ Подтвердить оплату', notif_min: ' Мин $1!', notif_copied: ' Скопировано!', notif_bonus: ' Ты получил $1 бонус!', notif_confirmed: '✅ Оплата подтверждена!', notif_timeout: '⏰ Время вышло!', notif_success: '✅ Успешно!', notif_invalid: '❌ Неверно!', notif_required: '❌ Адрес обязателен!', notif_code_copied: '📋 Код скопирован!', notif_saved: '✅ Сохранено!', roi_days: '90 дней', status_pending: 'Ожидает', status_approved: 'Одобрено', status_rejected: 'Отклонено', no_pending: 'Нет ожидающих запросов', my_requests: ' Мои запросы', page: 'Страница'
+        site_name: 'Hash Power Mining', site_subtitle: 'Pro Платформа', menu_main: 'Главное меню', menu_home: 'Главная', menu_buy: 'Купить', menu_production: 'Производство', menu_account: 'Аккаунт', menu_profile: 'Профиль', menu_leaderboard: 'Рейтинг', menu_referral: 'Реферал', menu_withdraw: 'Вывод', menu_admin: 'Админ Панель', hero_greeting: '👋 Добро пожаловать', hero_subtitle: 'Зарабатывай с Hash Power Mining', stat_earned: 'Всего заработано', stat_active: 'Активных продуктов', stat_invested: 'Всего вложено', stat_persecond: 'В секунду', action_buy: 'Купить', action_production: 'Производство', action_withdraw: 'Вывод', activity_title: 'Последние активности', profile_title: '👤 Профиль', profile_subtitle: 'Управление аккаунтом', profile_personal: '📝 Личные данные', profile_nickname: 'Никнейм', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 Фото профиля', profile_stats: '📊 Моя статистика', btn_save: '💾 Сохранить', buy_title: '💎 Купить мощность', buy_subtitle: 'Начни с $1, ROI за 3 месяца', info_minimum: 'Минимум', info_roi: 'ROI', info_return: 'Доход', info_daily: 'В день', select_package: 'Выбрать пакет', package_roi: 'ROI за 3 мес', custom_amount: '💰 Своя сумма', calculation: '📊 Расчёт', calc_daily: 'В день', calc_monthly: 'В месяц', calc_3month: '3 месяца', calc_roi: 'ROI', btn_buy_now: ' Купить сейчас', production_title: '⚡ Производство', production_subtitle: 'Майнинг в реальном времени', active_production: 'Активное производство', status_working: 'РАБОТАЕТ', station_verify: 'Проверка', station_chain: 'Цепочка', station_reward: 'Награда', summary_total: '💰 Всего', summary_minute: '⏱️ Минута', summary_hour: '🕐 Час', summary_month: '📅 Месяц', stats_title: 'Статистика', stat_active_products: 'Активных продуктов', stat_total_earn: 'Всего заработано', stat_per_second: 'В секунду', stat_roi_time: 'Время ROI', leaderboard_title: '🏆 Рейтинг', leaderboard_subtitle: 'Топ earners', referral_title: ' Реферал', referral_subtitle: 'Приглашай друзей, получай 10%', referral_code: 'Твой реферальный код', referral_click: 'Нажми чтобы скопировать!', ref_invited: 'Приглашено', ref_earnings: 'Заработок', ref_rate: 'Ставка', share_telegram: 'Поделиться в Telegram', share_instagram: 'Поделиться в Instagram', withdraw_title: '💸 Вывод', withdraw_subtitle: 'Минимум: $0.01', balance_current: 'Текущий баланс', withdraw_amount: '💰 Сумма вывода ($)', withdraw_address: '₿ BTC Адрес', btn_withdraw: '💸 Вывести', admin_title: '🔐 Админ Панель', admin_subtitle: 'Управление платежами', admin_revenue: 'Всего доход', admin_pending: 'Ожидает', admin_approved: 'Одобрено', admin_rejected: 'Отклонено', tab_payments: 'Платежи', tab_withdrawals: 'Выводы', admin_total_invested: 'Всего вложено', admin_total_withdrawn: 'Всего выведено', admin_total_pending: 'Всего ожидает', admin_income_expense: 'Доход/Расход', support_title: '💬 Поддержка', faq_bonus: '❓ Что такое бонус?', faq_bonus_answer: '$1 бесплатной мощности при первом входе!', faq_how: '❓ Как купить?', faq_how_answer: 'Выбери пакет, оплати, подтверди.', faq_roi: '❓ Период ROI?', faq_roi_answer: 'Все инвестиции возвращаются за 3 месяца.', welcome_title: 'ДОБРО ПОЖАЛОВАТЬ!', welcome_desc: '<strong>Бесплатный бонус</strong> готов!<br>Начни сейчас!', welcome_amount: '🎁 $1.00 БЕСПЛАТНО', welcome_feat1: 'Мгновенное добавление', welcome_feat2: 'Посекундный заработок', welcome_feat3: 'ROI за 3 месяца', welcome_feat4: 'Без оплаты!', btn_start: '🚀 НАЧАТЬ', payment_title: ' Выбери способ оплаты', payment_total: 'Всего', payment_select: 'Выбери крипто', payment_send_amount: 'Сумма к отправке (Нажми: Копировать)', btn_copy_both: '📋 Копировать адрес + сумму', payment_time: 'Осталось:', payment_waiting: 'Ожидание оплаты...', payment_how: 'Как?', payment_step1: 'Скопируй сумму', payment_step3: 'Подтверди оплату', btn_cancel: 'Отмена', btn_confirm: '✓ Подтвердить оплату', notif_min: '❌ Мин $1!', notif_copied: '📋 Скопировано!', notif_bonus: '🎉 Ты получил $1 бонус!', notif_confirmed: '✅ Оплата подтверждена!', notif_timeout: '⏰ Время вышло!', notif_success: '✅ Успешно!', notif_invalid: '❌ Неверно!', notif_required: '❌ Адрес обязателен!', notif_code_copied: ' Код скопирован!', notif_saved: '✅ Сохранено!', roi_days: '90 дней', status_pending: 'Ожидает', status_approved: 'Одобрено', status_rejected: 'Отклонено', no_pending: 'Нет ожидающих запросов', my_requests: ' Мои запросы', page: 'Страница'
       },
       ar: {
-        site_name: 'Hash Power Mining', site_subtitle: 'منصة احترافية', menu_main: 'القائمة الرئيسية', menu_home: 'الرئيسية', menu_buy: 'شراء', menu_production: 'الإنتاج', menu_account: 'الحساب', menu_profile: 'الملف الشخصي', menu_leaderboard: 'المتصدرين', menu_referral: 'الإحالة', menu_withdraw: 'سحب', menu_admin: 'لوحة الإدارة', hero_greeting: '👋 مرحباً', hero_subtitle: 'اكسب دخلاً سلبياً مع Hash Power Mining', stat_earned: 'إجمالي الأرباح', stat_active: 'المنتجات النشطة', stat_invested: 'إجمالي الاستثمار', stat_persecond: 'في الثانية', action_buy: 'شراء', action_production: 'إنتاج', action_withdraw: 'سحب', activity_title: 'الأنشطة الأخيرة', profile_title: '👤 الملف الشخصي', profile_subtitle: 'إدارة حسابك', profile_personal: '📝 المعلومات الشخصية', profile_nickname: 'الاسم المستعار', profile_telegram_id: 'معرف Telegram', profile_avatar: '🎨 صورة الملف', profile_stats: '📊 إحصائياتي', btn_save: '💾 حفظ', buy_title: '💎 شراء قوة التعدين', buy_subtitle: 'ابدأ بـ $1، عائد خلال 3 أشهر', info_minimum: 'الحد الأدنى', info_roi: 'العائد', info_return: 'الربح', info_daily: 'يومياً', select_package: 'اختر الباقة', package_roi: 'عائد 3 أشهر', custom_amount: '💰 مبلغ مخصص', calculation: '📊 الحساب', calc_daily: 'يومياً', calc_monthly: 'شهرياً', calc_3month: '3 أشهر', calc_roi: 'العائد', btn_buy_now: '🚀 اشترِ الآن', production_title: '⚡ خط الإنتاج', production_subtitle: 'عمليات التعدين في الوقت الفعلي', active_production: 'إنتاج نشط', status_working: 'يعمل', station_verify: 'تحقق', station_chain: 'السلسلة', station_reward: 'مكافأة', summary_total: '💰 الإجمالي', summary_minute: '⏱️ دقيقة', summary_hour: '🕐 ساعة', summary_month: '📅 شهر', stats_title: 'الإحصائيات', stat_active_products: 'المنتجات النشطة', stat_total_earn: 'إجمالي الأرباح', stat_per_second: 'في الثانية', stat_roi_time: 'وقت العائد', leaderboard_title: '🏆 المتصدرين', leaderboard_subtitle: 'أعلى الأرباح', referral_title: '👥 الإحالة', referral_subtitle: 'ادعُ الأصدقاء، اربح 10%', referral_code: 'رمز الإحالة الخاص بك', referral_click: 'انقر للنسخ!', ref_invited: 'مدعوون', ref_earnings: 'أرباح', ref_rate: 'النسبة', share_telegram: 'مشاركة على Telegram', share_instagram: 'مشاركة على Instagram', withdraw_title: '💸 سحب', withdraw_subtitle: 'الحد الأدنى: $0.01', balance_current: 'الرصيد الحالي', withdraw_amount: ' مبلغ السحب ($)', withdraw_address: ' عنوان BTC', btn_withdraw: '💸 سحب', admin_title: ' لوحة الإدارة', admin_subtitle: 'إدارة المدفوعات والسحوبات', admin_revenue: 'إجمالي الإيرادات', admin_pending: 'قيد الانتظار', admin_approved: 'موافق عليه', admin_rejected: 'مرفوض', tab_payments: 'المدفوعات', tab_withdrawals: 'السحوبات', admin_total_invested: 'إجمالي المستثمر', admin_total_withdrawn: 'إجمالي المسحوب', admin_total_pending: 'إجمالي المنتظر', admin_income_expense: 'الدخل/المصروف', support_title: '💬 الدعم', faq_bonus: '❓ ما هو المكافأة؟', faq_bonus_answer: '$1 قوة تعدين مجانية عند أول دخول!', faq_how: '❓ كيف تشتري؟', faq_how_answer: 'اختر باقة، ادفع، أكد.', faq_roi: '❓ فترة العائد؟', faq_roi_answer: 'جميع الاستثمارات تعود خلال 3 أشهر.', welcome_title: 'مرحباً!', welcome_desc: '<strong>مكافأة مجانية</strong> جاهزة!<br>ابدأ الآن!', welcome_amount: '🎁 $1.00 مجاناً', welcome_feat1: 'إضافة فورية', welcome_feat2: 'أرباح بالثانية', welcome_feat3: 'عائد 3 أشهر', welcome_feat4: 'بدون دفع!', btn_start: '🚀 ابدأ', payment_title: '💳 اختر طريقة الدفع', payment_total: 'الإجمالي', payment_select: 'اختر العملة', payment_send_amount: 'المبلغ للإرسال (انقر: نسخ)', btn_copy_both: '📋 نسخ العنوان + المبلغ', payment_time: 'الوقت المتبقي:', payment_waiting: 'في انتظار الدفع...', payment_how: 'كيف؟', payment_step1: 'انسخ المبلغ', payment_step3: 'أكد الدفع', btn_cancel: 'إلغاء', btn_confirm: '✓ تأكيد الدفع', notif_min: '❌ الحد الأدنى $1!', notif_copied: '📋 تم النسخ!', notif_bonus: '🎉 ربحت مكافأة $1!', notif_confirmed: '✅ تم تأكيد الدفع!', notif_timeout: '⏰ انتهى الوقت!', notif_success: '✅ نجح!', notif_invalid: '❌ غير صالح!', notif_required: '❌ العنوان مطلوب!', notif_code_copied: '📋 تم نسخ الرمز!', notif_saved: '✅ تم الحفظ!', roi_days: '90 يوم', status_pending: 'قيد الانتظار', status_approved: 'موافق عليه', status_rejected: 'مرفوض', no_pending: 'لا توجد طلبات معلقة', my_requests: '📋 طلباتي', page: 'صفحة'
+        site_name: 'Hash Power Mining', site_subtitle: 'منصة احترافية', menu_main: 'القائمة الرئيسية', menu_home: 'الرئيسية', menu_buy: 'شراء', menu_production: 'الإنتاج', menu_account: 'الحساب', menu_profile: 'الملف الشخصي', menu_leaderboard: 'المتصدرين', menu_referral: 'الإحالة', menu_withdraw: 'سحب', menu_admin: 'لوحة الإدارة', hero_greeting: '👋 مرحباً', hero_subtitle: 'اكسب دخلاً سلبياً مع Hash Power Mining', stat_earned: 'إجمالي الأرباح', stat_active: 'المنتجات النشطة', stat_invested: 'إجمالي الاستثمار', stat_persecond: 'في الثانية', action_buy: 'شراء', action_production: 'إنتاج', action_withdraw: 'سحب', activity_title: 'الأنشطة الأخيرة', profile_title: '👤 الملف الشخصي', profile_subtitle: 'إدارة حسابك', profile_personal: '📝 المعلومات الشخصية', profile_nickname: 'الاسم المستعار', profile_telegram_id: 'معرف Telegram', profile_avatar: '🎨 صورة الملف', profile_stats: ' إحصائياتي', btn_save: ' حفظ', buy_title: '💎 شراء قوة التعدين', buy_subtitle: 'ابدأ بـ $1، عائد خلال 3 أشهر', info_minimum: 'الحد الأدنى', info_roi: 'العائد', info_return: 'الربح', info_daily: 'يومياً', select_package: 'اختر الباقة', package_roi: 'عائد 3 أشهر', custom_amount: '💰 مبلغ مخصص', calculation: '📊 الحساب', calc_daily: 'يومياً', calc_monthly: 'شهرياً', calc_3month: '3 أشهر', calc_roi: 'العائد', btn_buy_now: '🚀 اشترِ الآن', production_title: '⚡ خط الإنتاج', production_subtitle: 'عمليات التعدين في الوقت الفعلي', active_production: 'إنتاج نشط', status_working: 'يعمل', station_verify: 'تحقق', station_chain: 'السلسلة', station_reward: 'مكافأة', summary_total: '💰 الإجمالي', summary_minute: '⏱️ دقيقة', summary_hour: '🕐 ساعة', summary_month: '📅 شهر', stats_title: 'الإحصائيات', stat_active_products: 'المنتجات النشطة', stat_total_earn: 'إجمالي الأرباح', stat_per_second: 'في الثانية', stat_roi_time: 'وقت العائد', leaderboard_title: '🏆 المتصدرين', leaderboard_subtitle: 'أعلى الأرباح', referral_title: '👥 الإحالة', referral_subtitle: 'ادعُ الأصدقاء، اربح 10%', referral_code: 'رمز الإحالة الخاص بك', referral_click: 'انقر للنسخ!', ref_invited: 'مدعوون', ref_earnings: 'أرباح', ref_rate: 'النسبة', share_telegram: 'مشاركة على Telegram', share_instagram: 'مشاركة على Instagram', withdraw_title: '💸 سحب', withdraw_subtitle: 'الحد الأدنى: $0.01', balance_current: 'الرصيد الحالي', withdraw_amount: '💰 مبلغ السحب ($)', withdraw_address: '₿ عنوان BTC', btn_withdraw: '💸 سحب', admin_title: '🔐 لوحة الإدارة', admin_subtitle: 'إدارة المدفوعات والسحوبات', admin_revenue: 'إجمالي الإيرادات', admin_pending: 'قيد الانتظار', admin_approved: 'موافق عليه', admin_rejected: 'مرفوض', tab_payments: 'المدفوعات', tab_withdrawals: 'السحوبات', admin_total_invested: 'إجمالي المستثمر', admin_total_withdrawn: 'إجمالي المسحوب', admin_total_pending: 'إجمالي المنتظر', admin_income_expense: 'الدخل/المصروف', support_title: '💬 الدعم', faq_bonus: '❓ ما هو المكافأة؟', faq_bonus_answer: '$1 قوة تعدين مجانية عند أول دخول!', faq_how: '❓ كيف تشتري؟', faq_how_answer: 'اختر باقة، ادفع، أكد.', faq_roi: '❓ فترة العائد؟', faq_roi_answer: 'جميع الاستثمارات تعود خلال 3 أشهر.', welcome_title: 'مرحباً!', welcome_desc: '<strong>مكافأة مجانية</strong> جاهزة!<br>ابدأ الآن!', welcome_amount: ' $1.00 مجاناً', welcome_feat1: 'إضافة فورية', welcome_feat2: 'أرباح بالثانية', welcome_feat3: 'عائد 3 أشهر', welcome_feat4: 'بدون دفع!', btn_start: '🚀 ابدأ', payment_title: '💳 اختر طريقة الدفع', payment_total: 'الإجمالي', payment_select: 'اختر العملة', payment_send_amount: 'المبلغ للإرسال (انقر: نسخ)', btn_copy_both: '📋 نسخ العنوان + المبلغ', payment_time: 'الوقت المتبقي:', payment_waiting: 'في انتظار الدفع...', payment_how: 'كيف؟', payment_step1: 'انسخ المبلغ', payment_step3: 'أكد الدفع', btn_cancel: 'إلغاء', btn_confirm: '✓ تأكيد الدفع', notif_min: '❌ الحد الأدنى $1!', notif_copied: '📋 تم النسخ!', notif_bonus: '🎉 ربحت مكافأة $1!', notif_confirmed: '✅ تم تأكيد الدفع!', notif_timeout: '⏰ انتهى الوقت!', notif_success: '✅ نجح!', notif_invalid: '❌ غير صالح!', notif_required: '❌ العنوان مطلوب!', notif_code_copied: '📋 تم نسخ الرمز!', notif_saved: '✅ تم الحفظ!', roi_days: '90 يوم', status_pending: 'قيد الانتظار', status_approved: 'موافق عليه', status_rejected: 'مرفوض', no_pending: 'لا توجد طلبات معلقة', my_requests: '📋 طلباتي', page: 'صفحة'
       },
       zh: {
-        site_name: 'Hash Power Mining', site_subtitle: '专业平台', menu_main: '主菜单', menu_home: '首页', menu_buy: '购买', menu_production: '生产', menu_account: '账户', menu_profile: '个人资料', menu_leaderboard: '排行榜', menu_referral: '推荐', menu_withdraw: '提现', menu_admin: '管理面板', hero_greeting: '👋 欢迎', hero_subtitle: '通过Hash Power Mining赚取被动收入', stat_earned: '总收益', stat_active: '活跃产品', stat_invested: '总投资', stat_persecond: '每秒', action_buy: '购买', action_production: '生产', action_withdraw: '提现', activity_title: '最近活动', profile_title: ' 个人资料', profile_subtitle: '管理您的账户', profile_personal: '📝 个人信息', profile_nickname: '昵称', profile_telegram_id: 'Telegram ID', profile_avatar: ' 头像', profile_stats: '📊 我的统计', btn_save: '💾 保存', buy_title: '💎 购买算力', buy_subtitle: '从$1开始，3个月回本', info_minimum: '最低', info_roi: '回本', info_return: '回报', info_daily: '每日', select_package: '选择套餐', package_roi: '3个月回本', custom_amount: '💰 自定义金额', calculation: '📊 计算', calc_daily: '每日', calc_monthly: '每月', calc_3month: '3个月', calc_roi: '回本', btn_buy_now: '🚀 立即购买', production_title: '⚡ 生产线', production_subtitle: '实时挖矿运营', active_production: '活跃生产', status_working: '运行中', station_verify: '验证', station_chain: '链', station_reward: '奖励', summary_total: '💰 总计', summary_minute: '⏱️ 分钟', summary_hour: ' 小时', summary_month: ' 月', stats_title: '统计', stat_active_products: '活跃产品', stat_total_earn: '总收益', stat_per_second: '每秒', stat_roi_time: '回本时间', leaderboard_title: '🏆 排行榜', leaderboard_subtitle: '最高收益者', referral_title: ' 推荐', referral_subtitle: '邀请朋友，赚10%', referral_code: '您的推荐码', referral_click: '点击复制！', ref_invited: '已邀请', ref_earnings: '收益', ref_rate: '比例', share_telegram: '在Telegram分享', share_instagram: '在Instagram分享', withdraw_title: '💸 提现', withdraw_subtitle: '最低提现：$0.01', balance_current: '当前余额', withdraw_amount: '💰 提现金额 ($)', withdraw_address: '₿ BTC地址', btn_withdraw: '💸 提现', admin_title: ' 管理面板', admin_subtitle: '管理付款和提现', admin_revenue: '总收入', admin_pending: '待处理', admin_approved: '已批准', admin_rejected: '已拒绝', tab_payments: '付款', tab_withdrawals: '提现', admin_total_invested: '总投资', admin_total_withdrawn: '总提现', admin_total_pending: '总待处理', admin_income_expense: '收入/支出', support_title: ' 支持', faq_bonus: '❓ 什么是奖金？', faq_bonus_answer: '首次登录免费$1算力！', faq_how: '❓ 如何购买？', faq_how_answer: '选择套餐，付款，确认。', faq_roi: '❓ 回本期？', faq_roi_answer: '所有投资3个月回本。', welcome_title: '欢迎！', welcome_desc: '<strong>免费奖金</strong>已准备好！<br>立即开始！', welcome_amount: '🎁 $1.00 免费', welcome_feat1: '即时添加', welcome_feat2: '每秒收益', welcome_feat3: '3个月回本', welcome_feat4: '无需付款！', btn_start: '🚀 开始', payment_title: ' 选择支付方式', payment_total: '总计', payment_select: '选择加密货币', payment_send_amount: '发送金额（点击：复制）', btn_copy_both: '📋 复制地址+金额', payment_time: '剩余时间：', payment_waiting: '等待付款...', payment_how: '如何操作？', payment_step1: '复制金额', payment_step3: '确认付款', btn_cancel: '取消', btn_confirm: '✓ 确认付款', notif_min: '❌ 最低$1！', notif_copied: '📋 已复制！', notif_bonus: '🎉 你获得了$1奖金！', notif_confirmed: '✅ 付款已确认！', notif_timeout: ' 时间已到！', notif_success: '✅ 成功！', notif_invalid: '❌ 无效！', notif_required: '❌ 需要地址！', notif_code_copied: '📋 代码已复制！', notif_saved: '✅ 已保存！', roi_days: '90天', status_pending: '待处理', status_approved: '已批准', status_rejected: '已拒绝', no_pending: '没有待处理的请求', my_requests: '📋 我的请求', page: '页'
+        site_name: 'Hash Power Mining', site_subtitle: '专业平台', menu_main: '主菜单', menu_home: '首页', menu_buy: '购买', menu_production: '生产', menu_account: '账户', menu_profile: '个人资料', menu_leaderboard: '排行榜', menu_referral: '推荐', menu_withdraw: '提现', menu_admin: '管理面板', hero_greeting: '👋 欢迎', hero_subtitle: '通过Hash Power Mining赚取被动收入', stat_earned: '总收益', stat_active: '活跃产品', stat_invested: '总投资', stat_persecond: '每秒', action_buy: '购买', action_production: '生产', action_withdraw: '提现', activity_title: '最近活动', profile_title: '👤 个人资料', profile_subtitle: '管理您的账户', profile_personal: ' 个人信息', profile_nickname: '昵称', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 头像', profile_stats: '📊 我的统计', btn_save: '💾 保存', buy_title: '💎 购买算力', buy_subtitle: '从$1开始，3个月回本', info_minimum: '最低', info_roi: '回本', info_return: '回报', info_daily: '每日', select_package: '选择套餐', package_roi: '3个月回本', custom_amount: '💰 自定义金额', calculation: '📊 计算', calc_daily: '每日', calc_monthly: '每月', calc_3month: '3个月', calc_roi: '回本', btn_buy_now: '🚀 立即购买', production_title: ' 生产线', production_subtitle: '实时挖矿运营', active_production: '活跃生产', status_working: '运行中', station_verify: '验证', station_chain: '链', station_reward: '奖励', summary_total: '💰 总计', summary_minute: '⏱️ 分钟', summary_hour: '🕐 小时', summary_month: '📅 月', stats_title: '统计', stat_active_products: '活跃产品', stat_total_earn: '总收益', stat_per_second: '每秒', stat_roi_time: '回本时间', leaderboard_title: '🏆 排行榜', leaderboard_subtitle: '最高收益者', referral_title: ' 推荐', referral_subtitle: '邀请朋友，赚10%', referral_code: '您的推荐码', referral_click: '点击复制！', ref_invited: '已邀请', ref_earnings: '收益', ref_rate: '比例', share_telegram: '在Telegram分享', share_instagram: '在Instagram分享', withdraw_title: ' 提现', withdraw_subtitle: '最低提现：$0.01', balance_current: '当前余额', withdraw_amount: '💰 提现金额 ($)', withdraw_address: '₿ BTC地址', btn_withdraw: '💸 提现', admin_title: '🔐 管理面板', admin_subtitle: '管理付款和提现', admin_revenue: '总收入', admin_pending: '待处理', admin_approved: '已批准', admin_rejected: '已拒绝', tab_payments: '付款', tab_withdrawals: '提现', admin_total_invested: '总投资', admin_total_withdrawn: '总提现', admin_total_pending: '总待处理', admin_income_expense: '收入/支出', support_title: '💬 支持', faq_bonus: '❓ 什么是奖金？', faq_bonus_answer: '首次登录免费$1算力！', faq_how: '❓ 如何购买？', faq_how_answer: '选择套餐，付款，确认。', faq_roi: '❓ 回本期？', faq_roi_answer: '所有投资3个月回本。', welcome_title: '欢迎！', welcome_desc: '<strong>免费奖金</strong>已准备好！<br>立即开始！', welcome_amount: '🎁 $1.00 免费', welcome_feat1: '即时添加', welcome_feat2: '每秒收益', welcome_feat3: '3个月回本', welcome_feat4: '无需付款！', btn_start: '🚀 开始', payment_title: '💳 选择支付方式', payment_total: '总计', payment_select: '选择加密货币', payment_send_amount: '发送金额（点击：复制）', btn_copy_both: '📋 复制地址+金额', payment_time: '剩余时间：', payment_waiting: '等待付款...', payment_how: '如何操作？', payment_step1: '复制金额', payment_step3: '确认付款', btn_cancel: '取消', btn_confirm: '✓ 确认付款', notif_min: '❌ 最低$1！', notif_copied: '📋 已复制！', notif_bonus: ' 你获得了$1奖金！', notif_confirmed: '✅ 付款已确认！', notif_timeout: '⏰ 时间已到！', notif_success: '✅ 成功！', notif_invalid: '❌ 无效！', notif_required: ' 需要地址！', notif_code_copied: '📋 代码已复制！', notif_saved: '✅ 已保存！', roi_days: '90天', status_pending: '待处理', status_approved: '已批准', status_rejected: '已拒绝', no_pending: '没有待处理的请求', my_requests: '📋 我的请求', page: '页'
       },
       ja: {
-        site_name: 'Hash Power Mining', site_subtitle: 'プロプラットフォーム', menu_main: 'メインメニュー', menu_home: 'ホーム', menu_buy: '購入', menu_production: '生産', menu_account: 'アカウント', menu_profile: 'プロフィール', menu_leaderboard: 'リーダーボード', menu_referral: '紹介', menu_withdraw: '出金', menu_admin: '管理パネル', hero_greeting: '👋 ようこそ', hero_subtitle: 'Hash Power Miningで不労所得を得る', stat_earned: '総収益', stat_active: 'アクティブ製品', stat_invested: '総投資', stat_persecond: '毎秒', action_buy: '購入', action_production: '生産', action_withdraw: '出金', activity_title: '最近のアクティビティ', profile_title: '👤 プロフィール', profile_subtitle: 'アカウント管理', profile_personal: ' 個人情報', profile_nickname: 'ニックネーム', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 プロフィール写真', profile_stats: '📊 私の統計', btn_save: '💾 保存', buy_title: '💎 マイニングパワー購入', buy_subtitle: '$1から始め、3ヶ月でROI', info_minimum: '最小', info_roi: 'ROI', info_return: 'リターン', info_daily: '毎日', select_package: 'パッケージ選択', package_roi: '3ヶ月ROI', custom_amount: '💰 カスタム金額', calculation: '📊 計算', calc_daily: '毎日', calc_monthly: '毎月', calc_3month: '3ヶ月', calc_roi: 'ROI', btn_buy_now: '🚀 今すぐ購入', production_title: '⚡ 生産ライン', production_subtitle: 'リアルタイムマイニング', active_production: 'アクティブ生産', status_working: '稼働中', station_verify: '検証', station_chain: 'チェーン', station_reward: '報酬', summary_total: ' 合計', summary_minute: '⏱️ 分', summary_hour: '🕐 時間', summary_month: '📅 月', stats_title: '統計', stat_active_products: 'アクティブ製品', stat_total_earn: '総収益', stat_per_second: '毎秒', stat_roi_time: 'ROI時間', leaderboard_title: ' リーダーボード', leaderboard_subtitle: 'トップ earners', referral_title: '👥 紹介', referral_subtitle: '友達を招待、10%獲得', referral_code: 'あなたの紹介コード', referral_click: 'クリックしてコピー！', ref_invited: '招待済み', ref_earnings: '収益', ref_rate: 'レート', share_telegram: 'Telegramでシェア', share_instagram: 'Instagramでシェア', withdraw_title: '💸 出金', withdraw_subtitle: '最小出金：$0.01', balance_current: '現在の残高', withdraw_amount: '💰 出金額 ($)', withdraw_address: '₿ BTCアドレス', btn_withdraw: '💸 出金', admin_title: '🔐 管理パネル', admin_subtitle: '支払いと出金を管理', admin_revenue: '総収入', admin_pending: '保留中', admin_approved: '承認済み', admin_rejected: '却下', tab_payments: '支払い', tab_withdrawals: '出金', admin_total_invested: '総投資', admin_total_withdrawn: '総出金', admin_total_pending: '総保留', admin_income_expense: '収入/支出', support_title: '💬 サポート', faq_bonus: '❓ ボーナスとは？', faq_bonus_answer: '初回ログインで$1無料マイニングパワー！', faq_how: '❓ 購入方法？', faq_how_answer: 'パッケージ選択、支払い、確認。', faq_roi: '❓ ROI期間？', faq_roi_answer: 'すべての投資は3ヶ月で回収。', welcome_title: 'ようこそ！', welcome_desc: '<strong>無料ボーナス</strong>準備完了！<br>今すぐ始める！', welcome_amount: '🎁 $1.00 無料', welcome_feat1: '即時追加', welcome_feat2: '秒単位収益', welcome_feat3: '3ヶ月ROI', welcome_feat4: '支払い不要！', btn_start: '🚀 始める', payment_title: '💳 支払い方法選択', payment_total: '合計', payment_select: '暗号通貨選択', payment_send_amount: '送信金額（タップ：コピー）', btn_copy_both: '📋 アドレス+金額コピー', payment_time: '残り時間：', payment_waiting: '支払い待ち...', payment_how: '方法？', payment_step1: '金額をコピー', payment_step3: '支払いを確認', btn_cancel: 'キャンセル', btn_confirm: '✓ 支払い確認', notif_min: '❌ 最小$1！', notif_copied: '📋 コピーしました！', notif_bonus: '🎉 $1ボーナス獲得！', notif_confirmed: '✅ 支払い確認済み！', notif_timeout: '⏰ 時間切れ！', notif_success: '✅ 成功！', notif_invalid: '❌ 無効！', notif_required: ' アドレス必須！', notif_code_copied: '📋 コードコピー済み！', notif_saved: '✅ 保存しました！', roi_days: '90日', status_pending: '保留中', status_approved: '承認済み', status_rejected: '却下', no_pending: '保留中のリクエストなし', my_requests: '📋 マイリクエスト', page: 'ページ'
+        site_name: 'Hash Power Mining', site_subtitle: 'プロプラットフォーム', menu_main: 'メインメニュー', menu_home: 'ホーム', menu_buy: '購入', menu_production: '生産', menu_account: 'アカウント', menu_profile: 'プロフィール', menu_leaderboard: 'リーダーボード', menu_referral: '紹介', menu_withdraw: '出金', menu_admin: '管理パネル', hero_greeting: '👋 ようこそ', hero_subtitle: 'Hash Power Miningで不労所得を得る', stat_earned: '総収益', stat_active: 'アクティブ製品', stat_invested: '総投資', stat_persecond: '毎秒', action_buy: '購入', action_production: '生産', action_withdraw: '出金', activity_title: '最近のアクティビティ', profile_title: '👤 プロフィール', profile_subtitle: 'アカウント管理', profile_personal: '📝 個人情報', profile_nickname: 'ニックネーム', profile_telegram_id: 'Telegram ID', profile_avatar: '🎨 プロフィール写真', profile_stats: '📊 私の統計', btn_save: '💾 保存', buy_title: ' マイニングパワー購入', buy_subtitle: '$1から始め、3ヶ月でROI', info_minimum: '最小', info_roi: 'ROI', info_return: 'リターン', info_daily: '毎日', select_package: 'パッケージ選択', package_roi: '3ヶ月ROI', custom_amount: '💰 カスタム金額', calculation: '📊 計算', calc_daily: '毎日', calc_monthly: '毎月', calc_3month: '3ヶ月', calc_roi: 'ROI', btn_buy_now: ' 今すぐ購入', production_title: ' 生産ライン', production_subtitle: 'リアルタイムマイニング', active_production: 'アクティブ生産', status_working: '稼働中', station_verify: '検証', station_chain: 'チェーン', station_reward: '報酬', summary_total: '💰 合計', summary_minute: '⏱️ 分', summary_hour: '🕐 時間', summary_month: '📅 月', stats_title: '統計', stat_active_products: 'アクティブ製品', stat_total_earn: '総収益', stat_per_second: '毎秒', stat_roi_time: 'ROI時間', leaderboard_title: ' リーダーボード', leaderboard_subtitle: 'トップ earners', referral_title: ' 紹介', referral_subtitle: '友達を招待、10%獲得', referral_code: 'あなたの紹介コード', referral_click: 'クリックしてコピー！', ref_invited: '招待済み', ref_earnings: '収益', ref_rate: 'レート', share_telegram: 'Telegramでシェア', share_instagram: 'Instagramでシェア', withdraw_title: '💸 出金', withdraw_subtitle: '最小出金：$0.01', balance_current: '現在の残高', withdraw_amount: '💰 出金額 ($)', withdraw_address: '₿ BTCアドレス', btn_withdraw: '💸 出金', admin_title: '🔐 管理パネル', admin_subtitle: '支払いと出金を管理', admin_revenue: '総収入', admin_pending: '保留中', admin_approved: '承認済み', admin_rejected: '却下', tab_payments: '支払い', tab_withdrawals: '出金', admin_total_invested: '総投資', admin_total_withdrawn: '総出金', admin_total_pending: '総保留', admin_income_expense: '収入/支出', support_title: '💬 サポート', faq_bonus: '❓ ボーナスとは？', faq_bonus_answer: '初回ログインで$1無料マイニングパワー！', faq_how: '❓ 購入方法？', faq_how_answer: 'パッケージ選択、支払い、確認。', faq_roi: '❓ ROI期間？', faq_roi_answer: 'すべての投資は3ヶ月で回収。', welcome_title: 'ようこそ！', welcome_desc: '<strong>無料ボーナス</strong>準備完了！<br>今すぐ始める！', welcome_amount: ' $1.00 無料', welcome_feat1: '即時追加', welcome_feat2: '秒単位収益', welcome_feat3: '3ヶ月ROI', welcome_feat4: '支払い不要！', btn_start: '🚀 始める', payment_title: '💳 支払い方法選択', payment_total: '合計', payment_select: '暗号通貨選択', payment_send_amount: '送信金額（タップ：コピー）', btn_copy_both: ' アドレス+金額コピー', payment_time: '残り時間：', payment_waiting: '支払い待ち...', payment_how: '方法？', payment_step1: '金額をコピー', payment_step3: '支払いを確認', btn_cancel: 'キャンセル', btn_confirm: '✓ 支払い確認', notif_min: '❌ 最小$1！', notif_copied: '📋 コピーしました！', notif_bonus: ' $1ボーナス獲得！', notif_confirmed: '✅ 支払い確認済み！', notif_timeout: '⏰ 時間切れ！', notif_success: '✅ 成功！', notif_invalid: ' 無効！', notif_required: '❌ アドレス必須！', notif_code_copied: '📋 コードコピー済み！', notif_saved: '✅ 保存しました！', roi_days: '90日', status_pending: '保留中', status_approved: '承認済み', status_rejected: '却下', no_pending: '保留中のリクエストなし', my_requests: '📋 マイリクエスト', page: 'ページ'
       }
     };
     let currentLang = 'tr';
@@ -1315,13 +1315,53 @@
       }).join('');
     }
     function getTimeAgo(timestamp) {
-      const seconds = Math.floor((Date.now() - timestamp) / 1000);
-      const labels = { tr: { s: 'Az önce', m: ' dk önce', h: ' saat önce', d: ' gün önce' }, en: { s: 'Just now', m: 'm ago', h: 'h ago', d: 'd ago' } };
+      let time = timestamp;
+      if (!time && typeof timestamp === 'object' && timestamp.createdAt) {
+        time = new Date(timestamp.createdAt).getTime();
+      }
+      if (!time) return currentLang === 'tr' ? 'Az önce' : 'Just now';
+      
+      const seconds = Math.floor((Date.now() - time) / 1000);
+      const labels = { 
+        tr: { s: 'Az önce', m: ' dk önce', h: ' saat önce', d: ' gün önce' }, 
+        en: { s: 'Just now', m: 'm ago', h: 'h ago', d: 'd ago' } 
+      };
       const l = labels[currentLang] || labels.en;
       if (seconds < 60) return l.s;
       if (seconds < 3600) return Math.floor(seconds / 60) + l.m;
       if (seconds < 86400) return Math.floor(seconds / 3600) + l.h;
       return Math.floor(seconds / 86400) + l.d;
+    }
+    async function loadApprovedProducts() {
+      try {
+        if (!firebaseUserId) return;
+        const userRef = db.collection('users').doc(firebaseUserId);
+        const doc = await userRef.get();
+        if (doc.exists) {
+          const data = doc.data();
+          const approvedPayments = data.approvedPayments || [];
+          for (const payment of approvedPayments) {
+            const exists = state.purchasedProducts.some(p => p.id === payment.id);
+            if (!exists) {
+              const product = {
+                id: payment.id,
+                amount: payment.amount,
+                earned: 0,
+                startTime: payment.approvedAt || Date.now(),
+                isBonus: false,
+                tier: getTier(payment.amount)
+              };
+              state.purchasedProducts.push(product);
+              state.totalInvested += payment.amount;
+              console.log('Ürün eklendi:', payment.amount, 'USD');
+            }
+          }
+          saveState();
+          console.log('Toplam ürün:', state.purchasedProducts.length);
+        }
+      } catch (error) {
+        console.error('Ürünler yüklenemedi:', error);
+      }
     }
     async function init() {
       await initFirebase();
@@ -1343,6 +1383,7 @@
       }
       document.getElementById('referralCode').textContent = state.referralCode;
       changeLanguage(currentLang);
+      await loadApprovedProducts();
       restoreConveyorProducts();
       updateLevel();
       renderLeaderboard();
@@ -1388,13 +1429,21 @@
     }
     function renderConveyorProduct(product) {
       const container = document.getElementById('conveyorProducts');
+      if (document.getElementById(`conveyor-${product.id}`)) return;
       const element = document.createElement('div');
       const tierClass = product.isBonus ? 'product-bonus' : `product-tier-${product.tier}`;
       element.className = `product-item ${tierClass}`;
       element.id = `conveyor-${product.id}`;
       const perSecond = product.amount * PER_SECOND_RATE;
-      const speedDisplay = perSecond < 0.0001 ? perSecond.toExponential(2) + '/s' : perSecond.toFixed(6) + '/s';
-      element.innerHTML = `${product.isBonus ? '<div class="product-badge">🎁</div>' : ''}<div class="product-amount">$${product.amount}</div><div class="product-speed">${speedDisplay}</div><div class="product-earned" id="earned-${product.id}">$0.000000</div>`;
+      let speedDisplay;
+      if (perSecond < 0.000001) {
+        speedDisplay = perSecond.toExponential(2) + '/s';
+      } else if (perSecond < 0.01) {
+        speedDisplay = perSecond.toFixed(6) + '/s';
+      } else {
+        speedDisplay = perSecond.toFixed(4) + '/s';
+      }
+      element.innerHTML = `${product.isBonus ? '<div class="product-badge">🎁</div>' : ''}<div class="product-amount">$${product.amount}</div><div class="product-speed">${speedDisplay}</div><div class="product-earned" id="earned-${product.id}">$${(product.earned || 0).toFixed(6)}</div>`;
       element.style.animationDelay = `${Math.random() * -25}s`;
       container.appendChild(element);
     }
@@ -1405,12 +1454,19 @@
       document.getElementById('homeActiveProducts').textContent = state.purchasedProducts.length;
       document.getElementById('homeTotalInvested').textContent = '$' + state.totalInvested.toFixed(0);
       document.getElementById('homeTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
-      const perSecondDisplay = totalPerSecond < 0.0001 ? totalPerSecond.toExponential(2) + '/s' : '$' + totalPerSecond.toFixed(4) + '/s';
+      let perSecondDisplay;
+      if (totalPerSecond < 0.000001) {
+        perSecondDisplay = totalPerSecond.toExponential(2) + '/s';
+      } else if (totalPerSecond < 0.01) {
+        perSecondDisplay = '$' + totalPerSecond.toFixed(6) + '/s';
+      } else {
+        perSecondDisplay = '$' + totalPerSecond.toFixed(4) + '/s';
+      }
       document.getElementById('homePerSecond').textContent = perSecondDisplay;
       document.getElementById('activeProducts').textContent = state.purchasedProducts.length;
       document.getElementById('perSecond').textContent = perSecondDisplay;
       document.getElementById('summaryTotal').textContent = '$' + state.totalInvested.toFixed(0);
-      document.getElementById('summaryMinute').textContent = '$' + (totalPerSecond * 60).toFixed(4);
+      document.getElementById('summaryMinute').textContent = '$' + (totalPerSecond * 60).toFixed(6);
       document.getElementById('summaryHour').textContent = '$' + (totalPerSecond * 3600).toFixed(4);
       document.getElementById('summaryMonth').textContent = '$' + (totalPerSecond * 3600 * 24 * 30).toFixed(2);
       document.getElementById('productCount').textContent = state.purchasedProducts.length;
@@ -1543,12 +1599,13 @@
         cryptoAmount: (currentPaymentAmount / CRYPTO_PRICES[selectedCrypto]).toFixed(6), 
         address: CRYPTO_ADDRESSES[selectedCrypto], 
         status: 'pending', 
+        timestamp: Date.now(),
         createdAt: new Date().toISOString()
       };
       state.pendingPayments.push(payment);
       saveState();
       updateAdminBadge();
-      showNotification(currentLang === 'tr' ? '⏳ Ödeme onay bekliyor.' : ' Awaiting confirmation.');
+      showNotification(currentLang === 'tr' ? '⏳ Ödeme onay bekliyor.' : '⏳ Awaiting confirmation.');
       haptic('success');
       closeModal();
       setTimeout(() => { isProcessingPayment = false; }, 3000);
@@ -1558,7 +1615,6 @@
       const badge = document.getElementById('adminBadge');
       if (badge) { badge.textContent = pendingCount; badge.style.display = pendingCount > 0 ? 'block' : 'none'; }
     }
-    // 🔧 GÜNCELLENEN loadAllUsers
     async function loadAllUsers() {
       try {
         const snapshot = await db.collection('users').get();
@@ -1639,7 +1695,6 @@
         renderWithdrawalsList(content);
       }
     }
-    // 🔧 GÜNCELLENEN approvePayment
     async function approvePayment(paymentId) {
       try {
         console.log('Onaylanıyor:', paymentId);
@@ -1655,7 +1710,7 @@
           }
         }
         if (!targetUser || paymentIndex === -1) {
-          showNotification(' Ödeme bulunamadı!', true);
+          showNotification('❌ Ödeme bulunamadı!', true);
           console.error('Ödeme bulunamadı:', paymentId);
           return;
         }
@@ -1685,7 +1740,6 @@
         showNotification('❌ Onaylama başarısız: ' + error.message, true);
       }
     }
-    // 🔧 GÜNCELLENEN rejectPayment
     async function rejectPayment(paymentId) {
       try {
         console.log('Reddediliyor:', paymentId);
@@ -1701,7 +1755,7 @@
           }
         }
         if (!targetUser || paymentIndex === -1) {
-          showNotification(' Ödeme bulunamadı!', true);
+          showNotification('❌ Ödeme bulunamadı!', true);
           console.error('Ödeme bulunamadı:', paymentId);
           return;
         }
@@ -1720,7 +1774,7 @@
           lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         });
         console.log('✅ Reddetme başarılı');
-        showNotification(' Ödeme reddedildi!');
+        showNotification('❌ Ödeme reddedildi!');
         haptic('error');
         setTimeout(() => renderAdminPanel(), 800);
       } catch (error) {
@@ -1741,18 +1795,18 @@
       const netUSD = totalInvestedUSD - totalWithdrawnUSD;
       grid.innerHTML = `
         <div class="crypto-stat-card usd"><div class="crypto-stat-header"><span class="crypto-stat-icon">💰</span><span class="crypto-stat-title">${t('admin_total_invested')}</span></div>
-        <div class="crypto-stat-row"><span class="crypto-stat-label"> BTC:</span><span class="crypto-stat-value">${approvedByCrypto.btc.toFixed(6)}</span></div>
+        <div class="crypto-stat-row"><span class="crypto-stat-label">₿ BTC:</span><span class="crypto-stat-value">${approvedByCrypto.btc.toFixed(6)}</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">💠 TRX:</span><span class="crypto-stat-value">${approvedByCrypto.trx.toFixed(2)}</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">🔶 BNB:</span><span class="crypto-stat-value">${approvedByCrypto.bnb.toFixed(5)}</span></div>
         <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;"><span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span><span class="crypto-stat-value" style="color: var(--success);">$${totalInvestedUSD.toFixed(2)}</span></div></div>
-        <div class="crypto-stat-card trx"><div class="crypto-stat-header"><span class="crypto-stat-icon">💸</span><span class="crypto-stat-title">${t('admin_total_withdrawn')}</span></div>
+        <div class="crypto-stat-card trx"><div class="crypto-stat-header"><span class="crypto-stat-icon"></span><span class="crypto-stat-title">${t('admin_total_withdrawn')}</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">₿ BTC:</span><span class="crypto-stat-value">0.000000</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">💠 TRX:</span><span class="crypto-stat-value">0.00</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">🔶 BNB:</span><span class="crypto-stat-value">0.00000</span></div>
         <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;"><span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span><span class="crypto-stat-value" style="color: var(--danger);">$${totalWithdrawnUSD.toFixed(2)}</span></div></div>
         <div class="crypto-stat-card btc"><div class="crypto-stat-header"><span class="crypto-stat-icon">⏳</span><span class="crypto-stat-title">${t('admin_total_pending')}</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">₿ BTC:</span><span class="crypto-stat-value">${pendingByCrypto.btc.toFixed(6)}</span></div>
-        <div class="crypto-stat-row"><span class="crypto-stat-label"> TRX:</span><span class="crypto-stat-value">${pendingByCrypto.trx.toFixed(2)}</span></div>
+        <div class="crypto-stat-row"><span class="crypto-stat-label">💠 TRX:</span><span class="crypto-stat-value">${pendingByCrypto.trx.toFixed(2)}</span></div>
         <div class="crypto-stat-row"><span class="crypto-stat-label">🔶 BNB:</span><span class="crypto-stat-value">${pendingByCrypto.bnb.toFixed(5)}</span></div>
         <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;"><span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span><span class="crypto-stat-value" style="color: var(--warning);">$${totalPendingUSD.toFixed(2)}</span></div></div>
         <div class="crypto-stat-card bnb"><div class="crypto-stat-header"><span class="crypto-stat-icon">📊</span><span class="crypto-stat-title">${t('admin_income_expense')}</span></div>
@@ -1762,10 +1816,10 @@
         <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;"><span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span><span class="crypto-stat-value" style="color: ${netUSD >= 0 ? 'var(--success)' : 'var(--danger)'};">$${netUSD.toFixed(2)}</span></div></div>`;
     }
     function renderPaymentsList(container) {
-      if (adminState.pendingPayments.length === 0) { container.innerHTML = `<div class="admin-empty"><div class="admin-empty-icon">📭</div><div>${t('no_pending')}</div></div>`; return; }
+      if (adminState.pendingPayments.length === 0) { container.innerHTML = `<div class="admin-empty"><div class="admin-empty-icon"></div><div>${t('no_pending')}</div></div>`; return; }
       container.innerHTML = '<div class="admin-list">' + adminState.pendingPayments.map(payment => {
         const timeAgo = getTimeAgo(payment.timestamp);
-        return `<div class="admin-item"><div class="admin-item-header"><div class="admin-item-user">👤 ${payment.userName}</div><div class="admin-item-amount">$${payment.amount.toFixed(2)}</div></div>
+        return `<div class="admin-item"><div class="admin-item-header"><div class="admin-item-user"> ${payment.userName}</div><div class="admin-item-amount">$${payment.amount.toFixed(2)}</div></div>
         <div class="admin-item-details"><div class="detail-row"><span class="detail-label">Kripto:</span><span class="detail-value">${CRYPTO_ICONS[payment.crypto]} ${payment.cryptoAmount} ${CRYPTO_SYMBOLS[payment.crypto]}</span></div>
         <div class="detail-row"><span class="detail-label">Adres:</span><span class="detail-value">${payment.address.substring(0, 20)}...</span></div>
         <div class="detail-row"><span class="detail-label">Zaman:</span><span class="detail-value">${timeAgo}</span></div>
@@ -1778,7 +1832,7 @@
       if (pendingWithdrawals.length === 0) { container.innerHTML = `<div class="admin-empty"><div class="admin-empty-icon">📭</div><div>${t('no_pending')}</div></div>`; return; }
       container.innerHTML = '<div class="admin-list">' + pendingWithdrawals.map(withdrawal => {
         const timeAgo = getTimeAgo(withdrawal.timestamp);
-        return `<div class="admin-item"><div class="admin-item-header"><div class="admin-item-user"> ${withdrawal.userName}</div><div class="admin-item-amount">$${withdrawal.amount.toFixed(2)}</div></div>
+        return `<div class="admin-item"><div class="admin-item-header"><div class="admin-item-user">👤 ${withdrawal.userName}</div><div class="admin-item-amount">$${withdrawal.amount.toFixed(2)}</div></div>
         <div class="admin-item-details"><div class="detail-row"><span class="detail-label">BTC Adresi:</span><span class="detail-value">${withdrawal.walletAddress}</span></div>
         <div class="detail-row"><span class="detail-label">Zaman:</span><span class="detail-value">${timeAgo}</span></div>
         <div class="detail-row"><span class="detail-label">Durum:</span><span class="admin-item-status status-pending">${t('status_pending')}</span></div></div>
@@ -1802,7 +1856,7 @@
         setTimeout(() => renderAdminPanel(), 800);
       } catch (error) {
         console.error('Çekim onaylama hatası:', error);
-        showNotification('❌ Onaylama başarısız!', true);
+        showNotification(' Onaylama başarısız!', true);
       }
     }
     function rejectWithdrawal(withdrawalId) {
@@ -1845,7 +1899,7 @@
       container.innerHTML = pageUsers.map((user, index) => {
         const globalRank = startIndex + index + 1;
         const isCrowned = globalRank <= 10;
-        const crown = isCrowned ? (user.gender === 'female' ? '👸' : '') : '';
+        const crown = isCrowned ? (user.gender === 'female' ? '👸' : '🤴') : '';
         const avatarUrl = user.isRealUser ? AVATARS[state.profile.avatarIndex] : AVATARS[index % AVATARS.length];
         const displayName = user.name.length > 4 ? user.name.substring(0, 2) + '...' + user.name.substring(user.name.length - 2) : user.name;
         const earned = (user.investment * 0.011).toFixed(2);
@@ -1882,7 +1936,7 @@
       container.innerHTML = `<div class="my-pending-section"><div class="my-pending-title">${t('my_requests')}</div>` + allMyRequests.map(req => {
         const timeAgo = getTimeAgo(req.timestamp);
         const statusClass = req.status === 'approved' ? 'approved' : req.status === 'rejected' ? 'rejected' : '';
-        const statusText = req.status === 'approved' ? '✅ ' + t('status_approved') : req.status === 'rejected' ? '❌ ' + t('status_rejected') : ' ' + t('status_pending');
+        const statusText = req.status === 'approved' ? '✅ ' + t('status_approved') : req.status === 'rejected' ? '❌ ' + t('status_rejected') : '⏳ ' + t('status_pending');
         const typeIcon = req.type === 'payment' ? '💳' : '💸';
         const typeText = req.type === 'payment' ? 'Ödeme' : 'Çekim';
         return `<div class="my-pending-item ${statusClass}"><div class="my-pending-info"><div class="my-pending-amount">${typeIcon} ${typeText}: $${req.amount.toFixed(2)}</div><div class="my-pending-time">${timeAgo} • ${statusText}</div></div></div>`;
@@ -1935,7 +1989,7 @@
       state.withdrawalRequests.push(withdrawal);
       addActivity('withdraw', 'Çekim talebi (beklemede)', amount);
       addXP(10);
-      showNotification(' Çekim talebi oluşturuldu. Admin onayı bekleniyor.');
+      showNotification('⏳ Çekim talebi oluşturuldu. Admin onayı bekleniyor.');
       haptic('success');
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('walletAddress').value = '';
@@ -1974,7 +2028,8 @@
       lastUpdate = now;
       if (elapsed > 5) elapsed = 5;
       state.purchasedProducts.forEach(product => {
-        product.earned = (product.earned || 0) + product.amount * PER_SECOND_RATE * elapsed;
+        const earned = product.amount * PER_SECOND_RATE * elapsed;
+        product.earned = (product.earned || 0) + earned;
         const conveyorElement = document.getElementById(`earned-${product.id}`);
         if (conveyorElement) {
           conveyorElement.textContent = '$' + product.earned.toFixed(6);
