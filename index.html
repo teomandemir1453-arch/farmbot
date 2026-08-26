@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hash Power Mining</title>
+<title>Hash Power Mining - Stone Age</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -14,138 +14,159 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
   body {
-    background: #0a0a0a;
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 50%, #1a0f0a 100%);
     background-image: 
-      radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 80% 50%, rgba(75, 0, 130, 0.15) 0%, transparent 50%);
+      radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
     min-height: 100vh;
     font-family: 'Cinzel', serif;
-    color: #d4af37;
+    color: #ffd700;
     padding: 10px;
     overflow-x: hidden;
   }
   
   .container { max-width: 500px; margin: 0 auto; }
   
-  /* Maden Temalı Çerçeve */
-  .mine-frame {
+  /* Şaşalı Altın Çerçeve */
+  .luxury-frame {
     position: relative;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border: 8px solid #8b4513;
-    border-radius: 15px;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 6px solid #ffd700;
+    border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 
-      0 0 30px rgba(139, 69, 19, 0.5),
-      inset 0 0 40px rgba(0, 0, 0, 0.7);
+      0 0 40px rgba(255, 215, 0, 0.4),
+      inset 0 0 50px rgba(0, 0, 0, 0.5),
+      0 10px 30px rgba(0, 0, 0, 0.5);
     overflow: hidden;
   }
   
-  .mine-frame::before {
+  .luxury-frame::before {
     content: '';
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: 
-      radial-gradient(circle at 10% 10%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 90% 90%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #ffd700, #ff8c00, #ffd700, #ff8c00);
+    border-radius: 20px;
+    opacity: 0.3;
+    z-index: -1;
+    animation: shimmer 3s linear infinite;
   }
   
-  .mine-frame > * {
+  @keyframes shimmer {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .luxury-frame > * {
     position: relative;
     z-index: 1;
   }
   
-  /* Dekoratif Köşe Elementleri */
-  .corner-decoration {
+  /* Altın Parıltı Efekti */
+  .gold-sparkle {
     position: absolute;
-    font-size: 30px;
-    z-index: 2;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-  }
-  
-  .corner-tl { top: -15px; left: -15px; }
-  .corner-tr { top: -15px; right: -15px; }
-  .corner-bl { bottom: -15px; left: -15px; }
-  .corner-br { bottom: -15px; right: -15px; }
-  
-  /* Maden Aksesuarları */
-  .mine-accessories {
-    position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     pointer-events: none;
     z-index: 0;
   }
   
-  .accessory {
+  .sparkle {
     position: absolute;
-    font-size: 24px;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+    width: 4px;
+    height: 4px;
+    background: #ffd700;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+    box-shadow: 0 0 10px #ffd700;
   }
   
-  .accessory:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-  .accessory:nth-child(2) { top: 20%; right: 5%; animation-delay: 0.5s; }
-  .accessory:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 1s; }
-  .accessory:nth-child(4) { bottom: 25%; right: 8%; animation-delay: 1.5s; }
-  .accessory:nth-child(5) { top: 50%; left: 3%; animation-delay: 2s; }
-  .accessory:nth-child(6) { top: 40%; right: 3%; animation-delay: 2.5s; }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(5deg); }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
   }
   
-  .header { text-align: center; padding: 15px 0; }
+  .header { 
+    text-align: center; 
+    padding: 15px 0;
+    position: relative;
+  }
   
   h1 {
     font-family: 'MedievalSharp', cursive;
-    font-size: 24px;
-    color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
-    letter-spacing: 2px;
+    font-size: 28px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite;
   }
   
-  .stats-row { display: flex; gap: 6px; margin-bottom: 12px; }
+  @keyframes glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+  }
+  
+  .stats-row { 
+    display: flex; 
+    gap: 8px; 
+    margin-bottom: 15px;
+  }
   
   .stat-box {
     flex: 1;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(101, 67, 33, 0.3) 100%);
-    border: 2px solid #8b4513;
-    border-radius: 8px;
-    padding: 8px 5px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.2);
-  }
-  
-  .stat-box .icon { font-size: 20px; margin-bottom: 3px; }
-  .stat-box .label { font-size: 9px; color: #d4af37; margin-bottom: 2px; text-transform: uppercase; }
-  .stat-box .value {
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffd700;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-  }
-  
-  /* Gelişmiş Madenci Sahnesi */
-  .mining-scene {
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #8b4513;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 3px solid #daa520;
     border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: 
+      0 5px 15px rgba(255, 215, 0, 0.4),
+      inset 0 2px 10px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-box .icon { font-size: 28px; margin-bottom: 5px; }
+  .stat-box .label { 
+    font-size: 11px; 
+    color: #1a0f0a; 
+    margin-bottom: 3px; 
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .stat-box .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a0f0a;
+    font-family: 'Cinzel', serif;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Madenci Sahnesi - Taş Devri */
+  .mining-scene {
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
+    border: 4px solid #daa520;
+    border-radius: 15px;
     padding: 30px 20px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(139, 69, 19, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
-    min-height: 280px;
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.3),
+      inset 0 0 40px rgba(0, 0, 0, 0.6);
+    min-height: 300px;
     cursor: pointer;
     user-select: none;
   }
@@ -155,20 +176,27 @@
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: 
-      radial-gradient(circle at 30% 40%, rgba(139, 69, 19, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 70% 60%, rgba(75, 0, 130, 0.15) 0%, transparent 50%);
+      radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(255, 165, 0, 0.2) 0%, transparent 50%);
     pointer-events: none;
   }
   
+  /* Taş Devri Madenci */
   .miner {
     position: absolute;
-    bottom: 40px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 70px;
+    font-size: 90px;
     z-index: 10;
     transition: transform 0.1s;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    animation: minerBreathe 2s ease-in-out infinite;
+  }
+  
+  @keyframes minerBreathe {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
   }
   
   .miner.mining {
@@ -176,19 +204,19 @@
   }
   
   @keyframes minerStrike {
-    0%, 100% { transform: translateX(-50%) rotate(0deg); }
-    25% { transform: translateX(-50%) rotate(-30deg) translateY(-10px); }
-    50% { transform: translateX(-50%) rotate(0deg) translateY(0); }
+    0%, 100% { transform: translateX(-50%) rotate(0deg) scale(1); }
+    25% { transform: translateX(-50%) rotate(-35deg) translateY(-15px) scale(1.1); }
+    50% { transform: translateX(-50%) rotate(0deg) translateY(0) scale(1); }
   }
   
   .pickaxe {
     position: absolute;
-    bottom: 80px;
-    left: calc(50% + 40px);
-    font-size: 45px;
+    bottom: 90px;
+    left: calc(50% + 50px);
+    font-size: 55px;
     transform: rotate(45deg);
     z-index: 9;
-    filter: drop-shadow(0 0 8px rgba(192, 192, 192, 0.6));
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
   }
   
   .pickaxe.swing {
@@ -197,31 +225,31 @@
   
   @keyframes pickaxeSwing {
     0%, 100% { transform: rotate(45deg) translateY(0); }
-    50% { transform: rotate(-45deg) translateY(-30px); }
+    50% { transform: rotate(-55deg) translateY(-40px); }
   }
   
   .lantern {
     position: absolute;
-    bottom: 60px;
-    left: calc(50% - 50px);
-    font-size: 35px;
+    bottom: 70px;
+    left: calc(50% - 60px);
+    font-size: 45px;
     z-index: 9;
     animation: lanternGlow 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(255, 200, 0, 0.6));
+    filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.8));
   }
   
   @keyframes lanternGlow {
-    0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 200, 0, 0.6)) brightness(1); }
-    50% { filter: drop-shadow(0 0 25px rgba(255, 220, 50, 0.8)) brightness(1.2); }
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.8)) brightness(1); }
+    50% { filter: drop-shadow(0 0 35px rgba(255, 220, 50, 1)) brightness(1.3); }
   }
   
   .light-beam {
     position: absolute;
-    bottom: 70px;
-    left: calc(50% - 60px);
-    width: 120px;
-    height: 150px;
-    background: linear-gradient(to bottom, rgba(255, 220, 50, 0.2) 0%, transparent 100%);
+    bottom: 80px;
+    left: calc(50% - 70px);
+    width: 140px;
+    height: 180px;
+    background: linear-gradient(to bottom, rgba(255, 220, 50, 0.3) 0%, transparent 100%);
     border-radius: 50% 50% 0 0;
     transform-origin: bottom center;
     animation: lightSweep 3s ease-in-out infinite;
@@ -230,54 +258,57 @@
   }
   
   @keyframes lightSweep {
-    0%, 100% { transform: rotate(-15deg); opacity: 0.5; }
-    50% { transform: rotate(15deg); opacity: 0.8; }
+    0%, 100% { transform: rotate(-20deg); opacity: 0.6; }
+    50% { transform: rotate(20deg); opacity: 1; }
   }
   
   .rock {
     position: absolute;
-    bottom: 20px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 80px;
+    font-size: 100px;
     cursor: pointer;
     z-index: 5;
     transition: transform 0.1s;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
   }
   
   .rock:active {
-    transform: translateX(-50%) scale(0.95);
+    transform: translateX(-50%) scale(0.9);
   }
   
   .rock.breaking {
-    animation: rockBreak 0.5s ease-out forwards;
+    animation: rockBreak 0.6s ease-out forwards;
   }
   
   @keyframes rockBreak {
-    0% { transform: translateX(-50%) scale(1); opacity: 1; }
-    50% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
-    100% { transform: translateX(-50%) scale(0); opacity: 0; }
+    0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: translateX(-50%) scale(1.2) rotate(5deg); opacity: 0.8; }
+    100% { transform: translateX(-50%) scale(0) rotate(-10deg); opacity: 0; }
   }
   
   .rock.spawn {
-    animation: rockSpawn 0.5s ease-out;
+    animation: rockSpawn 0.6s ease-out;
   }
   
   @keyframes rockSpawn {
-    0% { transform: translateX(-50%) scale(0); opacity: 0; }
-    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    0% { transform: translateX(-50%) scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
   }
   
   .dollar-float {
     position: absolute;
-    font-size: 28px;
+    font-size: 35px;
     font-weight: bold;
     color: #ffd700;
-    animation: dollarFloat 1.5s ease-out forwards;
+    animation: dollarFloat 1.8s ease-out forwards;
     pointer-events: none;
     z-index: 100;
-    text-shadow: 0 0 12px rgba(255, 215, 0, 1), 0 0 24px rgba(255, 215, 0, 0.6);
+    text-shadow: 
+      0 0 15px rgba(255, 215, 0, 1),
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 0 45px rgba(255, 165, 0, 0.6);
   }
   
   @keyframes dollarFloat {
@@ -287,65 +318,75 @@
     }
     50% {
       opacity: 1;
-      transform: translateY(-60px) scale(1.2) rotate(10deg);
+      transform: translateY(-80px) scale(1.4) rotate(15deg);
     }
     100% {
       opacity: 0;
-      transform: translateY(-120px) scale(0.8) rotate(-10deg);
+      transform: translateY(-150px) scale(0.8) rotate(-15deg);
     }
   }
   
   .mining-stats {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 15px;
+    left: 15px;
+    right: 15px;
     display: flex;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #8b4513;
-    border-radius: 6px;
-    padding: 8px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   }
   
   .mining-stats .item { text-align: center; }
-  .mining-stats .label { font-size: 9px; color: #d4af37; text-transform: uppercase; }
+  .mining-stats .label { 
+    font-size: 10px; 
+    color: #ffd700; 
+    text-transform: uppercase;
+    font-weight: bold;
+  }
   .mining-stats .value {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     color: #ffd700;
     font-family: 'Cinzel', serif;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
   }
   
   .gem-float {
     position: absolute;
-    font-size: 20px;
-    animation: floatUp 2s ease-out infinite;
+    font-size: 25px;
+    animation: floatUp 2.5s ease-out infinite;
     opacity: 0;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
   }
   
   @keyframes floatUp {
     0% { opacity: 0; transform: translateY(0) scale(0.5); }
-    50% { opacity: 1; transform: translateY(-30px) scale(1); }
-    100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
+    50% { opacity: 1; transform: translateY(-40px) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.5); }
   }
   
   .menu-row { 
     display: flex; 
-    gap: 6px; 
-    margin-bottom: 10px;
+    gap: 8px; 
+    margin-bottom: 12px;
   }
   
   .menu-btn {
     flex: 1;
-    background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
-    border: 2px solid #a0522d;
-    border-radius: 8px;
-    padding: 10px 5px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 3px solid #daa520;
+    border-radius: 12px;
+    padding: 12px 8px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    box-shadow: 
+      0 5px 15px rgba(255, 215, 0, 0.4),
+      inset 0 2px 10px rgba(255, 255, 255, 0.3);
     position: relative;
     overflow: hidden;
   }
@@ -357,7 +398,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     transition: left 0.5s ease;
   }
   
@@ -366,233 +407,252 @@
   }
   
   .menu-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     border-color: #ffd700;
-    box-shadow: 0 5px 12px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.3);
+    box-shadow: 
+      0 8px 20px rgba(255, 215, 0, 0.6),
+      inset 0 2px 10px rgba(255, 255, 255, 0.4);
   }
   
   .menu-btn:active { 
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
   }
   
   .menu-btn .icon { 
-    font-size: 24px; 
+    font-size: 32px; 
     display: block; 
-    margin-bottom: 3px;
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
   }
   
   .menu-btn .label {
-    font-size: 10px;
-    color: #ffd700;
+    font-size: 12px;
+    color: #1a0f0a;
     font-family: 'Cinzel', serif;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
   
   .menu-btn.withdraw { 
-    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
-    border-color: #daa520;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+    border-color: #ff4757;
   }
   
   .menu-btn.profile { 
-    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
-    border-color: #6a6a6a;
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a3aa 100%);
+    border-color: #26a69a;
   }
   
   .menu-btn.admin { 
-    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
-    border-color: #aa0000;
+    background: linear-gradient(135deg, #a55eea 0%, #8854d0 100%);
+    border-color: #7b3cbf;
   }
   
-  .form-group { margin-bottom: 12px; }
+  .form-group { margin-bottom: 15px; }
   
   label {
     display: block;
-    color: #d4af37;
+    color: #ffd700;
     font-family: 'Cinzel', serif;
-    font-size: 14px;
-    margin-bottom: 6px;
-    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   }
   
   input, select, textarea {
     width: 100%;
-    padding: 10px;
-    background: #1a1a1a;
-    border: 2px solid #8b4513;
-    border-radius: 6px;
-    color: #d4af37;
-    font-size: 13px;
+    padding: 12px;
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    color: #ffd700;
+    font-size: 14px;
     font-family: 'Cinzel', serif;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
   }
   
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #ffd700;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+    box-shadow: 
+      inset 0 2px 10px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba(255, 215, 0, 0.4);
   }
   
   .btn {
-    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
-    border: 2px solid #daa520;
-    border-radius: 6px;
-    padding: 10px 16px;
-    color: #ffd700;
-    font-size: 13px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: #1a0f0a;
+    font-size: 14px;
     font-weight: bold;
     font-family: 'Cinzel', serif;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 4px;
+    margin: 5px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
   }
   
   .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
     border-color: #ffd700;
   }
   
   .btn:active { 
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
   }
   
   .btn.secondary {
-    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
-    border-color: #6a6a6a;
-    color: #c0c0c0;
+    background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+    border-color: #636e72;
+    color: #dfe6e9;
   }
   
   .btn.approve {
-    background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 100%);
-    border-color: #3a7a3a;
-    color: #90ee90;
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    border-color: #00b894;
+    color: white;
   }
   
   .btn.reject {
-    background: linear-gradient(135deg, #5a2d2d 0%, #3a1a1a 100%);
-    border-color: #7a3a3a;
-    color: #ff9999;
+    background: linear-gradient(135deg, #d63031 0%, #c0392b 100%);
+    border-color: #d63031;
+    color: white;
   }
   
   .balance-box {
-    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 4px solid #daa520;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.5),
+      inset 0 2px 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .balance-box .label {
+    font-size: 14px;
+    color: #1a0f0a;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  
+  .balance-box .amount {
+    font-size: 36px;
+    font-weight: bold;
+    color: #1a0f0a;
+    font-family: 'Cinzel', serif;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+  
+  .crypto-box {
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
     border: 3px solid #daa520;
     border-radius: 10px;
     padding: 15px;
     text-align: center;
-    margin-bottom: 12px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-  
-  .balance-box .label {
-    font-size: 12px;
-    color: #1a1a1a;
-    font-family: 'Cinzel', serif;
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-  
-  .balance-box .amount {
-    font-size: 28px;
-    font-weight: bold;
-    color: #1a1a1a;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
-  }
-  
-  .crypto-box {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #8b4513;
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    margin: 12px 0;
+    margin: 15px 0;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
   }
   
   .crypto-box strong { 
-    color: #d4af37; 
-    font-size: 14px;
+    color: #ffd700; 
+    font-size: 16px;
     font-family: 'Cinzel', serif;
   }
   
   .crypto-box .value {
-    color: #90ee90;
-    font-size: 18px;
+    color: #00b894;
+    font-size: 22px;
     font-weight: bold;
     font-family: 'Cinzel', serif;
+    text-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
   }
   
   .deposit-card {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #8b4513;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border: 4px solid #daa520;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(139, 69, 19, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.3),
+      inset 0 0 30px rgba(0, 0, 0, 0.6);
   }
   
   .deposit-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid rgba(139, 69, 19, 0.3);
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid rgba(255, 215, 0, 0.3);
   }
   
   .deposit-logo {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #f3ba2f 0%, #b8860b 100%);
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 35px;
+    font-size: 40px;
     font-weight: bold;
-    color: #1a1a1a;
-    box-shadow: 0 0 20px rgba(243, 186, 47, 0.4);
-    border: 2px solid #ffd700;
+    color: #1a0f0a;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    border: 3px solid #ffd700;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
   }
   
   .deposit-header .title {
     font-family: 'Cinzel', serif;
-    font-size: 18px;
+    font-size: 20px;
     color: #ffd700;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
     font-weight: 700;
   }
   
   .deposit-header .subtitle { 
-    font-size: 11px; 
-    color: #d4af37;
+    font-size: 12px; 
+    color: #daa520;
     font-family: 'Cinzel', serif;
   }
   
   .deposit-info {
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #8b4513;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
   }
   
   .deposit-info .info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
   }
   
   .deposit-info .info-row:last-child {
@@ -602,59 +662,60 @@
   }
   
   .deposit-info .info-label {
-    font-size: 11px;
-    color: #d4af37;
+    font-size: 12px;
+    color: #daa520;
     font-family: 'Cinzel', serif;
   }
   
   .deposit-info .info-value {
-    font-size: 13px;
+    font-size: 15px;
     color: #ffd700;
     font-weight: bold;
     font-family: 'Cinzel', serif;
   }
   
   .deposit-info .info-value.highlight {
-    color: #90ee90;
-    font-size: 16px;
+    color: #00b894;
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
   }
   
   .wallet-box {
-    background: rgba(0, 0, 0, 0.4);
-    border: 2px solid #8b4513;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
   }
   
   .wallet-box .wallet-label {
-    font-size: 10px;
-    color: #d4af37;
-    margin-bottom: 6px;
+    font-size: 11px;
+    color: #daa520;
+    margin-bottom: 8px;
     display: block;
     font-family: 'Cinzel', serif;
   }
   
   .wallet-box .wallet-address {
     font-family: 'Courier New', monospace;
-    font-size: 10px;
+    font-size: 11px;
     color: #ffd700;
     word-break: break-all;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
-    margin-bottom: 8px;
-    border: 2px dashed rgba(139, 69, 19, 0.5);
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 3px dashed rgba(255, 215, 0, 0.4);
   }
   
   .wallet-box .copy-btn {
     width: 100%;
-    background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
-    border: 2px solid #a0522d;
-    border-radius: 6px;
-    padding: 8px;
-    color: #ffd700;
-    font-size: 12px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 3px solid #daa520;
+    border-radius: 8px;
+    padding: 10px;
+    color: #1a0f0a;
+    font-size: 13px;
     font-weight: bold;
     font-family: 'Cinzel', serif;
     cursor: pointer;
@@ -663,138 +724,145 @@
   }
   
   .wallet-box .copy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
     border-color: #ffd700;
   }
   
   .warning-box {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(90, 0, 0, 0.3) 100%);
-    border: 2px solid #8b0000;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(214, 48, 49, 0.3) 0%, rgba(192, 57, 43, 0.3) 100%);
+    border: 3px solid #d63031;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 15px;
   }
   
   .warning-box .warning-title {
-    color: #ff6666;
-    font-size: 12px;
+    color: #ff6b6b;
+    font-size: 13px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-family: 'Cinzel', serif;
   }
   
   .warning-box .warning-text {
-    color: #d4af37;
-    font-size: 10px;
-    line-height: 1.5;
+    color: #ffd700;
+    font-size: 11px;
+    line-height: 1.6;
     font-family: 'Cinzel', serif;
   }
   
   .profile-card {
-    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
-    border: 3px solid #6a6a6a;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a3aa 100%);
+    border: 4px solid #26a69a;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
     text-align: center;
-    box-shadow: 0 0 20px rgba(100, 100, 100, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 0 30px rgba(78, 205, 196, 0.4),
+      inset 0 2px 15px rgba(255, 255, 255, 0.2);
   }
   
   .profile-avatar {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
     border-radius: 50%;
-    margin: 0 auto 12px;
+    margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 35px;
-    border: 3px solid #ffd700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    font-size: 40px;
+    border: 4px solid #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
   }
   
   .profile-name {
     font-family: 'Cinzel', serif;
-    font-size: 18px;
-    color: #ffd700;
-    margin-bottom: 4px;
+    font-size: 20px;
+    color: #1a0f0a;
+    margin-bottom: 5px;
     font-weight: 700;
   }
   
   .profile-id {
-    font-size: 11px;
-    color: #d4af37;
+    font-size: 12px;
+    color: #1a0f0a;
     font-family: 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
   }
   
   .lang-section {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 2px solid #8b4513;
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 12px;
+    border: 3px solid #daa520;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
   }
   
   .lang-section h3 {
     font-family: 'Cinzel', serif;
-    color: #d4af37;
-    margin-bottom: 12px;
+    color: #ffd700;
+    margin-bottom: 15px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
   }
   
   .lang-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   
   .lang-option {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #8b4513;
-    border-radius: 8px;
-    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid #daa520;
+    border-radius: 10px;
+    padding: 12px 15px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   
   .lang-option:hover {
     border-color: #ffd700;
-    background: rgba(255, 215, 0, 0.05);
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateX(5px);
   }
   
   .lang-option.active {
     border-color: #ffd700;
-    background: rgba(255, 215, 0, 0.1);
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
   }
   
   .lang-option .lang-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
   
   .lang-option .flag {
-    font-size: 24px;
+    font-size: 28px;
   }
   
   .lang-option .lang-name {
     font-family: 'Cinzel', serif;
-    color: #d4af37;
-    font-size: 14px;
+    color: #ffd700;
+    font-size: 15px;
     font-weight: 600;
   }
   
   .lang-option .check {
-    color: #90ee90;
-    font-size: 18px;
+    color: #00b894;
+    font-size: 22px;
     display: none;
   }
   
@@ -804,33 +872,33 @@
   
   .stats-section {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 2px solid #8b4513;
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 12px;
+    border: 3px solid #daa520;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
   }
   
   .stats-section h3 {
     font-family: 'Cinzel', serif;
-    color: #d4af37;
-    margin-bottom: 12px;
+    color: #ffd700;
+    margin-bottom: 15px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
   }
   
   .stat-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+    padding: 10px 0;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
   }
   
   .stat-row:last-child { border-bottom: none; }
   
   .stat-row .label {
-    color: #d4af37;
-    font-size: 12px;
+    color: #daa520;
+    font-size: 13px;
     font-family: 'Cinzel', serif;
   }
   
@@ -838,47 +906,53 @@
     color: #ffd700;
     font-weight: bold;
     font-family: 'Cinzel', serif;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .tabs { 
     display: flex; 
-    gap: 6px; 
-    margin-bottom: 12px;
+    gap: 8px; 
+    margin-bottom: 15px;
   }
   
   .tab {
     flex: 1;
-    padding: 8px;
+    padding: 10px;
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 2px solid #8b4513;
-    border-radius: 6px;
-    color: #d4af37;
-    font-size: 11px;
+    border: 3px solid #daa520;
+    border-radius: 8px;
+    color: #daa520;
+    font-size: 12px;
     font-family: 'Cinzel', serif;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .tab:hover {
+    border-color: #ffd700;
+    color: #ffd700;
   }
   
   .tab.active {
-    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
-    color: #1a1a1a;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    color: #1a0f0a;
     border-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
   }
   
   .item-card {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 2px solid #8b4513;
-    border-left: 4px solid #b8860b;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 8px 0;
+    border: 3px solid #daa520;
+    border-left: 5px solid #ffd700;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
   }
   
   .item-card strong {
-    font-size: 16px;
+    font-size: 18px;
     color: #ffd700;
     font-family: 'Cinzel', serif;
     font-weight: 700;
@@ -886,9 +960,9 @@
   
   .item-card small {
     display: block;
-    color: #d4af37;
-    margin: 4px 0;
-    font-size: 11px;
+    color: #daa520;
+    margin: 5px 0;
+    font-size: 12px;
     font-family: 'Cinzel', serif;
   }
   
@@ -896,94 +970,66 @@
   
   .page-title {
     font-family: 'Cinzel', serif;
-    font-size: 18px;
+    font-size: 20px;
     color: #ffd700;
     text-align: center;
-    margin-bottom: 12px;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
     font-weight: 700;
   }
   
   .toast {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 100%);
-    color: #90ee90;
-    padding: 10px 20px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
     font-family: 'Cinzel', serif;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 20px rgba(0, 184, 148, 0.6);
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease;
-    border: 2px solid #3a7a3a;
+    border: 3px solid #00b894;
+    font-size: 14px;
   }
   
   .toast.show { opacity: 1; }
   
   .click-hint {
     position: absolute;
-    top: 8px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(139, 69, 19, 0.3);
-    border: 2px solid #8b4513;
-    border-radius: 15px;
-    padding: 4px 12px;
-    font-size: 10px;
-    color: #d4af37;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+    border: 3px solid #daa520;
+    border-radius: 20px;
+    padding: 6px 15px;
+    font-size: 11px;
+    color: #ffd700;
     font-family: 'Cinzel', serif;
     animation: pulse 2s ease-in-out infinite;
+    font-weight: bold;
   }
   
   .error-message {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.4) 0%, rgba(90, 0, 0, 0.4) 100%);
-    border: 2px solid #8b0000;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 12px 0;
+    background: linear-gradient(135deg, rgba(214, 48, 49, 0.4) 0%, rgba(192, 57, 43, 0.4) 100%);
+    border: 3px solid #d63031;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
     text-align: center;
-    color: #ff6666;
+    color: #ff6b6b;
     font-family: 'Cinzel', serif;
-    font-size: 13px;
+    font-size: 14px;
   }
   
   .error-icon {
-    font-size: 30px;
-    margin-bottom: 8px;
-  }
-  
-  .offline-earnings {
-    background: linear-gradient(135deg, #4a3a1a 0%, #2a1a0a 100%);
-    border: 2px solid #8b6914;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
-    text-align: center;
-    animation: fadeIn 0.5s ease;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .offline-earnings .title {
-    color: #ffd700;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 6px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .offline-earnings .amount {
-    color: #90ee90;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
+    font-size: 35px;
+    margin-bottom: 10px;
   }
 </style>
 </head>
@@ -992,7 +1038,7 @@
     <!-- Ana Sayfa -->
     <div id="page-home">
       <div class="header">
-        <h1 id="mainTitle">⚡ HASH MINING ⚡</h1>
+        <h1>⚡ HASH MINING ⚡</h1>
       </div>
       
       <div class="stats-row">
@@ -1030,7 +1076,7 @@
           </div>
         </div>
         
-        <div class="miner" id="miner">⛏️</div>
+        <div class="miner" id="miner">️</div>
         <div class="pickaxe" id="pickaxe">⚒️</div>
         <div class="lantern"></div>
         <div class="light-beam"></div>
@@ -1047,7 +1093,7 @@
           <span class="label" data-i18n="withdraw">WITHDRAW</span>
         </div>
         <div class="menu-btn profile" onclick="showPage('profile')">
-          <span class="icon"></span>
+          <span class="icon">👤</span>
           <span class="label" data-i18n="profile">PROFILE</span>
         </div>
       </div>
@@ -1083,7 +1129,7 @@
             <span class="info-value">TRON (TRC20)</span>
           </div>
           <div class="info-row">
-            <span class="info-label" data-i18n="rate">💱 Rate</span>
+            <span class="info-label" data-i18n="rate"> Rate</span>
             <span class="info-value">1 TRX ≈ $0.12</span>
           </div>
         </div>
@@ -1091,7 +1137,7 @@
         <div class="form-group">
           <label data-i18n="usdAmount">💵 Amount to Receive (USD)</label>
           <input type="number" id="usdAmount" placeholder="10" min="0.24" step="0.01" oninput="calculateTRX()">
-          <div style="margin-top: 6px; font-size: 11px; color: #d4af37;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #90ee90; font-weight: bold;">0</span> TRX</div>
+          <div style="margin-top: 8px; font-size: 12px; color: #daa520;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #00b894; font-weight: bold;">0</span> TRX</div>
         </div>
         
         <div class="wallet-box">
@@ -1121,7 +1167,7 @@
       <div class="balance-box">
         <div class="label" data-i18n="currentBalance">Current Balance</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 11px; margin-top: 6px; color: #1a1a1a;" data-i18n="minWithdraw">Min: $0.01</div>
+        <div style="font-size: 12px; margin-top: 8px; color: #1a0f0a;" data-i18n="minWithdraw">Min: $0.01</div>
       </div>
       
       <div class="form-group">
@@ -1163,7 +1209,7 @@
       </div>
       
       <div class="lang-section">
-        <h3 data-i18n="selectLang">🌐 Select Language</h3>
+        <h3 data-i18n="selectLang"> Select Language</h3>
         <div class="lang-list">
           <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
             <div class="lang-info">
@@ -1174,7 +1220,7 @@
           </div>
           <div class="lang-option" data-lang="tr" onclick="changeLanguage('tr')">
             <div class="lang-info">
-              <span class="flag">🇹🇷</span>
+              <span class="flag">🇹</span>
               <span class="lang-name">Türkçe</span>
             </div>
             <span class="check">✓</span>
@@ -1265,7 +1311,6 @@
     let currentAdminTab = 'deposits';
     let unsubscribe = null;
     let currentLang = 'tr';
-    let lastUpdateTime = Date.now();
     
     const ROI_DAYS = 100;
     const DAILY_RATE = 1 / ROI_DAYS;
@@ -1310,16 +1355,14 @@
         minWithdrawAmount: '❌ Minimum: $0.01',
         approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!',
         error: '❌ Hata: ',
-        adminPermissionError: '❌ Yetkiniz yok! Bu sayfa sadece yönetici içindir.',
-        offlineEarnings: '⛏️ Offline Kazanç',
-        earnedWhileAway: 'Program kapalıyken kazandınız:'
+        adminPermissionError: '❌ Yetkiniz yok! Bu sayfa sadece yönetici içindir.'
       },
       en: {
         balance: 'Balance', products: 'Products', investment: 'Investment',
         perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour',
         clickMiner: 'Click Rock!',
         buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
-        buyTitle: '💎 Buy Mining Power', trxInvest: 'TRX Investment',
+        buyTitle: ' Buy Mining Power', trxInvest: 'TRX Investment',
         minDeposit: '💰 Minimum Deposit', network: '🌐 Network',
         rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)',
         youWillGet: 'You will get: ',
@@ -1345,9 +1388,7 @@
         minWithdrawAmount: '❌ Minimum: $0.01',
         approved: '✅ Approved!', rejected: '❌ Rejected!',
         error: '❌ Error: ',
-        adminPermissionError: '❌ No permission! This page is for admin only.',
-        offlineEarnings: '⛏️ Offline Earnings',
-        earnedWhileAway: 'You earned while away:'
+        adminPermissionError: '❌ No permission! This page is for admin only.'
       },
       ru: {
         balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции',
@@ -1380,9 +1421,7 @@
         minWithdrawAmount: '❌ Минимум: $0.01',
         approved: '✅ Одобрено!', rejected: '❌ Отклонено!',
         error: '❌ Ошибка: ',
-        adminPermissionError: '❌ Нет доступа! Эта страница только для админа.',
-        offlineEarnings: '⛏️ Оффлайн заработок',
-        earnedWhileAway: 'Вы заработали пока отсутствовали:'
+        adminPermissionError: '❌ Нет доступа! Эта страница только для админа.'
       },
       ar: {
         balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار',
@@ -1390,10 +1429,10 @@
         clickMiner: 'انقر على الصخرة!',
         buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
         buyTitle: '💎 شراء قوة التعدين', trxInvest: 'استثمار TRX',
-        minDeposit: '💰 الحد الأدنى للإيداع', network: '🌐 الشبكة',
+        minDeposit: '💰 الحد الأدنى للإيداع', network: ' الشبكة',
         rate: '💱 السعر', usdAmount: '💵 المبلغ المستلم (USD)',
         youWillGet: 'ستحصل على: ',
-        trxWallet: '📍 عنوان محفظة TRX',
+        trxWallet: ' عنوان محفظة TRX',
         copyAddress: '📋 نسخ العنوان', warning: '⚠️ مهم',
         warningText: '• استخدم فقط شبكة <strong>TRON (TRC20)</strong><br>• أرسل المبلغ الدقيق الموضح أعلاه<br>• قد يستغرق التأكيد 5-30 دقيقة',
         notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
@@ -1415,9 +1454,7 @@
         minWithdrawAmount: '❌ الحد الأدنى: $0.01',
         approved: '✅ تمت الموافقة!', rejected: '❌ مرفوض!',
         error: '❌ خطأ: ',
-        adminPermissionError: '❌ لا صلاحية! هذه الصفحة للمسؤول فقط.',
-        offlineEarnings: '⛏️ أرباح عدم الاتصال',
-        earnedWhileAway: 'ربحت أثناء غيابك:'
+        adminPermissionError: '❌ لا صلاحية! هذه الصفحة للمسؤول فقط.'
       },
       es: {
         balance: 'Saldo', products: 'Productos', investment: 'Inversión',
@@ -1446,13 +1483,11 @@
         depositSent: '✅ ¡Notificación enviada! Esperando aprobación del admin.',
         withdrawCreated: '✅ ¡Solicitud de retiro creada!',
         insufficientBalance: '❌ ¡Saldo insuficiente!',
-        walletRequired: '❌ ¡Dirección de billetera requerida!',
+        walletRequired: ' ¡Dirección de billetera requerida!',
         minWithdrawAmount: '❌ Mínimo: $0.01',
         approved: '✅ ¡Aprobado!', rejected: '❌ ¡Rechazado!',
         error: '❌ Error: ',
-        adminPermissionError: '❌ ¡Sin permiso! Esta página es solo para admin.',
-        offlineEarnings: '⛏️ Ganancias sin conexión',
-        earnedWhileAway: 'Ganaste mientras estabas ausente:'
+        adminPermissionError: '❌ ¡Sin permiso! Esta página es solo para admin.'
       }
     };
     
@@ -1557,14 +1592,14 @@
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 15; i++) {
         setTimeout(() => {
           const dollar = document.createElement('div');
           dollar.className = 'dollar-float';
           dollar.textContent = '$';
           
-          const offsetX = (Math.random() - 0.5) * 120;
-          const offsetY = (Math.random() - 0.5) * 60;
+          const offsetX = (Math.random() - 0.5) * 150;
+          const offsetY = (Math.random() - 0.5) * 80;
           
           dollar.style.left = (centerX + offsetX) + 'px';
           dollar.style.top = (centerY + offsetY) + 'px';
@@ -1573,7 +1608,7 @@
           dollar.style.color = goldColors[Math.floor(Math.random() * goldColors.length)];
           
           document.body.appendChild(dollar);
-          setTimeout(() => dollar.remove(), 1500);
+          setTimeout(() => dollar.remove(), 1800);
         }, i * 50);
       }
       
@@ -1585,7 +1620,7 @@
       setTimeout(() => {
         rock.classList.remove('breaking');
         rock.classList.add('spawn');
-      }, 500);
+      }, 600);
       
       if (tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('medium');
@@ -1603,55 +1638,11 @@
           totalWithdrawn = data.totalWithdrawn || 0;
           balance = lifetimeEarnings - totalWithdrawn;
           
-          // Offline earnings hesapla
-          const lastUpdate = data.lastUpdateTime || Date.now();
-          const now = Date.now();
-          const offlineSeconds = (now - lastUpdate) / 1000;
-          
-          if (offlineSeconds > 5 && products.length > 0) {
-            const offlineEarnings = products.reduce((sum, p) => {
-              return sum + (p.amount * PER_SECOND * offlineSeconds);
-            }, 0);
-            
-            if (offlineEarnings > 0.01) {
-              lifetimeEarnings += offlineEarnings;
-              balance = lifetimeEarnings - totalWithdrawn;
-              
-              // Offline earnings bildirimini göster
-              showOfflineEarnings(offlineEarnings);
-            }
-          }
-          
           updateUI();
-          
-          // Last update time güncelle
-          db.collection('users').doc(userId).set({
-            lastUpdateTime: now
-          }, { merge: true });
         }
       }, (error) => {
         console.error('Dinleme hatası:', error);
       });
-    }
-    
-    function showOfflineEarnings(amount) {
-      const homePage = document.getElementById('page-home');
-      if (!homePage) return;
-      
-      const offlineDiv = document.createElement('div');
-      offlineDiv.className = 'offline-earnings';
-      offlineDiv.innerHTML = `
-        <div class="title">${translations[currentLang].offlineEarnings}</div>
-        <div class="amount">${translations[currentLang].earnedWhileAway} $${amount.toFixed(2)}</div>
-      `;
-      
-      homePage.insertBefore(offlineDiv, homePage.firstChild);
-      
-      setTimeout(() => {
-        offlineDiv.style.opacity = '0';
-        offlineDiv.style.transition = 'opacity 1s ease';
-        setTimeout(() => offlineDiv.remove(), 1000);
-      }, 5000);
     }
     
     async function submitDeposit() {
@@ -1706,8 +1697,7 @@
       try {
         await db.collection('users').doc(userId).set({
           approvedPayments: products,
-          lifetimeEarnings: lifetimeEarnings,
-          lastUpdateTime: Date.now()
+          lifetimeEarnings: lifetimeEarnings
         }, { merge: true });
       } catch (error) {
         console.error('Kaydetme hatası:', error);
@@ -1817,7 +1807,7 @@
           }
         });
         
-        if (pending.length === 0) return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        if (pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
         
         let html = '';
         pending.forEach(d => {
@@ -1855,7 +1845,7 @@
           }
         });
         
-        if (pending.length === 0) return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        if (pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
         
         let html = '';
         pending.forEach(w => {
@@ -1896,7 +1886,7 @@
       const container = document.getElementById('adminContent');
       const loadingText = currentLang === 'tr' ? 'Yükleniyor...' : currentLang === 'en' ? 'Loading...' : currentLang === 'ru' ? 'Загрузка...' : currentLang === 'ar' ? 'جاري التحميل...' : 'Cargando...';
       
-      container.innerHTML = `<p style="text-align: center; color: #d4af37; padding: 20px;">${loadingText}</p>`;
+      container.innerHTML = `<p style="text-align: center; color: #daa520; padding: 20px;">${loadingText}</p>`;
       
       if (currentAdminTab === 'deposits') {
         container.innerHTML = await loadAdminDeposits();
@@ -1955,10 +1945,10 @@
           totalInvested: (data.totalInvested || 0) + usdAmount
         }, { merge: true });
         
-        alert(`${translations[currentLang].approved} $${usdAmount.toFixed(2)}`);
+        showToast(`${translations[currentLang].approved} $${usdAmount.toFixed(2)}`);
         await loadAdmin();
       } catch (error) {
-        alert(translations[currentLang].error + error.message);
+        showToast(translations[currentLang].error + error.message);
       }
     }
     
@@ -1978,10 +1968,10 @@
         
         await userRef.set({ deposits: newDeposits }, { merge: true });
         
-        alert(translations[currentLang].rejected);
+        showToast(translations[currentLang].rejected);
         await loadAdmin();
       } catch (error) {
-        alert(translations[currentLang].error + error.message);
+        showToast(translations[currentLang].error + error.message);
       }
     }
     
@@ -2018,10 +2008,10 @@
           totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
         }, { merge: true });
         
-        alert(translations[currentLang].approved);
+        showToast(translations[currentLang].approved);
         await loadAdmin();
       } catch (error) {
-        alert(translations[currentLang].error + error.message);
+        showToast(translations[currentLang].error + error.message);
       }
     }
     
@@ -2041,10 +2031,10 @@
         
         await userRef.set({ withdrawalRequests: newWithdrawals }, { merge: true });
         
-        alert(translations[currentLang].rejected);
+        showToast(translations[currentLang].rejected);
         await loadAdmin();
       } catch (error) {
-        alert(translations[currentLang].error + error.message);
+        showToast(translations[currentLang].error + error.message);
       }
     }
     
@@ -2086,7 +2076,7 @@
       gem.style.bottom = '40px';
       scene.appendChild(gem);
       
-      setTimeout(() => gem.remove(), 2000);
+      setTimeout(() => gem.remove(), 2500);
     }
     
     try {
