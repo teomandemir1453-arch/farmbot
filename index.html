@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Hash Power Mining</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -11,7 +11,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap');
   
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
   body {
     background: #1a0f0a;
@@ -21,176 +21,220 @@
     min-height: 100vh;
     font-family: 'Cinzel', serif;
     color: #f4e4c1;
-    padding: 20px;
+    padding: 10px;
+    overflow-x: hidden;
   }
   
   .container {
-    max-width: 800px;
+    max-width: 500px;
     margin: 0 auto;
-    position: relative;
-  }
-  
-  /* Maden Temalı Çerçeve */
-  .mine-frame {
-    position: relative;
-    background: #2d1810;
-    border: 8px solid #8b4513;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 
-      0 0 20px rgba(139, 69, 19, 0.5),
-      inset 0 0 30px rgba(0, 0, 0, 0.5);
-  }
-  
-  .mine-frame::before {
-    content: '⛏️';
-    position: absolute;
-    top: -25px;
-    right: 20px;
-    font-size: 40px;
-    transform: rotate(45deg);
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-  }
-  
-  .mine-frame::after {
-    content: '💎';
-    position: absolute;
-    top: -20px;
-    left: 20px;
-    font-size: 35px;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
   }
   
   /* Başlık */
-  h1 {
+  .header {
     text-align: center;
+    padding: 15px 0;
+    position: relative;
+  }
+  
+  h1 {
     font-family: 'MedievalSharp', cursive;
-    font-size: 32px;
+    font-size: 24px;
     color: #ffd700;
     text-shadow: 
       0 0 10px rgba(255, 215, 0, 0.8),
       2px 2px 4px rgba(0, 0, 0, 0.8);
-    margin-bottom: 20px;
     letter-spacing: 2px;
   }
   
-  h2 {
-    font-family: 'MedievalSharp', cursive;
-    font-size: 24px;
-    color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  /* İstatistikler */
+  .stats-row {
+    display: flex;
+    gap: 8px;
     margin-bottom: 15px;
-    text-align: center;
   }
   
-  /* İstatistik Kartları */
-  .stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .stat-card {
+  .stat-box {
+    flex: 1;
     background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
-    border: 3px solid #8b4513;
-    border-radius: 12px;
-    padding: 20px;
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 12px 8px;
     text-align: center;
-    position: relative;
-    box-shadow: 
-      0 4px 15px rgba(0, 0, 0, 0.5),
-      inset 0 2px 10px rgba(255, 215, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
   
-  .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 
-      0 8px 25px rgba(255, 215, 0, 0.3),
-      inset 0 2px 10px rgba(255, 215, 0, 0.2);
-  }
-  
-  .stat-card .icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-  }
-  
-  .stat-card .label {
-    font-size: 14px;
-    color: #c9a961;
+  .stat-box .icon {
+    font-size: 24px;
     margin-bottom: 5px;
-    font-family: 'Cinzel', serif;
   }
   
-  .stat-card .value {
-    font-size: 28px;
+  .stat-box .label {
+    font-size: 10px;
+    color: #c9a961;
+    margin-bottom: 3px;
+  }
+  
+  .stat-box .value {
+    font-size: 16px;
     font-weight: bold;
     color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     font-family: 'MedievalSharp', cursive;
   }
   
-  /* Menü Butonları */
-  .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .menu-btn {
-    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 100%);
+  /* Kazım Animasyonu */
+  .mining-scene {
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
     border: 3px solid #8b4513;
     border-radius: 12px;
     padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    margin-bottom: 15px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 
+      0 0 20px rgba(139, 69, 19, 0.5),
+      inset 0 0 30px rgba(0, 0, 0, 0.5);
+    min-height: 200px;
   }
   
-  .menu-btn::before {
+  .mining-scene::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
-    transition: left 0.5s ease;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 40%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(75, 0, 130, 0.2) 0%, transparent 50%);
+    pointer-events: none;
   }
   
-  .menu-btn:hover::before {
-    left: 100%;
-  }
-  
-  .menu-btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    border-color: #ffd700;
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-  }
-  
-  .menu-btn:active {
-    transform: translateY(-2px) scale(1.02);
-  }
-  
-  .menu-btn .icon {
+  .miner {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
     font-size: 50px;
-    margin-bottom: 10px;
-    display: block;
+    animation: mine 1s ease-in-out infinite;
     filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
   }
   
+  @keyframes mine {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-20deg) translateY(-5px); }
+    50% { transform: rotate(0deg) translateY(0); }
+    75% { transform: rotate(-20deg) translateY(-5px); }
+  }
+  
+  .rock {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-size: 60px;
+    animation: shake 0.5s ease-in-out infinite;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px) rotate(-2deg); }
+    75% { transform: translateX(3px) rotate(2deg); }
+  }
+  
+  .spark {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-size: 20px;
+    animation: sparkle 0.8s ease-in-out infinite;
+    opacity: 0;
+  }
+  
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+  
+  .mining-stats {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .mining-stats .item {
+    text-align: center;
+  }
+  
+  .mining-stats .label {
+    font-size: 10px;
+    color: #c9a961;
+  }
+  
+  .mining-stats .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .gem-float {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 2s ease-out infinite;
+    opacity: 0;
+  }
+  
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(0) scale(0.5); }
+    50% { opacity: 1; transform: translateY(-30px) scale(1); }
+    100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
+  }
+  
+  /* Menü Butonları */
+  .menu-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .menu-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 100%);
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .menu-btn:hover {
+    transform: translateY(-3px);
+    border-color: #ffd700;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+  }
+  
+  .menu-btn:active {
+    transform: translateY(-1px);
+  }
+  
+  .menu-btn .icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
   .menu-btn .label {
-    font-size: 16px;
+    font-size: 11px;
     color: #f4e4c1;
     font-family: 'MedievalSharp', cursive;
-    letter-spacing: 1px;
   }
   
   .menu-btn.withdraw {
@@ -201,336 +245,235 @@
     background: linear-gradient(135deg, #4a0e4e 0%, #2d0830 100%);
   }
   
-  /* Form Elemanları */
+  /* Form */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
   input, select {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: #1a0f0a;
-    border: 3px solid #8b4513;
-    border-radius: 10px;
+    border: 2px solid #8b4513;
+    border-radius: 8px;
     color: #f4e4c1;
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'Cinzel', serif;
-    margin: 10px 0;
-    transition: all 0.3s ease;
   }
   
   input:focus, select:focus {
     outline: none;
     border-color: #ffd700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
   }
   
-  input::placeholder {
-    color: #8b7355;
-  }
-  
-  /* Aksiyon Butonları */
-  .action-btn {
+  /* Butonlar */
+  .btn {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
-    border: 3px solid #b8860b;
-    border-radius: 12px;
-    padding: 15px 30px;
+    border: 2px solid #b8860b;
+    border-radius: 10px;
+    padding: 12px 20px;
     color: #1a0f0a;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     font-family: 'MedievalSharp', cursive;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    margin: 10px 5px;
+    margin: 5px;
   }
   
-  .action-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.5);
   }
   
-  .action-btn:active {
+  .btn:active {
     transform: translateY(-1px);
   }
   
-  .action-btn.secondary {
+  .btn.secondary {
     background: linear-gradient(135deg, #696969 0%, #404040 100%);
     border-color: #505050;
     color: #f4e4c1;
-    text-shadow: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   }
   
-  .action-btn.approve {
+  .btn.approve {
     background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
     border-color: #16a34a;
   }
   
-  .action-btn.reject {
+  .btn.reject {
     background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
     border-color: #b91c1c;
   }
   
-  /* Bakiye Göstergesi */
-  .balance-display {
+  /* Bakiye */
+  .balance-box {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
-    border: 4px solid #b8860b;
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
-    margin: 20px 0;
-    box-shadow: 
-      0 0 30px rgba(255, 215, 0, 0.5),
-      inset 0 0 20px rgba(255, 255, 255, 0.2);
-    position: relative;
-  }
-  
-  .balance-display::before {
-    content: '💰';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 40px;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-  }
-  
-  .balance-display .label {
-    font-size: 18px;
-    color: #1a0f0a;
-    font-family: 'MedievalSharp', cursive;
-    margin-bottom: 10px;
-  }
-  
-  .balance-display .amount {
-    font-size: 48px;
-    font-weight: bold;
-    color: #1a0f0a;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
-    font-family: 'MedievalSharp', cursive;
-  }
-  
-  /* Ürün Kartları */
-  .product-card {
-    background: linear-gradient(135deg, #4a2c17 0%, #2d1810 100%);
-    border: 3px solid #8b4513;
+    border: 3px solid #b8860b;
     border-radius: 12px;
     padding: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  
+  .balance-box .label {
+    font-size: 14px;
+    color: #1a0f0a;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .balance-box .amount {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1a0f0a;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  /* Kripto Bilgi */
+  .crypto-box {
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
     margin: 15px 0;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   }
   
-  .product-card::before {
-    content: '⛏️';
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    font-size: 30px;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-  }
-  
-  .product-card .amount {
-    font-size: 24px;
+  .crypto-box strong {
     color: #ffd700;
+    font-size: 16px;
+  }
+  
+  .crypto-box .value {
+    color: #4ade80;
+    font-size: 20px;
     font-weight: bold;
     font-family: 'MedievalSharp', cursive;
-    margin-bottom: 10px;
   }
   
-  .product-card .detail {
-    font-size: 14px;
-    color: #c9a961;
-    margin: 5px 0;
-  }
-  
-  /* Admin Panel */
-  .tab-container {
+  /* Admin */
+  .tabs {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
   }
   
   .tab {
     flex: 1;
-    padding: 15px;
+    padding: 10px;
     background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
-    border: 3px solid #8b4513;
-    border-radius: 10px;
+    border: 2px solid #8b4513;
+    border-radius: 8px;
     color: #f4e4c1;
-    font-size: 16px;
+    font-size: 12px;
     font-family: 'MedievalSharp', cursive;
     cursor: pointer;
-    transition: all 0.3s ease;
   }
   
   .tab.active {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
     color: #1a0f0a;
     border-color: #b8860b;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
   }
   
-  .tab:hover:not(.active) {
-    border-color: #ffd700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-  }
-  
-  /* Bekleyen Ödeme/Çekim */
-  .pending-item, .withdrawal-item {
+  /* Liste */
+  .item-card {
     background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
-    border: 3px solid #8b4513;
-    border-left: 6px solid #ffd700;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 15px 0;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid #8b4513;
+    border-left: 4px solid #ffd700;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
   }
   
-  .pending-item::before {
-    content: '⏳';
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    font-size: 30px;
-  }
-  
-  .withdrawal-item::before {
-    content: '💸';
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    font-size: 30px;
-  }
-  
-  .pending-item strong, .withdrawal-item strong {
-    font-size: 20px;
+  .item-card strong {
+    font-size: 18px;
     color: #ffd700;
     font-family: 'MedievalSharp', cursive;
   }
   
-  .pending-item small, .withdrawal-item small {
+  .item-card small {
     display: block;
     color: #c9a961;
     margin: 5px 0;
-    font-size: 13px;
+    font-size: 12px;
   }
   
-  /* Kripto Bilgi */
-  .crypto-info {
-    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
-    border: 3px solid #8b4513;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 15px 0;
-    text-align: center;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-  }
+  /* Gizli */
+  .hidden { display: none; }
   
-  .crypto-info strong {
+  /* Sayfa Başlığı */
+  .page-title {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 20px;
     color: #ffd700;
-    font-size: 18px;
-    font-family: 'MedievalSharp', cursive;
-  }
-  
-  .crypto-info .value {
-    color: #4ade80;
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'MedievalSharp', cursive;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
-  }
-  
-  /* Gizli Sayfalar */
-  .hidden {
-    display: none;
-  }
-  
-  /* Dekoratif Elementler */
-  .decoration {
-    position: fixed;
-    pointer-events: none;
-    opacity: 0.3;
-    z-index: -1;
-  }
-  
-  .decoration.pickaxe {
-    top: 10%;
-    right: 5%;
-    font-size: 80px;
-    transform: rotate(45deg);
-  }
-  
-  .decoration.gem {
-    bottom: 10%;
-    left: 5%;
-    font-size: 60px;
-  }
-  
-  /* Animasyonlar */
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-    50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
-  .glow-effect {
-    animation: glow 2s ease-in-out infinite;
-  }
-  
-  .float-effect {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    h1 { font-size: 24px; }
-    h2 { font-size: 20px; }
-    .stat-card .value { font-size: 22px; }
-    .menu-btn .icon { font-size: 40px; }
-    .balance-display .amount { font-size: 36px; }
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   }
 </style>
 </head>
 <body>
-  <!-- Dekoratif Elementler -->
-  <div class="decoration pickaxe">⛏️</div>
-  <div class="decoration gem">💎</div>
-  
   <div class="container">
     <!-- Ana Sayfa -->
-    <div id="page-home" class="mine-frame">
-      <h1 class="glow-effect">⚡ HASH POWER MINING ⚡</h1>
+    <div id="page-home">
+      <div class="header">
+        <h1>⚡ HASH MINING ⚡</h1>
+      </div>
       
-      <div class="stats-container">
-        <div class="stat-card">
+      <div class="stats-row">
+        <div class="stat-box">
           <div class="icon">💰</div>
           <div class="label">Bakiye</div>
           <div class="value">$<span id="balance">0.00</span></div>
         </div>
-        <div class="stat-card">
-          <div class="icon">📦</div>
-          <div class="label">Aktif Ürün</div>
+        <div class="stat-box">
+          <div class="icon"></div>
+          <div class="label">Ürün</div>
           <div class="value"><span id="productCount">0</span></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-box">
           <div class="icon">💵</div>
-          <div class="label">Toplam Yatırım</div>
+          <div class="label">Yatırım</div>
           <div class="value">$<span id="totalInvested">0</span></div>
         </div>
       </div>
       
-      <div class="menu-grid">
+      <!-- Kazım Animasyonu -->
+      <div class="mining-scene" id="miningScene">
+        <div class="mining-stats">
+          <div class="item">
+            <div class="label">Saniyelik</div>
+            <div class="value">$<span id="perSecond">0.00</span></div>
+          </div>
+          <div class="item">
+            <div class="label">Dakikalık</div>
+            <div class="value">$<span id="perMinute">0.00</span></div>
+          </div>
+          <div class="item">
+            <div class="label">Saatlik</div>
+            <div class="value">$<span id="perHour">0.00</span></div>
+          </div>
+        </div>
+        <div class="miner">⛏️</div>
+        <div class="rock"></div>
+        <div class="spark">✨</div>
+      </div>
+      
+      <div class="menu-row">
         <div class="menu-btn" onclick="showPage('buy')">
           <span class="icon">💎</span>
           <span class="label">SATIN AL</span>
-        </div>
-        <div class="menu-btn" onclick="showPage('production')">
-          <span class="icon">⚡</span>
-          <span class="label">ÜRETİM</span>
         </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
           <span class="icon">💸</span>
@@ -544,61 +487,63 @@
     </div>
 
     <!-- Satın Al -->
-    <div id="page-buy" class="mine-frame hidden">
-      <h2>💎 Mining Gücü Satın Al</h2>
-      <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10">
-      <button class="action-btn" onclick="buyProduct()">⛏️ Satın Al</button>
-      <button class="action-btn secondary" onclick="showPage('home')">← Geri</button>
-    </div>
-
-    <!-- Üretim -->
-    <div id="page-production" class="mine-frame hidden">
-      <h2>⚡ Üretim Hattı</h2>
-      <div id="products"></div>
-      <button class="action-btn secondary" onclick="showPage('home')">← Geri</button>
+    <div id="page-buy" class="hidden">
+      <div class="page-title">💎 Mining Gücü Satın Al</div>
+      <div class="form-group">
+        <label>Miktar ($)</label>
+        <input type="number" id="buyAmount" placeholder="10" min="1" value="10">
+      </div>
+      <button class="btn" onclick="buyProduct()">️ Satın Al</button>
+      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
     </div>
 
     <!-- Çekim -->
-    <div id="page-withdraw" class="mine-frame hidden">
-      <h2>💸 Çekim Talebi</h2>
+    <div id="page-withdraw" class="hidden">
+      <div class="page-title">💸 Çekim Talebi</div>
       
-      <div class="balance-display">
+      <div class="balance-box">
         <div class="label">Mevcut Bakiye</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 14px; margin-top: 10px; color: #1a0f0a;">Minimum çekim: $0.01</div>
+        <div style="font-size: 12px; margin-top: 8px; color: #1a0f0a;">Min: $0.01</div>
       </div>
       
-      <label style="color: #ffd700; font-family: 'MedievalSharp', cursive; font-size: 18px;">Çekilecek Miktar (USD)</label>
-      <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
+      <div class="form-group">
+        <label>Çekilecek Miktar (USD)</label>
+        <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
+      </div>
       
-      <label style="color: #ffd700; font-family: 'MedievalSharp', cursive; font-size: 18px;">🪙 Kripto Seçimi</label>
-      <select id="withdrawCrypto" onchange="updateCryptoAmount()">
-        <option value="trx">TRX (TRON) - ~$0.12</option>
-        <option value="bnb">BNB (Binance Coin) - ~$600</option>
-        <option value="xrp">XRP (Ripple) - ~$0.50</option>
-      </select>
+      <div class="form-group">
+        <label>🪙 Kripto Seçimi</label>
+        <select id="withdrawCrypto" onchange="updateCryptoAmount()">
+          <option value="trx">TRX (TRON) - ~$0.12</option>
+          <option value="bnb">BNB - ~$600</option>
+          <option value="xrp">XRP (Ripple) - ~$0.50</option>
+        </select>
+      </div>
       
-      <div class="crypto-info">
+      <div class="crypto-box">
         <strong>Karşılık:</strong><br>
         <span class="value"><span id="cryptoEquivalent">0.00</span> <span id="cryptoSymbol">TRX</span></span>
       </div>
       
-      <label style="color: #ffd700; font-family: 'MedievalSharp', cursive; font-size: 18px;">📍 Cüzdan Adresi</label>
-      <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin...">
+      <div class="form-group">
+        <label>📍 Cüzdan Adresi</label>
+        <input type="text" id="walletAddress" placeholder="Cüzdan adresi...">
+      </div>
       
-      <button class="action-btn" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
-      <button class="action-btn secondary" onclick="showPage('home')">← Geri</button>
+      <button class="btn" onclick="requestWithdrawal()">💸 Çekim Oluştur</button>
+      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
     </div>
 
     <!-- Admin -->
-    <div id="page-admin" class="mine-frame hidden">
-      <h2>🔐 Admin Panel</h2>
-      <div class="tab-container">
+    <div id="page-admin" class="hidden">
+      <div class="page-title">🔐 Admin Panel</div>
+      <div class="tabs">
         <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Ödemeler</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
       </div>
       <div id="adminContent">Yükleniyor...</div>
-      <button class="action-btn secondary" onclick="showPage('home')">← Geri</button>
+      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
     </div>
   </div>
 
@@ -640,9 +585,9 @@
     
     auth.signInAnonymously().then(() => {
       userId = auth.currentUser.uid;
-      console.log('✅ Giriş yapıldı:', userId);
       listenToData();
       setInterval(updateEarnings, 1000);
+      setInterval(createGem, 3000);
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
@@ -658,7 +603,6 @@
           totalWithdrawn = data.totalWithdrawn || 0;
           balance = lifetimeEarnings - totalWithdrawn;
           updateUI();
-          console.log('📡 Güncel:', products.length, 'ürün, Bakiye: $' + balance.toFixed(2));
         }
       }, (error) => {
         console.error('Dinleme hatası:', error);
@@ -693,30 +637,8 @@
         alert('✅ Ödeme oluşturuldu! Admin onayı bekleniyor.');
         document.getElementById('buyAmount').value = '';
       } catch (error) {
-        console.error('Satın alma hatası:', error);
         alert('❌ Hata: ' + error.message);
       }
-    }
-    
-    function renderProducts() {
-      const container = document.getElementById('products');
-      container.innerHTML = '';
-      
-      if (products.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #c9a961; font-family: MedievalSharp, cursive; font-size: 18px;">Henüz ürün yok. Admin onayı bekleyen ödemeleriniz varsa onaylanınca burada görünecek.</p>';
-        return;
-      }
-      
-      products.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'product-card';
-        div.innerHTML = `
-          <div class="amount">$${p.amount}</div>
-          <div class="detail">Kazanç: $${(p.earned || 0).toFixed(6)}</div>
-          <div class="detail">Saniyelik: $${(p.amount * PER_SECOND).toFixed(6)}</div>
-        `;
-        container.appendChild(div);
-      });
     }
     
     async function updateEarnings() {
@@ -746,7 +668,11 @@
       document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
-      renderProducts();
+      
+      const perSec = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
+      document.getElementById('perSecond').textContent = perSec.toFixed(4);
+      document.getElementById('perMinute').textContent = (perSec * 60).toFixed(2);
+      document.getElementById('perHour').textContent = (perSec * 3600).toFixed(2);
     }
     
     function updateCryptoAmount() {
@@ -764,9 +690,9 @@
       const crypto = document.getElementById('withdrawCrypto').value;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
-      if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
+      if (amount < 0.01) { alert('❌ Min: $0.01'); return; }
       if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
-      if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
+      if (!walletAddress) { alert('❌ Cüzdan gerekli!'); return; }
       
       const withdrawal = {
         id: 'wd_' + Date.now(),
@@ -791,12 +717,11 @@
           withdrawalRequests: [...currentWithdrawals, withdrawal]
         }, { merge: true });
         
-        alert('✅ Çekim talebi oluşturuldu! Admin onayı bekleniyor.');
+        alert('✅ Çekim talebi oluşturuldu!');
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
         updateCryptoAmount();
       } catch (error) {
-        console.error('Çekim hatası:', error);
         alert('❌ Hata: ' + error.message);
       }
     }
@@ -815,22 +740,22 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80; font-family: MedievalSharp, cursive; font-size: 18px;">✅ Bekleyen ödeme yok</p>';
+        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen ödeme yok</p>';
         
         let html = '';
         pending.forEach(p => {
           html += `
-            <div class="pending-item">
+            <div class="item-card">
               <strong>$${p.amount}</strong> - ${p.userName}<br>
-              <small>ID: ${p.id}</small><br>
-              <button class="action-btn approve" onclick="approvePayment('${p.userDocId}', '${p.id}')">✓ Onayla</button>
-              <button class="action-btn reject" onclick="rejectPayment('${p.userDocId}', '${p.id}')"> Reddet</button>
+              <small>ID: ${p.id}</small>
+              <button class="btn approve" onclick="approvePayment('${p.userDocId}', '${p.id}')">✓ Onayla</button>
+              <button class="btn reject" onclick="rejectPayment('${p.userDocId}', '${p.id}')">✕ Reddet</button>
             </div>
           `;
         });
         return html;
       } catch (error) {
-        return '<p style="color: #f87171;">❌ Hata: ' + error.message + '</p>';
+        return '<p style="color: #f87171;"> Hata: ' + error.message + '</p>';
       }
     }
     
@@ -850,24 +775,24 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80; font-family: MedievalSharp, cursive; font-size: 18px;">✅ Bekleyen çekim yok</p>';
+        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen çekim yok</p>';
         
         let html = '';
         pending.forEach(w => {
           html += `
-            <div class="withdrawal-item">
+            <div class="item-card">
               <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}<br>
-              <small>Kullanıcı: ${w.userName}</small><br>
-              <small>Cüzdan: ${w.walletAddress}</small><br>
-              <small>ID: ${w.id}</small><br>
-              <button class="action-btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ Onayla</button>
-              <button class="action-btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ Reddet</button>
+              <small>Kullanıcı: ${w.userName}</small>
+              <small>Cüzdan: ${w.walletAddress}</small>
+              <small>ID: ${w.id}</small>
+              <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ Onayla</button>
+              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ Reddet</button>
             </div>
           `;
         });
         return html;
       } catch (error) {
-        return '<p style="color: #f87171;"> Hata: ' + error.message + '</p>';
+        return '<p style="color: #f87171;">❌ Hata: ' + error.message + '</p>';
       }
     }
     
@@ -943,7 +868,7 @@
           pendingPayments: newPending
         }, { merge: true });
         
-        alert('❌ Ödeme reddedildi!');
+        alert(' Ödeme reddedildi!');
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
@@ -961,7 +886,7 @@
         const withdrawalRequests = data.withdrawalRequests || [];
         
         const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
-        if (withdrawalIndex === -1) { alert('Çekim talebi bulunamadı!'); return; }
+        if (withdrawalIndex === -1) { alert('Çekim bulunamadı!'); return; }
         
         const withdrawal = withdrawalRequests[withdrawalIndex];
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
@@ -977,8 +902,7 @@
           totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
         }, { merge: true });
         
-        console.log('✅ Çekim onaylandı:', withdrawalId);
-        alert('✅ Çekim onaylandı! $' + withdrawal.amount + ' bakiyeden düşüldü.');
+        alert('✅ Çekim onaylandı!');
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
@@ -1008,18 +932,31 @@
     }
     
     function showPage(page) {
-      document.querySelectorAll('.mine-frame').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.container > div').forEach(c => c.classList.add('hidden'));
       document.getElementById('page-' + page).classList.remove('hidden');
       
-      if (page === 'production') {
-        renderProducts();
-      } else if (page === 'withdraw') {
+      if (page === 'withdraw') {
         updateCryptoAmount();
       } else if (page === 'admin') {
         loadAdmin();
       }
       
       window.scrollTo(0, 0);
+    }
+    
+    // Elmas oluşturma animasyonu
+    function createGem() {
+      if (products.length === 0) return;
+      
+      const scene = document.getElementById('miningScene');
+      const gem = document.createElement('div');
+      gem.className = 'gem-float';
+      gem.textContent = ['💎', '💰', '✨', '⭐'][Math.floor(Math.random() * 4)];
+      gem.style.left = (60 + Math.random() * 20) + '%';
+      gem.style.bottom = '40px';
+      scene.appendChild(gem);
+      
+      setTimeout(() => gem.remove(), 2000);
     }
   </script>
 </body>
