@@ -1290,11 +1290,62 @@
       if (pageId === 'profile') renderProfile();
       if (pageId === 'leaderboard') renderLeaderboard();
       if (pageId === 'production') {
-        loadApprovedProducts().then(() => {
-          restoreConveyorProducts();
-        });
-      }
+     async function loadApprovedProducts() {
+  try {
+    if (!firebaseUserId) {
+      console.log('firebaseUserId yok');
+      return;
     }
+    
+    console.log('Ürünler yükleniyor...', firebaseUserId);
+    const userRef = db.collection('users').doc(firebaseUserId);
+    const doc = await userRef.get();
+    
+    if (doc.exists) {
+      const data = doc.data();
+      const approvedPayments = data.approvedPayments || [];
+      console.log('Firestore approvedPayments:', approvedPayments.length);
+      
+      // Mevcut ürünleri TEMİZLE
+      state.purchasedProducts = [];
+      state.totalInvested = 0;
+      state.totalEarned = 0;
+      
+      // Her approved payment için ürün oluştur
+      for (const payment of approvedPayments) {
+        const product = {
+          id: payment.id,
+          amount: payment.amount,
+          earned: payment.earned || 0,  // Firestore'dan al
+          startTime: payment.approvedAt || Date.now(),
+          isBonus: false,
+          tier: getTier(payment.amount)
+        };
+        
+        state.purchasedProducts.push(product);
+        state.totalInvested += payment.amount;
+        state.totalEarned += (payment.earned || 0);
+        
+        console.log('✅ Ürün yüklendi:', payment.amount, 'USD, Kazanç:', payment.earned || 0);
+      }
+      
+      console.log('Toplam ürün:', state.purchasedProducts.length);
+      console.log('Toplam yatırım:', state.totalInvested);
+      console.log('Toplam kazanç:', state.totalEarned);
+      
+      saveState();
+      
+      // UI'ı güncelle
+      updateStats();
+      updateLevel();
+      
+    } else {
+      console.log('Kullanıcı dokümanı bulunamadı');
+    }
+  } catch (error) {
+    console.error('❌ Ürünler yüklenemedi:', error);
+  }
+}
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('open');
       haptic('impact');
