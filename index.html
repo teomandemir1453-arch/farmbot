@@ -27,6 +27,82 @@
   
   .container { max-width: 500px; margin: 0 auto; }
   
+  /* Maden Temalı Çerçeve */
+  .mine-frame {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 8px solid #8b4513;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 
+      0 0 30px rgba(139, 69, 19, 0.5),
+      inset 0 0 40px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+  }
+  
+  .mine-frame::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: 
+      radial-gradient(circle at 10% 10%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 90% 90%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .mine-frame > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Dekoratif Köşe Elementleri */
+  .corner-decoration {
+    position: absolute;
+    font-size: 30px;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+  }
+  
+  .corner-tl { top: -15px; left: -15px; }
+  .corner-tr { top: -15px; right: -15px; }
+  .corner-bl { bottom: -15px; left: -15px; }
+  .corner-br { bottom: -15px; right: -15px; }
+  
+  /* Maden Aksesuarları */
+  .mine-accessories {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .accessory {
+    position: absolute;
+    font-size: 24px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+  }
+  
+  .accessory:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+  .accessory:nth-child(2) { top: 20%; right: 5%; animation-delay: 0.5s; }
+  .accessory:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 1s; }
+  .accessory:nth-child(4) { bottom: 25%; right: 8%; animation-delay: 1.5s; }
+  .accessory:nth-child(5) { top: 50%; left: 3%; animation-delay: 2s; }
+  .accessory:nth-child(6) { top: 40%; right: 3%; animation-delay: 2.5s; }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+  
   .header { text-align: center; padding: 15px 0; }
   
   h1 {
@@ -41,27 +117,28 @@
   
   .stat-box {
     flex: 1;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(101, 67, 33, 0.3) 100%);
+    border: 2px solid #8b4513;
     border-radius: 8px;
     padding: 8px 5px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.2);
   }
   
   .stat-box .icon { font-size: 20px; margin-bottom: 3px; }
-  .stat-box .label { font-size: 9px; color: #888; margin-bottom: 2px; text-transform: uppercase; }
+  .stat-box .label { font-size: 9px; color: #d4af37; margin-bottom: 2px; text-transform: uppercase; }
   .stat-box .value {
     font-size: 14px;
     font-weight: bold;
     color: #ffd700;
     font-family: 'Cinzel', serif;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
   }
   
   /* Gelişmiş Madenci Sahnesi */
   .mining-scene {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 3px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 3px solid #8b4513;
     border-radius: 12px;
     padding: 30px 20px;
     margin-bottom: 12px;
@@ -83,7 +160,6 @@
     pointer-events: none;
   }
   
-  /* Madenci */
   .miner {
     position: absolute;
     bottom: 40px;
@@ -105,7 +181,6 @@
     50% { transform: translateX(-50%) rotate(0deg) translateY(0); }
   }
   
-  /* Çekiç */
   .pickaxe {
     position: absolute;
     bottom: 80px;
@@ -125,7 +200,6 @@
     50% { transform: rotate(-45deg) translateY(-30px); }
   }
   
-  /* Fener/Işık */
   .lantern {
     position: absolute;
     bottom: 60px;
@@ -141,7 +215,6 @@
     50% { filter: drop-shadow(0 0 25px rgba(255, 220, 50, 0.8)) brightness(1.2); }
   }
   
-  /* Işık Huzmesi */
   .light-beam {
     position: absolute;
     bottom: 70px;
@@ -161,7 +234,6 @@
     50% { transform: rotate(15deg); opacity: 0.8; }
   }
   
-  /* Taş */
   .rock {
     position: absolute;
     bottom: 20px;
@@ -197,7 +269,6 @@
     100% { transform: translateX(-50%) scale(1); opacity: 1; }
   }
   
-  /* Dolar Efektleri - Sadece Altın Rengi */
   .dollar-float {
     position: absolute;
     font-size: 28px;
@@ -232,13 +303,13 @@
     display: flex;
     justify-content: space-between;
     background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 6px;
     padding: 8px;
   }
   
   .mining-stats .item { text-align: center; }
-  .mining-stats .label { font-size: 9px; color: #888; text-transform: uppercase; }
+  .mining-stats .label { font-size: 9px; color: #d4af37; text-transform: uppercase; }
   .mining-stats .value {
     font-size: 16px;
     font-weight: bold;
@@ -259,7 +330,6 @@
     100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
   }
   
-  /* Viking Tarzı Menü Butonları */
   .menu-row { 
     display: flex; 
     gap: 6px; 
@@ -268,14 +338,14 @@
   
   .menu-btn {
     flex: 1;
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
+    border: 2px solid #a0522d;
     border-radius: 8px;
     padding: 10px 5px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.2);
     position: relative;
     overflow: hidden;
   }
@@ -287,7 +357,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
     transition: left 0.5s ease;
   }
   
@@ -298,7 +368,7 @@
   .menu-btn:hover {
     transform: translateY(-2px);
     border-color: #ffd700;
-    box-shadow: 0 5px 12px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    box-shadow: 0 5px 12px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.3);
   }
   
   .menu-btn:active { 
@@ -315,7 +385,7 @@
   
   .menu-btn .label {
     font-size: 10px;
-    color: #d4af37;
+    color: #ffd700;
     font-family: 'Cinzel', serif;
     font-weight: 600;
     text-transform: uppercase;
@@ -323,23 +393,18 @@
   }
   
   .menu-btn.withdraw { 
-    background: linear-gradient(135deg, #3a3a2a 0%, #2a2a1a 100%);
-    border-color: #4a4a2a;
-  }
-  
-  .menu-btn.tasks { 
-    background: linear-gradient(135deg, #2a3a2a 0%, #1a2a1a 100%);
-    border-color: #2a4a2a;
+    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
+    border-color: #daa520;
   }
   
   .menu-btn.profile { 
-    background: linear-gradient(135deg, #2a2a3a 0%, #1a1a2a 100%);
-    border-color: #2a2a4a;
+    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+    border-color: #6a6a6a;
   }
   
   .menu-btn.admin { 
-    background: linear-gradient(135deg, #3a2a3a 0%, #2a1a2a 100%);
-    border-color: #4a2a4a;
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border-color: #aa0000;
   }
   
   .form-group { margin-bottom: 12px; }
@@ -357,7 +422,7 @@
     width: 100%;
     padding: 10px;
     background: #1a1a1a;
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 6px;
     color: #d4af37;
     font-size: 13px;
@@ -372,7 +437,7 @@
   
   .btn {
     background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
-    border: 2px solid #6b5a14;
+    border: 2px solid #daa520;
     border-radius: 6px;
     padding: 10px 16px;
     color: #ffd700;
@@ -399,56 +464,51 @@
   
   .btn.secondary {
     background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
-    border-color: #3a3a3a;
+    border-color: #6a6a6a;
     color: #c0c0c0;
   }
   
   .btn.approve {
     background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 100%);
-    border-color: #1a4a1a;
+    border-color: #3a7a3a;
     color: #90ee90;
   }
   
   .btn.reject {
     background: linear-gradient(135deg, #5a2d2d 0%, #3a1a1a 100%);
-    border-color: #4a1a1a;
+    border-color: #7a3a3a;
     color: #ff9999;
   }
   
-  .btn.complete {
-    background: linear-gradient(135deg, #2d4a5a 0%, #1a2a3a 100%);
-    border-color: #1a3a4a;
-    color: #99ccff;
-  }
-  
   .balance-box {
-    background: linear-gradient(135deg, #2a2a1a 0%, #1a1a0a 100%);
-    border: 3px solid #4a4a2a;
+    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
+    border: 3px solid #daa520;
     border-radius: 10px;
     padding: 15px;
     text-align: center;
     margin-bottom: 12px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   
   .balance-box .label {
     font-size: 12px;
-    color: #888;
+    color: #1a1a1a;
     font-family: 'Cinzel', serif;
     margin-bottom: 5px;
+    font-weight: 600;
   }
   
   .balance-box .amount {
     font-size: 28px;
     font-weight: bold;
-    color: #ffd700;
+    color: #1a1a1a;
     font-family: 'Cinzel', serif;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
   }
   
   .crypto-box {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 8px;
     padding: 12px;
     text-align: center;
@@ -468,26 +528,15 @@
     font-family: 'Cinzel', serif;
   }
   
-  /* Satın Al Kartı */
   .deposit-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 3px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 3px solid #8b4513;
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 16px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(139, 69, 19, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
-  }
-  
-  .deposit-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
-    pointer-events: none;
   }
   
   .deposit-header {
@@ -525,13 +574,13 @@
   
   .deposit-header .subtitle { 
     font-size: 11px; 
-    color: #888;
+    color: #d4af37;
     font-family: 'Cinzel', serif;
   }
   
   .deposit-info {
     background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 12px;
@@ -543,7 +592,7 @@
     align-items: center;
     margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(74, 74, 74, 0.5);
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
   }
   
   .deposit-info .info-row:last-child {
@@ -554,13 +603,13 @@
   
   .deposit-info .info-label {
     font-size: 11px;
-    color: #888;
+    color: #d4af37;
     font-family: 'Cinzel', serif;
   }
   
   .deposit-info .info-value {
     font-size: 13px;
-    color: #d4af37;
+    color: #ffd700;
     font-weight: bold;
     font-family: 'Cinzel', serif;
   }
@@ -572,7 +621,7 @@
   
   .wallet-box {
     background: rgba(0, 0, 0, 0.4);
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 12px;
@@ -580,7 +629,7 @@
   
   .wallet-box .wallet-label {
     font-size: 10px;
-    color: #888;
+    color: #d4af37;
     margin-bottom: 6px;
     display: block;
     font-family: 'Cinzel', serif;
@@ -589,22 +638,22 @@
   .wallet-box .wallet-address {
     font-family: 'Courier New', monospace;
     font-size: 10px;
-    color: #d4af37;
+    color: #ffd700;
     word-break: break-all;
     padding: 8px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
     margin-bottom: 8px;
-    border: 2px dashed rgba(74, 74, 74, 0.5);
+    border: 2px dashed rgba(139, 69, 19, 0.5);
   }
   
   .wallet-box .copy-btn {
     width: 100%;
-    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
-    border: 2px solid #3a3a3a;
+    background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
+    border: 2px solid #a0522d;
     border-radius: 6px;
     padding: 8px;
-    color: #d4af37;
+    color: #ffd700;
     font-size: 12px;
     font-weight: bold;
     font-family: 'Cinzel', serif;
@@ -620,8 +669,8 @@
   }
   
   .warning-box {
-    background: linear-gradient(135deg, rgba(90, 30, 30, 0.3) 0%, rgba(60, 20, 20, 0.3) 100%);
-    border: 2px solid #4a2a2a;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(90, 0, 0, 0.3) 100%);
+    border: 2px solid #8b0000;
     border-radius: 8px;
     padding: 10px;
     margin-top: 12px;
@@ -636,21 +685,20 @@
   }
   
   .warning-box .warning-text {
-    color: #888;
+    color: #d4af37;
     font-size: 10px;
     line-height: 1.5;
     font-family: 'Cinzel', serif;
   }
   
-  /* Profil Sayfası */
   .profile-card {
-    background: linear-gradient(135deg, #1a1a2a 0%, #2a2a3a 100%);
-    border: 3px solid #2a2a4a;
+    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+    border: 3px solid #6a6a6a;
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 16px;
     text-align: center;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
   .profile-avatar {
@@ -677,13 +725,13 @@
   
   .profile-id {
     font-size: 11px;
-    color: #888;
+    color: #d4af37;
     font-family: 'Courier New', monospace;
   }
   
   .lang-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
     border-radius: 10px;
     padding: 16px;
     margin-bottom: 12px;
@@ -709,7 +757,7 @@
     align-items: center;
     justify-content: space-between;
     background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #4a4a4a;
+    border: 2px solid #8b4513;
     border-radius: 8px;
     padding: 10px 12px;
     cursor: pointer;
@@ -755,8 +803,8 @@
   }
   
   .stats-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
     border-radius: 10px;
     padding: 16px;
     margin-bottom: 12px;
@@ -775,197 +823,22 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(74, 74, 74, 0.3);
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
   }
   
   .stat-row:last-child { border-bottom: none; }
   
   .stat-row .label {
-    color: #888;
+    color: #d4af37;
     font-size: 12px;
     font-family: 'Cinzel', serif;
   }
   
   .stat-row .value {
-    color: #d4af37;
+    color: #ffd700;
     font-weight: bold;
     font-family: 'Cinzel', serif;
     font-size: 14px;
-  }
-  
-  /* Görevler Sayfası */
-  .tasks-container {
-    background: linear-gradient(135deg, #1a2a1a 0%, #2a3a2a 100%);
-    border: 3px solid #2a4a2a;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-  
-  .tasks-container h3 {
-    font-family: 'Cinzel', serif;
-    color: #d4af37;
-    text-align: center;
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  .task-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
-    border-radius: 10px;
-    padding: 12px;
-    margin: 8px 0;
-    position: relative;
-  }
-  
-  .task-card.completed {
-    border-color: #2a4a2a;
-    opacity: 0.7;
-  }
-  
-  .task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .task-title {
-    font-family: 'Cinzel', serif;
-    color: #d4af37;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  .task-reward {
-    color: #90ee90;
-    font-weight: bold;
-    font-size: 16px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .task-desc {
-    color: #888;
-    font-size: 11px;
-    margin-bottom: 8px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .task-link {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 6px;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    word-break: break-all;
-    font-size: 10px;
-    color: #60a5fa;
-    font-family: 'Courier New', monospace;
-  }
-  
-  .task-timer {
-    background: rgba(139, 69, 19, 0.2);
-    border: 2px solid #4a4a2a;
-    border-radius: 6px;
-    padding: 8px;
-    text-align: center;
-    margin-bottom: 8px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #d4af37;
-    font-family: 'Courier New', monospace;
-  }
-  
-  .task-btn {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-family: 'Cinzel', serif;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 12px;
-    text-transform: uppercase;
-  }
-  
-  .task-btn.start {
-    background: linear-gradient(135deg, #2a4a5a 0%, #1a2a3a 100%);
-    color: #99ccff;
-    border: 2px solid #1a3a4a;
-  }
-  
-  .task-btn.complete {
-    background: linear-gradient(135deg, #2a5a2a 0%, #1a3a1a 100%);
-    color: #90ee90;
-    border: 2px solid #1a4a1a;
-  }
-  
-  .task-btn.completed {
-    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-    color: #666;
-    border: 2px solid #3a3a3a;
-    cursor: not-allowed;
-  }
-  
-  /* Admin Görev Yönetimi */
-  .admin-task-form {
-    background: linear-gradient(135deg, #2a1a2a 0%, #3a2a3a 100%);
-    border: 3px solid #4a2a4a;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .admin-task-form h3 {
-    font-family: 'Cinzel', serif;
-    color: #d4af37;
-    text-align: center;
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  .admin-task-list {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
-    border-radius: 10px;
-    padding: 12px;
-  }
-  
-  .admin-task-item {
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #4a4a4a;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 8px 0;
-  }
-  
-  .admin-task-item .task-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-  
-  .admin-task-item .task-name {
-    color: #d4af37;
-    font-weight: bold;
-    font-size: 13px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .admin-task-item .task-price {
-    color: #90ee90;
-    font-weight: bold;
-    font-size: 14px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .admin-task-item .task-actions {
-    display: flex;
-    gap: 6px;
   }
   
   .tabs { 
@@ -977,10 +850,10 @@
   .tab {
     flex: 1;
     padding: 8px;
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
     border-radius: 6px;
-    color: #888;
+    color: #d4af37;
     font-size: 11px;
     font-family: 'Cinzel', serif;
     cursor: pointer;
@@ -996,8 +869,8 @@
   }
   
   .item-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #4a4a4a;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
     border-left: 4px solid #b8860b;
     border-radius: 8px;
     padding: 12px;
@@ -1006,14 +879,14 @@
   
   .item-card strong {
     font-size: 16px;
-    color: #d4af37;
+    color: #ffd700;
     font-family: 'Cinzel', serif;
     font-weight: 700;
   }
   
   .item-card small {
     display: block;
-    color: #888;
+    color: #d4af37;
     margin: 4px 0;
     font-size: 11px;
     font-family: 'Cinzel', serif;
@@ -1024,7 +897,7 @@
   .page-title {
     font-family: 'Cinzel', serif;
     font-size: 18px;
-    color: #d4af37;
+    color: #ffd700;
     text-align: center;
     margin-bottom: 12px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
@@ -1046,7 +919,7 @@
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease;
-    border: 2px solid #2a4a2a;
+    border: 2px solid #3a7a3a;
   }
   
   .toast.show { opacity: 1; }
@@ -1056,53 +929,19 @@
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(139, 69, 19, 0.2);
-    border: 2px solid #4a4a2a;
+    background: rgba(139, 69, 19, 0.3);
+    border: 2px solid #8b4513;
     border-radius: 15px;
     padding: 4px 12px;
     font-size: 10px;
-    color: #888;
+    color: #d4af37;
     font-family: 'Cinzel', serif;
     animation: pulse 2s ease-in-out infinite;
   }
   
-  .video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    background: #000;
-    border: 2px solid #4a4a4a;
-  }
-  
-  .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .progress-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-    overflow: hidden;
-    margin: 8px 0;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #b8860b, #ffd700);
-    transition: width 0.3s ease;
-  }
-  
   .error-message {
-    background: linear-gradient(135deg, rgba(90, 30, 30, 0.4) 0%, rgba(60, 20, 20, 0.4) 100%);
-    border: 2px solid #4a2a2a;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.4) 0%, rgba(90, 0, 0, 0.4) 100%);
+    border: 2px solid #8b0000;
     border-radius: 8px;
     padding: 12px;
     margin: 12px 0;
@@ -1115,6 +954,36 @@
   .error-icon {
     font-size: 30px;
     margin-bottom: 8px;
+  }
+  
+  .offline-earnings {
+    background: linear-gradient(135deg, #4a3a1a 0%, #2a1a0a 100%);
+    border: 2px solid #8b6914;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .offline-earnings .title {
+    color: #ffd700;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-family: 'Cinzel', serif;
+  }
+  
+  .offline-earnings .amount {
+    color: #90ee90;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Cinzel', serif;
   }
 </style>
 </head>
@@ -1161,12 +1030,11 @@
           </div>
         </div>
         
-        <!-- Madenci Sahnesi -->
         <div class="miner" id="miner">⛏️</div>
         <div class="pickaxe" id="pickaxe">⚒️</div>
-        <div class="lantern">🏮</div>
+        <div class="lantern"></div>
         <div class="light-beam"></div>
-        <div class="rock" id="rock" onclick="breakRock()"></div>
+        <div class="rock" id="rock" onclick="breakRock()">🪨</div>
       </div>
       
       <div class="menu-row">
@@ -1174,23 +1042,19 @@
           <span class="icon">💎</span>
           <span class="label" data-i18n="buy">BUY</span>
         </div>
-        <div class="menu-btn tasks" onclick="showPage('tasks')">
-          <span class="icon">📋</span>
-          <span class="label" data-i18n="tasks">TASKS</span>
-        </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
           <span class="icon">💸</span>
           <span class="label" data-i18n="withdraw">WITHDRAW</span>
         </div>
+        <div class="menu-btn profile" onclick="showPage('profile')">
+          <span class="icon"></span>
+          <span class="label" data-i18n="profile">PROFILE</span>
+        </div>
       </div>
       
       <div class="menu-row">
-        <div class="menu-btn profile" onclick="showPage('profile')">
-          <span class="icon">👤</span>
-          <span class="label" data-i18n="profile">PROFILE</span>
-        </div>
         <div class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display: none;">
-          <span class="icon"></span>
+          <span class="icon">🔐</span>
           <span class="label" data-i18n="admin">ADMIN</span>
         </div>
       </div>
@@ -1211,7 +1075,7 @@
         
         <div class="deposit-info">
           <div class="info-row">
-            <span class="info-label" data-i18n="minDeposit"> Minimum Deposit</span>
+            <span class="info-label" data-i18n="minDeposit">💰 Minimum Deposit</span>
             <span class="info-value highlight">2 TRX (~$0.24)</span>
           </div>
           <div class="info-row">
@@ -1219,7 +1083,7 @@
             <span class="info-value">TRON (TRC20)</span>
           </div>
           <div class="info-row">
-            <span class="info-label" data-i18n="rate"> Rate</span>
+            <span class="info-label" data-i18n="rate">💱 Rate</span>
             <span class="info-value">1 TRX ≈ $0.12</span>
           </div>
         </div>
@@ -1227,13 +1091,13 @@
         <div class="form-group">
           <label data-i18n="usdAmount">💵 Amount to Receive (USD)</label>
           <input type="number" id="usdAmount" placeholder="10" min="0.24" step="0.01" oninput="calculateTRX()">
-          <div style="margin-top: 6px; font-size: 11px; color: #888;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #90ee90; font-weight: bold;">0</span> TRX</div>
+          <div style="margin-top: 6px; font-size: 11px; color: #d4af37;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #90ee90; font-weight: bold;">0</span> TRX</div>
         </div>
         
         <div class="wallet-box">
           <span class="wallet-label" data-i18n="trxWallet">📍 TRX Wallet Address</span>
           <div class="wallet-address" id="walletAddressDisplay">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</div>
-          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress">📋 Copy Address</button>
+          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress"> Copy Address</button>
         </div>
         
         <div class="warning-box">
@@ -1246,32 +1110,18 @@
         </div>
       </div>
       
-      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit"> Notify Deposit</button>
-      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
-    </div>
-
-    <!-- Görevler Sayfası -->
-    <div id="page-tasks" class="hidden">
-      <div class="page-title" data-i18n="tasksTitle">📋 Tasks & Earn</div>
-      
-      <div class="tasks-container">
-        <h3 data-i18n="availableTasks">Available Tasks</h3>
-        <div id="tasksList">
-          <p style="text-align: center; color: #888; padding: 20px;" data-i18n="noTasks">No tasks available</p>
-        </div>
-      </div>
-      
+      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
       <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Çekim -->
     <div id="page-withdraw" class="hidden">
-      <div class="page-title" data-i18n="withdrawTitle">💸 Withdrawal Request</div>
+      <div class="page-title" data-i18n="withdrawTitle"> Withdrawal Request</div>
       
       <div class="balance-box">
         <div class="label" data-i18n="currentBalance">Current Balance</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 11px; margin-top: 6px; color: #888;" data-i18n="minWithdraw">Min: $0.01</div>
+        <div style="font-size: 11px; margin-top: 6px; color: #1a1a1a;" data-i18n="minWithdraw">Min: $0.01</div>
       </div>
       
       <div class="form-group">
@@ -1313,11 +1163,11 @@
       </div>
       
       <div class="lang-section">
-        <h3 data-i18n="selectLang"> Select Language</h3>
+        <h3 data-i18n="selectLang">🌐 Select Language</h3>
         <div class="lang-list">
           <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
             <div class="lang-info">
-              <span class="flag">🇬</span>
+              <span class="flag">🇬🇧</span>
               <span class="lang-name">English</span>
             </div>
             <span class="check">✓</span>
@@ -1331,7 +1181,7 @@
           </div>
           <div class="lang-option" data-lang="ru" onclick="changeLanguage('ru')">
             <div class="lang-info">
-              <span class="flag">🇷</span>
+              <span class="flag">🇷🇺</span>
               <span class="lang-name">Русский</span>
             </div>
             <span class="check">✓</span>
@@ -1345,7 +1195,7 @@
           </div>
           <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
             <div class="lang-info">
-              <span class="flag">🇸</span>
+              <span class="flag">🇪🇸</span>
               <span class="lang-name">Español</span>
             </div>
             <span class="check">✓</span>
@@ -1383,7 +1233,6 @@
       <div class="tabs">
         <button class="tab active" onclick="switchAdminTab('deposits', this)" data-i18n="deposits">💳 Deposits</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)" data-i18n="withdrawals">💸 Withdrawals</button>
-        <button class="tab" onclick="switchAdminTab('tasks', this)" data-i18n="adminTasks">📋 Tasks</button>
       </div>
       
       <div id="adminContent">Loading...</div>
@@ -1416,8 +1265,7 @@
     let currentAdminTab = 'deposits';
     let unsubscribe = null;
     let currentLang = 'tr';
-    let userTasks = [];
-    let currentTaskTimer = null;
+    let lastUpdateTime = Date.now();
     
     const ROI_DAYS = 100;
     const DAILY_RATE = 1 / ROI_DAYS;
@@ -1435,68 +1283,42 @@
         balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım',
         perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat',
         clickMiner: 'Taşa Tıkla!',
-        buy: 'SATIN AL', tasks: 'GÖREV', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN',
+        buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN',
         buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı',
-        minDeposit: ' Minimum Yatırım', network: ' Ağ',
-        rate: '💱 Kur', usdAmount: '💵 Alınacak Miktar (USD)',
+        minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ',
+        rate: '💱 Kur', usdAmount: ' Alınacak Miktar (USD)',
         youWillGet: 'Alacağınız: ',
         trxWallet: '📍 TRX Cüzdan Adresi',
-        copyAddress: ' Adresi Kopyala', warning: '️ ÖNEMLİ',
+        copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ',
         warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir',
         notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri',
         withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye',
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)',
-        selectCrypto: '🪙 Kripto Seçimi', equivalent: 'Karşılık:',
+        selectCrypto: ' Kripto Seçimi', equivalent: 'Karşılık:',
         walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur',
         profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi',
-        myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç',
+        myStats: ' İstatistiklerim', totalEarned: 'Toplam Kazanç',
         totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün',
         totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel',
-        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler', adminTasks: '📋 Görevler',
+        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler',
         noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!',
         minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} gerekli!`,
         depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.',
         withdrawCreated: '✅ Çekim talebi oluşturuldu!',
-        insufficientBalance: '❌ Yetersiz bakiye!',
+        insufficientBalance: ' Yetersiz bakiye!',
         walletRequired: '❌ Cüzdan adresi gerekli!',
-        minWithdrawAmount: ' Minimum: $0.01',
-        approved: '✅ Onaylandı!', rejected: ' Reddedildi!',
+        minWithdrawAmount: '❌ Minimum: $0.01',
+        approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!',
         error: '❌ Hata: ',
-        tasksTitle: ' Görev Yap Para Kazan',
-        availableTasks: 'Mevcut Görevler',
-        noTasks: 'Henüz görev yok',
-        watchVideo: 'Video İzle',
-        subscribe: 'Abone Ol',
-        follow: 'Takip Et',
-        visit: 'Ziyaret Et',
-        startTask: 'Göreve Başla',
-        completeTask: 'Tamamla',
-        completed: 'Tamamlandı',
-        taskReward: 'Ödül: $',
-        watchTime: 'İzleme Süresi: ',
-        seconds: 'saniye',
-        addTask: 'Görev Ekle',
-        taskTitle: 'Görev Başlığı',
-        taskType: 'Görev Tipi',
-        taskLink: 'Görev Linki',
-        taskRewardAmount: 'Görev Ücreti ($)',
-        watchDuration: 'İzleme Süresi (saniye)',
-        createTask: 'Görev Oluştur',
-        deleteTask: 'Sil',
-        taskAdded: '✅ Görev eklendi!',
-        taskDeleted: '✅ Görev silindi!',
-        taskCompleted: '✅ Görev tamamlandı! $',
-        added: ' eklendi',
-        alreadyCompleted: '❌ Bu görev zaten tamamlandı!',
-        watchComplete: 'İzleme tamamlandı! Tamamla butonuna basın.',
-        selectTaskType: 'Görev tipi seçin',
-        adminPermissionError: '❌ Yetkiniz yok! Bu sayfa sadece yönetici içindir.'
+        adminPermissionError: '❌ Yetkiniz yok! Bu sayfa sadece yönetici içindir.',
+        offlineEarnings: '⛏️ Offline Kazanç',
+        earnedWhileAway: 'Program kapalıyken kazandınız:'
       },
       en: {
         balance: 'Balance', products: 'Products', investment: 'Investment',
         perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour',
         clickMiner: 'Click Rock!',
-        buy: 'BUY', tasks: 'TASKS', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
+        buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
         buyTitle: '💎 Buy Mining Power', trxInvest: 'TRX Investment',
         minDeposit: '💰 Minimum Deposit', network: '🌐 Network',
         rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)',
@@ -1505,15 +1327,15 @@
         copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT',
         warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes',
         notifyDeposit: '📤 Notify Deposit', back: '← Back',
-        withdrawTitle: ' Withdrawal Request', currentBalance: 'Current Balance',
+        withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance',
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)',
-        selectCrypto: ' Select Crypto', equivalent: 'Equivalent:',
-        walletAddr: '📍 Wallet Address', createWithdraw: '💸 Create Withdrawal',
+        selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:',
+        walletAddr: ' Wallet Address', createWithdraw: '💸 Create Withdrawal',
         profileTitle: '👤 Profile', selectLang: '🌐 Select Language',
         myStats: '📊 My Statistics', totalEarned: 'Total Earned',
         totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products',
         totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel',
-        deposits: '💳 Deposits', withdrawals: '💸 Withdrawals', adminTasks: '📋 Tasks',
+        deposits: '💳 Deposits', withdrawals: ' Withdrawals',
         noPending: '✅ No pending items', copied: '✅ Address copied!',
         minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} required!`,
         depositSent: '✅ Deposit notification sent! Waiting for admin approval.',
@@ -1523,46 +1345,20 @@
         minWithdrawAmount: '❌ Minimum: $0.01',
         approved: '✅ Approved!', rejected: '❌ Rejected!',
         error: '❌ Error: ',
-        tasksTitle: '📋 Tasks & Earn',
-        availableTasks: 'Available Tasks',
-        noTasks: 'No tasks available',
-        watchVideo: 'Watch Video',
-        subscribe: 'Subscribe',
-        follow: 'Follow',
-        visit: 'Visit',
-        startTask: 'Start Task',
-        completeTask: 'Complete',
-        completed: 'Completed',
-        taskReward: 'Reward: $',
-        watchTime: 'Watch Time: ',
-        seconds: 'seconds',
-        addTask: 'Add Task',
-        taskTitle: 'Task Title',
-        taskType: 'Task Type',
-        taskLink: 'Task Link',
-        taskRewardAmount: 'Task Reward ($)',
-        watchDuration: 'Watch Duration (seconds)',
-        createTask: 'Create Task',
-        deleteTask: 'Delete',
-        taskAdded: '✅ Task added!',
-        taskDeleted: '✅ Task deleted!',
-        taskCompleted: '✅ Task completed! $',
-        added: ' added',
-        alreadyCompleted: '❌ This task is already completed!',
-        watchComplete: 'Watching complete! Click Complete button.',
-        selectTaskType: 'Select task type',
-        adminPermissionError: '❌ No permission! This page is for admin only.'
+        adminPermissionError: '❌ No permission! This page is for admin only.',
+        offlineEarnings: '⛏️ Offline Earnings',
+        earnedWhileAway: 'You earned while away:'
       },
       ru: {
         balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции',
         perSec: 'В сек', perMin: 'В мин', perHour: 'В час',
         clickMiner: 'Кликни камень!',
-        buy: 'КУПИТЬ', tasks: 'ЗАДАНИЯ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН',
+        buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН',
         buyTitle: '💎 Купить мощность', trxInvest: 'Инвестиция TRX',
-        minDeposit: '💰 Минимальный депозит', network: '🌐 Сеть',
-        rate: '💱 Курс', usdAmount: '💵 Сумма получения (USD)',
+        minDeposit: ' Минимальный депозит', network: '🌐 Сеть',
+        rate: ' Курс', usdAmount: '💵 Сумма получения (USD)',
         youWillGet: 'Вы получите: ',
-        trxWallet: '📍 Адрес кошелька TRX',
+        trxWallet: ' Адрес кошелька TRX',
         copyAddress: '📋 Копировать адрес', warning: '⚠️ ВАЖНО',
         warningText: '• Используйте только сеть <strong>TRON (TRC20)</strong><br>• Отправьте ТОЧНУЮ сумму, показанную выше<br>• Подтверждение может занять 5-30 минут',
         notifyDeposit: '📤 Уведомить о депозите', back: '← Назад',
@@ -1574,7 +1370,7 @@
         myStats: '📊 Моя статистика', totalEarned: 'Всего заработано',
         totalWithdrawn: 'Всего выведено', activeProducts: 'Активные продукты',
         totalInvestment: 'Всего инвестиций', adminTitle: '🔐 Панель админа',
-        deposits: ' Депозиты', withdrawals: ' Выводы', adminTasks: '📋 Задания',
+        deposits: '💳 Депозиты', withdrawals: '💸 Выводы',
         noPending: '✅ Нет ожидающих', copied: '✅ Адрес скопирован!',
         minUsd: `❌ Минимум $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ Уведомление отправлено! Ожидание одобрения админа.',
@@ -1584,43 +1380,17 @@
         minWithdrawAmount: '❌ Минимум: $0.01',
         approved: '✅ Одобрено!', rejected: '❌ Отклонено!',
         error: '❌ Ошибка: ',
-        tasksTitle: '📋 Задания и заработок',
-        availableTasks: 'Доступные задания',
-        noTasks: 'Заданий нет',
-        watchVideo: 'Смотреть видео',
-        subscribe: 'Подписаться',
-        follow: 'Подписаться',
-        visit: 'Посетить',
-        startTask: 'Начать задание',
-        completeTask: 'Выполнить',
-        completed: 'Выполнено',
-        taskReward: 'Награда: $',
-        watchTime: 'Время просмотра: ',
-        seconds: 'секунд',
-        addTask: 'Добавить задание',
-        taskTitle: 'Название задания',
-        taskType: 'Тип задания',
-        taskLink: 'Ссылка',
-        taskRewardAmount: 'Награда ($)',
-        watchDuration: 'Длительность просмотра (сек)',
-        createTask: 'Создать задание',
-        deleteTask: 'Удалить',
-        taskAdded: '✅ Задание добавлено!',
-        taskDeleted: '✅ Задание удалено!',
-        taskCompleted: '✅ Задание выполнено! $',
-        added: ' добавлено',
-        alreadyCompleted: '❌ Это задание уже выполнено!',
-        watchComplete: 'Просмотр завершен! Нажмите кнопку Выполнить.',
-        selectTaskType: 'Выберите тип задания',
-        adminPermissionError: '❌ Нет доступа! Эта страница только для админа.'
+        adminPermissionError: '❌ Нет доступа! Эта страница только для админа.',
+        offlineEarnings: '⛏️ Оффлайн заработок',
+        earnedWhileAway: 'Вы заработали пока отсутствовали:'
       },
       ar: {
         balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار',
         perSec: 'في الثانية', perMin: 'في الدقيقة', perHour: 'في الساعة',
         clickMiner: 'انقر على الصخرة!',
-        buy: 'شراء', tasks: 'المهام', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
+        buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
         buyTitle: '💎 شراء قوة التعدين', trxInvest: 'استثمار TRX',
-        minDeposit: '💰 الحد الأدنى للإيداع', network: ' الشبكة',
+        minDeposit: '💰 الحد الأدنى للإيداع', network: '🌐 الشبكة',
         rate: '💱 السعر', usdAmount: '💵 المبلغ المستلم (USD)',
         youWillGet: 'ستحصل على: ',
         trxWallet: '📍 عنوان محفظة TRX',
@@ -1629,15 +1399,15 @@
         notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
         withdrawTitle: '💸 طلب السحب', currentBalance: 'الرصيد الحالي',
         minWithdraw: 'الحد الأدنى: $0.01', withdrawAmount: 'مبلغ السحب (USD)',
-        selectCrypto: ' اختر العملة', equivalent: 'المعادل:',
-        walletAddr: '📍 عنوان المحفظة', createWithdraw: '💸 إنشاء سحب',
-        profileTitle: '👤 الملف الشخصي', selectLang: '🌐 اختيار اللغة',
-        myStats: '📊 إحصائياتي', totalEarned: 'إجمالي الأرباح',
+        selectCrypto: '🪙 اختر العملة', equivalent: 'المعادل:',
+        walletAddr: ' عنوان المحفظة', createWithdraw: ' إنشاء سحب',
+        profileTitle: '👤 الملف الشخصي', selectLang: ' اختيار اللغة',
+        myStats: ' إحصائياتي', totalEarned: 'إجمالي الأرباح',
         totalWithdrawn: 'إجمالي المسحوب', activeProducts: 'المنتجات النشطة',
         totalInvestment: 'إجمالي الاستثمار', adminTitle: ' لوحة المسؤول',
-        deposits: '💳 الإيداعات', withdrawals: ' السحوبات', adminTasks: ' المهام',
+        deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات',
         noPending: '✅ لا توجد معاملات معلقة', copied: '✅ تم نسخ العنوان!',
-        minUsd: ` الحد الأدنى $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
+        minUsd: `❌ الحد الأدنى $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ تم إرسال الإشعار! في انتظار موافقة المسؤول.',
         withdrawCreated: '✅ تم إنشاء طلب السحب!',
         insufficientBalance: '❌ رصيد غير كافٍ!',
@@ -1645,49 +1415,23 @@
         minWithdrawAmount: '❌ الحد الأدنى: $0.01',
         approved: '✅ تمت الموافقة!', rejected: '❌ مرفوض!',
         error: '❌ خطأ: ',
-        tasksTitle: '📋 المهام والربح',
-        availableTasks: 'المهام المتاحة',
-        noTasks: 'لا توجد مهام',
-        watchVideo: 'مشاهدة الفيديو',
-        subscribe: 'اشتراك',
-        follow: 'متابعة',
-        visit: 'زيارة',
-        startTask: 'بدء المهمة',
-        completeTask: 'إكمال',
-        completed: 'مكتمل',
-        taskReward: 'المكافأة: $',
-        watchTime: 'مدة المشاهدة: ',
-        seconds: 'ثواني',
-        addTask: 'إضافة مهمة',
-        taskTitle: 'عنوان المهمة',
-        taskType: 'نوع المهمة',
-        taskLink: 'رابط المهمة',
-        taskRewardAmount: 'مكافأة المهمة ($)',
-        watchDuration: 'مدة المشاهدة (ثواني)',
-        createTask: 'إنشاء مهمة',
-        deleteTask: 'حذف',
-        taskAdded: '✅ تمت إضافة المهمة!',
-        taskDeleted: '✅ تم حذف المهمة!',
-        taskCompleted: '✅ اكتملت المهمة! $',
-        added: ' تمت الإضافة',
-        alreadyCompleted: '❌ هذه المهمة مكتملة بالفعل!',
-        watchComplete: 'اكتملت المشاهدة! اضغط على زر إكمال.',
-        selectTaskType: 'اختر نوع المهمة',
-        adminPermissionError: '❌ لا صلاحية! هذه الصفحة للمسؤول فقط.'
+        adminPermissionError: '❌ لا صلاحية! هذه الصفحة للمسؤول فقط.',
+        offlineEarnings: '⛏️ أرباح عدم الاتصال',
+        earnedWhileAway: 'ربحت أثناء غيابك:'
       },
       es: {
         balance: 'Saldo', products: 'Productos', investment: 'Inversión',
         perSec: 'Por seg', perMin: 'Por min', perHour: 'Por hora',
         clickMiner: '¡Clic Roca!',
-        buy: 'COMPRAR', tasks: 'TAREAS', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN',
+        buy: 'COMPRAR', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN',
         buyTitle: '💎 Comprar Poder Minero', trxInvest: 'Inversión TRX',
-        minDeposit: '💰 Depósito Mínimo', network: ' Red',
-        rate: '💱 Tasa', usdAmount: '💵 Cantidad a Recibir (USD)',
+        minDeposit: '💰 Depósito Mínimo', network: '🌐 Red',
+        rate: ' Tasa', usdAmount: ' Cantidad a Recibir (USD)',
         youWillGet: 'Recibirás: ',
         trxWallet: '📍 Dirección TRX',
-        copyAddress: '📋 Copiar Dirección', warning: '️ IMPORTANTE',
+        copyAddress: '📋 Copiar Dirección', warning: '⚠️ IMPORTANTE',
         warningText: '• Use solo la red <strong>TRON (TRC20)</strong><br>• Envíe la cantidad EXACTA mostrada arriba<br>• La confirmación puede tardar 5-30 minutos',
-        notifyDeposit: '📤 Notificar Depósito', back: '← Atrás',
+        notifyDeposit: ' Notificar Depósito', back: '← Atrás',
         withdrawTitle: '💸 Solicitud de Retiro', currentBalance: 'Saldo Actual',
         minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad de Retiro (USD)',
         selectCrypto: '🪙 Seleccionar Cripto', equivalent: 'Equivalente:',
@@ -1696,9 +1440,9 @@
         myStats: '📊 Mis Estadísticas', totalEarned: 'Total Ganado',
         totalWithdrawn: 'Total Retirado', activeProducts: 'Productos Activos',
         totalInvestment: 'Inversión Total', adminTitle: '🔐 Panel Admin',
-        deposits: '💳 Depósitos', withdrawals: '💸 Retiros', adminTasks: '📋 Tareas',
+        deposits: '💳 Depósitos', withdrawals: '💸 Retiros',
         noPending: '✅ Sin pendientes', copied: '✅ ¡Dirección copiada!',
-        minUsd: `❌ ¡Mínimo $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
+        minUsd: ` ¡Mínimo $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ ¡Notificación enviada! Esperando aprobación del admin.',
         withdrawCreated: '✅ ¡Solicitud de retiro creada!',
         insufficientBalance: '❌ ¡Saldo insuficiente!',
@@ -1706,35 +1450,9 @@
         minWithdrawAmount: '❌ Mínimo: $0.01',
         approved: '✅ ¡Aprobado!', rejected: '❌ ¡Rechazado!',
         error: '❌ Error: ',
-        tasksTitle: '📋 Tareas y Ganar',
-        availableTasks: 'Tareas Disponibles',
-        noTasks: 'No hay tareas',
-        watchVideo: 'Ver Video',
-        subscribe: 'Suscribirse',
-        follow: 'Seguir',
-        visit: 'Visitar',
-        startTask: 'Iniciar Tarea',
-        completeTask: 'Completar',
-        completed: 'Completado',
-        taskReward: 'Recompensa: $',
-        watchTime: 'Tiempo de visualización: ',
-        seconds: 'segundos',
-        addTask: 'Agregar Tarea',
-        taskTitle: 'Título de la Tarea',
-        taskType: 'Tipo de Tarea',
-        taskLink: 'Enlace de la Tarea',
-        taskRewardAmount: 'Recompensa ($)',
-        watchDuration: 'Duración (segundos)',
-        createTask: 'Crear Tarea',
-        deleteTask: 'Eliminar',
-        taskAdded: '✅ ¡Tarea agregada!',
-        taskDeleted: '✅ ¡Tarea eliminada!',
-        taskCompleted: '✅ ¡Tarea completada! $',
-        added: ' agregado',
-        alreadyCompleted: '❌ ¡Esta tarea ya está completada!',
-        watchComplete: '¡Visualización completada! Haz clic en Completar.',
-        selectTaskType: 'Seleccionar tipo de tarea',
-        adminPermissionError: '❌ ¡Sin permiso! Esta página es solo para admin.'
+        adminPermissionError: '❌ ¡Sin permiso! Esta página es solo para admin.',
+        offlineEarnings: '⛏️ Ganancias sin conexión',
+        earnedWhileAway: 'Ganaste mientras estabas ausente:'
       }
     };
     
@@ -1748,11 +1466,9 @@
     auth.signInAnonymously().then(() => {
       userId = auth.currentUser.uid;
       listenToData();
-      loadTasks();
       setInterval(updateEarnings, 1000);
       setInterval(createGem, 3000);
       
-      // Admin kontrolü - DÜZELTİLDİ
       if (currentUser) {
         const userIdStr = currentUser.id ? currentUser.id.toString() : '';
         if (userIdStr === ADMIN_ID) {
@@ -1823,25 +1539,20 @@
       try {
         localStorage.setItem('selectedLang', lang);
       } catch(e) {}
-      
-      loadTasks();
     }
     
-    // Madenci Animasyonları
     function breakRock() {
       const rock = document.getElementById('rock');
       const miner = document.getElementById('miner');
       const pickaxe = document.getElementById('pickaxe');
       
-      // Animasyonları tetikle
       rock.classList.remove('spawn');
-      void rock.offsetWidth; // Reflow
+      void rock.offsetWidth;
       rock.classList.add('breaking');
       
       miner.classList.add('mining');
       pickaxe.classList.add('swing');
       
-      // Dolar efektleri oluştur (sadece altın rengi)
       const rect = rock.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -1858,7 +1569,6 @@
           dollar.style.left = (centerX + offsetX) + 'px';
           dollar.style.top = (centerY + offsetY) + 'px';
           
-          // Sadece altın/sarı tonları
           const goldColors = ['#ffd700', '#ffd700', '#daa520', '#ffd700', '#ffb700'];
           dollar.style.color = goldColors[Math.floor(Math.random() * goldColors.length)];
           
@@ -1867,19 +1577,16 @@
         }, i * 50);
       }
       
-      // Animasyonları temizle
       setTimeout(() => {
         miner.classList.remove('mining');
         pickaxe.classList.remove('swing');
       }, 500);
       
-      // Yeni taş oluştur
       setTimeout(() => {
         rock.classList.remove('breaking');
         rock.classList.add('spawn');
       }, 500);
       
-      // Titreşim
       if (tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('medium');
       }
@@ -1895,151 +1602,56 @@
           lifetimeEarnings = data.lifetimeEarnings || 0;
           totalWithdrawn = data.totalWithdrawn || 0;
           balance = lifetimeEarnings - totalWithdrawn;
+          
+          // Offline earnings hesapla
+          const lastUpdate = data.lastUpdateTime || Date.now();
+          const now = Date.now();
+          const offlineSeconds = (now - lastUpdate) / 1000;
+          
+          if (offlineSeconds > 5 && products.length > 0) {
+            const offlineEarnings = products.reduce((sum, p) => {
+              return sum + (p.amount * PER_SECOND * offlineSeconds);
+            }, 0);
+            
+            if (offlineEarnings > 0.01) {
+              lifetimeEarnings += offlineEarnings;
+              balance = lifetimeEarnings - totalWithdrawn;
+              
+              // Offline earnings bildirimini göster
+              showOfflineEarnings(offlineEarnings);
+            }
+          }
+          
           updateUI();
+          
+          // Last update time güncelle
+          db.collection('users').doc(userId).set({
+            lastUpdateTime: now
+          }, { merge: true });
         }
       }, (error) => {
         console.error('Dinleme hatası:', error);
       });
     }
     
-    async function loadTasks() {
-      try {
-        const snapshot = await db.collection('tasks').get();
-        const tasks = [];
-        
-        snapshot.forEach(doc => {
-          tasks.push({ id: doc.id, ...doc.data() });
-        });
-        
-        // Kullanıcının tamamladığı görevleri al
-        const userDoc = await db.collection('users').doc(userId).get();
-        const completedTasks = userDoc.exists ? (userDoc.data().completedTasks || []) : [];
-        
-        userTasks = tasks.map(task => ({
-          ...task,
-          completed: completedTasks.includes(task.id),
-          watching: false,
-          watchProgress: 0
-        }));
-        
-        renderTasks();
-      } catch (error) {
-        console.error('Görev yükleme hatası:', error);
-      }
-    }
-    
-    function renderTasks() {
-      const container = document.getElementById('tasksList');
+    function showOfflineEarnings(amount) {
+      const homePage = document.getElementById('page-home');
+      if (!homePage) return;
       
-      if (!container) return;
+      const offlineDiv = document.createElement('div');
+      offlineDiv.className = 'offline-earnings';
+      offlineDiv.innerHTML = `
+        <div class="title">${translations[currentLang].offlineEarnings}</div>
+        <div class="amount">${translations[currentLang].earnedWhileAway} $${amount.toFixed(2)}</div>
+      `;
       
-      if (userTasks.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: #888; padding: 20px;">${translations[currentLang].noTasks}</p>`;
-        return;
-      }
+      homePage.insertBefore(offlineDiv, homePage.firstChild);
       
-      let html = '';
-      userTasks.forEach(task => {
-        const typeText = translations[currentLang][task.type] || task.type;
-        
-        html += `
-          <div class="task-card ${task.completed ? 'completed' : ''}">
-            <div class="task-header">
-              <div class="task-title">${task.title}</div>
-              <div class="task-reward">${translations[currentLang].taskReward}${task.reward}</div>
-            </div>
-            <div class="task-desc">${typeText}</div>
-            <div class="task-link">${task.link}</div>
-            ${task.type === 'video' ? `
-              <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/${getYouTubeID(task.link)}" frameborder="0" allowfullscreen></iframe>
-              </div>
-              <div class="task-timer" id="timer-${task.id}">${task.watchDuration || 30}s</div>
-              <div class="progress-bar">
-                <div class="progress-fill" id="progress-${task.id}" style="width: 0%"></div>
-              </div>
-            ` : ''}
-            <button class="task-btn ${task.completed ? 'completed' : task.type === 'video' ? 'start' : 'complete'}" 
-                    onclick="${task.completed ? '' : task.type === 'video' ? `startVideoTask('${task.id}')` : `completeTask('${task.id}', ${task.reward})`}"
-                    ${task.completed ? 'disabled' : ''}>
-              ${task.completed ? translations[currentLang].completed : task.type === 'video' ? translations[currentLang].startTask : translations[currentLang].completeTask}
-            </button>
-          </div>
-        `;
-      });
-      
-      container.innerHTML = html;
-    }
-    
-    function getYouTubeID(url) {
-      const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-      return match ? match[1] : '';
-    }
-    
-    let videoTimers = {};
-    
-    async function startVideoTask(taskId) {
-      const task = userTasks.find(t => t.id === taskId);
-      if (!task || task.completed) {
-        showToast(translations[currentLang].alreadyCompleted);
-        return;
-      }
-      
-      const duration = task.watchDuration || 30;
-      let progress = 0;
-      
-      videoTimers[taskId] = setInterval(() => {
-        progress++;
-        const percent = (progress / duration) * 100;
-        
-        const timerEl = document.getElementById(`timer-${taskId}`);
-        const progressEl = document.getElementById(`progress-${taskId}`);
-        
-        if (timerEl) timerEl.textContent = `${duration - progress}s`;
-        if (progressEl) progressEl.style.width = `${percent}%`;
-        
-        if (progress >= duration) {
-          clearInterval(videoTimers[taskId]);
-          showToast(translations[currentLang].watchComplete);
-          renderTasks();
-        }
-      }, 1000);
-    }
-    
-    async function completeTask(taskId, reward) {
-      const task = userTasks.find(t => t.id === taskId);
-      if (!task || task.completed) {
-        showToast(translations[currentLang].alreadyCompleted);
-        return;
-      }
-      
-      // Video göreviyse ve süre dolmadıysa kontrol et
-      if (task.type === 'video') {
-        const duration = task.watchDuration || 30;
-        if (videoTimers[taskId]) {
-          showToast('Lütfen videoyu izleyin!');
-          return;
-        }
-      }
-      
-      try {
-        // Kullanıcıya para ekle
-        const userRef = db.collection('users').doc(userId);
-        const doc = await userRef.get();
-        const data = doc.data() || {};
-        const completedTasks = data.completedTasks || [];
-        const newLifetimeEarnings = (data.lifetimeEarnings || 0) + reward;
-        
-        await userRef.set({
-          completedTasks: [...completedTasks, taskId],
-          lifetimeEarnings: newLifetimeEarnings
-        }, { merge: true });
-        
-        showToast(`${translations[currentLang].taskCompleted}${reward}${translations[currentLang].added}`);
-        loadTasks();
-      } catch (error) {
-        showToast(translations[currentLang].error + error.message);
-      }
+      setTimeout(() => {
+        offlineDiv.style.opacity = '0';
+        offlineDiv.style.transition = 'opacity 1s ease';
+        setTimeout(() => offlineDiv.remove(), 1000);
+      }, 5000);
     }
     
     async function submitDeposit() {
@@ -2094,7 +1706,8 @@
       try {
         await db.collection('users').doc(userId).set({
           approvedPayments: products,
-          lifetimeEarnings: lifetimeEarnings
+          lifetimeEarnings: lifetimeEarnings,
+          lastUpdateTime: Date.now()
         }, { merge: true });
       } catch (error) {
         console.error('Kaydetme hatası:', error);
@@ -2258,7 +1871,7 @@
               <small>${walletText}: ${w.walletAddress}</small>
               <small>ID: ${w.id}</small>
               <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ ${approveText}</button>
-              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ ${rejectText}</button>
+              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')"> ${rejectText}</button>
             </div>
           `;
         });
@@ -2268,138 +1881,7 @@
       }
     }
     
-    async function loadAdminTasks() {
-      try {
-        const snapshot = await db.collection('tasks').get();
-        const tasks = [];
-        
-        snapshot.forEach(doc => {
-          tasks.push({ id: doc.id, ...doc.data() });
-        });
-        
-        const addTaskText = translations[currentLang].addTask;
-        const taskTitleText = translations[currentLang].taskTitle;
-        const taskTypeText = translations[currentLang].taskType;
-        const taskLinkText = translations[currentLang].taskLink;
-        const taskRewardAmountText = translations[currentLang].taskRewardAmount;
-        const watchDurationText = translations[currentLang].watchDuration;
-        const createTaskText = translations[currentLang].createTask;
-        const watchVideoText = translations[currentLang].watchVideo;
-        const subscribeText = translations[currentLang].subscribe;
-        const followText = translations[currentLang].follow;
-        const visitText = translations[currentLang].visit;
-        const deleteTaskText = translations[currentLang].deleteTask;
-        const availableTasksText = translations[currentLang].availableTasks;
-        const noTasksText = translations[currentLang].noTasks;
-        
-        let html = `
-          <div class="admin-task-form">
-            <h3>${addTaskText}</h3>
-            <div class="form-group">
-              <label>${taskTitleText}</label>
-              <input type="text" id="adminTaskTitle" placeholder="${taskTitleText}">
-            </div>
-            <div class="form-group">
-              <label>${taskTypeText}</label>
-              <select id="adminTaskType">
-                <option value="video">${watchVideoText}</option>
-                <option value="subscribe">${subscribeText}</option>
-                <option value="follow">${followText}</option>
-                <option value="visit">${visitText}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>${taskLinkText}</label>
-              <input type="text" id="adminTaskLink" placeholder="https://...">
-            </div>
-            <div class="form-group">
-              <label>${taskRewardAmountText}</label>
-              <input type="number" id="adminTaskReward" placeholder="0.50" min="0.01" step="0.01">
-            </div>
-            <div class="form-group" id="watchDurationGroup">
-              <label>${watchDurationText}</label>
-              <input type="number" id="adminWatchDuration" placeholder="30" min="10" step="5">
-            </div>
-            <button class="btn" onclick="createTask()">${createTaskText}</button>
-          </div>
-          <div class="admin-task-list">
-            <h3 style="color: #d4af37; margin-bottom: 12px; text-align: center; font-family: 'Cinzel', serif;">${availableTasksText}</h3>
-        `;
-        
-        if (tasks.length === 0) {
-          html += `<p style="text-align: center; color: #888; padding: 20px;">${noTasksText}</p>`;
-        } else {
-          tasks.forEach(task => {
-            html += `
-              <div class="admin-task-item">
-                <div class="task-info">
-                  <span class="task-name">${task.title}</span>
-                  <span class="task-price">$${task.reward}</span>
-                </div>
-                <div style="color: #888; font-size: 11px; margin-bottom: 6px;">${task.type} - ${task.link.substring(0, 50)}...</div>
-                <div class="task-actions">
-                  <button class="btn reject" onclick="deleteTask('${task.id}')">${deleteTaskText}</button>
-                </div>
-              </div>
-            `;
-          });
-        }
-        
-        html += '</div>';
-        return html;
-      } catch (error) {
-        return `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].error} ${error.message}</div>`;
-      }
-    }
-    
-    async function createTask() {
-      const title = document.getElementById('adminTaskTitle').value;
-      const type = document.getElementById('adminTaskType').value;
-      const link = document.getElementById('adminTaskLink').value;
-      const reward = parseFloat(document.getElementById('adminTaskReward').value);
-      const watchDuration = parseInt(document.getElementById('adminWatchDuration').value) || 30;
-      
-      if (!title || !link || !reward) {
-        alert('Tüm alanları doldurun!');
-        return;
-      }
-      
-      try {
-        await db.collection('tasks').add({
-          title,
-          type,
-          link,
-          reward,
-          watchDuration: type === 'video' ? watchDuration : 0,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        showToast(translations[currentLang].taskAdded);
-        loadAdminTasks();
-        
-        // Formu temizle
-        document.getElementById('adminTaskTitle').value = '';
-        document.getElementById('adminTaskLink').value = '';
-        document.getElementById('adminTaskReward').value = '';
-      } catch (error) {
-        alert(translations[currentLang].error + error.message);
-      }
-    }
-    
-    async function deleteTask(taskId) {
-      if (!confirm('Görevi silmek istediğinize emin misiniz?')) return;
-      
-      try {
-        await db.collection('tasks').doc(taskId).delete();
-        showToast(translations[currentLang].taskDeleted);
-        loadAdminTasks();
-      } catch (error) {
-        alert(translations[currentLang].error + error.message);
-      }
-    }
-    
     async function loadAdmin() {
-      // Admin kontrolü - DÜZELTİLDİ
       if (!currentUser) {
         document.getElementById('adminContent').innerHTML = `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].adminPermissionError}</div>`;
         return;
@@ -2414,14 +1896,12 @@
       const container = document.getElementById('adminContent');
       const loadingText = currentLang === 'tr' ? 'Yükleniyor...' : currentLang === 'en' ? 'Loading...' : currentLang === 'ru' ? 'Загрузка...' : currentLang === 'ar' ? 'جاري التحميل...' : 'Cargando...';
       
-      container.innerHTML = `<p style="text-align: center; color: #888; padding: 20px;">${loadingText}</p>`;
+      container.innerHTML = `<p style="text-align: center; color: #d4af37; padding: 20px;">${loadingText}</p>`;
       
       if (currentAdminTab === 'deposits') {
         container.innerHTML = await loadAdminDeposits();
       } else if (currentAdminTab === 'withdrawals') {
         container.innerHTML = await loadAdminWithdrawals();
-      } else if (currentAdminTab === 'tasks') {
-        container.innerHTML = await loadAdminTasks();
       }
     }
     
@@ -2588,8 +2068,6 @@
         }
       } else if (page === 'buy') {
         calculateTRX();
-      } else if (page === 'tasks') {
-        loadTasks();
       }
       
       window.scrollTo(0, 0);
