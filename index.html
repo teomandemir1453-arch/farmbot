@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -25,31 +25,19 @@
     overflow-x: hidden;
   }
   
-  .container {
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  .container { max-width: 500px; margin: 0 auto; }
   
-  .header {
-    text-align: center;
-    padding: 15px 0;
-  }
+  .header { text-align: center; padding: 15px 0; }
   
   h1 {
     font-family: 'MedievalSharp', cursive;
     font-size: 24px;
     color: #ffd700;
-    text-shadow: 
-      0 0 10px rgba(255, 215, 0, 0.8),
-      2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
     letter-spacing: 2px;
   }
   
-  .stats-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-  }
+  .stats-row { display: flex; gap: 8px; margin-bottom: 15px; }
   
   .stat-box {
     flex: 1;
@@ -78,9 +66,7 @@
     margin-bottom: 15px;
     position: relative;
     overflow: hidden;
-    box-shadow: 
-      0 0 20px rgba(139, 69, 19, 0.5),
-      inset 0 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(139, 69, 19, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.5);
     min-height: 200px;
   }
   
@@ -173,11 +159,7 @@
     100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
   }
   
-  .menu-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-  }
+  .menu-row { display: flex; gap: 8px; margin-bottom: 15px; }
   
   .menu-btn {
     flex: 1;
@@ -206,6 +188,7 @@
   }
   
   .menu-btn.withdraw { background: linear-gradient(135deg, #8b6914 0%, #5c4a0e 100%); }
+  .menu-btn.profile { background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); }
   .menu-btn.admin { background: linear-gradient(135deg, #4a0e4e 0%, #2d0830 100%); }
   
   .form-group { margin-bottom: 15px; }
@@ -272,14 +255,6 @@
     border-color: #b91c1c;
   }
   
-  .btn.copy-btn {
-    background: linear-gradient(135deg, #4a9eff 0%, #2a6acc 100%);
-    border-color: #1a4a9c;
-    color: white;
-    padding: 8px 15px;
-    font-size: 12px;
-  }
-  
   .balance-box {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
     border: 3px solid #b8860b;
@@ -312,11 +287,7 @@
     margin: 15px 0;
   }
   
-  .crypto-box strong {
-    color: #ffd700;
-    font-size: 16px;
-  }
-  
+  .crypto-box strong { color: #ffd700; font-size: 16px; }
   .crypto-box .value {
     color: #4ade80;
     font-size: 20px;
@@ -324,7 +295,6 @@
     font-family: 'MedievalSharp', cursive;
   }
   
-  /* Yatırım Bilgi Kartı */
   .deposit-card {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
     border: 3px solid #f3ba2f;
@@ -333,9 +303,7 @@
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
-    box-shadow: 
-      0 0 30px rgba(243, 186, 47, 0.3),
-      inset 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(243, 186, 47, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
   }
   
   .deposit-card::before {
@@ -385,10 +353,7 @@
     text-shadow: 0 0 10px rgba(243, 186, 47, 0.5);
   }
   
-  .deposit-header .subtitle {
-    font-size: 12px;
-    color: #c9a961;
-  }
+  .deposit-header .subtitle { font-size: 12px; color: #c9a961; }
   
   .deposit-info {
     background: rgba(0, 0, 0, 0.4);
@@ -437,7 +402,6 @@
     border-radius: 10px;
     padding: 12px;
     margin-bottom: 15px;
-    position: relative;
   }
   
   .wallet-box .wallet-label {
@@ -478,10 +442,6 @@
     box-shadow: 0 4px 15px rgba(243, 186, 47, 0.5);
   }
   
-  .wallet-box .copy-btn:active {
-    transform: translateY(0);
-  }
-  
   .warning-box {
     background: linear-gradient(135deg, rgba(248, 113, 113, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
     border: 2px solid #f87171;
@@ -504,11 +464,151 @@
     line-height: 1.5;
   }
   
-  .tabs {
+  /* Profil Sayfası */
+  .profile-card {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 3px solid #3b82f6;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+  }
+  
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    border-radius: 50%;
+    margin: 0 auto 15px;
     display: flex;
-    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  
+  .profile-name {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 22px;
+    color: #ffd700;
+    margin-bottom: 5px;
+  }
+  
+  .profile-id {
+    font-size: 12px;
+    color: #93c5fd;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .lang-section {
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
+    border-radius: 12px;
+    padding: 20px;
     margin-bottom: 15px;
   }
+  
+  .lang-section h3 {
+    font-family: 'MedievalSharp', cursive;
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .lang-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .lang-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .lang-option:hover {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+  }
+  
+  .lang-option.active {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  }
+  
+  .lang-option .lang-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .lang-option .flag {
+    font-size: 28px;
+  }
+  
+  .lang-option .lang-name {
+    font-family: 'MedievalSharp', cursive;
+    color: #f4e4c1;
+    font-size: 16px;
+  }
+  
+  .lang-option .check {
+    color: #4ade80;
+    font-size: 20px;
+    display: none;
+  }
+  
+  .lang-option.active .check {
+    display: block;
+  }
+  
+  .stats-section {
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b4513;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .stats-section h3 {
+    font-family: 'MedievalSharp', cursive;
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+  }
+  
+  .stat-row:last-child { border-bottom: none; }
+  
+  .stat-row .label {
+    color: #c9a961;
+    font-size: 14px;
+  }
+  
+  .stat-row .value {
+    color: #ffd700;
+    font-weight: bold;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 16px;
+  }
+  
+  .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
   
   .tab {
     flex: 1;
@@ -586,23 +686,23 @@
     <!-- Ana Sayfa -->
     <div id="page-home">
       <div class="header">
-        <h1> HASH MINING ⚡</h1>
+        <h1 id="mainTitle">⚡ HASH MINING ⚡</h1>
       </div>
       
       <div class="stats-row">
         <div class="stat-box">
           <div class="icon">💰</div>
-          <div class="label">Bakiye</div>
+          <div class="label" data-i18n="balance">Balance</div>
           <div class="value">$<span id="balance">0.00</span></div>
         </div>
         <div class="stat-box">
           <div class="icon">📦</div>
-          <div class="label">Ürün</div>
+          <div class="label" data-i18n="products">Products</div>
           <div class="value"><span id="productCount">0</span></div>
         </div>
         <div class="stat-box">
           <div class="icon">💵</div>
-          <div class="label">Yatırım</div>
+          <div class="label" data-i18n="investment">Investment</div>
           <div class="value">$<span id="totalInvested">0</span></div>
         </div>
       </div>
@@ -610,15 +710,15 @@
       <div class="mining-scene" id="miningScene">
         <div class="mining-stats">
           <div class="item">
-            <div class="label">Saniyelik</div>
+            <div class="label" data-i18n="perSec">Per Sec</div>
             <div class="value">$<span id="perSecond">0.00</span></div>
           </div>
           <div class="item">
-            <div class="label">Dakikalık</div>
+            <div class="label" data-i18n="perMin">Per Min</div>
             <div class="value">$<span id="perMinute">0.00</span></div>
           </div>
           <div class="item">
-            <div class="label">Saatlik</div>
+            <div class="label" data-i18n="perHour">Per Hour</div>
             <div class="value">$<span id="perHour">0.00</span></div>
           </div>
         </div>
@@ -629,97 +729,101 @@
       
       <div class="menu-row">
         <div class="menu-btn" onclick="showPage('buy')">
-          <span class="icon">💎</span>
-          <span class="label">SATIN AL</span>
+          <span class="icon"></span>
+          <span class="label" data-i18n="buy">BUY</span>
         </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
           <span class="icon">💸</span>
-          <span class="label">ÇEKİM</span>
+          <span class="label" data-i18n="withdraw">WITHDRAW</span>
         </div>
-        <div class="menu-btn admin" onclick="showPage('admin')">
-          <span class="icon">🔐</span>
-          <span class="label">ADMIN</span>
+        <div class="menu-btn profile" onclick="showPage('profile')">
+          <span class="icon">👤</span>
+          <span class="label" data-i18n="profile">PROFILE</span>
+        </div>
+      </div>
+      
+      <!-- Admin butonu sadece admin için -->
+      <div id="adminMenuContainer" class="hidden">
+        <div class="menu-row">
+          <div class="menu-btn admin" onclick="showPage('admin')" style="flex: 1;">
+            <span class="icon">🔐</span>
+            <span class="label" data-i18n="admin">ADMIN</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Satın Al -->
     <div id="page-buy" class="hidden">
-      <div class="page-title">💎 Mining Gücü Satın Al</div>
+      <div class="page-title" data-i18n="buyTitle">💎 Buy Mining Power</div>
       
-      <!-- Yatırım Bilgi Kartı -->
       <div class="deposit-card">
         <div class="deposit-header">
           <div class="bnb-logo">B</div>
           <div>
-            <div class="title">BNB ile Yatırım</div>
+            <div class="title" data-i18n="bnbInvest">BNB Investment</div>
             <div class="subtitle">Binance Smart Chain (BEP20)</div>
           </div>
         </div>
         
         <div class="deposit-info">
           <div class="info-row">
-            <span class="info-label">💰 Minimum Yatırım</span>
+            <span class="info-label" data-i18n="minDeposit">💰 Minimum Deposit</span>
             <span class="info-value highlight">2 TRX</span>
           </div>
           <div class="info-row">
-            <span class="info-label">📊 Yaklaşık Değer</span>
+            <span class="info-label" data-i18n="approxValue">📊 Approximate Value</span>
             <span class="info-value">~$0.24 USD</span>
           </div>
           <div class="info-row">
-            <span class="info-label"> Ağ</span>
+            <span class="info-label" data-i18n="network">🌐 Network</span>
             <span class="info-value">BNB Smart Chain</span>
           </div>
         </div>
         
         <div class="wallet-box">
-          <span class="wallet-label"> BNB Cüzdan Adresi (BEP20)</span>
+          <span class="wallet-label" data-i18n="bnbWallet">📍 BNB Wallet Address (BEP20)</span>
           <div class="wallet-address" id="walletAddressDisplay">0x1249ce408537f251f2b0047ee606a2d85c43a320</div>
-          <button class="copy-btn" onclick="copyWalletAddress()">📋 Adresi Kopyala</button>
+          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress">📋 Copy Address</button>
         </div>
         
         <div class="warning-box">
-          <div class="warning-title">⚠️ ÖNEMLİ UYARI</div>
-          <div class="warning-text">
-            • Sadece <strong>BNB Smart Chain (BEP20)</strong> ağını kullanın<br>
-            • Yanlış ağdan gönderilen coin'ler geri alınamaz<br>
-            • Gönderim sonrası dekont saklayın<br>
-            • Onay süreci 5-30 dakika sürebilir
+          <div class="warning-title" data-i18n="warning">⚠️ IMPORTANT</div>
+          <div class="warning-text" data-i18n="warningText">
+            • Use only <strong>BNB Smart Chain (BEP20)</strong> network<br>
+            • Coins sent from wrong network cannot be recovered<br>
+            • Save your receipt after sending<br>
+            • Confirmation may take 5-30 minutes
           </div>
         </div>
       </div>
       
       <div class="form-group">
-        <label>Gönderdiğiniz Miktar (TRX)</label>
+        <label data-i18n="sentAmount">Amount Sent (TRX)</label>
         <input type="number" id="sentAmount" placeholder="2" min="2" step="0.1">
       </div>
       
-      <div class="form-group">
-        <label>İşlem Hash (TXID)</label>
-        <input type="text" id="txHash" placeholder="0x...">
-      </div>
-      
-      <button class="btn" onclick="submitDeposit()">📤 Yatırımı Bildir</button>
-      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
+      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
+      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Çekim -->
     <div id="page-withdraw" class="hidden">
-      <div class="page-title">💸 Çekim Talebi</div>
+      <div class="page-title" data-i18n="withdrawTitle">💸 Withdrawal Request</div>
       
       <div class="balance-box">
-        <div class="label">Mevcut Bakiye</div>
+        <div class="label" data-i18n="currentBalance">Current Balance</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 12px; margin-top: 8px; color: #1a0f0a;">Min: $0.01</div>
+        <div style="font-size: 12px; margin-top: 8px; color: #1a0f0a;" data-i18n="minWithdraw">Min: $0.01</div>
       </div>
       
       <div class="form-group">
-        <label>Çekilecek Miktar (USD)</label>
+        <label data-i18n="withdrawAmount">Withdrawal Amount (USD)</label>
         <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
       </div>
       
       <div class="form-group">
-        <label>🪙 Kripto Seçimi</label>
+        <label data-i18n="selectCrypto">🪙 Select Crypto</label>
         <select id="withdrawCrypto" onchange="updateCryptoAmount()">
           <option value="trx">TRX (TRON) - ~$0.12</option>
           <option value="bnb">BNB - ~$600</option>
@@ -728,28 +832,102 @@
       </div>
       
       <div class="crypto-box">
-        <strong>Karşılık:</strong><br>
+        <strong data-i18n="equivalent">Equivalent:</strong><br>
         <span class="value"><span id="cryptoEquivalent">0.00</span> <span id="cryptoSymbol">TRX</span></span>
       </div>
       
       <div class="form-group">
-        <label>📍 Cüzdan Adresi</label>
-        <input type="text" id="walletAddress" placeholder="Cüzdan adresi...">
+        <label data-i18n="walletAddr"> Wallet Address</label>
+        <input type="text" id="walletAddress" placeholder="Wallet address...">
       </div>
       
-      <button class="btn" onclick="requestWithdrawal()">💸 Çekim Oluştur</button>
-      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
+      <button class="btn" onclick="requestWithdrawal()" data-i18n="createWithdraw">💸 Create Withdrawal</button>
+      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
+    </div>
+
+    <!-- Profil -->
+    <div id="page-profile" class="hidden">
+      <div class="page-title" data-i18n="profileTitle">👤 Profile</div>
+      
+      <div class="profile-card">
+        <div class="profile-avatar">⛏️</div>
+        <div class="profile-name" id="profileName">Miner</div>
+        <div class="profile-id" id="profileId">ID: ---</div>
+      </div>
+      
+      <div class="lang-section">
+        <h3 data-i18n="selectLang">🌐 Select Language</h3>
+        <div class="lang-list">
+          <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
+            <div class="lang-info">
+              <span class="flag">🇧</span>
+              <span class="lang-name">English</span>
+            </div>
+            <span class="check">✓</span>
+          </div>
+          <div class="lang-option" data-lang="tr" onclick="changeLanguage('tr')">
+            <div class="lang-info">
+              <span class="flag">🇹🇷</span>
+              <span class="lang-name">Türkçe</span>
+            </div>
+            <span class="check">✓</span>
+          </div>
+          <div class="lang-option" data-lang="ru" onclick="changeLanguage('ru')">
+            <div class="lang-info">
+              <span class="flag">🇺</span>
+              <span class="lang-name">Русский</span>
+            </div>
+            <span class="check">✓</span>
+          </div>
+          <div class="lang-option" data-lang="ar" onclick="changeLanguage('ar')">
+            <div class="lang-info">
+              <span class="flag">🇦</span>
+              <span class="lang-name">العربية</span>
+            </div>
+            <span class="check">✓</span>
+          </div>
+          <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
+            <div class="lang-info">
+              <span class="flag">🇸</span>
+              <span class="lang-name">Español</span>
+            </div>
+            <span class="check">✓</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="stats-section">
+        <h3 data-i18n="myStats"> My Statistics</h3>
+        <div class="stat-row">
+          <span class="label" data-i18n="totalEarned">Total Earned</span>
+          <span class="value">$<span id="statEarned">0.00</span></span>
+        </div>
+        <div class="stat-row">
+          <span class="label" data-i18n="totalWithdrawn">Total Withdrawn</span>
+          <span class="value">$<span id="statWithdrawn">0.00</span></span>
+        </div>
+        <div class="stat-row">
+          <span class="label" data-i18n="activeProducts">Active Products</span>
+          <span class="value" id="statProducts">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="label" data-i18n="totalInvestment">Total Investment</span>
+          <span class="value">$<span id="statInvested">0.00</span></span>
+        </div>
+      </div>
+      
+      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Admin -->
     <div id="page-admin" class="hidden">
-      <div class="page-title">🔐 Admin Panel</div>
+      <div class="page-title" data-i18n="adminTitle"> Admin Panel</div>
       <div class="tabs">
-        <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Ödemeler</button>
-        <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
+        <button class="tab active" onclick="switchAdminTab('payments', this)" data-i18n="deposits">💳 Deposits</button>
+        <button class="tab" onclick="switchAdminTab('withdrawals', this)" data-i18n="withdrawals">💸 Withdrawals</button>
       </div>
-      <div id="adminContent">Yükleniyor...</div>
-      <button class="btn secondary" onclick="showPage('home')">← Geri</button>
+      <div id="adminContent">Loading...</div>
+      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
   </div>
 
@@ -777,8 +955,11 @@
     let balance = 0;
     let currentAdminTab = 'payments';
     let unsubscribe = null;
+    let currentLang = 'en';
     
-    const DAILY_RATE = 1 / 90;
+    // ROI 100 gün (gizli) - müşteriye "3 ay" gösterilecek
+    const ROI_DAYS = 100;
+    const DAILY_RATE = 1 / ROI_DAYS;
     const PER_SECOND = DAILY_RATE / 86400;
     
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
@@ -786,6 +967,160 @@
     
     const BNB_WALLET = "0x1249ce408537f251f2b0047ee606a2d85c43a320";
     const MIN_DEPOSIT_TRX = 2;
+    
+    // Çeviri sistemi
+    const translations = {
+      en: {
+        balance: 'Balance', products: 'Products', investment: 'Investment',
+        perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour',
+        buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
+        buyTitle: '💎 Buy Mining Power', bnbInvest: 'BNB Investment',
+        minDeposit: '💰 Minimum Deposit', approxValue: '📊 Approximate Value',
+        network: '🌐 Network', bnbWallet: '📍 BNB Wallet Address (BEP20)',
+        copyAddress: '📋 Copy Address', warning: '️ IMPORTANT',
+        warningText: '• Use only <strong>BNB Smart Chain (BEP20)</strong> network<br>• Coins sent from wrong network cannot be recovered<br>• Save your receipt after sending<br>• Confirmation may take 5-30 minutes',
+        sentAmount: 'Amount Sent (TRX)', notifyDeposit: ' Notify Deposit', back: '← Back',
+        withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance',
+        minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)',
+        selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:',
+        walletAddr: ' Wallet Address', createWithdraw: '💸 Create Withdrawal',
+        profileTitle: '👤 Profile', selectLang: ' Select Language',
+        myStats: ' My Statistics', totalEarned: 'Total Earned',
+        totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products',
+        totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel',
+        deposits: ' Deposits', withdrawals: '💸 Withdrawals',
+        noPending: '✅ No pending items', copied: '✅ Address copied!',
+        minTrx: `❌ Minimum ${MIN_DEPOSIT_TRX} TRX required!`,
+        txRequired: '❌ Transaction hash required!',
+        depositSent: '✅ Deposit notification sent! Waiting for admin approval.',
+        withdrawCreated: '✅ Withdrawal request created!',
+        insufficientBalance: '❌ Insufficient balance!',
+        walletRequired: '❌ Wallet address required!',
+        minWithdrawAmount: '❌ Minimum: $0.01',
+        approved: '✅ Approved!', rejected: '❌ Rejected!',
+        error: '❌ Error: '
+      },
+      tr: {
+        balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım',
+        perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat',
+        buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN',
+        buyTitle: '💎 Mining Gücü Satın Al', bnbInvest: 'BNB Yatırımı',
+        minDeposit: '💰 Minimum Yatırım', approxValue: ' Yaklaşık Değer',
+        network: '🌐 Ağ', bnbWallet: '📍 BNB Cüzdan Adresi (BEP20)',
+        copyAddress: ' Adresi Kopyala', warning: '️ ÖNEMLİ',
+        warningText: '• Sadece <strong>BNB Smart Chain (BEP20)</strong> ağını kullanın<br>• Yanlış ağdan gönderilen coin\'ler geri alınamaz<br>• Gönderim sonrası dekont saklayın<br>• Onay süreci 5-30 dakika sürebilir',
+        sentAmount: 'Gönderilen Miktar (TRX)', notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri',
+        withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye',
+        minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)',
+        selectCrypto: ' Kripto Seçimi', equivalent: 'Karşılık:',
+        walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur',
+        profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi',
+        myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç',
+        totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün',
+        totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel',
+        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler',
+        noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!',
+        minTrx: `❌ Minimum ${MIN_DEPOSIT_TRX} TRX gerekli!`,
+        txRequired: '❌ İşlem hash gerekli!',
+        depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.',
+        withdrawCreated: '✅ Çekim talebi oluşturuldu!',
+        insufficientBalance: '❌ Yetersiz bakiye!',
+        walletRequired: '❌ Cüzdan adresi gerekli!',
+        minWithdrawAmount: '❌ Minimum: $0.01',
+        approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!',
+        error: '❌ Hata: '
+      },
+      ru: {
+        balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции',
+        perSec: 'В сек', perMin: 'В мин', perHour: 'В час',
+        buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН',
+        buyTitle: '💎 Купить мощность', bnbInvest: 'Инвестиция BNB',
+        minDeposit: '💰 Минимальный депозит', approxValue: '📊 Примерная стоимость',
+        network: '🌐 Сеть', bnbWallet: '📍 Адрес кошелька BNB (BEP20)',
+        copyAddress: '📋 Копировать адрес', warning: '⚠️ ВАЖНО',
+        warningText: '• Используйте только сеть <strong>BNB Smart Chain (BEP20)</strong><br>• Монеты, отправленные не в ту сеть, не могут быть возвращены<br>• Сохраните квитанцию после отправки<br>• Подтверждение может занять 5-30 минут',
+        sentAmount: 'Отправленная сумма (TRX)', notifyDeposit: ' Уведомить о депозите', back: '← Назад',
+        withdrawTitle: '💸 Запрос на вывод', currentBalance: 'Текущий баланс',
+        minWithdraw: 'Мин: $0.01', withdrawAmount: 'Сумма вывода (USD)',
+        selectCrypto: '🪙 Выбрать крипто', equivalent: 'Эквивалент:',
+        walletAddr: '📍 Адрес кошелька', createWithdraw: '💸 Создать вывод',
+        profileTitle: '👤 Профиль', selectLang: '🌐 Выбор языка',
+        myStats: '📊 Моя статистика', totalEarned: 'Всего заработано',
+        totalWithdrawn: 'Всего выведено', activeProducts: 'Активные продукты',
+        totalInvestment: 'Всего инвестиций', adminTitle: '🔐 Панель админа',
+        deposits: '💳 Депозиты', withdrawals: '💸 Выводы',
+        noPending: '✅ Нет ожидающих', copied: '✅ Адрес скопирован!',
+        minTrx: `❌ Минимум ${MIN_DEPOSIT_TRX} TRX!`,
+        txRequired: ' Требуется хэш транзакции!',
+        depositSent: '✅ Уведомление отправлено! Ожидание одобрения админа.',
+        withdrawCreated: '✅ Запрос на вывод создан!',
+        insufficientBalance: '❌ Недостаточно средств!',
+        walletRequired: ' Адрес кошелька обязателен!',
+        minWithdrawAmount: '❌ Минимум: $0.01',
+        approved: '✅ Одобрено!', rejected: '❌ Отклонено!',
+        error: '❌ Ошибка: '
+      },
+      ar: {
+        balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار',
+        perSec: 'في الثانية', perMin: 'في الدقيقة', perHour: 'في الساعة',
+        buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
+        buyTitle: '💎 شراء قوة التعدين', bnbInvest: 'استثمار BNB',
+        minDeposit: '💰 الحد الأدنى للإيداع', approxValue: ' القيمة التقريبية',
+        network: '🌐 الشبكة', bnbWallet: '📍 عنوان محفظة BNB (BEP20)',
+        copyAddress: ' نسخ العنوان', warning: '⚠️ مهم',
+        warningText: '• استخدم فقط شبكة <strong>BNB Smart Chain (BEP20)</strong><br>• العملات المرسلة من شبكة خاطئة لا يمكن استردادها<br>• احفظ إيصالك بعد الإرسال<br>• قد يستغرق التأكيد 5-30 دقيقة',
+        sentAmount: 'المبلغ المرسل (TRX)', notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
+        withdrawTitle: '💸 طلب السحب', currentBalance: 'الرصيد الحالي',
+        minWithdraw: 'الحد الأدنى: $0.01', withdrawAmount: 'مبلغ السحب (USD)',
+        selectCrypto: '🪙 اختر العملة', equivalent: 'المعادل:',
+        walletAddr: '📍 عنوان المحفظة', createWithdraw: '💸 إنشاء سحب',
+        profileTitle: '👤 الملف الشخصي', selectLang: '🌐 اختيار اللغة',
+        myStats: '📊 إحصائياتي', totalEarned: 'إجمالي الأرباح',
+        totalWithdrawn: 'إجمالي المسحوب', activeProducts: 'المنتجات النشطة',
+        totalInvestment: 'إجمالي الاستثمار', adminTitle: '🔐 لوحة المسؤول',
+        deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات',
+        noPending: '✅ لا توجد معاملات معلقة', copied: '✅ تم نسخ العنوان!',
+        minTrx: `❌ الحد الأدنى ${MIN_DEPOSIT_TRX} TRX!`,
+        txRequired: '❌ مطلوب hash المعاملة!',
+        depositSent: '✅ تم إرسال الإشعار! في انتظار موافقة المسؤول.',
+        withdrawCreated: '✅ تم إنشاء طلب السحب!',
+        insufficientBalance: '❌ رصيد غير كافٍ!',
+        walletRequired: '❌ عنوان المحفظة مطلوب!',
+        minWithdrawAmount: '❌ الحد الأدنى: $0.01',
+        approved: '✅ تمت الموافقة!', rejected: '❌ مرفوض!',
+        error: '❌ خطأ: '
+      },
+      es: {
+        balance: 'Saldo', products: 'Productos', investment: 'Inversión',
+        perSec: 'Por seg', perMin: 'Por min', perHour: 'Por hora',
+        buy: 'COMPRAR', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN',
+        buyTitle: '💎 Comprar Poder Minero', bnbInvest: 'Inversión BNB',
+        minDeposit: ' Depósito Mínimo', approxValue: ' Valor Aproximado',
+        network: '🌐 Red', bnbWallet: '📍 Dirección BNB (BEP20)',
+        copyAddress: '📋 Copiar Dirección', warning: '⚠️ IMPORTANTE',
+        warningText: '• Use solo la red <strong>BNB Smart Chain (BEP20)</strong><br>• Las monedas enviadas desde red incorrecta no se pueden recuperar<br>• Guarde su recibo después de enviar<br>• La confirmación puede tardar 5-30 minutos',
+        sentAmount: 'Cantidad Enviada (TRX)', notifyDeposit: ' Notificar Depósito', back: '← Atrás',
+        withdrawTitle: '💸 Solicitud de Retiro', currentBalance: 'Saldo Actual',
+        minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad de Retiro (USD)',
+        selectCrypto: '🪙 Seleccionar Cripto', equivalent: 'Equivalente:',
+        walletAddr: '📍 Dirección de Billetera', createWithdraw: '💸 Crear Retiro',
+        profileTitle: '👤 Perfil', selectLang: '🌐 Seleccionar Idioma',
+        myStats: '📊 Mis Estadísticas', totalEarned: 'Total Ganado',
+        totalWithdrawn: 'Total Retirado', activeProducts: 'Productos Activos',
+        totalInvestment: 'Inversión Total', adminTitle: ' Panel Admin',
+        deposits: '💳 Depósitos', withdrawals: ' Retiros',
+        noPending: '✅ Sin pendientes', copied: '✅ ¡Dirección copiada!',
+        minTrx: `❌ ¡Mínimo ${MIN_DEPOSIT_TRX} TRX!`,
+        txRequired: '❌ ¡Hash de transacción requerido!',
+        depositSent: '✅ ¡Notificación enviada! Esperando aprobación del admin.',
+        withdrawCreated: '✅ ¡Solicitud de retiro creada!',
+        insufficientBalance: ' ¡Saldo insuficiente!',
+        walletRequired: '❌ ¡Dirección de billetera requerida!',
+        minWithdrawAmount: ' Mínimo: $0.01',
+        approved: '✅ ¡Aprobado!', rejected: '❌ ¡Rechazado!',
+        error: '❌ Error: '
+      }
+    };
     
     const tg = window.Telegram.WebApp;
     tg.ready();
@@ -799,6 +1134,11 @@
       listenToData();
       setInterval(updateEarnings, 1000);
       setInterval(createGem, 3000);
+      
+      // Admin kontrolü
+      if (currentUser && currentUser.id.toString() === ADMIN_ID) {
+        document.getElementById('adminMenuContainer').classList.remove('hidden');
+      }
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
@@ -812,17 +1152,53 @@
     
     function copyWalletAddress() {
       navigator.clipboard.writeText(BNB_WALLET).then(() => {
-        showToast('✅ Adres kopyalandı!');
+        showToast(translations[currentLang].copied);
       }).catch(() => {
-        // Fallback
         const textArea = document.createElement('textarea');
         textArea.value = BNB_WALLET;
         document.body.appendChild(textArea);
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        showToast('✅ Adres kopyalandı!');
+        showToast(translations[currentLang].copied);
       });
+    }
+    
+    function changeLanguage(lang) {
+      currentLang = lang;
+      
+      // Aktif dili işaretle
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.remove('active');
+        if (opt.dataset.lang === lang) opt.classList.add('active');
+      });
+      
+      // Tüm çevirileri uygula
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          if (key === 'warningText') {
+            el.innerHTML = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
+        }
+      });
+      
+      // HTML lang attribute
+      document.documentElement.lang = lang;
+      
+      // RTL for Arabic
+      if (lang === 'ar') {
+        document.documentElement.dir = 'rtl';
+      } else {
+        document.documentElement.dir = 'ltr';
+      }
+      
+      // Kaydet
+      try {
+        localStorage.setItem('selectedLang', lang);
+      } catch(e) {}
     }
     
     function listenToData() {
@@ -844,22 +1220,15 @@
     
     async function submitDeposit() {
       const sentAmount = parseFloat(document.getElementById('sentAmount').value);
-      const txHash = document.getElementById('txHash').value.trim();
       
       if (!sentAmount || sentAmount < MIN_DEPOSIT_TRX) {
-        alert(`❌ Minimum ${MIN_DEPOSIT_TRX} TRX göndermelisiniz!`);
-        return;
-      }
-      
-      if (!txHash) {
-        alert('❌ İşlem hash (TXID) gerekli!');
+        alert(translations[currentLang].minTrx);
         return;
       }
       
       const deposit = {
         id: 'dep_' + Date.now(),
         sentAmount: sentAmount,
-        txHash: txHash,
         status: 'pending',
         userId: userId,
         userName: currentUser ? currentUser.first_name : 'User',
@@ -876,11 +1245,10 @@
           deposits: [...currentDeposits, deposit]
         }, { merge: true });
         
-        alert('✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.');
+        alert(translations[currentLang].depositSent);
         document.getElementById('sentAmount').value = '';
-        document.getElementById('txHash').value = '';
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -912,6 +1280,12 @@
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
       
+      // Profil istatistikleri
+      document.getElementById('statEarned').textContent = lifetimeEarnings.toFixed(2);
+      document.getElementById('statWithdrawn').textContent = totalWithdrawn.toFixed(2);
+      document.getElementById('statProducts').textContent = products.length;
+      document.getElementById('statInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0).toFixed(2);
+      
       const perSec = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
       document.getElementById('perSecond').textContent = perSec.toFixed(4);
       document.getElementById('perMinute').textContent = (perSec * 60).toFixed(2);
@@ -933,9 +1307,9 @@
       const crypto = document.getElementById('withdrawCrypto').value;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
-      if (amount < 0.01) { alert('❌ Min: $0.01'); return; }
-      if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
-      if (!walletAddress) { alert('❌ Cüzdan gerekli!'); return; }
+      if (amount < 0.01) { alert(translations[currentLang].minWithdrawAmount); return; }
+      if (amount > balance) { alert(translations[currentLang].insufficientBalance); return; }
+      if (!walletAddress) { alert(translations[currentLang].walletRequired); return; }
       
       const withdrawal = {
         id: 'wd_' + Date.now(),
@@ -960,12 +1334,12 @@
           withdrawalRequests: [...currentWithdrawals, withdrawal]
         }, { merge: true });
         
-        alert('✅ Çekim talebi oluşturuldu!');
+        alert(translations[currentLang].withdrawCreated);
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
         updateCryptoAmount();
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -985,23 +1359,22 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen yatırım yok</p>';
+        if (pending.length === 0) return `<p style="text-align: center; color: #4ade80;">${translations[currentLang].noPending}</p>`;
         
         let html = '';
         pending.forEach(d => {
           html += `
             <div class="item-card">
               <strong>${d.sentAmount} TRX</strong> - ${d.userName}<br>
-              <small>TX: ${d.txHash.substring(0, 20)}...</small>
               <small>ID: ${d.id}</small>
-              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.sentAmount})">✓ Onayla</button>
-              <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ Reddet</button>
+              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.sentAmount})">✓ ${currentLang === 'en' ? 'Approve' : currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar'}</button>
+              <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ ${currentLang === 'en' ? 'Reject' : currentLang === 'tr' ? 'Reddet' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : 'Rechazar'}</button>
             </div>
           `;
         });
         return html;
       } catch (error) {
-        return '<p style="color: #f87171;">❌ Hata: ' + error.message + '</p>';
+        return `<p style="color: #f87171;">${translations[currentLang].error} ${error.message}</p>`;
       }
     }
     
@@ -1021,36 +1394,36 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen çekim yok</p>';
+        if (pending.length === 0) return `<p style="text-align: center; color: #4ade80;">${translations[currentLang].noPending}</p>`;
         
         let html = '';
         pending.forEach(w => {
           html += `
             <div class="item-card">
               <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}<br>
-              <small>Kullanıcı: ${w.userName}</small>
-              <small>Cüzdan: ${w.walletAddress}</small>
+              <small>${currentLang === 'en' ? 'User' : currentLang === 'tr' ? 'Kullanıcı' : currentLang === 'ru' ? 'Пользователь' : currentLang === 'ar' ? 'مستخدم' : 'Usuario'}: ${w.userName}</small>
+              <small>${currentLang === 'en' ? 'Wallet' : currentLang === 'tr' ? 'Cüzdan' : currentLang === 'ru' ? 'Кошелек' : currentLang === 'ar' ? 'محفظة' : 'Billetera'}: ${w.walletAddress}</small>
               <small>ID: ${w.id}</small>
-              <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ Onayla</button>
-              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ Reddet</button>
+              <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ ${currentLang === 'en' ? 'Approve' : currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar'}</button>
+              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ ${currentLang === 'en' ? 'Reject' : currentLang === 'tr' ? 'Reddet' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : 'Rechazar'}</button>
             </div>
           `;
         });
         return html;
       } catch (error) {
-        return '<p style="color: #f87171;">❌ Hata: ' + error.message + '</p>';
+        return `<p style="color: #f87171;">${translations[currentLang].error} ${error.message}</p>`;
       }
     }
     
     async function loadAdmin() {
       if (currentUser?.id?.toString() !== ADMIN_ID) {
-        alert('Yetkiniz yok!');
+        alert(currentLang === 'en' ? 'No permission!' : currentLang === 'tr' ? 'Yetkiniz yok!' : currentLang === 'ru' ? 'Нет доступа!' : currentLang === 'ar' ? 'لا صلاحية!' : '¡Sin permiso!');
         showPage('home');
         return;
       }
       
       const container = document.getElementById('adminContent');
-      container.innerHTML = '<p style="text-align: center; color: #c9a961;">Yükleniyor...</p>';
+      container.innerHTML = `<p style="text-align: center; color: #c9a961;">${currentLang === 'en' ? 'Loading...' : currentLang === 'tr' ? 'Yükleniyor...' : currentLang === 'ru' ? 'Загрузка...' : currentLang === 'ar' ? 'جاري التحميل...' : 'Cargando...'}</p>`;
       
       if (currentAdminTab === 'payments') {
         container.innerHTML = await loadAdminDeposits();
@@ -1071,14 +1444,14 @@
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
+        if (!doc.exists) { alert(currentLang === 'en' ? 'User not found!' : 'Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const deposits = data.deposits || [];
         const approvedPayments = data.approvedPayments || [];
         
         const depositIndex = deposits.findIndex(d => d.id === depositId);
-        if (depositIndex === -1) { alert('Yatırım bulunamadı!'); return; }
+        if (depositIndex === -1) { alert(currentLang === 'en' ? 'Deposit not found!' : 'Yatırım bulunamadı!'); return; }
         
         const deposit = deposits[depositIndex];
         const newDeposits = deposits.filter(d => d.id !== depositId);
@@ -1106,10 +1479,10 @@
           totalInvested: (data.totalInvested || 0) + usdAmount
         }, { merge: true });
         
-        alert(`✅ Yatırım onaylandı! $${usdAmount.toFixed(2)} eklendi.`);
+        alert(`${translations[currentLang].approved} $${usdAmount.toFixed(2)}`);
         await loadAdmin();
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -1118,20 +1491,18 @@
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
+        if (!doc.exists) { alert(currentLang === 'en' ? 'User not found!' : 'Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const deposits = data.deposits || [];
         const newDeposits = deposits.filter(d => d.id !== depositId);
         
-        await userRef.set({
-          deposits: newDeposits
-        }, { merge: true });
+        await userRef.set({ deposits: newDeposits }, { merge: true });
         
-        alert(' Yatırım reddedildi!');
+        alert(translations[currentLang].rejected);
         await loadAdmin();
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -1140,13 +1511,13 @@
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
+        if (!doc.exists) { alert(currentLang === 'en' ? 'User not found!' : 'Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const withdrawalRequests = data.withdrawalRequests || [];
         
         const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
-        if (withdrawalIndex === -1) { alert('Çekim bulunamadı!'); return; }
+        if (withdrawalIndex === -1) { alert(currentLang === 'en' ? 'Withdrawal not found!' : 'Çekim bulunamadı!'); return; }
         
         const withdrawal = withdrawalRequests[withdrawalIndex];
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
@@ -1162,10 +1533,10 @@
           totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
         }, { merge: true });
         
-        alert('✅ Çekim onaylandı!');
+        alert(translations[currentLang].approved);
         await loadAdmin();
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -1174,20 +1545,18 @@
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
+        if (!doc.exists) { alert(currentLang === 'en' ? 'User not found!' : 'Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const withdrawalRequests = data.withdrawalRequests || [];
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         
-        await userRef.set({
-          withdrawalRequests: newWithdrawals
-        }, { merge: true });
+        await userRef.set({ withdrawalRequests: newWithdrawals }, { merge: true });
         
-        alert('❌ Çekim reddedildi!');
+        alert(translations[currentLang].rejected);
         await loadAdmin();
       } catch (error) {
-        alert('❌ Hata: ' + error.message);
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -1199,6 +1568,12 @@
         updateCryptoAmount();
       } else if (page === 'admin') {
         loadAdmin();
+      } else if (page === 'profile') {
+        // Profil bilgilerini güncelle
+        if (currentUser) {
+          document.getElementById('profileName').textContent = currentUser.first_name || 'Miner';
+          document.getElementById('profileId').textContent = 'ID: ' + (currentUser.id || '---');
+        }
       }
       
       window.scrollTo(0, 0);
@@ -1217,6 +1592,17 @@
       
       setTimeout(() => gem.remove(), 2000);
     }
+    
+    // Kaydedilmiş dil varsa yükle
+    try {
+      const savedLang = localStorage.getItem('selectedLang');
+      if (savedLang && translations[savedLang]) {
+        currentLang = savedLang;
+      }
+    } catch(e) {}
+    
+    // İlk dil ayarını uygula
+    setTimeout(() => changeLanguage(currentLang), 100);
   </script>
 </body>
 </html>
