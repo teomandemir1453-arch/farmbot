@@ -279,7 +279,7 @@
 <body>
   <div class="container">
     <div id="page-home">
-      <div class="header"><h1>⚡ HASH MINING ⚡</h1></div>
+      <div class="header"><h1> HASH MINING ⚡</h1></div>
       <div class="stats-row">
         <div class="stat-box"><div class="icon">💰</div><div class="label" data-i18n="balance">Balance</div><div class="value">$<span id="balance">0.00</span></div></div>
         <div class="stat-box"><div class="icon">📦</div><div class="label" data-i18n="products">Products</div><div class="value"><span id="productCount">0</span></div></div>
@@ -304,7 +304,7 @@
         <div class="menu-btn profile" onclick="showPage('profile')"><span class="icon">👤</span><span class="label" data-i18n="profile">PROFILE</span></div>
       </div>
       <div class="menu-row">
-        <div class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display: none;"><span class="icon">🔐</span><span class="label" data-i18n="admin">ADMIN</span></div>
+        <div class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display: none;"><span class="icon"></span><span class="label" data-i18n="admin">ADMIN</span></div>
       </div>
     </div>
 
@@ -335,7 +335,7 @@
           <div class="warning-text" data-i18n="warningText">• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes</div>
         </div>
       </div>
-      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
+      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit"> Notify Deposit</button>
       <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
@@ -359,7 +359,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label data-i18n="walletAddr">📍 Wallet Address</label>
+        <label data-i18n="walletAddr"> Wallet Address</label>
         <input type="text" id="walletAddress" placeholder="Wallet address...">
       </div>
       <button class="btn" onclick="requestWithdrawal()" data-i18n="createWithdraw">💸 Create Withdrawal</button>
@@ -367,7 +367,7 @@
     </div>
 
     <div id="page-profile" class="hidden">
-      <div class="page-title" data-i18n="profileTitle">👤 Profile</div>
+      <div class="page-title" data-i18n="profileTitle"> Profile</div>
       <div class="profile-card">
         <div class="profile-avatar">⛏️</div>
         <div class="profile-name" id="profileName">Miner</div>
@@ -409,7 +409,15 @@
     // SUPABASE CONFIGURATION
     const SUPABASE_URL = 'https://ttlzrfnvwmutceiiench.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_AlC2IJD9nZnYeaji4FBOQg_0w31CE0I';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    let supabase;
+    
+    // Initialize Supabase
+    try {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      console.log('✅ Supabase initialized');
+    } catch (error) {
+      console.error('❌ Supabase init error:', error);
+    }
     
     const ADMIN_ID = "8974010159";
     let currentUser = null;
@@ -431,8 +439,8 @@
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
     const translations = {
-      tr: { balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım', perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat', clickMiner: 'Taşa Tıkla!', buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN', buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı', minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ', rate: '💱 Kur', usdAmount: '💵 Alınacak Miktar (USD)', youWillGet: 'Alacağınız: ', trxWallet: '📍 TRX Cüzdan Adresi', copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ', warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir', notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri', withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye', minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)', selectCrypto: '🪙 Kripto Seçimi', equivalent: 'Karşılık:', walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur', profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi', myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç', totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün', totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel', deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler', noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!', minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} gerekli!`, depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.', withdrawCreated: '✅ Çekim talebi oluşturuldu!', insufficientBalance: '❌ Yetersiz bakiye!', walletRequired: '❌ Cüzdan adresi gerekli!', minWithdrawAmount: '❌ Minimum: $0.01', approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!', error: '❌ Hata: ', adminPermissionError: '❌ Yetkiniz yok!' },
-      en: { balance: 'Balance', products: 'Products', investment: 'Investment', perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour', clickMiner: 'Click Rock!', buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN', buyTitle: '💎 Buy Mining Power', trxInvest: 'TRX Investment', minDeposit: '💰 Minimum Deposit', network: '🌐 Network', rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)', youWillGet: 'You will get: ', trxWallet: '📍 TRX Wallet Address', copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT', warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes', notifyDeposit: '📤 Notify Deposit', back: '← Back', withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance', minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)', selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:', walletAddr: '📍 Wallet Address', createWithdraw: '💸 Create Withdrawal', profileTitle: '👤 Profile', selectLang: '🌐 Select Language', myStats: '📊 My Statistics', totalEarned: 'Total Earned', totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products', totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel', deposits: '💳 Deposits', withdrawals: '💸 Withdrawals', noPending: '✅ No pending items', copied: '✅ Address copied!', minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} required!`, depositSent: '✅ Deposit notification sent!', withdrawCreated: '✅ Withdrawal request created!', insufficientBalance: '❌ Insufficient balance!', walletRequired: '❌ Wallet address required!', minWithdrawAmount: '❌ Minimum: $0.01', approved: '✅ Approved!', rejected: '❌ Rejected!', error: '❌ Error: ', adminPermissionError: '❌ No permission!' }
+      tr: { balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım', perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat', clickMiner: 'Taşa Tıkla!', buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN', buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı', minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ', rate: '💱 Kur', usdAmount: '💵 Alınacak Miktar (USD)', youWillGet: 'Alacağınız: ', trxWallet: '📍 TRX Cüzdan Adresi', copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ', warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir', notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri', withdrawTitle: ' Çekim Talebi', currentBalance: 'Mevcut Bakiye', minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)', selectCrypto: '🪙 Kripto Seçimi', equivalent: 'Karşılık:', walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur', profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi', myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç', totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün', totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel', deposits: ' Yatırımlar', withdrawals: '💸 Çekimler', noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!', minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} gerekli!`, depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.', withdrawCreated: '✅ Çekim talebi oluşturuldu!', insufficientBalance: '❌ Yetersiz bakiye!', walletRequired: '❌ Cüzdan adresi gerekli!', minWithdrawAmount: '❌ Minimum: $0.01', approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!', error: '❌ Hata: ', adminPermissionError: '❌ Yetkiniz yok!' },
+      en: { balance: 'Balance', products: 'Products', investment: 'Investment', perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour', clickMiner: 'Click Rock!', buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN', buyTitle: '💎 Buy Mining Power', trxInvest: 'TRX Investment', minDeposit: '💰 Minimum Deposit', network: '🌐 Network', rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)', youWillGet: 'You will get: ', trxWallet: '📍 TRX Wallet Address', copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT', warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes', notifyDeposit: ' Notify Deposit', back: '← Back', withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance', minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)', selectCrypto: ' Select Crypto', equivalent: 'Equivalent:', walletAddr: '📍 Wallet Address', createWithdraw: '💸 Create Withdrawal', profileTitle: '👤 Profile', selectLang: '🌐 Select Language', myStats: ' My Statistics', totalEarned: 'Total Earned', totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products', totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel', deposits: '💳 Deposits', withdrawals: '💸 Withdrawals', noPending: '✅ No pending items', copied: '✅ Address copied!', minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} required!`, depositSent: '✅ Deposit notification sent!', withdrawCreated: '✅ Withdrawal request created!', insufficientBalance: '❌ Insufficient balance!', walletRequired: '❌ Wallet address required!', minWithdrawAmount: '❌ Minimum: $0.01', approved: '✅ Approved!', rejected: '❌ Rejected!', error: '❌ Error: ', adminPermissionError: '❌ No permission!' }
     };
     
     const tg = window.Telegram.WebApp;
@@ -440,35 +448,54 @@
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) currentUser = tg.initDataUnsafe.user;
     
     async function initApp() {
+      console.log('🚀 Initializing app...');
       if (currentUser) {
         userId = currentUser.id.toString();
-        if (userId === ADMIN_ID) document.getElementById('adminBtn').style.display = 'block';
+        console.log('👤 User ID:', userId);
+        if (userId === ADMIN_ID) {
+          document.getElementById('adminBtn').style.display = 'block';
+          console.log('🔐 Admin mode enabled');
+        }
         await loadUserData();
         setInterval(updateEarnings, 1000);
+      } else {
+        console.error('❌ No user found');
       }
     }
     
     async function loadUserData() {
-      let { data: user, error } = await supabase.from('users').select('*').eq('id', userId).single();
-      if (error || !user) {
-        const newUser = {
-          id: userId, telegram_id: userId, telegram_username: currentUser.username || 'Unknown',
-          balance: 0, lifetime_earnings: 0, total_withdrawn: 0, total_invested: 0
-        };
-        await supabase.from('users').insert(newUser);
-        user = newUser;
+      try {
+        console.log('📥 Loading user data...');
+        let { data: user, error } = await supabase.from('users').select('*').eq('id', userId).single();
+        
+        if (error || !user) {
+          console.log('📝 Creating new user...');
+          const newUser = {
+            id: userId, telegram_id: userId, telegram_username: currentUser.username || 'Unknown',
+            balance: 0, lifetime_earnings: 0, total_withdrawn: 0, total_invested: 0
+          };
+          const { error: insertError } = await supabase.from('users').insert(newUser);
+          if (insertError) throw insertError;
+          user = newUser;
+        }
+        
+        lifetimeEarnings = user.lifetime_earnings || 0;
+        totalWithdrawn = user.total_withdrawn || 0;
+        balance = lifetimeEarnings - totalWithdrawn;
+        
+        let { data: approvedDeposits, error: depositsError } = await supabase.from('deposits').select('*').eq('user_id', userId).eq('status', 'approved');
+        if (depositsError) throw depositsError;
+        
+        products = (approvedDeposits || []).map(d => ({
+          id: d.id, amount: d.usd_amount, earned: 0, startTime: new Date(d.created_at).getTime(), isBonus: false
+        }));
+        
+        console.log('✅ User data loaded:', { balance, products: products.length });
+        updateUI();
+      } catch (error) {
+        console.error('❌ Load error:', error);
+        showToast('Error loading data: ' + error.message);
       }
-      
-      lifetimeEarnings = user.lifetime_earnings || 0;
-      totalWithdrawn = user.total_withdrawn || 0;
-      balance = lifetimeEarnings - totalWithdrawn;
-      
-      let { data: approvedDeposits } = await supabase.from('deposits').select('*').eq('user_id', userId).eq('status', 'approved');
-      products = (approvedDeposits || []).map(d => ({
-        id: d.id, amount: d.usd_amount, earned: 0, startTime: new Date(d.created_at).getTime(), isBonus: false
-      }));
-      
-      updateUI();
     }
     
     function showToast(message) {
@@ -538,10 +565,14 @@
       lifetimeEarnings = currentSessionEarnings;
       balance = lifetimeEarnings - totalWithdrawn;
       
-      await supabase.from('users').update({ 
-        lifetime_earnings: lifetimeEarnings,
-        last_active: new Date().toISOString()
-      }).eq('id', userId);
+      try {
+        await supabase.from('users').update({ 
+          lifetime_earnings: lifetimeEarnings,
+          last_active: new Date().toISOString()
+        }).eq('id', userId);
+      } catch (error) {
+        console.error('Update error:', error);
+      }
       
       updateUI();
     }
@@ -569,14 +600,16 @@
         alert(translations[currentLang].minUsd); return;
       }
       const depositId = 'dep_' + Date.now();
-      const { error } = await supabase.from('deposits').insert({
-        id: depositId, user_id: userId, user_name: currentUser.first_name || 'User',
-        usd_amount: usdAmount, trx_amount: usdAmount / TRX_PRICE, status: 'pending'
-      });
-      if (error) alert(translations[currentLang].error + error.message);
-      else {
+      try {
+        const { error } = await supabase.from('deposits').insert({
+          id: depositId, user_id: userId, user_name: currentUser.first_name || 'User',
+          usd_amount: usdAmount, trx_amount: usdAmount / TRX_PRICE, status: 'pending'
+        });
+        if (error) throw error;
         alert(translations[currentLang].depositSent);
         document.getElementById('usdAmount').value = '';
+      } catch (error) {
+        alert(translations[currentLang].error + error.message);
       }
     }
     
@@ -595,21 +628,24 @@
       if (amount > balance) { alert(translations[currentLang].insufficientBalance); return; }
       if (!walletAddress) { alert(translations[currentLang].walletRequired); return; }
       
-      const { error } = await supabase.from('withdrawals').insert({
-        id: 'wd_' + Date.now(), user_id: userId, user_name: currentUser.first_name || 'User',
-        amount, crypto, crypto_amount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
-        wallet_address: walletAddress, status: 'pending'
-      });
-      if (error) alert(translations[currentLang].error + error.message);
-      else {
+      try {
+        const { error } = await supabase.from('withdrawals').insert({
+          id: 'wd_' + Date.now(), user_id: userId, user_name: currentUser.first_name || 'User',
+          amount, crypto, crypto_amount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
+          wallet_address: walletAddress, status: 'pending'
+        });
+        if (error) throw error;
         alert(translations[currentLang].withdrawCreated);
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
+      } catch (error) {
+        alert(translations[currentLang].error + error.message);
       }
     }
     
     async function loadAdminDeposits() {
-      let { data: pending } = await supabase.from('deposits').select('*').eq('status', 'pending');
+      let { data: pending, error } = await supabase.from('deposits').select('*').eq('status', 'pending');
+      if (error) throw error;
       if (!pending || pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
       return pending.map(d => `
         <div class="item-card">
@@ -622,7 +658,8 @@
     }
     
     async function loadAdminWithdrawals() {
-      let { data: pending } = await supabase.from('withdrawals').select('*').eq('status', 'pending');
+      let { data: pending, error } = await supabase.from('withdrawals').select('*').eq('status', 'pending');
+      if (error) throw error;
       if (!pending || pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
       return pending.map(w => `
         <div class="item-card">
@@ -641,8 +678,12 @@
       }
       const container = document.getElementById('adminContent');
       container.innerHTML = '<p style="text-align: center; color: #daa520; padding: 20px;">Yükleniyor...</p>';
-      if (currentAdminTab === 'deposits') container.innerHTML = await loadAdminDeposits();
-      else container.innerHTML = await loadAdminWithdrawals();
+      try {
+        if (currentAdminTab === 'deposits') container.innerHTML = await loadAdminDeposits();
+        else container.innerHTML = await loadAdminWithdrawals();
+      } catch (error) {
+        container.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
+      }
     }
     
     function switchAdminTab(tab, btn) {
@@ -653,31 +694,47 @@
     }
     
     async function approveDeposit(depositId, usdAmount, targetUserId) {
-      await supabase.from('deposits').update({ status: 'approved' }).eq('id', depositId);
-      let { data: user } = await supabase.from('users').select('total_invested').eq('id', targetUserId).single();
-      await supabase.from('users').update({ total_invested: (user?.total_invested || 0) + usdAmount }).eq('id', targetUserId);
-      showToast(`✅ Onaylandı! $${usdAmount.toFixed(2)}`);
-      loadAdmin();
+      try {
+        await supabase.from('deposits').update({ status: 'approved' }).eq('id', depositId);
+        let { data: user } = await supabase.from('users').select('total_invested').eq('id', targetUserId).single();
+        await supabase.from('users').update({ total_invested: (user?.total_invested || 0) + usdAmount }).eq('id', targetUserId);
+        showToast(`✅ Onaylandı! $${usdAmount.toFixed(2)}`);
+        loadAdmin();
+      } catch (error) {
+        showToast('❌ Hata: ' + error.message);
+      }
     }
     
     async function rejectDeposit(depositId) {
-      await supabase.from('deposits').update({ status: 'rejected' }).eq('id', depositId);
-      showToast('❌ Reddedildi!');
-      loadAdmin();
+      try {
+        await supabase.from('deposits').update({ status: 'rejected' }).eq('id', depositId);
+        showToast('❌ Reddedildi!');
+        loadAdmin();
+      } catch (error) {
+        showToast(' Hata: ' + error.message);
+      }
     }
     
     async function approveWithdrawal(withdrawalId, amount, targetUserId) {
-      await supabase.from('withdrawals').update({ status: 'approved' }).eq('id', withdrawalId);
-      let { data: user } = await supabase.from('users').select('total_withdrawn').eq('id', targetUserId).single();
-      await supabase.from('users').update({ total_withdrawn: (user?.total_withdrawn || 0) + amount }).eq('id', targetUserId);
-      showToast('✅ Çekim onaylandı!');
-      loadAdmin();
+      try {
+        await supabase.from('withdrawals').update({ status: 'approved' }).eq('id', withdrawalId);
+        let { data: user } = await supabase.from('users').select('total_withdrawn').eq('id', targetUserId).single();
+        await supabase.from('users').update({ total_withdrawn: (user?.total_withdrawn || 0) + amount }).eq('id', targetUserId);
+        showToast('✅ Çekim onaylandı!');
+        loadAdmin();
+      } catch (error) {
+        showToast('❌ Hata: ' + error.message);
+      }
     }
     
     async function rejectWithdrawal(withdrawalId) {
-      await supabase.from('withdrawals').update({ status: 'rejected' }).eq('id', withdrawalId);
-      showToast('❌ Çekim reddedildi!');
-      loadAdmin();
+      try {
+        await supabase.from('withdrawals').update({ status: 'rejected' }).eq('id', withdrawalId);
+        showToast('❌ Çekim reddedildi!');
+        loadAdmin();
+      } catch (error) {
+        showToast(' Hata: ' + error.message);
+      }
     }
     
     function showPage(page) {
@@ -695,8 +752,16 @@
       window.scrollTo(0, 0);
     }
     
-    setTimeout(() => changeLanguage(currentLang), 100);
-    initApp();
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => changeLanguage(currentLang), 100);
+        initApp();
+      });
+    } else {
+      setTimeout(() => changeLanguage(currentLang), 100);
+      initApp();
+    }
   </script>
 </body>
 </html>
