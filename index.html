@@ -30,11 +30,9 @@
     margin: 0 auto;
   }
   
-  /* Başlık */
   .header {
     text-align: center;
     padding: 15px 0;
-    position: relative;
   }
   
   h1 {
@@ -47,7 +45,6 @@
     letter-spacing: 2px;
   }
   
-  /* İstatistikler */
   .stats-row {
     display: flex;
     gap: 8px;
@@ -64,17 +61,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
   
-  .stat-box .icon {
-    font-size: 24px;
-    margin-bottom: 5px;
-  }
-  
-  .stat-box .label {
-    font-size: 10px;
-    color: #c9a961;
-    margin-bottom: 3px;
-  }
-  
+  .stat-box .icon { font-size: 24px; margin-bottom: 5px; }
+  .stat-box .label { font-size: 10px; color: #c9a961; margin-bottom: 3px; }
   .stat-box .value {
     font-size: 16px;
     font-weight: bold;
@@ -82,7 +70,6 @@
     font-family: 'MedievalSharp', cursive;
   }
   
-  /* Kazım Animasyonu */
   .mining-scene {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
     border: 3px solid #8b4513;
@@ -100,10 +87,7 @@
   .mining-scene::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: 
       radial-gradient(circle at 30% 40%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
       radial-gradient(circle at 70% 60%, rgba(75, 0, 130, 0.2) 0%, transparent 50%);
@@ -167,15 +151,8 @@
     padding: 10px;
   }
   
-  .mining-stats .item {
-    text-align: center;
-  }
-  
-  .mining-stats .label {
-    font-size: 10px;
-    color: #c9a961;
-  }
-  
+  .mining-stats .item { text-align: center; }
+  .mining-stats .label { font-size: 10px; color: #c9a961; }
   .mining-stats .value {
     font-size: 18px;
     font-weight: bold;
@@ -196,7 +173,6 @@
     100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
   }
   
-  /* Menü Butonları */
   .menu-row {
     display: flex;
     gap: 8px;
@@ -221,34 +197,18 @@
     box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
   }
   
-  .menu-btn:active {
-    transform: translateY(-1px);
-  }
-  
-  .menu-btn .icon {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
+  .menu-btn:active { transform: translateY(-1px); }
+  .menu-btn .icon { font-size: 28px; display: block; margin-bottom: 5px; }
   .menu-btn .label {
     font-size: 11px;
     color: #f4e4c1;
     font-family: 'MedievalSharp', cursive;
   }
   
-  .menu-btn.withdraw {
-    background: linear-gradient(135deg, #8b6914 0%, #5c4a0e 100%);
-  }
+  .menu-btn.withdraw { background: linear-gradient(135deg, #8b6914 0%, #5c4a0e 100%); }
+  .menu-btn.admin { background: linear-gradient(135deg, #4a0e4e 0%, #2d0830 100%); }
   
-  .menu-btn.admin {
-    background: linear-gradient(135deg, #4a0e4e 0%, #2d0830 100%);
-  }
-  
-  /* Form */
-  .form-group {
-    margin-bottom: 15px;
-  }
+  .form-group { margin-bottom: 15px; }
   
   label {
     display: block;
@@ -275,7 +235,6 @@
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
   }
   
-  /* Butonlar */
   .btn {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
     border: 2px solid #b8860b;
@@ -295,9 +254,7 @@
     box-shadow: 0 6px 15px rgba(255, 215, 0, 0.5);
   }
   
-  .btn:active {
-    transform: translateY(-1px);
-  }
+  .btn:active { transform: translateY(-1px); }
   
   .btn.secondary {
     background: linear-gradient(135deg, #696969 0%, #404040 100%);
@@ -315,7 +272,14 @@
     border-color: #b91c1c;
   }
   
-  /* Bakiye */
+  .btn.copy-btn {
+    background: linear-gradient(135deg, #4a9eff 0%, #2a6acc 100%);
+    border-color: #1a4a9c;
+    color: white;
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+  
   .balance-box {
     background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
     border: 3px solid #b8860b;
@@ -339,7 +303,6 @@
     font-family: 'MedievalSharp', cursive;
   }
   
-  /* Kripto Bilgi */
   .crypto-box {
     background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
     border: 2px solid #8b4513;
@@ -361,7 +324,186 @@
     font-family: 'MedievalSharp', cursive;
   }
   
-  /* Admin */
+  /* Yatırım Bilgi Kartı */
+  .deposit-card {
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 3px solid #f3ba2f;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 0 30px rgba(243, 186, 47, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .deposit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(243, 186, 47, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(243, 186, 47, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  
+  .deposit-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(243, 186, 47, 0.3);
+  }
+  
+  .deposit-header .bnb-logo {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #f3ba2f 0%, #d4a017 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a0f0a;
+    box-shadow: 0 0 20px rgba(243, 186, 47, 0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(243, 186, 47, 0.5); }
+    50% { box-shadow: 0 0 35px rgba(243, 186, 47, 0.8); }
+  }
+  
+  .deposit-header .title {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 20px;
+    color: #f3ba2f;
+    text-shadow: 0 0 10px rgba(243, 186, 47, 0.5);
+  }
+  
+  .deposit-header .subtitle {
+    font-size: 12px;
+    color: #c9a961;
+  }
+  
+  .deposit-info {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .deposit-info .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+  }
+  
+  .deposit-info .info-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .deposit-info .info-label {
+    font-size: 12px;
+    color: #c9a961;
+    font-family: 'Cinzel', serif;
+  }
+  
+  .deposit-info .info-value {
+    font-size: 14px;
+    color: #ffd700;
+    font-weight: bold;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .deposit-info .info-value.highlight {
+    color: #4ade80;
+    font-size: 16px;
+  }
+  
+  .wallet-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #f3ba2f;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .wallet-box .wallet-label {
+    font-size: 11px;
+    color: #c9a961;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .wallet-box .wallet-address {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #f3ba2f;
+    word-break: break-all;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(243, 186, 47, 0.3);
+  }
+  
+  .wallet-box .copy-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #f3ba2f 0%, #d4a017 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    color: #1a0f0a;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'MedievalSharp', cursive;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .wallet-box .copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(243, 186, 47, 0.5);
+  }
+  
+  .wallet-box .copy-btn:active {
+    transform: translateY(0);
+  }
+  
+  .warning-box {
+    background: linear-gradient(135deg, rgba(248, 113, 113, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border: 2px solid #f87171;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 15px;
+  }
+  
+  .warning-box .warning-title {
+    color: #f87171;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .warning-box .warning-text {
+    color: #c9a961;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  
   .tabs {
     display: flex;
     gap: 8px;
@@ -386,7 +528,6 @@
     border-color: #b8860b;
   }
   
-  /* Liste */
   .item-card {
     background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
     border: 2px solid #8b4513;
@@ -409,10 +550,8 @@
     font-size: 12px;
   }
   
-  /* Gizli */
   .hidden { display: none; }
   
-  /* Sayfa Başlığı */
   .page-title {
     font-family: 'MedievalSharp', cursive;
     font-size: 20px;
@@ -421,6 +560,25 @@
     margin-bottom: 15px;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   }
+  
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: #1a0f0a;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: 'MedievalSharp', cursive;
+    font-weight: bold;
+    box-shadow: 0 4px 20px rgba(74, 222, 128, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -428,7 +586,7 @@
     <!-- Ana Sayfa -->
     <div id="page-home">
       <div class="header">
-        <h1>⚡ HASH MINING ⚡</h1>
+        <h1> HASH MINING ⚡</h1>
       </div>
       
       <div class="stats-row">
@@ -438,7 +596,7 @@
           <div class="value">$<span id="balance">0.00</span></div>
         </div>
         <div class="stat-box">
-          <div class="icon"></div>
+          <div class="icon">📦</div>
           <div class="label">Ürün</div>
           <div class="value"><span id="productCount">0</span></div>
         </div>
@@ -449,7 +607,6 @@
         </div>
       </div>
       
-      <!-- Kazım Animasyonu -->
       <div class="mining-scene" id="miningScene">
         <div class="mining-stats">
           <div class="item">
@@ -465,8 +622,8 @@
             <div class="value">$<span id="perHour">0.00</span></div>
           </div>
         </div>
-        <div class="miner">⛏️</div>
-        <div class="rock"></div>
+        <div class="miner">️</div>
+        <div class="rock">🪨</div>
         <div class="spark">✨</div>
       </div>
       
@@ -489,11 +646,60 @@
     <!-- Satın Al -->
     <div id="page-buy" class="hidden">
       <div class="page-title">💎 Mining Gücü Satın Al</div>
-      <div class="form-group">
-        <label>Miktar ($)</label>
-        <input type="number" id="buyAmount" placeholder="10" min="1" value="10">
+      
+      <!-- Yatırım Bilgi Kartı -->
+      <div class="deposit-card">
+        <div class="deposit-header">
+          <div class="bnb-logo">B</div>
+          <div>
+            <div class="title">BNB ile Yatırım</div>
+            <div class="subtitle">Binance Smart Chain (BEP20)</div>
+          </div>
+        </div>
+        
+        <div class="deposit-info">
+          <div class="info-row">
+            <span class="info-label">💰 Minimum Yatırım</span>
+            <span class="info-value highlight">2 TRX</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📊 Yaklaşık Değer</span>
+            <span class="info-value">~$0.24 USD</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label"> Ağ</span>
+            <span class="info-value">BNB Smart Chain</span>
+          </div>
+        </div>
+        
+        <div class="wallet-box">
+          <span class="wallet-label"> BNB Cüzdan Adresi (BEP20)</span>
+          <div class="wallet-address" id="walletAddressDisplay">0x1249ce408537f251f2b0047ee606a2d85c43a320</div>
+          <button class="copy-btn" onclick="copyWalletAddress()">📋 Adresi Kopyala</button>
+        </div>
+        
+        <div class="warning-box">
+          <div class="warning-title">⚠️ ÖNEMLİ UYARI</div>
+          <div class="warning-text">
+            • Sadece <strong>BNB Smart Chain (BEP20)</strong> ağını kullanın<br>
+            • Yanlış ağdan gönderilen coin'ler geri alınamaz<br>
+            • Gönderim sonrası dekont saklayın<br>
+            • Onay süreci 5-30 dakika sürebilir
+          </div>
+        </div>
       </div>
-      <button class="btn" onclick="buyProduct()">️ Satın Al</button>
+      
+      <div class="form-group">
+        <label>Gönderdiğiniz Miktar (TRX)</label>
+        <input type="number" id="sentAmount" placeholder="2" min="2" step="0.1">
+      </div>
+      
+      <div class="form-group">
+        <label>İşlem Hash (TXID)</label>
+        <input type="text" id="txHash" placeholder="0x...">
+      </div>
+      
+      <button class="btn" onclick="submitDeposit()">📤 Yatırımı Bildir</button>
       <button class="btn secondary" onclick="showPage('home')">← Geri</button>
     </div>
 
@@ -547,6 +753,8 @@
     </div>
   </div>
 
+  <div class="toast" id="toast"></div>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",
@@ -576,6 +784,9 @@
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
+    const BNB_WALLET = "0x1249ce408537f251f2b0047ee606a2d85c43a320";
+    const MIN_DEPOSIT_TRX = 2;
+    
     const tg = window.Telegram.WebApp;
     tg.ready();
     
@@ -591,6 +802,28 @@
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    
+    function copyWalletAddress() {
+      navigator.clipboard.writeText(BNB_WALLET).then(() => {
+        showToast('✅ Adres kopyalandı!');
+      }).catch(() => {
+        // Fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = BNB_WALLET;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast('✅ Adres kopyalandı!');
+      });
+    }
     
     function listenToData() {
       if (unsubscribe) unsubscribe();
@@ -609,14 +842,24 @@
       });
     }
     
-    async function buyProduct() {
-      const amount = parseFloat(document.getElementById('buyAmount').value);
-      if (amount < 1) { alert('Minimum $1'); return; }
+    async function submitDeposit() {
+      const sentAmount = parseFloat(document.getElementById('sentAmount').value);
+      const txHash = document.getElementById('txHash').value.trim();
       
-      const payment = {
-        id: 'pay_' + Date.now(),
-        amount: amount,
-        earned: 0,
+      if (!sentAmount || sentAmount < MIN_DEPOSIT_TRX) {
+        alert(`❌ Minimum ${MIN_DEPOSIT_TRX} TRX göndermelisiniz!`);
+        return;
+      }
+      
+      if (!txHash) {
+        alert('❌ İşlem hash (TXID) gerekli!');
+        return;
+      }
+      
+      const deposit = {
+        id: 'dep_' + Date.now(),
+        sentAmount: sentAmount,
+        txHash: txHash,
         status: 'pending',
         userId: userId,
         userName: currentUser ? currentUser.first_name : 'User',
@@ -627,15 +870,15 @@
         const userRef = db.collection('users').doc(userId);
         const doc = await userRef.get();
         const data = doc.data() || {};
-        const currentPending = data.pendingPayments || [];
+        const currentDeposits = data.deposits || [];
         
         await userRef.set({
-          pendingPayments: [...currentPending, payment],
-          totalInvested: (data.totalInvested || 0) + amount
+          deposits: [...currentDeposits, deposit]
         }, { merge: true });
         
-        alert('✅ Ödeme oluşturuldu! Admin onayı bekleniyor.');
-        document.getElementById('buyAmount').value = '';
+        alert('✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.');
+        document.getElementById('sentAmount').value = '';
+        document.getElementById('txHash').value = '';
       } catch (error) {
         alert('❌ Hata: ' + error.message);
       }
@@ -726,36 +969,39 @@
       }
     }
     
-    async function loadAdminPayments() {
+    async function loadAdminDeposits() {
       try {
         const snapshot = await db.collection('users').get();
         const pending = [];
         
         snapshot.forEach(doc => {
           const data = doc.data();
-          if (data.pendingPayments && data.pendingPayments.length > 0) {
-            data.pendingPayments.forEach(p => {
-              pending.push({ ...p, userDocId: doc.id });
+          if (data.deposits && data.deposits.length > 0) {
+            data.deposits.forEach(d => {
+              if (d.status === 'pending') {
+                pending.push({ ...d, userDocId: doc.id });
+              }
             });
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen ödeme yok</p>';
+        if (pending.length === 0) return '<p style="text-align: center; color: #4ade80;">✅ Bekleyen yatırım yok</p>';
         
         let html = '';
-        pending.forEach(p => {
+        pending.forEach(d => {
           html += `
             <div class="item-card">
-              <strong>$${p.amount}</strong> - ${p.userName}<br>
-              <small>ID: ${p.id}</small>
-              <button class="btn approve" onclick="approvePayment('${p.userDocId}', '${p.id}')">✓ Onayla</button>
-              <button class="btn reject" onclick="rejectPayment('${p.userDocId}', '${p.id}')">✕ Reddet</button>
+              <strong>${d.sentAmount} TRX</strong> - ${d.userName}<br>
+              <small>TX: ${d.txHash.substring(0, 20)}...</small>
+              <small>ID: ${d.id}</small>
+              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.sentAmount})">✓ Onayla</button>
+              <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ Reddet</button>
             </div>
           `;
         });
         return html;
       } catch (error) {
-        return '<p style="color: #f87171;"> Hata: ' + error.message + '</p>';
+        return '<p style="color: #f87171;">❌ Hata: ' + error.message + '</p>';
       }
     }
     
@@ -807,7 +1053,7 @@
       container.innerHTML = '<p style="text-align: center; color: #c9a961;">Yükleniyor...</p>';
       
       if (currentAdminTab === 'payments') {
-        container.innerHTML = await loadAdminPayments();
+        container.innerHTML = await loadAdminDeposits();
       } else {
         container.innerHTML = await loadAdminWithdrawals();
       }
@@ -820,7 +1066,7 @@
       loadAdmin();
     }
     
-    async function approvePayment(targetUserDocId, paymentId) {
+    async function approveDeposit(targetUserDocId, depositId, sentAmount) {
       try {
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
@@ -828,32 +1074,46 @@
         if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
-        const pendingPayments = data.pendingPayments || [];
+        const deposits = data.deposits || [];
         const approvedPayments = data.approvedPayments || [];
         
-        const paymentIndex = pendingPayments.findIndex(p => p.id === paymentId);
-        if (paymentIndex === -1) { alert('Ödeme bulunamadı!'); return; }
+        const depositIndex = deposits.findIndex(d => d.id === depositId);
+        if (depositIndex === -1) { alert('Yatırım bulunamadı!'); return; }
         
-        const payment = pendingPayments[paymentIndex];
-        const newPending = pendingPayments.filter(p => p.id !== paymentId);
+        const deposit = deposits[depositIndex];
+        const newDeposits = deposits.filter(d => d.id !== depositId);
         
-        payment.status = 'approved';
-        payment.approvedAt = Date.now();
+        deposit.status = 'approved';
+        deposit.approvedAt = Date.now();
+        
+        // TRX'i USD'ye çevir (yaklaşık $0.12/TRX)
+        const usdAmount = sentAmount * 0.12;
+        
+        const newPayment = {
+          id: 'pay_' + Date.now(),
+          amount: usdAmount,
+          earned: 0,
+          status: 'approved',
+          userId: targetUserDocId,
+          userName: deposit.userName,
+          timestamp: Date.now(),
+          approvedAt: Date.now()
+        };
         
         await userRef.set({
-          pendingPayments: newPending,
-          approvedPayments: [...approvedPayments, payment],
-          totalInvested: (data.totalInvested || 0) + payment.amount
+          deposits: newDeposits,
+          approvedPayments: [...approvedPayments, newPayment],
+          totalInvested: (data.totalInvested || 0) + usdAmount
         }, { merge: true });
         
-        alert('✅ Ödeme onaylandı!');
+        alert(`✅ Yatırım onaylandı! $${usdAmount.toFixed(2)} eklendi.`);
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
       }
     }
     
-    async function rejectPayment(targetUserDocId, paymentId) {
+    async function rejectDeposit(targetUserDocId, depositId) {
       try {
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
@@ -861,14 +1121,14 @@
         if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
-        const pendingPayments = data.pendingPayments || [];
-        const newPending = pendingPayments.filter(p => p.id !== paymentId);
+        const deposits = data.deposits || [];
+        const newDeposits = deposits.filter(d => d.id !== depositId);
         
         await userRef.set({
-          pendingPayments: newPending
+          deposits: newDeposits
         }, { merge: true });
         
-        alert(' Ödeme reddedildi!');
+        alert(' Yatırım reddedildi!');
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
@@ -944,7 +1204,6 @@
       window.scrollTo(0, 0);
     }
     
-    // Elmas oluşturma animasyonu
     function createGem() {
       if (products.length === 0) return;
       
