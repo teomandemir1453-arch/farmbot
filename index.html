@@ -58,6 +58,7 @@
     font-family: 'MedievalSharp', cursive;
   }
   
+  /* Madenci Animasyonu */
   .mining-scene {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
     border: 3px solid #8b4513;
@@ -67,7 +68,9 @@
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(139, 69, 19, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.5);
-    min-height: 200px;
+    min-height: 250px;
+    cursor: pointer;
+    user-select: none;
   }
   
   .mining-scene::before {
@@ -82,46 +85,85 @@
   
   .miner {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    font-size: 50px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 70px;
     animation: mine 1s ease-in-out infinite;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+    cursor: pointer;
+    transition: transform 0.1s;
+    z-index: 10;
+  }
+  
+  .miner:active {
+    transform: translateX(-50%) scale(0.95);
   }
   
   @keyframes mine {
-    0%, 100% { transform: rotate(0deg) translateY(0); }
-    25% { transform: rotate(-20deg) translateY(-5px); }
-    50% { transform: rotate(0deg) translateY(0); }
-    75% { transform: rotate(-20deg) translateY(-5px); }
+    0%, 100% { transform: translateX(-50%) rotate(0deg) translateY(0); }
+    25% { transform: translateX(-50%) rotate(-25deg) translateY(-8px); }
+    50% { transform: translateX(-50%) rotate(0deg) translateY(0); }
+    75% { transform: translateX(-50%) rotate(-25deg) translateY(-8px); }
   }
   
   .rock {
     position: absolute;
     bottom: 20px;
-    right: 40px;
-    font-size: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 80px;
     animation: shake 0.5s ease-in-out infinite;
+    z-index: 5;
   }
   
   @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-3px) rotate(-2deg); }
-    75% { transform: translateX(3px) rotate(2deg); }
+    0%, 100% { transform: translateX(calc(-50% + 0px)); }
+    25% { transform: translateX(calc(-50% - 5px)) rotate(-3deg); }
+    75% { transform: translateX(calc(-50% + 5px)) rotate(3deg); }
   }
   
   .spark {
     position: absolute;
-    bottom: 40px;
-    right: 60px;
-    font-size: 20px;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
     animation: sparkle 0.8s ease-in-out infinite;
     opacity: 0;
+    z-index: 8;
   }
   
   @keyframes sparkle {
-    0%, 100% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; transform: scale(1.2); }
+    0%, 100% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+  }
+  
+  /* Dolar İşareti Animasyonu */
+  .dollar-float {
+    position: absolute;
+    font-size: 28px;
+    font-weight: bold;
+    color: #4ade80;
+    animation: dollarFloat 1.5s ease-out forwards;
+    pointer-events: none;
+    z-index: 100;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.8);
+  }
+  
+  @keyframes dollarFloat {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(0.5) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50px) scale(1.2) rotate(10deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100px) scale(0.8) rotate(-10deg);
+    }
   }
   
   .mining-stats {
@@ -295,6 +337,7 @@
     font-family: 'MedievalSharp', cursive;
   }
   
+  /* Satın Al Kartı */
   .deposit-card {
     background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
     border: 3px solid #f3ba2f;
@@ -320,35 +363,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 15px;
+    margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 2px solid rgba(243, 186, 47, 0.3);
   }
   
-  .deposit-header .bnb-logo {
-    width: 50px;
-    height: 50px;
+  .deposit-logo {
+    width: 70px;
+    height: 70px;
     background: linear-gradient(135deg, #f3ba2f 0%, #d4a017 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
     color: #1a0f0a;
-    box-shadow: 0 0 20px rgba(243, 186, 47, 0.5);
+    box-shadow: 0 0 25px rgba(243, 186, 47, 0.6);
     animation: pulse 2s ease-in-out infinite;
+    border: 3px solid #ffd700;
   }
   
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(243, 186, 47, 0.5); }
-    50% { box-shadow: 0 0 35px rgba(243, 186, 47, 0.8); }
+    0%, 100% { box-shadow: 0 0 25px rgba(243, 186, 47, 0.6); transform: scale(1); }
+    50% { box-shadow: 0 0 40px rgba(243, 186, 47, 0.9); transform: scale(1.05); }
   }
   
   .deposit-header .title {
     font-family: 'MedievalSharp', cursive;
-    font-size: 20px;
+    font-size: 22px;
     color: #f3ba2f;
     text-shadow: 0 0 10px rgba(243, 186, 47, 0.5);
   }
@@ -393,14 +437,14 @@
   
   .deposit-info .info-value.highlight {
     color: #4ade80;
-    font-size: 16px;
+    font-size: 18px;
   }
   
   .wallet-box {
     background: rgba(0, 0, 0, 0.5);
     border: 2px solid #f3ba2f;
     border-radius: 10px;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 15px;
   }
   
@@ -416,11 +460,11 @@
     font-size: 11px;
     color: #f3ba2f;
     word-break: break-all;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
     margin-bottom: 10px;
-    border: 1px solid rgba(243, 186, 47, 0.3);
+    border: 2px dashed rgba(243, 186, 47, 0.4);
   }
   
   .wallet-box .copy-btn {
@@ -428,9 +472,9 @@
     background: linear-gradient(135deg, #f3ba2f 0%, #d4a017 100%);
     border: none;
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px;
     color: #1a0f0a;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
     font-family: 'MedievalSharp', cursive;
     cursor: pointer;
@@ -679,6 +723,21 @@
   }
   
   .toast.show { opacity: 1; }
+  
+  .click-hint {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 11px;
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+    animation: pulse 2s ease-in-out infinite;
+  }
 </style>
 </head>
 <body>
@@ -708,6 +767,7 @@
       </div>
       
       <div class="mining-scene" id="miningScene">
+        <div class="click-hint" data-i18n="clickMiner">Click Miner!</div>
         <div class="mining-stats">
           <div class="item">
             <div class="label" data-i18n="perSec">Per Sec</div>
@@ -722,14 +782,14 @@
             <div class="value">$<span id="perHour">0.00</span></div>
           </div>
         </div>
-        <div class="miner">️</div>
+        <div class="miner" id="miner" onclick="clickMiner(event)">⛏️</div>
         <div class="rock">🪨</div>
         <div class="spark">✨</div>
       </div>
       
       <div class="menu-row">
         <div class="menu-btn" onclick="showPage('buy')">
-          <span class="icon"></span>
+          <span class="icon">💎</span>
           <span class="label" data-i18n="buy">BUY</span>
         </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
@@ -759,48 +819,48 @@
       
       <div class="deposit-card">
         <div class="deposit-header">
-          <div class="bnb-logo">B</div>
+          <div class="deposit-logo">₮</div>
           <div>
-            <div class="title" data-i18n="bnbInvest">BNB Investment</div>
-            <div class="subtitle">Binance Smart Chain (BEP20)</div>
+            <div class="title" data-i18n="trxInvest">TRX Investment</div>
+            <div class="subtitle">TRON Network</div>
           </div>
         </div>
         
         <div class="deposit-info">
           <div class="info-row">
-            <span class="info-label" data-i18n="minDeposit">💰 Minimum Deposit</span>
-            <span class="info-value highlight">2 TRX</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label" data-i18n="approxValue">📊 Approximate Value</span>
-            <span class="info-value">~$0.24 USD</span>
+            <span class="info-label" data-i18n="minDeposit"> Minimum Deposit</span>
+            <span class="info-value highlight">2 TRX (~$0.24)</span>
           </div>
           <div class="info-row">
             <span class="info-label" data-i18n="network">🌐 Network</span>
-            <span class="info-value">BNB Smart Chain</span>
+            <span class="info-value">TRON (TRC20)</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label" data-i18n="rate">💱 Rate</span>
+            <span class="info-value">1 TRX ≈ $0.12</span>
           </div>
         </div>
         
+        <div class="form-group">
+          <label data-i18n="usdAmount">💵 Amount to Receive (USD)</label>
+          <input type="number" id="usdAmount" placeholder="10" min="0.24" step="0.01" oninput="calculateTRX()">
+          <div style="margin-top: 8px; font-size: 12px; color: #c9a961;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #4ade80; font-weight: bold;">0</span> TRX</div>
+        </div>
+        
         <div class="wallet-box">
-          <span class="wallet-label" data-i18n="bnbWallet">📍 BNB Wallet Address (BEP20)</span>
-          <div class="wallet-address" id="walletAddressDisplay">0x1249ce408537f251f2b0047ee606a2d85c43a320</div>
-          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress">📋 Copy Address</button>
+          <span class="wallet-label" data-i18n="trxWallet">📍 TRX Wallet Address</span>
+          <div class="wallet-address" id="walletAddressDisplay">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</div>
+          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress"> Copy Address</button>
         </div>
         
         <div class="warning-box">
           <div class="warning-title" data-i18n="warning">⚠️ IMPORTANT</div>
           <div class="warning-text" data-i18n="warningText">
-            • Use only <strong>BNB Smart Chain (BEP20)</strong> network<br>
-            • Coins sent from wrong network cannot be recovered<br>
-            • Save your receipt after sending<br>
+            • Use only <strong>TRON (TRC20)</strong> network<br>
+            • Send EXACT amount shown above<br>
             • Confirmation may take 5-30 minutes
           </div>
         </div>
-      </div>
-      
-      <div class="form-group">
-        <label data-i18n="sentAmount">Amount Sent (TRX)</label>
-        <input type="number" id="sentAmount" placeholder="2" min="2" step="0.1">
       </div>
       
       <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
@@ -837,7 +897,7 @@
       </div>
       
       <div class="form-group">
-        <label data-i18n="walletAddr"> Wallet Address</label>
+        <label data-i18n="walletAddr">📍 Wallet Address</label>
         <input type="text" id="walletAddress" placeholder="Wallet address...">
       </div>
       
@@ -860,35 +920,35 @@
         <div class="lang-list">
           <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
             <div class="lang-info">
-              <span class="flag">🇧</span>
+              <span class="flag">🇬🇧</span>
               <span class="lang-name">English</span>
             </div>
             <span class="check">✓</span>
           </div>
           <div class="lang-option" data-lang="tr" onclick="changeLanguage('tr')">
             <div class="lang-info">
-              <span class="flag">🇹🇷</span>
+              <span class="flag">🇷</span>
               <span class="lang-name">Türkçe</span>
             </div>
             <span class="check">✓</span>
           </div>
           <div class="lang-option" data-lang="ru" onclick="changeLanguage('ru')">
             <div class="lang-info">
-              <span class="flag">🇺</span>
+              <span class="flag">🇷🇺</span>
               <span class="lang-name">Русский</span>
             </div>
             <span class="check">✓</span>
           </div>
           <div class="lang-option" data-lang="ar" onclick="changeLanguage('ar')">
             <div class="lang-info">
-              <span class="flag">🇦</span>
+              <span class="flag">🇸🇦</span>
               <span class="lang-name">العربية</span>
             </div>
             <span class="check">✓</span>
           </div>
           <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
             <div class="lang-info">
-              <span class="flag">🇸</span>
+              <span class="flag">🇪🇸</span>
               <span class="lang-name">Español</span>
             </div>
             <span class="check">✓</span>
@@ -921,7 +981,7 @@
 
     <!-- Admin -->
     <div id="page-admin" class="hidden">
-      <div class="page-title" data-i18n="adminTitle"> Admin Panel</div>
+      <div class="page-title" data-i18n="adminTitle">🔐 Admin Panel</div>
       <div class="tabs">
         <button class="tab active" onclick="switchAdminTab('payments', this)" data-i18n="deposits">💳 Deposits</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)" data-i18n="withdrawals">💸 Withdrawals</button>
@@ -957,41 +1017,44 @@
     let unsubscribe = null;
     let currentLang = 'en';
     
-    // ROI 100 gün (gizli) - müşteriye "3 ay" gösterilecek
+    // ROI 100 gün (gizli)
     const ROI_DAYS = 100;
     const DAILY_RATE = 1 / ROI_DAYS;
     const PER_SECOND = DAILY_RATE / 86400;
     
+    const TRX_PRICE = 0.12; // 1 TRX = $0.12
+    const MIN_DEPOSIT_TRX = 2;
+    const TRX_WALLET = "TXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+    
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
-    
-    const BNB_WALLET = "0x1249ce408537f251f2b0047ee606a2d85c43a320";
-    const MIN_DEPOSIT_TRX = 2;
     
     // Çeviri sistemi
     const translations = {
       en: {
         balance: 'Balance', products: 'Products', investment: 'Investment',
         perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour',
+        clickMiner: 'Click Miner!',
         buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
-        buyTitle: '💎 Buy Mining Power', bnbInvest: 'BNB Investment',
-        minDeposit: '💰 Minimum Deposit', approxValue: '📊 Approximate Value',
-        network: '🌐 Network', bnbWallet: '📍 BNB Wallet Address (BEP20)',
-        copyAddress: '📋 Copy Address', warning: '️ IMPORTANT',
-        warningText: '• Use only <strong>BNB Smart Chain (BEP20)</strong> network<br>• Coins sent from wrong network cannot be recovered<br>• Save your receipt after sending<br>• Confirmation may take 5-30 minutes',
-        sentAmount: 'Amount Sent (TRX)', notifyDeposit: ' Notify Deposit', back: '← Back',
+        buyTitle: ' Buy Mining Power', trxInvest: 'TRX Investment',
+        minDeposit: '💰 Minimum Deposit', network: '🌐 Network',
+        rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)',
+        youWillGet: 'You will get: ',
+        trxWallet: ' TRX Wallet Address',
+        copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT',
+        warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes',
+        notifyDeposit: '📤 Notify Deposit', back: '← Back',
         withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance',
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)',
         selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:',
         walletAddr: ' Wallet Address', createWithdraw: '💸 Create Withdrawal',
         profileTitle: '👤 Profile', selectLang: ' Select Language',
-        myStats: ' My Statistics', totalEarned: 'Total Earned',
+        myStats: '📊 My Statistics', totalEarned: 'Total Earned',
         totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products',
         totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel',
-        deposits: ' Deposits', withdrawals: '💸 Withdrawals',
+        deposits: '💳 Deposits', withdrawals: '💸 Withdrawals',
         noPending: '✅ No pending items', copied: '✅ Address copied!',
-        minTrx: `❌ Minimum ${MIN_DEPOSIT_TRX} TRX required!`,
-        txRequired: '❌ Transaction hash required!',
+        minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} required!`,
         depositSent: '✅ Deposit notification sent! Waiting for admin approval.',
         withdrawCreated: '✅ Withdrawal request created!',
         insufficientBalance: '❌ Insufficient balance!',
@@ -1003,13 +1066,16 @@
       tr: {
         balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım',
         perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat',
+        clickMiner: 'Madenciye Tıkla!',
         buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN',
-        buyTitle: '💎 Mining Gücü Satın Al', bnbInvest: 'BNB Yatırımı',
-        minDeposit: '💰 Minimum Yatırım', approxValue: ' Yaklaşık Değer',
-        network: '🌐 Ağ', bnbWallet: '📍 BNB Cüzdan Adresi (BEP20)',
-        copyAddress: ' Adresi Kopyala', warning: '️ ÖNEMLİ',
-        warningText: '• Sadece <strong>BNB Smart Chain (BEP20)</strong> ağını kullanın<br>• Yanlış ağdan gönderilen coin\'ler geri alınamaz<br>• Gönderim sonrası dekont saklayın<br>• Onay süreci 5-30 dakika sürebilir',
-        sentAmount: 'Gönderilen Miktar (TRX)', notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri',
+        buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı',
+        minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ',
+        rate: '💱 Kur', usdAmount: '💵 Alınacak Miktar (USD)',
+        youWillGet: 'Alacağınız: ',
+        trxWallet: '📍 TRX Cüzdan Adresi',
+        copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ',
+        warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir',
+        notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri',
         withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye',
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)',
         selectCrypto: ' Kripto Seçimi', equivalent: 'Karşılık:',
@@ -1017,11 +1083,10 @@
         profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi',
         myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç',
         totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün',
-        totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel',
-        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler',
+        totalInvestment: 'Toplam Yatırım', adminTitle: ' Admin Panel',
+        deposits: '💳 Yatırımlar', withdrawals: ' Çekimler',
         noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!',
-        minTrx: `❌ Minimum ${MIN_DEPOSIT_TRX} TRX gerekli!`,
-        txRequired: '❌ İşlem hash gerekli!',
+        minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} gerekli!`,
         depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.',
         withdrawCreated: '✅ Çekim talebi oluşturuldu!',
         insufficientBalance: '❌ Yetersiz bakiye!',
@@ -1033,13 +1098,16 @@
       ru: {
         balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции',
         perSec: 'В сек', perMin: 'В мин', perHour: 'В час',
+        clickMiner: 'Кликни шахтера!',
         buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН',
-        buyTitle: '💎 Купить мощность', bnbInvest: 'Инвестиция BNB',
-        minDeposit: '💰 Минимальный депозит', approxValue: '📊 Примерная стоимость',
-        network: '🌐 Сеть', bnbWallet: '📍 Адрес кошелька BNB (BEP20)',
+        buyTitle: '💎 Купить мощность', trxInvest: 'Инвестиция TRX',
+        minDeposit: '💰 Минимальный депозит', network: '🌐 Сеть',
+        rate: '💱 Курс', usdAmount: '💵 Сумма получения (USD)',
+        youWillGet: 'Вы получите: ',
+        trxWallet: '📍 Адрес кошелька TRX',
         copyAddress: '📋 Копировать адрес', warning: '⚠️ ВАЖНО',
-        warningText: '• Используйте только сеть <strong>BNB Smart Chain (BEP20)</strong><br>• Монеты, отправленные не в ту сеть, не могут быть возвращены<br>• Сохраните квитанцию после отправки<br>• Подтверждение может занять 5-30 минут',
-        sentAmount: 'Отправленная сумма (TRX)', notifyDeposit: ' Уведомить о депозите', back: '← Назад',
+        warningText: '• Используйте только сеть <strong>TRON (TRC20)</strong><br>• Отправьте ТОЧНУЮ сумму, показанную выше<br>• Подтверждение может занять 5-30 минут',
+        notifyDeposit: '📤 Уведомить о депозите', back: '← Назад',
         withdrawTitle: '💸 Запрос на вывод', currentBalance: 'Текущий баланс',
         minWithdraw: 'Мин: $0.01', withdrawAmount: 'Сумма вывода (USD)',
         selectCrypto: '🪙 Выбрать крипто', equivalent: 'Эквивалент:',
@@ -1048,14 +1116,13 @@
         myStats: '📊 Моя статистика', totalEarned: 'Всего заработано',
         totalWithdrawn: 'Всего выведено', activeProducts: 'Активные продукты',
         totalInvestment: 'Всего инвестиций', adminTitle: '🔐 Панель админа',
-        deposits: '💳 Депозиты', withdrawals: '💸 Выводы',
+        deposits: ' Депозиты', withdrawals: ' Выводы',
         noPending: '✅ Нет ожидающих', copied: '✅ Адрес скопирован!',
-        minTrx: `❌ Минимум ${MIN_DEPOSIT_TRX} TRX!`,
-        txRequired: ' Требуется хэш транзакции!',
+        minUsd: `❌ Минимум $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ Уведомление отправлено! Ожидание одобрения админа.',
         withdrawCreated: '✅ Запрос на вывод создан!',
-        insufficientBalance: '❌ Недостаточно средств!',
-        walletRequired: ' Адрес кошелька обязателен!',
+        insufficientBalance: ' Недостаточно средств!',
+        walletRequired: '❌ Адрес кошелька обязателен!',
         minWithdrawAmount: '❌ Минимум: $0.01',
         approved: '✅ Одобрено!', rejected: '❌ Отклонено!',
         error: '❌ Ошибка: '
@@ -1063,13 +1130,16 @@
       ar: {
         balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار',
         perSec: 'في الثانية', perMin: 'في الدقيقة', perHour: 'في الساعة',
+        clickMiner: 'انقر على العامل!',
         buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
-        buyTitle: '💎 شراء قوة التعدين', bnbInvest: 'استثمار BNB',
-        minDeposit: '💰 الحد الأدنى للإيداع', approxValue: ' القيمة التقريبية',
-        network: '🌐 الشبكة', bnbWallet: '📍 عنوان محفظة BNB (BEP20)',
-        copyAddress: ' نسخ العنوان', warning: '⚠️ مهم',
-        warningText: '• استخدم فقط شبكة <strong>BNB Smart Chain (BEP20)</strong><br>• العملات المرسلة من شبكة خاطئة لا يمكن استردادها<br>• احفظ إيصالك بعد الإرسال<br>• قد يستغرق التأكيد 5-30 دقيقة',
-        sentAmount: 'المبلغ المرسل (TRX)', notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
+        buyTitle: '💎 شراء قوة التعدين', trxInvest: 'استثمار TRX',
+        minDeposit: '💰 الحد الأدنى للإيداع', network: '🌐 الشبكة',
+        rate: '💱 السعر', usdAmount: '💵 المبلغ المستلم (USD)',
+        youWillGet: 'ستحصل على: ',
+        trxWallet: '📍 عنوان محفظة TRX',
+        copyAddress: '📋 نسخ العنوان', warning: '⚠️ مهم',
+        warningText: '• استخدم فقط شبكة <strong>TRON (TRC20)</strong><br>• أرسل المبلغ الدقيق الموضح أعلاه<br>• قد يستغرق التأكيد 5-30 دقيقة',
+        notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
         withdrawTitle: '💸 طلب السحب', currentBalance: 'الرصيد الحالي',
         minWithdraw: 'الحد الأدنى: $0.01', withdrawAmount: 'مبلغ السحب (USD)',
         selectCrypto: '🪙 اختر العملة', equivalent: 'المعادل:',
@@ -1077,11 +1147,10 @@
         profileTitle: '👤 الملف الشخصي', selectLang: '🌐 اختيار اللغة',
         myStats: '📊 إحصائياتي', totalEarned: 'إجمالي الأرباح',
         totalWithdrawn: 'إجمالي المسحوب', activeProducts: 'المنتجات النشطة',
-        totalInvestment: 'إجمالي الاستثمار', adminTitle: '🔐 لوحة المسؤول',
+        totalInvestment: 'إجمالي الاستثمار', adminTitle: ' لوحة المسؤول',
         deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات',
         noPending: '✅ لا توجد معاملات معلقة', copied: '✅ تم نسخ العنوان!',
-        minTrx: `❌ الحد الأدنى ${MIN_DEPOSIT_TRX} TRX!`,
-        txRequired: '❌ مطلوب hash المعاملة!',
+        minUsd: ` الحد الأدنى $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ تم إرسال الإشعار! في انتظار موافقة المسؤول.',
         withdrawCreated: '✅ تم إنشاء طلب السحب!',
         insufficientBalance: '❌ رصيد غير كافٍ!',
@@ -1093,13 +1162,16 @@
       es: {
         balance: 'Saldo', products: 'Productos', investment: 'Inversión',
         perSec: 'Por seg', perMin: 'Por min', perHour: 'Por hora',
+        clickMiner: '¡Clic Minero!',
         buy: 'COMPRAR', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN',
-        buyTitle: '💎 Comprar Poder Minero', bnbInvest: 'Inversión BNB',
-        minDeposit: ' Depósito Mínimo', approxValue: ' Valor Aproximado',
-        network: '🌐 Red', bnbWallet: '📍 Dirección BNB (BEP20)',
+        buyTitle: '💎 Comprar Poder Minero', trxInvest: 'Inversión TRX',
+        minDeposit: '💰 Depósito Mínimo', network: ' Red',
+        rate: '💱 Tasa', usdAmount: '💵 Cantidad a Recibir (USD)',
+        youWillGet: 'Recibirás: ',
+        trxWallet: '📍 Dirección TRX',
         copyAddress: '📋 Copiar Dirección', warning: '⚠️ IMPORTANTE',
-        warningText: '• Use solo la red <strong>BNB Smart Chain (BEP20)</strong><br>• Las monedas enviadas desde red incorrecta no se pueden recuperar<br>• Guarde su recibo después de enviar<br>• La confirmación puede tardar 5-30 minutos',
-        sentAmount: 'Cantidad Enviada (TRX)', notifyDeposit: ' Notificar Depósito', back: '← Atrás',
+        warningText: '• Use solo la red <strong>TRON (TRC20)</strong><br>• Envíe la cantidad EXACTA mostrada arriba<br>• La confirmación puede tardar 5-30 minutos',
+        notifyDeposit: '📤 Notificar Depósito', back: '← Atrás',
         withdrawTitle: '💸 Solicitud de Retiro', currentBalance: 'Saldo Actual',
         minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad de Retiro (USD)',
         selectCrypto: '🪙 Seleccionar Cripto', equivalent: 'Equivalente:',
@@ -1107,16 +1179,15 @@
         profileTitle: '👤 Perfil', selectLang: '🌐 Seleccionar Idioma',
         myStats: '📊 Mis Estadísticas', totalEarned: 'Total Ganado',
         totalWithdrawn: 'Total Retirado', activeProducts: 'Productos Activos',
-        totalInvestment: 'Inversión Total', adminTitle: ' Panel Admin',
-        deposits: '💳 Depósitos', withdrawals: ' Retiros',
+        totalInvestment: 'Inversión Total', adminTitle: '🔐 Panel Admin',
+        deposits: ' Depósitos', withdrawals: '💸 Retiros',
         noPending: '✅ Sin pendientes', copied: '✅ ¡Dirección copiada!',
-        minTrx: `❌ ¡Mínimo ${MIN_DEPOSIT_TRX} TRX!`,
-        txRequired: '❌ ¡Hash de transacción requerido!',
+        minUsd: `❌ ¡Mínimo $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
         depositSent: '✅ ¡Notificación enviada! Esperando aprobación del admin.',
         withdrawCreated: '✅ ¡Solicitud de retiro creada!',
-        insufficientBalance: ' ¡Saldo insuficiente!',
+        insufficientBalance: '❌ ¡Saldo insuficiente!',
         walletRequired: '❌ ¡Dirección de billetera requerida!',
-        minWithdrawAmount: ' Mínimo: $0.01',
+        minWithdrawAmount: '❌ Mínimo: $0.01',
         approved: '✅ ¡Aprobado!', rejected: '❌ ¡Rechazado!',
         error: '❌ Error: '
       }
@@ -1151,17 +1222,23 @@
     }
     
     function copyWalletAddress() {
-      navigator.clipboard.writeText(BNB_WALLET).then(() => {
+      navigator.clipboard.writeText(TRX_WALLET).then(() => {
         showToast(translations[currentLang].copied);
       }).catch(() => {
         const textArea = document.createElement('textarea');
-        textArea.value = BNB_WALLET;
+        textArea.value = TRX_WALLET;
         document.body.appendChild(textArea);
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
         showToast(translations[currentLang].copied);
       });
+    }
+    
+    function calculateTRX() {
+      const usdAmount = parseFloat(document.getElementById('usdAmount').value) || 0;
+      const trxAmount = usdAmount / TRX_PRICE;
+      document.getElementById('trxAmount').textContent = trxAmount.toFixed(2);
     }
     
     function changeLanguage(lang) {
@@ -1177,7 +1254,7 @@
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
-          if (key === 'warningText') {
+          if (key === 'warningText' || key === 'youWillGet') {
             el.innerHTML = translations[lang][key];
           } else {
             el.textContent = translations[lang][key];
@@ -1201,6 +1278,45 @@
       } catch(e) {}
     }
     
+    function clickMiner(event) {
+      // Çok sayıda dolar işareti oluştur
+      const rect = event.currentTarget.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      // 10-15 dolar işareti oluştur
+      const count = Math.floor(Math.random() * 6) + 10;
+      
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const dollar = document.createElement('div');
+          dollar.className = 'dollar-float';
+          dollar.textContent = '$';
+          
+          // Rastgele pozisyon (madencinin etrafında)
+          const offsetX = (Math.random() - 0.5) * 100;
+          const offsetY = (Math.random() - 0.5) * 50;
+          
+          dollar.style.left = (centerX + offsetX) + 'px';
+          dollar.style.top = (centerY + offsetY) + 'px';
+          
+          // Rastgele renk
+          const colors = ['#4ade80', '#ffd700', '#60a5fa', '#f472b6'];
+          dollar.style.color = colors[Math.floor(Math.random() * colors.length)];
+          
+          document.body.appendChild(dollar);
+          
+          // Animasyon sonrası temizle
+          setTimeout(() => dollar.remove(), 1500);
+        }, i * 50);
+      }
+      
+      // Titreşim efekti (mobilde)
+      if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('medium');
+      }
+    }
+    
     function listenToData() {
       if (unsubscribe) unsubscribe();
       
@@ -1219,16 +1335,19 @@
     }
     
     async function submitDeposit() {
-      const sentAmount = parseFloat(document.getElementById('sentAmount').value);
+      const usdAmount = parseFloat(document.getElementById('usdAmount').value);
       
-      if (!sentAmount || sentAmount < MIN_DEPOSIT_TRX) {
-        alert(translations[currentLang].minTrx);
+      if (!usdAmount || usdAmount < MIN_DEPOSIT_TRX * TRX_PRICE) {
+        alert(translations[currentLang].minUsd);
         return;
       }
       
+      const trxAmount = usdAmount / TRX_PRICE;
+      
       const deposit = {
         id: 'dep_' + Date.now(),
-        sentAmount: sentAmount,
+        usdAmount: usdAmount,
+        trxAmount: trxAmount,
         status: 'pending',
         userId: userId,
         userName: currentUser ? currentUser.first_name : 'User',
@@ -1246,7 +1365,8 @@
         }, { merge: true });
         
         alert(translations[currentLang].depositSent);
-        document.getElementById('sentAmount').value = '';
+        document.getElementById('usdAmount').value = '';
+        document.getElementById('trxAmount').textContent = '0';
       } catch (error) {
         alert(translations[currentLang].error + error.message);
       }
@@ -1365,9 +1485,9 @@
         pending.forEach(d => {
           html += `
             <div class="item-card">
-              <strong>${d.sentAmount} TRX</strong> - ${d.userName}<br>
+              <strong>$${d.usdAmount.toFixed(2)}</strong> (${d.trxAmount.toFixed(2)} TRX) - ${d.userName}<br>
               <small>ID: ${d.id}</small>
-              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.sentAmount})">✓ ${currentLang === 'en' ? 'Approve' : currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar'}</button>
+              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.usdAmount})">✓ ${currentLang === 'en' ? 'Approve' : currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar'}</button>
               <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ ${currentLang === 'en' ? 'Reject' : currentLang === 'tr' ? 'Reddet' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : 'Rechazar'}</button>
             </div>
           `;
@@ -1439,7 +1559,7 @@
       loadAdmin();
     }
     
-    async function approveDeposit(targetUserDocId, depositId, sentAmount) {
+    async function approveDeposit(targetUserDocId, depositId, usdAmount) {
       try {
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
@@ -1458,9 +1578,6 @@
         
         deposit.status = 'approved';
         deposit.approvedAt = Date.now();
-        
-        // TRX'i USD'ye çevir (yaklaşık $0.12/TRX)
-        const usdAmount = sentAmount * 0.12;
         
         const newPayment = {
           id: 'pay_' + Date.now(),
@@ -1574,6 +1691,8 @@
           document.getElementById('profileName').textContent = currentUser.first_name || 'Miner';
           document.getElementById('profileId').textContent = 'ID: ' + (currentUser.id || '---');
         }
+      } else if (page === 'buy') {
+        calculateTRX();
       }
       
       window.scrollTo(0, 0);
