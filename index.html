@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BTC Mining Platform</title>
+<title>Hash Power Mining</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root {
@@ -23,6 +23,7 @@
     --btc-orange: #f7931a;
     --trx-red: #eb0029;
     --bnb-yellow: #f3ba2f;
+    --purple: #a855f7;
   }
 
   [data-theme="dark"] {
@@ -36,10 +37,15 @@
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: background-color 0.3s, color 0.3s; -webkit-tap-highlight-color: transparent; user-select: none; }
+  [dir="rtl"] {
+    direction: rtl;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: background-color 0.3s, color 0.3s; -webkit-tap-highlight-color: transparent; }
   body { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); display: flex; overflow-x: hidden; }
 
   .sidebar { width: 280px; background: var(--bg-sidebar); backdrop-filter: blur(20px); border-right: 1px solid var(--border-color); padding: 20px 15px; position: fixed; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.3s; }
+  [dir="rtl"] .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
   .sidebar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
   .sidebar-logo { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3); }
   .sidebar-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
@@ -53,21 +59,23 @@
   .menu-icon { font-size: 20px; width: 24px; text-align: center; }
   .menu-badge { margin-left: auto; background: var(--danger); color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
   .menu-item.active .menu-badge { background: rgba(255, 255, 255, 0.3); }
-  .language-selector { display: flex; gap: 8px; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-  .lang-btn { flex: 1; padding: 8px; border: 2px solid var(--border-color); background: var(--bg-card); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 12px; }
+  .language-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+  .lang-btn { padding: 8px 4px; border: 2px solid var(--border-color); background: var(--bg-card); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 11px; text-align: center; }
   .lang-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
   .sidebar-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-  .user-info { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; background: var(--bg-card); }
-  .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--success), #22c55e); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 16px; }
+  .user-info { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; background: var(--bg-card); cursor: pointer; }
+  .user-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 16px; background-size: cover; background-position: center; }
   .user-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
   .user-level { font-size: 11px; color: var(--text-secondary); }
 
   .main-content { margin-left: 280px; flex: 1; padding: 20px; min-height: 100vh; }
+  [dir="rtl"] .main-content { margin-left: 0; margin-right: 280px; }
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   .mobile-menu-btn { display: none; position: fixed; top: 10px; left: 15px; width: 45px; height: 45px; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; z-index: 999; font-size: 20px; align-items: center; justify-content: center; box-shadow: var(--shadow); }
+  [dir="rtl"] .mobile-menu-btn { left: auto; right: 15px; }
 
   .page-header { margin-bottom: 25px; padding-top: 10px; }
   .page-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
@@ -77,7 +85,7 @@
 
   .hero-banner { background: linear-gradient(135deg, #4a9eff 0%, #2a6acc 50%, #1a4a9c 100%); border-radius: 20px; padding: 25px; color: white; position: relative; overflow: hidden; margin-bottom: 20px; box-shadow: 0 10px 40px rgba(74, 158, 255, 0.3); }
   .hero-banner::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%; }
-  .hero-banner::after { content: '₿'; position: absolute; top: 15px; right: 20px; font-size: 80px; opacity: 0.15; font-weight: 700; animation: floatCoin 3s ease-in-out infinite; }
+  .hero-banner::after { content: '⚡'; position: absolute; top: 15px; right: 20px; font-size: 80px; opacity: 0.15; font-weight: 700; animation: floatCoin 3s ease-in-out infinite; }
   @keyframes floatCoin { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
   .hero-content { position: relative; z-index: 2; }
   .hero-greeting { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }
@@ -240,6 +248,7 @@
   .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary); font-size: 13px; }
 
   .live-feed { position: fixed; bottom: 20px; left: 20px; z-index: 998; display: flex; flex-direction: column; gap: 8px; pointer-events: none; max-width: 280px; }
+  [dir="rtl"] .live-feed { left: auto; right: 20px; }
   .feed-item { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 14px; box-shadow: var(--shadow); font-size: 12px; color: var(--text-primary); animation: slideIn 0.5s ease, fadeOut 0.5s ease 4.5s forwards; }
   @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
   @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
@@ -247,8 +256,10 @@
   .feed-item .feed-user { font-weight: 700; color: var(--accent); }
 
   .support-widget { position: fixed; bottom: 20px; right: 20px; z-index: 998; }
+  [dir="rtl"] .support-widget { right: auto; left: 20px; }
   .support-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; font-size: 22px; color: white; box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4); }
   .support-chat { position: absolute; bottom: 65px; right: 0; width: 280px; background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: var(--shadow); display: none; overflow: hidden; max-height: 300px; }
+  [dir="rtl"] .support-chat { right: auto; left: 0; }
   .support-chat.active { display: block; }
   .support-header { background: var(--accent); color: white; padding: 12px 15px; font-weight: 700; font-size: 14px; }
   .support-body { padding: 15px; max-height: 250px; overflow-y: auto; }
@@ -372,14 +383,207 @@
 
   .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
   .admin-stat-card { background: var(--bg-card-solid); border-radius: 12px; padding: 15px; border: 1px solid var(--border-color); text-align: center; }
-  .admin-stat-value { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
-  .admin-stat-label { font-size: 11px; color: var(--text-secondary); }
+  .admin-stat-value { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .admin-stat-label { font-size: 10px; color: var(--text-secondary); }
   .admin-stat-card.revenue .admin-stat-value { color: var(--success); }
   .admin-stat-card.pending .admin-stat-value { color: var(--warning); }
   .admin-stat-card.approved .admin-stat-value { color: var(--accent); }
   .admin-stat-card.rejected .admin-stat-value { color: var(--danger); }
 
-  /* User's pending requests section */
+  /* Kripto bazlı admin istatistikleri */
+  .crypto-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .crypto-stat-card {
+    background: var(--bg-card-solid);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent);
+  }
+
+  .crypto-stat-card.btc { border-left-color: var(--btc-orange); }
+  .crypto-stat-card.trx { border-left-color: var(--trx-red); }
+  .crypto-stat-card.bnb { border-left-color: var(--bnb-yellow); }
+  .crypto-stat-card.usd { border-left-color: var(--success); }
+
+  .crypto-stat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .crypto-stat-icon {
+    font-size: 20px;
+  }
+
+  .crypto-stat-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+
+  .crypto-stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 12px;
+  }
+
+  .crypto-stat-label {
+    color: var(--text-secondary);
+  }
+
+  .crypto-stat-value {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+  }
+
+  /* PROFİL SAYFASI */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 25px;
+    background: var(--bg-card-solid);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+  }
+
+  .profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 4px solid var(--accent);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+  }
+
+  .profile-info {
+    flex: 1;
+  }
+
+  .profile-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+
+  .profile-username {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .profile-telegram-id {
+    font-size: 12px;
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    background: rgba(74, 158, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .profile-section {
+    background: var(--bg-card-solid);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+  }
+
+  .profile-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .profile-field {
+    margin-bottom: 15px;
+  }
+
+  .profile-field label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .profile-field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .profile-field input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+
+  .avatar-option {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .avatar-option:hover {
+    transform: scale(1.1);
+  }
+
+  .avatar-option.selected {
+    border-color: var(--accent);
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
+  }
+
+  .btn-save {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  .btn-save:active {
+    transform: scale(0.98);
+  }
+
   .my-pending-section {
     background: var(--bg-card-solid);
     border-radius: 16px;
@@ -418,8 +622,10 @@
 
   @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); width: 260px; }
+    [dir="rtl"] .sidebar { transform: translateX(100%); }
     .sidebar.open { transform: translateX(0); }
     .main-content { margin-left: 0; padding: 15px; }
+    [dir="rtl"] .main-content { margin-right: 0; }
     .mobile-menu-btn { display: flex; }
     .page-title { font-size: 24px; }
     .packages-grid { grid-template-columns: repeat(2, 1fr); }
@@ -431,6 +637,9 @@
     .hero-stats { flex-direction: column; }
     .crypto-selector { grid-template-columns: repeat(3, 1fr); }
     .admin-stats { grid-template-columns: repeat(2, 1fr); }
+    .crypto-stats-grid { grid-template-columns: 1fr; }
+    .profile-header { flex-direction: column; text-align: center; }
+    .avatar-grid { grid-template-columns: repeat(5, 1fr); }
   }
 
   @media (max-width: 480px) {
@@ -440,6 +649,7 @@
     .calc-results { grid-template-columns: 1fr 1fr; }
     .referral-stats { grid-template-columns: 1fr; }
     .crypto-selector { grid-template-columns: 1fr; }
+    .avatar-grid { grid-template-columns: repeat(4, 1fr); }
   }
 </style>
 </head>
@@ -448,85 +658,90 @@
 
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">₿</div>
+      <div class="sidebar-logo">⚡</div>
       <div>
-        <div class="sidebar-title">BTC Mining</div>
-        <div class="sidebar-subtitle">Pro Platform</div>
+        <div class="sidebar-title" data-i18n="site_name">Hash Power Mining</div>
+        <div class="sidebar-subtitle" data-i18n="site_subtitle">Pro Platform</div>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label">Ana Menü</div>
+      <div class="menu-label" data-i18n="menu_main">Ana Menü</div>
       <div class="menu-item active" onclick="showPage('home', this)">
         <span class="menu-icon">🏠</span>
-        <span>Ana Sayfa</span>
+        <span data-i18n="menu_home">Ana Sayfa</span>
       </div>
       <div class="menu-item" onclick="showPage('buy', this)">
         <span class="menu-icon">💎</span>
-        <span>Satın Al</span>
+        <span data-i18n="menu_buy">Satın Al</span>
       </div>
       <div class="menu-item" onclick="showPage('production', this)">
-        <span class="menu-icon"></span>
-        <span>Üretim Hattı</span>
+        <span class="menu-icon">⚡</span>
+        <span data-i18n="menu_production">Üretim Hattı</span>
         <span class="menu-badge" id="productCount">0</span>
       </div>
     </div>
 
     <div class="menu-section">
-      <div class="menu-label">İstatistik</div>
+      <div class="menu-label" data-i18n="menu_account">Hesap</div>
+      <div class="menu-item" onclick="showPage('profile', this)">
+        <span class="menu-icon">👤</span>
+        <span data-i18n="menu_profile">Profil</span>
+      </div>
       <div class="menu-item" onclick="showPage('leaderboard', this)">
         <span class="menu-icon">🏆</span>
-        <span>Liderlik</span>
+        <span data-i18n="menu_leaderboard">Liderlik</span>
       </div>
-    </div>
-
-    <div class="menu-section">
-      <div class="menu-label">Hesap</div>
       <div class="menu-item" onclick="showPage('referral', this)">
         <span class="menu-icon">👥</span>
-        <span>Referans</span>
+        <span data-i18n="menu_referral">Referans</span>
       </div>
       <div class="menu-item" onclick="showPage('withdraw', this)">
         <span class="menu-icon">💸</span>
-        <span>Çekim</span>
+        <span data-i18n="menu_withdraw">Çekim</span>
       </div>
       <div class="menu-item" id="adminMenuItem" onclick="showPage('admin', this)" style="display: none;">
         <span class="menu-icon">🔐</span>
-        <span>Admin Panel</span>
+        <span data-i18n="menu_admin">Admin Panel</span>
         <span class="menu-badge" id="adminBadge">0</span>
       </div>
     </div>
 
     <div class="language-selector">
-      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹🇷 TR</button>
-      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇧 EN</button>
+      <button class="lang-btn active" onclick="changeLanguage('tr')" id="lang-tr">🇹 TR</button>
+      <button class="lang-btn" onclick="changeLanguage('en')" id="lang-en">🇬🇧 EN</button>
+      <button class="lang-btn" onclick="changeLanguage('ru')" id="lang-ru">🇺 RU</button>
+      <button class="lang-btn" onclick="changeLanguage('ar')" id="lang-ar">🇸🇦 AR</button>
+      <button class="lang-btn" onclick="changeLanguage('zh')" id="lang-zh">🇨🇳 ZH</button>
+      <button class="lang-btn" onclick="changeLanguage('ja')" id="lang-ja">🇯🇵 JA</button>
     </div>
 
     <div class="sidebar-footer">
-      <div class="user-info">
-        <div class="user-avatar" id="userAvatar">1</div>
+      <div class="user-info" onclick="showPage('profile', document.querySelectorAll('.menu-item')[3])">
+        <div class="user-avatar" id="sidebarAvatar"></div>
         <div>
-          <div class="user-name" id="userName">Bronz Madenci</div>
-          <div class="user-level" id="userXP">0 XP</div>
+          <div class="user-name" id="sidebarUserName">Madenci</div>
+          <div class="user-level" id="sidebarUserLevel">Bronz</div>
         </div>
       </div>
     </div>
   </aside>
 
   <main class="main-content">
+    <!-- HOME PAGE -->
     <div class="page active" id="page-home">
       <div class="hero-banner">
         <div class="hero-content">
-          <div class="hero-greeting">👋 Hoş Geldin</div>
+          <div class="hero-greeting" data-i18n="hero_greeting">👋 Hoş Geldin</div>
           <div class="hero-title" id="heroUserName">Madenci</div>
-          <div class="hero-subtitle">BTC Mining ile pasif gelir kazanmaya başla</div>
+          <div class="hero-subtitle" data-i18n="hero_subtitle">Hash Power Mining ile pasif gelir kazan</div>
           <div class="hero-stats">
             <div class="hero-stat">
-              <div class="hero-stat-label">Toplam Kazanç</div>
+              <div class="hero-stat-label" data-i18n="stat_earned">Toplam Kazanç</div>
               <div class="hero-stat-value" id="heroTotalEarned">$0.00</div>
             </div>
             <div class="hero-stat">
-              <div class="hero-stat-label">Aktif Ürün</div>
+              <div class="hero-stat-label" data-i18n="stat_active">Aktif Ürün</div>
               <div class="hero-stat-value" id="heroActiveProducts">0</div>
             </div>
           </div>
@@ -547,154 +762,219 @@
 
       <div class="stats-grid">
         <div class="stat-card blue">
-          <div class="stat-card-icon"></div>
+          <div class="stat-card-icon">📦</div>
           <div class="stat-card-value" id="homeActiveProducts">0</div>
-          <div class="stat-card-label">Aktif Ürün</div>
+          <div class="stat-card-label" data-i18n="stat_active">Aktif Ürün</div>
         </div>
         <div class="stat-card orange">
           <div class="stat-card-icon">💰</div>
           <div class="stat-card-value" id="homeTotalInvested">$0</div>
-          <div class="stat-card-label">Toplam Yatırım</div>
+          <div class="stat-card-label" data-i18n="stat_invested">Toplam Yatırım</div>
         </div>
         <div class="stat-card green live">
           <div class="stat-card-icon">💵</div>
           <div class="stat-card-value" id="homeTotalEarned">$0.00</div>
-          <div class="stat-card-label">Toplam Kazanç</div>
+          <div class="stat-card-label" data-i18n="stat_earned">Toplam Kazanç</div>
         </div>
         <div class="stat-card purple live">
           <div class="stat-card-icon">⚡</div>
           <div class="stat-card-value" id="homePerSecond">$0/s</div>
-          <div class="stat-card-label">Saniyelik</div>
+          <div class="stat-card-label" data-i18n="stat_persecond">Saniyelik</div>
         </div>
       </div>
 
       <div class="quick-actions">
         <div class="quick-action" onclick="showPage('buy', document.querySelectorAll('.menu-item')[1])">
           <div class="quick-action-icon">💎</div>
-          <div class="quick-action-label">Satın Al</div>
+          <div class="quick-action-label" data-i18n="action_buy">Satın Al</div>
         </div>
         <div class="quick-action" onclick="showPage('production', document.querySelectorAll('.menu-item')[2])">
           <div class="quick-action-icon">⚡</div>
-          <div class="quick-action-label">Üretim</div>
+          <div class="quick-action-label" data-i18n="action_production">Üretim</div>
         </div>
         <div class="quick-action" onclick="showPage('withdraw', document.querySelectorAll('.menu-item')[5])">
           <div class="quick-action-icon">💸</div>
-          <div class="quick-action-label">Çekim</div>
+          <div class="quick-action-label" data-i18n="action_withdraw">Çekim</div>
         </div>
       </div>
 
-      <!-- Bekleyen İşlemlerim (Kullanıcı için) -->
       <div id="myPendingSection"></div>
 
       <div class="activity-card">
         <div class="activity-header">
-          <div class="activity-title">Son Aktiviteler</div>
+          <div class="activity-title" data-i18n="activity_title">Son Aktiviteler</div>
           <div class="activity-badge" id="activityCount">0</div>
         </div>
         <div id="activityList"></div>
       </div>
     </div>
 
+    <!-- PROFILE PAGE -->
+    <div class="page" id="page-profile">
+      <div class="page-header">
+        <h1 class="page-title" data-i18n="profile_title"> Profil Bilgisi</h1>
+        <p class="page-subtitle" data-i18n="profile_subtitle">Hesap bilgilerini yönet</p>
+      </div>
+
+      <div class="profile-header">
+        <div class="profile-avatar-large" id="profileAvatarLarge"></div>
+        <div class="profile-info">
+          <div class="profile-name" id="profileDisplayName">Madenci</div>
+          <div class="profile-username" id="profileUsername">@user</div>
+          <div class="profile-telegram-id" id="profileTelegramId">ID: -</div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title" data-i18n="profile_personal">📝 Kişisel Bilgiler</div>
+        
+        <div class="profile-field">
+          <label data-i18n="profile_nickname">Takma Adı</label>
+          <input type="text" id="nicknameInput" placeholder="Takma adını gir..." maxlength="30">
+        </div>
+
+        <div class="profile-field">
+          <label data-i18n="profile_telegram_id">Telegram ID</label>
+          <input type="text" id="telegramIdDisplay" readonly style="opacity: 0.7; cursor: not-allowed;">
+        </div>
+
+        <button class="btn-save" onclick="saveProfile()" data-i18n="btn_save">💾 Kaydet</button>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title" data-i18n="profile_avatar">🎨 Profil Fotoğrafı</div>
+        <div class="avatar-grid" id="avatarGrid"></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title" data-i18n="profile_stats">📊 İstatistiklerim</div>
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-card-icon"></div>
+            <div class="stat-card-value" id="profileTotalInvested">$0</div>
+            <div class="stat-card-label" data-i18n="stat_invested">Toplam Yatırım</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-icon">💵</div>
+            <div class="stat-card-value" id="profileTotalEarned">$0</div>
+            <div class="stat-card-label" data-i18n="stat_earned">Toplam Kazanç</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-card-icon">📦</div>
+            <div class="stat-card-value" id="profileProducts">0</div>
+            <div class="stat-card-label" data-i18n="stat_active">Aktif Ürün</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-card-icon">⭐</div>
+            <div class="stat-card-value" id="profileXP">0</div>
+            <div class="stat-card-label">XP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUY PAGE -->
     <div class="page" id="page-buy">
       <div class="page-header">
-        <h1 class="page-title">💎 Mining Gücü Satın Al</h1>
-        <p class="page-subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
+        <h1 class="page-title" data-i18n="buy_title">💎 Mining Gücü Satın Al</h1>
+        <p class="page-subtitle" data-i18n="buy_subtitle">Minimum $1 ile başla, 3 ayda yatırımını geri al</p>
       </div>
 
       <div class="card">
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px;">
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$1</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Minimum</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_minimum">Minimum</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">3 Ay</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">ROI</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_roi">ROI</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">100%</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Getiri</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_return">Getiri</div>
           </div>
           <div style="text-align: center; padding: 12px; background: rgba(74, 158, 255, 0.1); border-radius: 10px;">
             <div style="font-size: 20px; font-weight: 700; color: var(--accent);">$0.011</div>
-            <div style="font-size: 11px; color: var(--text-secondary);">Günlük</div>
+            <div style="font-size: 11px; color: var(--text-secondary);" data-i18n="info_daily">Günlük</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;">Paket Seç</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="select_package">Paket Seç</h3>
         <div class="packages-grid">
           <div class="package" data-price="1" onclick="selectPackage(this)">
             <div class="package-price">$1</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.011/gün</div>
           </div>
           <div class="package" data-price="5" onclick="selectPackage(this)">
             <div class="package-price">$5</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.056/gün</div>
           </div>
           <div class="package popular" data-price="10" onclick="selectPackage(this)">
             <div class="package-price">$10</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.111/gün</div>
           </div>
           <div class="package" data-price="50" onclick="selectPackage(this)">
             <div class="package-price">$50</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$0.556/gün</div>
           </div>
           <div class="package" data-price="100" onclick="selectPackage(this)">
             <div class="package-price">$100</div>
-            <div class="package-roi">3 Ayda Geri</div>
+            <div class="package-roi" data-i18n="package_roi">3 Ayda Geri</div>
             <div class="package-daily">$1.111/gün</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;">💰 Özel Miktar</h3>
+        <h3 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px;" data-i18n="custom_amount">💰 Özel Miktar</h3>
         <input type="number" class="calc-input" id="amountInput" value="10" min="1" step="1" oninput="calculateROI()">
 
-        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;"> Hesaplama</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-primary); font-size: 16px;" data-i18n="calculation">📊 Hesaplama</h3>
         <div class="calc-results">
           <div class="calc-result-item">
-            <div class="label">Günlük</div>
+            <div class="label" data-i18n="calc_daily">Günlük</div>
             <div class="value" id="dailyEarning">$0.111</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">Aylık</div>
+            <div class="label" data-i18n="calc_monthly">Aylık</div>
             <div class="value" id="monthlyEarning">$3.33</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">3 Aylık</div>
+            <div class="label" data-i18n="calc_3month">3 Aylık</div>
             <div class="value" id="threeMonthEarning">$10.00</div>
           </div>
           <div class="calc-result-item">
-            <div class="label">ROI</div>
+            <div class="label" data-i18n="calc_roi">ROI</div>
             <div class="value" id="roiDate" style="font-size: 12px;">-</div>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="openModal()">🚀 Şimdi Satın Al</button>
+        <button class="btn-primary" onclick="openModal()" data-i18n="btn_buy_now"> Şimdi Satın Al</button>
       </div>
     </div>
 
+    <!-- PRODUCTION PAGE -->
     <div class="page" id="page-production">
       <div class="page-header">
-        <h1 class="page-title"> Üretim Hattı</h1>
-        <p class="page-subtitle">Mining operasyonlarınız gerçek zamanlı</p>
+        <h1 class="page-title" data-i18n="production_title">⚡ Üretim Hattı</h1>
+        <p class="page-subtitle" data-i18n="production_subtitle">Mining operasyonlarınız gerçek zamanlı</p>
       </div>
 
       <div class="factory-layout">
         <div class="conveyor-system">
           <div class="conveyor-header">
-            <div class="conveyor-title"><span>🏭</span><span>Aktif Üretim</span></div>
-            <div class="conveyor-status"><div class="status-indicator"></div><span>ÇALIŞIYOR</span></div>
+            <div class="conveyor-title"><span></span><span data-i18n="active_production">Aktif Üretim</span></div>
+            <div class="conveyor-status"><div class="status-indicator"></div><span data-i18n="status_working">ÇALIŞIYOR</span></div>
           </div>
           <div class="stations-container">
             <div class="station-connector"></div>
             <div class="station"><div class="station-icon">🔍</div><div class="station-name">Hashing</div><div class="station-desc">SHA-256</div></div>
-            <div class="station"><div class="station-icon">✓</div><div class="station-name">Doğrulama</div><div class="station-desc">Verify</div></div>
-            <div class="station"><div class="station-icon">⛓️</div><div class="station-name">Zincir</div><div class="station-desc">Chain</div></div>
-            <div class="station"><div class="station-icon">💰</div><div class="station-name">Ödül</div><div class="station-desc">Reward</div></div>
+            <div class="station"><div class="station-icon">✓</div><div class="station-name" data-i18n="station_verify">Doğrulama</div><div class="station-desc">Verify</div></div>
+            <div class="station"><div class="station-icon">️</div><div class="station-name" data-i18n="station_chain">Zincir</div><div class="station-desc">Chain</div></div>
+            <div class="station"><div class="station-icon">💰</div><div class="station-name" data-i18n="station_reward">Ödül</div><div class="station-desc">Reward</div></div>
           </div>
           <div class="conveyor-belt-wrapper">
             <div class="conveyor-products" id="conveyorProducts"></div>
@@ -702,114 +982,122 @@
           </div>
           <div class="production-summary">
             <div class="summary-item total">
-              <div class="summary-label">💰 Toplam</div>
+              <div class="summary-label" data-i18n="summary_total">💰 Toplam</div>
               <div class="summary-value" id="summaryTotal">$0</div>
             </div>
             <div class="summary-item daily">
-              <div class="summary-label">⏱️ Dakika</div>
+              <div class="summary-label" data-i18n="summary_minute">⏱️ Dakika</div>
               <div class="summary-value live" id="summaryMinute">$0</div>
             </div>
             <div class="summary-item hourly">
-              <div class="summary-label">🕐 Saat</div>
+              <div class="summary-label" data-i18n="summary_hour">🕐 Saat</div>
               <div class="summary-value live" id="summaryHour">$0</div>
             </div>
             <div class="summary-item monthly">
-              <div class="summary-label">📅 Ay</div>
+              <div class="summary-label" data-i18n="summary_month">📅 Ay</div>
               <div class="summary-value live" id="summaryMonth">$0</div>
             </div>
           </div>
         </div>
 
         <div class="stats-panel">
-          <div class="stats-title"><span>📊</span><span>İstatistikler</span></div>
-          <div class="stat-item"><div class="stat-label">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
-          <div class="stat-item"><div class="stat-label">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
-          <div class="stat-item"><div class="stat-label">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
-          <div class="stat-item"><div class="stat-label">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
+          <div class="stats-title"><span>📊</span><span data-i18n="stats_title">İstatistikler</span></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_active_products">Aktif Ürün</div><div class="stat-value" id="activeProducts">0</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_total_earn">Toplam Kazanç</div><div class="stat-value live success" id="totalEarned">$0</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_per_second">Saniyelik</div><div class="stat-value live" id="perSecond">$0/s</div></div>
+          <div class="stat-item"><div class="stat-label" data-i18n="stat_roi_time">ROI Süre</div><div class="stat-value" id="roiTimeLeft">90 gün</div></div>
         </div>
       </div>
     </div>
 
+    <!-- LEADERBOARD PAGE -->
     <div class="page" id="page-leaderboard">
       <div class="page-header">
-        <h1 class="page-title">🏆 Liderlik</h1>
-        <p class="page-subtitle">En çok kazananlar</p>
+        <h1 class="page-title" data-i18n="leaderboard_title">🏆 Liderlik</h1>
+        <p class="page-subtitle" data-i18n="leaderboard_subtitle">En çok kazananlar</p>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
     </div>
 
+    <!-- REFERRAL PAGE -->
     <div class="page" id="page-referral">
       <div class="page-header">
-        <h1 class="page-title"> Referans</h1>
-        <p class="page-subtitle">Arkadaşlarını davet et, %10 kazan</p>
+        <h1 class="page-title" data-i18n="referral_title">👥 Referans</h1>
+        <p class="page-subtitle" data-i18n="referral_subtitle">Arkadaşlarını davet et, %10 kazan</p>
       </div>
       <div class="referral-card">
-        <h3 style="margin-bottom: 8px;">Referans Kodun</h3>
-        <div class="referral-code" id="referralCode" onclick="copyReferral()">BTC-XXXXXX</div>
-        <p style="font-size: 12px; opacity: 0.9; text-align: center;">Kopyalamak için tıkla!</p>
+        <h3 style="margin-bottom: 8px;" data-i18n="referral_code">Referans Kodun</h3>
+        <div class="referral-code" id="referralCode" onclick="copyReferral()">HPM-XXXXXX</div>
+        <p style="font-size: 12px; opacity: 0.9; text-align: center;" data-i18n="referral_click">Kopyalamak için tıkla!</p>
         <div class="referral-stats">
-          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label">Davet</div></div>
-          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label">Kazanç</div></div>
-          <div class="referral-stat"><div class="value">%10</div><div class="label">Oran</div></div>
+          <div class="referral-stat"><div class="value" id="refCount">0</div><div class="label" data-i18n="ref_invited">Davet</div></div>
+          <div class="referral-stat"><div class="value" id="refEarnings">$0</div><div class="label" data-i18n="ref_earnings">Kazanç</div></div>
+          <div class="referral-stat"><div class="value">%10</div><div class="label" data-i18n="ref_rate">Oran</div></div>
         </div>
       </div>
     </div>
 
+    <!-- WITHDRAW PAGE -->
     <div class="page" id="page-withdraw">
       <div class="page-header">
-        <h1 class="page-title"> Çekim</h1>
-        <p class="page-subtitle">Minimum çekim: $0.01</p>
+        <h1 class="page-title" data-i18n="withdraw_title">💸 Çekim</h1>
+        <p class="page-subtitle" data-i18n="withdraw_subtitle">Minimum çekim: $0.01</p>
       </div>
       <div class="balance-display">
-        <div class="balance-label">Mevcut Bakiye</div>
+        <div class="balance-label" data-i18n="balance_current">Mevcut Bakiye</div>
         <div class="balance-amount" id="balanceDisplay">$0</div>
       </div>
       <div class="withdrawal-form">
         <div class="form-group">
-          <label class="form-label">💰 Çekilecek Miktar ($)</label>
+          <label class="form-label" data-i18n="withdraw_amount">💰 Çekilecek Miktar ($)</label>
           <input type="number" class="calc-input" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="validateWithdraw()">
         </div>
         <div class="form-group">
-          <label class="form-label">₿ BTC Adresi</label>
+          <label class="form-label" data-i18n="withdraw_address">₿ BTC Adresi</label>
           <input type="text" class="calc-input" id="walletAddress" placeholder="bc1q...">
         </div>
-        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);">💸 Çekim Yap</button>
+        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()" disabled style="background: linear-gradient(135deg, var(--success), #22c55e);" data-i18n="btn_withdraw">💸 Çekim Yap</button>
       </div>
     </div>
 
     <!-- ADMIN PANEL PAGE -->
     <div class="page" id="page-admin">
       <div class="page-header">
-        <h1 class="page-title">🔐 Admin Panel</h1>
-        <p class="page-subtitle">Ödeme ve çekim taleplerini yönet</p>
+        <h1 class="page-title" data-i18n="admin_title"> Admin Panel</h1>
+        <p class="page-subtitle" data-i18n="admin_subtitle">Ödeme ve çekim taleplerini yönet</p>
+      </div>
+
+      <!-- Kripto Bazlı İstatistikler -->
+      <div class="crypto-stats-grid" id="cryptoStatsGrid">
+        <!-- Dinamik olarak doldurulacak -->
       </div>
 
       <div class="admin-stats">
         <div class="admin-stat-card revenue">
           <div class="admin-stat-value" id="adminRevenue">$0</div>
-          <div class="admin-stat-label">Toplam Gelir</div>
+          <div class="admin-stat-label" data-i18n="admin_revenue">Toplam Gelir</div>
         </div>
         <div class="admin-stat-card pending">
           <div class="admin-stat-value" id="adminPending">0</div>
-          <div class="admin-stat-label">Bekleyen</div>
+          <div class="admin-stat-label" data-i18n="admin_pending">Bekleyen</div>
         </div>
         <div class="admin-stat-card approved">
           <div class="admin-stat-value" id="adminApproved">0</div>
-          <div class="admin-stat-label">Onaylanan</div>
+          <div class="admin-stat-label" data-i18n="admin_approved">Onaylanan</div>
         </div>
         <div class="admin-stat-card rejected">
           <div class="admin-stat-value" id="adminRejected">0</div>
-          <div class="admin-stat-label">Reddedilen</div>
+          <div class="admin-stat-label" data-i18n="admin_rejected">Reddedilen</div>
         </div>
       </div>
 
       <div class="admin-tabs">
         <div class="admin-tab active" onclick="switchAdminTab('payments', this)">
-          💳 Ödemeler
+          💳 <span data-i18n="tab_payments">Ödemeler</span>
           <span class="count" id="paymentsTabCount">0</span>
         </div>
         <div class="admin-tab" onclick="switchAdminTab('withdrawals', this)">
-          💸 Çekimler
+          💸 <span data-i18n="tab_withdrawals">Çekimler</span>
           <span class="count" id="withdrawalsTabCount">0</span>
         </div>
       </div>
@@ -822,19 +1110,19 @@
 
   <div class="support-widget">
     <div class="support-chat" id="supportChat">
-      <div class="support-header">💬 Destek</div>
+      <div class="support-header" data-i18n="support_title">💬 Destek</div>
       <div class="support-body">
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ Bonus nedir?</div>
-          <div class="faq-answer">İlk girişte $1 ücretsiz mining gücü!</div>
+          <div class="faq-question" data-i18n="faq_bonus">❓ Bonus nedir?</div>
+          <div class="faq-answer" data-i18n="faq_bonus_answer">İlk girişte $1 ücretsiz mining gücü!</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ Nasıl alınır?</div>
-          <div class="faq-answer">Satın Al'dan paket seç, öde, onayla.</div>
+          <div class="faq-question" data-i18n="faq_how">❓ Nasıl alınır?</div>
+          <div class="faq-answer" data-i18n="faq_how_answer">Satın Al'dan paket seç, öde, onayla.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('active')">
-          <div class="faq-question">❓ ROI süresi?</div>
-          <div class="faq-answer">Tüm yatırımlar 3 ayda geri döner.</div>
+          <div class="faq-question" data-i18n="faq_roi">❓ ROI süresi?</div>
+          <div class="faq-answer" data-i18n="faq_roi_answer">Tüm yatırımlar 3 ayda geri döner.</div>
         </div>
       </div>
     </div>
@@ -843,28 +1131,28 @@
 
   <div class="modal-overlay" id="welcomeBonusModal">
     <div class="modal welcome-bonus-modal">
-      <button class="modal-close" onclick="closeWelcomeBonus()">✕</button>
+      <button class="modal-close" onclick="closeWelcomeBonus()"></button>
       <div class="welcome-bonus-icon">🎉</div>
-      <div class="welcome-bonus-title">HOŞ GELDİN!</div>
-      <div class="welcome-bonus-desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
-      <div class="welcome-bonus-amount"> $1.00 ÜCRETSİZ</div>
+      <div class="welcome-bonus-title" data-i18n="welcome_title">HOŞ GELDİN!</div>
+      <div class="welcome-bonus-desc" data-i18n="welcome_desc"><strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!</div>
+      <div class="welcome-bonus-amount" data-i18n="welcome_amount">🎁 $1.00 ÜCRETSİZ</div>
       <div class="welcome-bonus-features">
-        <div>Anında ekleme</div>
-        <div>Saniyelik kazanç</div>
-        <div>3 ay ROI</div>
-        <div>Ödeme yok!</div>
+        <div data-i18n="welcome_feat1">Anında ekleme</div>
+        <div data-i18n="welcome_feat2">Saniyelik kazanç</div>
+        <div data-i18n="welcome_feat3">3 ay ROI</div>
+        <div data-i18n="welcome_feat4">Ödeme yok!</div>
       </div>
-      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()">🚀 BAŞLA</button>
+      <button class="btn-claim-bonus" onclick="claimWelcomeBonus()" data-i18n="btn_start">🚀 BAŞLA</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
-      <h2>💳 Ödeme Yöntemi Seç</h2>
+      <h2 data-i18n="payment_title">💳 Ödeme Yöntemi Seç</h2>
       
       <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
-        Toplam: <strong id="modalUsdAmount">$10.00</strong> - Kripto para birimi seçin
+        <span data-i18n="payment_total">Toplam</span>: <strong id="modalUsdAmount">$10.00</strong> - <span data-i18n="payment_select">Kripto seçin</span>
       </p>
 
       <div class="crypto-selector">
@@ -893,7 +1181,7 @@
         
         <div class="payment-amount-display" onclick="copyAmount()" id="amountDisplay">
           <div class="copy-hint">📋</div>
-          <div class="label">Gönderilecek Tutar (Tıkla: Kopyala)</div>
+          <div class="label" data-i18n="payment_send_amount">Gönderilecek Tutar (Tıkla: Kopyala)</div>
           <div class="value" id="cryptoAmountDisplay">0.000154 BTC</div>
         </div>
         
@@ -908,32 +1196,32 @@
           </div>
         </div>
         
-        <button class="btn-copy" id="copyBtn" onclick="copyBoth()">📋 Adres + Tutar Kopyala</button>
+        <button class="btn-copy" id="copyBtn" onclick="copyBoth()" data-i18n="btn_copy_both">📋 Adres + Tutar Kopyala</button>
         
         <div class="payment-timer">
-          <span>️</span>
-          <span>Kalan Süre:</span>
+          <span>⏱️</span>
+          <span data-i18n="payment_time">Kalan Süre:</span>
           <span class="timer-value" id="paymentTimer">15:00</span>
         </div>
         
         <div class="payment-status">
           <div class="status-dot"></div>
-          <span id="paymentStatus">Ödeme Bekleniyor...</span>
+          <span id="paymentStatus" data-i18n="payment_waiting">Ödeme Bekleniyor...</span>
         </div>
         
         <div class="payment-instructions">
-          <strong>Nasıl Yapılır?</strong>
+          <strong data-i18n="payment_how">Nasıl Yapılır?</strong>
           <ol>
-            <li>Tutarı kopyala</li>
+            <li data-i18n="payment_step1">Tutarı kopyala</li>
             <li id="step2">BTC cüzdanından gönder</li>
-            <li>Ödemeyi onayla</li>
+            <li data-i18n="payment_step3">Ödemeyi onayla</li>
           </ol>
         </div>
       </div>
       
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">İptal</button>
-        <button class="btn-confirm" onclick="confirmPayment()">✓ Ödemeyi Onayla</button>
+        <button class="btn-cancel" onclick="closeModal()" data-i18n="btn_cancel">İptal</button>
+        <button class="btn-confirm" onclick="confirmPayment()" data-i18n="btn_confirm">✓ Ödemeyi Onayla</button>
       </div>
     </div>
   </div>
@@ -942,8 +1230,21 @@
 
   <script>
     // ===== ADMIN CONFIGURATION =====
-    // ⚠️ SENİN TELEGRAM USER ID'N
     const ADMIN_USER_ID = 8974010159;
+    
+    // 10 Profil Fotoğrafı (Unsplash'tan)
+    const AVATARS = [
+      'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=200&fit=crop'
+    ];
     
     const CRYPTO_PRICES = { btc: 65000, trx: 0.12, bnb: 600 };
     const CRYPTO_ADDRESSES = {
@@ -953,7 +1254,809 @@
     };
     const CRYPTO_NAMES = { btc: 'Bitcoin', trx: 'TRON', bnb: 'BNB' };
     const CRYPTO_SYMBOLS = { btc: 'BTC', trx: 'TRX', bnb: 'BNB' };
-    const CRYPTO_ICONS = { btc: '₿', trx: '💠', bnb: '🔶' };
+    const CRYPTO_ICONS = { btc: '₿', trx: '💠', bnb: '' };
+
+    // ===== ÇOK DİLLİ SİSTEM =====
+    const translations = {
+      tr: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: 'Pro Platform',
+        menu_main: 'Ana Menü',
+        menu_home: 'Ana Sayfa',
+        menu_buy: 'Satın Al',
+        menu_production: 'Üretim Hattı',
+        menu_account: 'Hesap',
+        menu_profile: 'Profil',
+        menu_leaderboard: 'Liderlik',
+        menu_referral: 'Referans',
+        menu_withdraw: 'Çekim',
+        menu_admin: 'Admin Panel',
+        hero_greeting: '👋 Hoş Geldin',
+        hero_subtitle: 'Hash Power Mining ile pasif gelir kazan',
+        stat_earned: 'Toplam Kazanç',
+        stat_active: 'Aktif Ürün',
+        stat_invested: 'Toplam Yatırım',
+        stat_persecond: 'Saniyelik',
+        action_buy: 'Satın Al',
+        action_production: 'Üretim',
+        action_withdraw: 'Çekim',
+        activity_title: 'Son Aktiviteler',
+        profile_title: ' Profil Bilgisi',
+        profile_subtitle: 'Hesap bilgilerini yönet',
+        profile_personal: '📝 Kişisel Bilgiler',
+        profile_nickname: 'Takma Adı',
+        profile_telegram_id: 'Telegram ID',
+        profile_avatar: '🎨 Profil Fotoğrafı',
+        profile_stats: '📊 İstatistiklerim',
+        btn_save: '💾 Kaydet',
+        buy_title: '💎 Mining Gücü Satın Al',
+        buy_subtitle: 'Minimum $1 ile başla, 3 ayda yatırımını geri al',
+        info_minimum: 'Minimum',
+        info_roi: 'ROI',
+        info_return: 'Getiri',
+        info_daily: 'Günlük',
+        select_package: 'Paket Seç',
+        package_roi: '3 Ayda Geri',
+        custom_amount: '💰 Özel Miktar',
+        calculation: ' Hesaplama',
+        calc_daily: 'Günlük',
+        calc_monthly: 'Aylık',
+        calc_3month: '3 Aylık',
+        calc_roi: 'ROI',
+        btn_buy_now: '🚀 Şimdi Satın Al',
+        production_title: ' Üretim Hattı',
+        production_subtitle: 'Mining operasyonlarınız gerçek zamanlı',
+        active_production: 'Aktif Üretim',
+        status_working: 'ÇALIŞIYOR',
+        station_verify: 'Doğrulama',
+        station_chain: 'Zincir',
+        station_reward: 'Ödül',
+        summary_total: ' Toplam',
+        summary_minute: '️ Dakika',
+        summary_hour: ' Saat',
+        summary_month: '📅 Ay',
+        stats_title: 'İstatistikler',
+        stat_active_products: 'Aktif Ürün',
+        stat_total_earn: 'Toplam Kazanç',
+        stat_per_second: 'Saniyelik',
+        stat_roi_time: 'ROI Süre',
+        leaderboard_title: ' Liderlik',
+        leaderboard_subtitle: 'En çok kazananlar',
+        referral_title: ' Referans',
+        referral_subtitle: 'Arkadaşlarını davet et, %10 kazan',
+        referral_code: 'Referans Kodun',
+        referral_click: 'Kopyalamak için tıkla!',
+        ref_invited: 'Davet',
+        ref_earnings: 'Kazanç',
+        ref_rate: 'Oran',
+        withdraw_title: '💸 Çekim',
+        withdraw_subtitle: 'Minimum çekim: $0.01',
+        balance_current: 'Mevcut Bakiye',
+        withdraw_amount: '💰 Çekilecek Miktar ($)',
+        withdraw_address: '₿ BTC Adresi',
+        btn_withdraw: '💸 Çekim Yap',
+        admin_title: '🔐 Admin Panel',
+        admin_subtitle: 'Ödeme ve çekim taleplerini yönet',
+        admin_revenue: 'Toplam Gelir',
+        admin_pending: 'Bekleyen',
+        admin_approved: 'Onaylanan',
+        admin_rejected: 'Reddedilen',
+        tab_payments: 'Ödemeler',
+        tab_withdrawals: 'Çekimler',
+        admin_total_invested: 'Toplam Yatırım',
+        admin_total_withdrawn: 'Toplam Çıkan',
+        admin_total_pending: 'Toplam Bekleyen',
+        admin_income_expense: 'Gelir/Gider',
+        support_title: '💬 Destek',
+        faq_bonus: '❓ Bonus nedir?',
+        faq_bonus_answer: 'İlk girişte $1 ücretsiz mining gücü!',
+        faq_how: '❓ Nasıl alınır?',
+        faq_how_answer: 'Satın Al\'dan paket seç, öde, onayla.',
+        faq_roi: '❓ ROI süresi?',
+        faq_roi_answer: 'Tüm yatırımlar 3 ayda geri döner.',
+        welcome_title: 'HOŞ GELDİN!',
+        welcome_desc: '<strong>Ücretsiz bonus</strong> hazır!<br>Hemen başla!',
+        welcome_amount: '🎁 $1.00 ÜCRETSİZ',
+        welcome_feat1: 'Anında ekleme',
+        welcome_feat2: 'Saniyelik kazanç',
+        welcome_feat3: '3 ay ROI',
+        welcome_feat4: 'Ödeme yok!',
+        btn_start: '🚀 BAŞLA',
+        payment_title: '💳 Ödeme Yöntemi Seç',
+        payment_total: 'Toplam',
+        payment_select: 'Kripto seçin',
+        payment_send_amount: 'Gönderilecek Tutar (Tıkla: Kopyala)',
+        btn_copy_both: '📋 Adres + Tutar Kopyala',
+        payment_time: 'Kalan Süre:',
+        payment_waiting: 'Ödeme Bekleniyor...',
+        payment_how: 'Nasıl Yapılır?',
+        payment_step1: 'Tutarı kopyala',
+        payment_step3: 'Ödemeyi onayla',
+        btn_cancel: 'İptal',
+        btn_confirm: '✓ Ödemeyi Onayla',
+        notif_min: '❌ Min $1!',
+        notif_copied: ' Kopyalandı!',
+        notif_bonus: '🎉 $1 bonus kazandın!',
+        notif_confirmed: '✅ Ödeme onaylandı!',
+        notif_timeout: '⏰ Süre doldu!',
+        notif_success: '✅ Başarılı!',
+        notif_invalid: '❌ Geçersiz!',
+        notif_required: '❌ Adres gerekli!',
+        notif_code_copied: '📋 Kod kopyalandı!',
+        notif_saved: '✅ Kaydedildi!',
+        roi_days: '90 gün',
+        status_pending: 'Beklemede',
+        status_approved: 'Onaylandı',
+        status_rejected: 'Reddedildi',
+        no_pending: 'Bekleyen işlem yok',
+        my_requests: ' İşlemlerim'
+      },
+      en: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: 'Pro Platform',
+        menu_main: 'Main Menu',
+        menu_home: 'Home',
+        menu_buy: 'Buy',
+        menu_production: 'Production',
+        menu_account: 'Account',
+        menu_profile: 'Profile',
+        menu_leaderboard: 'Leaderboard',
+        menu_referral: 'Referral',
+        menu_withdraw: 'Withdraw',
+        menu_admin: 'Admin Panel',
+        hero_greeting: ' Welcome',
+        hero_subtitle: 'Earn passive income with Hash Power Mining',
+        stat_earned: 'Total Earnings',
+        stat_active: 'Active Products',
+        stat_invested: 'Total Investment',
+        stat_persecond: 'Per Second',
+        action_buy: 'Buy',
+        action_production: 'Production',
+        action_withdraw: 'Withdraw',
+        activity_title: 'Recent Activities',
+        profile_title: '👤 Profile',
+        profile_subtitle: 'Manage your account',
+        profile_personal: '📝 Personal Info',
+        profile_nickname: 'Nickname',
+        profile_telegram_id: 'Telegram ID',
+        profile_avatar: '🎨 Profile Photo',
+        profile_stats: '📊 My Stats',
+        btn_save: '💾 Save',
+        buy_title: '💎 Buy Mining Power',
+        buy_subtitle: 'Start with $1, get ROI in 3 months',
+        info_minimum: 'Minimum',
+        info_roi: 'ROI',
+        info_return: 'Return',
+        info_daily: 'Daily',
+        select_package: 'Select Package',
+        package_roi: '3 Month ROI',
+        custom_amount: '💰 Custom Amount',
+        calculation: '📊 Calculation',
+        calc_daily: 'Daily',
+        calc_monthly: 'Monthly',
+        calc_3month: '3 Months',
+        calc_roi: 'ROI',
+        btn_buy_now: '🚀 Buy Now',
+        production_title: '⚡ Production Line',
+        production_subtitle: 'Real-time mining operations',
+        active_production: 'Active Production',
+        status_working: 'RUNNING',
+        station_verify: 'Verify',
+        station_chain: 'Chain',
+        station_reward: 'Reward',
+        summary_total: '💰 Total',
+        summary_minute: '️ Minute',
+        summary_hour: ' Hour',
+        summary_month: '📅 Month',
+        stats_title: 'Statistics',
+        stat_active_products: 'Active Products',
+        stat_total_earn: 'Total Earnings',
+        stat_per_second: 'Per Second',
+        stat_roi_time: 'ROI Time',
+        leaderboard_title: '🏆 Leaderboard',
+        leaderboard_subtitle: 'Top earners',
+        referral_title: '👥 Referral',
+        referral_subtitle: 'Invite friends, earn 10%',
+        referral_code: 'Your Referral Code',
+        referral_click: 'Click to copy!',
+        ref_invited: 'Invited',
+        ref_earnings: 'Earnings',
+        ref_rate: 'Rate',
+        withdraw_title: '💸 Withdraw',
+        withdraw_subtitle: 'Minimum withdrawal: $0.01',
+        balance_current: 'Current Balance',
+        withdraw_amount: '💰 Withdrawal Amount ($)',
+        withdraw_address: '₿ BTC Address',
+        btn_withdraw: '💸 Withdraw',
+        admin_title: '🔐 Admin Panel',
+        admin_subtitle: 'Manage payments and withdrawals',
+        admin_revenue: 'Total Revenue',
+        admin_pending: 'Pending',
+        admin_approved: 'Approved',
+        admin_rejected: 'Rejected',
+        tab_payments: 'Payments',
+        tab_withdrawals: 'Withdrawals',
+        admin_total_invested: 'Total Invested',
+        admin_total_withdrawn: 'Total Withdrawn',
+        admin_total_pending: 'Total Pending',
+        admin_income_expense: 'Income/Expense',
+        support_title: '💬 Support',
+        faq_bonus: ' What is the bonus?',
+        faq_bonus_answer: '$1 free mining power on first login!',
+        faq_how: '❓ How to buy?',
+        faq_how_answer: 'Select package, pay, confirm.',
+        faq_roi: ' ROI period?',
+        faq_roi_answer: 'All investments return in 3 months.',
+        welcome_title: 'WELCOME!',
+        welcome_desc: '<strong>Free bonus</strong> ready!<br>Start now!',
+        welcome_amount: '🎁 $1.00 FREE',
+        welcome_feat1: 'Instant addition',
+        welcome_feat2: 'Per-second earnings',
+        welcome_feat3: '3 month ROI',
+        welcome_feat4: 'No payment!',
+        btn_start: '🚀 START',
+        payment_title: '💳 Select Payment Method',
+        payment_total: 'Total',
+        payment_select: 'Select crypto',
+        payment_send_amount: 'Amount to Send (Tap to Copy)',
+        btn_copy_both: '📋 Copy Address + Amount',
+        payment_time: 'Time Left:',
+        payment_waiting: 'Waiting for Payment...',
+        payment_how: 'How to?',
+        payment_step1: 'Copy amount',
+        payment_step3: 'Confirm payment',
+        btn_cancel: 'Cancel',
+        btn_confirm: '✓ Confirm Payment',
+        notif_min: '❌ Min $1!',
+        notif_copied: '📋 Copied!',
+        notif_bonus: '🎉 You earned $1 bonus!',
+        notif_confirmed: '✅ Payment confirmed!',
+        notif_timeout: ' Time expired!',
+        notif_success: '✅ Success!',
+        notif_invalid: '❌ Invalid!',
+        notif_required: '❌ Address required!',
+        notif_code_copied: '📋 Code copied!',
+        notif_saved: '✅ Saved!',
+        roi_days: '90 days',
+        status_pending: 'Pending',
+        status_approved: 'Approved',
+        status_rejected: 'Rejected',
+        no_pending: 'No pending requests',
+        my_requests: '📋 My Requests'
+      },
+      ru: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: 'Pro Платформа',
+        menu_main: 'Главное меню',
+        menu_home: 'Главная',
+        menu_buy: 'Купить',
+        menu_production: 'Производство',
+        menu_account: 'Аккаунт',
+        menu_profile: 'Профиль',
+        menu_leaderboard: 'Рейтинг',
+        menu_referral: 'Реферал',
+        menu_withdraw: 'Вывод',
+        menu_admin: 'Админ Панель',
+        hero_greeting: '👋 Добро пожаловать',
+        hero_subtitle: 'Зарабатывай с Hash Power Mining',
+        stat_earned: 'Всего заработано',
+        stat_active: 'Активных продуктов',
+        stat_invested: 'Всего вложено',
+        stat_persecond: 'В секунду',
+        action_buy: 'Купить',
+        action_production: 'Производство',
+        action_withdraw: 'Вывод',
+        activity_title: 'Последние активности',
+        profile_title: '👤 Профиль',
+        profile_subtitle: 'Управление аккаунтом',
+        profile_personal: ' Личные данные',
+        profile_nickname: 'Никнейм',
+        profile_telegram_id: 'Telegram ID',
+        profile_avatar: ' Фото профиля',
+        profile_stats: ' Моя статистика',
+        btn_save: '💾 Сохранить',
+        buy_title: '💎 Купить мощность',
+        buy_subtitle: 'Начни с $1, ROI за 3 месяца',
+        info_minimum: 'Минимум',
+        info_roi: 'ROI',
+        info_return: 'Доход',
+        info_daily: 'В день',
+        select_package: 'Выбрать пакет',
+        package_roi: 'ROI за 3 мес',
+        custom_amount: '💰 Своя сумма',
+        calculation: '📊 Расчёт',
+        calc_daily: 'В день',
+        calc_monthly: 'В месяц',
+        calc_3month: '3 месяца',
+        calc_roi: 'ROI',
+        btn_buy_now: '🚀 Купить сейчас',
+        production_title: '⚡ Производство',
+        production_subtitle: 'Майнинг в реальном времени',
+        active_production: 'Активное производство',
+        status_working: 'РАБОТАЕТ',
+        station_verify: 'Проверка',
+        station_chain: 'Цепочка',
+        station_reward: 'Награда',
+        summary_total: '💰 Всего',
+        summary_minute: '⏱️ Минута',
+        summary_hour: '🕐 Час',
+        summary_month: '📅 Месяц',
+        stats_title: 'Статистика',
+        stat_active_products: 'Активных продуктов',
+        stat_total_earn: 'Всего заработано',
+        stat_per_second: 'В секунду',
+        stat_roi_time: 'Время ROI',
+        leaderboard_title: '🏆 Рейтинг',
+        leaderboard_subtitle: 'Топ earners',
+        referral_title: '👥 Реферал',
+        referral_subtitle: 'Приглашай друзей, получай 10%',
+        referral_code: 'Твой реферальный код',
+        referral_click: 'Нажми чтобы скопировать!',
+        ref_invited: 'Приглашено',
+        ref_earnings: 'Заработок',
+        ref_rate: 'Ставка',
+        withdraw_title: '💸 Вывод',
+        withdraw_subtitle: 'Минимум: $0.01',
+        balance_current: 'Текущий баланс',
+        withdraw_amount: '💰 Сумма вывода ($)',
+        withdraw_address: '₿ BTC Адрес',
+        btn_withdraw: '💸 Вывести',
+        admin_title: '🔐 Админ Панель',
+        admin_subtitle: 'Управление платежами',
+        admin_revenue: 'Всего доход',
+        admin_pending: 'Ожидает',
+        admin_approved: 'Одобрено',
+        admin_rejected: 'Отклонено',
+        tab_payments: 'Платежи',
+        tab_withdrawals: 'Выводы',
+        admin_total_invested: 'Всего вложено',
+        admin_total_withdrawn: 'Всего выведено',
+        admin_total_pending: 'Всего ожидает',
+        admin_income_expense: 'Доход/Расход',
+        support_title: '💬 Поддержка',
+        faq_bonus: '❓ Что такое бонус?',
+        faq_bonus_answer: '$1 бесплатной мощности при первом входе!',
+        faq_how: '❓ Как купить?',
+        faq_how_answer: 'Выбери пакет, оплати, подтверди.',
+        faq_roi: '❓ Период ROI?',
+        faq_roi_answer: 'Все инвестиции возвращаются за 3 месяца.',
+        welcome_title: 'ДОБРО ПОЖАЛОВАТЬ!',
+        welcome_desc: '<strong>Бесплатный бонус</strong> готов!<br>Начни сейчас!',
+        welcome_amount: '🎁 $1.00 БЕСПЛАТНО',
+        welcome_feat1: 'Мгновенное добавление',
+        welcome_feat2: 'Посекундный заработок',
+        welcome_feat3: 'ROI за 3 месяца',
+        welcome_feat4: 'Без оплаты!',
+        btn_start: '🚀 НАЧАТЬ',
+        payment_title: '💳 Выбери способ оплаты',
+        payment_total: 'Всего',
+        payment_select: 'Выбери крипто',
+        payment_send_amount: 'Сумма к отправке (Нажми: Копировать)',
+        btn_copy_both: '📋 Копировать адрес + сумму',
+        payment_time: 'Осталось:',
+        payment_waiting: 'Ожидание оплаты...',
+        payment_how: 'Как?',
+        payment_step1: 'Скопируй сумму',
+        payment_step3: 'Подтверди оплату',
+        btn_cancel: 'Отмена',
+        btn_confirm: '✓ Подтвердить оплату',
+        notif_min: '❌ Мин $1!',
+        notif_copied: '📋 Скопировано!',
+        notif_bonus: '🎉 Ты получил $1 бонус!',
+        notif_confirmed: '✅ Оплата подтверждена!',
+        notif_timeout: '⏰ Время вышло!',
+        notif_success: '✅ Успешно!',
+        notif_invalid: '❌ Неверно!',
+        notif_required: '❌ Адрес обязателен!',
+        notif_code_copied: '📋 Код скопирован!',
+        notif_saved: '✅ Сохранено!',
+        roi_days: '90 дней',
+        status_pending: 'Ожидает',
+        status_approved: 'Одобрено',
+        status_rejected: 'Отклонено',
+        no_pending: 'Нет ожидающих запросов',
+        my_requests: '📋 Мои запросы'
+      },
+      ar: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: 'منصة احترافية',
+        menu_main: 'القائمة الرئيسية',
+        menu_home: 'الرئيسية',
+        menu_buy: 'شراء',
+        menu_production: 'الإنتاج',
+        menu_account: 'الحساب',
+        menu_profile: 'الملف الشخصي',
+        menu_leaderboard: 'المتصدرين',
+        menu_referral: 'الإحالة',
+        menu_withdraw: 'سحب',
+        menu_admin: 'لوحة الإدارة',
+        hero_greeting: '👋 مرحباً',
+        hero_subtitle: 'اكسب دخلاً سلبياً مع Hash Power Mining',
+        stat_earned: 'إجمالي الأرباح',
+        stat_active: 'المنتجات النشطة',
+        stat_invested: 'إجمالي الاستثمار',
+        stat_persecond: 'في الثانية',
+        action_buy: 'شراء',
+        action_production: 'إنتاج',
+        action_withdraw: 'سحب',
+        activity_title: 'الأنشطة الأخيرة',
+        profile_title: '👤 الملف الشخصي',
+        profile_subtitle: 'إدارة حسابك',
+        profile_personal: ' المعلومات الشخصية',
+        profile_nickname: 'الاسم المستعار',
+        profile_telegram_id: 'معرف Telegram',
+        profile_avatar: '🎨 صورة الملف',
+        profile_stats: '📊 إحصائياتي',
+        btn_save: '💾 حفظ',
+        buy_title: '💎 شراء قوة التعدين',
+        buy_subtitle: 'ابدأ بـ $1، عائد خلال 3 أشهر',
+        info_minimum: 'الحد الأدنى',
+        info_roi: 'العائد',
+        info_return: 'الربح',
+        info_daily: 'يومياً',
+        select_package: 'اختر الباقة',
+        package_roi: 'عائد 3 أشهر',
+        custom_amount: '💰 مبلغ مخصص',
+        calculation: '📊 الحساب',
+        calc_daily: 'يومياً',
+        calc_monthly: 'شهرياً',
+        calc_3month: '3 أشهر',
+        calc_roi: 'العائد',
+        btn_buy_now: '🚀 اشترِ الآن',
+        production_title: '⚡ خط الإنتاج',
+        production_subtitle: 'عمليات التعدين في الوقت الفعلي',
+        active_production: 'إنتاج نشط',
+        status_working: 'يعمل',
+        station_verify: 'تحقق',
+        station_chain: 'السلسلة',
+        station_reward: 'مكافأة',
+        summary_total: '💰 الإجمالي',
+        summary_minute: '⏱️ دقيقة',
+        summary_hour: '🕐 ساعة',
+        summary_month: '📅 شهر',
+        stats_title: 'الإحصائيات',
+        stat_active_products: 'المنتجات النشطة',
+        stat_total_earn: 'إجمالي الأرباح',
+        stat_per_second: 'في الثانية',
+        stat_roi_time: 'وقت العائد',
+        leaderboard_title: '🏆 المتصدرين',
+        leaderboard_subtitle: 'أعلى الأرباح',
+        referral_title: '👥 الإحالة',
+        referral_subtitle: 'ادعُ الأصدقاء، اربح 10%',
+        referral_code: 'رمز الإحالة الخاص بك',
+        referral_click: 'انقر للنسخ!',
+        ref_invited: 'مدعوون',
+        ref_earnings: 'أرباح',
+        ref_rate: 'النسبة',
+        withdraw_title: '💸 سحب',
+        withdraw_subtitle: 'الحد الأدنى: $0.01',
+        balance_current: 'الرصيد الحالي',
+        withdraw_amount: ' مبلغ السحب ($)',
+        withdraw_address: '₿ عنوان BTC',
+        btn_withdraw: '💸 سحب',
+        admin_title: '🔐 لوحة الإدارة',
+        admin_subtitle: 'إدارة المدفوعات والسحوبات',
+        admin_revenue: 'إجمالي الإيرادات',
+        admin_pending: 'قيد الانتظار',
+        admin_approved: 'موافق عليه',
+        admin_rejected: 'مرفوض',
+        tab_payments: 'المدفوعات',
+        tab_withdrawals: 'السحوبات',
+        admin_total_invested: 'إجمالي المستثمر',
+        admin_total_withdrawn: 'إجمالي المسحوب',
+        admin_total_pending: 'إجمالي المنتظر',
+        admin_income_expense: 'الدخل/المصروف',
+        support_title: '💬 الدعم',
+        faq_bonus: '❓ ما هو المكافأة؟',
+        faq_bonus_answer: '$1 قوة تعدين مجانية عند أول دخول!',
+        faq_how: '❓ كيف تشتري؟',
+        faq_how_answer: 'اختر باقة، ادفع، أكد.',
+        faq_roi: '❓ فترة العائد؟',
+        faq_roi_answer: 'جميع الاستثمارات تعود خلال 3 أشهر.',
+        welcome_title: 'مرحباً!',
+        welcome_desc: '<strong>مكافأة مجانية</strong> جاهزة!<br>ابدأ الآن!',
+        welcome_amount: '🎁 $1.00 مجاناً',
+        welcome_feat1: 'إضافة فورية',
+        welcome_feat2: 'أرباح بالثانية',
+        welcome_feat3: 'عائد 3 أشهر',
+        welcome_feat4: 'بدون دفع!',
+        btn_start: '🚀 ابدأ',
+        payment_title: '💳 اختر طريقة الدفع',
+        payment_total: 'الإجمالي',
+        payment_select: 'اختر العملة',
+        payment_send_amount: 'المبلغ للإرسال (انقر: نسخ)',
+        btn_copy_both: '📋 نسخ العنوان + المبلغ',
+        payment_time: 'الوقت المتبقي:',
+        payment_waiting: 'في انتظار الدفع...',
+        payment_how: 'كيف؟',
+        payment_step1: 'انسخ المبلغ',
+        payment_step3: 'أكد الدفع',
+        btn_cancel: 'إلغاء',
+        btn_confirm: '✓ تأكيد الدفع',
+        notif_min: '❌ الحد الأدنى $1!',
+        notif_copied: '📋 تم النسخ!',
+        notif_bonus: '🎉 ربحت مكافأة $1!',
+        notif_confirmed: '✅ تم تأكيد الدفع!',
+        notif_timeout: '⏰ انتهى الوقت!',
+        notif_success: '✅ نجح!',
+        notif_invalid: '❌ غير صالح!',
+        notif_required: '❌ العنوان مطلوب!',
+        notif_code_copied: '📋 تم نسخ الرمز!',
+        notif_saved: '✅ تم الحفظ!',
+        roi_days: '90 يوم',
+        status_pending: 'قيد الانتظار',
+        status_approved: 'موافق عليه',
+        status_rejected: 'مرفوض',
+        no_pending: 'لا توجد طلبات معلقة',
+        my_requests: '📋 طلباتي'
+      },
+      zh: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: '专业平台',
+        menu_main: '主菜单',
+        menu_home: '首页',
+        menu_buy: '购买',
+        menu_production: '生产',
+        menu_account: '账户',
+        menu_profile: '个人资料',
+        menu_leaderboard: '排行榜',
+        menu_referral: '推荐',
+        menu_withdraw: '提现',
+        menu_admin: '管理面板',
+        hero_greeting: '👋 欢迎',
+        hero_subtitle: '通过Hash Power Mining赚取被动收入',
+        stat_earned: '总收益',
+        stat_active: '活跃产品',
+        stat_invested: '总投资',
+        stat_persecond: '每秒',
+        action_buy: '购买',
+        action_production: '生产',
+        action_withdraw: '提现',
+        activity_title: '最近活动',
+        profile_title: '👤 个人资料',
+        profile_subtitle: '管理您的账户',
+        profile_personal: '📝 个人信息',
+        profile_nickname: '昵称',
+        profile_telegram_id: 'Telegram ID',
+        profile_avatar: '🎨 头像',
+        profile_stats: '📊 我的统计',
+        btn_save: '💾 保存',
+        buy_title: '💎 购买算力',
+        buy_subtitle: '从$1开始，3个月回本',
+        info_minimum: '最低',
+        info_roi: '回本',
+        info_return: '回报',
+        info_daily: '每日',
+        select_package: '选择套餐',
+        package_roi: '3个月回本',
+        custom_amount: ' 自定义金额',
+        calculation: ' 计算',
+        calc_daily: '每日',
+        calc_monthly: '每月',
+        calc_3month: '3个月',
+        calc_roi: '回本',
+        btn_buy_now: '🚀 立即购买',
+        production_title: '⚡ 生产线',
+        production_subtitle: '实时挖矿运营',
+        active_production: '活跃生产',
+        status_working: '运行中',
+        station_verify: '验证',
+        station_chain: '链',
+        station_reward: '奖励',
+        summary_total: '💰 总计',
+        summary_minute: '⏱️ 分钟',
+        summary_hour: '🕐 小时',
+        summary_month: '📅 月',
+        stats_title: '统计',
+        stat_active_products: '活跃产品',
+        stat_total_earn: '总收益',
+        stat_per_second: '每秒',
+        stat_roi_time: '回本时间',
+        leaderboard_title: '🏆 排行榜',
+        leaderboard_subtitle: '最高收益者',
+        referral_title: '👥 推荐',
+        referral_subtitle: '邀请朋友，赚10%',
+        referral_code: '您的推荐码',
+        referral_click: '点击复制！',
+        ref_invited: '已邀请',
+        ref_earnings: '收益',
+        ref_rate: '比例',
+        withdraw_title: '💸 提现',
+        withdraw_subtitle: '最低提现：$0.01',
+        balance_current: '当前余额',
+        withdraw_amount: '💰 提现金额 ($)',
+        withdraw_address: '₿ BTC地址',
+        btn_withdraw: '💸 提现',
+        admin_title: '🔐 管理面板',
+        admin_subtitle: '管理付款和提现',
+        admin_revenue: '总收入',
+        admin_pending: '待处理',
+        admin_approved: '已批准',
+        admin_rejected: '已拒绝',
+        tab_payments: '付款',
+        tab_withdrawals: '提现',
+        admin_total_invested: '总投资',
+        admin_total_withdrawn: '总提现',
+        admin_total_pending: '总待处理',
+        admin_income_expense: '收入/支出',
+        support_title: '💬 支持',
+        faq_bonus: '❓ 什么是奖金？',
+        faq_bonus_answer: '首次登录免费$1算力！',
+        faq_how: '❓ 如何购买？',
+        faq_how_answer: '选择套餐，付款，确认。',
+        faq_roi: '❓ 回本期？',
+        faq_roi_answer: '所有投资3个月回本。',
+        welcome_title: '欢迎！',
+        welcome_desc: '<strong>免费奖金</strong>已准备好！<br>立即开始！',
+        welcome_amount: '🎁 $1.00 免费',
+        welcome_feat1: '即时添加',
+        welcome_feat2: '每秒收益',
+        welcome_feat3: '3个月回本',
+        welcome_feat4: '无需付款！',
+        btn_start: '🚀 开始',
+        payment_title: '💳 选择支付方式',
+        payment_total: '总计',
+        payment_select: '选择加密货币',
+        payment_send_amount: '发送金额（点击：复制）',
+        btn_copy_both: '📋 复制地址+金额',
+        payment_time: '剩余时间：',
+        payment_waiting: '等待付款...',
+        payment_how: '如何操作？',
+        payment_step1: '复制金额',
+        payment_step3: '确认付款',
+        btn_cancel: '取消',
+        btn_confirm: '✓ 确认付款',
+        notif_min: '❌ 最低$1！',
+        notif_copied: '📋 已复制！',
+        notif_bonus: ' 你获得了$1奖金！',
+        notif_confirmed: '✅ 付款已确认！',
+        notif_timeout: '⏰ 时间已到！',
+        notif_success: '✅ 成功！',
+        notif_invalid: ' 无效！',
+        notif_required: ' 需要地址！',
+        notif_code_copied: '📋 代码已复制！',
+        notif_saved: '✅ 已保存！',
+        roi_days: '90天',
+        status_pending: '待处理',
+        status_approved: '已批准',
+        status_rejected: '已拒绝',
+        no_pending: '没有待处理的请求',
+        my_requests: '📋 我的请求'
+      },
+      ja: {
+        site_name: 'Hash Power Mining',
+        site_subtitle: 'プロプラットフォーム',
+        menu_main: 'メインメニュー',
+        menu_home: 'ホーム',
+        menu_buy: '購入',
+        menu_production: '生産',
+        menu_account: 'アカウント',
+        menu_profile: 'プロフィール',
+        menu_leaderboard: 'リーダーボード',
+        menu_referral: '紹介',
+        menu_withdraw: '出金',
+        menu_admin: '管理パネル',
+        hero_greeting: '👋 ようこそ',
+        hero_subtitle: 'Hash Power Miningで不労所得を得る',
+        stat_earned: '総収益',
+        stat_active: 'アクティブ製品',
+        stat_invested: '総投資',
+        stat_persecond: '毎秒',
+        action_buy: '購入',
+        action_production: '生産',
+        action_withdraw: '出金',
+        activity_title: '最近のアクティビティ',
+        profile_title: '👤 プロフィール',
+        profile_subtitle: 'アカウント管理',
+        profile_personal: '📝 個人情報',
+        profile_nickname: 'ニックネーム',
+        profile_telegram_id: 'Telegram ID',
+        profile_avatar: '🎨 プロフィール写真',
+        profile_stats: '📊 私の統計',
+        btn_save: '💾 保存',
+        buy_title: '💎 マイニングパワー購入',
+        buy_subtitle: '$1から始め、3ヶ月でROI',
+        info_minimum: '最小',
+        info_roi: 'ROI',
+        info_return: 'リターン',
+        info_daily: '毎日',
+        select_package: 'パッケージ選択',
+        package_roi: '3ヶ月ROI',
+        custom_amount: '💰 カスタム金額',
+        calculation: ' 計算',
+        calc_daily: '毎日',
+        calc_monthly: '毎月',
+        calc_3month: '3ヶ月',
+        calc_roi: 'ROI',
+        btn_buy_now: '🚀 今すぐ購入',
+        production_title: '⚡ 生産ライン',
+        production_subtitle: 'リアルタイムマイニング',
+        active_production: 'アクティブ生産',
+        status_working: '稼働中',
+        station_verify: '検証',
+        station_chain: 'チェーン',
+        station_reward: '報酬',
+        summary_total: '💰 合計',
+        summary_minute: '⏱️ 分',
+        summary_hour: '🕐 時間',
+        summary_month: '📅 月',
+        stats_title: '統計',
+        stat_active_products: 'アクティブ製品',
+        stat_total_earn: '総収益',
+        stat_per_second: '毎秒',
+        stat_roi_time: 'ROI時間',
+        leaderboard_title: '🏆 リーダーボード',
+        leaderboard_subtitle: 'トップ earners',
+        referral_title: '👥 紹介',
+        referral_subtitle: '友達を招待、10%獲得',
+        referral_code: 'あなたの紹介コード',
+        referral_click: 'クリックしてコピー！',
+        ref_invited: '招待済み',
+        ref_earnings: '収益',
+        ref_rate: 'レート',
+        withdraw_title: '💸 出金',
+        withdraw_subtitle: '最小出金：$0.01',
+        balance_current: '現在の残高',
+        withdraw_amount: '💰 出金額 ($)',
+        withdraw_address: '₿ BTCアドレス',
+        btn_withdraw: ' 出金',
+        admin_title: '🔐 管理パネル',
+        admin_subtitle: '支払いと出金を管理',
+        admin_revenue: '総収入',
+        admin_pending: '保留中',
+        admin_approved: '承認済み',
+        admin_rejected: '却下',
+        tab_payments: '支払い',
+        tab_withdrawals: '出金',
+        admin_total_invested: '総投資',
+        admin_total_withdrawn: '総出金',
+        admin_total_pending: '総保留',
+        admin_income_expense: '収入/支出',
+        support_title: '💬 サポート',
+        faq_bonus: '❓ ボーナスとは？',
+        faq_bonus_answer: '初回ログインで$1無料マイニングパワー！',
+        faq_how: '❓ 購入方法？',
+        faq_how_answer: 'パッケージ選択、支払い、確認。',
+        faq_roi: '❓ ROI期間？',
+        faq_roi_answer: 'すべての投資は3ヶ月で回収。',
+        welcome_title: 'ようこそ！',
+        welcome_desc: '<strong>無料ボーナス</strong>準備完了！<br>今すぐ始める！',
+        welcome_amount: '🎁 $1.00 無料',
+        welcome_feat1: '即時追加',
+        welcome_feat2: '秒単位収益',
+        welcome_feat3: '3ヶ月ROI',
+        welcome_feat4: '支払い不要！',
+        btn_start: '🚀 始める',
+        payment_title: '💳 支払い方法選択',
+        payment_total: '合計',
+        payment_select: '暗号通貨選択',
+        payment_send_amount: '送信金額（タップ：コピー）',
+        btn_copy_both: '📋 アドレス+金額コピー',
+        payment_time: '残り時間：',
+        payment_waiting: '支払い待ち...',
+        payment_how: '方法？',
+        payment_step1: '金額をコピー',
+        payment_step3: '支払いを確認',
+        btn_cancel: 'キャンセル',
+        btn_confirm: '✓ 支払い確認',
+        notif_min: '❌ 最小$1！',
+        notif_copied: ' コピーしました！',
+        notif_bonus: '🎉 $1ボーナス獲得！',
+        notif_confirmed: '✅ 支払い確認済み！',
+        notif_timeout: '⏰ 時間切れ！',
+        notif_success: '✅ 成功！',
+        notif_invalid: '❌ 無効！',
+        notif_required: '❌ アドレス必須！',
+        notif_code_copied: '📋 コードコピー済み！',
+        notif_saved: '✅ 保存しました！',
+        roi_days: '90日',
+        status_pending: '保留中',
+        status_approved: '承認済み',
+        status_rejected: '却下',
+        no_pending: '保留中のリクエストなし',
+        my_requests: '📋 マイリクエスト'
+      }
+    };
 
     let currentLang = 'tr';
     let selectedCrypto = 'btc';
@@ -996,12 +2099,16 @@
       pendingPayments: [],
       withdrawalRequests: [],
       approvedPayments: [],
-      rejectedPayments: []
+      rejectedPayments: [],
+      profile: {
+        nickname: '',
+        avatarIndex: 0,
+        telegramId: ''
+      }
     };
 
     let lastUpdate = Date.now();
 
-    // Check if user is admin
     function isAdmin() {
       if (ADMIN_USER_ID === 0) return false;
       if (!currentUser || !currentUser.id) return false;
@@ -1011,17 +2118,42 @@
     function changeLanguage(lang) {
       currentLang = lang;
       state.language = lang;
+      
+      // RTL for Arabic
+      if (lang === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+      } else {
+        document.documentElement.removeAttribute('dir');
+      }
+      
       saveState();
-      document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
-      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      
+      // Update language buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('lang-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+      
+      // Update all translatable elements
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          element.innerHTML = translations[lang][key];
+        }
+      });
+      
       updateLevel();
       renderActivities();
+      renderProfile();
       haptic('impact');
+    }
+
+    function t(key) {
+      return translations[currentLang] && translations[currentLang][key] ? translations[currentLang][key] : key;
     }
 
     function showPage(pageId, menuItem) {
       if (pageId === 'admin' && !isAdmin()) {
-        showNotification('❌ Yetkiniz yok!', true);
+        showNotification('❌ ' + (currentLang === 'tr' ? 'Yetkiniz yok!' : 'No permission!'), true);
         haptic('error');
         return;
       }
@@ -1034,12 +2166,9 @@
       window.scrollTo(0, 0);
       haptic('impact');
 
-      if (pageId === 'admin') {
-        renderAdminPanel();
-      }
-      if (pageId === 'home') {
-        renderMyPending();
-      }
+      if (pageId === 'admin') renderAdminPanel();
+      if (pageId === 'home') renderMyPending();
+      if (pageId === 'profile') renderProfile();
     }
 
     function toggleSidebar() {
@@ -1062,8 +2191,8 @@
         list.innerHTML = `<div class="activity-item">
           <div class="activity-icon earn">🎁</div>
           <div class="activity-info">
-            <div class="activity-name">Hoş geldin bonusu</div>
-            <div class="activity-time">Az önce</div>
+            <div class="activity-name">${t('welcome_title')}</div>
+            <div class="activity-time">${currentLang === 'tr' ? 'Az önce' : currentLang === 'ru' ? 'Только что' : currentLang === 'ar' ? 'الآن' : currentLang === 'zh' ? '刚刚' : currentLang === 'ja' ? 'たった今' : 'Just now'}</div>
           </div>
           <div class="activity-amount">+$1.00</div>
         </div>`;
@@ -1089,18 +2218,32 @@
 
     function getTimeAgo(timestamp) {
       const seconds = Math.floor((Date.now() - timestamp) / 1000);
-      if (seconds < 60) return 'Az önce';
-      if (seconds < 3600) return Math.floor(seconds / 60) + ' dk önce';
-      if (seconds < 86400) return Math.floor(seconds / 3600) + ' saat önce';
-      return Math.floor(seconds / 86400) + ' gün önce';
+      const labels = {
+        tr: { s: 'Az önce', m: ' dk önce', h: ' saat önce', d: ' gün önce' },
+        en: { s: 'Just now', m: 'm ago', h: 'h ago', d: 'd ago' },
+        ru: { s: 'Только что', m: 'м назад', h: 'ч назад', d: 'д назад' },
+        ar: { s: 'الآن', m: 'د مضت', h: 'س مضت', d: 'ي مضت' },
+        zh: { s: '刚刚', m: '分钟前', h: '小时前', d: '天前' },
+        ja: { s: 'たった今', m: '分前', h: '時間前', d: '日前' }
+      };
+      const l = labels[currentLang] || labels.en;
+      if (seconds < 60) return l.s;
+      if (seconds < 3600) return Math.floor(seconds / 60) + l.m;
+      if (seconds < 86400) return Math.floor(seconds / 3600) + l.h;
+      return Math.floor(seconds / 86400) + l.d;
     }
 
     function init() {
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         currentUser = tg.initDataUnsafe.user;
         const userName = currentUser.first_name + (currentUser.last_name ? ' ' + currentUser.last_name : '');
-        document.getElementById('userName').textContent = userName;
-        document.getElementById('heroUserName').textContent = userName;
+        
+        if (!state.profile.nickname) {
+          state.profile.nickname = userName;
+        }
+        if (!state.profile.telegramId) {
+          state.profile.telegramId = currentUser.id.toString();
+        }
         
         if (isAdmin()) {
           document.getElementById('adminMenuItem').style.display = 'flex';
@@ -1110,23 +2253,25 @@
 
       if (state.language) {
         currentLang = state.language;
-        document.getElementById('lang-tr').classList.toggle('active', currentLang === 'tr');
-        document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
       }
 
       loadState();
       if (!state.referralCode) {
-        state.referralCode = 'BTC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        state.referralCode = 'HPM-' + Math.random().toString(36).substr(2, 6).toUpperCase();
         saveState();
       }
       document.getElementById('referralCode').textContent = state.referralCode;
       
+      // Apply initial language
       changeLanguage(currentLang);
+      
       restoreConveyorProducts();
       updateLevel();
       renderLeaderboard();
       renderActivities();
       renderMyPending();
+      renderProfile();
+      renderAvatarGrid();
       startLiveFeed();
       setInterval(updateEarnings, 100);
       setInterval(generateFeedItem, 5000);
@@ -1140,13 +2285,17 @@
     }
 
     function loadState() {
-      const saved = localStorage.getItem('btcMiningState');
-      if (saved) state = { ...state, ...JSON.parse(saved) };
+      const saved = localStorage.getItem('hashPowerMiningState');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        state = { ...state, ...parsed };
+        if (parsed.profile) state.profile = { ...state.profile, ...parsed.profile };
+      }
       if (state.theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     }
 
     function saveState() {
-      localStorage.setItem('btcMiningState', JSON.stringify(state));
+      localStorage.setItem('hashPowerMiningState', JSON.stringify(state));
     }
 
     function claimWelcomeBonus() {
@@ -1154,9 +2303,9 @@
       addProduct(WELCOME_BONUS, true);
       state.welcomeBonusClaimed = true;
       addXP(50);
-      addActivity('earn', 'Hoş geldin bonusu', WELCOME_BONUS);
+      addActivity('earn', t('welcome_title'), WELCOME_BONUS);
       closeWelcomeBonus();
-      showNotification('🎉 $1 bonus kazandın!', 'bonus');
+      showNotification(t('notif_bonus'), 'bonus');
       haptic('success');
       setTimeout(() => showPage('production', document.querySelectorAll('.menu-item')[2]), 500);
       saveState();
@@ -1233,16 +2382,16 @@
       
       document.getElementById('productCount').textContent = state.purchasedProducts.length;
       
-      if (state.totalInvested > 0) document.getElementById('roiTimeLeft').textContent = '90 gün';
+      if (state.totalInvested > 0) document.getElementById('roiTimeLeft').textContent = t('roi_days');
     }
 
     function updateLevel() {
       const levels = [
-        { tr: 'Bronz', en: 'Bronze', desc_tr: 'İlk adımlarını atıyorsun!', desc_en: 'Taking your first steps!', xp: 0, class: 'level-bronze' },
-        { tr: 'Gümüş', en: 'Silver', desc_tr: 'İlerleme kaydediyorsun!', desc_en: 'Making progress!', xp: 100, class: 'level-silver' },
-        { tr: 'Altın', en: 'Gold', desc_tr: 'Harika!', desc_en: 'Great!', xp: 500, class: 'level-gold' },
-        { tr: 'Elmas', en: 'Diamond', desc_tr: 'Efsane!', desc_en: 'Legendary!', xp: 2000, class: 'level-diamond' },
-        { tr: 'Usta', en: 'Master', desc_tr: 'Zirve!', desc_en: 'Peak!', xp: 10000, class: 'level-master' }
+        { tr: 'Bronz', en: 'Bronze', ru: 'Бронза', ar: 'برونزي', zh: '青铜', ja: 'ブロンズ', desc_tr: 'İlk adımlarını atıyorsun!', desc_en: 'Taking your first steps!', desc_ru: 'Первые шаги!', desc_ar: 'الخطوات الأولى!', desc_zh: '第一步！', desc_ja: '最初のステップ！', xp: 0, class: 'level-bronze' },
+        { tr: 'Gümüş', en: 'Silver', ru: 'Серебро', ar: 'فضي', zh: '白银', ja: 'シルバー', desc_tr: 'İlerleme kaydediyorsun!', desc_en: 'Making progress!', desc_ru: 'Прогресс!', desc_ar: 'تقدم!', desc_zh: '进步中！', desc_ja: '進捗中！', xp: 100, class: 'level-silver' },
+        { tr: 'Altın', en: 'Gold', ru: 'Золото', ar: 'ذهبي', zh: '黄金', ja: 'ゴールド', desc_tr: 'Harika!', desc_en: 'Great!', desc_ru: 'Отлично!', desc_ar: 'رائع!', desc_zh: '太棒了！', desc_ja: '素晴らしい！', xp: 500, class: 'level-gold' },
+        { tr: 'Elmas', en: 'Diamond', ru: 'Алмаз', ar: 'ماسي', zh: '钻石', ja: 'ダイヤモンド', desc_tr: 'Efsane!', desc_en: 'Legendary!', desc_ru: 'Легенда!', desc_ar: 'أسطوري!', desc_zh: '传奇！', desc_ja: '伝説的！', xp: 2000, class: 'level-diamond' },
+        { tr: 'Usta', en: 'Master', ru: 'Мастер', ar: 'ماجستير', zh: '大师', ja: 'マスター', desc_tr: 'Zirve!', desc_en: 'Peak!', desc_ru: 'Вершина!', desc_ar: 'القمة!', desc_zh: '巅峰！', desc_ja: '頂点！', xp: 10000, class: 'level-master' }
       ];
       let currentLevel = levels[0];
       let nextLevel = levels[1];
@@ -1256,7 +2405,7 @@
       }
       document.getElementById('levelBadge').textContent = state.level;
       document.getElementById('levelBadge').className = 'level-badge-large ' + currentLevel.class;
-      const levelName = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : 'Miner');
+      const levelName = currentLevel[currentLang] + ' ' + (currentLang === 'tr' ? 'Madenci' : currentLang === 'ru' ? 'Майнер' : currentLang === 'ar' ? 'عامل' : currentLang === 'zh' ? '矿工' : currentLang === 'ja' ? 'マイナー' : 'Miner');
       document.getElementById('levelName').textContent = levelName;
       document.getElementById('levelDesc').textContent = currentLevel['desc_' + currentLang];
       document.getElementById('currentXP').textContent = state.xp;
@@ -1264,9 +2413,9 @@
       const progress = ((state.xp - currentLevel.xp) / (nextLevel.xp - currentLevel.xp)) * 100;
       document.getElementById('xpFill').style.width = Math.min(progress, 100) + '%';
       
-      document.getElementById('userAvatar').textContent = state.level;
-      document.getElementById('userName').textContent = levelName;
-      document.getElementById('userXP').textContent = state.xp + ' XP';
+      document.getElementById('sidebarAvatar').style.backgroundImage = `url('${AVATARS[state.profile.avatarIndex]}')`;
+      document.getElementById('sidebarUserName').textContent = state.profile.nickname || 'Madenci';
+      document.getElementById('sidebarUserLevel').textContent = levelName;
     }
 
     function addXP(amount) {
@@ -1298,13 +2447,13 @@
       document.getElementById('threeMonthEarning').textContent = '$' + (daily * 90).toFixed(0);
       const roiDate = new Date();
       roiDate.setDate(roiDate.getDate() + 90);
-      document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { day: 'numeric', month: 'short' });
+      document.getElementById('roiDate').textContent = roiDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : currentLang === 'ru' ? 'ru-RU' : currentLang === 'ar' ? 'ar-SA' : currentLang === 'zh' ? 'zh-CN' : currentLang === 'ja' ? 'ja-JP' : 'en-US', { day: 'numeric', month: 'short' });
     }
 
     function openModal() {
       const amount = parseFloat(document.getElementById('amountInput').value) || 0;
       if (amount < 1) {
-        showNotification('❌ Min $1!', true);
+        showNotification(t('notif_min'), true);
         haptic('error');
         return;
       }
@@ -1337,7 +2486,7 @@
       paymentBox.className = 'payment-box ' + crypto;
       
       document.getElementById('paymentIcon').textContent = CRYPTO_ICONS[crypto];
-      document.getElementById('paymentTitle').textContent = CRYPTO_NAMES[crypto] + ' Ödeme';
+      document.getElementById('paymentTitle').textContent = CRYPTO_NAMES[crypto] + ' ' + (currentLang === 'tr' ? 'Ödeme' : currentLang === 'ru' ? 'Оплата' : currentLang === 'ar' ? 'دفع' : currentLang === 'zh' ? '支付' : currentLang === 'ja' ? '支払い' : 'Payment');
       
       const usdAmount = currentPaymentAmount;
       const cryptoAmount = usdAmount / CRYPTO_PRICES[crypto];
@@ -1345,14 +2494,14 @@
       document.getElementById('cryptoAmountDisplay').textContent = amountText;
       
       document.getElementById('qrCrypto').setAttribute('data-crypto', CRYPTO_SYMBOLS[crypto]);
-      document.getElementById('addressLabel').textContent = CRYPTO_SYMBOLS[crypto] + ' Adresini Kopyala (Tıkla)';
+      document.getElementById('addressLabel').textContent = CRYPTO_SYMBOLS[crypto] + ' ' + (currentLang === 'tr' ? 'Adresini Kopyala (Tıkla)' : currentLang === 'ru' ? 'Адрес (Нажми)' : currentLang === 'ar' ? 'انسخ العنوان' : currentLang === 'zh' ? '复制地址' : currentLang === 'ja' ? 'アドレスをコピー' : 'Copy Address');
       document.getElementById('addressText').textContent = CRYPTO_ADDRESSES[crypto];
       document.getElementById('cryptoAddress').className = 'address-text ' + crypto;
       
       const copyBtn = document.getElementById('copyBtn');
       copyBtn.className = 'btn-copy' + (crypto === 'bnb' ? ' bnb' : '');
       
-      document.getElementById('step2').textContent = CRYPTO_NAMES[crypto] + ' cüzdanından gönder';
+      document.getElementById('step2').textContent = CRYPTO_NAMES[crypto] + ' ' + (currentLang === 'tr' ? 'cüzdanından gönder' : currentLang === 'ru' ? 'кошелька' : currentLang === 'ar' ? 'من المحفظة' : currentLang === 'zh' ? '从钱包发送' : currentLang === 'ja' ? 'ウォレットから送信' : 'wallet');
       
       haptic('impact');
     }
@@ -1363,7 +2512,7 @@
       const amountText = cryptoAmount.toFixed(6) + ' ' + CRYPTO_SYMBOLS[selectedCrypto];
       
       navigator.clipboard.writeText(amountText).then(() => {
-        showNotification('📋 Tutar kopyalandı: ' + amountText);
+        showNotification(t('notif_copied') + ' ' + amountText);
         haptic('success');
       }).catch(() => fallbackCopy(amountText));
     }
@@ -1371,7 +2520,7 @@
     function copyAddress() {
       const address = CRYPTO_ADDRESSES[selectedCrypto];
       navigator.clipboard.writeText(address).then(() => {
-        showNotification(' Adres kopyalandı!');
+        showNotification(t('notif_copied'));
         haptic('success');
       }).catch(() => fallbackCopy(address));
     }
@@ -1384,7 +2533,7 @@
       const combinedText = amountText + '\n' + address;
       
       navigator.clipboard.writeText(combinedText).then(() => {
-        showNotification('📋 Tutar + Adres kopyalandı!');
+        showNotification(t('notif_copied'));
         haptic('success');
       }).catch(() => fallbackCopy(combinedText));
     }
@@ -1398,10 +2547,10 @@
       textArea.select();
       try {
         document.execCommand('copy');
-        showNotification('📋 Kopyalandı!');
+        showNotification(t('notif_copied'));
         haptic('success');
       } catch (err) {
-        showNotification('❌ Kopyalama başarısız!', true);
+        showNotification(' Copy failed!', true);
         haptic('error');
       }
       document.body.removeChild(textArea);
@@ -1415,7 +2564,7 @@
         updateTimerDisplay();
         if (paymentTimeLeft <= 0) {
           clearInterval(paymentTimerInterval);
-          showNotification(' Süre doldu!', true);
+          showNotification(t('notif_timeout'), true);
           haptic('error');
           closeModal();
         }
@@ -1436,7 +2585,6 @@
       }
     }
 
-    // ✅ DÜZELTİLDİ: Ödeme onaylanınca beklemeye alınır, ürün EKLENMEZ
     function confirmPayment() {
       if (currentPaymentAmount < 1) return;
       
@@ -1456,7 +2604,7 @@
       saveState();
       updateAdminBadge();
       
-      showNotification(' Ödeme onay bekliyor. Admin onaylayınca ürün eklenecek.');
+      showNotification(currentLang === 'tr' ? ' Ödeme onay bekliyor.' : currentLang === 'ru' ? ' Ожидает подтверждения.' : currentLang === 'ar' ? '⏳ بانتظار التأكيد.' : currentLang === 'zh' ? '⏳ 等待确认。' : currentLang === 'ja' ? '⏳ 確認待ち。' : '⏳ Awaiting confirmation.');
       haptic('success');
       closeModal();
     }
@@ -1470,7 +2618,7 @@
       }
     }
 
-    // ===== ADMIN PANEL FUNCTIONS =====
+    // ===== ADMIN PANEL =====
     function switchAdminTab(tab, element) {
       currentAdminTab = tab;
       document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -1495,6 +2643,7 @@
       document.getElementById('withdrawalsTabCount').textContent = pendingWithdrawals;
       
       updateAdminBadge();
+      renderCryptoStats();
       
       const content = document.getElementById('adminContent');
       
@@ -1505,12 +2654,137 @@
       }
     }
 
+    function renderCryptoStats() {
+      const grid = document.getElementById('cryptoStatsGrid');
+      
+      // Toplam Yatırım (Onaylanan ödemeler)
+      const approvedByCrypto = { btc: 0, trx: 0, bnb: 0 };
+      state.approvedPayments.forEach(p => {
+        if (approvedByCrypto[p.crypto] !== undefined) {
+          approvedByCrypto[p.crypto] += parseFloat(p.cryptoAmount);
+        }
+      });
+      const totalInvestedUSD = state.approvedPayments.reduce((sum, p) => sum + p.amount, 0);
+      
+      // Toplam Çıkan (Onaylanan çekimler)
+      const approvedWithdrawals = state.withdrawalRequests.filter(w => w.status === 'approved');
+      const totalWithdrawnUSD = approvedWithdrawals.reduce((sum, w) => sum + w.amount, 0);
+      
+      // Toplam Bekleyen
+      const pendingByCrypto = { btc: 0, trx: 0, bnb: 0 };
+      state.pendingPayments.forEach(p => {
+        if (pendingByCrypto[p.crypto] !== undefined) {
+          pendingByCrypto[p.crypto] += parseFloat(p.cryptoAmount);
+        }
+      });
+      const totalPendingUSD = state.pendingPayments.reduce((sum, p) => sum + p.amount, 0) + state.withdrawalRequests.filter(w => w.status === 'pending').reduce((sum, w) => sum + w.amount, 0);
+      
+      // Gelir/Gider
+      const incomeUSD = totalInvestedUSD;
+      const expenseUSD = totalWithdrawnUSD;
+      const netUSD = incomeUSD - expenseUSD;
+      
+      grid.innerHTML = `
+        <div class="crypto-stat-card usd">
+          <div class="crypto-stat-header">
+            <span class="crypto-stat-icon">💰</span>
+            <span class="crypto-stat-title">${t('admin_total_invested')}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">₿ BTC:</span>
+            <span class="crypto-stat-value">${approvedByCrypto.btc.toFixed(6)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">💠 TRX:</span>
+            <span class="crypto-stat-value">${approvedByCrypto.trx.toFixed(2)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">🔶 BNB:</span>
+            <span class="crypto-stat-value">${approvedByCrypto.bnb.toFixed(5)}</span>
+          </div>
+          <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;">
+            <span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span>
+            <span class="crypto-stat-value" style="color: var(--success);">$${totalInvestedUSD.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        <div class="crypto-stat-card trx">
+          <div class="crypto-stat-header">
+            <span class="crypto-stat-icon">💸</span>
+            <span class="crypto-stat-title">${t('admin_total_withdrawn')}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">₿ BTC:</span>
+            <span class="crypto-stat-value">0.000000</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">💠 TRX:</span>
+            <span class="crypto-stat-value">0.00</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label"> BNB:</span>
+            <span class="crypto-stat-value">0.00000</span>
+          </div>
+          <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;">
+            <span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span>
+            <span class="crypto-stat-value" style="color: var(--danger);">$${totalWithdrawnUSD.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        <div class="crypto-stat-card btc">
+          <div class="crypto-stat-header">
+            <span class="crypto-stat-icon"></span>
+            <span class="crypto-stat-title">${t('admin_total_pending')}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">₿ BTC:</span>
+            <span class="crypto-stat-value">${pendingByCrypto.btc.toFixed(6)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">💠 TRX:</span>
+            <span class="crypto-stat-value">${pendingByCrypto.trx.toFixed(2)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">🔶 BNB:</span>
+            <span class="crypto-stat-value">${pendingByCrypto.bnb.toFixed(5)}</span>
+          </div>
+          <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;">
+            <span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span>
+            <span class="crypto-stat-value" style="color: var(--warning);">$${totalPendingUSD.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        <div class="crypto-stat-card bnb">
+          <div class="crypto-stat-header">
+            <span class="crypto-stat-icon">📊</span>
+            <span class="crypto-stat-title">${t('admin_income_expense')}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">₿ BTC:</span>
+            <span class="crypto-stat-value">${(approvedByCrypto.btc - 0).toFixed(6)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">💠 TRX:</span>
+            <span class="crypto-stat-value">${(approvedByCrypto.trx - 0).toFixed(2)}</span>
+          </div>
+          <div class="crypto-stat-row">
+            <span class="crypto-stat-label">🔶 BNB:</span>
+            <span class="crypto-stat-value">${(approvedByCrypto.bnb - 0).toFixed(5)}</span>
+          </div>
+          <div class="crypto-stat-row" style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;">
+            <span class="crypto-stat-label" style="font-weight: 700;">💵 USD:</span>
+            <span class="crypto-stat-value" style="color: ${netUSD >= 0 ? 'var(--success)' : 'var(--danger)'};">$${netUSD.toFixed(2)}</span>
+          </div>
+        </div>
+      `;
+    }
+
     function renderPaymentsList(container) {
       if (state.pendingPayments.length === 0) {
         container.innerHTML = `
           <div class="admin-empty">
             <div class="admin-empty-icon">📭</div>
-            <div>Bekleyen ödeme yok</div>
+            <div>${t('no_pending')}</div>
           </div>
         `;
         return;
@@ -1526,25 +2800,25 @@
             </div>
             <div class="admin-item-details">
               <div class="detail-row">
-                <span class="detail-label">Kripto:</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Kripto' : currentLang === 'ru' ? 'Крипто' : currentLang === 'ar' ? 'عملة' : currentLang === 'zh' ? '加密货币' : currentLang === 'ja' ? '暗号通貨' : 'Crypto'}:</span>
                 <span class="detail-value">${CRYPTO_ICONS[payment.crypto]} ${payment.cryptoAmount} ${CRYPTO_SYMBOLS[payment.crypto]}</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Adres:</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Adres' : currentLang === 'ru' ? 'Адрес' : currentLang === 'ar' ? 'عنوان' : currentLang === 'zh' ? '地址' : currentLang === 'ja' ? 'アドレス' : 'Address'}:</span>
                 <span class="detail-value">${payment.address.substring(0, 20)}...</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Zaman:</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Zaman' : currentLang === 'ru' ? 'Время' : currentLang === 'ar' ? 'وقت' : currentLang === 'zh' ? '时间' : currentLang === 'ja' ? '時間' : 'Time'}:</span>
                 <span class="detail-value">${timeAgo}</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Durum:</span>
-                <span class="admin-item-status status-pending">Beklemede</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Durum' : currentLang === 'ru' ? 'Статус' : currentLang === 'ar' ? 'حالة' : currentLang === 'zh' ? '状态' : currentLang === 'ja' ? '状態' : 'Status'}:</span>
+                <span class="admin-item-status status-pending">${t('status_pending')}</span>
               </div>
             </div>
             <div class="admin-item-actions">
-              <button class="admin-btn approve" onclick="approvePayment('${payment.id}')">✓ Onayla</button>
-              <button class="admin-btn reject" onclick="rejectPayment('${payment.id}')">✕ Reddet</button>
+              <button class="admin-btn approve" onclick="approvePayment('${payment.id}')">✓ ${currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : currentLang === 'zh' ? '批准' : currentLang === 'ja' ? '承認' : 'Approve'}</button>
+              <button class="admin-btn reject" onclick="rejectPayment('${payment.id}')">✕ ${currentLang === 'tr' ? 'Reddet' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : currentLang === 'zh' ? '拒绝' : currentLang === 'ja' ? '却下' : 'Reject'}</button>
             </div>
           </div>
         `;
@@ -1558,7 +2832,7 @@
         container.innerHTML = `
           <div class="admin-empty">
             <div class="admin-empty-icon">📭</div>
-            <div>Bekleyen çekim yok</div>
+            <div>${t('no_pending')}</div>
           </div>
         `;
         return;
@@ -1574,35 +2848,33 @@
             </div>
             <div class="admin-item-details">
               <div class="detail-row">
-                <span class="detail-label">BTC Adresi:</span>
+                <span class="detail-label">BTC ${currentLang === 'tr' ? 'Adresi' : currentLang === 'ru' ? 'Адрес' : currentLang === 'ar' ? 'عنوان' : currentLang === 'zh' ? '地址' : currentLang === 'ja' ? 'アドレス' : 'Address'}:</span>
                 <span class="detail-value">${withdrawal.walletAddress}</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Zaman:</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Zaman' : currentLang === 'ru' ? 'Время' : currentLang === 'ar' ? 'وقت' : currentLang === 'zh' ? '时间' : currentLang === 'ja' ? '時間' : 'Time'}:</span>
                 <span class="detail-value">${timeAgo}</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Durum:</span>
-                <span class="admin-item-status status-pending">Beklemede</span>
+                <span class="detail-label">${currentLang === 'tr' ? 'Durum' : currentLang === 'ru' ? 'Статус' : currentLang === 'ar' ? 'حالة' : currentLang === 'zh' ? '状态' : currentLang === 'ja' ? '状態' : 'Status'}:</span>
+                <span class="admin-item-status status-pending">${t('status_pending')}</span>
               </div>
             </div>
             <div class="admin-item-actions">
-              <button class="admin-btn approve" onclick="approveWithdrawal('${withdrawal.id}')">✓ Onayla</button>
-              <button class="admin-btn reject" onclick="rejectWithdrawal('${withdrawal.id}')">✕ Reddet</button>
+              <button class="admin-btn approve" onclick="approveWithdrawal('${withdrawal.id}')">✓ ${currentLang === 'tr' ? 'Onayla' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : currentLang === 'zh' ? '批准' : currentLang === 'ja' ? '承認' : 'Approve'}</button>
+              <button class="admin-btn reject" onclick="rejectWithdrawal('${withdrawal.id}')">✕ ${currentLang === 'tr' ? 'Reddet' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : currentLang === 'zh' ? '拒绝' : currentLang === 'ja' ? '却下' : 'Reject'}</button>
             </div>
           </div>
         `;
       }).join('') + '</div>';
     }
 
-    // ✅ DÜZELTİLDİ: Onaylanınca ürün EKLENİR
     function approvePayment(paymentId) {
       const paymentIndex = state.pendingPayments.findIndex(p => p.id === paymentId);
       if (paymentIndex === -1) return;
       
       const payment = state.pendingPayments[paymentIndex];
       
-      // Ürünü ekle (bakiyeye etkisi yok, sadece üretim gücü eklenir)
       addProduct(payment.amount, false);
       addXP(Math.floor(payment.amount));
       
@@ -1613,11 +2885,10 @@
       
       saveState();
       renderAdminPanel();
-      showNotification('✅ Ödeme onaylandı! Ürün eklendi.');
+      showNotification(t('notif_confirmed'));
       haptic('success');
     }
 
-    // ✅ DÜZELTİLDİ: Reddedilince hiçbir şey olmaz (ürün eklenmedi zaten)
     function rejectPayment(paymentId) {
       const paymentIndex = state.pendingPayments.findIndex(p => p.id === paymentId);
       if (paymentIndex === -1) return;
@@ -1631,18 +2902,16 @@
       
       saveState();
       renderAdminPanel();
-      showNotification('❌ Ödeme reddedildi. Ürün eklenmedi.');
+      showNotification(t('status_rejected'));
       haptic('error');
     }
 
-    // ✅ DÜZELTİLDİ: Onaylanınca bakiyeden düşer
     function approveWithdrawal(withdrawalId) {
       const withdrawalIndex = state.withdrawalRequests.findIndex(w => w.id === withdrawalId);
       if (withdrawalIndex === -1) return;
       
       const withdrawal = state.withdrawalRequests[withdrawalIndex];
       
-      // Bakiyeden düşür
       const totalEarned = state.purchasedProducts.reduce((sum, p) => sum + (p.earned || 0), 0);
       if (totalEarned > 0 && withdrawal.amount > 0) {
         state.purchasedProducts.forEach(product => {
@@ -1663,26 +2932,22 @@
       saveState();
       renderAdminPanel();
       updateStats();
-      showNotification('✅ Çekim onaylandı! Bakiye düşürüldü.');
+      showNotification(t('notif_success'));
       haptic('success');
     }
 
-    // ✅ DÜZELTİLDİ: Reddedilince bakiye iade edilir (çünkü düşürülmüştü)
     function rejectWithdrawal(withdrawalId) {
       const withdrawalIndex = state.withdrawalRequests.findIndex(w => w.id === withdrawalId);
       if (withdrawalIndex === -1) return;
       
       const withdrawal = state.withdrawalRequests[withdrawalIndex];
       
-      // Bakiyeyi iade et (çünkü onaylanırken düşürülmüştü)
-      // NOT: Şu anki mantıkta onaylanana kadar düşürmüyoruz, bu yüzden iadeye gerek yok
-      // Sadece durumu güncelle
       withdrawal.status = 'rejected';
       withdrawal.rejectedAt = Date.now();
       
       saveState();
       renderAdminPanel();
-      showNotification('❌ Çekim reddedildi.');
+      showNotification(t('status_rejected'));
       haptic('error');
     }
 
@@ -1718,7 +2983,7 @@
         { name: 'User789', earned: 432.10 }
       ];
       const list = document.getElementById('leaderboardList');
-      const productText = currentLang === 'tr' ? 'ürün' : 'products';
+      const productText = currentLang === 'tr' ? 'ürün' : currentLang === 'ru' ? 'продукт' : currentLang === 'ar' ? 'منتج' : currentLang === 'zh' ? '产品' : currentLang === 'ja' ? '製品' : 'products';
       list.innerHTML = fakeUsers.map((user, i) => `
         <div class="leaderboard-item ${i < 3 ? 'top-' + (i+1) : ''}">
           <div class="rank ${i < 3 ? 'rank-' + (i+1) : ''}">${i + 1}</div>
@@ -1733,7 +2998,7 @@
 
     function copyReferral() {
       navigator.clipboard.writeText(state.referralCode).then(() => {
-        showNotification('📋 Kod kopyalandı!');
+        showNotification(t('notif_code_copied'));
         haptic('success');
       });
     }
@@ -1746,30 +3011,28 @@
         btn.textContent = `Min $${MIN_WITHDRAW}`;
       } else if (amount > state.totalEarned) {
         btn.disabled = true;
-        btn.textContent = '❌ Yetersiz Bakiye';
+        btn.textContent = currentLang === 'tr' ? '❌ Yetersiz Bakiye' : currentLang === 'ru' ? '❌ Недостаточно' : currentLang === 'ar' ? '❌ غير كافٍ' : currentLang === 'zh' ? '❌ 余额不足' : currentLang === 'ja' ? '❌ 残高不足' : '❌ Insufficient';
       } else {
         btn.disabled = false;
-        btn.textContent = '💸 $' + amount.toFixed(2) + ' Çek';
+        btn.textContent = '💸 $' + amount.toFixed(2) + ' ' + (currentLang === 'tr' ? 'Çek' : currentLang === 'ru' ? 'Вывод' : currentLang === 'ar' ? 'سحب' : currentLang === 'zh' ? '提现' : currentLang === 'ja' ? '出金' : 'Withdraw');
       }
     }
 
-    // ✅ DÜZELTİLDİ: Çekim talebi oluşturulur, bakiye HEMEN düşmez
     function processWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
       if (amount < MIN_WITHDRAW || amount > state.totalEarned) {
-        showNotification('❌ Geçersiz!', true);
+        showNotification(t('notif_invalid'), true);
         haptic('error');
         return;
       }
       if (!walletAddress) {
-        showNotification('❌ Adres gerekli!', true);
+        showNotification(t('notif_required'), true);
         haptic('error');
         return;
       }
       
-      // Sadece talep oluştur, bakiyeden düşme
       const withdrawal = {
         id: 'wd_' + Date.now(),
         userId: currentUser ? currentUser.id : 'unknown',
@@ -1782,9 +3045,9 @@
       
       state.withdrawalRequests.push(withdrawal);
       
-      addActivity('withdraw', 'Çekim talebi (beklemede)', amount);
+      addActivity('withdraw', currentLang === 'tr' ? 'Çekim talebi (beklemede)' : currentLang === 'ru' ? 'Запрос на вывод (ожидает)' : currentLang === 'ar' ? 'طلب سحب (بانتظار)' : currentLang === 'zh' ? '提现请求（待处理）' : currentLang === 'ja' ? '出金リクエスト（保留中）' : 'Withdrawal request (pending)', amount);
       addXP(10);
-      showNotification(' Çekim talebi oluşturuldu. Admin onayı bekleniyor.');
+      showNotification(currentLang === 'tr' ? ' Çekim talebi oluşturuldu. Admin onayı bekleniyor.' : currentLang === 'ru' ? '⏳ Запрос создан. Ожидает подтверждения.' : currentLang === 'ar' ? '⏳ تم إنشاء الطلب. بانتظار التأكيد.' : currentLang === 'zh' ? '⏳ 已创建请求。等待确认。' : currentLang === 'ja' ? '⏳ リクエスト作成。確認待ち。' : '⏳ Request created. Awaiting admin approval.');
       haptic('success');
       
       document.getElementById('withdrawAmount').value = '';
@@ -1795,7 +3058,6 @@
       saveState();
     }
 
-    // Kullanıcının kendi bekleyen işlemlerini göster
     function renderMyPending() {
       const container = document.getElementById('myPendingSection');
       if (!container) return;
@@ -1829,13 +3091,13 @@
       
       container.innerHTML = `
         <div class="my-pending-section">
-          <div class="my-pending-title">📋 Bekleyen & Geçmiş İşlemlerim</div>
+          <div class="my-pending-title">${t('my_requests')}</div>
           ${allMyRequests.map(req => {
             const timeAgo = getTimeAgo(req.timestamp);
             const statusClass = req.status === 'approved' ? 'approved' : req.status === 'rejected' ? 'rejected' : '';
-            const statusText = req.status === 'approved' ? '✅ Onaylandı' : req.status === 'rejected' ? '❌ Reddedildi' : '⏳ Beklemede';
-            const typeIcon = req.type === 'payment' ? '💳' : '';
-            const typeText = req.type === 'payment' ? 'Ödeme' : 'Çekim';
+            const statusText = req.status === 'approved' ? '✅ ' + t('status_approved') : req.status === 'rejected' ? '❌ ' + t('status_rejected') : '⏳ ' + t('status_pending');
+            const typeIcon = req.type === 'payment' ? '💳' : '💸';
+            const typeText = req.type === 'payment' ? (currentLang === 'tr' ? 'Ödeme' : currentLang === 'ru' ? 'Платеж' : currentLang === 'ar' ? 'دفعة' : currentLang === 'zh' ? '付款' : currentLang === 'ja' ? '支払い' : 'Payment') : (currentLang === 'tr' ? 'Çekim' : currentLang === 'ru' ? 'Вывод' : currentLang === 'ar' ? 'سحب' : currentLang === 'zh' ? '提现' : currentLang === 'ja' ? '出金' : 'Withdrawal');
             
             return `
               <div class="my-pending-item ${statusClass}">
@@ -1850,15 +3112,69 @@
       `;
     }
 
+    // ===== PROFİL FONKSİYONLARI =====
+    function renderProfile() {
+      if (!currentUser) return;
+      
+      const displayName = state.profile.nickname || currentUser.first_name;
+      const avatarUrl = AVATARS[state.profile.avatarIndex] || AVATARS[0];
+      
+      document.getElementById('profileAvatarLarge').style.backgroundImage = `url('${avatarUrl}')`;
+      document.getElementById('profileDisplayName').textContent = displayName;
+      document.getElementById('profileUsername').textContent = '@' + (currentUser.username || 'user' + currentUser.id);
+      document.getElementById('profileTelegramId').textContent = 'ID: ' + currentUser.id;
+      
+      document.getElementById('nicknameInput').value = state.profile.nickname || '';
+      document.getElementById('telegramIdDisplay').value = currentUser.id;
+      
+      // Profil istatistikleri
+      document.getElementById('profileTotalInvested').textContent = '$' + state.totalInvested.toFixed(0);
+      document.getElementById('profileTotalEarned').textContent = '$' + state.totalEarned.toFixed(2);
+      document.getElementById('profileProducts').textContent = state.purchasedProducts.length;
+      document.getElementById('profileXP').textContent = state.xp;
+      
+      renderAvatarGrid();
+    }
+
+    function renderAvatarGrid() {
+      const grid = document.getElementById('avatarGrid');
+      if (!grid) return;
+      
+      grid.innerHTML = AVATARS.map((url, index) => `
+        <div class="avatar-option ${state.profile.avatarIndex === index ? 'selected' : ''}" 
+             style="background-image: url('${url}')"
+             onclick="selectAvatar(${index})"></div>
+      `).join('');
+    }
+
+    function selectAvatar(index) {
+      state.profile.avatarIndex = index;
+      renderAvatarGrid();
+      updateLevel();
+      haptic('impact');
+    }
+
+    function saveProfile() {
+      const nickname = document.getElementById('nicknameInput').value.trim();
+      if (nickname) {
+        state.profile.nickname = nickname;
+      }
+      saveState();
+      updateLevel();
+      renderProfile();
+      showNotification(t('notif_saved'));
+      haptic('success');
+    }
+
     function startLiveFeed() {
       for (let i = 0; i < 2; i++) setTimeout(() => generateFeedItem(), i * 2000);
     }
 
     function generateFeedItem() {
       const actions = [
-        { icon: '💰', text: '$<amount> yatırdı', users: ['User234', 'User891', 'User456'] },
-        { icon: '💸', text: '$<amount> çekti', users: ['User345', 'User678', 'User901'] },
-        { icon: '🎯', text: 'seviye atladı', users: ['User847', 'User234'] }
+        { icon: '💰', text: '$<amount> ' + (currentLang === 'tr' ? 'yatırdı' : currentLang === 'ru' ? 'вложил' : currentLang === 'ar' ? 'استثمر' : currentLang === 'zh' ? '投资' : currentLang === 'ja' ? '投資' : 'invested'), users: ['User234', 'User891', 'User456'] },
+        { icon: '💸', text: '$<amount> ' + (currentLang === 'tr' ? 'çekti' : currentLang === 'ru' ? 'вывел' : currentLang === 'ar' ? 'سحب' : currentLang === 'zh' ? '提现' : currentLang === 'ja' ? '出金' : 'withdrew'), users: ['User345', 'User678', 'User901'] },
+        { icon: '🎯', text: currentLang === 'tr' ? 'seviye atladı' : currentLang === 'ru' ? 'повысил уровень' : currentLang === 'ar' ? 'ارتقى مستوى' : currentLang === 'zh' ? '升级了' : currentLang === 'ja' ? 'レベルアップ' : 'leveled up', users: ['User847', 'User234'] }
       ];
       const action = actions[Math.floor(Math.random() * actions.length)];
       const user = action.users[Math.floor(Math.random() * action.users.length)];
