@@ -17,30 +17,33 @@
   .product { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin: 10px 0; }
   .btn { background: #4a9eff; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
   .btn:active { transform: scale(0.98); }
+  .btn-approve { background: #4ade80; }
+  .btn-reject { background: #f87171; }
   input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; width: 100%; margin: 10px 0; font-size: 16px; }
   h1, h2 { margin-bottom: 15px; color: #1a2a3a; }
   .hidden { display: none; }
+  .pending-item { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #ffc107; }
 </style>
 </head>
 <body>
   <div class="container">
     <!-- Ana Sayfa -->
-    <div class="card">
+    <div id="page-home" class="card">
       <h1> Hash Power Mining</h1>
       <div>
         <div class="stat">💰 Kazanç: $<span id="totalEarned">0.00</span></div>
-        <div class="stat"> Ürün: <span id="productCount">0</span></div>
+        <div class="stat">📦 Ürün: <span id="productCount">0</span></div>
         <div class="stat">💵 Yatırım: $<span id="totalInvested">0</span></div>
       </div>
       <br>
       <button class="btn" onclick="showPage('buy')">💎 Satın Al</button>
-      <button class="btn" onclick="showPage('production')"> Üretim</button>
+      <button class="btn" onclick="showPage('production')">⚡ Üretim</button>
       <button class="btn" onclick="showPage('admin')">🔐 Admin</button>
     </div>
 
     <!-- Satın Al -->
     <div id="page-buy" class="card hidden">
-      <h2>💎 Satın Al</h2>
+      <h2> Satın Al</h2>
       <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10">
       <button class="btn" onclick="buyProduct()">Satın Al</button>
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
@@ -56,7 +59,7 @@
     <!-- Admin -->
     <div id="page-admin" class="card hidden">
       <h2>🔐 Admin Panel</h2>
-      <div id="pendingPayments"></div>
+      <div id="pendingPayments">Yükleniyor...</div>
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
     </div>
   </div>
@@ -80,6 +83,7 @@
     let userId = null;
     let products = [];
     let earnings = 0;
+    let lastSave = 0;
     
     const DAILY_RATE = 1 / 90;
     const PER_SECOND = DAILY_RATE / 86400;
@@ -95,20 +99,28 @@
     // Giriş yap
     auth.signInAnonymously().then(() => {
       userId = auth.currentUser.uid;
+      console.log('✅ Giriş yapıldı:', userId);
       loadData();
       setInterval(updateEarnings, 1000);
+    }).catch(err => {
+      console.error('Giriş hatası:', err);
     });
     
     // Verileri yükle
     async function loadData() {
-      const doc = await db.collection('users').doc(userId).get();
-      if (doc.exists) {
-        const data = doc.data();
-        products = data.approvedPayments || [];
-        earnings = data.totalEarned || 0;
-        updateUI();
-        renderProducts();
-        console.log('✅ Veri yüklendi:', products.length, 'ürün');
+      try {
+        const doc = await db.collection('users').doc(userId).get();
+        if (doc.exists) {
+          const data = doc.data();
+          products = data.approvedPayments || [];
+          earnings = data.totalEarned || 0;
+          updateUI();
+          console.log('✅ Veri yüklendi:', products.length, 'ürün, Kazanç:', earnings);
+        } else {
+          console.log('Yeni kullanıcı, boş veri');
+        }
+      } catch (error) {
+        console.error('Veri yükleme hatası:', error);
       }
     }
     
@@ -127,18 +139,37 @@
         timestamp: Date.now()
       };
       
-      await db.collection('users').doc(userId).set({
-        pendingPayments: firebase.firestore.FieldValue.arrayUnion(payment)
-      }, { merge: true });
-      
-      alert('Ödeme oluşturuldu! Admin onayı bekleniyor.');
-      document.getElementById('buyAmount').value = '';
+      try {
+        const userRef = db.collection('users').doc(userId);
+        const doc = await userRef.get();
+        const data = doc.data() || {};
+        const currentPending = data.pendingPayments || [];
+        
+        // Yeni pending listesi
+        const newPending = [...currentPending, payment];
+        
+        await userRef.set({
+          pendingPayments: newPending,
+          totalInvested: (data.totalInvested || 0) + amount
+        }, { merge: true });
+        
+        alert('✅ Ödeme oluşturuldu! Admin onayı bekleniyor.');
+        document.getElementById('buyAmount').value = '';
+      } catch (error) {
+        console.error('Satın alma hatası:', error);
+        alert('❌ Hata: ' + error.message);
+      }
     }
     
     // Ürün render et
     function renderProducts() {
       const container = document.getElementById('products');
       container.innerHTML = '';
+      
+      if (products.length === 0) {
+        container.innerHTML = '<p>Henüz ürün yok. Admin onayı bekleyen ödemeleriniz varsa onaylanınca burada görünecek.</p>';
+        return;
+      }
       
       products.forEach(p => {
         const div = document.createElement('div');
@@ -162,13 +193,19 @@
       
       earnings = products.reduce((sum, p) => sum + p.earned, 0);
       
-      // Firestore'a kaydet (her 5 saniyede)
-      if (Date.now() % 5000 < 1000) {
-        await db.collection('users').doc(userId).set({
-          approvedPayments: products,
-          totalEarned: earnings,
-          totalInvested: products.reduce((sum, p) => sum + p.amount, 0)
-        }, { merge: true });
+      // Her 30 saniyede bir Firestore'a kaydet (race condition önleme)
+      const now = Date.now();
+      if (now - lastSave > 30000) {
+        try {
+          await db.collection('users').doc(userId).set({
+            approvedPayments: products,
+            totalEarned: earnings
+          }, { merge: true });
+          lastSave = now;
+          console.log('💾 Kaydedildi:', earnings.toFixed(2));
+        } catch (error) {
+          console.error('Kaydetme hatası:', error);
+        }
       }
       
       updateUI();
@@ -179,101 +216,161 @@
       document.getElementById('totalEarned').textContent = earnings.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
-      
-      // Ürünleri güncelle
       renderProducts();
     }
     
-    // Admin panel
+    // Admin panel - HER YÜKLEMEDE FRESH DATA
     async function loadAdmin() {
       if (currentUser?.id?.toString() !== ADMIN_ID) {
         alert('Yetkiniz yok!');
+        showPage('home');
         return;
       }
-      
-      const snapshot = await db.collection('users').get();
-      const pending = [];
-      
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        if (data.pendingPayments) {
-          data.pendingPayments.forEach(p => {
-            pending.push({ ...p, userId: doc.id });
-          });
-        }
-      });
       
       const container = document.getElementById('pendingPayments');
-      container.innerHTML = '';
+      container.innerHTML = 'Yükleniyor...';
       
-      if (pending.length === 0) {
-        container.innerHTML = '<p>Bekleyen ödeme yok</p>';
-        return;
+      try {
+        const snapshot = await db.collection('users').get();
+        const pending = [];
+        
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          if (data.pendingPayments && data.pendingPayments.length > 0) {
+            data.pendingPayments.forEach(p => {
+              pending.push({ ...p, userDocId: doc.id });
+            });
+          }
+        });
+        
+        if (pending.length === 0) {
+          container.innerHTML = '<p>✅ Bekleyen ödeme yok</p>';
+          return;
+        }
+        
+        container.innerHTML = '';
+        pending.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'pending-item';
+          div.innerHTML = `
+            <strong>$${p.amount}</strong> - ${p.userName}<br>
+            <small>ID: ${p.id}</small><br>
+            <button class="btn btn-approve" onclick="approvePayment('${p.userDocId}', '${p.id}')">✓ Onayla</button>
+            <button class="btn btn-reject" onclick="rejectPayment('${p.userDocId}', '${p.id}')">✕ Reddet</button>
+          `;
+          container.appendChild(div);
+        });
+        
+        console.log('📋 Admin yüklendi:', pending.length, 'bekleyen');
+      } catch (error) {
+        console.error('Admin yükleme hatası:', error);
+        container.innerHTML = '❌ Hata: ' + error.message;
       }
-      
-      pending.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `
-          <strong>$${p.amount}</strong> - ${p.userName}<br>
-          <button class="btn" onclick="approvePayment('${p.userId}', '${p.id}')">✓ Onayla</button>
-          <button class="btn" style="background:#f87171" onclick="rejectPayment('${p.userId}', '${p.id}')">✕ Reddet</button>
-        `;
-        container.appendChild(div);
-      });
     }
     
-    // Ödeme onayla
-    async function approvePayment(userId, paymentId) {
-      const userRef = db.collection('users').doc(userId);
-      const doc = await userRef.get();
-      const data = doc.data();
-      
-      const payment = data.pendingPayments.find(p => p.id === paymentId);
-      if (!payment) return;
-      
-      payment.status = 'approved';
-      payment.approvedAt = Date.now();
-      
-      await userRef.update({
-        pendingPayments: firebase.firestore.FieldValue.arrayRemove(payment),
-        approvedPayments: firebase.firestore.FieldValue.arrayUnion(payment)
-      });
-      
-      alert('Ödeme onaylandı!');
-      loadAdmin();
+    // Ödeme onayla - KESİN ÇALIŞAN VERSİYON
+    async function approvePayment(targetUserDocId, paymentId) {
+      try {
+        console.log('Onaylanıyor:', paymentId, 'Kullanıcı:', targetUserDocId);
+        
+        const userRef = db.collection('users').doc(targetUserDocId);
+        const doc = await userRef.get();
+        
+        if (!doc.exists) {
+          alert('Kullanıcı bulunamadı!');
+          return;
+        }
+        
+        const data = doc.data();
+        const pendingPayments = data.pendingPayments || [];
+        const approvedPayments = data.approvedPayments || [];
+        
+        // Pending'den bul ve çıkar
+        const paymentIndex = pendingPayments.findIndex(p => p.id === paymentId);
+        if (paymentIndex === -1) {
+          alert('Ödeme bulunamadı!');
+          return;
+        }
+        
+        const payment = pendingPayments[paymentIndex];
+        
+        // Yeni array'ler oluştur
+        const newPending = pendingPayments.filter(p => p.id !== paymentId);
+        
+        payment.status = 'approved';
+        payment.approvedAt = Date.now();
+        const newApproved = [...approvedPayments, payment];
+        
+        // Firestore'u güncelle - TÜM ARRAY'İ YAZ
+        await userRef.set({
+          pendingPayments: newPending,
+          approvedPayments: newApproved,
+          totalInvested: (data.totalInvested || 0) + payment.amount
+        }, { merge: true });
+        
+        console.log('✅ Onaylandı:', paymentId);
+        alert('✅ Ödeme onaylandı!');
+        
+        // Listeyi YENİDEN YÜKLE
+        await loadAdmin();
+        
+      } catch (error) {
+        console.error('Onaylama hatası:', error);
+        alert('❌ Onaylama başarısız: ' + error.message);
+      }
     }
     
-    // Ödeme reddet
-    async function rejectPayment(userId, paymentId) {
-      const userRef = db.collection('users').doc(userId);
-      const doc = await userRef.get();
-      const data = doc.data();
-      
-      const payment = data.pendingPayments.find(p => p.id === paymentId);
-      if (!payment) return;
-      
-      await userRef.update({
-        pendingPayments: firebase.firestore.FieldValue.arrayRemove(payment)
-      });
-      
-      alert('Ödeme reddedildi!');
-      loadAdmin();
+    // Ödeme reddet - KESİN ÇALIŞAN VERSİYON
+    async function rejectPayment(targetUserDocId, paymentId) {
+      try {
+        console.log('Reddediliyor:', paymentId, 'Kullanıcı:', targetUserDocId);
+        
+        const userRef = db.collection('users').doc(targetUserDocId);
+        const doc = await userRef.get();
+        
+        if (!doc.exists) {
+          alert('Kullanıcı bulunamadı!');
+          return;
+        }
+        
+        const data = doc.data();
+        const pendingPayments = data.pendingPayments || [];
+        
+        // Pending'den bul ve çıkar
+        const paymentIndex = pendingPayments.findIndex(p => p.id === paymentId);
+        if (paymentIndex === -1) {
+          alert('Ödeme bulunamadı!');
+          return;
+        }
+        
+        // Yeni array oluştur
+        const newPending = pendingPayments.filter(p => p.id !== paymentId);
+        
+        // Firestore'u güncelle
+        await userRef.set({
+          pendingPayments: newPending
+        }, { merge: true });
+        
+        console.log('❌ Reddedildi:', paymentId);
+        alert('❌ Ödeme reddedildi!');
+        
+        // Listeyi YENİDEN YÜKLE
+        await loadAdmin();
+        
+      } catch (error) {
+        console.error('Reddetme hatası:', error);
+        alert('❌ Reddetme başarısız: ' + error.message);
+      }
     }
     
     // Sayfa değiştir
     function showPage(page) {
       document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+      document.getElementById('page-' + page).classList.remove('hidden');
       
-      if (page === 'home') {
-        document.querySelector('.card').classList.remove('hidden');
-      } else if (page === 'buy') {
-        document.getElementById('page-buy').classList.remove('hidden');
-      } else if (page === 'production') {
-        document.getElementById('page-production').classList.remove('hidden');
+      if (page === 'production') {
         renderProducts();
       } else if (page === 'admin') {
-        document.getElementById('page-admin').classList.remove('hidden');
         loadAdmin();
       }
     }
