@@ -36,22 +36,20 @@
 </head>
 <body>
   <div class="container">
-    <!-- Ana Sayfa -->
     <div id="page-home" class="card">
       <h1>⚡ Hash Power Mining</h1>
       <div>
-        <div class="stat">💰 Kazanç: $<span id="totalEarned">0.00</span></div>
-        <div class="stat"> Ürün: <span id="productCount">0</span></div>
+        <div class="stat">💰 Bakiye: $<span id="balance">0.00</span></div>
+        <div class="stat">📦 Ürün: <span id="productCount">0</span></div>
         <div class="stat">💵 Yatırım: $<span id="totalInvested">0</span></div>
       </div>
       <br>
-      <button class="btn" onclick="showPage('buy')"> Satın Al</button>
-      <button class="btn" onclick="showPage('production')"> Üretim</button>
+      <button class="btn" onclick="showPage('buy')">💎 Satın Al</button>
+      <button class="btn" onclick="showPage('production')">⚡ Üretim</button>
       <button class="btn btn-withdraw" onclick="showPage('withdraw')">💸 Çekim</button>
-      <button class="btn" onclick="showPage('admin')"> Admin</button>
+      <button class="btn" onclick="showPage('admin')">🔐 Admin</button>
     </div>
 
-    <!-- Satın Al -->
     <div id="page-buy" class="card hidden">
       <h2>💎 Satın Al</h2>
       <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10">
@@ -59,16 +57,14 @@
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
     </div>
 
-    <!-- Üretim -->
     <div id="page-production" class="card hidden">
-      <h2> Üretim Hattı</h2>
+      <h2>⚡ Üretim Hattı</h2>
       <div id="products"></div>
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
     </div>
 
-    <!-- Çekim -->
     <div id="page-withdraw" class="card hidden">
-      <h2> Çekim Talebi</h2>
+      <h2>💸 Çekim Talebi</h2>
       <div class="balance-display">
         <div>Mevcut Bakiye</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
@@ -96,7 +92,6 @@
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
     </div>
 
-    <!-- Admin -->
     <div id="page-admin" class="card hidden">
       <h2>🔐 Admin Panel</h2>
       <div class="tab-container">
@@ -125,7 +120,9 @@
     let currentUser = null;
     let userId = null;
     let products = [];
-    let earnings = 0;
+    let lifetimeEarnings = 0;  // Hiç düşmeyen toplam kazanç
+    let totalWithdrawn = 0;    // Toplam çekilen
+    let balance = 0;           // lifetimeEarnings - totalWithdrawn
     let currentAdminTab = 'payments';
     let unsubscribe = null;
     
@@ -151,7 +148,7 @@
       console.error('Giriş hatası:', err);
     });
     
-    // 🔧 GERÇEK ZAMANLI DİNLEME - Firestore'dan anlık güncelleme
+    // 🔧 GERÇEK ZAMANLI DİNLEME
     function listenToData() {
       if (unsubscribe) unsubscribe();
       
@@ -159,9 +156,11 @@
         if (doc.exists) {
           const data = doc.data();
           products = data.approvedPayments || [];
-          earnings = data.totalEarned || 0;
+          lifetimeEarnings = data.lifetimeEarnings || 0;
+          totalWithdrawn = data.totalWithdrawn || 0;
+          balance = lifetimeEarnings - totalWithdrawn;
           updateUI();
-          console.log('📡 Güncel veri:', products.length, 'ürün, $' + earnings.toFixed(2));
+          console.log(' Güncel:', products.length, 'ürün, Bakiye: $' + balance.toFixed(2));
         }
       }, (error) => {
         console.error('Dinleme hatası:', error);
@@ -222,7 +221,7 @@
       });
     }
     
-    // 🔧 SADECE approvedPayments'i güncelle, totalEarned'i ezme
+    //  SADECE lifetimeEarnings'i güncelle (hiç düşmez)
     async function updateEarnings() {
       if (products.length === 0) return;
       
@@ -230,11 +229,13 @@
         p.earned = (p.earned || 0) + (p.amount * PER_SECOND);
       });
       
-      earnings = products.reduce((sum, p) => sum + p.earned, 0);
+      lifetimeEarnings = products.reduce((sum, p) => sum + p.earned, 0);
+      balance = lifetimeEarnings - totalWithdrawn;
       
       try {
         await db.collection('users').doc(userId).set({
-          approvedPayments: products
+          approvedPayments: products,
+          lifetimeEarnings: lifetimeEarnings
         }, { merge: true });
       } catch (error) {
         console.error('Kaydetme hatası:', error);
@@ -244,10 +245,10 @@
     }
     
     function updateUI() {
-      document.getElementById('totalEarned').textContent = earnings.toFixed(2);
+      document.getElementById('balance').textContent = balance.toFixed(2);
+      document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
-      document.getElementById('withdrawBalance').textContent = earnings.toFixed(2);
       renderProducts();
     }
     
@@ -267,7 +268,7 @@
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
       if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
-      if (amount > earnings) { alert('❌ Yetersiz bakiye!'); return; }
+      if (amount > balance) { alert(' Yetersiz bakiye!'); return; }
       if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
       
       const withdrawal = {
@@ -332,7 +333,7 @@
         });
         return html;
       } catch (error) {
-        return ' Hata: ' + error.message;
+        return '❌ Hata: ' + error.message;
       }
     }
     
@@ -452,7 +453,7 @@
       }
     }
     
-    // 🔧 ÇEKİM ONAYLAMA - BAKİYEDEN DÜŞÜR
+    // 🔧 ÇEKİM ONAYLAMA - totalWithdrawn'ı artır (lifetimeEarnings'e dokunma!)
     async function approveWithdrawal(targetUserDocId, withdrawalId) {
       try {
         const userRef = db.collection('users').doc(targetUserDocId);
@@ -473,16 +474,15 @@
         withdrawal.approvedAt = Date.now();
         newWithdrawals.push(withdrawal);
         
-        // 🔧 BAKİYEDEN DÜŞÜR
-        const currentEarnings = data.totalEarned || 0;
-        const newEarnings = Math.max(0, currentEarnings - withdrawal.amount);
+        // 🔧 totalWithdrawn'ı artır, lifetimeEarnings'e dokunma!
+        const currentTotalWithdrawn = data.totalWithdrawn || 0;
         
         await userRef.set({
           withdrawalRequests: newWithdrawals,
-          totalEarned: newEarnings
+          totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
         }, { merge: true });
         
-        console.log('✅ Çekim onaylandı:', withdrawalId, 'Yeni bakiye:', newEarnings);
+        console.log('✅ Çekim onaylandı:', withdrawalId, 'Yeni totalWithdrawn:', currentTotalWithdrawn + withdrawal.amount);
         alert('✅ Çekim onaylandı! $' + withdrawal.amount + ' bakiyeden düşüldü.');
         await loadAdmin();
       } catch (error) {
@@ -505,7 +505,7 @@
           withdrawalRequests: newWithdrawals
         }, { merge: true });
         
-        alert('❌ Çekim reddedildi!');
+        alert(' Çekim reddedildi!');
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
