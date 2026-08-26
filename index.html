@@ -41,14 +41,14 @@
       <h1>⚡ Hash Power Mining</h1>
       <div>
         <div class="stat">💰 Kazanç: $<span id="totalEarned">0.00</span></div>
-        <div class="stat">📦 Ürün: <span id="productCount">0</span></div>
+        <div class="stat"> Ürün: <span id="productCount">0</span></div>
         <div class="stat">💵 Yatırım: $<span id="totalInvested">0</span></div>
       </div>
       <br>
-      <button class="btn" onclick="showPage('buy')">💎 Satın Al</button>
-      <button class="btn" onclick="showPage('production')">⚡ Üretim</button>
+      <button class="btn" onclick="showPage('buy')"> Satın Al</button>
+      <button class="btn" onclick="showPage('production')"> Üretim</button>
       <button class="btn btn-withdraw" onclick="showPage('withdraw')">💸 Çekim</button>
-      <button class="btn" onclick="showPage('admin')">🔐 Admin</button>
+      <button class="btn" onclick="showPage('admin')"> Admin</button>
     </div>
 
     <!-- Satın Al -->
@@ -61,14 +61,14 @@
 
     <!-- Üretim -->
     <div id="page-production" class="card hidden">
-      <h2>⚡ Üretim Hattı</h2>
+      <h2> Üretim Hattı</h2>
       <div id="products"></div>
       <button class="btn" style="background:#666" onclick="showPage('home')">Geri</button>
     </div>
 
     <!-- Çekim -->
     <div id="page-withdraw" class="card hidden">
-      <h2>💸 Çekim Talebi</h2>
+      <h2> Çekim Talebi</h2>
       <div class="balance-display">
         <div>Mevcut Bakiye</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
@@ -109,7 +109,6 @@
   </div>
 
   <script>
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",
       authDomain: "hash-power-mining.firebaseapp.com",
@@ -127,26 +126,15 @@
     let userId = null;
     let products = [];
     let earnings = 0;
-    let lastSave = 0;
     let currentAdminTab = 'payments';
+    let unsubscribe = null;
     
     const DAILY_RATE = 1 / 90;
     const PER_SECOND = DAILY_RATE / 86400;
     
-    // Kripto fiyatları (USD)
-    const CRYPTO_PRICES = {
-      trx: 0.12,
-      bnb: 600,
-      xrp: 0.50
-    };
+    const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
+    const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
-    const CRYPTO_SYMBOLS = {
-      trx: 'TRX',
-      bnb: 'BNB',
-      xrp: 'XRP'
-    };
-    
-    // Telegram'dan kullanıcı bilgisi al
     const tg = window.Telegram.WebApp;
     tg.ready();
     
@@ -154,35 +142,32 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
-    // Giriş yap
     auth.signInAnonymously().then(() => {
       userId = auth.currentUser.uid;
       console.log('✅ Giriş yapıldı:', userId);
-      loadData();
+      listenToData();
       setInterval(updateEarnings, 1000);
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
     
-    // Verileri yükle
-    async function loadData() {
-      try {
-        const doc = await db.collection('users').doc(userId).get();
+    // 🔧 GERÇEK ZAMANLI DİNLEME - Firestore'dan anlık güncelleme
+    function listenToData() {
+      if (unsubscribe) unsubscribe();
+      
+      unsubscribe = db.collection('users').doc(userId).onSnapshot((doc) => {
         if (doc.exists) {
           const data = doc.data();
           products = data.approvedPayments || [];
           earnings = data.totalEarned || 0;
           updateUI();
-          console.log('✅ Veri yüklendi:', products.length, 'ürün');
-        } else {
-          console.log('Yeni kullanıcı, boş veri');
+          console.log('📡 Güncel veri:', products.length, 'ürün, $' + earnings.toFixed(2));
         }
-      } catch (error) {
-        console.error('Veri yükleme hatası:', error);
-      }
+      }, (error) => {
+        console.error('Dinleme hatası:', error);
+      });
     }
     
-    // Ürün satın al
     async function buyProduct() {
       const amount = parseFloat(document.getElementById('buyAmount').value);
       if (amount < 1) { alert('Minimum $1'); return; }
@@ -203,10 +188,8 @@
         const data = doc.data() || {};
         const currentPending = data.pendingPayments || [];
         
-        const newPending = [...currentPending, payment];
-        
         await userRef.set({
-          pendingPayments: newPending,
+          pendingPayments: [...currentPending, payment],
           totalInvested: (data.totalInvested || 0) + amount
         }, { merge: true });
         
@@ -218,13 +201,12 @@
       }
     }
     
-    // Ürün render et
     function renderProducts() {
       const container = document.getElementById('products');
       container.innerHTML = '';
       
       if (products.length === 0) {
-        container.innerHTML = '<p>Henüz ürün yok. Admin onayı bekleyen ödemeleriniz varsa onaylanınca burada görünecek.</p>';
+        container.innerHTML = '<p>Henüz ürün yok.</p>';
         return;
       }
       
@@ -240,7 +222,7 @@
       });
     }
     
-    // Kazanç güncelle
+    // 🔧 SADECE approvedPayments'i güncelle, totalEarned'i ezme
     async function updateEarnings() {
       if (products.length === 0) return;
       
@@ -250,25 +232,17 @@
       
       earnings = products.reduce((sum, p) => sum + p.earned, 0);
       
-      // Her 30 saniyede bir Firestore'a kaydet
-      const now = Date.now();
-      if (now - lastSave > 30000) {
-        try {
-          await db.collection('users').doc(userId).set({
-            approvedPayments: products,
-            totalEarned: earnings
-          }, { merge: true });
-          lastSave = now;
-          console.log('💾 Kaydedildi:', earnings.toFixed(2));
-        } catch (error) {
-          console.error('Kaydetme hatası:', error);
-        }
+      try {
+        await db.collection('users').doc(userId).set({
+          approvedPayments: products
+        }, { merge: true });
+      } catch (error) {
+        console.error('Kaydetme hatası:', error);
       }
       
       updateUI();
     }
     
-    // UI güncelle
     function updateUI() {
       document.getElementById('totalEarned').textContent = earnings.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
@@ -277,7 +251,6 @@
       renderProducts();
     }
     
-    // Çekim için kripto karşılığını güncelle
     function updateCryptoAmount() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const crypto = document.getElementById('withdrawCrypto').value;
@@ -288,26 +261,14 @@
       document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto];
     }
     
-    // Çekim talebi oluştur
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
       const crypto = document.getElementById('withdrawCrypto').value;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
-      if (amount < 0.01) {
-        alert(' Minimum çekim: $0.01');
-        return;
-      }
-      
-      if (amount > earnings) {
-        alert(' Yetersiz bakiye!');
-        return;
-      }
-      
-      if (!walletAddress) {
-        alert('❌ Cüzdan adresi gerekli!');
-        return;
-      }
+      if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
+      if (amount > earnings) { alert('❌ Yetersiz bakiye!'); return; }
+      if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
       
       const withdrawal = {
         id: 'wd_' + Date.now(),
@@ -328,10 +289,8 @@
         const data = doc.data() || {};
         const currentWithdrawals = data.withdrawalRequests || [];
         
-        const newWithdrawals = [...currentWithdrawals, withdrawal];
-        
         await userRef.set({
-          withdrawalRequests: newWithdrawals
+          withdrawalRequests: [...currentWithdrawals, withdrawal]
         }, { merge: true });
         
         alert('✅ Çekim talebi oluşturuldu! Admin onayı bekleniyor.');
@@ -344,7 +303,6 @@
       }
     }
     
-    // Admin panel - Ödemeler
     async function loadAdminPayments() {
       try {
         const snapshot = await db.collection('users').get();
@@ -359,9 +317,7 @@
           }
         });
         
-        if (pending.length === 0) {
-          return '<p>✅ Bekleyen ödeme yok</p>';
-        }
+        if (pending.length === 0) return '<p>✅ Bekleyen ödeme yok</p>';
         
         let html = '';
         pending.forEach(p => {
@@ -374,15 +330,12 @@
             </div>
           `;
         });
-        
         return html;
       } catch (error) {
-        console.error('Admin yükleme hatası:', error);
-        return '❌ Hata: ' + error.message;
+        return ' Hata: ' + error.message;
       }
     }
     
-    // Admin panel - Çekimler
     async function loadAdminWithdrawals() {
       try {
         const snapshot = await db.collection('users').get();
@@ -399,9 +352,7 @@
           }
         });
         
-        if (pending.length === 0) {
-          return '<p>✅ Bekleyen çekim yok</p>';
-        }
+        if (pending.length === 0) return '<p>✅ Bekleyen çekim yok</p>';
         
         let html = '';
         pending.forEach(w => {
@@ -416,15 +367,12 @@
             </div>
           `;
         });
-        
         return html;
       } catch (error) {
-        console.error('Admin yükleme hatası:', error);
-        return ' Hata: ' + error.message;
+        return '❌ Hata: ' + error.message;
       }
     }
     
-    // Admin panel yükle
     async function loadAdmin() {
       if (currentUser?.id?.toString() !== ADMIN_ID) {
         alert('Yetkiniz yok!');
@@ -440,11 +388,8 @@
       } else {
         container.innerHTML = await loadAdminWithdrawals();
       }
-      
-      console.log('📋 Admin yüklendi');
     }
     
-    // Admin tab değiştir
     function switchAdminTab(tab, btn) {
       currentAdminTab = tab;
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -452,111 +397,74 @@
       loadAdmin();
     }
     
-    // Ödeme onayla
     async function approvePayment(targetUserDocId, paymentId) {
       try {
-        console.log('🔄 Onaylanıyor:', paymentId);
-        
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) {
-          alert('Kullanıcı bulunamadı!');
-          return;
-        }
+        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const pendingPayments = data.pendingPayments || [];
         const approvedPayments = data.approvedPayments || [];
         
         const paymentIndex = pendingPayments.findIndex(p => p.id === paymentId);
-        if (paymentIndex === -1) {
-          alert('Ödeme bulunamadı!');
-          return;
-        }
+        if (paymentIndex === -1) { alert('Ödeme bulunamadı!'); return; }
         
         const payment = pendingPayments[paymentIndex];
         const newPending = pendingPayments.filter(p => p.id !== paymentId);
         
         payment.status = 'approved';
         payment.approvedAt = Date.now();
-        const newApproved = [...approvedPayments, payment];
         
         await userRef.set({
           pendingPayments: newPending,
-          approvedPayments: newApproved,
+          approvedPayments: [...approvedPayments, payment],
           totalInvested: (data.totalInvested || 0) + payment.amount
         }, { merge: true });
         
-        console.log('✅ Onaylandı:', paymentId);
         alert('✅ Ödeme onaylandı!');
         await loadAdmin();
-        
       } catch (error) {
-        console.error('Onaylama hatası:', error);
-        alert('❌ Onaylama başarısız: ' + error.message);
+        alert('❌ Hata: ' + error.message);
       }
     }
     
-    // Ödeme reddet
     async function rejectPayment(targetUserDocId, paymentId) {
       try {
-        console.log('🔄 Reddediliyor:', paymentId);
-        
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) {
-          alert('Kullanıcı bulunamadı!');
-          return;
-        }
+        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const pendingPayments = data.pendingPayments || [];
-        
-        const paymentIndex = pendingPayments.findIndex(p => p.id === paymentId);
-        if (paymentIndex === -1) {
-          alert('Ödeme bulunamadı!');
-          return;
-        }
-        
         const newPending = pendingPayments.filter(p => p.id !== paymentId);
         
         await userRef.set({
           pendingPayments: newPending
         }, { merge: true });
         
-        console.log('❌ Reddedildi:', paymentId);
         alert('❌ Ödeme reddedildi!');
         await loadAdmin();
-        
       } catch (error) {
-        console.error('Reddetme hatası:', error);
-        alert('❌ Reddetme başarısız: ' + error.message);
+        alert('❌ Hata: ' + error.message);
       }
     }
     
-    // Çekim onayla
+    // 🔧 ÇEKİM ONAYLAMA - BAKİYEDEN DÜŞÜR
     async function approveWithdrawal(targetUserDocId, withdrawalId) {
       try {
-        console.log('🔄 Çekim onaylanıyor:', withdrawalId);
-        
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) {
-          alert('Kullanıcı bulunamadı!');
-          return;
-        }
+        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const withdrawalRequests = data.withdrawalRequests || [];
         
         const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
-        if (withdrawalIndex === -1) {
-          alert('Çekim talebi bulunamadı!');
-          return;
-        }
+        if (withdrawalIndex === -1) { alert('Çekim talebi bulunamadı!'); return; }
         
         const withdrawal = withdrawalRequests[withdrawalIndex];
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
@@ -565,63 +473,45 @@
         withdrawal.approvedAt = Date.now();
         newWithdrawals.push(withdrawal);
         
-        // Kazançtan düş
-        const newEarnings = (data.totalEarned || 0) - withdrawal.amount;
+        // 🔧 BAKİYEDEN DÜŞÜR
+        const currentEarnings = data.totalEarned || 0;
+        const newEarnings = Math.max(0, currentEarnings - withdrawal.amount);
         
         await userRef.set({
           withdrawalRequests: newWithdrawals,
-          totalEarned: Math.max(0, newEarnings)
+          totalEarned: newEarnings
         }, { merge: true });
         
-        console.log('✅ Çekim onaylandı:', withdrawalId);
-        alert('✅ Çekim onaylandı!');
+        console.log('✅ Çekim onaylandı:', withdrawalId, 'Yeni bakiye:', newEarnings);
+        alert('✅ Çekim onaylandı! $' + withdrawal.amount + ' bakiyeden düşüldü.');
         await loadAdmin();
-        
       } catch (error) {
-        console.error('Çekim onaylama hatası:', error);
-        alert('❌ Onaylama başarısız: ' + error.message);
+        alert('❌ Hata: ' + error.message);
       }
     }
     
-    // Çekim reddet
     async function rejectWithdrawal(targetUserDocId, withdrawalId) {
       try {
-        console.log('🔄 Çekim reddediliyor:', withdrawalId);
-        
         const userRef = db.collection('users').doc(targetUserDocId);
         const doc = await userRef.get();
         
-        if (!doc.exists) {
-          alert('Kullanıcı bulunamadı!');
-          return;
-        }
+        if (!doc.exists) { alert('Kullanıcı bulunamadı!'); return; }
         
         const data = doc.data();
         const withdrawalRequests = data.withdrawalRequests || [];
-        
-        const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
-        if (withdrawalIndex === -1) {
-          alert('Çekim talebi bulunamadı!');
-          return;
-        }
-        
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         
         await userRef.set({
           withdrawalRequests: newWithdrawals
         }, { merge: true });
         
-        console.log('❌ Çekim reddedildi:', withdrawalId);
         alert('❌ Çekim reddedildi!');
         await loadAdmin();
-        
       } catch (error) {
-        console.error('Çekim reddetme hatası:', error);
-        alert('❌ Reddetme başarısız: ' + error.message);
+        alert('❌ Hata: ' + error.message);
       }
     }
     
-    // Sayfa değiştir
     function showPage(page) {
       document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
       document.getElementById('page-' + page).classList.remove('hidden');
