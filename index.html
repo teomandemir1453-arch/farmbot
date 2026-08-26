@@ -1280,22 +1280,32 @@
     }
 
     function setupRealtimeListener() {
-      if (!firebaseUserId) return;
-      db.collection('users').doc(firebaseUserId).onSnapshot((doc) => {
-        if (doc.exists) {
-          const data = doc.data();
-          if (data.lastUpdate && data.lastUpdate.toMillis() > lastUpdate) {
-            state = { ...state, ...data };
-            if (data.profile) state.profile = { ...state.profile, ...data.profile };
-            updateUIFromState();
-            updateSyncStatus('online', 'Güncellendi');
-          }
+  if (!firebaseUserId) return;
+  db.collection('users').doc(firebaseUserId).onSnapshot((doc) => {
+    if (doc.exists) {
+      const data = doc.data();
+      
+      // Global listeleri listener'dan koru (ezilmesin)
+      const keysToSkip = ['pendingPayments', 'approvedPayments', 'rejectedPayments', 'withdrawalRequests'];
+      
+      const newState = { ...state };
+      for (const key in data) {
+        if (!keysToSkip.includes(key)) {
+          newState[key] = data[key];
         }
-      }, (error) => {
-        console.error('Listener Error:', error);
-        updateSyncStatus('offline', 'Offline');
-      });
+      }
+      
+      if (data.profile) newState.profile = { ...state.profile, ...data.profile };
+      state = newState;
+      
+      updateUIFromState();
+      updateSyncStatus('online', 'Güncellendi');
     }
+  }, (error) => {
+    console.error('Listener Error:', error);
+    updateSyncStatus('offline', 'Offline');
+  });
+}
 
     function updateUIFromState() {
       updateStats();
@@ -1786,19 +1796,52 @@
     }
 
     async function approvePayment(paymentId) {
-      // Hangi kullanıcıda bu ödeme var bul
-      const allUsers = await loadAllUsers();
-      let targetUser = null;
-      let paymentIndex = -1;
-      
-      for (const user of allUsers) {
-        const idx = (user.pendingPayments || []).findIndex(p => p.id === paymentId);
-        if (idx !== -1) {
-          targetUser = user;
-          paymentIndex = idx;
-          break;
-        }
-      }
+  const allUsers = await loadAllUsers();
+  let targetUser = null;
+  let paymentIndex = -1;
+  
+  for (const user of allUsers) {
+    const idx = (user.pendingPayments || []).findIndex(p => p.id === paymentId);
+    if (idx !== -1) {
+      targetUser = user;
+      paymentIndex = idx;
+      break;
+    }
+  }
+  
+  if (!targetUser || paymentIndex === -1) {
+    showNotification('❌ Ödeme bulunamadı!', true);
+    return;
+  }
+  
+  const payment = targetUser.pendingPayments[paymentIndex];
+  const userRef = db.collection('users').doc(targetUser.id);
+  
+  // Local state'i güncelle
+  targetUser.pendingPayments.splice(paymentIndex, 1);
+  if (!targetUser.approvedPayments) targetUser.approvedPayments = [];
+  payment.status = 'approved';
+  payment.approvedAt = Date.now();
+  targetUser.approvedPayments.push(payment);
+  
+  try {
+    await userRef.update({
+      pendingPayments: targetUser.pendingPayments,
+      approvedPayments: targetUser.approvedPayments,
+      totalInvested: (targetUser.totalInvested || 0) + payment.amount,
+      lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    showNotification('✅ Ödeme onaylandı!');
+    haptic('success');
+    
+    // 1 saniye bekle sonra paneli yenile
+    setTimeout(() => renderAdminPanel(), 1000);
+  } catch (error) {
+    console.error('Onaylama hatası:', error);
+    showNotification('❌ Onaylama başarısız!', true);
+  }
+}
       
       if (!targetUser || paymentIndex === -1) {
         showNotification('❌ Ödeme bulunamadı!', true);
@@ -1835,18 +1878,51 @@
     }
 
     async function rejectPayment(paymentId) {
-      const allUsers = await loadAllUsers();
-      let targetUser = null;
-      let paymentIndex = -1;
-      
-      for (const user of allUsers) {
-        const idx = (user.pendingPayments || []).findIndex(p => p.id === paymentId);
-        if (idx !== -1) {
-          targetUser = user;
-          paymentIndex = idx;
-          break;
-        }
-      }
+  const allUsers = await loadAllUsers();
+  let targetUser = null;
+  let paymentIndex = -1;
+  
+  for (const user of allUsers) {
+    const idx = (user.pendingPayments || []).findIndex(p => p.id === paymentId);
+    if (idx !== -1) {
+      targetUser = user;
+      paymentIndex = idx;
+      break;
+    }
+  }
+  
+  if (!targetUser || paymentIndex === -1) {
+    showNotification('❌ Ödeme bulunamadı!', true);
+    return;
+  }
+  
+  const payment = targetUser.pendingPayments[paymentIndex];
+  const userRef = db.collection('users').doc(targetUser.id);
+  
+  // Local state'i güncelle
+  targetUser.pendingPayments.splice(paymentIndex, 1);
+  if (!targetUser.rejectedPayments) targetUser.rejectedPayments = [];
+  payment.status = 'rejected';
+  payment.rejectedAt = Date.now();
+  targetUser.rejectedPayments.push(payment);
+  
+  try {
+    await userRef.update({
+      pendingPayments: targetUser.pendingPayments,
+      rejectedPayments: targetUser.rejectedPayments,
+      lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    showNotification('❌ Ödeme reddedildi!');
+    haptic('error');
+    
+    // 1 saniye bekle sonra paneli yenile
+    setTimeout(() => renderAdminPanel(), 1000);
+  } catch (error) {
+    console.error('Reddetme hatası:', error);
+    showNotification('❌ Reddetme başarısız!', true);
+  }
+}
       
       if (!targetUser || paymentIndex === -1) {
         showNotification('❌ Ödeme bulunamadı!', true);
