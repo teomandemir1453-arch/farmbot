@@ -17,21 +17,59 @@
     -webkit-tap-highlight-color: transparent;
   }
   
+  /* YENİ: Mavi çevre glow efekti */
   body { 
     background: #f0f2f5; 
     padding: 15px; 
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
     min-height: 100vh;
+    position: relative;
   }
   
-  .container { max-width: 600px; margin: 0 auto; }
+  /* Mavi çevre glow - sayfanın etrafında */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 0% 0%, rgba(74, 158, 255, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(74, 158, 255, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(74, 158, 255, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(74, 158, 255, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .container { 
+    max-width: 600px; 
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    /* YENİ: Container çevresinde mavi şerit */
+    padding: 12px;
+    background: rgba(74, 158, 255, 0.03);
+    border: 2px solid rgba(74, 158, 255, 0.3);
+    border-radius: 20px;
+    box-shadow: 
+      0 0 0 1px rgba(74, 158, 255, 0.1),
+      0 0 20px rgba(74, 158, 255, 0.15),
+      0 0 40px rgba(74, 158, 255, 0.08);
+  }
   
   .card { 
     background: white; 
     border-radius: 16px; 
     padding: 20px; 
     margin-bottom: 15px; 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
+    /* YENİ: Hafif mavi gölge */
+    box-shadow: 
+      0 2px 8px rgba(74, 158, 255, 0.08),
+      0 4px 16px rgba(74, 158, 255, 0.06),
+      0 0 0 1px rgba(74, 158, 255, 0.05);
+    border: 1px solid rgba(74, 158, 255, 0.08);
   }
   
   h1 { text-align: center; color: #1a2a3a; margin-bottom: 20px; font-size: 22px; }
@@ -51,12 +89,14 @@
     border-radius: 12px;
     padding: 12px 5px;
     text-align: center;
+    /* YENİ: Hafif mavi gölge */
+    box-shadow: 0 2px 6px rgba(74, 158, 255, 0.06);
   }
   
   .stat-box .label { font-size: 11px; color: #64748b; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
   .stat-box .value { font-size: 16px; font-weight: bold; color: #1e293b; }
   
-  /* YENİ: Kazanç Tahmini Kutusu - Mavi Şeritli */
+  /* Kazanç Tahmini Kutusu - Mavi Şeritli */
   .earnings-estimate {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
     border: 3px solid #4a9eff;
@@ -65,7 +105,9 @@
     margin: 15px 0;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
+    box-shadow: 
+      0 4px 12px rgba(74, 158, 255, 0.25),
+      0 0 0 1px rgba(74, 158, 255, 0.1);
   }
   
   .earnings-estimate::before {
@@ -97,9 +139,7 @@
     gap: 6px;
   }
   
-  .earnings-title .icon {
-    font-size: 16px;
-  }
+  .earnings-title .icon { font-size: 16px; }
   
   .earnings-grid {
     display: grid;
@@ -114,6 +154,7 @@
     padding: 10px 5px;
     text-align: center;
     transition: transform 0.2s;
+    box-shadow: 0 2px 6px rgba(74, 158, 255, 0.1);
   }
   
   .earnings-item:hover {
@@ -121,32 +162,9 @@
     border-color: #4a9eff;
   }
   
-  .earnings-item .icon {
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-  
-  .earnings-item .label {
-    font-size: 10px;
-    color: #64748b;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  
-  .earnings-item .value {
-    font-size: 14px;
-    font-weight: bold;
-    color: #1e40af;
-  }
-  
-  .earnings-empty {
-    text-align: center;
-    color: #64748b;
-    font-size: 12px;
-    padding: 8px;
-    font-style: italic;
-  }
+  .earnings-item .icon { font-size: 18px; margin-bottom: 4px; }
+  .earnings-item .label { font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+  .earnings-item .value { font-size: 14px; font-weight: bold; color: #1e40af; }
   
   input, select { 
     padding: 14px; 
@@ -163,6 +181,7 @@
     outline: none;
     border-color: #4a9eff;
     background: white;
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
   }
   
   input[readonly] {
@@ -184,13 +203,15 @@
     margin: 5px 0;
     width: 100%;
     transition: transform 0.1s, background 0.2s;
+    /* YENİ: Mavi buton gölgesi */
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
   }
   
   .btn:active { transform: scale(0.98); }
-  .btn-approve { background: #10b981; }
-  .btn-reject { background: #ef4444; }
-  .btn-withdraw { background: #f59e0b; }
-  .btn-secondary { background: #94a3b8; }
+  .btn-approve { background: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+  .btn-reject { background: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+  .btn-withdraw { background: #f59e0b; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+  .btn-secondary { background: #94a3b8; box-shadow: 0 4px 12px rgba(148, 163, 184, 0.3); }
   
   .crypto-info { 
     background: #f1f5f9; 
@@ -210,6 +231,7 @@
     border-radius: 16px; 
     text-align: center; 
     margin: 15px 0; 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
   }
   .balance-display .amount { font-size: 36px; font-weight: bold; margin-top: 5px; }
   
@@ -219,6 +241,7 @@
     border-radius: 12px; 
     margin: 10px 0; 
     border-left: 4px solid #f59e0b; 
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.1);
   }
   .withdrawal-item { 
     background: #eff6ff; 
@@ -226,6 +249,7 @@
     border-radius: 12px; 
     margin: 10px 0; 
     border-left: 4px solid #3b82f6; 
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
   }
   
   .tab-container { display: flex; gap: 10px; margin-bottom: 15px; }
@@ -241,10 +265,11 @@
     text-align: center;
     color: #64748b;
   }
-  .tab.active { background: #4a9eff; color: white; border-color: #4a9eff; }
+  .tab.active { background: #4a9eff; color: white; border-color: #4a9eff; box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3); }
   
   .hidden { display: none !important; }
   
+  /* ALT NAVİGASYON MENÜSÜ - Mavi üst şerit */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -255,9 +280,12 @@
     justify-content: space-around;
     padding: 10px 0;
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+    /* YENİ: Mavi üst şerit ve gölge */
+    border-top: 3px solid #4a9eff;
+    box-shadow: 
+      0 -4px 15px rgba(74, 158, 255, 0.15),
+      0 -2px 8px rgba(74, 158, 255, 0.1);
     z-index: 1000;
-    border-top: 1px solid #e2e8f0;
   }
   
   .nav-item {
@@ -287,7 +315,7 @@
   }
   
   .packages-container::-webkit-scrollbar { height: 4px; }
-  .packages-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+  .packages-container::-webkit-scrollbar-thumb { background: #4a9eff; border-radius: 2px; }
   
   .package-card {
     min-width: 155px;
@@ -302,14 +330,20 @@
     transition: all 0.2s;
     position: relative;
     overflow: hidden;
+    /* YENİ: Hafif mavi gölge */
+    box-shadow: 0 2px 8px rgba(74, 158, 255, 0.08);
   }
   
   .package-card:active { transform: scale(0.96); }
-  .package-card:hover { border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+  .package-card:hover { 
+    border-color: #4a9eff; 
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2); 
+  }
   
   .package-card.featured {
     border-color: #f59e0b;
     background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
   }
   
   .package-card.featured::before {
@@ -369,6 +403,7 @@
     padding: 15px;
     margin: 15px 0;
     display: none;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
   }
   
   .package-summary.active { display: block; }
@@ -391,7 +426,6 @@
   }
   
   .package-summary-row:last-child { border-bottom: none; }
-  
   .package-summary-row .label { color: #64748b; }
   .package-summary-row .value { font-weight: bold; color: #059669; }
   .package-summary-row .value.original { color: #94a3b8; text-decoration: line-through; }
@@ -404,10 +438,10 @@
     background: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 50px rgba(74, 158, 255, 0.3);
     text-align: center;
     z-index: 1001;
-    border: 3px solid #10b981;
+    border: 3px solid #4a9eff;
     animation: popIn 0.3s ease-out;
     width: 90%;
     max-width: 350px;
@@ -418,8 +452,8 @@
     to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   }
   
-  .offline-popup h3 { color: #059669; margin-bottom: 10px; font-size: 20px; }
-  .offline-popup .amount { font-size: 36px; font-weight: bold; color: #10b981; margin: 15px 0; }
+  .offline-popup h3 { color: #1e40af; margin-bottom: 10px; font-size: 20px; }
+  .offline-popup .amount { font-size: 36px; font-weight: bold; color: #4a9eff; margin: 15px 0; }
   
   .overlay {
     position: fixed;
@@ -427,7 +461,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(74, 158, 255, 0.3);
     z-index: 1000;
     backdrop-filter: blur(2px);
   }
@@ -438,7 +472,7 @@
     
     <!-- Ana Sayfa -->
     <div id="page-home" class="card">
-      <h1>⚡ Hash Power Mining</h1>
+      <h1> Hash Power Mining</h1>
       <div class="stats-grid">
         <div class="stat-box">
           <div class="label">Bakiye</div>
@@ -454,10 +488,10 @@
         </div>
       </div>
       
-      <!-- YENİ: Kazanç Tahmini Kutusu -->
+      <!-- Kazanç Tahmini Kutusu -->
       <div class="earnings-estimate">
         <div class="earnings-title">
-          <span class="icon">📊</span>
+          <span class="icon"></span>
           <span>Tahmini Kazançlarınız</span>
         </div>
         <div class="earnings-grid">
@@ -673,7 +707,7 @@
             <span class="original-price">$${pkg.price.toFixed(2)}</span>
             <span class="discounted-price">$${discountedPrice.toFixed(2)}</span>
           </div>
-          <div class="package-savings">💰 -$${savings.toFixed(2)}</div>
+          <div class="package-savings"> -$${savings.toFixed(2)}</div>
           <div class="package-cta">Seç →</div>
         `;
         
@@ -832,7 +866,7 @@
         
         let successMsg = '✅ Ödeme bildirimi alındı!';
         if (selectedPackageName) {
-          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
+          successMsg += `\n\n Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
         }
         successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
         
@@ -883,7 +917,6 @@
       updateUI();
     }
     
-    // YENİ: updateUI fonksiyonuna kazanç tahmini eklendi
     function updateUI() {
       document.getElementById('balance').textContent = balance.toFixed(2);
       document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
@@ -892,7 +925,6 @@
       const totalInvested = products.reduce((sum, p) => sum + p.amount, 0);
       document.getElementById('totalInvested').textContent = totalInvested.toFixed(2);
       
-      // YENİ: Kazanç tahmini hesaplamaları
       const earnPerMin = totalInvested * PER_SECOND * 60;
       const earnPerHour = totalInvested * PER_SECOND * 3600;
       const earnPerDay = totalInvested * PER_SECOND * 86400;
@@ -952,7 +984,7 @@
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Çekim hatası:', error);
-        alert('❌ Hata: ' + error.message);
+        alert(' Hata: ' + error.message);
       }
     }
     
@@ -1033,7 +1065,7 @@
         });
         return html;
       } catch (error) {
-        return '<p style="color:red; text-align:center;"> Hata: ' + error.message + '</p>';
+        return '<p style="color:red; text-align:center;">❌ Hata: ' + error.message + '</p>';
       }
     }
     
