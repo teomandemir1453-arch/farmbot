@@ -47,6 +47,8 @@
     z-index: 1000;
     border: 3px solid #10b981;
     animation: popIn 0.3s ease-out;
+    width: 90%;
+    max-width: 400px;
   }
   @keyframes popIn {
     from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
@@ -56,7 +58,7 @@
   .offline-popup .amount { font-size: 36px; font-weight: bold; color: #10b981; margin: 15px 0; }
   .overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 999;
+    background: rgba(0,0,0,0.6); z-index: 999;
   }
 </style>
 </head>
@@ -217,7 +219,7 @@
       console.error('Giriş hatası:', err);
     });
     
-    // 🔧 OFFLINE KAZANÇ HESAPLAMA
+    // 🔧 DÜZELTİLDİ: Offline Kazanç Hesaplama
     async function calculateOfflineEarnings() {
       try {
         const doc = await db.collection('users').doc(userId).get();
@@ -227,13 +229,14 @@
           const lastActive = data.lastActive || now;
           const offlineSeconds = (now - lastActive) / 1000;
           
-          // Eğer 10 saniyeden uzun süredir yoksa ve ürünü varsa
-          if (offlineSeconds > 10 && data.approvedPayments && data.approvedPayments.length > 0) {
+          // Eğer 5 saniyeden uzun süredir yoksa ve ürünü varsa
+          if (offlineSeconds > 5 && data.approvedPayments && data.approvedPayments.length > 0) {
             const totalPower = data.approvedPayments.reduce((sum, p) => sum + p.amount, 0);
             const offlineEarned = offlineSeconds * (totalPower * PER_SECOND);
             
             if (offlineEarned > 0.001) {
-              const newLifetime = (data.lifetimeEarnings || 0) + offlineEarned;
+              const currentLifetime = data.lifetimeEarnings || 0;
+              const newLifetime = currentLifetime + offlineEarned;
               
               // Veritabanını güncelle
               await db.collection('users').doc(userId).update({
@@ -245,7 +248,7 @@
               showOfflinePopup(offlineEarned);
             }
           } else {
-            // Sadece son aktif zamanı güncelle ki sürekli tetiklenmesin
+            // Sadece son aktif zamanı güncelle
             await db.collection('users').doc(userId).update({ lastActive: now });
           }
         } else {
@@ -277,7 +280,8 @@
       unsubscribe = db.collection('users').doc(userId).onSnapshot((doc) => {
         if (doc.exists) {
           const data = doc.data();
-          products = data.approvedPayments || [];
+          // Ürünleri yüklerken yerel 'earned' değerini sıfırla ki UI temiz başlasın
+          products = (data.approvedPayments || []).map(p => ({ ...p, earned: 0 }));
           lifetimeEarnings = data.lifetimeEarnings || 0;
           totalWithdrawn = data.totalWithdrawn || 0;
           balance = lifetimeEarnings - totalWithdrawn;
@@ -347,28 +351,33 @@
         div.className = 'product';
         div.innerHTML = `
           <strong style="font-size:18px;">$${p.amount}</strong><br>
-          <small>Kazanç: $${(p.earned || 0).toFixed(6)}</small><br>
+          <small>Bu oturum kazancı: $${(p.earned || 0).toFixed(6)}</small><br>
           <small>Saniyelik: $${(p.amount * PER_SECOND).toFixed(6)}</small>
         `;
         container.appendChild(div);
       });
     }
     
+    // 🔧 DÜZELTİLDİ: Artık lifetimeEarnings'i sıfırlamıyor, ÜSTÜNE EKLIYOR (+=)
     async function updateEarnings() {
       if (products.length === 0) return;
       
+      // 1 saniyede toplam ne kadar kazanıldığını hesapla
+      const perSecondTotal = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
+      
+      // Yerel ürün kazançlarını güncelle (sadece ekranda göstermek için)
       products.forEach(p => {
         p.earned = (p.earned || 0) + (p.amount * PER_SECOND);
       });
       
-      lifetimeEarnings = products.reduce((sum, p) => sum + p.earned, 0);
+      // Toplam kazancın ÜSTÜNE ekle (Eski hata buradaydı, '=' yerine '+=' kullanıyoruz)
+      lifetimeEarnings += perSecondTotal;
       balance = lifetimeEarnings - totalWithdrawn;
       
       try {
         await db.collection('users').doc(userId).set({
-          approvedPayments: products,
           lifetimeEarnings: lifetimeEarnings,
-          lastActive: Date.now() // Her güncellemede son aktif zamanı da kaydet
+          lastActive: Date.now()
         }, { merge: true });
       } catch (error) {
         console.error('Kaydetme hatası:', error);
