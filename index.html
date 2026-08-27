@@ -146,7 +146,6 @@
   
   .hidden { display: none !important; }
   
-  /* ALT NAVİGASYON MENÜSÜ */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -173,29 +172,12 @@
     font-weight: 600;
   }
   
-  .nav-item.active {
-    color: #4a9eff;
-  }
+  .nav-item.active { color: #4a9eff; }
+  .nav-item .icon { font-size: 24px; display: block; margin-bottom: 4px; }
   
-  .nav-item .icon {
-    font-size: 24px;
-    display: block;
-    margin-bottom: 4px;
-  }
-  
-  /* YENİ: YATAY PAKET KARTLARI */
-  .packages-wrapper {
-    position: relative;
-    margin-top: 15px;
-  }
-  
-  .scroll-hint {
-    text-align: center;
-    font-size: 11px;
-    color: #94a3b8;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
+  /* YATAY PAKET KARTLARI */
+  .packages-wrapper { position: relative; margin-top: 15px; }
+  .scroll-hint { text-align: center; font-size: 11px; color: #94a3b8; margin-bottom: 8px; font-weight: 600; }
   
   .packages-container {
     display: flex;
@@ -204,18 +186,10 @@
     scroll-snap-type: x mandatory;
     padding: 5px 2px 12px 2px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
   }
   
-  .packages-container::-webkit-scrollbar {
-    height: 4px;
-  }
-  
-  .packages-container::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 2px;
-  }
+  .packages-container::-webkit-scrollbar { height: 4px; }
+  .packages-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
   
   .package-card {
     min-width: 155px;
@@ -232,14 +206,8 @@
     overflow: hidden;
   }
   
-  .package-card:active {
-    transform: scale(0.96);
-  }
-  
-  .package-card:hover {
-    border-color: #10b981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  }
+  .package-card:active { transform: scale(0.96); }
+  .package-card:hover { border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
   
   .package-card.featured {
     border-color: #f59e0b;
@@ -260,13 +228,7 @@
     letter-spacing: 0.5px;
   }
   
-  .package-name {
-    font-size: 14px;
-    font-weight: bold;
-    color: #1e293b;
-    margin-bottom: 6px;
-    text-align: center;
-  }
+  .package-name { font-size: 14px; font-weight: bold; color: #1e293b; margin-bottom: 6px; text-align: center; }
   
   .discount-badge {
     background: #ef4444;
@@ -285,25 +247,9 @@
     50% { transform: scale(1.05); }
   }
   
-  .package-pricing {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    margin-bottom: 6px;
-  }
-  
-  .original-price {
-    font-size: 12px;
-    color: #94a3b8;
-    text-decoration: line-through;
-  }
-  
-  .discounted-price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #10b981;
-  }
+  .package-pricing { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 6px; }
+  .original-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; }
+  .discounted-price { font-size: 18px; font-weight: bold; color: #10b981; }
   
   .package-savings {
     font-size: 10px;
@@ -316,14 +262,43 @@
     margin-bottom: 6px;
   }
   
-  .package-cta {
-    font-size: 11px;
-    color: #4a9eff;
-    font-weight: 600;
+  .package-cta { font-size: 11px; color: #4a9eff; font-weight: 600; text-align: center; }
+  
+  /* YENİ: Paket Özet Bilgi Kutusu */
+  .package-summary {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    display: none;
+  }
+  
+  .package-summary.active { display: block; }
+  
+  .package-summary-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #065f46;
+    margin-bottom: 10px;
     text-align: center;
   }
   
-  /* Offline Popup */
+  .package-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+    color: #1e293b;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  
+  .package-summary-row:last-child { border-bottom: none; }
+  
+  .package-summary-row .label { color: #64748b; }
+  .package-summary-row .value { font-weight: bold; color: #059669; }
+  .package-summary-row .value.original { color: #94a3b8; text-decoration: line-through; }
+  
   .offline-popup {
     position: fixed;
     top: 50%;
@@ -382,28 +357,47 @@
         </div>
       </div>
       
-      <!-- YENİ: YATAY PAKET SİSTEMİ -->
-      <h3 style="text-align: center; margin-top: 20px; color: #1e293b;"> Özel Paket Fırsatları - %20 İndirim!</h3>
+      <h3 style="text-align: center; margin-top: 20px; color: #1e293b;">🎁 Özel Paket Fırsatları - %20 İndirim!</h3>
       
       <div class="packages-wrapper">
         <div class="scroll-hint">← Kaydırarak tüm paketleri görün →</div>
-        <div class="packages-container" id="packagesContainer">
-          <!-- Paketler JavaScript ile oluşturulacak -->
-        </div>
+        <div class="packages-container" id="packagesContainer"></div>
       </div>
     </div>
 
     <!-- Satın Al -->
     <div id="page-buy" class="card hidden">
-      <h2> Satın Al</h2>
+      <h2>💎 Satın Al</h2>
+      
+      <!-- YENİ: Paket Özet Kutusu -->
+      <div class="package-summary" id="packageSummary">
+        <div class="package-summary-title">📦 Seçtiğiniz Paket</div>
+        <div class="package-summary-row">
+          <span class="label">Paket Adı:</span>
+          <span class="value" id="summaryName">-</span>
+        </div>
+        <div class="package-summary-row">
+          <span class="label">Orijinal Fiyat:</span>
+          <span class="value original" id="summaryOriginal">-</span>
+        </div>
+        <div class="package-summary-row">
+          <span class="label">İndirimli Ödeme:</span>
+          <span class="value" id="summaryDiscounted">-</span>
+        </div>
+        <div class="package-summary-row">
+          <span class="label">Kaydedilecek Tutar:</span>
+          <span class="value" id="summaryRecord" style="color: #dc2626;">-</span>
+        </div>
+      </div>
+      
       <div class="crypto-info">
         <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
-        <strong> Cüzdan Adresi:</strong><br>
+        <strong>📍 Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 13px; background: white; padding: 8px; border-radius: 6px; display: block; margin-top: 5px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
         <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
       </div>
       
-      <h3>Yatırım Miktarı (USD)</h3>
+      <h3>Gönderilecek Tutar (USD) - Orijinal Fiyat</h3>
       <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10" oninput="updateBuyTRX()">
       
       <div class="crypto-info" style="text-align: center;">
@@ -469,7 +463,7 @@
       <span>Çekim</span>
     </div>
     <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;">
-      <span class="icon">🔐</span>
+      <span class="icon"></span>
       <span>Admin</span>
     </div>
   </div>
@@ -508,16 +502,20 @@
     let currentAdminTab = 'payments';
     let unsubscribe = null;
     
+    // YENİ: Seçili paket bilgilerini tutacak değişkenler
+    let selectedPackageName = '';
+    let selectedPackageOriginal = 0;
+    let selectedPackageDiscounted = 0;
+    
     const DAILY_RATE = 1 / 90;
     const PER_SECOND = DAILY_RATE / 86400;
     const TRX_PRICE = 0.12;
     const DEPOSIT_WALLET = "TXYZ1234567890abcdefghijklmnopqrstuvwxyz";
-    const DISCOUNT_RATE = 0.20; // %20 indirim
+    const DISCOUNT_RATE = 0.20;
     
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
-    // Paket Tanımları
     const packages = [
       { name: 'Mini', price: 3, featured: false },
       { name: 'Micro', price: 10, featured: false },
@@ -534,7 +532,6 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
-    // Paketleri render et - YATAY DÜZEN
     function renderPackages() {
       const container = document.getElementById('packagesContainer');
       container.innerHTML = '';
@@ -545,7 +542,7 @@
         
         const card = document.createElement('div');
         card.className = `package-card ${pkg.featured ? 'featured' : ''}`;
-        card.onclick = () => selectPackage(discountedPrice, pkg.name);
+        card.onclick = () => selectPackage(pkg.price, discountedPrice, pkg.name);
         
         card.innerHTML = `
           <div class="package-name">${pkg.name}</div>
@@ -564,10 +561,23 @@
       });
     }
     
-    // Paket seçildiğinde
-    function selectPackage(amount, packageName) {
-      document.getElementById('buyAmount').value = amount.toFixed(2);
+    // YENİ: Paket seçildiğinde orijinal fiyatı input'a yaz, özet kutusunu göster
+    function selectPackage(originalPrice, discountedPrice, packageName) {
+      selectedPackageName = packageName;
+      selectedPackageOriginal = originalPrice;
+      selectedPackageDiscounted = discountedPrice;
+      
+      // Input'a ORİJİNAL (indirimsiz) fiyatı yaz - Firebase'e bu gidecek
+      document.getElementById('buyAmount').value = originalPrice.toFixed(2);
       updateBuyTRX();
+      
+      // Özet kutusunu doldur ve göster
+      document.getElementById('summaryName').textContent = packageName;
+      document.getElementById('summaryOriginal').textContent = '$' + originalPrice.toFixed(2);
+      document.getElementById('summaryDiscounted').textContent = '$' + discountedPrice.toFixed(2);
+      document.getElementById('summaryRecord').textContent = '$' + originalPrice.toFixed(2);
+      document.getElementById('packageSummary').classList.add('active');
+      
       showPage('buy');
       
       if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -675,6 +685,9 @@
       const payment = {
         id: 'pay_' + Date.now(),
         amount: amount,
+        packageName: selectedPackageName || null,
+        originalPrice: selectedPackageOriginal || amount,
+        discountedPrice: selectedPackageDiscounted || null,
         earned: 0,
         status: 'pending',
         userId: userId,
@@ -693,9 +706,26 @@
           totalInvested: (data.totalInvested || 0) + amount
         }, { merge: true });
         
-        alert('✅ Ödeme bildirimi alındı! Admin onayından sonra üretiminiz başlayacaktır.');
+        // Başarı mesajında paket bilgisini göster
+        let successMsg = '✅ Ödeme bildirimi alındı!';
+        if (selectedPackageName) {
+          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}`;
+          if (selectedPackageDiscounted) {
+            successMsg += `\n🎉 İndirimli Ödeme: $${selectedPackageDiscounted.toFixed(2)}`;
+          }
+        }
+        successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
+        
+        alert(successMsg);
+        
+        // Formu sıfırla
         document.getElementById('buyAmount').value = '10';
         updateBuyTRX();
+        document.getElementById('packageSummary').classList.remove('active');
+        selectedPackageName = '';
+        selectedPackageOriginal = 0;
+        selectedPackageDiscounted = 0;
+        
         showPage('home');
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
@@ -807,10 +837,17 @@
         
         let html = '';
         pending.forEach(p => {
+          const packageInfo = p.packageName ? `<br><small style="color:#4a9eff;">📦 Paket: ${p.packageName}</small>` : '';
+          const discountInfo = (p.originalPrice && p.discountedPrice && p.originalPrice !== p.discountedPrice) 
+            ? `<br><small style="color:#10b981;">💰 Orijinal: $${p.originalPrice.toFixed(2)} | İndirimli: $${p.discountedPrice.toFixed(2)}</small>` 
+            : '';
+          
           html += `
             <div class="pending-item">
-              <strong>$${p.amount.toFixed(2)}</strong> - ${p.userName}<br>
-              <small style="color:#64748b;">ID: ${p.id}</small><br>
+              <strong>$${p.amount.toFixed(2)}</strong> - ${p.userName}
+              ${packageInfo}
+              ${discountInfo}
+              <br><small style="color:#64748b;">ID: ${p.id}</small><br>
               <div style="display:flex; gap:10px; margin-top:10px;">
                 <button class="btn btn-approve" style="flex:1; margin:0;" onclick="approvePayment('${p.userDocId}', '${p.id}', ${p.amount})">✓ Onayla</button>
                 <button class="btn btn-reject" style="flex:1; margin:0;" onclick="rejectPayment('${p.userDocId}', '${p.id}')">✕ Reddet</button>
