@@ -59,7 +59,6 @@
   h2 { color: #1a2a3a; margin-bottom: 12px; font-size: 18px; }
   h3 { color: #4b5563; margin: 12px 0 8px 0; font-size: 14px; font-weight: 600; }
   
-  /* Kompakt İstatistik Grid */
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -79,7 +78,6 @@
   .stat-box .label { font-size: 9px; color: #64748b; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; }
   .stat-box .value { font-size: 14px; font-weight: bold; color: #1e293b; }
   
-  /* Kompakt Kazanç Kutusu */
   .earnings-estimate {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
     border: 2px solid #4a9eff;
@@ -132,7 +130,6 @@
   .earnings-item .label { font-size: 8px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 2px; }
   .earnings-item .value { font-size: 12px; font-weight: bold; color: #1e40af; }
   
-  /* YENİ: 2 Sütunlu Paket Grid - Kaydırma Yok */
   .packages-section-title {
     text-align: center;
     font-size: 13px;
@@ -159,14 +156,8 @@
     box-shadow: 0 2px 6px rgba(74, 158, 255, 0.06);
   }
   
-  .package-card:active { 
-    transform: scale(0.97); 
-  }
-  
-  .package-card:hover { 
-    border-color: #4a9eff; 
-    box-shadow: 0 3px 10px rgba(74, 158, 255, 0.15); 
-  }
+  .package-card:active { transform: scale(0.97); }
+  .package-card:hover { border-color: #4a9eff; box-shadow: 0 3px 10px rgba(74, 158, 255, 0.15); }
   
   .package-card.featured {
     border-color: #f59e0b;
@@ -182,13 +173,7 @@
     font-size: 12px;
   }
   
-  .package-name { 
-    font-size: 12px; 
-    font-weight: bold; 
-    color: #1e293b; 
-    text-align: center;
-    margin-bottom: 4px;
-  }
+  .package-name { font-size: 12px; font-weight: bold; color: #1e293b; text-align: center; margin-bottom: 4px; }
   
   .discount-badge {
     background: #ef4444;
@@ -207,13 +192,7 @@
     50% { transform: scale(1.05); }
   }
   
-  .package-pricing { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 1px; 
-    margin-bottom: 4px; 
-  }
+  .package-pricing { display: flex; flex-direction: column; align-items: center; gap: 1px; margin-bottom: 4px; }
   .original-price { font-size: 10px; color: #94a3b8; text-decoration: line-through; }
   .discounted-price { font-size: 14px; font-weight: bold; color: #10b981; }
   
@@ -228,12 +207,7 @@
     margin-bottom: 4px;
   }
   
-  .package-cta { 
-    font-size: 9px; 
-    color: #4a9eff; 
-    font-weight: 600; 
-    text-align: center; 
-  }
+  .package-cta { font-size: 9px; color: #4a9eff; font-weight: 600; text-align: center; }
   
   input, select { 
     padding: 12px; 
@@ -243,7 +217,7 @@
     margin: 6px 0 12px 0; 
     font-size: 15px; 
     background: #f8fafc;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
   }
   
   input:focus, select:focus {
@@ -258,6 +232,39 @@
     color: #64748b;
     cursor: not-allowed;
     border-color: #cbd5e1;
+  }
+  
+  /* YENİ: Adres Doğrulama Stilleri */
+  input.input-valid {
+    border-color: #10b981 !important;
+    background: #ecfdf5 !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+  }
+  
+  input.input-invalid {
+    border-color: #ef4444 !important;
+    background: #fef2f2 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+  }
+  
+  .validation-message {
+    font-size: 11px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: none;
+  }
+  
+  .validation-message.show { display: block; }
+  .validation-message.valid { 
+    color: #065f46; 
+    background: #d1fae5; 
+  }
+  .validation-message.invalid { 
+    color: #991b1b; 
+    background: #fee2e2; 
   }
   
   .btn { 
@@ -320,6 +327,25 @@
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.08);
   }
   
+  .address-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  
+  .address-badge.valid {
+    background: #d1fae5;
+    color: #065f46;
+  }
+  
+  .address-badge.invalid {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  
   .tab-container { display: flex; gap: 8px; margin-bottom: 12px; }
   .tab { 
     flex: 1; 
@@ -337,7 +363,6 @@
   
   .hidden { display: none !important; }
   
-  /* Kompakt Alt Navigasyon */
   .bottom-nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -438,7 +463,7 @@
     
     <!-- Ana Sayfa -->
     <div id="page-home" class="card">
-      <h1> Hash Power Mining</h1>
+      <h1>⚡ Hash Power Mining</h1>
       <div class="stats-grid">
         <div class="stat-box">
           <div class="label">Bakiye</div>
@@ -454,17 +479,16 @@
         </div>
       </div>
       
-      <!-- Kompakt Kazanç Kutusu -->
       <div class="earnings-estimate">
         <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
         <div class="earnings-grid">
           <div class="earnings-item">
-            <div class="icon">⏱️</div>
+            <div class="icon">️</div>
             <div class="label">Dakikalık</div>
             <div class="value">$<span id="earnPerMin">0.00</span></div>
           </div>
           <div class="earnings-item">
-            <div class="icon">🕐</div>
+            <div class="icon"></div>
             <div class="label">Saatlik</div>
             <div class="value">$<span id="earnPerHour">0.00</span></div>
           </div>
@@ -476,7 +500,6 @@
         </div>
       </div>
       
-      <!-- YENİ: 2 Sütunlu Paket Grid - Kaydırma Yok -->
       <div class="packages-section-title">🎁 Özel Paket Fırsatları - %20 İndirim!</div>
       
       <div class="packages-grid" id="packagesContainer"></div>
@@ -535,8 +558,8 @@
       <h3>Çekilecek Miktar (USD)</h3>
       <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
       
-      <h3>🪙 Kripto Seçimi</h3>
-      <select id="withdrawCrypto" onchange="updateCryptoAmount()">
+      <h3> Kripto Seçimi</h3>
+      <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
         <option value="xrp">XRP (Ripple) - ~$0.50</option>
@@ -547,14 +570,15 @@
       </div>
       
       <h3>📍 Cüzdan Adresi</h3>
-      <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin...">
+      <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
+      <div id="addressValidationMsg" class="validation-message"></div>
       
       <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
     </div>
 
     <!-- Admin -->
     <div id="page-admin" class="card hidden">
-      <h2> Admin Panel</h2>
+      <h2>🔐 Admin Panel</h2>
       <div class="tab-container">
         <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Yatırımlar</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
@@ -579,7 +603,7 @@
       <span>Çekim</span>
     </div>
     <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;">
-      <span class="icon">🔐</span>
+      <span class="icon"></span>
       <span>Admin</span>
     </div>
   </div>
@@ -647,7 +671,91 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
-    // YENİ: 2 Sütunlu Grid Render
+    // ============================================
+    // YENİ: KRIPTO ADRESI DOĞRULAMA SİSTEMİ
+    // ============================================
+    
+    const addressValidators = {
+      trx: (addr) => {
+        // TRON: T ile başlar, 34 karakter, Base58
+        const regex = /^T[a-km-zA-HJ-NP-Z1-9]{33}$/;
+        return regex.test(addr);
+      },
+      bnb: (addr) => {
+        // BSC/BEP20: 0x ile başlar, 42 karakter, hex
+        const regex = /^0x[a-fA-F0-9]{40}$/;
+        return regex.test(addr);
+      },
+      xrp: (addr) => {
+        // XRP: r ile başlar, 25-35 karakter
+        const regex = /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/;
+        return regex.test(addr);
+      }
+    };
+    
+    const addressFormats = {
+      trx: 'T ile başlayan 34 karakter',
+      bnb: '0x ile başlayan 42 karakter',
+      xrp: 'r ile başlayan 25-35 karakter'
+    };
+    
+    function validateAddress(address, crypto) {
+      const validator = addressValidators[crypto];
+      if (!validator) return { valid: false, message: 'Geçersiz coin' };
+      
+      const isValid = validator(address);
+      
+      return {
+        valid: isValid,
+        message: isValid 
+          ? '✅ Geçerli adres formatı' 
+          : ` Geçersiz format. ${addressFormats[crypto]} olmalı`
+      };
+    }
+    
+    // Input'a yazarken anlık doğrulama
+    function validateAddressInput() {
+      const crypto = document.getElementById('withdrawCrypto').value;
+      const address = document.getElementById('walletAddress').value.trim();
+      const msgElement = document.getElementById('addressValidationMsg');
+      const inputElement = document.getElementById('walletAddress');
+      
+      if (address.length === 0) {
+        inputElement.classList.remove('input-valid', 'input-invalid');
+        msgElement.classList.remove('show', 'valid', 'invalid');
+        return;
+      }
+      
+      const validation = validateAddress(address, crypto);
+      
+      if (validation.valid) {
+        inputElement.classList.add('input-valid');
+        inputElement.classList.remove('input-invalid');
+        msgElement.textContent = validation.message;
+        msgElement.classList.add('show', 'valid');
+        msgElement.classList.remove('invalid');
+      } else {
+        inputElement.classList.add('input-invalid');
+        inputElement.classList.remove('input-valid');
+        msgElement.textContent = validation.message;
+        msgElement.classList.add('show', 'invalid');
+        msgElement.classList.remove('valid');
+      }
+    }
+    
+    // Kripto seçimi değiştiğinde doğrulamayı temizle
+    function clearAddressValidation() {
+      const inputElement = document.getElementById('walletAddress');
+      const msgElement = document.getElementById('addressValidationMsg');
+      
+      inputElement.classList.remove('input-valid', 'input-invalid');
+      msgElement.classList.remove('show', 'valid', 'invalid');
+    }
+    
+    // ============================================
+    // PAKET RENDER
+    // ============================================
+    
     function renderPackages() {
       const container = document.getElementById('packagesContainer');
       container.innerHTML = '';
@@ -906,14 +1014,22 @@
       document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto];
     }
     
+    // YENİ: Adres doğrulama ile çekim talebi
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
       const crypto = document.getElementById('withdrawCrypto').value;
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
       if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
-      if (amount > balance) { alert(' Yetersiz bakiye!'); return; }
+      if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
       if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
+      
+      // 🔐 ADRES DOĞRULAMA
+      const validation = validateAddress(walletAddress, crypto);
+      if (!validation.valid) {
+        alert(`❌ Geçersiz ${crypto.toUpperCase()} adresi!\n\n${validation.message}\n\nLütfen doğru adresi girin.`);
+        return;
+      }
       
       const withdrawal = {
         id: 'wd_' + Date.now(),
@@ -922,6 +1038,7 @@
         cryptoAmount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
         cryptoSymbol: CRYPTO_SYMBOLS[crypto],
         walletAddress: walletAddress,
+        addressValidated: true, // Doğrulandı işareti
         status: 'pending',
         userId: userId,
         userName: currentUser ? currentUser.first_name : 'User',
@@ -941,6 +1058,7 @@
         alert('✅ Çekim talebi oluşturuldu! Admin onayı bekleniyor.');
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
+        clearAddressValidation();
         updateCryptoAmount();
         showPage('home');
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -1012,10 +1130,16 @@
         
         let html = '';
         pending.forEach(w => {
+          // YENİ: Adres doğrulama rozeti
+          const addressBadge = w.addressValidated 
+            ? '<span class="address-badge valid">✓ Doğrulandı</span>' 
+            : '<span class="address-badge invalid"> Doğrulanmadı</span>';
+          
           html += `
             <div class="withdrawal-item">
-              <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}<br>
-              <small style="color:#64748b;">Kullanıcı: ${w.userName}</small><br>
+              <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}
+              ${addressBadge}
+              <br><small style="color:#64748b;">Kullanıcı: ${w.userName}</small><br>
               <small style="color:#64748b;">Cüzdan: ${w.walletAddress}</small><br>
               <small style="color:#64748b;">ID: ${w.id}</small><br>
               <div style="display:flex; gap:10px; margin-top:10px;">
@@ -1171,7 +1295,10 @@
         if (matchingNav) matchingNav.classList.add('active');
       }
       
-      if (page === 'withdraw') updateCryptoAmount();
+      if (page === 'withdraw') {
+        updateCryptoAmount();
+        clearAddressValidation();
+      }
       else if (page === 'admin') loadAdmin();
       else if (page === 'buy') updateBuyTRX();
       
