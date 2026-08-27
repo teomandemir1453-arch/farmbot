@@ -65,67 +65,18 @@
   .validation-message.show { display: block; }
   .validation-message.valid { color: #065f46; background: #d1fae5; }
   .validation-message.invalid { color: #991b1b; background: #fee2e2; }
-  
-  /* 🔧 DÜZELTİLDİ: Buton stilleri güçlendirildi */
-  .btn { 
-    background: #3b82f6; 
-    color: white; 
-    border: none; 
-    padding: 14px 20px; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    font-size: 15px; 
-    font-weight: 800; 
-    margin: 6px 0; 
-    width: 100%; 
-    transition: all 0.2s; 
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
+  .btn { background: #3b82f6; color: white; border: none; padding: 14px 20px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 800; margin: 6px 0; width: 100%; transition: all 0.2s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; gap: 8px; }
   .btn:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3); }
   .btn:hover { box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5); }
-  
-  .btn-approve { 
-    background: linear-gradient(135deg, #10b981, #059669); 
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); 
-  }
+  .btn-approve { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
   .btn-approve:hover { box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5); }
-  
-  .btn-reject { 
-    background: linear-gradient(135deg, #ef4444, #dc2626); 
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); 
-  }
+  .btn-reject { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
   .btn-reject:hover { box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5); }
-  
-  .btn-withdraw { 
-    background: linear-gradient(135deg, #f59e0b, #d97706); 
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); 
-  }
+  .btn-withdraw { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
   .btn-withdraw:hover { box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5); }
-  
-  .btn-secondary { 
-    background: linear-gradient(135deg, #64748b, #475569); 
-    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4); 
-  }
+  .btn-secondary { background: linear-gradient(135deg, #64748b, #475569); box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4); }
   .btn-secondary:hover { box-shadow: 0 6px 16px rgba(100, 116, 139, 0.5); }
-  
-  .btn-ctrl { 
-    width: 48px; 
-    height: 48px; 
-    padding: 0; 
-    font-size: 24px; 
-    font-weight: 800; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    margin: 0; 
-    flex-shrink: 0; 
-    border-radius: 10px;
-  }
-  
+  .btn-ctrl { width: 48px; height: 48px; padding: 0; font-size: 24px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0; flex-shrink: 0; border-radius: 10px; }
   .crypto-info { background: #f1f5f9; padding: 12px; border-radius: 10px; margin: 10px 0; font-size: 13px; border: 2px solid #e2e8f0; line-height: 1.5; }
   .crypto-info strong { color: #1e293b; }
   .network-badge { display: inline-block; background: #3b82f6; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-top: 5px; }
@@ -136,7 +87,7 @@
   .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; padding-bottom: calc(8px + env(safe-area-inset-bottom)); border-top: 3px solid #3b82f6; box-shadow: 0 -3px 10px rgba(59, 130, 246, 0.15); z-index: 1000; }
   .nav-item { flex: 1; text-align: center; padding: 6px 4px; cursor: pointer; color: #94a3b8; transition: color 0.2s; font-size: 10px; font-weight: 700; }
   .nav-item.active { color: #3b82f6; }
-  .nav-item .icon { font-size: 20px; display: block; margin-bottom: 2px; }
+  .nav-item .icon { font-size: 22px; display: block; margin-bottom: 2px; }
   .package-summary { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 10px; padding: 12px; margin: 10px 0; display: none; }
   .package-summary.active { display: block; }
   .package-summary-title { font-size: 13px; font-weight: 800; color: #065f46; margin-bottom: 8px; text-align: center; }
@@ -191,11 +142,11 @@
         <div class="earnings-grid">
           <div class="earnings-item"><div class="icon">⏱️</div><div class="label">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
           <div class="earnings-item"><div class="icon">🕐</div><div class="label">Saatlik</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
-          <div class="earnings-item"><div class="icon">📅</div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
+          <div class="earnings-item"><div class="icon"></div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
         </div>
       </div>
       <div class="telegram-notif-card inactive" id="telegramNotifCard" onclick="activateTelegramNotif()">
-        <div class="telegram-icon"></div>
+        <div class="telegram-icon">📱</div>
         <div class="telegram-content">
           <div class="telegram-title" id="telegramTitle">🔔 Bildirimleri Aktif Et</div>
           <div class="telegram-desc" id="telegramDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div>
@@ -224,7 +175,7 @@
       </div>
       <div class="qr-container">
         <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
-        <div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
+        <div class="qr-label"> TRX Göndermek İçin QR Kodu Tara</div>
       </div>
       <div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
@@ -252,13 +203,13 @@
         <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex: 1; margin-right: 8px;">
         <button class="max-btn" onclick="setMaxAmount()">MAX</button>
       </div>
-      <h3> Kripto Seçimi</h3>
+      <h3>🪙 Kripto Seçimi</h3>
       <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
         <option value="xrp">XRP (Ripple) - ~$0.50</option>
       </select>
-      <div class="network-info" id="networkInfo">🌐 <strong>Ağ:</strong> TRON (TRC20)<br><small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small></div>
+      <div class="network-info" id="networkInfo"> <strong>Ağ:</strong> TRON (TRC20)<br><small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small></div>
       <div class="crypto-info" style="text-align: center;"><strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: 800; font-size: 18px;">0.00</span> <span id="cryptoSymbol">TRX</span></div>
       <h3>📍 Cüzdan Adresi</h3>
       <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
@@ -269,15 +220,16 @@
 
     <div id="page-admin" class="card hidden">
       <h2>🔐 Admin Panel</h2>
-      <p style="text-align:center; color:#64748b; padding:20px;">Yönetim için ayrı panelden giriş yapın:<br><br><a href="admin.html" target="_blank" class="btn">Admin Paneline Git</a></p>
+      <p style="text-align:center; color:#64748b; padding:20px;">Yönetim için ayrı panelden giriş yapın:<br><br><a href="admin.html" target="_blank" class="btn">🔐 Admin Paneline Git</a></p>
     </div>
   </div>
 
+  <!-- ✅ DÜZELTİLDİ: Tüm alt menü ikonları -->
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="showPage('home', this)"><span class="icon"></span><span>Ana Sayfa</span></div>
+    <div class="nav-item active" onclick="showPage('home', this)"><span class="icon">🏠</span><span>Ana Sayfa</span></div>
     <div class="nav-item" onclick="showPage('buy', this)"><span class="icon">💎</span><span>Satın Al</span></div>
     <div class="nav-item" onclick="showPage('withdraw', this)"><span class="icon">💸</span><span>Çekim</span></div>
-    <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;"><span class="icon"></span><span>Admin</span></div>
+    <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;"><span class="icon">🔐</span><span>Admin</span></div>
   </div>
 
   <div id="offlinePopup" class="hidden">
@@ -290,7 +242,7 @@
     </div>
   </div>
 
-  <div id="notifToast" class="notif-toast"> Admin'e bildirim gönderildi!</div>
+  <div id="notifToast" class="notif-toast">🔔 Admin'e bildirim gönderildi!</div>
 
   <script>
     const firebaseConfig = { apiKey: "AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ", authDomain: "hash-power-mining.firebaseapp.com", projectId: "hash-power-mining", storageBucket: "hash-power-mining.firebasestorage.app", messagingSenderId: "266480566753", appId: "1:266480566753:web:835b6e5119e4d3e4eb92a0" };
@@ -443,7 +395,7 @@
       try {
         const userRef = db.collection('users').doc(userId); const doc = await userRef.get(); const data = doc.data() || {};
         await userRef.set({ pendingPayments: [...(data.pendingPayments || []), payment], totalInvested: (data.totalInvested || 0) + amount }, { merge: true });
-        const adminMsg = `🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n <b>ID:</b> ${payment.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+        const adminMsg = `🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n🆔 <b>ID:</b> ${payment.userTelegramId || userId}\n\n <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}\n\n <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
         alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
         resetAndGoHome();
@@ -475,19 +427,19 @@
     
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value); const crypto = document.getElementById('withdrawCrypto').value; const walletAddress = document.getElementById('walletAddress').value.trim();
-      if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
+      if (amount < 0.01) { alert(' Minimum çekim: $0.01'); return; }
       if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
       if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
       const validation = validateAddress(walletAddress, crypto);
-      if (!validation.valid) { alert(`❌ Geçersiz adres!\n${validation.message}`); return; }
+      if (!validation.valid) { alert(` Geçersiz adres!\n${validation.message}`); return; }
       const cryptoAmount = (amount / CRYPTO_PRICES[crypto]).toFixed(6);
       const withdrawal = { id: 'wd_' + Date.now(), amount: amount, crypto: crypto, cryptoSymbol: CRYPTO_SYMBOLS[crypto], cryptoAmount: cryptoAmount, walletAddress: walletAddress, network: NETWORK_INFO[crypto].fullName, addressValidated: true, status: 'pending', userId: userId, userName: currentUser ? currentUser.first_name : 'User', userTelegramId: currentUser ? currentUser.id : null, timestamp: Date.now() };
       try {
         const userRef = db.collection('users').doc(userId); const doc = await userRef.get(); const data = doc.data() || {};
         await userRef.set({ withdrawalRequests: [...(data.withdrawalRequests || []), withdrawal] }, { merge: true });
-        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n📍 <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n📍 <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
-        alert(`✅ Çekim talebi oluşturuldu!\n\n Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
+        alert(`✅ Çekim talebi oluşturuldu!\n\n🌐 Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
         document.getElementById('withdrawAmount').value = ''; document.getElementById('walletAddress').value = '';
         clearAddressValidation(); updateCryptoAmount(); loadWithdrawalHistory();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -517,7 +469,7 @@
           const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
           const packageText = d.packageName ? '📦 ' + d.packageName : '💰 Manuel';
           const trxText = d.trxAmount ? `(${d.trxAmount} TRX)` : '';
-          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${d.network || 'TRON (TRC20)'}</span></div><div class="h-date"> ${date}</div></div>`;
+          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${d.network || 'TRON (TRC20)'}</span></div><div class="h-date">🕐 ${date}</div></div>`;
         });
         container.innerHTML = html;
       } catch (error) { console.error('Geçmiş yükleme hatası:', error); container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; }
@@ -538,7 +490,7 @@
           const status = w.status || 'pending';
           const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
           const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
-          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${w.network || ''}</span></div><div class="h-date">🕐 ${date}</div></div>`;
+          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span></div><div class="h-row"><span class="h-label"> Ağ:</span><span class="h-value">${w.network || ''}</span></div><div class="h-date">🕐 ${date}</div></div>`;
         });
         container.innerHTML = html;
       } catch (error) { container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; }
