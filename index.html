@@ -234,7 +234,6 @@
     border-color: #cbd5e1;
   }
   
-  /* YENİ: Adres Doğrulama Stilleri */
   input.input-valid {
     border-color: #10b981 !important;
     background: #ecfdf5 !important;
@@ -258,14 +257,8 @@
   }
   
   .validation-message.show { display: block; }
-  .validation-message.valid { 
-    color: #065f46; 
-    background: #d1fae5; 
-  }
-  .validation-message.invalid { 
-    color: #991b1b; 
-    background: #fee2e2; 
-  }
+  .validation-message.valid { color: #065f46; background: #d1fae5; }
+  .validation-message.invalid { color: #991b1b; background: #fee2e2; }
   
   .btn { 
     background: #4a9eff; 
@@ -298,6 +291,17 @@
     line-height: 1.5;
   }
   .crypto-info strong { color: #1e293b; }
+  
+  .network-badge {
+    display: inline-block;
+    background: #4a9eff;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
   
   .balance-display { 
     background: linear-gradient(135deg, #10b981, #059669); 
@@ -336,14 +340,18 @@
     margin-left: 5px;
   }
   
-  .address-badge.valid {
-    background: #d1fae5;
-    color: #065f46;
-  }
+  .address-badge.valid { background: #d1fae5; color: #065f46; }
+  .address-badge.invalid { background: #fee2e2; color: #991b1b; }
   
-  .address-badge.invalid {
-    background: #fee2e2;
-    color: #991b1b;
+  .network-info {
+    background: #dbeafe;
+    border: 1px solid #4a9eff;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+    color: #1e40af;
+    font-weight: 600;
   }
   
   .tab-container { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -480,15 +488,15 @@
       </div>
       
       <div class="earnings-estimate">
-        <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
+        <div class="earnings-title"> Tahmini Kazançlarınız</div>
         <div class="earnings-grid">
           <div class="earnings-item">
-            <div class="icon">️</div>
+            <div class="icon">⏱️</div>
             <div class="label">Dakikalık</div>
             <div class="value">$<span id="earnPerMin">0.00</span></div>
           </div>
           <div class="earnings-item">
-            <div class="icon"></div>
+            <div class="icon">🕐</div>
             <div class="label">Saatlik</div>
             <div class="value">$<span id="earnPerHour">0.00</span></div>
           </div>
@@ -530,10 +538,15 @@
       </div>
       
       <div class="crypto-info">
-        <strong> Ağ:</strong> TRON (TRC20)<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
+        <strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
+        <strong> Kabul Edilen Coin:</strong> TRX<br>
+        <strong> Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
-        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+      </div>
+      
+      <div class="network-info">
+        ⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!
       </div>
       
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
@@ -558,12 +571,18 @@
       <h3>Çekilecek Miktar (USD)</h3>
       <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
       
-      <h3> Kripto Seçimi</h3>
-      <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation();">
+      <h3>🪙 Kripto Seçimi</h3>
+      <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
         <option value="xrp">XRP (Ripple) - ~$0.50</option>
       </select>
+      
+      <!-- YENİ: Ağ Bilgisi -->
+      <div class="network-info" id="networkInfo">
+        🌐 <strong>Ağ:</strong> TRON (TRC20)<br>
+        <small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small>
+      </div>
       
       <div class="crypto-info" style="text-align: center;">
         <strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: bold; font-size: 16px;">0.00</span> <span id="cryptoSymbol">TRX</span>
@@ -603,7 +622,7 @@
       <span>Çekim</span>
     </div>
     <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;">
-      <span class="icon"></span>
+      <span class="icon">🔐</span>
       <span>Admin</span>
     </div>
   </div>
@@ -655,6 +674,28 @@
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
+    // YENİ: Ağ (Network) Bilgileri
+    const NETWORK_INFO = {
+      trx: {
+        name: 'TRON',
+        standard: 'TRC20',
+        fullName: 'TRON (TRC20)',
+        description: 'TRX coin\'leri TRON ağı üzerinden gönderilecektir.'
+      },
+      bnb: {
+        name: 'BSC',
+        standard: 'BEP20',
+        fullName: 'BSC (BEP20)',
+        description: 'BNB coin\'leri Binance Smart Chain ağı üzerinden gönderilecektir.'
+      },
+      xrp: {
+        name: 'XRP Ledger',
+        standard: 'XRP',
+        fullName: 'XRP Ledger',
+        description: 'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.'
+      }
+    };
+    
     const packages = [
       { name: 'Mini', price: 3, featured: false },
       { name: 'Micro', price: 10, featured: false },
@@ -671,23 +712,16 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
-    // ============================================
-    // YENİ: KRIPTO ADRESI DOĞRULAMA SİSTEMİ
-    // ============================================
-    
     const addressValidators = {
       trx: (addr) => {
-        // TRON: T ile başlar, 34 karakter, Base58
         const regex = /^T[a-km-zA-HJ-NP-Z1-9]{33}$/;
         return regex.test(addr);
       },
       bnb: (addr) => {
-        // BSC/BEP20: 0x ile başlar, 42 karakter, hex
         const regex = /^0x[a-fA-F0-9]{40}$/;
         return regex.test(addr);
       },
       xrp: (addr) => {
-        // XRP: r ile başlar, 25-35 karakter
         const regex = /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/;
         return regex.test(addr);
       }
@@ -709,11 +743,10 @@
         valid: isValid,
         message: isValid 
           ? '✅ Geçerli adres formatı' 
-          : ` Geçersiz format. ${addressFormats[crypto]} olmalı`
+          : `❌ Geçersiz format. ${addressFormats[crypto]} olmalı`
       };
     }
     
-    // Input'a yazarken anlık doğrulama
     function validateAddressInput() {
       const crypto = document.getElementById('withdrawCrypto').value;
       const address = document.getElementById('walletAddress').value.trim();
@@ -743,7 +776,6 @@
       }
     }
     
-    // Kripto seçimi değiştiğinde doğrulamayı temizle
     function clearAddressValidation() {
       const inputElement = document.getElementById('walletAddress');
       const msgElement = document.getElementById('addressValidationMsg');
@@ -752,9 +784,17 @@
       msgElement.classList.remove('show', 'valid', 'invalid');
     }
     
-    // ============================================
-    // PAKET RENDER
-    // ============================================
+    // YENİ: Ağ bilgisini güncelle
+    function updateNetworkInfo() {
+      const crypto = document.getElementById('withdrawCrypto').value;
+      const networkInfo = NETWORK_INFO[crypto];
+      const networkInfoElement = document.getElementById('networkInfo');
+      
+      networkInfoElement.innerHTML = `
+         <strong>Ağ:</strong> ${networkInfo.fullName}<br>
+        <small>${networkInfo.description}</small>
+      `;
+    }
     
     function renderPackages() {
       const container = document.getElementById('packagesContainer');
@@ -916,6 +956,8 @@
         packageName: selectedPackageName || null,
         originalPrice: selectedPackageOriginal || amount,
         discountedPrice: selectedPackageDiscounted || null,
+        network: 'TRON (TRC20)', // YENİ: Ağ bilgisi
+        coin: 'TRX', // YENİ: Coin bilgisi
         earned: 0,
         status: 'pending',
         userId: userId,
@@ -936,7 +978,7 @@
         
         let successMsg = '✅ Ödeme bildirimi alındı!';
         if (selectedPackageName) {
-          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
+          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}\n🌐 Ağ: TRON (TRC20)`;
         }
         successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
         
@@ -1014,7 +1056,6 @@
       document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto];
     }
     
-    // YENİ: Adres doğrulama ile çekim talebi
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
       const crypto = document.getElementById('withdrawCrypto').value;
@@ -1024,7 +1065,6 @@
       if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
       if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
       
-      // 🔐 ADRES DOĞRULAMA
       const validation = validateAddress(walletAddress, crypto);
       if (!validation.valid) {
         alert(`❌ Geçersiz ${crypto.toUpperCase()} adresi!\n\n${validation.message}\n\nLütfen doğru adresi girin.`);
@@ -1035,10 +1075,11 @@
         id: 'wd_' + Date.now(),
         amount: amount,
         crypto: crypto,
-        cryptoAmount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
         cryptoSymbol: CRYPTO_SYMBOLS[crypto],
+        cryptoAmount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
         walletAddress: walletAddress,
-        addressValidated: true, // Doğrulandı işareti
+        network: NETWORK_INFO[crypto].fullName, // YENİ: Ağ bilgisi
+        addressValidated: true,
         status: 'pending',
         userId: userId,
         userName: currentUser ? currentUser.first_name : 'User',
@@ -1055,7 +1096,7 @@
           withdrawalRequests: [...currentWithdrawals, withdrawal]
         }, { merge: true });
         
-        alert('✅ Çekim talebi oluşturuldu! Admin onayı bekleniyor.');
+        alert(`✅ Çekim talebi oluşturuldu!\n\n🌐 Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${withdrawal.cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
         clearAddressValidation();
@@ -1090,10 +1131,12 @@
           const discountInfo = (p.originalPrice && p.discountedPrice && p.originalPrice !== p.discountedPrice) 
             ? `<br><small style="color:#10b981;">💰 Orijinal: $${p.originalPrice.toFixed(2)} | Ödenen: $${p.discountedPrice.toFixed(2)}</small>` 
             : '';
+          const networkInfo = p.network ? `<br><small style="color:#1e40af;"> Ağ: ${p.network} | Coin: ${p.coin || 'TRX'}</small>` : '';
           
           html += `
             <div class="pending-item">
               <strong>$${p.amount.toFixed(2)}</strong> - ${p.userName}
+              ${networkInfo}
               ${packageInfo}
               ${discountInfo}
               <br><small style="color:#64748b;">ID: ${p.id}</small><br>
@@ -1130,15 +1173,19 @@
         
         let html = '';
         pending.forEach(w => {
-          // YENİ: Adres doğrulama rozeti
           const addressBadge = w.addressValidated 
             ? '<span class="address-badge valid">✓ Doğrulandı</span>' 
-            : '<span class="address-badge invalid"> Doğrulanmadı</span>';
+            : '<span class="address-badge invalid">✗ Doğrulanmadı</span>';
+          
+          const networkBadge = w.network 
+            ? `<span class="network-badge" style="font-size:10px; padding:2px 8px;">${w.network}</span>` 
+            : '';
           
           html += `
             <div class="withdrawal-item">
               <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}
               ${addressBadge}
+              ${networkBadge}
               <br><small style="color:#64748b;">Kullanıcı: ${w.userName}</small><br>
               <small style="color:#64748b;">Cüzdan: ${w.walletAddress}</small><br>
               <small style="color:#64748b;">ID: ${w.id}</small><br>
@@ -1298,6 +1345,7 @@
       if (page === 'withdraw') {
         updateCryptoAmount();
         clearAddressValidation();
+        updateNetworkInfo();
       }
       else if (page === 'admin') loadAdmin();
       else if (page === 'buy') updateBuyTRX();
