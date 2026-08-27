@@ -14,7 +14,6 @@
   .container { max-width: 800px; margin: 0 auto; }
   .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
   .stat { display: inline-block; padding: 15px 25px; background: #4a9eff; color: white; border-radius: 8px; margin: 5px; font-size: 18px; }
-  .product { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin: 10px 0; }
   .btn { background: #4a9eff; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
   .btn:active { transform: scale(0.98); }
   .btn-approve { background: #4ade80; }
@@ -33,7 +32,7 @@
   .tab { flex: 1; padding: 12px; background: #e5e7eb; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; }
   .tab.active { background: #4a9eff; color: white; }
 
-  /* Offline Kazanç Popup Stili */
+  /* Offline Kazanç Popup */
   .offline-popup {
     position: fixed;
     top: 50%;
@@ -68,13 +67,12 @@
     <div id="page-home" class="card">
       <h1>⚡ Hash Power Mining</h1>
       <div>
-        <div class="stat">💰 Bakiye: $<span id="balance">0.00</span></div>
+        <div class="stat"> Bakiye: $<span id="balance">0.00</span></div>
         <div class="stat">📦 Ürün: <span id="productCount">0</span></div>
         <div class="stat">💵 Yatırım: $<span id="totalInvested">0</span></div>
       </div>
       <br>
       <button class="btn" onclick="showPage('buy')">💎 Satın Al</button>
-      <button class="btn" onclick="showPage('production')">⚡ Üretim</button>
       <button class="btn btn-withdraw" onclick="showPage('withdraw')">💸 Çekim</button>
       <button class="btn" onclick="showPage('admin')" id="adminBtn" style="display:none;">🔐 Admin</button>
     </div>
@@ -98,13 +96,6 @@
       </div>
       
       <button class="btn btn-approve" style="width: 100%;" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
-      <button class="btn" style="background:#666; width: 100%;" onclick="showPage('home')">← Geri</button>
-    </div>
-
-    <!-- Üretim -->
-    <div id="page-production" class="card hidden">
-      <h2>⚡ Üretim Hattı</h2>
-      <div id="products"></div>
       <button class="btn" style="background:#666; width: 100%;" onclick="showPage('home')">← Geri</button>
     </div>
 
@@ -207,19 +198,13 @@
         document.getElementById('adminBtn').style.display = 'inline-block';
       }
       
-      // 1. Önce offline kazancı hesapla ve veritabanını güncelle
       await calculateOfflineEarnings();
-      
-      // 2. Sonra gerçek zamanlı dinlemeyi başlat
       listenToData();
-      
-      // 3. Her saniye kazançları güncelle
       setInterval(updateEarnings, 1000);
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
     
-    // 🔧 DÜZELTİLDİ: Offline Kazanç Hesaplama
     async function calculateOfflineEarnings() {
       try {
         const doc = await db.collection('users').doc(userId).get();
@@ -229,7 +214,6 @@
           const lastActive = data.lastActive || now;
           const offlineSeconds = (now - lastActive) / 1000;
           
-          // Eğer 5 saniyeden uzun süredir yoksa ve ürünü varsa
           if (offlineSeconds > 5 && data.approvedPayments && data.approvedPayments.length > 0) {
             const totalPower = data.approvedPayments.reduce((sum, p) => sum + p.amount, 0);
             const offlineEarned = offlineSeconds * (totalPower * PER_SECOND);
@@ -238,21 +222,17 @@
               const currentLifetime = data.lifetimeEarnings || 0;
               const newLifetime = currentLifetime + offlineEarned;
               
-              // Veritabanını güncelle
               await db.collection('users').doc(userId).update({
                 lifetimeEarnings: newLifetime,
                 lastActive: now
               });
               
-              // Popup göster
               showOfflinePopup(offlineEarned);
             }
           } else {
-            // Sadece son aktif zamanı güncelle
             await db.collection('users').doc(userId).update({ lastActive: now });
           }
         } else {
-          // Yeni kullanıcı oluştur
           await db.collection('users').doc(userId).set({
             lifetimeEarnings: 0,
             totalWithdrawn: 0,
@@ -261,7 +241,7 @@
           });
         }
       } catch (error) {
-        console.error('Offline kazanç hesaplama hatası:', error);
+        console.error('Offline kazanç hatası:', error);
       }
     }
     
@@ -280,7 +260,6 @@
       unsubscribe = db.collection('users').doc(userId).onSnapshot((doc) => {
         if (doc.exists) {
           const data = doc.data();
-          // Ürünleri yüklerken yerel 'earned' değerini sıfırla ki UI temiz başlasın
           products = (data.approvedPayments || []).map(p => ({ ...p, earned: 0 }));
           lifetimeEarnings = data.lifetimeEarnings || 0;
           totalWithdrawn = data.totalWithdrawn || 0;
@@ -337,40 +316,15 @@
       }
     }
     
-    function renderProducts() {
-      const container = document.getElementById('products');
-      container.innerHTML = '';
-      
-      if (products.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#666; padding:20px;">Henüz aktif ürününüz yok. Satın alma işleminiz admin tarafından onaylanınca burada görünecektir.</p>';
-        return;
-      }
-      
-      products.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'product';
-        div.innerHTML = `
-          <strong style="font-size:18px;">$${p.amount}</strong><br>
-          <small>Bu oturum kazancı: $${(p.earned || 0).toFixed(6)}</small><br>
-          <small>Saniyelik: $${(p.amount * PER_SECOND).toFixed(6)}</small>
-        `;
-        container.appendChild(div);
-      });
-    }
-    
-    // 🔧 DÜZELTİLDİ: Artık lifetimeEarnings'i sıfırlamıyor, ÜSTÜNE EKLIYOR (+=)
     async function updateEarnings() {
       if (products.length === 0) return;
       
-      // 1 saniyede toplam ne kadar kazanıldığını hesapla
       const perSecondTotal = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
       
-      // Yerel ürün kazançlarını güncelle (sadece ekranda göstermek için)
       products.forEach(p => {
         p.earned = (p.earned || 0) + (p.amount * PER_SECOND);
       });
       
-      // Toplam kazancın ÜSTÜNE ekle (Eski hata buradaydı, '=' yerine '+=' kullanıyoruz)
       lifetimeEarnings += perSecondTotal;
       balance = lifetimeEarnings - totalWithdrawn;
       
@@ -391,7 +345,6 @@
       document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
-      renderProducts();
     }
     
     function updateCryptoAmount() {
@@ -651,8 +604,7 @@
       document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
       document.getElementById('page-' + page).classList.remove('hidden');
       
-      if (page === 'production') renderProducts();
-      else if (page === 'withdraw') updateCryptoAmount();
+      if (page === 'withdraw') updateCryptoAmount();
       else if (page === 'admin') loadAdmin();
       else if (page === 'buy') updateBuyTRX();
       
