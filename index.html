@@ -20,7 +20,7 @@
   body { 
     background: #f0f2f5; 
     padding: 15px; 
-    padding-bottom: calc(80px + env(safe-area-inset-bottom)); /* iPhone boşluk desteği */
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
     min-height: 100vh;
   }
   
@@ -38,7 +38,6 @@
   h2 { color: #1a2a3a; margin-bottom: 15px; font-size: 20px; }
   h3 { color: #4b5563; margin: 15px 0 10px 0; font-size: 15px; font-weight: 600; }
   
-  /* İstatistik Izgarası */
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -57,7 +56,6 @@
   .stat-box .label { font-size: 11px; color: #64748b; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
   .stat-box .value { font-size: 16px; font-weight: bold; color: #1e293b; }
   
-  /* Form Elemanları */
   input, select { 
     padding: 14px; 
     border: 2px solid #e2e8f0; 
@@ -75,7 +73,6 @@
     background: white;
   }
   
-  /* Butonlar */
   .btn { 
     background: #4a9eff; 
     color: white; 
@@ -96,7 +93,6 @@
   .btn-withdraw { background: #f59e0b; }
   .btn-secondary { background: #94a3b8; }
   
-  /* Bilgi Kutuları */
   .crypto-info { 
     background: #f1f5f9; 
     padding: 15px; 
@@ -118,7 +114,6 @@
   }
   .balance-display .amount { font-size: 36px; font-weight: bold; margin-top: 5px; }
   
-  /* Admin Listeleri */
   .pending-item { 
     background: #fffbeb; 
     padding: 15px; 
@@ -151,7 +146,7 @@
   
   .hidden { display: none !important; }
   
-  /* ALT NAVİGASYON MENÜSÜ (Mini App Standardı) */
+  /* ALT NAVİGASYON MENÜSÜ */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -186,6 +181,146 @@
     font-size: 24px;
     display: block;
     margin-bottom: 4px;
+  }
+  
+  /* YENİ: YATAY PAKET KARTLARI */
+  .packages-wrapper {
+    position: relative;
+    margin-top: 15px;
+  }
+  
+  .scroll-hint {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  .packages-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 5px 2px 12px 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  
+  .packages-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .packages-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 2px;
+  }
+  
+  .package-card {
+    min-width: 155px;
+    max-width: 155px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .package-card:active {
+    transform: scale(0.96);
+  }
+  
+  .package-card:hover {
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+  
+  .package-card.featured {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  }
+  
+  .package-card.featured::before {
+    content: '⭐ POPÜLER';
+    position: absolute;
+    top: 6px;
+    right: -28px;
+    background: #f59e0b;
+    color: white;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 3px 30px;
+    transform: rotate(45deg);
+    letter-spacing: 0.5px;
+  }
+  
+  .package-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1e293b;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  
+  .discount-badge {
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 8px;
+    animation: pulse-badge 2s infinite;
+  }
+  
+  @keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .package-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 6px;
+  }
+  
+  .original-price {
+    font-size: 12px;
+    color: #94a3b8;
+    text-decoration: line-through;
+  }
+  
+  .discounted-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #10b981;
+  }
+  
+  .package-savings {
+    font-size: 10px;
+    color: #059669;
+    font-weight: 600;
+    background: #d1fae5;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  
+  .package-cta {
+    font-size: 11px;
+    color: #4a9eff;
+    font-weight: 600;
+    text-align: center;
   }
   
   /* Offline Popup */
@@ -246,17 +381,24 @@
           <div class="value" style="color: #f59e0b;">$<span id="totalInvested">0</span></div>
         </div>
       </div>
-      <div class="crypto-info" style="text-align: center; margin-top: 20px;">
-        🚀 Ürün satın almak için aşağıdaki <strong>"Satın Al"</strong> menüsünü kullanın. Onaydan sonra otomatik üretim başlayacaktır.
+      
+      <!-- YENİ: YATAY PAKET SİSTEMİ -->
+      <h3 style="text-align: center; margin-top: 20px; color: #1e293b;"> Özel Paket Fırsatları - %20 İndirim!</h3>
+      
+      <div class="packages-wrapper">
+        <div class="scroll-hint">← Kaydırarak tüm paketleri görün →</div>
+        <div class="packages-container" id="packagesContainer">
+          <!-- Paketler JavaScript ile oluşturulacak -->
+        </div>
       </div>
     </div>
 
     <!-- Satın Al -->
     <div id="page-buy" class="card hidden">
-      <h2>💎 Satın Al</h2>
+      <h2> Satın Al</h2>
       <div class="crypto-info">
         <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
+        <strong> Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 13px; background: white; padding: 8px; border-radius: 6px; display: block; margin-top: 5px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
         <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
       </div>
@@ -283,7 +425,7 @@
       <h3>Çekilecek Miktar (USD)</h3>
       <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
       
-      <h3>🪙 Kripto Seçimi</h3>
+      <h3> Kripto Seçimi</h3>
       <select id="withdrawCrypto" onchange="updateCryptoAmount()">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
@@ -370,16 +512,65 @@
     const PER_SECOND = DAILY_RATE / 86400;
     const TRX_PRICE = 0.12;
     const DEPOSIT_WALLET = "TXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+    const DISCOUNT_RATE = 0.20; // %20 indirim
     
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
+    // Paket Tanımları
+    const packages = [
+      { name: 'Mini', price: 3, featured: false },
+      { name: 'Micro', price: 10, featured: false },
+      { name: 'Ultra', price: 100, featured: true },
+      { name: 'PRO Ultra', price: 500, featured: false },
+      { name: 'Business', price: 1000, featured: false }
+    ];
+    
     const tg = window.Telegram.WebApp;
     tg.ready();
-    tg.expand(); // Mini App'i tam ekran yap
+    tg.expand();
     
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
       currentUser = tg.initDataUnsafe.user;
+    }
+    
+    // Paketleri render et - YATAY DÜZEN
+    function renderPackages() {
+      const container = document.getElementById('packagesContainer');
+      container.innerHTML = '';
+      
+      packages.forEach(pkg => {
+        const discountedPrice = pkg.price * (1 - DISCOUNT_RATE);
+        const savings = pkg.price - discountedPrice;
+        
+        const card = document.createElement('div');
+        card.className = `package-card ${pkg.featured ? 'featured' : ''}`;
+        card.onclick = () => selectPackage(discountedPrice, pkg.name);
+        
+        card.innerHTML = `
+          <div class="package-name">${pkg.name}</div>
+          <div style="text-align:center;">
+            <span class="discount-badge">%20 İNDİRİM</span>
+          </div>
+          <div class="package-pricing">
+            <span class="original-price">$${pkg.price.toFixed(2)}</span>
+            <span class="discounted-price">$${discountedPrice.toFixed(2)}</span>
+          </div>
+          <div class="package-savings">💰 -$${savings.toFixed(2)}</div>
+          <div class="package-cta">Seç →</div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+    
+    // Paket seçildiğinde
+    function selectPackage(amount, packageName) {
+      document.getElementById('buyAmount').value = amount.toFixed(2);
+      updateBuyTRX();
+      showPage('buy');
+      
+      if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     }
     
     auth.signInAnonymously().then(async () => {
@@ -390,6 +581,7 @@
         document.getElementById('adminNav').style.display = 'block';
       }
       
+      renderPackages();
       await calculateOfflineEarnings();
       listenToData();
       setInterval(updateEarnings, 1000);
@@ -504,7 +696,7 @@
         alert('✅ Ödeme bildirimi alındı! Admin onayından sonra üretiminiz başlayacaktır.');
         document.getElementById('buyAmount').value = '10';
         updateBuyTRX();
-        showPage('home'); // Ana sayfaya yönlendir
+        showPage('home');
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Satın alma hatası:', error);
@@ -617,7 +809,7 @@
         pending.forEach(p => {
           html += `
             <div class="pending-item">
-              <strong>$${p.amount}</strong> - ${p.userName}<br>
+              <strong>$${p.amount.toFixed(2)}</strong> - ${p.userName}<br>
               <small style="color:#64748b;">ID: ${p.id}</small><br>
               <div style="display:flex; gap:10px; margin-top:10px;">
                 <button class="btn btn-approve" style="flex:1; margin:0;" onclick="approvePayment('${p.userDocId}', '${p.id}', ${p.amount})">✓ Onayla</button>
@@ -799,23 +991,18 @@
     }
     
     function showPage(page, navElement) {
-      // Tüm sayfaları gizle
       document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
-      // İstenen sayfayı göster
       document.getElementById('page-' + page).classList.remove('hidden');
       
-      // Alt menü aktif durumunu güncelle
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       
       if (navElement) {
         navElement.classList.add('active');
       } else {
-        // Eğer butonla değil de fonksiyonla çağrıldıysa, ilgili menüyü bul ve aktif yap
         const matchingNav = document.querySelector(`.nav-item[onclick*="'${page}'"]`);
         if (matchingNav) matchingNav.classList.add('active');
       }
       
-      // Sayfa özel işlemleri
       if (page === 'withdraw') updateCryptoAmount();
       else if (page === 'admin') loadAdmin();
       else if (page === 'buy') updateBuyTRX();
