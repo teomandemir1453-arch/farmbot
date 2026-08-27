@@ -280,6 +280,13 @@
   .btn-reject { background: #ef4444; box-shadow: 0 3px 10px rgba(239, 68, 68, 0.25); }
   .btn-withdraw { background: #f59e0b; box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25); }
   .btn-secondary { background: #94a3b8; box-shadow: 0 3px 10px rgba(148, 163, 184, 0.25); }
+  .btn-small { 
+    width: auto; 
+    padding: 8px 14px; 
+    font-size: 12px; 
+    display: inline-block; 
+    margin: 2px;
+  }
   
   .crypto-info { 
     background: #f1f5f9; 
@@ -464,6 +471,141 @@
     z-index: 1000;
     backdrop-filter: blur(2px);
   }
+  
+  /* YENİ: QR Kod Stili */
+  .qr-container {
+    text-align: center;
+    margin: 12px 0;
+    padding: 12px;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+  }
+  
+  .qr-container img {
+    max-width: 180px;
+    border-radius: 8px;
+  }
+  
+  .qr-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  
+  /* YENİ: Miktar Kontrol Butonları */
+  .amount-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  
+  .amount-control .btn-ctrl {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  
+  .amount-control input {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .amount-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+  
+  .max-btn {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .max-btn:active { transform: scale(0.95); }
+  
+  /* YENİ: Geçmiş Listesi */
+  .history-section {
+    margin-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 12px;
+  }
+  
+  .history-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1e293b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .history-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  
+  .history-item .h-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+  }
+  
+  .history-item .h-label { color: #64748b; }
+  .history-item .h-value { font-weight: bold; color: #1e293b; }
+  .history-item .h-date { font-size: 10px; color: #94a3b8; }
+  
+  .history-item.success { border-left: 3px solid #10b981; }
+  .history-item.pending { border-left: 3px solid #f59e0b; }
+  .history-item.rejected { border-left: 3px solid #ef4444; }
+  
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  
+  .status-badge.success { background: #d1fae5; color: #065f46; }
+  .status-badge.pending { background: #fef3c7; color: #92400e; }
+  .status-badge.rejected { background: #fee2e2; color: #991b1b; }
+  
+  .empty-history {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 15px;
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
@@ -488,7 +630,7 @@
       </div>
       
       <div class="earnings-estimate">
-        <div class="earnings-title"> Tahmini Kazançlarınız</div>
+        <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
         <div class="earnings-grid">
           <div class="earnings-item">
             <div class="icon">⏱️</div>
@@ -538,11 +680,17 @@
       </div>
       
       <div class="crypto-info">
-        <strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
+        <strong> Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
         <strong> Kabul Edilen Coin:</strong> TRX<br>
-        <strong> Cüzdan Adresi:</strong><br>
-        <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
-        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+        <strong>📍 Cüzdan Adresi:</strong><br>
+        <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 1px dashed #cbd5e1;">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
+        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+      </div>
+      
+      <!-- YENİ: QR Kod -->
+      <div class="qr-container">
+        <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
+        <div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
       </div>
       
       <div class="network-info">
@@ -550,13 +698,30 @@
       </div>
       
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
-      <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10" oninput="updateBuyTRX()">
+      
+      <!-- YENİ: +/- Miktar Kontrolü -->
+      <div class="amount-control">
+        <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
+        <input type="number" id="buyAmount" placeholder="1.00" min="1" max="9999" value="1" oninput="updateBuyTRX(); validateAmount();">
+        <button class="btn btn-ctrl" onclick="adjustAmount(1)">+</button>
+      </div>
+      <div class="amount-info">
+        <span>Min: $1.00 (<span id="minTrx">8.33</span> TRX)</span>
+        <span>Max: $9,999.00</span>
+      </div>
       
       <div class="crypto-info" style="text-align: center;">
-        <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: bold; font-size: 16px;">83.33</span> TRX
+        <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: bold; font-size: 16px;">8.33</span> TRX
       </div>
       
       <button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
+      <button class="btn btn-secondary" onclick="resetAndGoHome()">← Vazgeç / Ana Sayfa</button>
+      
+      <!-- YENİ: Yatırım Geçmişi -->
+      <div class="history-section">
+        <div class="history-title">📜 Yatırım Geçmişim</div>
+        <div id="depositHistory"></div>
+      </div>
     </div>
 
     <!-- Çekim -->
@@ -569,16 +734,20 @@
       </div>
       
       <h3>Çekilecek Miktar (USD)</h3>
-      <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
       
-      <h3>🪙 Kripto Seçimi</h3>
+      <!-- YENİ: MAX Butonu -->
+      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+        <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex: 1; margin-right: 8px;">
+        <button class="max-btn" onclick="setMaxAmount()">MAX</button>
+      </div>
+      
+      <h3> Kripto Seçimi</h3>
       <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
         <option value="xrp">XRP (Ripple) - ~$0.50</option>
       </select>
       
-      <!-- YENİ: Ağ Bilgisi -->
       <div class="network-info" id="networkInfo">
         🌐 <strong>Ağ:</strong> TRON (TRC20)<br>
         <small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small>
@@ -592,12 +761,18 @@
       <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
       <div id="addressValidationMsg" class="validation-message"></div>
       
-      <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
+      <button class="btn btn-withdraw" onclick="requestWithdrawal()"> Çekim Talebi Oluştur</button>
+      
+      <!-- YENİ: Çekim Geçmişi -->
+      <div class="history-section">
+        <div class="history-title">📜 Çekim Geçmişim</div>
+        <div id="withdrawalHistory"></div>
+      </div>
     </div>
 
     <!-- Admin -->
     <div id="page-admin" class="card hidden">
-      <h2>🔐 Admin Panel</h2>
+      <h2> Admin Panel</h2>
       <div class="tab-container">
         <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Yatırımlar</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
@@ -668,32 +843,18 @@
     const DAILY_RATE = 1 / 90;
     const PER_SECOND = DAILY_RATE / 86400;
     const TRX_PRICE = 0.12;
-    const DEPOSIT_WALLET = "TXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+    const DEPOSIT_WALLET = "TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN";
     const DISCOUNT_RATE = 0.20;
+    const MIN_DEPOSIT = 1;
+    const MAX_DEPOSIT = 9999;
     
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
-    // YENİ: Ağ (Network) Bilgileri
     const NETWORK_INFO = {
-      trx: {
-        name: 'TRON',
-        standard: 'TRC20',
-        fullName: 'TRON (TRC20)',
-        description: 'TRX coin\'leri TRON ağı üzerinden gönderilecektir.'
-      },
-      bnb: {
-        name: 'BSC',
-        standard: 'BEP20',
-        fullName: 'BSC (BEP20)',
-        description: 'BNB coin\'leri Binance Smart Chain ağı üzerinden gönderilecektir.'
-      },
-      xrp: {
-        name: 'XRP Ledger',
-        standard: 'XRP',
-        fullName: 'XRP Ledger',
-        description: 'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.'
-      }
+      trx: { name: 'TRON', standard: 'TRC20', fullName: 'TRON (TRC20)', description: 'TRX coin\'leri TRON ağı üzerinden gönderilecektir.' },
+      bnb: { name: 'BSC', standard: 'BEP20', fullName: 'BSC (BEP20)', description: 'BNB coin\'leri Binance Smart Chain ağı üzerinden gönderilecektir.' },
+      xrp: { name: 'XRP Ledger', standard: 'XRP', fullName: 'XRP Ledger', description: 'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.' }
     };
     
     const packages = [
@@ -713,18 +874,9 @@
     }
     
     const addressValidators = {
-      trx: (addr) => {
-        const regex = /^T[a-km-zA-HJ-NP-Z1-9]{33}$/;
-        return regex.test(addr);
-      },
-      bnb: (addr) => {
-        const regex = /^0x[a-fA-F0-9]{40}$/;
-        return regex.test(addr);
-      },
-      xrp: (addr) => {
-        const regex = /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/;
-        return regex.test(addr);
-      }
+      trx: (addr) => /^T[a-km-zA-HJ-NP-Z1-9]{33}$/.test(addr),
+      bnb: (addr) => /^0x[a-fA-F0-9]{40}$/.test(addr),
+      xrp: (addr) => /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(addr)
     };
     
     const addressFormats = {
@@ -736,14 +888,10 @@
     function validateAddress(address, crypto) {
       const validator = addressValidators[crypto];
       if (!validator) return { valid: false, message: 'Geçersiz coin' };
-      
       const isValid = validator(address);
-      
       return {
         valid: isValid,
-        message: isValid 
-          ? '✅ Geçerli adres formatı' 
-          : `❌ Geçersiz format. ${addressFormats[crypto]} olmalı`
+        message: isValid ? '✅ Geçerli adres formatı' : `❌ Geçersiz format. ${addressFormats[crypto]} olmalı`
       };
     }
     
@@ -779,21 +927,49 @@
     function clearAddressValidation() {
       const inputElement = document.getElementById('walletAddress');
       const msgElement = document.getElementById('addressValidationMsg');
-      
       inputElement.classList.remove('input-valid', 'input-invalid');
       msgElement.classList.remove('show', 'valid', 'invalid');
     }
     
-    // YENİ: Ağ bilgisini güncelle
     function updateNetworkInfo() {
       const crypto = document.getElementById('withdrawCrypto').value;
       const networkInfo = NETWORK_INFO[crypto];
-      const networkInfoElement = document.getElementById('networkInfo');
-      
-      networkInfoElement.innerHTML = `
-         <strong>Ağ:</strong> ${networkInfo.fullName}<br>
+      document.getElementById('networkInfo').innerHTML = `
+        🌐 <strong>Ağ:</strong> ${networkInfo.fullName}<br>
         <small>${networkInfo.description}</small>
       `;
+    }
+    
+    // YENİ: Miktar Ayarlama
+    function adjustAmount(delta) {
+      const input = document.getElementById('buyAmount');
+      let val = parseFloat(input.value) || 0;
+      val = Math.round((val + delta) * 100) / 100;
+      if (val < MIN_DEPOSIT) val = MIN_DEPOSIT;
+      if (val > MAX_DEPOSIT) val = MAX_DEPOSIT;
+      input.value = val.toFixed(2);
+      updateBuyTRX();
+      validateAmount();
+    }
+    
+    function validateAmount() {
+      const input = document.getElementById('buyAmount');
+      let val = parseFloat(input.value) || 0;
+      if (val < MIN_DEPOSIT) val = MIN_DEPOSIT;
+      if (val > MAX_DEPOSIT) val = MAX_DEPOSIT;
+      // Sadece görsel uyarı, değeri değiştirme
+    }
+    
+    // YENİ: MAX Butonu
+    function setMaxAmount() {
+      const maxVal = Math.max(0.01, balance);
+      if (maxVal < 0.01) {
+        alert('❌ Çekilecek bakiye yok!');
+        return;
+      }
+      document.getElementById('withdrawAmount').value = maxVal.toFixed(2);
+      updateCryptoAmount();
+      if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     }
     
     function renderPackages() {
@@ -848,6 +1024,25 @@
       showPage('buy');
       
       if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    }
+    
+    // YENİ: Paket seçimini sıfırla ve ana sayfaya dön
+    function resetAndGoHome() {
+      selectedPackageName = '';
+      selectedPackageOriginal = 0;
+      selectedPackageDiscounted = 0;
+      
+      const buyAmountInput = document.getElementById('buyAmount');
+      const amountLabel = document.getElementById('amountLabel');
+      
+      buyAmountInput.value = '1';
+      buyAmountInput.readOnly = false;
+      amountLabel.textContent = 'Gönderilecek Tutar (USD)';
+      updateBuyTRX();
+      
+      document.getElementById('packageSummary').classList.remove('active');
+      
+      showPage('home');
     }
     
     auth.signInAnonymously().then(async () => {
@@ -948,7 +1143,8 @@
     async function buyProduct() {
       const amount = selectedPackageOriginal > 0 ? selectedPackageOriginal : parseFloat(document.getElementById('buyAmount').value);
       
-      if (amount < 1) { alert('❌ Minimum $1 yatırabilirsiniz.'); return; }
+      if (amount < MIN_DEPOSIT) { alert(`❌ Minimum $${MIN_DEPOSIT} yatırabilirsiniz.`); return; }
+      if (amount > MAX_DEPOSIT) { alert(` Maximum $${MAX_DEPOSIT} yatırabilirsiniz.`); return; }
       
       const payment = {
         id: 'pay_' + Date.now(),
@@ -956,8 +1152,9 @@
         packageName: selectedPackageName || null,
         originalPrice: selectedPackageOriginal || amount,
         discountedPrice: selectedPackageDiscounted || null,
-        network: 'TRON (TRC20)', // YENİ: Ağ bilgisi
-        coin: 'TRX', // YENİ: Coin bilgisi
+        network: 'TRON (TRC20)',
+        coin: 'TRX',
+        trxAmount: (amount / TRX_PRICE).toFixed(2),
         earned: 0,
         status: 'pending',
         userId: userId,
@@ -976,28 +1173,18 @@
           totalInvested: (data.totalInvested || 0) + amount
         }, { merge: true });
         
-        let successMsg = '✅ Ödeme bildirimi alındı!';
+        let successMsg = `✅ Ödeme bildirimi alındı!\n\n`;
         if (selectedPackageName) {
-          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}\n🌐 Ağ: TRON (TRC20)`;
+          successMsg += `📦 Paket: ${selectedPackageName}\n`;
         }
-        successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
+        successMsg += `💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n`;
+        successMsg += `🪙 Gönderilecek TRX: ${payment.trxAmount} TRX\n`;
+        successMsg += `🌐 Ağ: TRON (TRC20)\n\n`;
+        successMsg += `Admin onayından sonra üretiminiz başlayacaktır.`;
         
         alert(successMsg);
         
-        const buyAmountInput = document.getElementById('buyAmount');
-        const amountLabel = document.getElementById('amountLabel');
-        
-        buyAmountInput.value = '10';
-        buyAmountInput.readOnly = false;
-        amountLabel.textContent = 'Gönderilecek Tutar (USD)';
-        updateBuyTRX();
-        
-        document.getElementById('packageSummary').classList.remove('active');
-        selectedPackageName = '';
-        selectedPackageOriginal = 0;
-        selectedPackageDiscounted = 0;
-        
-        showPage('home');
+        resetAndGoHome();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Satın alma hatası:', error);
@@ -1067,7 +1254,7 @@
       
       const validation = validateAddress(walletAddress, crypto);
       if (!validation.valid) {
-        alert(`❌ Geçersiz ${crypto.toUpperCase()} adresi!\n\n${validation.message}\n\nLütfen doğru adresi girin.`);
+        alert(` Geçersiz ${crypto.toUpperCase()} adresi!\n\n${validation.message}\n\nLütfen doğru adresi girin.`);
         return;
       }
       
@@ -1078,7 +1265,7 @@
         cryptoSymbol: CRYPTO_SYMBOLS[crypto],
         cryptoAmount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
         walletAddress: walletAddress,
-        network: NETWORK_INFO[crypto].fullName, // YENİ: Ağ bilgisi
+        network: NETWORK_INFO[crypto].fullName,
         addressValidated: true,
         status: 'pending',
         userId: userId,
@@ -1101,11 +1288,159 @@
         document.getElementById('walletAddress').value = '';
         clearAddressValidation();
         updateCryptoAmount();
-        showPage('home');
+        loadWithdrawalHistory();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Çekim hatası:', error);
         alert('❌ Hata: ' + error.message);
+      }
+    }
+    
+    // YENİ: Yatırım Geçmişi Yükle
+    async function loadDepositHistory() {
+      const container = document.getElementById('depositHistory');
+      container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
+      
+      try {
+        const userRef = db.collection('users').doc(userId);
+        
+        // Bekleyen ödemeler
+        const pendingSnap = await userRef.collection('pendingPayments').get().catch(() => null);
+        // Onaylanmış ödemeler (varsa)
+        const approvedSnap = await userRef.collection('approvedPayments').get().catch(() => null);
+        // Kullanıcı doc içindeki pendingPayments array
+        const userDoc = await userRef.get();
+        const userData = userDoc.data() || {};
+        
+        let allDeposits = [];
+        
+        // Array'den gelenler
+        if (userData.pendingPayments && Array.isArray(userData.pendingPayments)) {
+          userData.pendingPayments.forEach(p => {
+            allDeposits.push({ ...p, source: 'pending' });
+          });
+        }
+        
+        // Subcollection'dan gelenler (varsa)
+        if (pendingSnap) {
+          pendingSnap.forEach(doc => {
+            allDeposits.push({ ...doc.data(), source: 'pending' });
+          });
+        }
+        
+        if (approvedSnap) {
+          approvedSnap.forEach(doc => {
+            allDeposits.push({ ...doc.data(), source: 'approved' });
+          });
+        }
+        
+        // Tarihe göre sırala (en yeni en üstte)
+        allDeposits.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        
+        if (allDeposits.length === 0) {
+          container.innerHTML = '<div class="empty-history">Henüz yatırım yapmadınız</div>';
+          return;
+        }
+        
+        let html = '';
+        allDeposits.slice(0, 10).forEach(d => {
+          const date = d.timestamp ? new Date(d.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor';
+          const status = d.status || 'pending';
+          const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
+          const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
+          const packageText = d.packageName ? ` ${d.packageName}` : '💰 Manuel';
+          const trxText = d.trxAmount ? `${d.trxAmount} TRX` : '';
+          
+          html += `
+            <div class="history-item ${statusClass}">
+              <div class="h-row">
+                <span class="h-label">${packageText}</span>
+                <span class="status-badge ${statusClass}">${statusText}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">Tutar:</span>
+                <span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText ? '(' + trxText + ')' : ''}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">🌐 Ağ:</span>
+                <span class="h-value">${d.network || 'TRON (TRC20)'}</span>
+              </div>
+              <div class="h-date">🕐 ${date}</div>
+            </div>
+          `;
+        });
+        
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Geçmiş yükleme hatası:', error);
+        container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>';
+      }
+    }
+    
+    // YENİ: Çekim Geçmişi Yükle
+    async function loadWithdrawalHistory() {
+      const container = document.getElementById('withdrawalHistory');
+      container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
+      
+      try {
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+        const userData = userDoc.data() || {};
+        
+        let allWithdrawals = [];
+        
+        if (userData.withdrawalRequests && Array.isArray(userData.withdrawalRequests)) {
+          userData.withdrawalRequests.forEach(w => {
+            allWithdrawals.push({ ...w });
+          });
+        }
+        
+        // Tarihe göre sırala
+        allWithdrawals.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        
+        if (allWithdrawals.length === 0) {
+          container.innerHTML = '<div class="empty-history">Henüz çekim yapmadınız</div>';
+          return;
+        }
+        
+        let html = '';
+        allWithdrawals.slice(0, 10).forEach(w => {
+          const date = w.timestamp ? new Date(w.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor';
+          const status = w.status || 'pending';
+          const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
+          const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
+          
+          html += `
+            <div class="history-item ${statusClass}">
+              <div class="h-row">
+                <span class="h-label">💸 Çekim</span>
+                <span class="status-badge ${statusClass}">${statusText}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">Tutar:</span>
+                <span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">🪙 Coin:</span>
+                <span class="h-value">${w.cryptoSymbol || w.crypto || ''}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">🌐 Ağ:</span>
+                <span class="h-value">${w.network || ''}</span>
+              </div>
+              <div class="h-row">
+                <span class="h-label">📍 Cüzdan:</span>
+                <span class="h-value" style="font-size:10px; word-break:break-all;">${w.walletAddress || ''}</span>
+              </div>
+              <div class="h-date">🕐 ${date}</div>
+            </div>
+          `;
+        });
+        
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Çekim geçmişi hatası:', error);
+        container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>';
       }
     }
     
@@ -1127,11 +1462,11 @@
         
         let html = '';
         pending.forEach(p => {
-          const packageInfo = p.packageName ? `<br><small style="color:#4a9eff;"> Paket: ${p.packageName}</small>` : '';
+          const packageInfo = p.packageName ? `<br><small style="color:#4a9eff;">📦 Paket: ${p.packageName}</small>` : '';
           const discountInfo = (p.originalPrice && p.discountedPrice && p.originalPrice !== p.discountedPrice) 
             ? `<br><small style="color:#10b981;">💰 Orijinal: $${p.originalPrice.toFixed(2)} | Ödenen: $${p.discountedPrice.toFixed(2)}</small>` 
             : '';
-          const networkInfo = p.network ? `<br><small style="color:#1e40af;"> Ağ: ${p.network} | Coin: ${p.coin || 'TRX'}</small>` : '';
+          const networkInfo = p.network ? `<br><small style="color:#1e40af;">🌐 Ağ: ${p.network} | Coin: ${p.coin || 'TRX'} | TRX: ${p.trxAmount || '-'}</small>` : '';
           
           html += `
             <div class="pending-item">
@@ -1322,7 +1657,7 @@
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         
         await userRef.set({ withdrawalRequests: newWithdrawals }, { merge: true });
-        alert('❌ Çekim reddedildi!');
+        alert(' Çekim reddedildi!');
         await loadAdmin();
       } catch (error) {
         alert('❌ Hata: ' + error.message);
@@ -1346,9 +1681,13 @@
         updateCryptoAmount();
         clearAddressValidation();
         updateNetworkInfo();
+        loadWithdrawalHistory();
       }
       else if (page === 'admin') loadAdmin();
-      else if (page === 'buy') updateBuyTRX();
+      else if (page === 'buy') {
+        updateBuyTRX();
+        loadDepositHistory();
+      }
       
       window.scrollTo(0, 0);
     }
