@@ -11,6 +11,7 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
   body { background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f2fe 100%); padding: 10px; padding-bottom: calc(75px + env(safe-area-inset-bottom)); min-height: 100vh; }
+  body.rtl { direction: rtl; }
   .container { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
   .card { background: white; border-radius: 16px; padding: 15px; margin-bottom: 12px; border: 3px solid #3b82f6; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
   h1 { text-align: center; color: #1e293b; margin-bottom: 15px; font-size: 22px; font-weight: 800; }
@@ -25,64 +26,18 @@
   .stat-box .value { font-size: 16px; font-weight: 800; color: #1e293b; transition: all 0.3s; }
   @keyframes countUp { 0% { transform: scale(1); color: #1e293b; } 50% { transform: scale(1.15); color: #10b981; } 100% { transform: scale(1); color: #1e293b; } }
   .stat-box .value.updating { animation: countUp 0.4s ease; }
-  
-  /* HIZLI EYLEM KISAYOLLARI */
-  .quick-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin: 12px 0;
-    padding: 10px;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    border-radius: 12px;
-    border: 2px solid #3b82f6;
-  }
-  .qa-item {
-    flex: 1;
-    text-align: center;
-    padding: 10px 4px;
-    background: white;
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s;
-    border: 2px solid #bfdbfe;
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
-  }
-  .qa-item:active { transform: scale(0.95); background: #f0f9ff; }
-  .qa-icon { font-size: 22px; margin-bottom: 2px; }
-  .qa-label { font-size: 9px; font-weight: 800; color: #1e40af; text-transform: uppercase; letter-spacing: 0.3px; }
-  .qa-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: white;
-    font-size: 10px;
-    font-weight: 800;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 5px;
-    animation: pulseBadge 1.2s infinite;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
-    border: 2px solid white;
-  }
-  @keyframes pulseBadge {
-    0%, 100% { transform: scale(1); box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5); }
-    50% { transform: scale(1.25); box-shadow: 0 2px 12px rgba(239, 68, 68, 0.8); }
-  }
-  .qa-item.new-bonus .qa-icon {
-    animation: bounceIcon 1.5s infinite;
-  }
-  @keyframes bounceIcon {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-  
+  .quick-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .quick-action-btn { background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px 6px; cursor: pointer; transition: all 0.2s; position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .quick-action-btn:active { transform: scale(0.95); }
+  .quick-action-btn .qa-icon { font-size: 20px; }
+  .quick-action-btn .qa-label { font-size: 9px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.3px; }
+  .quick-action-btn.notif-btn { border-color: #a78bfa; background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); }
+  .quick-action-btn.bonus-btn { border-color: #fbbf24; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+  .quick-action-btn.tasks-btn { border-color: #34d399; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+  .qa-badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; min-width: 18px; height: 18px; border-radius: 9px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid white; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4); animation: badgePulse 1.5s ease-in-out infinite; }
+  body.rtl .qa-badge { right: auto; left: -6px; }
+  @keyframes badgePulse { 0%, 100% { transform: scale(1); background: #ef4444; } 50% { transform: scale(1.15); background: #dc2626; } }
+  .qa-badge.hidden { display: none; }
   .bonus-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid #f59e0b; border-radius: 14px; padding: 12px; margin: 12px 0; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2); }
   .bonus-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .bonus-title { font-size: 13px; font-weight: 800; color: #92400e; display: flex; align-items: center; gap: 6px; }
@@ -96,7 +51,6 @@
   .bonus-withdraw-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
   .bonus-lock-info { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 8px; font-size: 10px; color: #92400e; text-align: center; margin-top: 8px; display: none; }
   .bonus-lock-info.show { display: block; }
-  
   .earnings-estimate { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 3px solid #3b82f6; border-radius: 14px; padding: 12px; margin: 12px 0; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
   .earnings-title { text-align: center; font-size: 13px; font-weight: 800; color: #1e40af; margin-bottom: 10px; }
   .earnings-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -123,6 +77,7 @@
   .package-card:nth-child(4) { border-color: #f97316; }
   .package-card:nth-child(5) { border-color: #dc2626; }
   .package-card.featured::before { content: '⭐'; position: absolute; top: 6px; right: 8px; font-size: 16px; }
+  body.rtl .package-card.featured::before { right: auto; left: 8px; }
   .package-name { font-size: 14px; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 6px; }
   .discount-badge { background: #ef4444; color: white; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 6px; }
   .package-pricing { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 6px; }
@@ -133,16 +88,9 @@
   input, select { padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; width: 100%; margin: 6px 0 12px 0; font-size: 15px; background: #f8fafc; transition: all 0.2s; }
   input:focus, select:focus { outline: none; border-color: #3b82f6; background: white; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
   input[readonly] { background: #f1f5f9; color: #64748b; cursor: not-allowed; border-color: #cbd5e1; }
-  input.input-valid { border-color: #10b981 !important; background: #ecfdf5 !important; }
-  input.input-invalid { border-color: #ef4444 !important; background: #fef2f2 !important; }
-  .validation-message { font-size: 11px; margin-top: -8px; margin-bottom: 10px; font-weight: 600; padding: 4px 8px; border-radius: 6px; display: none; }
-  .validation-message.show { display: block; }
-  .validation-message.valid { color: #065f46; background: #d1fae5; }
-  .validation-message.invalid { color: #991b1b; background: #fee2e2; }
   .btn { background: #3b82f6; color: white; border: none; padding: 14px 20px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 800; margin: 6px 0; width: 100%; transition: all 0.2s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; gap: 8px; }
   .btn:active { transform: scale(0.97); }
   .btn-approve { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
-  .btn-reject { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
   .btn-withdraw { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
   .btn-secondary { background: linear-gradient(135deg, #64748b, #475569); box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4); }
   .btn-ctrl { width: 48px; height: 48px; padding: 0; font-size: 24px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0; flex-shrink: 0; border-radius: 10px; }
@@ -154,10 +102,9 @@
   .network-info { background: #dbeafe; border: 2px solid #3b82f6; border-radius: 8px; padding: 8px; margin: 8px 0; font-size: 11px; color: #1e40af; font-weight: 600; }
   .hidden { display: none !important; }
   .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; padding-bottom: calc(8px + env(safe-area-inset-bottom)); border-top: 3px solid #3b82f6; box-shadow: 0 -3px 10px rgba(59, 130, 246, 0.15); z-index: 1000; }
-  .nav-item { flex: 1; text-align: center; padding: 6px 4px; cursor: pointer; color: #94a3b8; transition: color 0.2s; font-size: 10px; font-weight: 700; position: relative; }
+  .nav-item { flex: 1; text-align: center; padding: 6px 4px; cursor: pointer; color: #94a3b8; transition: color 0.2s; font-size: 10px; font-weight: 700; }
   .nav-item.active { color: #3b82f6; }
   .nav-item .icon { font-size: 22px; display: block; margin-bottom: 2px; }
-  .nav-badge { position: absolute; top: 2px; right: 20%; background: #ef4444; color: white; font-size: 9px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 4px; animation: pulseBadge 1.2s infinite; border: 2px solid white; }
   .package-summary { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 10px; padding: 12px; margin: 10px 0; display: none; }
   .package-summary.active { display: block; }
   .package-summary-title { font-size: 13px; font-weight: 800; color: #065f46; margin-bottom: 8px; text-align: center; }
@@ -173,6 +120,7 @@
   .amount-control input { flex: 1; text-align: center; font-size: 20px; font-weight: 800; margin: 0; }
   .amount-info { display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: -6px; margin-bottom: 10px; padding: 0 4px; }
   .max-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; margin-left: 8px; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3); }
+  body.rtl .max-btn { margin-left: 0; margin-right: 8px; }
   .max-btn:active { transform: scale(0.95); }
   .history-section { margin-top: 15px; border-top: 2px solid #e2e8f0; padding-top: 12px; }
   .history-title { font-size: 13px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
@@ -182,8 +130,11 @@
   .history-item .h-value { font-weight: 700; color: #1e293b; }
   .history-item .h-date { font-size: 10px; color: #94a3b8; }
   .history-item.success { border-left: 3px solid #10b981; }
+  body.rtl .history-item.success { border-left: none; border-right: 3px solid #10b981; }
   .history-item.pending { border-left: 3px solid #f59e0b; }
+  body.rtl .history-item.pending { border-left: none; border-right: 3px solid #f59e0b; }
   .history-item.rejected { border-left: 3px solid #ef4444; }
+  body.rtl .history-item.rejected { border-left: none; border-right: 3px solid #ef4444; }
   .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
   .status-badge.success { background: #d1fae5; color: #065f46; }
   .status-badge.pending { background: #fef3c7; color: #92400e; }
@@ -195,6 +146,7 @@
   .offline-popup .amount { font-size: 32px; font-weight: 800; color: #3b82f6; margin: 12px 0; }
   .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(59, 130, 246, 0.25); z-index: 1000; backdrop-filter: blur(2px); }
   .notif-toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: bold; z-index: 2000; transform: translateX(150%); transition: transform 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  body.rtl .notif-toast { right: auto; left: 20px; transform: translateX(-150%); }
   .notif-toast.show { transform: translateX(0); }
   .profile-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
   .profile-overlay.show { opacity: 1; visibility: visible; }
@@ -202,6 +154,7 @@
   .profile-overlay.show .profile-popup { transform: scale(1) translateY(0); }
   .profile-header { background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); padding: 20px; border-radius: 17px 17px 0 0; position: relative; color: white; }
   .profile-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  body.rtl .profile-close { right: auto; left: 12px; }
   .profile-close:active { transform: scale(0.9); }
   .profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .profile-name { font-size: 18px; font-weight: 800; text-align: center; margin-bottom: 4px; }
@@ -220,10 +173,6 @@
   .level-progress-info { font-size: 11px; color: #475569; font-weight: 600; }
   .level-progress-bar { height: 8px; background: rgba(255,255,255,0.5); border-radius: 10px; overflow: hidden; }
   .level-progress-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #fbbf24); border-radius: 10px; transition: width 0.5s ease; }
-  .level-card.silver .level-progress-fill { background: linear-gradient(90deg, #64748b, #94a3b8); }
-  .level-card.gold .level-progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-  .level-card.platinum .level-progress-fill { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
-  .level-card.bronze .level-progress-fill { background: linear-gradient(90deg, #f97316, #fb923c); }
   .profile-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
   .profile-stat { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px 8px; text-align: center; }
   .profile-stat .p-icon { font-size: 18px; margin-bottom: 3px; }
@@ -238,12 +187,12 @@
   .profile-menu-item .m-icon.purple { background: #ede9fe; }
   .profile-menu-item .m-icon.orange { background: #fed7aa; }
   .profile-menu-item .m-icon.pink { background: #fce7f3; }
-  .profile-menu-item .m-icon.red { background: #fee2e2; }
   .profile-menu-item .m-icon.teal { background: #ccfbf1; }
   .profile-menu-item .m-content { flex: 1; }
   .profile-menu-item .m-title { font-size: 13px; font-weight: 700; color: #1e293b; }
   .profile-menu-item .m-desc { font-size: 10px; color: #64748b; margin-top: 1px; }
   .profile-menu-item .m-arrow { color: #94a3b8; font-size: 18px; }
+  body.rtl .profile-menu-item .m-arrow { transform: rotate(180deg); }
   .sub-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(6px); z-index: 3000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
   .sub-overlay.show { opacity: 1; visibility: visible; }
   .sub-popup { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 20px; transform: translateY(100%); transition: transform 0.3s ease; }
@@ -261,7 +210,6 @@
   .toggle-switch input:checked + .toggle-slider { background: #10b981; }
   .toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
   .referral-box { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #3b82f6; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 12px; }
-  .referral-code { font-family: monospace; font-size: 16px; font-weight: 800; color: #1e40af; background: white; padding: 10px; border-radius: 8px; margin: 10px 0; letter-spacing: 1px; border: 2px dashed #93c5fd; word-break: break-all; }
   .referral-link { font-family: monospace; font-size: 11px; color: #1e40af; background: white; padding: 8px; border-radius: 8px; margin: 8px 0; word-break: break-all; border: 1px solid #93c5fd; }
   .referral-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .ref-stat { background: white; border-radius: 8px; padding: 10px; text-align: center; border: 1px solid #e2e8f0; }
@@ -309,16 +257,16 @@
   .chart-period button.active { background: #3b82f6; color: white; border-color: #3b82f6; }
   .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 120px; padding-top: 10px; }
   .chart-bar { flex: 1; background: linear-gradient(180deg, #3b82f6, #60a5fa); border-radius: 4px 4px 0 0; min-height: 4px; position: relative; transition: all 0.3s; }
-  .chart-bar:hover { opacity: 0.8; }
   .chart-bar .bar-label { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #64748b; font-weight: 600; }
   .chart-bar .bar-value { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #1e40af; font-weight: 700; white-space: nowrap; }
   .chart-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 25px; }
   .chart-summary-item { text-align: center; padding: 8px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
   .chart-summary-item .csi-value { font-size: 14px; font-weight: 800; color: #1e40af; }
   .chart-summary-item .csi-label { font-size: 9px; color: #64748b; font-weight: 600; margin-top: 2px; }
-  .notif-item { background: #f8fafc; border-radius: 10px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #3b82f6; display: flex; gap: 10px; cursor: pointer; transition: all 0.2s; }
+  .notif-item { background: #f8fafc; border-radius: 10px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #3b82f6; display: flex; gap: 10px; }
+  body.rtl .notif-item { border-left: none; border-right: 3px solid #3b82f6; }
   .notif-item.unread { background: #eff6ff; border-left-color: #10b981; }
-  .notif-item:active { transform: scale(0.98); }
+  body.rtl .notif-item.unread { border-left: none; border-right-color: #10b981; }
   .notif-item .ni-icon { font-size: 20px; flex-shrink: 0; }
   .notif-item .ni-content { flex: 1; }
   .notif-item .ni-title { font-size: 13px; font-weight: 700; color: #1e293b; }
@@ -326,7 +274,7 @@
   .notif-item .ni-time { font-size: 10px; color: #94a3b8; margin-top: 4px; }
   .notif-empty { text-align: center; padding: 30px; color: #94a3b8; }
   .notif-empty .ne-icon { font-size: 48px; margin-bottom: 8px; }
-  .mark-all-read { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; }
+  .mark-all-read { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 12px; }
   .wheel-container { text-align: center; padding: 15px; }
   .wheel-wrapper { position: relative; width: 280px; height: 280px; margin: 0 auto 15px; }
   .wheel-canvas { width: 280px; height: 280px; border-radius: 50%; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
@@ -351,144 +299,137 @@
 <body>
   <div class="container">
     <div id="page-home" class="card">
-      <h1>⚡ Hash Power Mining</h1>
+      <h1>⚡ <span data-i18n="appName">Hash Power Mining</span></h1>
       <div class="stats-grid">
-        <div class="stat-box"><div class="label">Bakiye</div><div class="value" style="color: #22c55e;" id="balance">$0.00</div></div>
-        <div class="stat-box"><div class="label">Ürün</div><div class="value" style="color: #3b82f6;" id="productCount">0</div></div>
-        <div class="stat-box"><div class="label">Yatırım</div><div class="value" style="color: #f97316;" id="totalInvested">$0</div></div>
+        <div class="stat-box"><div class="label" data-i18n="balance">Bakiye</div><div class="value" style="color: #22c55e;" id="balance">$0.00</div></div>
+        <div class="stat-box"><div class="label" data-i18n="product">Ürün</div><div class="value" style="color: #3b82f6;" id="productCount">0</div></div>
+        <div class="stat-box"><div class="label" data-i18n="investment">Yatırım</div><div class="value" style="color: #f97316;" id="totalInvested">$0</div></div>
       </div>
-      
-      <!-- HIZLI EYLEM KISAYOLLARI -->
       <div class="quick-actions">
-        <div class="qa-item" id="qaNotif" onclick="openQuickNotif()">
+        <div class="quick-action-btn notif-btn" onclick="openNotificationsQuick()">
           <div class="qa-icon">🔔</div>
-          <div class="qa-label">bildirim</div>
-          <div class="qa-badge" id="qaNotifBadge" style="display:none;">0</div>
+          <div class="qa-label" data-i18n="notifications">bildirimler</div>
+          <div class="qa-badge hidden" id="quickNotifBadge">0</div>
         </div>
-        <div class="qa-item" id="qaDaily" onclick="openQuickDaily()">
+        <div class="quick-action-btn bonus-btn" onclick="openSubPopup('dailyBonus')">
           <div class="qa-icon">🎁</div>
-          <div class="qa-label">günlük</div>
+          <div class="qa-label" data-i18n="dailyBonus">günlük bonus</div>
         </div>
-        <div class="qa-item" id="qaTasks" onclick="openQuickTasks()">
+        <div class="quick-action-btn tasks-btn" onclick="openSubPopup('tasks')">
           <div class="qa-icon">🎯</div>
-          <div class="qa-label">görevler</div>
-        </div>
-        <div class="qa-item" id="qaWheel" onclick="openQuickWheel()">
-          <div class="qa-icon">🎰</div>
-          <div class="qa-label">çark</div>
+          <div class="qa-label" data-i18n="tasks">görevler</div>
         </div>
       </div>
-      
       <div class="bonus-card" id="bonusCard" style="display: none;">
         <div class="bonus-header">
-          <div class="bonus-title">🎁 Bonus Bakiyesi</div>
-          <div class="bonus-amount" id="bonusBalance">$0.00</div>
+          <div class="bonus-title">🎁 <span data-i18n="bonusBalance">Bonus Bakiyesi</span></div>
+          <div class="bonus-amount" id="bonusBalanceDisplay">$0.00</div>
         </div>
         <div class="bonus-grid">
-          <div class="bonus-item"><div class="bi-label">Dakikalık</div><div class="bi-value" id="bonusPerMin">$0.00</div></div>
-          <div class="bonus-item"><div class="bi-label">Saatlik</div><div class="bi-value" id="bonusPerHour">$0.00</div></div>
-          <div class="bonus-item"><div class="bi-label">Günlük</div><div class="bi-value" id="bonusPerDay">$0.00</div></div>
+          <div class="bonus-item"><div class="bi-label" data-i18n="perMinute">Dakikalık</div><div class="bi-value" id="bonusPerMin">$0.00</div></div>
+          <div class="bonus-item"><div class="bi-label" data-i18n="perHour">Saatlik</div><div class="bi-value" id="bonusPerHour">$0.00</div></div>
+          <div class="bonus-item"><div class="bi-label" data-i18n="perDay">Günlük</div><div class="bi-value" id="bonusPerDay">$0.00</div></div>
         </div>
-        <button class="bonus-withdraw-btn" id="bonusWithdrawBtn" onclick="withdrawBonuses()">💰 Bonusları Ana Bakiyeye Aktar</button>
-        <div class="bonus-lock-info" id="bonusLockInfo">⚠️ Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız. Şu an: $<span id="currentInvestedForBonus">0.00</span> / $3.00</div>
+        <button class="bonus-withdraw-btn" id="bonusWithdrawBtn" onclick="withdrawBonuses()">💰 <span data-i18n="transferBonus">Bonusları Ana Bakiyeye Aktar</span></button>
+        <div class="bonus-lock-info" id="bonusLockInfo">
+          ⚠️ <span data-i18n="bonusLockMsg">Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız.</span> <span data-i18n="current">Şu an</span>: $<span id="currentInvestedForBonus">0.00</span> / $3.00
+        </div>
       </div>
-      
       <div class="earnings-estimate">
-        <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
+        <div class="earnings-title">📊 <span data-i18n="estimatedEarnings">Tahmini Kazançlarınız</span></div>
         <div class="earnings-grid">
-          <div class="earnings-item"><div class="icon">⏱️</div><div class="label">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
-          <div class="earnings-item"><div class="icon">🕐</div><div class="label">Saatlik</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
-          <div class="earnings-item"><div class="icon">📅</div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
+          <div class="earnings-item"><div class="icon">⏱️</div><div class="label" data-i18n="perMinute">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
+          <div class="earnings-item"><div class="icon">🕐</div><div class="label" data-i18n="perHour">Saatlik</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
+          <div class="earnings-item"><div class="icon">📅</div><div class="label" data-i18n="perDay">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
         </div>
       </div>
       <div class="telegram-notif-card inactive" id="telegramNotifCard" onclick="activateTelegramNotif()">
         <div class="telegram-icon">📱</div>
         <div class="telegram-content">
-          <div class="telegram-title" id="telegramTitle">🔔 Bildirimleri Aktif Et</div>
-          <div class="telegram-desc" id="telegramDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div>
+          <div class="telegram-title" id="telegramTitle">🔔 <span data-i18n="activateNotif">Bildirimleri Aktif Et</span></div>
+          <div class="telegram-desc" id="telegramDesc" data-i18n="notifDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div>
         </div>
         <div class="telegram-check" id="telegramCheck">›</div>
       </div>
-      <div class="packages-section-title">🎁 Özel Paket Fırsatları - %20 İndirim!</div>
+      <div class="packages-section-title"> <span data-i18n="packagesTitle">Özel Paket Fırsatları - %20 İndirim!</span></div>
       <div class="packages-grid" id="packagesContainer"></div>
     </div>
 
     <div id="page-buy" class="card hidden">
-      <h2>💎 Satın Al</h2>
+      <h2>💎 <span data-i18n="buy">Satın Al</span></h2>
       <div class="package-summary" id="packageSummary">
-        <div class="package-summary-title">📦 Seçtiğiniz Paket</div>
-        <div class="package-summary-row"><span class="label">Paket Adı:</span><span class="value" id="summaryName">-</span></div>
-        <div class="package-summary-row"><span class="label">Orijinal Fiyat:</span><span class="value original" id="summaryOriginal">-</span></div>
-        <div class="package-summary-row"><span class="label">İndirimli Ödeme:</span><span class="value" id="summaryDiscounted">-</span></div>
-        <div class="package-summary-row"><span class="label">Kaydedilecek Tutar:</span><span class="value" id="summaryRecord" style="color: #dc2626;">-</span></div>
+        <div class="package-summary-title">📦 <span data-i18n="selectedPackage">Seçtiğiniz Paket</span></div>
+        <div class="package-summary-row"><span class="label" data-i18n="packageName">Paket Adı:</span><span class="value" id="summaryName">-</span></div>
+        <div class="package-summary-row"><span class="label" data-i18n="originalPrice">Orijinal Fiyat:</span><span class="value original" id="summaryOriginal">-</span></div>
+        <div class="package-summary-row"><span class="label" data-i18n="discountedPayment">İndirimli Ödeme:</span><span class="value" id="summaryDiscounted">-</span></div>
+        <div class="package-summary-row"><span class="label" data-i18n="recordedAmount">Kaydedilecek Tutar:</span><span class="value" id="summaryRecord" style="color: #dc2626;">-</span></div>
       </div>
       <div class="crypto-info">
-        <strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
-        <strong>💰 Kabul Edilen Coin:</strong> TRX<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
+        <strong>🌐 <span data-i18n="network">Ağ (Network)</span>:</strong> <span class="network-badge">TRON (TRC20)</span><br>
+        <strong>💰 <span data-i18n="acceptedCoin">Kabul Edilen Coin</span>:</strong> TRX<br>
+        <strong>📍 <span data-i18n="walletAddress">Cüzdan Adresi</span>:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #3b82f6; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 2px dashed #cbd5e1;">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
-        <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+        <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 <span data-i18n="copyAddress">Adresi Kopyala</span></button>
       </div>
       <div class="qr-container">
         <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
-        <div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
+        <div class="qr-label" data-i18n="qrLabel"> TRX Göndermek İçin QR Kodu Tara</div>
       </div>
-      <div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
-      <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
+      <div class="network-info">⚠️ <strong data-i18n="important">ÖNEMLİ:</strong> <span data-i18n="networkWarning">Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</span></div>
+      <h3 id="amountLabel" data-i18n="sendAmount">Gönderilecek Tutar (USD)</h3>
       <div class="amount-control">
         <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
         <input type="number" id="buyAmount" placeholder="1.00" min="1" max="9999" value="1" oninput="updateBuyTRX();">
         <button class="btn btn-ctrl" onclick="adjustAmount(1)">+</button>
       </div>
-      <div class="amount-info"><span>Min: $1.00 (<span id="minTrx">8.33</span> TRX)</span><span>Max: $9,999.00</span></div>
-      <div class="crypto-info" style="text-align: center;"><strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: 800; font-size: 20px;">8.33</span> TRX</div>
-      <button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
-      <button class="btn btn-secondary" onclick="resetAndGoHome()">← Vazgeç / Ana Sayfa</button>
-      <div class="history-section"><div class="history-title">📜 Yatırım Geçmişim</div><div id="depositHistory"></div></div>
+      <div class="amount-info"><span><span data-i18n="min">Min</span>: $1.00 (<span id="minTrx">8.33</span> TRX)</span><span><span data-i18n="max">Max</span>: $9,999.00</span></div>
+      <div class="crypto-info" style="text-align: center;"><strong data-i18n="equivalent">Karşılık</strong>: <span id="buyTrxAmount" style="color: #10b981; font-weight: 800; font-size: 20px;">8.33</span> TRX</div>
+      <button class="btn btn-approve" onclick="buyProduct()">✅ <span data-i18n="paymentSent">Ödemeyi Yaptım, Bildir</span></button>
+      <button class="btn btn-secondary" onclick="resetAndGoHome()">← <span data-i18n="cancel">Vazgeç / Ana Sayfa</span></button>
+      <div class="history-section"><div class="history-title">📜 <span data-i18n="depositHistory">Yatırım Geçmişim</span></div><div id="depositHistory"></div></div>
     </div>
 
     <div id="page-withdraw" class="card hidden">
-      <h2>💸 Çekim Talebi</h2>
+      <h2>💸 <span data-i18n="withdrawalRequest">Çekim Talebi</span></h2>
       <div class="balance-display">
-        <div style="font-size: 13px; opacity: 0.9;">Mevcut Bakiye</div>
+        <div style="font-size: 13px; opacity: 0.9;" data-i18n="currentBalance">Mevcut Bakiye</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 12px; margin-top: 4px; opacity: 0.8;">Minimum çekim: $0.01</div>
+        <div style="font-size: 12px; margin-top: 4px; opacity: 0.8;"><span data-i18n="minWithdraw">Minimum çekim</span>: $0.01</div>
       </div>
-      <h3>Çekilecek Miktar (USD)</h3>
+      <h3 data-i18n="withdrawAmount">Çekilecek Miktar (USD)</h3>
       <div style="display: flex; align-items: center; margin-bottom: 4px;">
         <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex: 1; margin-right: 8px;">
         <button class="max-btn" onclick="setMaxAmount()">MAX</button>
       </div>
-      <h3>🪙 Kripto Seçimi</h3>
+      <h3>🪙 <span data-i18n="cryptoSelect">Kripto Seçimi</span></h3>
       <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
         <option value="xrp">XRP (Ripple) - ~$0.50</option>
       </select>
-      <div class="network-info" id="networkInfo">🌐 <strong>Ağ:</strong> TRON (TRC20)<br><small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small></div>
-      <div class="crypto-info" style="text-align: center;"><strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: 800; font-size: 18px;">0.00</span> <span id="cryptoSymbol">TRX</span></div>
-      <h3>📍 Cüzdan Adresi</h3>
-      <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
+      <div class="network-info" id="networkInfo">🌐 <strong data-i18n="network">Ağ</strong>: TRON (TRC20)<br><small data-i18n="networkDesc">TRX coin'leri TRON ağı üzerinden gönderilecektir.</small></div>
+      <div class="crypto-info" style="text-align: center;"><strong data-i18n="equivalent">Karşılık</strong>: <span id="cryptoEquivalent" style="color: #10b981; font-weight: 800; font-size: 18px;">0.00</span> <span id="cryptoSymbol">TRX</span></div>
+      <h3>📍 <span data-i18n="walletAddress">Cüzdan Adresi</span></h3>
+      <input type="text" id="walletAddress" placeholder="" data-i18n-placeholder="enterWallet" oninput="validateAddressInput()">
       <div id="addressValidationMsg" class="validation-message"></div>
-      <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
-      <div class="history-section"><div class="history-title">📜 Çekim Geçmişim</div><div id="withdrawalHistory"></div></div>
+      <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 <span data-i18n="createWithdrawal">Çekim Talebi Oluştur</span></button>
+      <div class="history-section"><div class="history-title">📜 <span data-i18n="withdrawalHistory">Çekim Geçmişim</span></div><div id="withdrawalHistory"></div></div>
     </div>
 
     <div id="page-admin" class="card hidden">
-      <h2>🔐 Admin Panel</h2>
-      <p style="text-align:center; color:#64748b; padding:20px;">Yönetim için ayrı panelden giriş yapın:<br><br><a href="admin.html" target="_blank" class="btn">🔐 Admin Paneline Git</a></p>
+      <h2>🔐 <span data-i18n="adminPanel">Admin Panel</span></h2>
+      <p style="text-align:center; color:#64748b; padding:20px;"><span data-i18n="adminGoTo">Yönetim için ayrı panelden giriş yapın:</span><br><br><a href="admin.html" target="_blank" class="btn">🔐 <span data-i18n="goToAdmin">Admin Paneline Git</span></a></p>
     </div>
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="showPage('home', this)"><span class="icon">🏠</span><span>Ana Sayfa</span></div>
-    <div class="nav-item" onclick="showPage('buy', this)"><span class="icon">💎</span><span>Satın Al</span></div>
-    <div class="nav-item" onclick="openProfile()"><span class="icon">👤</span><span>Profil</span></div>
-    <div class="nav-item" onclick="showPage('withdraw', this)"><span class="icon">💸</span><span>Çekim</span></div>
-    <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;"><span class="icon">🔐</span><span>Admin</span></div>
+    <div class="nav-item active" onclick="showPage('home', this)"><span class="icon">🏠</span><span data-i18n="home">Ana Sayfa</span></div>
+    <div class="nav-item" onclick="showPage('buy', this)"><span class="icon">💎</span><span data-i18n="buy">Satın Al</span></div>
+    <div class="nav-item" onclick="openProfile()"><span class="icon"></span><span data-i18n="profile">Profil</span></div>
+    <div class="nav-item" onclick="showPage('withdraw', this)"><span class="icon"></span><span data-i18n="withdraw">Çekim</span></div>
+    <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;"><span class="icon">🔐</span><span data-i18n="admin">Admin</span></div>
   </div>
 
-  <!-- PROFİL POPUP -->
   <div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
     <div class="profile-popup" onclick="event.stopPropagation()">
       <div class="profile-header">
@@ -498,7 +439,7 @@
         <div class="profile-id" id="profileId">ID: ---</div>
       </div>
       <div class="profile-body">
-        <div class="profile-register-date">📅 <strong>Kayıt Tarihi:</strong> <span id="profileRegisterDate">Yükleniyor...</span></div>
+        <div class="profile-register-date">📅 <strong data-i18n="registerDate">Kayıt Tarihi</strong>: <span id="profileRegisterDate">Yükleniyor...</span></div>
         <div class="level-card" id="levelCard">
           <div class="level-header">
             <div class="level-badge"><span class="level-icon" id="levelIcon">🥉</span><span id="levelName">Bronze</span></div>
@@ -507,60 +448,60 @@
           <div class="level-progress-bar"><div class="level-progress-fill" id="levelProgressFill" style="width: 0%"></div></div>
         </div>
         <div class="profile-stats-grid">
-          <div class="profile-stat"><div class="p-icon">💰</div><div class="p-label">Bakiye</div><div class="p-value" id="pBalance">$0.00</div></div>
-          <div class="profile-stat"><div class="p-icon">🎁</div><div class="p-label">Bonus</div><div class="p-value" id="pBonus">$0.00</div></div>
-          <div class="profile-stat"><div class="p-icon">💵</div><div class="p-label">Toplam Yatırım</div><div class="p-value" id="pInvested">$0.00</div></div>
-          <div class="profile-stat"><div class="p-icon">💸</div><div class="p-label">Toplam Çekim</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
+          <div class="profile-stat"><div class="p-icon">💰</div><div class="p-label" data-i18n="balance">Bakiye</div><div class="p-value" id="pBalance">$0.00</div></div>
+          <div class="profile-stat"><div class="p-icon">🎁</div><div class="p-label" data-i18n="bonus">Bonus</div><div class="p-value" id="pBonus">$0.00</div></div>
+          <div class="profile-stat"><div class="p-icon">💵</div><div class="p-label" data-i18n="totalInvestment">Toplam Yatırım</div><div class="p-value" id="pInvested">$0.00</div></div>
+          <div class="profile-stat"><div class="p-icon">💸</div><div class="p-label" data-i18n="totalWithdrawal">Toplam Çekim</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
         </div>
         <div class="profile-menu">
           <div class="profile-menu-item" onclick="openSubPopup('dailyBonus')">
-            <div class="m-icon orange">🎁</div>
-            <div class="m-content"><div class="m-title">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Giriş bonusu al</div></div>
+            <div class="m-icon orange"></div>
+            <div class="m-content"><div class="m-title" data-i18n="dailyBonus">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Giriş bonusu al</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('tasks')">
             <div class="m-icon teal">🎯</div>
-            <div class="m-content"><div class="m-title">Görevler</div><div class="m-desc" id="tasksDesc">Görevleri tamamla, bonus kazan</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="tasks">Görevler</div><div class="m-desc" id="tasksDesc">Görevleri tamamla, bonus kazan</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('chart')">
-            <div class="m-icon blue">📈</div>
-            <div class="m-content"><div class="m-title">Kazanç Grafiği</div><div class="m-desc">Kazançlarını görüntüle</div></div>
+            <div class="m-icon blue"></div>
+            <div class="m-content"><div class="m-title" data-i18n="earningsChart">Kazanç Grafiği</div><div class="m-desc" data-i18n="viewEarnings">Kazançlarını görüntüle</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('notifications')">
             <div class="m-icon purple">🔔</div>
-            <div class="m-content"><div class="m-title">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimlerini gör</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="notifications">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimlerini gör</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('wheel')">
             <div class="m-icon pink">🎰</div>
-            <div class="m-content"><div class="m-title">Şans Çarkı</div><div class="m-desc" id="wheelDesc">Çevir, bonus kazan!</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="luckyWheel">Şans Çarkı</div><div class="m-desc" id="wheelDesc">Çevir, bonus kazan!</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('settings')">
             <div class="m-icon blue">⚙️</div>
-            <div class="m-content"><div class="m-title">Ayarlar</div><div class="m-desc">Bildirim ve tercihler</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="settings">Ayarlar</div><div class="m-desc" data-i18n="settingsDesc">Bildirim ve tercihler</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('referral')">
             <div class="m-icon green">🔗</div>
-            <div class="m-content"><div class="m-title">Referans Kodu</div><div class="m-desc" id="referralMenuDesc">Arkadaşlarını davet et, $0.50 kazan</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="referralCode">Referans Kodu</div><div class="m-desc" id="referralMenuDesc">Arkadaşlarını davet et, $0.50 kazan</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('faq')">
             <div class="m-icon purple">❓</div>
-            <div class="m-content"><div class="m-title">Sık Sorulan Sorular</div><div class="m-desc">Yardım ve bilgi</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="faq">Sık Sorulan Sorular</div><div class="m-desc" data-i18n="helpInfo">Yardım ve bilgi</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSupport()">
             <div class="m-icon orange">📞</div>
-            <div class="m-content"><div class="m-title">Destek</div><div class="m-desc">Telegram destek hattı</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="support">Destek</div><div class="m-desc" data-i18n="telegramSupport">Telegram destek hattı</div></div>
             <div class="m-arrow">›</div>
           </div>
           <div class="profile-menu-item" onclick="openSubPopup('about')">
             <div class="m-icon pink">ℹ️</div>
-            <div class="m-content"><div class="m-title">Hakkında</div><div class="m-desc">Uygulama bilgisi</div></div>
+            <div class="m-content"><div class="m-title" data-i18n="about">Hakkında</div><div class="m-desc" data-i18n="appInfo">Uygulama bilgisi</div></div>
             <div class="m-arrow">›</div>
           </div>
         </div>
@@ -568,7 +509,6 @@
     </div>
   </div>
 
-  <!-- ALT POPUP -->
   <div class="sub-overlay" id="subOverlay" onclick="closeSubOutside(event)">
     <div class="sub-popup" onclick="event.stopPropagation()" id="subPopupContent"></div>
   </div>
@@ -576,16 +516,655 @@
   <div id="offlinePopup" class="hidden">
     <div class="overlay" onclick="closeOfflinePopup()"></div>
     <div class="offline-popup">
-      <h3>⛏️ Tekrar Hoşgeldin!</h3>
-      <p style="color: #64748b; font-size: 13px;">Sen yokken madencilerin çalıştı:</p>
+      <h3>⛏️ <span data-i18n="welcomeBack">Tekrar Hoşgeldin!</span></h3>
+      <p style="color: #64748b; font-size: 13px;" data-i18n="minersWorked">Sen yokken madencilerin çalıştı:</p>
       <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
-      <button class="btn btn-approve" onclick="closeOfflinePopup()">Harika! Topla</button>
+      <button class="btn btn-approve" onclick="closeOfflinePopup()">🎉 <span data-i18n="collect">Harika! Topla</span></button>
     </div>
   </div>
 
-  <div id="notifToast" class="notif-toast">🔔 Bildirim!</div>
+  <div id="notifToast" class="notif-toast">🔔 <span data-i18n="notification">Bildirim!</span></div>
 
   <script>
+    // ============================================
+    // ÇEVİRİ SÖZLÜĞÜ - 7 DİL
+    // ============================================
+    const translations = {
+      tr: {
+        appName: "Hash Power Mining", balance: "Bakiye", product: "Ürün", investment: "Yatırım",
+        notifications: "bildirimler", dailyBonus: "günlük bonus", tasks: "görevler",
+        bonusBalance: "Bonus Bakiyesi", perMinute: "Dakikalık", perHour: "Saatlik", perDay: "Günlük",
+        transferBonus: "Bonusları Ana Bakiyeye Aktar", bonusLockMsg: "Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız.",
+        current: "Şu an", estimatedEarnings: "Tahmini Kazançlarınız", activateNotif: "Bildirimleri Aktif Et",
+        notifDesc: "Yatırım & çekim onaylarını Telegram'dan anında al!", packagesTitle: "Özel Paket Fırsatları - %20 İndirim!",
+        buy: "Satın Al", selectedPackage: "Seçtiğiniz Paket", packageName: "Paket Adı:", originalPrice: "Orijinal Fiyat:",
+        discountedPayment: "İndirimli Ödeme:", recordedAmount: "Kaydedilecek Tutar:", network: "Ağ (Network)",
+        acceptedCoin: "Kabul Edilen Coin", walletAddress: "Cüzdan Adresi", copyAddress: "Adresi Kopyala",
+        qrLabel: "📱 TRX Göndermek İçin QR Kodu Tara", important: "ÖNEMLİ:",
+        networkWarning: "Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!",
+        sendAmount: "Gönderilecek Tutar (USD)", min: "Min", max: "Max", equivalent: "Karşılık",
+        paymentSent: "Ödemeyi Yaptım, Bildir", cancel: "Vazgeç / Ana Sayfa", depositHistory: "Yatırım Geçmişim",
+        withdrawalRequest: "Çekim Talebi", currentBalance: "Mevcut Bakiye", minWithdraw: "Minimum çekim",
+        withdrawAmount: "Çekilecek Miktar (USD)", cryptoSelect: "Kripto Seçimi", networkDesc: "TRX coin'leri TRON ağı üzerinden gönderilecektir.",
+        enterWallet: "Cüzdan adresinizi girin...", createWithdrawal: "Çekim Talebi Oluştur", withdrawalHistory: "Çekim Geçmişim",
+        adminPanel: "Admin Panel", adminGoTo: "Yönetim için ayrı panelden giriş yapın:", goToAdmin: "Admin Paneline Git",
+        home: "Ana Sayfa", profile: "Profil", withdraw: "Çekim", admin: "Admin",
+        registerDate: "Kayıt Tarihi", bonus: "Bonus", totalInvestment: "Toplam Yatırım", totalWithdrawal: "Toplam Çekim",
+        earningsChart: "Kazanç Grafiği", viewEarnings: "Kazançlarını görüntüle", luckyWheel: "Şans Çarkı",
+        settings: "Ayarlar", settingsDesc: "Bildirim ve tercihler", referralCode: "Referans Kodu",
+        faq: "Sık Sorulan Sorular", helpInfo: "Yardım ve bilgi", support: "Destek", telegramSupport: "Telegram destek hattı",
+        about: "Hakkında", appInfo: "Uygulama bilgisi", welcomeBack: "Tekrar Hoşgeldin!",
+        minersWorked: "Sen yokken madencilerin çalıştı:", collect: "Harika! Topla", notification: "Bildirim!",
+        language: "Dil", languageChanged: "Dil değiştirildi!", selectLanguage: "Dil Seçimi",
+        telegramNotif: "Telegram Bildirimleri", notifOnOff: "Yatırım ve çekim onayları",
+        languageLabel: "Dil", appLanguage: "Uygulama dili", theme: "Tema", appearance: "Görünüm teması",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "Bugünün Bonusu Hazır!", comeBackTomorrow: "Yarın Tekrar Gel!",
+        getBonus: "Bonusu Al", streakBonus: "Seri Bonusu", streakInfo: "Her gün ardışık giriş yap, bonuslar artsın! 7. gün $0.10 kazan!",
+        alreadyClaimed: "⏰ Bugün zaten aldın! Yarın tekrar gel.",
+        congrats: "🎉 Tebrikler!", bonusEarned: "bonus kazandın!", streak: "gün seri",
+        tomorrowYouGet: "Yarın", youWillGet: "alacaksın!",
+        completeTasks: "Görevleri tamamla, otomatik bonus kazan!",
+        taskCompleted: "✅ Tamamlandı", waiting: "Bekliyor", claim: "🎁 Al",
+        alreadyCompleted: "⚠️ Bu görevi zaten tamamladın!",
+        taskDone: "görevi tamamlandı!", bonusWon: "bonus kazandın!",
+        earningsChartTitle: "Kazanç Grafiği", lastDaysEarnings: "Son", daysEarnings: "Gün Kazançların",
+        total: "Toplam", average: "Ortalama", highest: "En Yüksek",
+        notificationsTitle: "Bildirimler", markAllRead: "✅ Tümünü Okundu İşaretle",
+        noNotifications: "Henüz bildirim yok", unread: "okunmamış", allRead: "Tümü okundu",
+        referralSystem: "Referans Sistemi", yourLink: "Senin Özel Linkin", copyLink: "📋 Linki Kopyala",
+        referred: "Davet Edilen", earned: "Kazanılan", pending: "Bekleyen",
+        greatJob: "✅ Harika! $3 yatırım şartını sağladın. Davet bonusu bakiyene eklendi!",
+        bonusLock: " Bonus Kilidi: Bonuslar için minimum $3.00 yatırım gerekli. Şu an:",
+        howItWorks: "💡 Nasıl Çalışır?",
+        shareLink: "1. Linkini arkadaşlarınla paylaş", friendClicks: "2. Arkadaşın linke tıklayıp botu başlatır",
+        friendInvests: "3. Arkadaşın yatırım yaptığında sen $0.50 kazanırsın",
+        unlockBonuses: "4. Toplam $3+ yatırım yapınca bonuslar bakiyene eklenir",
+        faqTitle: "Sık Sorulan Sorular",
+        faq1Q: "💰 Nasıl yatırım yapabilirim?", faq1A: "Ana sayfadaki paketlerden birini seç, TRX cüzdanımıza TRX gönder, ardından \"Ödemeyi Yaptım\" butonuna bas. Admin onayından sonra kazancın başlar.",
+        faq2Q: "⏰ Kazancım ne zaman başlar?", faq2A: "Admin ödemeni onayladıktan sonra otomatik olarak başlar. Günlük %1.11 oranında kazanırsın (90 günde 2x).",
+        faq3Q: "💸 Nasıl çekim yapabilirim?", faq3A: "Alt menüden \"Çekim\" butonuna bas, miktarı gir, kripto türünü ve cüzdan adresini seç. Minimum çekim $0.01'dir.",
+        faq4Q: "🎁 Bonuslar nasıl çalışır?", faq4A: "Günlük bonus, görevler ve şans çarkından kazandığın bonuslar ayrı bir bakiyede birikir. Bonuslar da üretim yapar! Min $3 yatırım yapınca ana bakiyene aktarabilirsin.",
+        faq5Q: "🎰 Şans çarkı nasıl çalışır?", faq5A: "Her $10 yatırım için 1 çevirme hakkı kazanırsın. Çarkı çevir ve $0.10, $0.50 veya $1.00 kazan!",
+        faq6Q: "🌐 Hangi ağları destekliyorsunuz?", faq6A: "Yatırım için sadece TRON (TRC20) ağı. Çekim için TRX (TRC20), BNB (BEP20) ve XRP desteklenmektedir.",
+        aboutTitle: "Hakkında", appVersion: "Sürüm 2.3.0",
+        aboutDesc: "Kripto madencilik platformu ile pasif gelir elde et.",
+        luckyWheelTitle: "Şans Çarkı", spinsLeft: "Çevirme Hakkın",
+        spinPerInvest: "Her $10 yatırım = 1 çevirme hakkı", spinWheel: "🎰 Çarkı Çevir!",
+        noSpins: "⏳ Çevirme hakkın yok. $10 yatırım yap, hak kazan!",
+        lastWins: "🏆 Son Kazançların",
+        wheelWon: "kazandın!", spinsRemaining: "Kalan hak:",
+        bonusTransferred: "bonus ana bakiyeye aktarıldı!", newBalance: "Yeni bakiye:",
+        needMoreInvest: "⚠️ Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız.",
+        needMore: "daha", noBonusToTransfer: " Aktarılacak bonus yok!",
+        successful: "✅ Başarılı!",
+        notifActivated: "✅ Bildirimler aktif edildi!", notifDeactivated: "⏸️ Bildirimler kapatıldı.",
+        linkCopied: "✅ Referans linki kopyalandı!", shareWithFriends: "Arkadaşlarınla paylaş, her davet için $0.50 kazan!",
+        botOpened: "📱 Bot açıldı!", pleaseStart: "Lütfen sohbete \"/start\" yaz.",
+        minDeposit: "Minimum", youCanDeposit: "yatırabilirsiniz.", maxDeposit: "Maximum",
+        paymentNotified: "✅ Ödeme bildirimi alındı!", afterApproval: "Admin onayından sonra üretiminiz başlayacaktır.",
+        error: " Hata:", minWithdrawMsg: " Minimum çekim: $0.01", insufficientBalance: "❌ Yetersiz bakiye!",
+        walletRequired: "❌ Cüzdan adresi gerekli!", invalidAddress: "❌ Geçersiz adres!",
+        withdrawalCreated: "✅ Çekim talebi oluşturuldu!", awaitingApproval: "Admin onayı bekleniyor.",
+        noDeposits: "Henüz yatırım yapmadınız", noWithdrawals: "Henüz çekim yapmadınız",
+        historyLoading: "Yükleniyor...", historyFailed: "Geçmiş yüklenemedi",
+        approved: "✅ Onaylandı", rejected: "❌ Reddedildi", pending: "⏳ Bekliyor",
+        manual: "💰 Manuel", addressCopied: "✅ Cüzdan adresi kopyalandı!",
+        offlineEarning: "Sen yokken madencilerin çalıştı:",
+        bonusUnlocked: "Bonus kilidi açıldı! Bonus bakiyene eklendi.",
+        wheelSpinWon: "Şans Çarkı", spinRightsWon: "çevirme hakkı kazandın!",
+        taskCompletedNotif: "🎯 Görev Tamamlandı", dailyBonusNotif: "🎁 Günlük Bonus",
+        referralBonusNotif: "🎁 Referans Bonusu", bonusTransferredNotif: "💰 Bonus Aktarıldı",
+        day: "Gün", days: "Gün",
+        loading: "Yükleniyor...",
+        select: "Seç →"
+      },
+      en: {
+        appName: "Hash Power Mining", balance: "Balance", product: "Product", investment: "Investment",
+        notifications: "notifications", dailyBonus: "daily bonus", tasks: "tasks",
+        bonusBalance: "Bonus Balance", perMinute: "Per Minute", perHour: "Per Hour", perDay: "Per Day",
+        transferBonus: "Transfer Bonuses to Main Balance", bonusLockMsg: "You need minimum $3.00 investment to transfer bonuses.",
+        current: "Current", estimatedEarnings: "Your Estimated Earnings", activateNotif: "Activate Notifications",
+        notifDesc: "Get instant deposit & withdrawal approvals via Telegram!", packagesTitle: "Special Package Deals - 20% Off!",
+        buy: "Buy", selectedPackage: "Selected Package", packageName: "Package Name:", originalPrice: "Original Price:",
+        discountedPayment: "Discounted Payment:", recordedAmount: "Recorded Amount:", network: "Network",
+        acceptedCoin: "Accepted Coin", walletAddress: "Wallet Address", copyAddress: "Copy Address",
+        qrLabel: "📱 Scan QR Code to Send TRX", important: "IMPORTANT:",
+        networkWarning: "Only TRON (TRC20) network TRX deposits are accepted. Coins sent from wrong network cannot be refunded!",
+        sendAmount: "Amount to Send (USD)", min: "Min", max: "Max", equivalent: "Equivalent",
+        paymentSent: "I Made Payment, Notify", cancel: "Cancel / Home", depositHistory: "Deposit History",
+        withdrawalRequest: "Withdrawal Request", currentBalance: "Current Balance", minWithdraw: "Minimum withdrawal",
+        withdrawAmount: "Withdrawal Amount (USD)", cryptoSelect: "Crypto Selection", networkDesc: "TRX coins will be sent via TRON network.",
+        enterWallet: "Enter your wallet address...", createWithdrawal: "Create Withdrawal Request", withdrawalHistory: "Withdrawal History",
+        adminPanel: "Admin Panel", adminGoTo: "Access management from separate panel:", goToAdmin: "Go to Admin Panel",
+        home: "Home", profile: "Profile", withdraw: "Withdraw", admin: "Admin",
+        registerDate: "Registration Date", bonus: "Bonus", totalInvestment: "Total Investment", totalWithdrawal: "Total Withdrawal",
+        earningsChart: "Earnings Chart", viewEarnings: "View your earnings", luckyWheel: "Lucky Wheel",
+        settings: "Settings", settingsDesc: "Notifications & preferences", referralCode: "Referral Code",
+        faq: "FAQ", helpInfo: "Help & info", support: "Support", telegramSupport: "Telegram support line",
+        about: "About", appInfo: "App info", welcomeBack: "Welcome Back!",
+        minersWorked: "Miners worked while you were away:", collect: "Great! Collect", notification: "Notification!",
+        language: "Language", languageChanged: "Language changed!", selectLanguage: "Select Language",
+        telegramNotif: "Telegram Notifications", notifOnOff: "Deposit & withdrawal approvals",
+        languageLabel: "Language", appLanguage: "App language", theme: "Theme", appearance: "Appearance theme",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "Today's Bonus is Ready!", comeBackTomorrow: "Come Back Tomorrow!",
+        getBonus: "Claim Bonus", streakBonus: "Streak Bonus", streakInfo: "Login daily to increase bonuses! Day 7 earn $0.10!",
+        alreadyClaimed: "⏰ You already claimed today! Come back tomorrow.",
+        congrats: "🎉 Congratulations!", bonusEarned: "bonus earned!", streak: "day streak",
+        tomorrowYouGet: "Tomorrow you'll get", youWillGet: "!",
+        completeTasks: "Complete tasks, earn automatic bonuses!",
+        taskCompleted: "✅ Completed", waiting: "Waiting", claim: "🎁 Claim",
+        alreadyCompleted: "⚠️ You already completed this task!",
+        taskDone: "task completed!", bonusWon: "bonus won!",
+        earningsChartTitle: "Earnings Chart", lastDaysEarnings: "Last", daysEarnings: "Days Earnings",
+        total: "Total", average: "Average", highest: "Highest",
+        notificationsTitle: "Notifications", markAllRead: "✅ Mark All as Read",
+        noNotifications: "No notifications yet", unread: "unread", allRead: "All read",
+        referralSystem: "Referral System", yourLink: "Your Special Link", copyLink: " Copy Link",
+        referred: "Referred", earned: "Earned", pending: "Pending",
+        greatJob: "✅ Great! You met the $3 investment requirement. Referral bonus added to your balance!",
+        bonusLock: "⏳ Bonus Lock: Minimum $3.00 investment required for bonuses. Current:",
+        howItWorks: "💡 How It Works?",
+        shareLink: "1. Share your link with friends", friendClicks: "2. Friend clicks link and starts bot",
+        friendInvests: "3. When friend invests, you earn $0.50",
+        unlockBonuses: "4. After $3+ total investment, bonuses are added to your balance",
+        faqTitle: "Frequently Asked Questions",
+        faq1Q: "💰 How can I invest?", faq1A: "Choose a package from home page, send TRX to our wallet, then click \"I Made Payment\". After admin approval, earnings start.",
+        faq2Q: "⏰ When do my earnings start?", faq2A: "Automatically after admin approves your payment. You earn 1.11% daily (2x in 90 days).",
+        faq3Q: "💸 How can I withdraw?", faq3A: "Click \"Withdraw\" in bottom menu, enter amount, select crypto and wallet address. Minimum withdrawal is $0.01.",
+        faq4Q: "🎁 How do bonuses work?", faq4A: "Daily bonus, tasks and wheel bonuses accumulate in separate balance. Bonuses also generate! Transfer to main balance after min $3 investment.",
+        faq5Q: "🎰 How does lucky wheel work?", faq5A: "1 spin per $10 investment. Spin and win $0.10, $0.50 or $1.00!",
+        faq6Q: "🌐 Which networks do you support?", faq6A: "Deposits: TRON (TRC20) only. Withdrawals: TRX (TRC20), BNB (BEP20), XRP supported.",
+        aboutTitle: "About", appVersion: "Version 2.3.0",
+        aboutDesc: "Earn passive income with crypto mining platform.",
+        luckyWheelTitle: "Lucky Wheel", spinsLeft: "Spins Available",
+        spinPerInvest: "1 spin per $10 investment", spinWheel: "🎰 Spin the Wheel!",
+        noSpins: "⏳ No spins available. Invest $10 to earn spins!",
+        lastWins: "🏆 Recent Wins",
+        wheelWon: "won!", spinsRemaining: "Spins left:",
+        bonusTransferred: "bonus transferred to main balance!", newBalance: "New balance:",
+        needMoreInvest: "⚠️ You need minimum $3.00 investment to transfer bonuses.",
+        needMore: "more", noBonusToTransfer: "💰 No bonus to transfer!",
+        successful: "✅ Successful!",
+        notifActivated: "✅ Notifications activated!", notifDeactivated: "⏸️ Notifications deactivated.",
+        linkCopied: "✅ Referral link copied!", shareWithFriends: "Share with friends, earn $0.50 per referral!",
+        botOpened: "📱 Bot opened!", pleaseStart: "Please type \"/start\" in chat.",
+        minDeposit: "Minimum", youCanDeposit: "you can deposit.", maxDeposit: "Maximum",
+        paymentNotified: "✅ Payment notified!", afterApproval: "Mining starts after admin approval.",
+        error: "❌ Error:", minWithdrawMsg: " Minimum withdrawal: $0.01", insufficientBalance: "❌ Insufficient balance!",
+        walletRequired: "❌ Wallet address required!", invalidAddress: "❌ Invalid address!",
+        withdrawalCreated: "✅ Withdrawal request created!", awaitingApproval: "Awaiting admin approval.",
+        noDeposits: "No deposits yet", noWithdrawals: "No withdrawals yet",
+        historyLoading: "Loading...", historyFailed: "History failed to load",
+        approved: "✅ Approved", rejected: "❌ Rejected", pending: " Pending",
+        manual: "💰 Manual", addressCopied: "✅ Wallet address copied!",
+        offlineEarning: "Miners worked while you were away:",
+        bonusUnlocked: "Bonus unlocked! Added to bonus balance.",
+        wheelSpinWon: "Lucky Wheel", spinRightsWon: "spin rights won!",
+        taskCompletedNotif: "🎯 Task Completed", dailyBonusNotif: "🎁 Daily Bonus",
+        referralBonusNotif: "🎁 Referral Bonus", bonusTransferredNotif: "💰 Bonus Transferred",
+        day: "Day", days: "Days",
+        loading: "Loading...",
+        select: "Select →"
+      },
+      ru: {
+        appName: "Hash Power Mining", balance: "Баланс", product: "Продукт", investment: "Инвестиция",
+        notifications: "уведомления", dailyBonus: "ежедневный бонус", tasks: "задания",
+        bonusBalance: "Бонусный баланс", perMinute: "В минуту", perHour: "В час", perDay: "В день",
+        transferBonus: "Перевести бонусы на основной баланс", bonusLockMsg: "Нужна минимальная инвестиция $3.00 для перевода бонусов.",
+        current: "Сейчас", estimatedEarnings: "Ваши примерные доходы", activateNotif: "Активировать уведомления",
+        notifDesc: "Получайте мгновенные подтверждения через Telegram!", packagesTitle: "Специальные пакеты - Скидка 20%!",
+        buy: "Купить", selectedPackage: "Выбранный пакет", packageName: "Название пакета:", originalPrice: "Оригинальная цена:",
+        discountedPayment: "Цена со скидкой:", recordedAmount: "Записанная сумма:", network: "Сеть",
+        acceptedCoin: "Принимаемая монета", walletAddress: "Адрес кошелька", copyAddress: "Копировать адрес",
+        qrLabel: "📱 Сканируйте QR для отправки TRX", important: "ВАЖНО:",
+        networkWarning: "Принимаются только депозиты TRX через сеть TRON (TRC20). Монеты, отправленные через другую сеть, не возвращаются!",
+        sendAmount: "Сумма к отправке (USD)", min: "Мин", max: "Макс", equivalent: "Эквивалент",
+        paymentSent: "Я оплатил, уведомить", cancel: "Отмена / Главная", depositHistory: "История депозитов",
+        withdrawalRequest: "Запрос на вывод", currentBalance: "Текущий баланс", minWithdraw: "Минимальный вывод",
+        withdrawAmount: "Сумма вывода (USD)", cryptoSelect: "Выбор криптовалюты", networkDesc: "Монеты TRX будут отправлены через сеть TRON.",
+        enterWallet: "Введите адрес кошелька...", createWithdrawal: "Создать запрос на вывод", withdrawalHistory: "История выводов",
+        adminPanel: "Панель админа", adminGoTo: "Доступ к управлению через отдельную панель:", goToAdmin: "Перейти в панель админа",
+        home: "Главная", profile: "Профиль", withdraw: "Вывод", admin: "Админ",
+        registerDate: "Дата регистрации", bonus: "Бонус", totalInvestment: "Всего инвестиций", totalWithdrawal: "Всего выводов",
+        earningsChart: "График доходов", viewEarnings: "Просмотреть доходы", luckyWheel: "Колесо удачи",
+        settings: "Настройки", settingsDesc: "Уведомления и предпочтения", referralCode: "Реферальный код",
+        faq: "Часто задаваемые вопросы", helpInfo: "Помощь и информация", support: "Поддержка", telegramSupport: "Линия поддержки Telegram",
+        about: "О нас", appInfo: "Информация о приложении", welcomeBack: "С возвращением!",
+        minersWorked: "Майнеры работали пока вас не было:", collect: "Отлично! Собрать", notification: "Уведомление!",
+        language: "Язык", languageChanged: "Язык изменён!", selectLanguage: "Выбор языка",
+        telegramNotif: "Уведомления Telegram", notifOnOff: "Подтверждения депозитов и выводов",
+        languageLabel: "Язык", appLanguage: "Язык приложения", theme: "Тема", appearance: "Тема оформления",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "Сегодняшний бонус готов!", comeBackTomorrow: "Возвращайтесь завтра!",
+        getBonus: "Получить бонус", streakBonus: "Бонус серии", streakInfo: "Входите ежедневно для увеличения бонусов! День 7 - $0.10!",
+        alreadyClaimed: "⏰ Вы уже получили сегодня! Возвращайтесь завтра.",
+        congrats: "🎉 Поздравляем!", bonusEarned: "бонус получен!", streak: "дней серии",
+        tomorrowYouGet: "Завтра вы получите", youWillGet: "!",
+        completeTasks: "Выполняйте задания, получайте бонусы!",
+        taskCompleted: "✅ Выполнено", waiting: "Ожидание", claim: "🎁 Получить",
+        alreadyCompleted: "⚠️ Вы уже выполнили это задание!",
+        taskDone: "задание выполнено!", bonusWon: "бонус получен!",
+        earningsChartTitle: "График доходов", lastDaysEarnings: "Доходы за последние",
+        daysEarnings: "дней", total: "Всего", average: "Среднее", highest: "Максимум",
+        notificationsTitle: "Уведомления", markAllRead: "✅ Отметить все как прочитанные",
+        noNotifications: "Уведомлений пока нет", unread: "непрочитано", allRead: "Все прочитано",
+        referralSystem: "Реферальная система", yourLink: "Ваша специальная ссылка", copyLink: " Копировать ссылку",
+        referred: "Приглашено", earned: "Заработано", pending: "Ожидает",
+        greatJob: "✅ Отлично! Вы выполнили требование $3. Реферальный бонус добавлен!",
+        bonusLock: " Блокировка бонуса: Минимум $3.00 инвестиций. Сейчас:",
+        howItWorks: "💡 Как это работает?",
+        shareLink: "1. Поделитесь ссылкой с друзьями", friendClicks: "2. Друг кликает и запускает бота",
+        friendInvests: "3. Когда друг инвестирует, вы получаете $0.50",
+        unlockBonuses: "4. После $3+ инвестиций бонусы добавляются на баланс",
+        faqTitle: "Часто задаваемые вопросы",
+        faq1Q: "💰 Как инвестировать?", faq1A: "Выберите пакет на главной, отправьте TRX на наш кошелёк, нажмите \"Я оплатил\". После подтверждения админом начнутся начисления.",
+        faq2Q: " Когда начнутся доходы?", faq2A: "Автоматически после подтверждения админом. 1.11% в день (2x за 90 дней).",
+        faq3Q: "💸 Как вывести?", faq3A: "Нажмите \"Вывод\" в нижнем меню, введите сумму, выберите криптовалюту и адрес. Минимум $0.01.",
+        faq4Q: "🎁 Как работают бонусы?", faq4A: "Ежедневные бонусы, задания и колесо накапливаются на отдельном балансе. Бонусы тоже генерируют! Перевод после мин $3 инвестиций.",
+        faq5Q: " Как работает колесо?", faq5A: "1 вращение за $10 инвестиций. Крутите и выигрывайте $0.10, $0.50 или $1.00!",
+        faq6Q: "🌐 Какие сети поддерживаются?", faq6A: "Депозиты: только TRON (TRC20). Выводы: TRX (TRC20), BNB (BEP20), XRP.",
+        aboutTitle: "О нас", appVersion: "Версия 2.3.0",
+        aboutDesc: "Зарабатывайте пассивный доход с крипто-майнингом.",
+        luckyWheelTitle: "Колесо удачи", spinsLeft: "Доступно вращений",
+        spinPerInvest: "1 вращение за $10 инвестиций", spinWheel: "🎰 Крутить колесо!",
+        noSpins: "⏳ Нет вращений. Инвестируйте $10!",
+        lastWins: "🏆 Последние выигрыши",
+        wheelWon: "выиграно!", spinsRemaining: "Осталось вращений:",
+        bonusTransferred: "бонус переведён на основной баланс!", newBalance: "Новый баланс:",
+        needMoreInvest: "⚠️ Нужно минимум $3.00 инвестиций для перевода бонусов.",
+        needMore: "ещё", noBonusToTransfer: "💰 Нет бонусов для перевода!",
+        successful: "✅ Успешно!",
+        notifActivated: "✅ Уведомления активированы!", notifDeactivated: "⏸️ Уведомления отключены.",
+        linkCopied: "✅ Реферальная ссылка скопирована!", shareWithFriends: "Поделитесь с друзьями, $0.50 за каждого!",
+        botOpened: "📱 Бот открыт!", pleaseStart: "Напишите \"/start\" в чате.",
+        minDeposit: "Минимум", youCanDeposit: "можно внести.", maxDeposit: "Максимум",
+        paymentNotified: "✅ Платёж уведомлён!", afterApproval: "Майнинг начнётся после подтверждения админом.",
+        error: " Ошибка:", minWithdrawMsg: "❌ Минимальный вывод: $0.01", insufficientBalance: "❌ Недостаточно средств!",
+        walletRequired: "❌ Адрес кошелька обязателен!", invalidAddress: "❌ Неверный адрес!",
+        withdrawalCreated: "✅ Запрос на вывод создан!", awaitingApproval: "Ожидает подтверждения админа.",
+        noDeposits: "Депозитов пока нет", noWithdrawals: "Выводов пока нет",
+        historyLoading: "Загрузка...", historyFailed: "Не удалось загрузить историю",
+        approved: "✅ Одобрено", rejected: " Отклонено", pending: "⏳ Ожидает",
+        manual: "💰 Вручную", addressCopied: "✅ Адрес кошелька скопирован!",
+        offlineEarning: "Майнеры работали пока вас не было:",
+        bonusUnlocked: "Бонус разблокирован! Добавлен на бонусный баланс.",
+        wheelSpinWon: "Колесо удачи", spinRightsWon: "прав вращения получено!",
+        taskCompletedNotif: " Задание выполнено", dailyBonusNotif: "🎁 Ежедневный бонус",
+        referralBonusNotif: "🎁 Реферальный бонус", bonusTransferredNotif: "💰 Бонус переведён",
+        day: "День", days: "Дней",
+        loading: "Загрузка...",
+        select: "Выбрать →"
+      },
+      ar: {
+        appName: "Hash Power Mining", balance: "الرصيد", product: "المنتج", investment: "الاستثمار",
+        notifications: "الإشعارات", dailyBonus: "المكافأة اليومية", tasks: "المهام",
+        bonusBalance: "رصيد المكافآت", perMinute: "في الدقيقة", perHour: "في الساعة", perDay: "يومياً",
+        transferBonus: "تحويل المكافآت للرصيد الرئيسي", bonusLockMsg: "تحتاج استثمار $3.00 على الأقل لتحويل المكافآت.",
+        current: "الحالي", estimatedEarnings: "أرباحك المقدرة", activateNotif: "تفعيل الإشعارات",
+        notifDesc: "احصل على موافقات فورية عبر Telegram!", packagesTitle: "عروض خاصة - خصم 20%!",
+        buy: "شراء", selectedPackage: "الباقة المختارة", packageName: "اسم الباقة:", originalPrice: "السعر الأصلي:",
+        discountedPayment: "السعر بعد الخصم:", recordedAmount: "المبلغ المسجل:", network: "الشبكة",
+        acceptedCoin: "العملة المقبولة", walletAddress: "عنوان المحفظة", copyAddress: "نسخ العنوان",
+        qrLabel: "📱 امسح رمز QR لإرسال TRX", important: "مهم:",
+        networkWarning: "نقبل فقط إيداعات TRX عبر شبكة TRON (TRC20). العملات المرسلة من شبكة أخرى لا تُرد!",
+        sendAmount: "المبلغ للإرسال (USD)", min: "الحد الأدنى", max: "الحد الأقصى", equivalent: "المعادل",
+        paymentSent: "دفعت، أخبر", cancel: "إلغاء / الرئيسية", depositHistory: "سجل الإيداعات",
+        withdrawalRequest: "طلب السحب", currentBalance: "الرصيد الحالي", minWithdraw: "الحد الأدنى للسحب",
+        withdrawAmount: "مبلغ السحب (USD)", cryptoSelect: "اختيار العملة", networkDesc: "سيتم إرسال عملات TRX عبر شبكة TRON.",
+        enterWallet: "أدخل عنوان محفظتك...", createWithdrawal: "إنشاء طلب سحب", withdrawalHistory: "سجل السحوبات",
+        adminPanel: "لوحة الإدارة", adminGoTo: "الوصول للإدارة من لوحة منفصلة:", goToAdmin: "الذهاب للوحة الإدارة",
+        home: "الرئيسية", profile: "الملف الشخصي", withdraw: "سحب", admin: "إدارة",
+        registerDate: "تاريخ التسجيل", bonus: "مكافأة", totalInvestment: "إجمالي الاستثمار", totalWithdrawal: "إجمالي السحب",
+        earningsChart: "رسم الأرباح", viewEarnings: "عرض أرباحك", luckyWheel: "عجلة الحظ",
+        settings: "الإعدادات", settingsDesc: "الإشعارات والتفضيلات", referralCode: "كود الإحالة",
+        faq: "الأسئلة الشائعة", helpInfo: "المساعدة والمعلومات", support: "الدعم", telegramSupport: "خط دعم Telegram",
+        about: "حول", appInfo: "معلومات التطبيق", welcomeBack: "مرحباً بعودتك!",
+        minersWorked: "العمال اشتغلوا أثناء غيابك:", collect: "ممتاز! اجمع", notification: "إشعار!",
+        language: "اللغة", languageChanged: "تم تغيير اللغة!", selectLanguage: "اختيار اللغة",
+        telegramNotif: "إشعارات Telegram", notifOnOff: "موافقات الإيداع والسحب",
+        languageLabel: "اللغة", appLanguage: "لغة التطبيق", theme: "المظهر", appearance: "مظهر التطبيق",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "مكافأة اليوم جاهزة!", comeBackTomorrow: "عد غداً!",
+        getBonus: "احصل على المكافأة", streakBonus: "مكافأة السلسلة", streakInfo: "سجل دخول يومي لزيادة المكافآت! اليوم 7 اكسب $0.10!",
+        alreadyClaimed: " حصلت عليها اليوم! عد غداً.",
+        congrats: "🎉 تهانينا!", bonusEarned: "مكافأة!", streak: "أيام سلسلة",
+        tomorrowYouGet: "غداً ستحصل على", youWillGet: "!",
+        completeTasks: "أكمل المهام، اكسب مكافآت تلقائية!",
+        taskCompleted: "✅ مكتمل", waiting: "انتظار", claim: "🎁 احصل",
+        alreadyCompleted: "⚠️ أكملت هذه المهمة بالفعل!",
+        taskDone: "تمت المهمة!", bonusWon: "مكافأة!",
+        earningsChartTitle: "رسم الأرباح", lastDaysEarnings: "أرباح آخر",
+        daysEarnings: "أيام", total: "الإجمالي", average: "المتوسط", highest: "الأعلى",
+        notificationsTitle: "الإشعارات", markAllRead: "✅ تعليم الكل كمقروء",
+        noNotifications: "لا إشعارات بعد", unread: "غير مقروء", allRead: "الكل مقروء",
+        referralSystem: "نظام الإحالة", yourLink: "رابطك الخاص", copyLink: "📋 نسخ الرابط",
+        referred: "تمت إحالتهم", earned: "مكتسب", pending: "معلق",
+        greatJob: "✅ ممتاز! استوفيت شرط $3. تمت إضافة مكافأة الإحالة!",
+        bonusLock: "⏳ قفل المكافأة: مطلوب $3.00 استثمار. الحالي:",
+        howItWorks: "💡 كيف يعمل?",
+        shareLink: "1. شارك الرابط مع أصدقائك", friendClicks: "2. صديقك يضغط الرابط ويبدأ البوت",
+        friendInvests: "3. عندما يستثمر صديقك، تكسب $0.50",
+        unlockBonuses: "4. بعد $3+ استثمار، تُضاف المكافآت للرصيد",
+        faqTitle: "الأسئلة الشائعة",
+        faq1Q: "💰 كيف أستثمر?", faq1A: "اختر باقة من الرئيسية، أرسل TRX لمحفظتنا، اضغط \"دفعت\". بعد موافقة الإدارة تبدأ الأرباح.",
+        faq2Q: " متى تبدأ أرباحي?", faq2A: "تلقائياً بعد موافقة الإدارة. 1.11% يومياً (2x في 90 يوم).",
+        faq3Q: "💸 كيف أسحب?", faq3A: "اضغط \"سحب\" في القائمة السفلية، أدخل المبلغ، اختر العملة والعنوان. الحد الأدنى $0.01.",
+        faq4Q: "🎁 كيف تعمل المكافآت?", faq4A: "المكافآت اليومية والمهام والعجلة تتراكم في رصيد منفصل. المكافآت أيضاً تُنتج! حوّل بعد $3 استثمار.",
+        faq5Q: "🎰 كيف تعمل عجلة الحظ?", faq5A: "دورة واحدة لكل $10 استثمار. أدر واربح $0.10 أو $0.50 أو $1.00!",
+        faq6Q: "🌐 ما الشبكات المدعومة?", faq6A: "إيداعات: TRON (TRC20) فقط. سحوبات: TRX (TRC20), BNB (BEP20), XRP.",
+        aboutTitle: "حول", appVersion: "الإصدار 2.3.0",
+        aboutDesc: "اكسب دخلاً سلبياً مع تعدين العملات.",
+        luckyWheelTitle: "عجلة الحظ", spinsLeft: "دورات متاحة",
+        spinPerInvest: "دورة واحدة لكل $10 استثمار", spinWheel: "🎰 أدر العجلة!",
+        noSpins: "⏳ لا دورات. استثمر $10!",
+        lastWins: "🏆 آخر الأرباح",
+        wheelWon: "ربحت!", spinsRemaining: "متبقي:",
+        bonusTransferred: "مكافأة حُولت للرصيد الرئيسي!", newBalance: "الرصيد الجديد:",
+        needMoreInvest: "️ تحتاج $3.00 استثمار على الأقل.",
+        needMore: "أكثر", noBonusToTransfer: "💰 لا مكافآت للتحويل!",
+        successful: "✅ نجح!",
+        notifActivated: "✅ فُعلت الإشعارات!", notifDeactivated: "⏸️ أُعطّلت الإشعارات.",
+        linkCopied: "✅ نُسخت رابط الإحالة!", shareWithFriends: "شارك مع أصدقائك، $0.50 لكل إحالة!",
+        botOpened: "📱 فُتح البوت!", pleaseStart: "اكتب \"/start\" في المحادثة.",
+        minDeposit: "الحد الأدنى", youCanDeposit: "يمكنك الإيداع.", maxDeposit: "الحد الأقصى",
+        paymentNotified: "✅ أُبلغ بالدفع!", afterApproval: "يبدأ التعدين بعد موافقة الإدارة.",
+        error: "❌ خطأ:", minWithdrawMsg: "❌ الحد الأدنى للسحب: $0.01", insufficientBalance: "❌ رصيد غير كاف!",
+        walletRequired: "❌ عنوان المحفظة مطلوب!", invalidAddress: "❌ عنوان غير صالح!",
+        withdrawalCreated: "✅ أُنشئ طلب السحب!", awaitingApproval: "بانتظار موافقة الإدارة.",
+        noDeposits: "لا إيداعات بعد", noWithdrawals: "لا سحوبات بعد",
+        historyLoading: "تحميل...", historyFailed: "فشل تحميل السجل",
+        approved: "✅ معتمد", rejected: "❌ مرفوض", pending: "⏳ معلق",
+        manual: "💰 يدوي", addressCopied: "✅ نُسخت عنوان المحفظة!",
+        offlineEarning: "العمال اشتغلوا أثناء غيابك:",
+        bonusUnlocked: "فُتحت المكافأة! أُضيفت لرصيد المكافآت.",
+        wheelSpinWon: "عجلة الحظ", spinRightsWon: "حقوق دوران!",
+        taskCompletedNotif: "🎯 مهمة مكتملة", dailyBonusNotif: "🎁 مكافأة يومية",
+        referralBonusNotif: "🎁 مكافأة إحالة", bonusTransferredNotif: "💰 حُوّلت المكافأة",
+        day: "يوم", days: "أيام",
+        loading: "تحميل...",
+        select: "اختيار →"
+      },
+      de: {
+        appName: "Hash Power Mining", balance: "Guthaben", product: "Produkt", investment: "Investition",
+        notifications: "Benachrichtigungen", dailyBonus: "Tagesbonus", tasks: "Aufgaben",
+        bonusBalance: "Bonusguthaben", perMinute: "Pro Minute", perHour: "Pro Stunde", perDay: "Pro Tag",
+        transferBonus: "Bonuss auf Hauptguthaben übertragen", bonusLockMsg: "Mindestinvestition $3.00 für Bonusübertragung nötig.",
+        current: "Aktuell", estimatedEarnings: "Ihre geschätzten Einnahmen", activateNotif: "Benachrichtigungen aktivieren",
+        notifDesc: "Sofortige Bestätigungen über Telegram!", packagesTitle: "Sonderangebote - 20% Rabatt!",
+        buy: "Kaufen", selectedPackage: "Ausgewähltes Paket", packageName: "Paketname:", originalPrice: "Originalpreis:",
+        discountedPayment: "Rabattierter Preis:", recordedAmount: "Erfasster Betrag:", network: "Netzwerk",
+        acceptedCoin: "Akzeptierte Münze", walletAddress: "Wallet-Adresse", copyAddress: "Adresse kopieren",
+        qrLabel: "📱 QR scannen um TRX zu senden", important: "WICHTIG:",
+        networkWarning: "Nur TRON (TRC20) TRX-Einzahlungen werden akzeptiert. Falsche Netzwerk-Coins werden nicht erstattet!",
+        sendAmount: "Zu sendender Betrag (USD)", min: "Min", max: "Max", equivalent: "Gegenwert",
+        paymentSent: "Ich habe bezahlt, melden", cancel: "Abbrechen / Startseite", depositHistory: "Einzahlungshistorie",
+        withdrawalRequest: "Auszahlungsantrag", currentBalance: "Aktuelles Guthaben", minWithdraw: "Mindestauszahlung",
+        withdrawAmount: "Auszahlungsbetrag (USD)", cryptoSelect: "Krypto-Auswahl", networkDesc: "TRX-Coins werden über TRON-Netzwerk gesendet.",
+        enterWallet: "Wallet-Adresse eingeben...", createWithdrawal: "Auszahlungsantrag erstellen", withdrawalHistory: "Auszahlungshistorie",
+        adminPanel: "Admin-Panel", adminGoTo: "Verwaltung über separates Panel:", goToAdmin: "Zum Admin-Panel",
+        home: "Startseite", profile: "Profil", withdraw: "Auszahlung", admin: "Admin",
+        registerDate: "Registrierungsdatum", bonus: "Bonus", totalInvestment: "Gesamtinvestition", totalWithdrawal: "Gesamtauszahlung",
+        earningsChart: "Einnahmen-Diagramm", viewEarnings: "Einnahmen ansehen", luckyWheel: "Glücksrad",
+        settings: "Einstellungen", settingsDesc: "Benachrichtigungen & Einstellungen", referralCode: "Empfehlungscode",
+        faq: "FAQ", helpInfo: "Hilfe & Info", support: "Support", telegramSupport: "Telegram-Support",
+        about: "Über uns", appInfo: "App-Info", welcomeBack: "Willkommen zurück!",
+        minersWorked: "Miner haben gearbeitet während Sie weg waren:", collect: "Super! Sammeln", notification: "Benachrichtigung!",
+        language: "Sprache", languageChanged: "Sprache geändert!", selectLanguage: "Sprache wählen",
+        telegramNotif: "Telegram-Benachrichtigungen", notifOnOff: "Einzahlungs- & Auszahlungsbestätigungen",
+        languageLabel: "Sprache", appLanguage: "App-Sprache", theme: "Design", appearance: "Erscheinungsbild",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "Heutiger Bonus bereit!", comeBackTomorrow: "Morgen wiederkommen!",
+        getBonus: "Bonus holen", streakBonus: "Serien-Bonus", streakInfo: "Täglich einloggen für mehr Boni! Tag 7 $0.10!",
+        alreadyClaimed: "⏰ Heute schon geholt! Morgen wiederkommen.",
+        congrats: "🎉 Glückwunsch!", bonusEarned: "Bonus verdient!", streak: "Tage Serie",
+        tomorrowYouGet: "Morgen bekommst du", youWillGet: "!",
+        completeTasks: "Aufgaben erledigen, Boni verdienen!",
+        taskCompleted: "✅ Abgeschlossen", waiting: "Warten", claim: "🎁 Holen",
+        alreadyCompleted: "⚠️ Diese Aufgabe schon erledigt!",
+        taskDone: "Aufgabe erledigt!", bonusWon: "Bonus gewonnen!",
+        earningsChartTitle: "Einnahmen-Diagramm", lastDaysEarnings: "Letzte", daysEarnings: "Tage Einnahmen",
+        total: "Gesamt", average: "Durchschnitt", highest: "Höchste",
+        notificationsTitle: "Benachrichtigungen", markAllRead: "✅ Alle als gelesen markieren",
+        noNotifications: "Noch keine Benachrichtigungen", unread: "ungelesen", allRead: "Alle gelesen",
+        referralSystem: "Empfehlungssystem", yourLink: "Dein spezieller Link", copyLink: "📋 Link kopieren",
+        referred: "Empfohlen", earned: "Verdient", pending: "Ausstehend",
+        greatJob: "✅ Super! $3 Investitionsbedingung erfüllt. Empfehlungsbonus hinzugefügt!",
+        bonusLock: "⏳ Bonus-Sperre: Mindestens $3.00 Investition nötig. Aktuell:",
+        howItWorks: " Wie funktioniert's?",
+        shareLink: "1. Link mit Freunden teilen", friendClicks: "2. Freund klickt Link und startet Bot",
+        friendInvests: "3. Wenn Freund investiert, verdienst du $0.50",
+        unlockBonuses: "4. Nach $3+ Investition werden Boni gutgeschrieben",
+        faqTitle: "Häufig gestellte Fragen",
+        faq1Q: "💰 Wie investiere ich?", faq1A: "Paket auf Startseite wählen, TRX an unsere Wallet senden, \"Ich habe bezahlt\" klicken. Nach Admin-Bestätigung beginnen Einnahmen.",
+        faq2Q: "⏰ Wann beginnen Einnahmen?", faq2A: "Automatisch nach Admin-Bestätigung. 1.11% täglich (2x in 90 Tagen).",
+        faq3Q: "💸 Wie zahle ich aus?", faq3A: "\"Auszahlung\" im unteren Menü klicken, Betrag eingeben, Krypto und Adresse wählen. Minimum $0.01.",
+        faq4Q: "🎁 Wie funktionieren Boni?", faq4A: "Tagesbonus, Aufgaben und Rad-Boni sammeln sich auf separatem Guthaben. Boni generieren auch! Übertragung nach min $3 Investition.",
+        faq5Q: "🎰 Wie funktioniert Glücksrad?", faq5A: "1 Dreh pro $10 Investition. Drehen und $0.10, $0.50 oder $1.00 gewinnen!",
+        faq6Q: "🌐 Welche Netzwerke werden unterstützt?", faq6A: "Einzahlungen: nur TRON (TRC20). Auszahlungen: TRX (TRC20), BNB (BEP20), XRP.",
+        aboutTitle: "Über uns", appVersion: "Version 2.3.0",
+        aboutDesc: "Passives Einkommen mit Krypto-Mining verdienen.",
+        luckyWheelTitle: "Glücksrad", spinsLeft: "Drehs verfügbar",
+        spinPerInvest: "1 Dreh pro $10 Investition", spinWheel: " Rad drehen!",
+        noSpins: "⏳ Keine Drehs. $10 investieren!",
+        lastWins: " Letzte Gewinne",
+        wheelWon: "gewonnen!", spinsRemaining: "Übrig:",
+        bonusTransferred: "Bonus auf Hauptguthaben übertragen!", newBalance: "Neues Guthaben:",
+        needMoreInvest: "⚠️ Mindestens $3.00 Investition für Bonusübertragung nötig.",
+        needMore: "mehr", noBonusToTransfer: "💰 Kein Bonus zu übertragen!",
+        successful: "✅ Erfolgreich!",
+        notifActivated: "✅ Benachrichtigungen aktiviert!", notifDeactivated: "⏸️ Benachrichtigungen deaktiviert.",
+        linkCopied: "✅ Empfehlungslink kopiert!", shareWithFriends: "Mit Freunden teilen, $0.50 pro Empfehlung!",
+        botOpened: "📱 Bot geöffnet!", pleaseStart: "Tippe \"/start\" im Chat.",
+        minDeposit: "Minimum", youCanDeposit: "einzahlbar.", maxDeposit: "Maximum",
+        paymentNotified: "✅ Zahlung gemeldet!", afterApproval: "Mining beginnt nach Admin-Bestätigung.",
+        error: "❌ Fehler:", minWithdrawMsg: "❌ Mindestauszahlung: $0.01", insufficientBalance: "❌ Unzureichendes Guthaben!",
+        walletRequired: "❌ Wallet-Adresse erforderlich!", invalidAddress: "❌ Ungültige Adresse!",
+        withdrawalCreated: "✅ Auszahlungsantrag erstellt!", awaitingApproval: "Warte auf Admin-Bestätigung.",
+        noDeposits: "Noch keine Einzahlungen", noWithdrawals: "Noch keine Auszahlungen",
+        historyLoading: "Laden...", historyFailed: "Historie konnte nicht geladen werden",
+        approved: "✅ Genehmigt", rejected: "❌ Abgelehnt", pending: "⏳ Ausstehend",
+        manual: "💰 Manuell", addressCopied: "✅ Wallet-Adresse kopiert!",
+        offlineEarning: "Miner haben gearbeitet während Sie weg waren:",
+        bonusUnlocked: "Bonus freigeschaltet! Zum Bonusguthaben hinzugefügt.",
+        wheelSpinWon: "Glücksrad", spinRightsWon: "Drehrechte gewonnen!",
+        taskCompletedNotif: " Aufgabe erledigt", dailyBonusNotif: " Tagesbonus",
+        referralBonusNotif: "🎁 Empfehlungsbonus", bonusTransferredNotif: "💰 Bonus übertragen",
+        day: "Tag", days: "Tage",
+        loading: "Laden...",
+        select: "Auswählen →"
+      },
+      fr: {
+        appName: "Hash Power Mining", balance: "Solde", product: "Produit", investment: "Investissement",
+        notifications: "notifications", dailyBonus: "bonus quotidien", tasks: "tâches",
+        bonusBalance: "Solde de bonus", perMinute: "Par minute", perHour: "Par heure", perDay: "Par jour",
+        transferBonus: "Transférer les bonus au solde principal", bonusLockMsg: "Investissement minimum $3.00 pour transférer les bonus.",
+        current: "Actuel", estimatedEarnings: "Vos gains estimés", activateNotif: "Activer les notifications",
+        notifDesc: "Recevez des confirmations instantanées via Telegram!", packagesTitle: "Offres spéciales - 20% de réduction!",
+        buy: "Acheter", selectedPackage: "Package sélectionné", packageName: "Nom du package:", originalPrice: "Prix original:",
+        discountedPayment: "Prix réduit:", recordedAmount: "Montant enregistré:", network: "Réseau",
+        acceptedCoin: "Coin accepté", walletAddress: "Adresse du portefeuille", copyAddress: "Copier l'adresse",
+        qrLabel: " Scanner le QR pour envoyer TRX", important: "IMPORTANT:",
+        networkWarning: "Seuls les dépôts TRX via réseau TRON (TRC20) sont acceptés. Les coins envoyés via mauvais réseau ne sont pas remboursés!",
+        sendAmount: "Montant à envoyer (USD)", min: "Min", max: "Max", equivalent: "Équivalent",
+        paymentSent: "J'ai payé, notifier", cancel: "Annuler / Accueil", depositHistory: "Historique des dépôts",
+        withdrawalRequest: "Demande de retrait", currentBalance: "Solde actuel", minWithdraw: "Retrait minimum",
+        withdrawAmount: "Montant du retrait (USD)", cryptoSelect: "Sélection crypto", networkDesc: "Les coins TRX seront envoyés via réseau TRON.",
+        enterWallet: "Entrez votre adresse...", createWithdrawal: "Créer demande de retrait", withdrawalHistory: "Historique des retraits",
+        adminPanel: "Panneau Admin", adminGoTo: "Accès gestion via panneau séparé:", goToAdmin: "Aller au panneau Admin",
+        home: "Accueil", profile: "Profil", withdraw: "Retrait", admin: "Admin",
+        registerDate: "Date d'inscription", bonus: "Bonus", totalInvestment: "Investissement total", totalWithdrawal: "Retrait total",
+        earningsChart: "Graphique des gains", viewEarnings: "Voir vos gains", luckyWheel: "Roue de la chance",
+        settings: "Paramètres", settingsDesc: "Notifications & préférences", referralCode: "Code de parrainage",
+        faq: "FAQ", helpInfo: "Aide & info", support: "Support", telegramSupport: "Support Telegram",
+        about: "À propos", appInfo: "Info app", welcomeBack: "Bon retour!",
+        minersWorked: "Les mineurs ont travaillé pendant votre absence:", collect: "Super! Collecter", notification: "Notification!",
+        language: "Langue", languageChanged: "Langue changée!", selectLanguage: "Choisir la langue",
+        telegramNotif: "Notifications Telegram", notifOnOff: "Confirmations dépôt & retrait",
+        languageLabel: "Langue", appLanguage: "Langue de l'app", theme: "Thème", appearance: "Apparence",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "Bonus du jour prêt!", comeBackTomorrow: "Revenez demain!",
+        getBonus: "Obtenir le bonus", streakBonus: "Bonus de série", streakInfo: "Connectez-vous quotidiennement! Jour 7 $0.10!",
+        alreadyClaimed: "⏰ Déjà obtenu aujourd'hui! Revenez demain.",
+        congrats: "🎉 Félicitations!", bonusEarned: "bonus gagné!", streak: "jours de série",
+        tomorrowYouGet: "Demain vous aurez", youWillGet: "!",
+        completeTasks: "Complétez les tâches, gagnez des bonus!",
+        taskCompleted: "✅ Terminé", waiting: "En attente", claim: "🎁 Réclamer",
+        alreadyCompleted: "⚠️ Tâche déjà complétée!",
+        taskDone: "tâche terminée!", bonusWon: "bonus gagné!",
+        earningsChartTitle: "Graphique des gains", lastDaysEarnings: "Gains des derniers",
+        daysEarnings: "jours", total: "Total", average: "Moyenne", highest: "Plus élevé",
+        notificationsTitle: "Notifications", markAllRead: "✅ Tout marquer comme lu",
+        noNotifications: "Pas encore de notifications", unread: "non lu", allRead: "Tout lu",
+        referralSystem: "Système de parrainage", yourLink: "Votre lien spécial", copyLink: "📋 Copier le lien",
+        referred: "Parrainés", earned: "Gagné", pending: "En attente",
+        greatJob: "✅ Super! Condition $3 remplie. Bonus de parrainage ajouté!",
+        bonusLock: "⏳ Verrou bonus: $3.00 investissement minimum. Actuel:",
+        howItWorks: " Comment ça marche?",
+        shareLink: "1. Partagez le lien avec vos amis", friendClicks: "2. Ami clique et lance le bot",
+        friendInvests: "3. Quand ami investit, vous gagnez $0.50",
+        unlockBonuses: "4. Après $3+ investissement, bonus ajoutés au solde",
+        faqTitle: "Questions fréquentes",
+        faq1Q: "💰 Comment investir?", faq1A: "Choisir un package sur l'accueil, envoyer TRX à notre wallet, cliquer \"J'ai payé\". Après confirmation admin, gains commencent.",
+        faq2Q: "⏰ Quand commencent les gains?", faq2A: "Automatiquement après confirmation admin. 1.11% par jour (2x en 90 jours).",
+        faq3Q: "💸 Comment retirer?", faq3A: "Cliquer \"Retrait\" dans le menu, entrer montant, choisir crypto et adresse. Minimum $0.01.",
+        faq4Q: "🎁 Comment fonctionnent les bonus?", faq4A: "Bonus quotidien, tâches et roue s'accumulent sur solde séparé. Bonus génèrent aussi! Transfert après min $3 investissement.",
+        faq5Q: " Comment fonctionne la roue?", faq5A: "1 tour par $10 investissement. Tournez et gagnez $0.10, $0.50 ou $1.00!",
+        faq6Q: "🌐 Quels réseaux supportés?", faq6A: "Dépôts: TRON (TRC20) seulement. Retraits: TRX (TRC20), BNB (BEP20), XRP.",
+        aboutTitle: "À propos", appVersion: "Version 2.3.0",
+        aboutDesc: "Gagnez un revenu passif avec le mining crypto.",
+        luckyWheelTitle: "Roue de la chance", spinsLeft: "Tours disponibles",
+        spinPerInvest: "1 tour par $10 investissement", spinWheel: " Tourner la roue!",
+        noSpins: "⏳ Pas de tours. Investissez $10!",
+        lastWins: " Derniers gains",
+        wheelWon: "gagné!", spinsRemaining: "Restant:",
+        bonusTransferred: "bonus transféré au solde principal!", newBalance: "Nouveau solde:",
+        needMoreInvest: "⚠️ $3.00 investissement minimum pour transférer bonus.",
+        needMore: "de plus", noBonusToTransfer: "💰 Pas de bonus à transférer!",
+        successful: "✅ Succès!",
+        notifActivated: "✅ Notifications activées!", notifDeactivated: "⏸️ Notifications désactivées.",
+        linkCopied: "✅ Lien de parrainage copié!", shareWithFriends: "Partagez avec amis, $0.50 par parrainage!",
+        botOpened: "📱 Bot ouvert!", pleaseStart: "Tapez \"/start\" dans le chat.",
+        minDeposit: "Minimum", youCanDeposit: "déposable.", maxDeposit: "Maximum",
+        paymentNotified: "✅ Paiement notifié!", afterApproval: "Mining commence après confirmation admin.",
+        error: "❌ Erreur:", minWithdrawMsg: "❌ Retrait minimum: $0.01", insufficientBalance: "❌ Solde insuffisant!",
+        walletRequired: "❌ Adresse wallet requise!", invalidAddress: "❌ Adresse invalide!",
+        withdrawalCreated: "✅ Demande de retrait créée!", awaitingApproval: "En attente de confirmation admin.",
+        noDeposits: "Pas encore de dépôts", noWithdrawals: "Pas encore de retraits",
+        historyLoading: "Chargement...", historyFailed: "Historique non chargé",
+        approved: "✅ Approuvé", rejected: "❌ Rejeté", pending: "⏳ En attente",
+        manual: "💰 Manuel", addressCopied: "✅ Adresse wallet copiée!",
+        offlineEarning: "Les mineurs ont travaillé pendant votre absence:",
+        bonusUnlocked: "Bonus débloqué! Ajouté au solde de bonus.",
+        wheelSpinWon: "Roue de la chance", spinRightsWon: "droits de tour gagnés!",
+        taskCompletedNotif: "🎯 Tâche terminée", dailyBonusNotif: " Bonus quotidien",
+        referralBonusNotif: "🎁 Bonus de parrainage", bonusTransferredNotif: "💰 Bonus transféré",
+        day: "Jour", days: "Jours",
+        loading: "Chargement...",
+        select: "Sélectionner →"
+      },
+      es: {
+        appName: "Hash Power Mining", balance: "Saldo", product: "Producto", investment: "Inversión",
+        notifications: "notificaciones", dailyBonus: "bono diario", tasks: "tareas",
+        bonusBalance: "Saldo de bonos", perMinute: "Por minuto", perHour: "Por hora", perDay: "Por día",
+        transferBonus: "Transferir bonos al saldo principal", bonusLockMsg: "Inversión mínima $3.00 para transferir bonos.",
+        current: "Actual", estimatedEarnings: "Tus ganancias estimadas", activateNotif: "Activar notificaciones",
+        notifDesc: "¡Recibe confirmaciones instantáneas vía Telegram!", packagesTitle: "Ofertas especiales - ¡20% descuento!",
+        buy: "Comprar", selectedPackage: "Paquete seleccionado", packageName: "Nombre del paquete:", originalPrice: "Precio original:",
+        discountedPayment: "Precio con descuento:", recordedAmount: "Monto registrado:", network: "Red",
+        acceptedCoin: "Moneda aceptada", walletAddress: "Dirección de billetera", copyAddress: "Copiar dirección",
+        qrLabel: " Escanea QR para enviar TRX", important: "IMPORTANTE:",
+        networkWarning: "Solo se aceptan depósitos TRX vía red TRON (TRC20). ¡Monedas enviadas desde red incorrecta no se reembolsan!",
+        sendAmount: "Monto a enviar (USD)", min: "Mín", max: "Máx", equivalent: "Equivalente",
+        paymentSent: "Pagé, notificar", cancel: "Cancelar / Inicio", depositHistory: "Historial de depósitos",
+        withdrawalRequest: "Solicitud de retiro", currentBalance: "Saldo actual", minWithdraw: "Retiro mínimo",
+        withdrawAmount: "Monto de retiro (USD)", cryptoSelect: "Selección crypto", networkDesc: "Monedas TRX se enviarán vía red TRON.",
+        enterWallet: "Ingresa tu dirección...", createWithdrawal: "Crear solicitud de retiro", withdrawalHistory: "Historial de retiros",
+        adminPanel: "Panel Admin", adminGoTo: "Acceso gestión vía panel separado:", goToAdmin: "Ir al panel Admin",
+        home: "Inicio", profile: "Perfil", withdraw: "Retiro", admin: "Admin",
+        registerDate: "Fecha de registro", bonus: "Bono", totalInvestment: "Inversión total", totalWithdrawal: "Retiro total",
+        earningsChart: "Gráfico de ganancias", viewEarnings: "Ver tus ganancias", luckyWheel: "Ruleta de la suerte",
+        settings: "Ajustes", settingsDesc: "Notificaciones y preferencias", referralCode: "Código de referido",
+        faq: "FAQ", helpInfo: "Ayuda e info", support: "Soporte", telegramSupport: "Soporte Telegram",
+        about: "Acerca de", appInfo: "Info de app", welcomeBack: "¡Bienvenido de vuelta!",
+        minersWorked: "Los mineros trabajaron mientras estabas fuera:", collect: "¡Genial! Recoger", notification: "¡Notificación!",
+        language: "Idioma", languageChanged: "¡Idioma cambiado!", selectLanguage: "Seleccionar idioma",
+        telegramNotif: "Notificaciones Telegram", notifOnOff: "Confirmaciones de depósito y retiro",
+        languageLabel: "Idioma", appLanguage: "Idioma de la app", theme: "Tema", appearance: "Apariencia",
+        turkish: "Türkçe", english: "English", russian: "Русский", arabic: "العربية",
+        german: "Deutsch", french: "Français", spanish: "Español",
+        todayBonus: "¡Bono de hoy listo!", comeBackTomorrow: "¡Vuelve mañana!",
+        getBonus: "Obtener bono", streakBonus: "Bono de racha", streakInfo: "¡Inicia sesión diariamente! Día 7 $0.10!",
+        alreadyClaimed: "⏰ ¡Ya reclamado hoy! Vuelve mañana.",
+        congrats: "🎉 ¡Felicitaciones!", bonusEarned: "¡bono ganado!", streak: "días de racha",
+        tomorrowYouGet: "Mañana obtendrás", youWillGet: "!",
+        completeTasks: "¡Completa tareas, gana bonos!",
+        taskCompleted: "✅ Completado", waiting: "Esperando", claim: " Reclamar",
+        alreadyCompleted: "⚠️ ¡Tarea ya completada!",
+        taskDone: "¡tarea completada!", bonusWon: "¡bono ganado!",
+        earningsChartTitle: "Gráfico de ganancias", lastDaysEarnings: "Ganancias de los últimos",
+        daysEarnings: "días", total: "Total", average: "Promedio", highest: "Más alto",
+        notificationsTitle: "Notificaciones", markAllRead: "✅ Marcar todo como leído",
+        noNotifications: "Aún no hay notificaciones", unread: "no leído", allRead: "Todo leído",
+        referralSystem: "Sistema de referidos", yourLink: "Tu enlace especial", copyLink: "📋 Copiar enlace",
+        referred: "Referidos", earned: "Ganado", pending: "Pendiente",
+        greatJob: "✅ ¡Genial! Condición $3 cumplida. ¡Bono de referido añadido!",
+        bonusLock: "⏳ Bloqueo de bono: $3.00 inversión mínima. Actual:",
+        howItWorks: "💡 ¿Cómo funciona?",
+        shareLink: "1. Comparte el enlace con amigos", friendClicks: "2. Amigo hace clic y inicia bot",
+        friendInvests: "3. Cuando amigo invierte, ganas $0.50",
+        unlockBonuses: "4. Después de $3+ inversión, bonos se añaden al saldo",
+        faqTitle: "Preguntas frecuentes",
+        faq1Q: "💰 ¿Cómo invertir?", faq1A: "Elige paquete en inicio, envía TRX a nuestra billetera, haz clic \"Pagé\". Después de confirmación admin, comienzan ganancias.",
+        faq2Q: "⏰ ¿Cuándo comienzan las ganancias?", faq2A: "Automáticamente después de confirmación admin. 1.11% diario (2x en 90 días).",
+        faq3Q: "💸 ¿Cómo retirar?", faq3A: "Haz clic \"Retiro\" en menú inferior, ingresa monto, elige crypto y dirección. Mínimo $0.01.",
+        faq4Q: "🎁 ¿Cómo funcionan los bonos?", faq4A: "Bono diario, tareas y ruleta se acumulan en saldo separado. ¡Bonos también generan! Transferencia después de min $3 inversión.",
+        faq5Q: "🎰 ¿Cómo funciona la ruleta?", faq5A: "1 giro por $10 inversión. ¡Gira y gana $0.10, $0.50 o $1.00!",
+        faq6Q: "🌐 ¿Qué redes soportan?", faq6A: "Depósitos: solo TRON (TRC20). Retiros: TRX (TRC20), BNB (BEP20), XRP.",
+        aboutTitle: "Acerca de", appVersion: "Versión 2.3.0",
+        aboutDesc: "Gana ingresos pasivos con minería crypto.",
+        luckyWheelTitle: "Ruleta de la suerte", spinsLeft: "Giros disponibles",
+        spinPerInvest: "1 giro por $10 inversión", spinWheel: "🎰 ¡Girar ruleta!",
+        noSpins: "⏳ Sin giros. ¡Invierte $10!",
+        lastWins: "🏆 Últimas ganancias",
+        wheelWon: "¡ganado!", spinsRemaining: "Restante:",
+        bonusTransferred: "¡bono transferido al saldo principal!", newBalance: "Nuevo saldo:",
+        needMoreInvest: "⚠️ $3.00 inversión mínima para transferir bonos.",
+        needMore: "más", noBonusToTransfer: "💰 ¡Sin bonos para transferir!",
+        successful: "✅ ¡Exitoso!",
+        notifActivated: "✅ ¡Notificaciones activadas!", notifDeactivated: "⏸️ Notificaciones desactivadas.",
+        linkCopied: "✅ ¡Enlace de referido copiado!", shareWithFriends: "¡Comparte con amigos, $0.50 por referido!",
+        botOpened: "📱 ¡Bot abierto!", pleaseStart: "Escribe \"/start\" en el chat.",
+        minDeposit: "Mínimo", youCanDeposit: "depositable.", maxDeposit: "Máximo",
+        paymentNotified: "✅ ¡Pago notificado!", afterApproval: "Minería comienza después de confirmación admin.",
+        error: "❌ Error:", minWithdrawMsg: "❌ Retiro mínimo: $0.01", insufficientBalance: "❌ ¡Saldo insuficiente!",
+        walletRequired: "❌ ¡Dirección de billetera requerida!", invalidAddress: "❌ ¡Dirección inválida!",
+        withdrawalCreated: "✅ ¡Solicitud de retiro creada!", awaitingApproval: "Esperando confirmación admin.",
+        noDeposits: "Aún no hay depósitos", noWithdrawals: "Aún no hay retiros",
+        historyLoading: "Cargando...", historyFailed: "Historial no cargado",
+        approved: "✅ Aprobado", rejected: "❌ Rechazado", pending: " Pendiente",
+        manual: "💰 Manual", addressCopied: "✅ ¡Dirección de billetera copiada!",
+        offlineEarning: "Los mineros trabajaron mientras estabas fuera:",
+        bonusUnlocked: "¡Bono desbloqueado! Añadido al saldo de bonos.",
+        wheelSpinWon: "Ruleta de la suerte", spinRightsWon: "¡derechos de giro ganados!",
+        taskCompletedNotif: " Tarea completada", dailyBonusNotif: "🎁 Bono diario",
+        referralBonusNotif: "🎁 Bono de referido", bonusTransferredNotif: "💰 Bono transferido",
+        day: "Día", days: "Días",
+        loading: "Cargando...",
+        select: "Seleccionar →"
+      }
+    };
+
+    // ============================================
+    // SİSTEM DEĞİŞKENLERİ
+    // ============================================
     const firebaseConfig = { apiKey: "AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ", authDomain: "hash-power-mining.firebaseapp.com", projectId: "hash-power-mining", storageBucket: "hash-power-mining.firebasestorage.app", messagingSenderId: "266480566753", appId: "1:266480566753:web:835b6e5119e4d3e4eb92a0" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -602,13 +1181,77 @@
     let selectedPackageName = '', selectedPackageOriginal = 0, selectedPackageDiscounted = 0;
     let referredByUserId = null;
     let dailyBonusData = { lastClaim: 0, streak: 0 };
-    let tasksData = [];
     let notificationsData = [];
     let wheelSpins = 0, wheelHistory = [];
     let earningsHistory = [];
     let currentChartPeriod = '7d';
     let bonusBalance = 0;
     let completedTasks = [];
+    
+    // DİL SİSTEMİ
+    let currentLang = 'tr';
+    const supportedLangs = ['tr', 'en', 'ru', 'ar', 'de', 'fr', 'es'];
+    const rtlLangs = ['ar'];
+    
+    function detectLanguage() {
+      // 1. Manuel seçim (en öncelikli)
+      const saved = localStorage.getItem('selectedLanguage');
+      if (saved && supportedLangs.includes(saved)) return saved;
+      
+      // 2. Telegram'dan al
+      if (tg.initDataUnsafe?.user?.language_code) {
+        const tgLang = tg.initDataUnsafe.user.language_code.split('-')[0];
+        if (supportedLangs.includes(tgLang)) return tgLang;
+      }
+      
+      // 3. Tarayıcı dilinden
+      if (navigator.language) {
+        const browserLang = navigator.language.split('-')[0];
+        if (supportedLangs.includes(browserLang)) return browserLang;
+      }
+      
+      // 4. Varsayılan
+      return 'tr';
+    }
+    
+    function t(key) {
+      return translations[currentLang]?.[key] || translations['en']?.[key] || key;
+    }
+    
+    function applyLanguage() {
+      currentLang = detectLanguage();
+      
+      // RTL desteği
+      if (rtlLangs.includes(currentLang)) {
+        document.body.classList.add('rtl');
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = currentLang;
+      } else {
+        document.body.classList.remove('rtl');
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = currentLang;
+      }
+      
+      // Tüm data-i18n attribute'larını güncelle
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+      
+      // Placeholder'ları güncelle
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+      });
+      
+      // Sayfa başlığını güncelle
+      document.title = t('appName');
+      
+      // Paketleri yeniden render et (select metni için)
+      if (document.getElementById('packagesContainer').children.length > 0) {
+        renderPackages();
+      }
+    }
     
     const DAILY_RATE = 1 / 90, PER_SECOND = DAILY_RATE / 86400, TRX_PRICE = 0.12;
     const DEPOSIT_WALLET = "TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN", DISCOUNT_RATE = 0.20, MIN_DEPOSIT = 1, MAX_DEPOSIT = 9999;
@@ -631,67 +1274,23 @@
     const addressValidators = { trx: (addr) => /^T[a-km-zA-HJ-NP-Z1-9]{33}$/.test(addr), bnb: (addr) => /^0x[a-fA-F0-9]{40}$/.test(addr), xrp: (addr) => /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(addr) };
     const addressFormats = { trx: 'T ile başlayan 34 karakter', bnb: '0x ile başlayan 42 karakter', xrp: 'r ile başlayan 25-35 karakter' };
     
-    // HIZLI EYLEM KISAYOLLARI
-    function openQuickNotif() {
+    // Dil sistemini başlat
+    applyLanguage();
+    
+    // KISAYOL BUTONLARI
+    function openNotificationsQuick() {
       openSubPopup('notifications');
-      // Bildirimler açıldığında okunmamışları okundu işaretle
-      setTimeout(() => markAllRead(), 500);
+      markAllRead();
     }
     
-    function openQuickDaily() {
-      const today = new Date().toDateString();
-      const lastClaim = dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
-      if (today === lastClaim) {
-        alert('⏰ Bugün bonusunu zaten aldın!\n\nYarın tekrar gel, daha büyük bonus kazan.');
-        return;
-      }
-      openSubPopup('dailyBonus');
-    }
-    
-    function openQuickTasks() {
-      openSubPopup('tasks');
-    }
-    
-    function openQuickWheel() {
-      if (wheelSpins <= 0) {
-        alert('🎰 Çevirme hakkın yok!\n\nHer $10 yatırım = 1 çevirme hakkı');
-        return;
-      }
-      openSubPopup('wheel');
-    }
-    
-    function updateQuickActionsUI() {
-      // Bildirim rozeti
+    function updateQuickNotifBadge() {
+      const badge = document.getElementById('quickNotifBadge');
       const unreadCount = notificationsData.filter(n => !n.read).length;
-      const notifBadge = document.getElementById('qaNotifBadge');
-      const notifItem = document.getElementById('qaNotif');
-      
       if (unreadCount > 0) {
-        notifBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        notifBadge.style.display = 'flex';
-        notifItem.classList.add('new-bonus');
+        badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+        badge.classList.remove('hidden');
       } else {
-        notifBadge.style.display = 'none';
-        notifItem.classList.remove('new-bonus');
-      }
-      
-      // Günlük bonus - alınabilir mi?
-      const today = new Date().toDateString();
-      const lastClaim = dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
-      const canClaimDaily = today !== lastClaim;
-      const dailyItem = document.getElementById('qaDaily');
-      if (canClaimDaily) {
-        dailyItem.classList.add('new-bonus');
-      } else {
-        dailyItem.classList.remove('new-bonus');
-      }
-      
-      // Şans çarkı - hakkı var mı?
-      const wheelItem = document.getElementById('qaWheel');
-      if (wheelSpins > 0) {
-        wheelItem.classList.add('new-bonus');
-      } else {
-        wheelItem.classList.remove('new-bonus');
+        badge.classList.add('hidden');
       }
     }
     
@@ -707,9 +1306,9 @@
       document.getElementById('profileId').textContent = `ID: ${currentUser ? currentUser.id : userId}`;
       if (createdAt) {
         const date = new Date(createdAt);
-        document.getElementById('profileRegisterDate').textContent = date.toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+        document.getElementById('profileRegisterDate').textContent = date.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : currentLang === 'ar' ? 'ar-SA' : currentLang === 'ru' ? 'ru-RU' : currentLang === 'de' ? 'de-DE' : currentLang === 'fr' ? 'fr-FR' : currentLang === 'es' ? 'es-ES' : 'en-US', { day: '2-digit', month: 'long', year: 'numeric' });
       } else {
-        document.getElementById('profileRegisterDate').textContent = new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+        document.getElementById('profileRegisterDate').textContent = new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' });
       }
       document.getElementById('pBalance').textContent = '$' + balance.toFixed(2);
       document.getElementById('pBonus').textContent = '$' + bonusBalance.toFixed(2);
@@ -721,19 +1320,21 @@
       const lastClaim = dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
       const canClaim = today !== lastClaim;
       const nextBonus = DAILY_BONUSES[Math.min(dailyBonusData.streak, 6)];
-      document.getElementById('dailyBonusDesc').textContent = canClaim ? `Bugün $${nextBonus.toFixed(2)} al!` : `Yarın $${DAILY_BONUSES[Math.min(dailyBonusData.streak + 1, 6)].toFixed(2)} al`;
+      document.getElementById('dailyBonusDesc').textContent = canClaim ? `${t('todayBonus')} - $${nextBonus.toFixed(2)}` : `${t('comeBackTomorrow')} - $${DAILY_BONUSES[Math.min(dailyBonusData.streak + 1, 6)].toFixed(2)}`;
       
       const completedCount = completedTasks.length;
-      document.getElementById('tasksDesc').textContent = `${completedCount} tamamlandı`;
+      document.getElementById('tasksDesc').textContent = `${completedCount} ${t('taskCompleted').toLowerCase()}`;
       
       const unreadNotifs = notificationsData.filter(n => !n.read).length;
-      document.getElementById('notifDesc').textContent = unreadNotifs > 0 ? `${unreadNotifs} okunmamış` : 'Tümü okundu';
+      document.getElementById('notifDesc').textContent = unreadNotifs > 0 ? `${unreadNotifs} ${t('unread')}` : t('allRead');
       
-      document.getElementById('wheelDesc').textContent = `${wheelSpins} çevirme hakkın var`;
+      document.getElementById('wheelDesc').textContent = `${wheelSpins} ${t('spinsLeft').toLowerCase()}`;
       
       const refDesc = document.getElementById('referralMenuDesc');
-      if (referralCount > 0) refDesc.textContent = `${referralCount} kişi davet ettin • $${pendingReferralBonus.toFixed(2)} bekliyor`;
-      else refDesc.textContent = 'Arkadaşlarını davet et, $0.50 kazan';
+      if (referralCount > 0) refDesc.textContent = `${referralCount} ${t('referred').toLowerCase()} • $${pendingReferralBonus.toFixed(2)} ${t('pending').toLowerCase()}`;
+      else refDesc.textContent = `${t('shareWithFriends')}`;
+      
+      updateQuickNotifBadge();
     }
     
     function updateLevel(invested) {
@@ -743,47 +1344,69 @@
       const levelProgressInfo = document.getElementById('levelProgressInfo');
       const levelProgressFill = document.getElementById('levelProgressFill');
       let level, icon;
-      if (invested >= 5000) { level = 'platinum'; icon = '💎'; levelName.textContent = 'Platinum'; levelProgressInfo.textContent = 'Maksimum Seviye!'; levelProgressFill.style.width = '100%'; }
-      else if (invested >= 500) { level = 'gold'; icon = '🥇'; levelName.textContent = 'Gold'; const progress = ((invested - 500) / (5000 - 500)) * 100; levelProgressInfo.textContent = `$${invested.toFixed(0)} / $5,000`; levelProgressFill.style.width = progress + '%'; }
-      else if (invested >= 50) { level = 'silver'; icon = '🥈'; levelName.textContent = 'Silver'; const progress = ((invested - 50) / (500 - 50)) * 100; levelProgressInfo.textContent = `$${invested.toFixed(0)} / $500`; levelProgressFill.style.width = progress + '%'; }
+      if (invested >= 5000) { level = 'platinum'; icon = ''; levelName.textContent = 'Platinum'; levelProgressInfo.textContent = t('highest') + '!'; levelProgressFill.style.width = '100%'; }
+      else if (invested >= 500) { level = 'gold'; icon = ''; levelName.textContent = 'Gold'; const progress = ((invested - 500) / (5000 - 500)) * 100; levelProgressInfo.textContent = `$${invested.toFixed(0)} / $5,000`; levelProgressFill.style.width = progress + '%'; }
+      else if (invested >= 50) { level = 'silver'; icon = ''; levelName.textContent = 'Silver'; const progress = ((invested - 50) / (500 - 50)) * 100; levelProgressInfo.textContent = `$${invested.toFixed(0)} / $500`; levelProgressFill.style.width = progress + '%'; }
       else { level = 'bronze'; icon = '🥉'; levelName.textContent = 'Bronze'; const progress = (invested / 50) * 100; levelProgressInfo.textContent = `$${invested.toFixed(0)} / $50`; levelProgressFill.style.width = progress + '%'; }
       levelIcon.textContent = icon;
       levelCard.className = 'level-card ' + level;
     }
     
+    // ALT POPUP
     function openSubPopup(type) {
       const content = document.getElementById('subPopupContent');
       let html = '';
       
       if (type === 'settings') {
         const notifEnabled = localStorage.getItem('telegramNotifActive') === 'true';
-        html = `<div class="sub-popup-header"><div class="sub-popup-title">⚙️ Ayarlar</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-          <div class="toggle-row"><div><div class="t-label">🔔 Telegram Bildirimleri</div><div class="t-desc">Yatırım ve çekim onayları</div></div><label class="toggle-switch"><input type="checkbox" ${notifEnabled ? 'checked' : ''} onchange="toggleNotif(this.checked)"><span class="toggle-slider"></span></label></div>
-          <div class="toggle-row"><div><div class="t-label">🌐 Dil</div><div class="t-desc">Uygulama dili</div></div><div style="font-weight: 700; color: #1e293b; font-size: 13px;">🇹🇷 Türkçe</div></div>
-          <div class="toggle-row"><div><div class="t-label">🎨 Tema</div><div class="t-desc">Görünüm teması</div></div><div style="font-weight: 700; color: #1e293b; font-size: 13px;">☀️ Açık</div></div>`;
+        const languages = [
+          { code: 'tr', name: '🇹🇷 Türkçe' },
+          { code: 'en', name: '🇬🇧 English' },
+          { code: 'ru', name: '🇺 Русский' },
+          { code: 'ar', name: '🇸 العربية' },
+          { code: 'de', name: '🇩🇪 Deutsch' },
+          { code: 'fr', name: '🇫🇷 Français' },
+          { code: 'es', name: '🇸 Español' }
+        ];
+        
+        let langHtml = languages.map(lang => {
+          const isActive = currentLang === lang.code;
+          return `<div class="profile-menu-item" style="${isActive ? 'border-color: #3b82f6; background: #eff6ff;' : ''}" onclick="changeLanguage('${lang.code}')">
+            <div class="m-icon blue" style="font-size: 20px;">${lang.name.split(' ')[0]}</div>
+            <div class="m-content"><div class="m-title">${lang.name.split(' ').slice(1).join(' ')}</div></div>
+            ${isActive ? '<div style="color: #3b82f6; font-size: 20px;">✓</div>' : ''}
+          </div>`;
+        }).join('');
+        
+        html = `<div class="sub-popup-header"><div class="sub-popup-title">⚙️ ${t('settings')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+          <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">🌐 ${t('selectLanguage')}</div>
+          ${langHtml}
+          <div style="margin-top: 15px; border-top: 2px solid #e2e8f0; padding-top: 12px;">
+            <div class="toggle-row"><div><div class="t-label">🔔 ${t('telegramNotif')}</div><div class="t-desc">${t('notifOnOff')}</div></div><label class="toggle-switch"><input type="checkbox" ${notifEnabled ? 'checked' : ''} onchange="toggleNotif(this.checked)"><span class="toggle-slider"></span></label></div>
+          </div>`;
       } else if (type === 'referral') {
         const referralCode = 'ref_' + (currentUser ? currentUser.id : userId);
         const referralLink = `https://t.me/${BOT_USERNAME}?start=${referralCode}`;
         const canUnlock = totalInvested >= MIN_INVESTMENT_TO_UNLOCK;
-        html = `<div class="sub-popup-header"><div class="sub-popup-title">🔗 Referans Sistemi</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-          <div class="referral-box"><div style="font-size: 13px; color: #1e40af; font-weight: 700; margin-bottom: 8px;">Senin Özel Linkin</div><div class="referral-link">${referralLink}</div><button class="btn" style="padding: 10px; font-size: 13px;" onclick="copyReferralLink()">📋 Linki Kopyala</button></div>
-          <div class="referral-stats"><div class="ref-stat"><div class="rs-value">${referralCount}</div><div class="rs-label">Davet Edilen</div></div><div class="ref-stat"><div class="rs-value">$${pendingReferralBonus.toFixed(2)}</div><div class="rs-label">${referralBonusUnlocked ? 'Kazanılan' : 'Bekleyen'}</div></div></div>
+        html = `<div class="sub-popup-header"><div class="sub-popup-title">🔗 ${t('referralSystem')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+          <div class="referral-box"><div style="font-size: 13px; color: #1e40af; font-weight: 700; margin-bottom: 8px;">${t('yourLink')}</div><div class="referral-link">${referralLink}</div><button class="btn" style="padding: 10px; font-size: 13px;" onclick="copyReferralLink()"> ${t('copyLink')}</button></div>
+          <div class="referral-stats"><div class="ref-stat"><div class="rs-value">${referralCount}</div><div class="rs-label">${t('referred')}</div></div><div class="ref-stat"><div class="rs-value">$${pendingReferralBonus.toFixed(2)}</div><div class="rs-label">${referralBonusUnlocked ? t('earned') : t('pending')}</div></div></div>
           <div style="background: ${canUnlock ? '#d1fae5' : '#fef3c7'}; padding: 12px; border-radius: 10px; font-size: 12px; color: ${canUnlock ? '#065f46' : '#92400e'}; line-height: 1.6; margin-top: 12px; border: 1px solid ${canUnlock ? '#10b981' : '#f59e0b'};">
-            ${canUnlock ? '✅ <strong>Harika!</strong> $3 yatırım şartını sağladın. Davet bonusu bakiyene eklendi!' : `⏳ <strong>Bonus Kilidi:</strong> Bonuslar için minimum <strong>$3.00</strong> yatırım gerekli. Şu an: <strong>$${totalInvested.toFixed(2)}</strong> / $3.00`}
+            ${canUnlock ? t('greatJob') : `${t('bonusLock')} <strong>$${totalInvested.toFixed(2)}</strong> / $3.00`}
           </div>
-          <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 11px; color: #64748b; line-height: 1.6; margin-top: 8px;">💡 <strong>Nasıl Çalışır?</strong><br>1. Linkini arkadaşlarınla paylaş<br>2. Arkadaşın linke tıklayıp botu başlatır<br>3. Arkadaşın yatırım yaptığında sen $0.50 kazanırsın<br>4. Toplam $3+ yatırım yapınca bonuslar bakiyene eklenir</div>`;
+          <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 11px; color: #64748b; line-height: 1.6; margin-top: 8px;"><strong>${t('howItWorks')}</strong><br>${t('shareLink')}<br>${t('friendClicks')}<br>${t('friendInvests')}<br>${t('unlockBonuses')}</div>`;
       } else if (type === 'faq') {
-        html = `<div class="sub-popup-header"><div class="sub-popup-title">❓ Sık Sorulan Sorular</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💰 Nasıl yatırım yapabilirim?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Ana sayfadaki paketlerden birini seç, TRX cüzdanımıza TRX gönder, ardından "Ödemeyi Yaptım" butonuna bas. Admin onayından sonra kazancın başlar.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>⏰ Kazancım ne zaman başlar?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Admin ödemeni onayladıktan sonra otomatik olarak başlar. Günlük %1.11 oranında kazanırsın (90 günde 2x).</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💸 Nasıl çekim yapabilirim?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Alt menüden "Çekim" butonuna bas, miktarı gir, kripto türünü ve cüzdan adresini seç. Minimum çekim $0.01'dir.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎁 Bonuslar nasıl çalışır?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Günlük bonus, görevler ve şans çarkından kazandığın bonuslar ayrı bir bakiyede birikir. Bonuslar da üretim yapar! Min $3 yatırım yapınca ana bakiyene aktarabilirsin.</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎰 Şans çarkı nasıl çalışır?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Her $10 yatırım için 1 çevirme hakkı kazanırsın. Çarkı çevir ve $0.10, $0.50 veya $1.00 kazan!</div></div>
-          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🌐 Hangi ağları destekliyorsunuz?</span><span class="faq-arrow">▼</span></div><div class="faq-answer">Yatırım için sadece TRON (TRC20) ağı. Çekim için TRX (TRC20), BNB (BEP20) ve XRP desteklenmektedir.</div></div>`;
+        html = `<div class="sub-popup-header"><div class="sub-popup-title">❓ ${t('faqTitle')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq1Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq1A')}</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq2Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq2A')}</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq3Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq3A')}</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq4Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq4A')}</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq5Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq5A')}</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>${t('faq6Q')}</span><span class="faq-arrow">▼</span></div><div class="faq-answer">${t('faq6A')}</div></div>`;
       } else if (type === 'about') {
-        html = `<div class="sub-popup-header"><div class="sub-popup-title">ℹ️ Hakkında</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-          <div class="about-info"><div class="about-logo">⚡</div><div class="about-title">Hash Power Mining</div><div class="about-version">Sürüm 2.2.0</div>
-          <div class="about-desc">Kripto madencilik platformu ile pasif gelir elde et.<br><br>🌐 TRON (TRC20) ağı üzerinden güvenli yatırım<br>📊 Günlük %1.11 kazanç oranı<br>💸 TRX, BNB, XRP çekim desteği<br>🔔 Anlık Telegram bildirimleri<br>🏆 Seviye sistemi ve ödüller<br>🎁 Referans bonusu: $0.50/davet<br>🎁 Günlük giriş bonusu<br>🎯 Görev sistemi<br>📈 Kazanç grafikleri<br>🎰 Şans çarkı<br>🎁 Bonus sistemi (üretimli)<br><br><strong style="color: #3b82f6;">© 2026 Hash Power Mining</strong></div></div>`;
+        html = `<div class="sub-popup-header"><div class="sub-popup-title">ℹ️ ${t('aboutTitle')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+          <div class="about-info"><div class="about-logo"></div><div class="about-title">Hash Power Mining</div><div class="about-version">${t('appVersion')}</div>
+          <div class="about-desc">${t('aboutDesc')}<br><br>🌐 TRON (TRC20)<br>📊 1.11% ${t('perDay')}<br>💸 TRX, BNB, XRP<br>🔔 Telegram<br>🏆 ${t('tasks')}<br>🎁 $0.50/${t('referred').toLowerCase()}<br>🎰 ${t('luckyWheel')}<br><br><strong style="color: #3b82f6;">© 2026 Hash Power Mining</strong></div></div>`;
       } else if (type === 'dailyBonus') {
         html = renderDailyBonus();
       } else if (type === 'tasks') {
@@ -804,12 +1427,22 @@
       if (type === 'wheel') setTimeout(drawWheel, 100);
     }
     
+    function changeLanguage(langCode) {
+      currentLang = langCode;
+      localStorage.setItem('selectedLanguage', langCode);
+      applyLanguage();
+      updateProfileData();
+      alert(`✅ ${t('languageChanged')} ${translations[langCode].language || langCode.toUpperCase()}`);
+      closeSubPopup();
+      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    }
+    
     function closeSubPopup() { document.getElementById('subOverlay').classList.remove('show'); }
     function closeSubOutside(event) { if (event.target === document.getElementById('subOverlay')) closeSubPopup(); }
     
     function toggleNotif(enabled) {
-      if (enabled) { localStorage.setItem('telegramNotifActive', 'true'); alert('✅ Bildirimler aktif edildi!'); }
-      else { localStorage.setItem('telegramNotifActive', 'false'); alert('⏸️ Bildirimler kapatıldı.'); }
+      if (enabled) { localStorage.setItem('telegramNotifActive', 'true'); alert(t('notifActivated')); }
+      else { localStorage.setItem('telegramNotifActive', 'false'); alert(t('notifDeactivated')); }
       updateTelegramNotifUI();
     }
     
@@ -817,7 +1450,7 @@
       const referralCode = 'ref_' + (currentUser ? currentUser.id : userId);
       const referralLink = `https://t.me/${BOT_USERNAME}?start=${referralCode}`;
       navigator.clipboard.writeText(referralLink).then(() => {
-        alert('✅ Referans linki kopyalandı!\n\nArkadaşlarınla paylaş, her davet için $0.50 kazan!');
+        alert(`${t('linkCopied')}\n\n${t('shareWithFriends')}`);
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       });
     }
@@ -825,6 +1458,7 @@
     function toggleFaq(element) { element.classList.toggle('open'); }
     function openSupport() { const supportUrl = `https://t.me/${BOT_USERNAME}`; if (tg.openTelegramLink) tg.openTelegramLink(supportUrl); else window.open(supportUrl, '_blank'); }
     
+    // GÜNLÜK BONUS
     function renderDailyBonus() {
       const today = new Date().toDateString();
       const lastClaim = dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
@@ -836,26 +1470,26 @@
       for (let i = 0; i < 7; i++) {
         const claimed = i < currentStreak;
         const isToday = i === currentStreak && canClaim;
-        streakHtml += `<div class="streak-day ${claimed ? 'claimed' : ''} ${isToday ? 'today' : ''}"><div class="sd-num">${i + 1}. Gün</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`;
+        streakHtml += `<div class="streak-day ${claimed ? 'claimed' : ''} ${isToday ? 'today' : ''}"><div class="sd-num">${i + 1}. ${t('day')}</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`;
       }
       streakHtml += '</div>';
       
-      return `<div class="sub-popup-header"><div class="sub-popup-title">🎁 Günlük Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+      return `<div class="sub-popup-header"><div class="sub-popup-title">🎁 ${t('dailyBonus')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
         <div class="daily-bonus-card">
           <div class="db-icon">🎁</div>
-          <div class="db-title">${canClaim ? 'Bugünün Bonusu Hazır!' : 'Yarın Tekrar Gel!'}</div>
+          <div class="db-title">${canClaim ? t('todayBonus') : t('comeBackTomorrow')}</div>
           <div class="db-amount">$${canClaim ? nextBonus.toFixed(2) : DAILY_BONUSES[Math.min(currentStreak + 1, 6)].toFixed(2)}</div>
-          <div class="db-streak">🔥 ${currentStreak} gün seri</div>
+          <div class="db-streak">🔥 ${currentStreak} ${t('streak').toLowerCase()}</div>
         </div>
         ${streakHtml}
-        ${canClaim ? `<button class="btn btn-approve" style="margin-top: 15px;" onclick="claimDailyBonus()">🎁 Bonusu Al ($${nextBonus.toFixed(2)})</button>` : `<div style="background: #f1f5f9; padding: 12px; border-radius: 10px; text-align: center; margin-top: 15px; font-size: 12px; color: #64748b;">🌙 Yarın tekrar gel, daha büyük bonus kazan!</div>`}
-        <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 11px; color: #64748b; line-height: 1.6; margin-top: 12px;">💡 <strong>Seri Bonusu:</strong> Her gün ardışık giriş yap, bonuslar artsın! 7. gün $0.10 kazan!</div>`;
+        ${canClaim ? `<button class="btn btn-approve" style="margin-top: 15px;" onclick="claimDailyBonus()">🎁 ${t('getBonus')} ($${nextBonus.toFixed(2)})</button>` : `<div style="background: #f1f5f9; padding: 12px; border-radius: 10px; text-align: center; margin-top: 15px; font-size: 12px; color: #64748b;">🌙 ${t('comeBackTomorrow')}</div>`}
+        <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 11px; color: #64748b; line-height: 1.6; margin-top: 12px;">💡 <strong>${t('streakBonus')}:</strong> ${t('streakInfo')}</div>`;
     }
     
     async function claimDailyBonus() {
       const today = new Date().toDateString();
       const lastClaim = dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
-      if (today === lastClaim) { alert('⏰ Bugün zaten aldın! Yarın tekrar gel.'); return; }
+      if (today === lastClaim) { alert(t('alreadyClaimed')); return; }
       
       const currentStreak = dailyBonusData.streak || 0;
       const bonus = DAILY_BONUSES[Math.min(currentStreak, 6)];
@@ -871,29 +1505,29 @@
         bonusBalance = (bonusBalance || 0) + bonus;
         dailyBonusData = { lastClaim: Date.now(), streak: newStreak };
         
-        addNotification('🎁 Günlük Bonus', `$${bonus.toFixed(2)} bonus kazandın! Seri: ${newStreak} gün`, 'bonus');
+        addNotification(t('dailyBonusNotif'), `$${bonus.toFixed(2)} ${t('bonusEarned').toLowerCase()}! ${t('streak')}: ${newStreak} ${t('days').toLowerCase()}`, 'bonus');
         
-        alert(`🎉 Tebrikler!\n\n$${bonus.toFixed(2)} bonus kazandın!\n🔥 Seri: ${newStreak} gün\n\nYarın $${DAILY_BONUSES[Math.min(newStreak, 6)].toFixed(2)} alacaksın!`);
+        alert(`${t('congrats')}\n\n$${bonus.toFixed(2)} ${t('bonusEarned')}\n🔥 ${t('streak')}: ${newStreak}\n\n${t('tomorrowYouGet')} $${DAILY_BONUSES[Math.min(newStreak, 6)].toFixed(2)}${t('youWillGet')}`);
         
         updateUI();
-        updateQuickActionsUI();
         openSubPopup('dailyBonus');
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(t('error') + ' ' + error.message); }
     }
     
+    // GÖREVLER
     function renderTasks() {
       const defaultTasks = [
-        { id: 'first_deposit', title: 'İlk Yatırım', desc: 'İlk yatırımını yap', reward: 0.50, icon: '💰', completed: totalInvested >= 1 },
-        { id: 'invest_10', title: '$10 Yatırım', desc: 'Toplam $10 yatırım yap', reward: 1.00, icon: '💵', completed: totalInvested >= 10 },
-        { id: 'invest_100', title: '$100 Yatırım', desc: 'Toplam $100 yatırım yap', reward: 5.00, icon: '💎', completed: totalInvested >= 100 },
-        { id: 'refer_1', title: 'İlk Referans', desc: '1 arkadaş davet et', reward: 0.50, icon: '👥', completed: referralCount >= 1 },
-        { id: 'refer_5', title: '5 Referans', desc: '5 arkadaş davet et', reward: 2.50, icon: '🎯', completed: referralCount >= 5 },
-        { id: 'daily_7', title: '7 Gün Seri', desc: '7 gün ardışık giriş yap', reward: 1.00, icon: '🔥', completed: dailyBonusData.streak >= 7 }
+        { id: 'first_deposit', title: t('buy'), desc: t('minDeposit') + ' $1', reward: 0.50, icon: '💰', completed: totalInvested >= 1 },
+        { id: 'invest_10', title: '$10 ' + t('investment'), desc: t('totalInvestment') + ' $10', reward: 1.00, icon: '💵', completed: totalInvested >= 10 },
+        { id: 'invest_100', title: '$100 ' + t('investment'), desc: t('totalInvestment') + ' $100', reward: 5.00, icon: '💎', completed: totalInvested >= 100 },
+        { id: 'refer_1', title: '1 ' + t('referred'), desc: '1 ' + t('referred').toLowerCase(), reward: 0.50, icon: '', completed: referralCount >= 1 },
+        { id: 'refer_5', title: '5 ' + t('referred'), desc: '5 ' + t('referred').toLowerCase(), reward: 2.50, icon: '', completed: referralCount >= 5 },
+        { id: 'daily_7', title: '7 ' + t('days') + ' ' + t('streak'), desc: '7 ' + t('days').toLowerCase() + ' ' + t('dailyBonus').toLowerCase(), reward: 1.00, icon: '🔥', completed: dailyBonusData.streak >= 7 }
       ];
       
-      let html = `<div class="sub-popup-header"><div class="sub-popup-title">🎯 Görevler</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-        <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 12px; color: #64748b; margin-bottom: 12px;">Görevleri tamamla, otomatik bonus kazan!</div>`;
+      let html = `<div class="sub-popup-header"><div class="sub-popup-title"> ${t('tasks')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+        <div style="background: #f1f5f9; padding: 12px; border-radius: 10px; font-size: 12px; color: #64748b; margin-bottom: 12px;">${t('completeTasks')}</div>`;
       
       defaultTasks.forEach(task => {
         const isCompleted = completedTasks.includes(task.id);
@@ -904,7 +1538,7 @@
             <div class="task-desc">${task.desc}</div>
             <div class="task-reward">🎁 $${task.reward.toFixed(2)}</div>
           </div>
-          ${isCompleted ? '<button class="task-btn done">✅ Tamamlandı</button>' : (task.completed ? `<button class="task-btn claim" onclick="claimTaskReward('${task.id}', ${task.reward}, '${task.title}')">🎁 Al</button>` : '<button class="task-btn" style="background: #e2e8f0; color: #64748b;">Bekliyor</button>')}
+          ${isCompleted ? `<button class="task-btn done">${t('taskCompleted')}</button>` : (task.completed ? `<button class="task-btn claim" onclick="claimTaskReward('${task.id}', ${task.reward}, '${task.title.replace(/'/g, "\\'")}')">${t('claim')}</button>` : `<button class="task-btn" style="background: #e2e8f0; color: #64748b;">${t('waiting')}</button>`)}
         </div>`;
       });
       
@@ -912,7 +1546,10 @@
     }
     
     async function claimTaskReward(taskId, reward, taskTitle) {
-      if (completedTasks.includes(taskId)) { alert('⚠️ Bu görevi zaten tamamladın!'); return; }
+      if (completedTasks.includes(taskId)) {
+        alert(t('alreadyCompleted'));
+        return;
+      }
       
       try {
         const userRef = db.collection('users').doc(userId);
@@ -924,17 +1561,17 @@
         completedTasks.push(taskId);
         bonusBalance = (bonusBalance || 0) + reward;
         
-        addNotification('🎯 Görev Tamamlandı', `${taskTitle} görevi tamamlandı! +$${reward.toFixed(2)} bonus`, 'bonus');
+        addNotification(t('taskCompletedNotif'), `${taskTitle} ${t('taskDone')} +$${reward.toFixed(2)} ${t('bonus').toLowerCase()}`, 'bonus');
         
-        alert(`🎉 Tebrikler!\n\n${taskTitle} görevi tamamlandı!\n+$${reward.toFixed(2)} bonus kazandın!`);
+        alert(`${t('congrats')}\n\n${taskTitle} ${t('taskDone')}\n+$${reward.toFixed(2)} ${t('bonusWon')}`);
         
         updateUI();
-        updateQuickActionsUI();
         openSubPopup('tasks');
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(t('error') + ' ' + error.message); }
     }
     
+    // KAZANÇ GRAFİĞİ
     function renderChart() {
       const days = currentChartPeriod === '7d' ? 7 : 30;
       const chartData = earningsHistory.slice(-days);
@@ -953,47 +1590,52 @@
       chartData.forEach((d, i) => {
         const height = (d.earnings / maxEarnings) * 100;
         const date = new Date(d.date);
-        const label = currentChartPeriod === '7d' ? date.toLocaleDateString('tr-TR', { weekday: 'short' }) : date.getDate();
+        const label = currentChartPeriod === '7d' ? date.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { weekday: 'short' }) : date.getDate();
         barsHtml += `<div class="chart-bar" style="height: ${Math.max(height, 3)}%"><div class="bar-value">$${d.earnings.toFixed(2)}</div><div class="bar-label">${label}</div></div>`;
       });
       barsHtml += '</div>';
       
-      return `<div class="sub-popup-header"><div class="sub-popup-title">📈 Kazanç Grafiği</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+      return `<div class="sub-popup-header"><div class="sub-popup-title">📈 ${t('earningsChartTitle')}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
         <div class="chart-container">
           <div class="chart-header">
-            <div class="chart-title">Son ${days} Gün Kazançların</div>
+            <div class="chart-title">${t('lastDaysEarnings')} ${days} ${t('daysEarnings')}</div>
             <div class="chart-period">
-              <button class="${currentChartPeriod === '7d' ? 'active' : ''}" onclick="changeChartPeriod('7d')">7G</button>
-              <button class="${currentChartPeriod === '30d' ? 'active' : ''}" onclick="changeChartPeriod('30d')">30G</button>
+              <button class="${currentChartPeriod === '7d' ? 'active' : ''}" onclick="changeChartPeriod('7d')">7${t('days')}</button>
+              <button class="${currentChartPeriod === '30d' ? 'active' : ''}" onclick="changeChartPeriod('30d')">30${t('days')}</button>
             </div>
           </div>
           ${barsHtml}
           <div class="chart-summary">
-            <div class="chart-summary-item"><div class="csi-value">$${totalEarnings.toFixed(2)}</div><div class="csi-label">Toplam</div></div>
-            <div class="chart-summary-item"><div class="csi-value">$${avgEarnings.toFixed(2)}</div><div class="csi-label">Ortalama</div></div>
-            <div class="chart-summary-item"><div class="csi-value">$${maxEarnings.toFixed(2)}</div><div class="csi-label">En Yüksek</div></div>
+            <div class="chart-summary-item"><div class="csi-value">$${totalEarnings.toFixed(2)}</div><div class="csi-label">${t('total')}</div></div>
+            <div class="chart-summary-item"><div class="csi-value">$${avgEarnings.toFixed(2)}</div><div class="csi-label">${t('average')}</div></div>
+            <div class="chart-summary-item"><div class="csi-value">$${maxEarnings.toFixed(2)}</div><div class="csi-label">${t('highest')}</div></div>
           </div>
         </div>`;
     }
     
-    function changeChartPeriod(period) { currentChartPeriod = period; openSubPopup('chart'); }
+    function changeChartPeriod(period) {
+      currentChartPeriod = period;
+      openSubPopup('chart');
+    }
+    
     function drawChart() {}
     
+    // BİLDİRİMLER
     function renderNotifications() {
       const unreadCount = notificationsData.filter(n => !n.read).length;
       
-      let html = `<div class="sub-popup-header"><div class="sub-popup-title">🔔 Bildirimler (${unreadCount})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+      let html = `<div class="sub-popup-header"><div class="sub-popup-title">🔔 ${t('notificationsTitle')} (${unreadCount})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
       
       if (unreadCount > 0) {
-        html += `<button class="mark-all-read" onclick="markAllRead()">✅ Tümünü Okundu İşaretle</button>`;
+        html += `<button class="mark-all-read" onclick="markAllRead()">${t('markAllRead')}</button>`;
       }
       
       if (notificationsData.length === 0) {
-        html += `<div class="notif-empty"><div class="ne-icon">🔔</div><div>Henüz bildirim yok</div></div>`;
+        html += `<div class="notif-empty"><div class="ne-icon">🔔</div><div>${t('noNotifications')}</div></div>`;
       } else {
-        notificationsData.slice(0, 20).forEach((notif, idx) => {
-          const time = new Date(notif.timestamp).toLocaleString('tr-TR');
-          html += `<div class="notif-item ${notif.read ? '' : 'unread'}" onclick="markNotifRead(${idx})">
+        notificationsData.slice(0, 20).forEach(notif => {
+          const time = new Date(notif.timestamp).toLocaleString(currentLang === 'tr' ? 'tr-TR' : currentLang === 'ar' ? 'ar-SA' : currentLang === 'ru' ? 'ru-RU' : currentLang === 'de' ? 'de-DE' : currentLang === 'fr' ? 'fr-FR' : currentLang === 'es' ? 'es-ES' : 'en-US');
+          html += `<div class="notif-item ${notif.read ? '' : 'unread'}">
             <div class="ni-icon">${notif.icon || '🔔'}</div>
             <div class="ni-content">
               <div class="ni-title">${notif.title}</div>
@@ -1007,20 +1649,14 @@
       return html;
     }
     
-    function markNotifRead(idx) {
-      if (notificationsData[idx] && !notificationsData[idx].read) {
-        notificationsData[idx].read = true;
-        saveNotifications();
-        updateQuickActionsUI();
-        openSubPopup('notifications');
-      }
-    }
-    
     function markAllRead() {
       notificationsData = notificationsData.map(n => ({ ...n, read: true }));
       saveNotifications();
-      updateQuickActionsUI();
-      openSubPopup('notifications');
+      updateQuickNotifBadge();
+      updateProfileData();
+      if (document.getElementById('subOverlay').classList.contains('show')) {
+        openSubPopup('notifications');
+      }
     }
     
     function addNotification(title, message, type = 'info') {
@@ -1034,7 +1670,7 @@
       });
       if (notificationsData.length > 50) notificationsData = notificationsData.slice(0, 50);
       saveNotifications();
-      updateQuickActionsUI();
+      updateQuickNotifBadge();
     }
     
     function saveNotifications() {
@@ -1043,29 +1679,30 @@
       } catch (e) { console.error('Bildirim kaydetme hatası:', e); }
     }
     
+    // ŞANS ÇARKI
     function renderWheel() {
       const canSpin = wheelSpins > 0;
       
       let historyHtml = '';
       if (wheelHistory.length > 0) {
-        historyHtml = '<div class="wheel-history"><div class="wheel-history-title">🏆 Son Kazançların</div>';
+        historyHtml = '<div class="wheel-history"><div class="wheel-history-title">' + t('lastWins') + '</div>';
         wheelHistory.slice(0, 5).forEach(h => {
-          historyHtml += `<div class="wheel-history-item"><span class="whi-prize">${h.prize}</span><span class="whi-time">${new Date(h.timestamp).toLocaleDateString('tr-TR')}</span></div>`;
+          historyHtml += `<div class="wheel-history-item"><span class="whi-prize">${h.prize}</span><span class="whi-time">${new Date(h.timestamp).toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US')}</span></div>`;
         });
         historyHtml += '</div>';
       }
       
-      return `<div class="sub-popup-header"><div class="sub-popup-title">🎰 Şans Çarkı</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+      return `<div class="sub-popup-header"><div class="sub-popup-title">🎰 ${t('luckyWheelTitle')}</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>
         <div class="wheel-container">
           <div class="wheel-info">
-            <div class="wi-spins">🎫 ${wheelSpins} Çevirme Hakkın</div>
-            <div class="wi-desc">Her $10 yatırım = 1 çevirme hakkı</div>
+            <div class="wi-spins"> ${wheelSpins} ${t('spinsLeft')}</div>
+            <div class="wi-desc">${t('spinPerInvest')}</div>
           </div>
           <div class="wheel-wrapper">
             <div class="wheel-pointer">🔻</div>
             <canvas id="wheelCanvas" class="wheel-canvas" width="280" height="280"></canvas>
           </div>
-          ${canSpin ? '<button class="btn btn-approve" onclick="spinWheel()">🎰 Çarkı Çevir!</button>' : '<div style="background: #fef3c7; padding: 12px; border-radius: 10px; text-align: center; font-size: 12px; color: #92400e; border: 1px solid #f59e0b;">⏳ Çevirme hakkın yok. $10 yatırım yap, hak kazan!</div>'}
+          ${canSpin ? `<button class="btn btn-approve" onclick="spinWheel()">${t('spinWheel')}</button>` : `<div style="background: #fef3c7; padding: 12px; border-radius: 10px; text-align: center; font-size: 12px; color: #92400e; border: 1px solid #f59e0b;">${t('noSpins')}</div>`}
           ${historyHtml}
         </div>`;
     }
@@ -1116,7 +1753,10 @@
       let selectedPrize = WHEEL_PRIZES[0];
       for (const prize of WHEEL_PRIZES) {
         random -= prize.weight;
-        if (random <= 0) { selectedPrize = prize; break; }
+        if (random <= 0) {
+          selectedPrize = prize;
+          break;
+        }
       }
       
       const prizeIndex = WHEEL_PRIZES.indexOf(selectedPrize);
@@ -1132,7 +1772,7 @@
         
         bonusBalance = (bonusBalance || 0) + selectedPrize.value;
         
-        addNotification('🎰 Şans Çarkı', `$${selectedPrize.value.toFixed(2)} kazandın!`, 'bonus');
+        addNotification(t('wheelSpinWon'), `$${selectedPrize.value.toFixed(2)} ${t('wheelWon')}`, 'bonus');
         
         try {
           db.collection('users').doc(userId).set({
@@ -1142,16 +1782,16 @@
           }, { merge: true });
         } catch (e) { console.error('Çark kaydetme hatası:', e); }
         
-        alert(`🎉 Tebrikler!\n\n$${selectedPrize.value.toFixed(2)} kazandın!\n\nKalan hak: ${wheelSpins}`);
+        alert(`${t('congrats')}\n\n$${selectedPrize.value.toFixed(2)} ${t('wheelWon')}\n\n${t('spinsRemaining')} ${wheelSpins}`);
         
         updateUI();
-        updateQuickActionsUI();
         openSubPopup('wheel');
         isSpinning = false;
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       }, 4000);
     }
     
+    // REFERANS
     async function processReferral() {
       if (!referredByUserId || referredByUserId === userId) return;
       try {
@@ -1179,7 +1819,7 @@
         bonusBalance = newBonusBalance;
         referralBonusUnlocked = true;
         pendingReferralBonus = 0;
-        addNotification('🎁 Referans Bonusu', 'Bonus kilidi açıldı! Bonus bakiyene eklendi.', 'bonus');
+        addNotification(t('referralBonusNotif'), t('bonusUnlocked'), 'bonus');
         updateUI();
       } catch (error) { console.error('Bonus kilit hatası:', error); }
     }
@@ -1187,11 +1827,14 @@
     async function withdrawBonuses() {
       if (totalInvested < MIN_INVESTMENT_TO_UNLOCK) {
         const needed = MIN_INVESTMENT_TO_UNLOCK - totalInvested;
-        alert(`⚠️ Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız.\n\nŞu an: $${totalInvested.toFixed(2)}\nGerekli: $${needed.toFixed(2)} daha`);
+        alert(`${t('needMoreInvest')}\n\n${t('current')}: $${totalInvested.toFixed(2)}\n${t('needMore')}: $${needed.toFixed(2)}`);
         return;
       }
       
-      if (bonusBalance <= 0) { alert('💰 Aktarılacak bonus yok!'); return; }
+      if (bonusBalance <= 0) {
+        alert(t('noBonusToTransfer'));
+        return;
+      }
       
       try {
         const userRef = db.collection('users').doc(userId);
@@ -1205,21 +1848,21 @@
         balance = lifetimeEarnings - totalWithdrawn;
         bonusBalance = 0;
         
-        addNotification('💰 Bonus Aktarıldı', `$${transferredAmount.toFixed(2)} bonus ana bakiyeye aktarıldı!`, 'success');
+        addNotification(t('bonusTransferredNotif'), `$${transferredAmount.toFixed(2)} ${t('bonusTransferred')}`, 'success');
         
-        alert(`✅ Başarılı!\n\n$${transferredAmount.toFixed(2)} bonus ana bakiyene aktarıldı!\n\nYeni bakiye: $${balance.toFixed(2)}`);
+        alert(`${t('successful')}\n\n$${transferredAmount.toFixed(2)} ${t('bonusTransferred')}\n\n${t('newBalance')} $${balance.toFixed(2)}`);
         
         updateUI();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(t('error') + ' ' + error.message); }
     }
     
     function activateTelegramNotif() {
       const isActive = localStorage.getItem('telegramNotifActive') === 'true';
-      if (isActive) { alert('✅ Bildirimler zaten aktif!'); return; }
+      if (isActive) { alert(t('notifActivated')); return; }
       const botUrl = `https://t.me/${BOT_USERNAME}?start=activate`;
       if (tg.openTelegramLink) tg.openTelegramLink(botUrl); else window.open(botUrl, '_blank');
-      setTimeout(() => { alert('📱 Bot açıldı!\n\nLütfen sohbete "/start" yaz.'); localStorage.setItem('telegramNotifActive', 'true'); updateTelegramNotifUI(); }, 1000);
+      setTimeout(() => { alert(`${t('botOpened')}\n\n${t('pleaseStart')}`); localStorage.setItem('telegramNotifActive', 'true'); updateTelegramNotifUI(); }, 1000);
     }
     function updateTelegramNotifUI() {
       const card = document.getElementById('telegramNotifCard');
@@ -1228,22 +1871,22 @@
       const check = document.getElementById('telegramCheck');
       const icon = card.querySelector('.telegram-icon');
       const isActive = localStorage.getItem('telegramNotifActive') === 'true';
-      if (isActive) { card.classList.remove('inactive'); title.textContent = '✅ Bildirimler Aktif'; desc.textContent = 'Yatırım & çekim onayları Telegram\'a gelecek!'; icon.textContent = '📱'; check.textContent = '✓'; }
-      else { card.classList.add('inactive'); title.textContent = '🔔 Bildirimleri Aktif Et'; desc.textContent = 'Yatırım & çekim onaylarını Telegram\'dan anında al!'; icon.textContent = '📱'; check.textContent = '›'; }
+      if (isActive) { card.classList.remove('inactive'); title.innerHTML = '✅ ' + t('activateNotif'); desc.textContent = t('notifDesc'); icon.textContent = '📱'; check.textContent = '✓'; }
+      else { card.classList.add('inactive'); title.innerHTML = '🔔 ' + t('activateNotif'); desc.textContent = t('notifDesc'); icon.textContent = '📱'; check.textContent = '›'; }
     }
     async function sendTelegramNotification(message) {
       if (!BOT_TOKEN || !ADMIN_CHAT_ID) return;
       try { await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: message, parse_mode: 'HTML' }) }); const toast = document.getElementById('notifToast'); toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); } catch (error) { console.error("Bildirim hatası:", error); }
     }
-    function validateAddress(address, crypto) { const validator = addressValidators[crypto]; if (!validator) return { valid: false, message: 'Geçersiz coin' }; const isValid = validator(address); return { valid: isValid, message: isValid ? '✅ Geçerli adres formatı' : `❌ Geçersiz format. ${addressFormats[crypto]} olmalı` }; }
+    function validateAddress(address, crypto) { const validator = addressValidators[crypto]; if (!validator) return { valid: false, message: t('invalidAddress') }; const isValid = validator(address); return { valid: isValid, message: isValid ? '✅ ' + t('approved') : '❌ ' + t('invalidAddress') }; }
     function validateAddressInput() { const crypto = document.getElementById('withdrawCrypto').value; const address = document.getElementById('walletAddress').value.trim(); const msgElement = document.getElementById('addressValidationMsg'); const inputElement = document.getElementById('walletAddress'); if (address.length === 0) { inputElement.classList.remove('input-valid', 'input-invalid'); msgElement.classList.remove('show', 'valid', 'invalid'); return; } const validation = validateAddress(address, crypto); if (validation.valid) { inputElement.classList.add('input-valid'); inputElement.classList.remove('input-invalid'); msgElement.textContent = validation.message; msgElement.classList.add('show', 'valid'); msgElement.classList.remove('invalid'); } else { inputElement.classList.add('input-invalid'); inputElement.classList.remove('input-valid'); msgElement.textContent = validation.message; msgElement.classList.add('show', 'invalid'); msgElement.classList.remove('valid'); } }
     function clearAddressValidation() { document.getElementById('walletAddress').classList.remove('input-valid', 'input-invalid'); document.getElementById('addressValidationMsg').classList.remove('show', 'valid', 'invalid'); }
-    function updateNetworkInfo() { const crypto = document.getElementById('withdrawCrypto').value; const ni = NETWORK_INFO[crypto]; document.getElementById('networkInfo').innerHTML = `🌐 <strong>Ağ:</strong> ${ni.fullName}<br><small>${ni.description}</small>`; }
+    function updateNetworkInfo() { const crypto = document.getElementById('withdrawCrypto').value; const ni = NETWORK_INFO[crypto]; document.getElementById('networkInfo').innerHTML = `🌐 <strong>${t('network')}:</strong> ${ni.fullName}<br><small>${ni.description}</small>`; }
     function adjustAmount(delta) { const input = document.getElementById('buyAmount'); let val = parseFloat(input.value) || 0; val = Math.round((val + delta) * 100) / 100; if (val < MIN_DEPOSIT) val = MIN_DEPOSIT; if (val > MAX_DEPOSIT) val = MAX_DEPOSIT; input.value = val.toFixed(2); updateBuyTRX(); }
-    function setMaxAmount() { const maxVal = Math.max(0.01, balance); if (maxVal < 0.01) { alert('❌ Çekilecek bakiye yok!'); return; } document.getElementById('withdrawAmount').value = maxVal.toFixed(2); updateCryptoAmount(); if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); }
-    function renderPackages() { const container = document.getElementById('packagesContainer'); container.innerHTML = ''; packages.forEach(pkg => { const discountedPrice = pkg.price * (1 - DISCOUNT_RATE); const savings = pkg.price - discountedPrice; const card = document.createElement('div'); card.className = `package-card ${pkg.featured ? 'featured' : ''}`; card.onclick = () => selectPackage(pkg.price, discountedPrice, pkg.name); card.innerHTML = `<div class="package-name">${pkg.name}</div><div style="text-align:center;"><span class="discount-badge">%20</span></div><div class="package-pricing"><span class="original-price">$${pkg.price.toFixed(2)}</span><span class="discounted-price">$${discountedPrice.toFixed(2)}</span></div><div class="package-savings">-$${savings.toFixed(2)}</div><div class="package-cta">Seç →</div>`; container.appendChild(card); }); }
-    function selectPackage(originalPrice, discountedPrice, packageName) { selectedPackageName = packageName; selectedPackageOriginal = originalPrice; selectedPackageDiscounted = discountedPrice; const buyAmountInput = document.getElementById('buyAmount'); buyAmountInput.value = discountedPrice.toFixed(2); buyAmountInput.readOnly = true; document.getElementById('amountLabel').textContent = 'Gönderilecek Tutar (İndirimli)'; updateBuyTRX(); document.getElementById('summaryName').textContent = packageName; document.getElementById('summaryOriginal').textContent = '$' + originalPrice.toFixed(2); document.getElementById('summaryDiscounted').textContent = '$' + discountedPrice.toFixed(2); document.getElementById('summaryRecord').textContent = '$' + originalPrice.toFixed(2); document.getElementById('packageSummary').classList.add('active'); showPage('buy'); if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); }
-    function resetAndGoHome() { selectedPackageName = ''; selectedPackageOriginal = 0; selectedPackageDiscounted = 0; const buyAmountInput = document.getElementById('buyAmount'); buyAmountInput.value = '1'; buyAmountInput.readOnly = false; document.getElementById('amountLabel').textContent = 'Gönderilecek Tutar (USD)'; updateBuyTRX(); document.getElementById('packageSummary').classList.remove('active'); showPage('home'); }
+    function setMaxAmount() { const maxVal = Math.max(0.01, balance); if (maxVal < 0.01) { alert(t('insufficientBalance')); return; } document.getElementById('withdrawAmount').value = maxVal.toFixed(2); updateCryptoAmount(); if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); }
+    function renderPackages() { const container = document.getElementById('packagesContainer'); container.innerHTML = ''; packages.forEach(pkg => { const discountedPrice = pkg.price * (1 - DISCOUNT_RATE); const savings = pkg.price - discountedPrice; const card = document.createElement('div'); card.className = `package-card ${pkg.featured ? 'featured' : ''}`; card.onclick = () => selectPackage(pkg.price, discountedPrice, pkg.name); card.innerHTML = `<div class="package-name">${pkg.name}</div><div style="text-align:center;"><span class="discount-badge">%20</span></div><div class="package-pricing"><span class="original-price">$${pkg.price.toFixed(2)}</span><span class="discounted-price">$${discountedPrice.toFixed(2)}</span></div><div class="package-savings">-$${savings.toFixed(2)}</div><div class="package-cta">${t('select')}</div>`; container.appendChild(card); }); }
+    function selectPackage(originalPrice, discountedPrice, packageName) { selectedPackageName = packageName; selectedPackageOriginal = originalPrice; selectedPackageDiscounted = discountedPrice; const buyAmountInput = document.getElementById('buyAmount'); buyAmountInput.value = discountedPrice.toFixed(2); buyAmountInput.readOnly = true; document.getElementById('amountLabel').textContent = t('sendAmount'); updateBuyTRX(); document.getElementById('summaryName').textContent = packageName; document.getElementById('summaryOriginal').textContent = '$' + originalPrice.toFixed(2); document.getElementById('summaryDiscounted').textContent = '$' + discountedPrice.toFixed(2); document.getElementById('summaryRecord').textContent = '$' + originalPrice.toFixed(2); document.getElementById('packageSummary').classList.add('active'); showPage('buy'); if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); }
+    function resetAndGoHome() { selectedPackageName = ''; selectedPackageOriginal = 0; selectedPackageDiscounted = 0; const buyAmountInput = document.getElementById('buyAmount'); buyAmountInput.value = '1'; buyAmountInput.readOnly = false; document.getElementById('amountLabel').textContent = t('sendAmount'); updateBuyTRX(); document.getElementById('packageSummary').classList.remove('active'); showPage('home'); }
     
     auth.signInAnonymously().then(async () => {
       userId = auth.currentUser.uid;
@@ -1275,19 +1918,20 @@
             if (offlineEarned > 0.001) { await db.collection('users').doc(userId).update({ lifetimeEarnings: (data.lifetimeEarnings || 0) + offlineEarned, lastActive: now }); showOfflinePopup(offlineEarned); }
           } else { await db.collection('users').doc(userId).update({ lastActive: now }); }
         } else { await db.collection('users').doc(userId).set({ lifetimeEarnings: 0, totalWithdrawn: 0, lastActive: Date.now(), created_at: firebase.firestore.FieldValue.serverTimestamp() }); }
+        updateQuickNotifBadge();
       } catch (error) { console.error('Offline kazanç hatası:', error); }
     }
     
     function showOfflinePopup(amount) { document.getElementById('offlineEarnedAmount').textContent = amount.toFixed(4); document.getElementById('offlinePopup').classList.remove('hidden'); if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
     function closeOfflinePopup() { document.getElementById('offlinePopup').classList.add('hidden'); }
-    function listenToData() { db.collection('users').doc(userId).onSnapshot((doc) => { if (doc.exists) { const data = doc.data(); products = (data.approvedPayments || []).map(p => ({ ...p, earned: 0 })); lifetimeEarnings = data.lifetimeEarnings || 0; totalWithdrawn = data.totalWithdrawn || 0; totalInvested = data.totalInvested || 0; balance = lifetimeEarnings - totalWithdrawn; referralCount = data.referralCount || 0; pendingReferralBonus = data.pendingReferralBonus || 0; referralBonusUnlocked = data.referralBonusUnlocked || false; bonusBalance = data.bonusBalance || 0; if (data.completedTasks) completedTasks = data.completedTasks; if (data.created_at) createdAt = data.created_at.toDate ? data.created_at.toDate() : new Date(data.created_at); if (data.dailyBonus) dailyBonusData = data.dailyBonus; if (data.notifications) notificationsData = data.notifications; if (data.wheelSpins !== undefined) wheelSpins = data.wheelSpins; if (data.wheelHistory) wheelHistory = data.wheelHistory; if (data.earningsHistory) earningsHistory = data.earningsHistory; updateUI(); updateQuickActionsUI(); } }); }
-    function copyDepositAddress() { navigator.clipboard.writeText(DEPOSIT_WALLET).then(() => { alert('✅ Cüzdan adresi kopyalandı!'); if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }); }
+    function listenToData() { db.collection('users').doc(userId).onSnapshot((doc) => { if (doc.exists) { const data = doc.data(); products = (data.approvedPayments || []).map(p => ({ ...p, earned: 0 })); lifetimeEarnings = data.lifetimeEarnings || 0; totalWithdrawn = data.totalWithdrawn || 0; totalInvested = data.totalInvested || 0; balance = lifetimeEarnings - totalWithdrawn; referralCount = data.referralCount || 0; pendingReferralBonus = data.pendingReferralBonus || 0; referralBonusUnlocked = data.referralBonusUnlocked || false; bonusBalance = data.bonusBalance || 0; if (data.completedTasks) completedTasks = data.completedTasks; if (data.created_at) createdAt = data.created_at.toDate ? data.created_at.toDate() : new Date(data.created_at); if (data.dailyBonus) dailyBonusData = data.dailyBonus; if (data.notifications) notificationsData = data.notifications; if (data.wheelSpins !== undefined) wheelSpins = data.wheelSpins; if (data.wheelHistory) wheelHistory = data.wheelHistory; if (data.earningsHistory) earningsHistory = data.earningsHistory; updateUI(); updateQuickNotifBadge(); } }); }
+    function copyDepositAddress() { navigator.clipboard.writeText(DEPOSIT_WALLET).then(() => { alert(t('addressCopied')); if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }); }
     function updateBuyTRX() { const amount = parseFloat(document.getElementById('buyAmount').value) || 0; document.getElementById('buyTrxAmount').textContent = (amount / TRX_PRICE).toFixed(2); }
     
     async function buyProduct() {
       const amount = selectedPackageOriginal > 0 ? selectedPackageOriginal : parseFloat(document.getElementById('buyAmount').value);
-      if (amount < MIN_DEPOSIT) { alert(`❌ Minimum $${MIN_DEPOSIT} yatırabilirsiniz.`); return; }
-      if (amount > MAX_DEPOSIT) { alert(`❌ Maximum $${MAX_DEPOSIT} yatırabilirsiniz.`); return; }
+      if (amount < MIN_DEPOSIT) { alert(`${t('minDeposit')} $${MIN_DEPOSIT} ${t('youCanDeposit')}`); return; }
+      if (amount > MAX_DEPOSIT) { alert(`${t('maxDeposit')} $${MAX_DEPOSIT} ${t('youCanDeposit')}`); return; }
       const trxAmount = (amount / TRX_PRICE).toFixed(2);
       const payment = { id: 'pay_' + Date.now(), amount: amount, packageName: selectedPackageName || null, originalPrice: selectedPackageOriginal || amount, discountedPrice: selectedPackageDiscounted || null, network: 'TRON (TRC20)', coin: 'TRX', trxAmount: trxAmount, earned: 0, status: 'pending', userId: userId, userName: currentUser ? currentUser.first_name : 'User', userTelegramId: currentUser ? currentUser.id : null, timestamp: Date.now() };
       try {
@@ -1299,15 +1943,15 @@
         const newWheelSpins = currentWheelSpins + Math.floor(newTotalInvested / 10) - Math.floor((data.totalInvested || 0) / 10);
         if (newWheelSpins > currentWheelSpins) {
           await userRef.set({ wheelSpins: newWheelSpins }, { merge: true });
-          addNotification('🎰 Şans Çarkı', `${newWheelSpins - currentWheelSpins} çevirme hakkı kazandın!`, 'bonus');
+          addNotification(t('wheelSpinWon'), `${newWheelSpins - currentWheelSpins} ${t('spinRightsWon')}`, 'bonus');
         }
         
-        const adminMsg = `🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n🆔 <b>ID:</b> ${payment.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+        const adminMsg = `🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n🆔 <b>ID:</b> ${payment.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}\n\n <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
-        alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n🪙 TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
+        alert(`${t('paymentNotified')}\n\n💰 ${t('investment')}: $${amount.toFixed(2)}\n🪙 TRX: ${trxAmount}\n\n${t('afterApproval')}`);
         resetAndGoHome();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(t('error') + ' ' + error.message); }
     }
     
     async function updateEarnings() {
@@ -1345,7 +1989,7 @@
       const bonusCard = document.getElementById('bonusCard');
       if (bonusBalance > 0) {
         bonusCard.style.display = 'block';
-        document.getElementById('bonusBalance').textContent = '$' + bonusBalance.toFixed(2);
+        document.getElementById('bonusBalanceDisplay').textContent = '$' + bonusBalance.toFixed(2);
         document.getElementById('bonusPerMin').textContent = '$' + (bonusBalance * PER_SECOND * 60).toFixed(4);
         document.getElementById('bonusPerHour').textContent = '$' + (bonusBalance * PER_SECOND * 3600).toFixed(4);
         document.getElementById('bonusPerDay').textContent = '$' + (bonusBalance * PER_SECOND * 86400).toFixed(4);
@@ -1354,11 +1998,11 @@
         const lockInfo = document.getElementById('bonusLockInfo');
         if (totalInvested >= MIN_INVESTMENT_TO_UNLOCK) {
           bonusBtn.disabled = false;
-          bonusBtn.textContent = '💰 Bonusları Ana Bakiyeye Aktar';
+          bonusBtn.innerHTML = '💰 ' + t('transferBonus');
           lockInfo.classList.remove('show');
         } else {
           bonusBtn.disabled = true;
-          bonusBtn.textContent = '🔒 Min $3 Yatırım Gerekli';
+          bonusBtn.innerHTML = '🔒 Min $3 ' + t('investment');
           lockInfo.classList.add('show');
           document.getElementById('currentInvestedForBonus').textContent = totalInvested.toFixed(2);
         }
@@ -1370,26 +2014,26 @@
     function updateCryptoAmount() { const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0; const crypto = document.getElementById('withdrawCrypto').value; document.getElementById('cryptoEquivalent').textContent = (amount / CRYPTO_PRICES[crypto]).toFixed(6); document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto]; }
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value); const crypto = document.getElementById('withdrawCrypto').value; const walletAddress = document.getElementById('walletAddress').value.trim();
-      if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
-      if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
-      if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
+      if (amount < 0.01) { alert(t('minWithdrawMsg')); return; }
+      if (amount > balance) { alert(t('insufficientBalance')); return; }
+      if (!walletAddress) { alert(t('walletRequired')); return; }
       const validation = validateAddress(walletAddress, crypto);
-      if (!validation.valid) { alert(`❌ Geçersiz adres!\n${validation.message}`); return; }
+      if (!validation.valid) { alert(t('invalidAddress') + '!\n' + validation.message); return; }
       const cryptoAmount = (amount / CRYPTO_PRICES[crypto]).toFixed(6);
       const withdrawal = { id: 'wd_' + Date.now(), amount: amount, crypto: crypto, cryptoSymbol: CRYPTO_SYMBOLS[crypto], cryptoAmount: cryptoAmount, walletAddress: walletAddress, network: NETWORK_INFO[crypto].fullName, addressValidated: true, status: 'pending', userId: userId, userName: currentUser ? currentUser.first_name : 'User', userTelegramId: currentUser ? currentUser.id : null, timestamp: Date.now() };
       try {
         const userRef = db.collection('users').doc(userId); const doc = await userRef.get(); const data = doc.data() || {};
         await userRef.set({ withdrawalRequests: [...(data.withdrawalRequests || []), withdrawal] }, { merge: true });
-        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n📍 <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
-        alert(`✅ Çekim talebi oluşturuldu!\n\n🌐 Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
+        alert(`${t('withdrawalCreated')}\n\n🌐 ${t('network')}: ${NETWORK_INFO[crypto].fullName}\n💰 ${t('equivalent')}: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\n${t('awaitingApproval')}`);
         document.getElementById('withdrawAmount').value = ''; document.getElementById('walletAddress').value = '';
         clearAddressValidation(); updateCryptoAmount(); loadWithdrawalHistory();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(t('error') + ' ' + error.message); }
     }
-    async function loadDepositHistory() { const container = document.getElementById('depositHistory'); container.innerHTML = '<div class="empty-history">Yükleniyor...</div>'; try { const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {}; let allDeposits = []; if (userData.pendingPayments && Array.isArray(userData.pendingPayments)) { userData.pendingPayments.forEach(p => { allDeposits.push({ ...p, status: p.status || 'pending' }); }); } if (userData.approvedPayments && Array.isArray(userData.approvedPayments)) { userData.approvedPayments.forEach(p => { allDeposits.push({ ...p, status: 'approved' }); }); } allDeposits.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); if (allDeposits.length === 0) { container.innerHTML = '<div class="empty-history">Henüz yatırım yapmadınız</div>'; return; } let html = ''; allDeposits.slice(0, 20).forEach(d => { const date = d.timestamp ? new Date(d.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor'; const status = d.status || 'pending'; const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending'); const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor'); const packageText = d.packageName ? '📦 ' + d.packageName : '💰 Manuel'; const trxText = d.trxAmount ? `(${d.trxAmount} TRX)` : ''; html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${d.network || 'TRON (TRC20)'}</span></div><div class="h-date">🕐 ${date}</div></div>`; }); container.innerHTML = html; } catch (error) { console.error('Geçmiş yükleme hatası:', error); container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; } }
-    async function loadWithdrawalHistory() { const container = document.getElementById('withdrawalHistory'); container.innerHTML = '<div class="empty-history">Yükleniyor...</div>'; try { const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {}; let allWithdrawals = userData.withdrawalRequests || []; allWithdrawals.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); if (allWithdrawals.length === 0) { container.innerHTML = '<div class="empty-history">Henüz çekim yapmadınız</div>'; return; } let html = ''; allWithdrawals.slice(0, 10).forEach(w => { const date = w.timestamp ? new Date(w.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor'; const status = w.status || 'pending'; const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending'); const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor'); html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${w.network || ''}</span></div><div class="h-date">🕐 ${date}</div></div>`; }); container.innerHTML = html; } catch (error) { container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; } }
+    async function loadDepositHistory() { const container = document.getElementById('depositHistory'); container.innerHTML = `<div class="empty-history">${t('historyLoading')}...</div>`; try { const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {}; let allDeposits = []; if (userData.pendingPayments && Array.isArray(userData.pendingPayments)) { userData.pendingPayments.forEach(p => { allDeposits.push({ ...p, status: p.status || 'pending' }); }); } if (userData.approvedPayments && Array.isArray(userData.approvedPayments)) { userData.approvedPayments.forEach(p => { allDeposits.push({ ...p, status: 'approved' }); }); } allDeposits.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); if (allDeposits.length === 0) { container.innerHTML = `<div class="empty-history">${t('noDeposits')}</div>`; return; } let html = ''; allDeposits.slice(0, 20).forEach(d => { const date = d.timestamp ? new Date(d.timestamp).toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'en-US') : t('loading'); const status = d.status || 'pending'; const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending'); const statusText = status === 'approved' ? t('approved') : (status === 'rejected' ? t('rejected') : t('pending')); const packageText = d.packageName ? '📦 ' + d.packageName : '💰 ' + t('manual'); const trxText = d.trxAmount ? `(${d.trxAmount} TRX)` : ''; html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">${t('investment')}:</span><span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 ${t('network')}:</span><span class="h-value">${d.network || 'TRON (TRC20)'}</span></div><div class="h-date">🕐 ${date}</div></div>`; }); container.innerHTML = html; } catch (error) { console.error('Geçmiş yükleme hatası:', error); container.innerHTML = `<div class="empty-history">${t('historyFailed')}</div>`; } }
+    async function loadWithdrawalHistory() { const container = document.getElementById('withdrawalHistory'); container.innerHTML = `<div class="empty-history">${t('historyLoading')}...</div>`; try { const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {}; let allWithdrawals = userData.withdrawalRequests || []; allWithdrawals.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); if (allWithdrawals.length === 0) { container.innerHTML = `<div class="empty-history">${t('noWithdrawals')}</div>`; return; } let html = ''; allWithdrawals.slice(0, 10).forEach(w => { const date = w.timestamp ? new Date(w.timestamp).toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'en-US') : t('loading'); const status = w.status || 'pending'; const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending'); const statusText = status === 'approved' ? t('approved') : (status === 'rejected' ? t('rejected') : t('pending')); html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 ${t('withdraw')}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">${t('investment')}:</span><span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span></div><div class="h-row"><span class="h-label">🌐 ${t('network')}:</span><span class="h-value">${w.network || ''}</span></div><div class="h-date">🕐 ${date}</div></div>`; }); container.innerHTML = html; } catch (error) { container.innerHTML = `<div class="empty-history">${t('historyFailed')}</div>`; } }
     function showPage(page, navElement) { document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); document.getElementById('page-' + page).classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); if (navElement) navElement.classList.add('active'); else { const matchingNav = document.querySelector(`.nav-item[onclick*="'${page}'"]`); if (matchingNav) matchingNav.classList.add('active'); } if (page === 'withdraw') { updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo(); loadWithdrawalHistory(); } else if (page === 'buy') { updateBuyTRX(); loadDepositHistory(); } window.scrollTo(0, 0); }
   </script>
 </body>
