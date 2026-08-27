@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>⛏️ Forest Mine - Hash Power</title>
+<title>⛏️ Wood Mine - Hash Power</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -14,127 +14,62 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
   body {
-    background: #0a1a0a;
+    background: #1a0f0a;
     background-image: 
-      radial-gradient(ellipse at 20% 30%, rgba(34, 139, 34, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(0, 50, 0, 0.3) 0%, transparent 70%);
+      repeating-linear-gradient(90deg, 
+        #3d2817 0px, #3d2817 2px, 
+        #2d1810 2px, #2d1810 20px,
+        #3d2817 20px, #3d2817 22px,
+        #2d1810 22px, #2d1810 40px),
+      repeating-linear-gradient(0deg,
+        rgba(139, 69, 19, 0.1) 0px,
+        rgba(139, 69, 19, 0.1) 1px,
+        transparent 1px,
+        transparent 40px);
     min-height: 100vh;
     font-family: 'Cinzel', serif;
     color: #d4af37;
     padding: 10px;
     overflow-x: hidden;
-    position: relative;
-  }
-  
-  /* Sarmaşık Desenleri - Kenarlar */
-  body::before, body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 60px;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-  
-  body::before {
-    left: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M20,0 Q40,25 20,50 Q0,75 20,100 Q40,125 20,150 Q0,175 20,200' stroke='%23228B22' stroke-width='3' fill='none'/%3E%3Cpath d='M20,25 Q35,20 40,30 Q35,40 20,35' fill='%2332CD32'/%3E%3Cpath d='M20,75 Q35,70 40,80 Q35,90 20,85' fill='%2332CD32'/%3E%3Cpath d='M20,125 Q35,120 40,130 Q35,140 20,135' fill='%2332CD32'/%3E%3Cpath d='M20,175 Q35,170 40,180 Q35,190 20,185' fill='%2332CD32'/%3E%3Ccircle cx='15' cy='15' r='4' fill='%23FFD700'/%3E%3Ccircle cx='25' cy='65' r='3' fill='%23FFD700'/%3E%3Ccircle cx='15' cy='115' r='4' fill='%23FFD700'/%3E%3Ccircle cx='25' cy='165' r='3' fill='%23FFD700'/%3E%3C/svg%3E");
-    background-repeat: repeat-y;
-    background-size: 60px 200px;
-    animation: vineSway 4s ease-in-out infinite;
-  }
-  
-  body::after {
-    right: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M80,0 Q60,25 80,50 Q100,75 80,100 Q60,125 80,150 Q100,175 80,200' stroke='%23228B22' stroke-width='3' fill='none'/%3E%3Cpath d='M80,25 Q65,20 60,30 Q65,40 80,35' fill='%2332CD32'/%3E%3Cpath d='M80,75 Q65,70 60,80 Q65,90 80,85' fill='%2332CD32'/%3E%3Cpath d='M80,125 Q65,120 60,130 Q65,140 80,135' fill='%2332CD32'/%3E%3Cpath d='M80,175 Q65,170 60,180 Q65,190 80,185' fill='%2332CD32'/%3E%3Ccircle cx='85' cy='15' r='4' fill='%23FFD700'/%3E%3Ccircle cx='75' cy='65' r='3' fill='%23FFD700'/%3E%3Ccircle cx='85' cy='115' r='4' fill='%23FFD700'/%3E%3Ccircle cx='75' cy='165' r='3' fill='%23FFD700'/%3E%3C/svg%3E");
-    background-repeat: repeat-y;
-    background-size: 60px 200px;
-    animation: vineSway 4s ease-in-out infinite reverse;
-  }
-  
-  @keyframes vineSway {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(3px); }
-  }
-  
-  /* Parıltı Efektleri */
-  .sparkle {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: #ffd700;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
-    animation: sparkle 3s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  @keyframes sparkle {
-    0%, 100% { opacity: 0; transform: scale(0); }
-    50% { opacity: 1; transform: scale(1); }
   }
   
   .container { 
     max-width: 500px; 
     margin: 0 auto;
     position: relative;
-    z-index: 2;
   }
   
-  /* Orman Ahşap Çerçeve */
-  .forest-frame {
-    background: 
-      linear-gradient(135deg, rgba(45, 24, 16, 0.95) 0%, rgba(26, 15, 10, 0.95) 100%);
-    border: 6px solid #5c3a21;
-    border-radius: 20px;
+  /* Odun Çerçeve */
+  .wood-frame {
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 50%, #2d1810 100%);
+    border: 8px solid #5c3a21;
+    border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 
       inset 0 0 30px rgba(0, 0, 0, 0.7),
-      0 0 0 3px #2d1810,
-      0 0 0 6px #8b4513,
-      0 0 0 9px #5c3a21,
-      0 10px 40px rgba(0, 0, 0, 0.8),
-      0 0 60px rgba(34, 139, 34, 0.3);
+      0 0 0 4px #2d1810,
+      0 0 0 8px #8b4513,
+      0 0 0 12px #5c3a21,
+      0 10px 40px rgba(0, 0, 0, 0.9);
     position: relative;
     overflow: hidden;
   }
   
-  /* Ahşap Damar Deseni */
-  .forest-frame::before {
+  /* Odun Damar Deseni */
+  .wood-frame::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
       repeating-linear-gradient(90deg, 
-        transparent 0px, 
-        transparent 20px, 
-        rgba(139, 69, 19, 0.1) 20px, 
-        rgba(139, 69, 19, 0.1) 21px),
-      repeating-linear-gradient(0deg, 
-        transparent 0px, 
-        transparent 40px, 
-        rgba(139, 69, 19, 0.05) 40px, 
-        rgba(139, 69, 19, 0.05) 41px);
+        transparent 0px, transparent 15px,
+        rgba(139, 69, 19, 0.15) 15px, rgba(139, 69, 19, 0.15) 16px),
+      repeating-linear-gradient(0deg,
+        transparent 0px, transparent 30px,
+        rgba(101, 67, 33, 0.1) 30px, rgba(101, 67, 33, 0.1) 31px);
     pointer-events: none;
   }
-  
-  /* Köşe Sarmaşıkları */
-  .forest-frame::after {
-    content: '🌿';
-    position: absolute;
-    font-size: 30px;
-    filter: drop-shadow(0 0 10px rgba(50, 205, 50, 0.8));
-  }
-  
-  .corner-vine-tl { top: -10px; left: -10px; }
-  .corner-vine-tr { top: -10px; right: -10px; transform: scaleX(-1); }
-  .corner-vine-bl { bottom: -10px; left: -10px; transform: scaleY(-1); }
-  .corner-vine-br { bottom: -10px; right: -10px; transform: scale(-1, -1); }
   
   .header { 
     text-align: center; 
@@ -152,7 +87,6 @@
     text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
     letter-spacing: 3px;
     animation: titleShine 3s ease-in-out infinite;
-    position: relative;
   }
   
   @keyframes titleShine {
@@ -162,10 +96,9 @@
   
   .subtitle {
     font-size: 11px;
-    color: #90ee90;
+    color: #daa520;
     margin-top: 5px;
     font-style: italic;
-    text-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
     letter-spacing: 2px;
   }
   
@@ -175,10 +108,9 @@
     margin-bottom: 15px; 
   }
   
-  /* 3D İstatistik Kartları */
   .stat-box {
     flex: 1;
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 50%, #3d2817 100%);
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 50%, #5c3a21 100%);
     border: 3px solid #8b4513;
     border-radius: 12px;
     padding: 12px 8px;
@@ -186,8 +118,7 @@
     box-shadow: 
       inset 0 2px 10px rgba(0, 0, 0, 0.6),
       inset 0 -2px 10px rgba(255, 215, 0, 0.1),
-      0 5px 15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(34, 139, 34, 0.3);
+      0 5px 15px rgba(0, 0, 0, 0.6);
     position: relative;
     transition: transform 0.3s ease;
   }
@@ -196,155 +127,130 @@
     transform: translateY(-5px) scale(1.05);
   }
   
-  .stat-box::before {
-    content: '';
-    position: absolute;
-    top: 2px; left: 2px; right: 2px; bottom: 2px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 10px;
-    pointer-events: none;
-  }
-  
-  .stat-box .icon { font-size: 26px; margin-bottom: 5px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)); }
-  .stat-box .label { font-size: 9px; color: #90ee90; margin-bottom: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+  .stat-box .icon { font-size: 26px; margin-bottom: 5px; }
+  .stat-box .label { font-size: 9px; color: #daa520; margin-bottom: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
   .stat-box .value { font-size: 16px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
   
-  /* Maden Sahnesi - Orman Mağarası */
+  /* Maden Sahnesi - Odun Mağarası */
   .mine-scene {
     background: 
-      radial-gradient(ellipse at 50% 30%, rgba(34, 139, 34, 0.2) 0%, transparent 60%),
-      linear-gradient(180deg, #1a2a1a 0%, #0a1a0a 50%, #2d1810 100%);
-    border: 4px solid #5c3a21;
+      radial-gradient(ellipse at 50% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 60%),
+      linear-gradient(180deg, #2d1810 0%, #1a0f0a 50%, #0a0505 100%);
+    border: 6px solid #5c3a21;
     border-radius: 15px;
     padding: 30px 20px;
     margin-bottom: 15px;
     position: relative;
     overflow: hidden;
     box-shadow: 
-      inset 0 0 40px rgba(0, 0, 0, 0.9),
-      inset 0 0 80px rgba(34, 139, 34, 0.2),
-      0 0 30px rgba(34, 139, 34, 0.4),
+      inset 0 0 50px rgba(0, 0, 0, 0.9),
+      0 0 30px rgba(139, 69, 19, 0.4),
       0 10px 40px rgba(0, 0, 0, 0.8);
-    min-height: 300px;
+    min-height: 320px;
     cursor: pointer;
     user-select: none;
   }
   
-  /* Mağara Duvarı Deseni */
+  /* Odun Duvar Deseni */
   .mine-scene::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
-      radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 30%),
-      radial-gradient(circle at 80% 60%, rgba(101, 67, 33, 0.3) 0%, transparent 30%),
-      radial-gradient(circle at 40% 80%, rgba(85, 107, 47, 0.2) 0%, transparent 30%);
+      repeating-linear-gradient(90deg,
+        transparent 0px, transparent 25px,
+        rgba(139, 69, 19, 0.2) 25px, rgba(139, 69, 19, 0.2) 26px),
+      repeating-linear-gradient(0deg,
+        transparent 0px, transparent 35px,
+        rgba(101, 67, 33, 0.15) 35px, rgba(101, 67, 33, 0.15) 36px);
     pointer-events: none;
   }
   
-  /* Üstten Sarkma Sarmaşıklar */
-  .hanging-vines {
+  /* Üst Odun Kirişler */
+  .wood-beams {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    pointer-events: none;
+    height: 40px;
+    background: linear-gradient(180deg, #5c3a21 0%, #3d2817 100%);
+    border-bottom: 4px solid #2d1810;
     z-index: 3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
   }
   
-  .vine {
+  .wood-beams::before {
+    content: '';
     position: absolute;
-    top: 0;
-    width: 3px;
-    background: linear-gradient(180deg, #228B22, #32CD32);
-    animation: vineHang 3s ease-in-out infinite;
-    box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
-  }
-  
-  .vine::after {
-    content: '🍃';
-    position: absolute;
-    bottom: -15px;
-    left: -10px;
-    font-size: 20px;
-    filter: drop-shadow(0 0 5px rgba(50, 205, 50, 0.8));
-  }
-  
-  .vine:nth-child(1) { left: 10%; height: 40px; animation-delay: 0s; }
-  .vine:nth-child(2) { left: 25%; height: 55px; animation-delay: 0.5s; }
-  .vine:nth-child(3) { left: 45%; height: 35px; animation-delay: 1s; }
-  .vine:nth-child(4) { left: 65%; height: 50px; animation-delay: 1.5s; }
-  .vine:nth-child(5) { left: 85%; height: 45px; animation-delay: 2s; }
-  
-  @keyframes vineHang {
-    0%, 100% { transform: rotate(-3deg); }
-    50% { transform: rotate(3deg); }
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(90deg,
+      transparent 0px, transparent 20px,
+      rgba(0, 0, 0, 0.3) 20px, rgba(0, 0, 0, 0.3) 22px);
   }
   
   .miner {
     position: absolute; 
-    bottom: 50px; 
+    bottom: 60px; 
     left: 50%; 
     transform: translateX(-50%);
-    font-size: 85px; 
+    font-size: 90px; 
     z-index: 10; 
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
     animation: minerBreathe 2s ease-in-out infinite;
   }
   
   @keyframes minerBreathe { 
     0%, 100% { transform: translateX(-50%) scale(1); } 
-    50% { transform: translateX(-50%) scale(1.05); } 
+    50% { transform: translateX(-50%) scale(1.08); } 
   }
   
   .miner.mining { animation: minerStrike 0.5s ease-in-out; }
   
   @keyframes minerStrike {
     0%, 100% { transform: translateX(-50%) rotate(0deg); }
-    25% { transform: translateX(-50%) rotate(-30deg) translateY(-15px); }
+    25% { transform: translateX(-50%) rotate(-35deg) translateY(-20px); }
     50% { transform: translateX(-50%) rotate(0deg); }
   }
   
   .pickaxe {
     position: absolute; 
-    bottom: 90px; 
-    left: calc(50% + 45px); 
-    font-size: 50px;
+    bottom: 100px; 
+    left: calc(50% + 50px); 
+    font-size: 55px;
     transform: rotate(45deg); 
     z-index: 9; 
-    filter: drop-shadow(0 0 12px rgba(192, 192, 192, 0.7));
+    filter: drop-shadow(0 0 15px rgba(192, 192, 192, 0.8));
   }
   
   .pickaxe.swing { animation: pickaxeSwing 0.5s ease-in-out; }
   
   @keyframes pickaxeSwing {
     0%, 100% { transform: rotate(45deg); }
-    50% { transform: rotate(-50deg) translateY(-35px); }
+    50% { transform: rotate(-55deg) translateY(-40px); }
   }
   
   .lantern {
     position: absolute; 
-    bottom: 70px; 
-    left: calc(50% - 55px); 
-    font-size: 40px; 
+    bottom: 80px; 
+    left: calc(50% - 60px); 
+    font-size: 45px; 
     z-index: 9;
     animation: lanternGlow 2s ease-in-out infinite; 
-    filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.9));
+    filter: drop-shadow(0 0 25px rgba(255, 200, 0, 1));
   }
   
   @keyframes lanternGlow {
-    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.9)); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 35px rgba(255, 220, 50, 1)); transform: scale(1.1); }
+    0%, 100% { filter: drop-shadow(0 0 25px rgba(255, 200, 0, 1)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 40px rgba(255, 220, 50, 1.2)); transform: scale(1.15); }
   }
   
   .light-beam {
     position: absolute; 
-    bottom: 80px; 
-    left: calc(50% - 65px); 
-    width: 130px; 
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(255, 220, 50, 0.3) 0%, transparent 100%);
+    bottom: 90px; 
+    left: calc(50% - 70px); 
+    width: 140px; 
+    height: 180px;
+    background: linear-gradient(to bottom, rgba(255, 220, 50, 0.35) 0%, transparent 100%);
     border-radius: 50% 50% 0 0; 
     transform-origin: bottom center;
     animation: lightSweep 3s ease-in-out infinite; 
@@ -353,8 +259,8 @@
   }
   
   @keyframes lightSweep { 
-    0%, 100% { transform: rotate(-15deg); opacity: 0.5; } 
-    50% { transform: rotate(15deg); opacity: 0.9; } 
+    0%, 100% { transform: rotate(-18deg); opacity: 0.6; } 
+    50% { transform: rotate(18deg); opacity: 1; } 
   }
   
   .rock {
@@ -362,10 +268,10 @@
     bottom: 20px; 
     left: 50%; 
     transform: translateX(-50%);
-    font-size: 90px; 
+    font-size: 95px; 
     cursor: pointer; 
     z-index: 5; 
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9));
     transition: transform 0.1s;
   }
   
@@ -374,8 +280,8 @@
   
   @keyframes rockBreak {
     0% { transform: translateX(-50%) scale(1); opacity: 1; }
-    50% { transform: translateX(-50%) scale(1.15) rotate(5deg); opacity: 0.7; }
-    100% { transform: translateX(-50%) scale(0) rotate(-10deg); opacity: 0; }
+    50% { transform: translateX(-50%) scale(1.2) rotate(8deg); opacity: 0.7; }
+    100% { transform: translateX(-50%) scale(0) rotate(-15deg); opacity: 0; }
   }
   
   .rock.spawn { animation: rockSpawn 0.6s ease-out; }
@@ -387,19 +293,50 @@
   
   .dollar-float {
     position: absolute; 
-    font-size: 32px; 
+    font-size: 35px; 
     font-weight: bold; 
     color: #ffd700;
     animation: dollarFloat 1.8s ease-out forwards; 
     pointer-events: none; 
     z-index: 100;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.8);
   }
   
   @keyframes dollarFloat {
     0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
-    50% { opacity: 1; transform: translateY(-70px) scale(1.3) rotate(15deg); }
-    100% { opacity: 0; transform: translateY(-140px) scale(0.7) rotate(-15deg); }
+    50% { opacity: 1; transform: translateY(-80px) scale(1.4) rotate(20deg); }
+    100% { opacity: 0; transform: translateY(-160px) scale(0.7) rotate(-20deg); }
+  }
+  
+  /* Kazım Miktarı Göstergesi */
+  .mining-counter {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    padding: 10px 20px;
+    z-index: 20;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.8);
+    text-align: center;
+  }
+  
+  .mining-counter .label {
+    font-size: 10px;
+    color: #daa520;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+  }
+  
+  .mining-counter .amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffd700;
+    font-family: 'Cinzel Decorative', cursive;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
   }
   
   .mining-stats {
@@ -409,18 +346,18 @@
     right: 12px; 
     display: flex; 
     justify-content: space-between;
-    background: rgba(10, 26, 10, 0.8);
-    border: 2px solid #228B22; 
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #8b4513; 
     border-radius: 8px; 
     padding: 8px;
-    box-shadow: 0 0 15px rgba(34, 139, 34, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(139, 69, 19, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.8);
   }
   
   .mining-stats .item { text-align: center; }
-  .mining-stats .label { font-size: 9px; color: #90ee90; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+  .mining-stats .label { font-size: 9px; color: #daa520; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
   .mining-stats .value { font-size: 16px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
   
-  /* 3D Orman Butonları */
+  /* 3D Odun Butonları */
   .menu-row { 
     display: flex; 
     gap: 10px; 
@@ -429,19 +366,18 @@
   
   .menu-btn {
     flex: 1; 
-    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 50%, #5c3a21 100%);
-    border: 3px solid #8b4513; 
+    background: linear-gradient(135deg, #6b4423 0%, #4a2f17 50%, #6b4423 100%);
+    border: 4px solid #8b4513; 
     border-radius: 12px; 
     padding: 14px 8px; 
     text-align: center;
     cursor: pointer; 
     transition: all 0.3s ease; 
     box-shadow: 
-      inset 0 2px 8px rgba(255, 215, 0, 0.2),
+      inset 0 2px 8px rgba(255, 215, 0, 0.3),
       inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 6px 0 #2d1810,
-      0 8px 15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(34, 139, 34, 0.3);
+      0 8px 15px rgba(0, 0, 0, 0.7);
     position: relative;
     transform: translateY(0);
   }
@@ -450,7 +386,7 @@
     content: '';
     position: absolute;
     top: 2px; left: 2px; right: 2px; bottom: 2px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.3);
     border-radius: 10px;
     pointer-events: none;
   }
@@ -458,38 +394,37 @@
   .menu-btn:hover { 
     transform: translateY(-3px);
     box-shadow: 
-      inset 0 2px 8px rgba(255, 215, 0, 0.3),
+      inset 0 2px 8px rgba(255, 215, 0, 0.4),
       inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 9px 0 #2d1810,
-      0 11px 20px rgba(255, 215, 0, 0.4),
-      0 0 30px rgba(255, 215, 0, 0.5);
+      0 11px 20px rgba(255, 215, 0, 0.5);
   }
   
   .menu-btn:active { 
     transform: translateY(4px);
     box-shadow: 
-      inset 0 2px 8px rgba(255, 215, 0, 0.2),
+      inset 0 2px 8px rgba(255, 215, 0, 0.3),
       inset 0 -2px 5px rgba(0, 0, 0, 0.6),
       0 2px 0 #2d1810,
-      0 3px 8px rgba(0, 0, 0, 0.6);
+      0 3px 8px rgba(0, 0, 0, 0.7);
   }
   
-  .menu-btn .icon { font-size: 30px; display: block; margin-bottom: 4px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
-  .menu-btn .label { font-size: 11px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+  .menu-btn .icon { font-size: 30px; display: block; margin-bottom: 4px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)); }
+  .menu-btn .label { font-size: 11px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
   
   .menu-btn.buy { 
-    background: linear-gradient(135deg, #6b4423 0%, #4a2f17 50%, #6b4423 100%);
+    background: linear-gradient(135deg, #7b5433 0%, #5a3f27 50%, #7b5433 100%);
     border-color: #a0522d;
   }
   
   .menu-btn.withdraw { 
-    background: linear-gradient(135deg, #556b2f 0%, #3d4f22 50%, #556b2f 100%);
-    border-color: #6b8e23;
+    background: linear-gradient(135deg, #654321 0%, #4a2f17 50%, #654321 100%);
+    border-color: #8b4513;
   }
   
   .menu-btn.profile { 
-    background: linear-gradient(135deg, #2f4f4f 0%, #1a3a3a 50%, #2f4f4f 100%);
-    border-color: #5f9ea0;
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 50%, #5c3a21 100%);
+    border-color: #8b4513;
   }
   
   .menu-btn.admin { 
@@ -502,37 +437,37 @@
   
   label { 
     display: block; 
-    color: #90ee90; 
+    color: #daa520; 
     font-family: 'Cinzel', serif; 
     font-size: 14px; 
     margin-bottom: 8px; 
     font-weight: 700; 
-    text-shadow: 0 0 8px rgba(144, 238, 144, 0.4);
+    text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
   }
   
   input, select {
     width: 100%; 
     padding: 12px; 
-    background: linear-gradient(135deg, #1a2a1a 0%, #0a1a0a 100%);
-    border: 3px solid #228B22; 
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
+    border: 3px solid #8b4513; 
     border-radius: 8px; 
     color: #ffd700; 
     font-size: 14px; 
     font-family: 'Cinzel', serif;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(34, 139, 34, 0.3);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.7);
     transition: all 0.3s ease;
   }
   
   input:focus, select:focus { 
     outline: none; 
     border-color: #ffd700; 
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.5);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
   }
   
   /* 3D Aksiyon Butonları */
   .btn {
     background: linear-gradient(135deg, #8b4513 0%, #654321 50%, #8b4513 100%); 
-    border: 3px solid #a0522d;
+    border: 4px solid #a0522d;
     border-radius: 10px; 
     padding: 14px 24px; 
     color: #ffd700; 
@@ -546,10 +481,9 @@
     letter-spacing: 1px;
     box-shadow: 
       inset 0 2px 8px rgba(255, 215, 0, 0.3),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 6px 0 #3d2817,
-      0 8px 15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.3);
+      0 8px 15px rgba(0, 0, 0, 0.7);
     position: relative;
     transform: translateY(0);
   }
@@ -558,19 +492,18 @@
     transform: translateY(-3px);
     box-shadow: 
       inset 0 2px 8px rgba(255, 215, 0, 0.4),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 9px 0 #3d2817,
-      0 11px 20px rgba(255, 215, 0, 0.5),
-      0 0 30px rgba(255, 215, 0, 0.6);
+      0 11px 20px rgba(255, 215, 0, 0.6);
   }
   
   .btn:active { 
     transform: translateY(4px);
     box-shadow: 
       inset 0 2px 8px rgba(255, 215, 0, 0.3),
-      inset 0 -2px 5px rgba(0, 0, 0, 0.5),
+      inset 0 -2px 5px rgba(0, 0, 0, 0.6),
       0 2px 0 #3d2817,
-      0 3px 8px rgba(0, 0, 0, 0.6);
+      0 3px 8px rgba(0, 0, 0, 0.7);
   }
   
   .btn.secondary { 
@@ -579,9 +512,9 @@
     color: #c0c0c0; 
     box-shadow: 
       inset 0 2px 8px rgba(255, 255, 255, 0.2),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 6px 0 #1a1a1a,
-      0 8px 15px rgba(0, 0, 0, 0.6);
+      0 8px 15px rgba(0, 0, 0, 0.7);
   }
   
   .btn.approve { 
@@ -590,10 +523,9 @@
     color: #90ee90; 
     box-shadow: 
       inset 0 2px 8px rgba(144, 238, 144, 0.3),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 6px 0 #0a1a0a,
-      0 8px 15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(144, 238, 144, 0.4);
+      0 8px 15px rgba(0, 0, 0, 0.7);
   }
   
   .btn.reject { 
@@ -602,25 +534,24 @@
     color: #ff9999; 
     box-shadow: 
       inset 0 2px 8px rgba(255, 153, 153, 0.3),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
       0 6px 0 #1a0a0a,
-      0 8px 15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(255, 100, 100, 0.4);
+      0 8px 15px rgba(0, 0, 0, 0.7);
   }
   
-  /* Bakiye Kutusu - Parlayan */
+  /* Bakiye Kutusu */
   .balance-box {
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 50%, #3d2817 100%); 
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 50%, #5c3a21 100%); 
     border: 4px solid #8b4513;
     border-radius: 15px; 
     padding: 20px; 
     text-align: center; 
     margin-bottom: 15px;
     box-shadow: 
-      inset 0 2px 15px rgba(255, 215, 0, 0.2),
-      inset 0 -4px 20px rgba(0, 0, 0, 0.6),
-      0 0 30px rgba(255, 215, 0, 0.4),
-      0 10px 30px rgba(0, 0, 0, 0.7);
+      inset 0 2px 15px rgba(255, 215, 0, 0.3),
+      inset 0 -4px 20px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(255, 215, 0, 0.5),
+      0 10px 30px rgba(0, 0, 0, 0.8);
     position: relative;
     overflow: hidden;
   }
@@ -632,7 +563,7 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%);
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.15) 50%, transparent 60%);
     animation: balanceShine 3s ease-in-out infinite;
   }
   
@@ -641,19 +572,19 @@
     100% { transform: translateX(100%) rotate(45deg); }
   }
   
-  .balance-box .label { font-size: 13px; color: #90ee90; font-family: 'Cinzel', serif; margin-bottom: 8px; font-weight: 700; position: relative; z-index: 1; }
-  .balance-box .amount { font-size: 36px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); position: relative; z-index: 1; }
+  .balance-box .label { font-size: 13px; color: #daa520; font-family: 'Cinzel', serif; margin-bottom: 8px; font-weight: 700; position: relative; z-index: 1; }
+  .balance-box .amount { font-size: 36px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 20px rgba(255, 215, 0, 0.9); position: relative; z-index: 1; }
   
   /* Yatırım Kartı */
   .deposit-card {
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 100%); 
     border: 4px solid #8b4513;
     border-radius: 15px; 
     padding: 20px; 
     margin-bottom: 20px;
     box-shadow: 
-      inset 0 0 30px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(139, 69, 19, 0.4);
+      inset 0 0 30px rgba(0, 0, 0, 0.7),
+      0 0 20px rgba(139, 69, 19, 0.5);
   }
   
   .deposit-header { 
@@ -678,13 +609,13 @@
     font-weight: bold; 
     color: #1a0f0a; 
     border: 3px solid #ffd700;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
     animation: logoPulse 2s ease-in-out infinite;
   }
   
   @keyframes logoPulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); }
-    50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 215, 0, 1); }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+    50% { transform: scale(1.08); box-shadow: 0 0 40px rgba(255, 215, 0, 1.2); }
   }
   
   .deposit-header .title { 
@@ -692,11 +623,11 @@
     font-size: 18px; 
     color: #ffd700; 
     font-weight: 700; 
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
   }
   
   .deposit-info { 
-    background: rgba(0, 0, 0, 0.4); 
+    background: rgba(0, 0, 0, 0.5); 
     border: 3px solid #8b4513; 
     border-radius: 8px; 
     padding: 15px; 
@@ -712,26 +643,26 @@
   }
   
   .deposit-info .info-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-  .deposit-info .info-label { font-size: 12px; color: #90ee90; }
+  .deposit-info .info-label { font-size: 12px; color: #daa520; }
   .deposit-info .info-value { font-size: 14px; color: #ffd700; font-weight: bold; }
-  .deposit-info .info-value.highlight { color: #90ee90; font-size: 16px; text-shadow: 0 0 10px rgba(144, 238, 144, 0.6); }
+  .deposit-info .info-value.highlight { color: #90ee90; font-size: 16px; text-shadow: 0 0 10px rgba(144, 238, 144, 0.7); }
   
   .wallet-box { 
-    background: rgba(0, 0, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.6); 
     border: 3px solid #8b4513; 
     border-radius: 8px; 
     padding: 15px; 
     margin-bottom: 15px; 
   }
   
-  .wallet-box .wallet-label { font-size: 11px; color: #90ee90; margin-bottom: 8px; display: block; }
+  .wallet-box .wallet-label { font-size: 11px; color: #daa520; margin-bottom: 8px; display: block; }
   .wallet-box .wallet-address {
     font-family: 'Courier New', monospace; 
     font-size: 10px; 
     color: #ffd700; 
     word-break: break-all;
     padding: 10px; 
-    background: rgba(0, 0, 0, 0.4); 
+    background: rgba(0, 0, 0, 0.5); 
     border-radius: 6px; 
     margin-bottom: 10px; 
     border: 3px dashed rgba(139, 69, 19, 0.5);
@@ -747,17 +678,17 @@
     font-size: 13px; 
     font-weight: bold; 
     cursor: pointer;
-    box-shadow: 0 4px 0 #3d2817, 0 6px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 0 #3d2817, 0 6px 10px rgba(0, 0, 0, 0.6);
     transition: all 0.2s ease;
   }
   
   .wallet-box .copy-btn:active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 #3d2817, 0 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 0 #3d2817, 0 2px 5px rgba(0, 0, 0, 0.6);
   }
   
   .warning-box { 
-    background: linear-gradient(135deg, rgba(90, 30, 30, 0.3) 0%, rgba(60, 20, 20, 0.3) 100%); 
+    background: linear-gradient(135deg, rgba(90, 30, 30, 0.4) 0%, rgba(60, 20, 20, 0.4) 100%); 
     border: 3px solid #8b0000; 
     border-radius: 8px; 
     padding: 12px; 
@@ -769,15 +700,15 @@
   
   /* Profil Kartı */
   .profile-card {
-    background: linear-gradient(135deg, #2f4f4f 0%, #1a3a3a 100%); 
-    border: 4px solid #5f9ea0;
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 100%); 
+    border: 4px solid #8b4513;
     border-radius: 15px; 
     padding: 20px; 
     margin-bottom: 20px; 
     text-align: center;
     box-shadow: 
-      inset 0 2px 15px rgba(95, 158, 160, 0.3),
-      0 0 25px rgba(95, 158, 160, 0.4);
+      inset 0 2px 15px rgba(255, 215, 0, 0.3),
+      0 0 25px rgba(139, 69, 19, 0.5);
   }
   
   .profile-avatar {
@@ -791,29 +722,29 @@
     justify-content: center;
     font-size: 38px; 
     border: 4px solid #ffd700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
   }
   
-  .profile-name { font-family: 'Cinzel Decorative', cursive; font-size: 18px; color: #ffd700; margin-bottom: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
-  .profile-id { font-size: 11px; color: #90ee90; font-family: 'Courier New', monospace; background: rgba(0, 0, 0, 0.4); padding: 4px 8px; border-radius: 6px; display: inline-block; }
+  .profile-name { font-family: 'Cinzel Decorative', cursive; font-size: 18px; color: #ffd700; margin-bottom: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); }
+  .profile-id { font-size: 11px; color: #daa520; font-family: 'Courier New', monospace; background: rgba(0, 0, 0, 0.5); padding: 4px 8px; border-radius: 6px; display: inline-block; }
   
   /* Dil Seçimi */
   .lang-section { 
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 100%); 
     border: 3px solid #8b4513; 
     border-radius: 10px; 
     padding: 18px; 
     margin-bottom: 15px; 
   }
   
-  .lang-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  .lang-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
   .lang-list { display: flex; flex-direction: column; gap: 10px; }
   
   .lang-option {
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     border: 3px solid #8b4513; 
     border-radius: 8px; 
     padding: 12px 15px; 
@@ -822,7 +753,7 @@
   }
   
   .lang-option:hover { border-color: #ffd700; background: rgba(255, 215, 0, 0.1); transform: translateX(5px); }
-  .lang-option.active { border-color: #ffd700; background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+  .lang-option.active { border-color: #ffd700; background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
   .lang-option .lang-info { display: flex; align-items: center; gap: 12px; }
   .lang-option .flag { font-size: 26px; }
   .lang-option .lang-name { font-family: 'Cinzel', serif; color: #ffd700; font-size: 14px; font-weight: 600; }
@@ -831,18 +762,18 @@
   
   /* İstatistikler */
   .stats-section { 
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 100%); 
     border: 3px solid #8b4513; 
     border-radius: 10px; 
     padding: 18px; 
     margin-bottom: 15px; 
   }
   
-  .stats-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  .stats-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
   .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 2px solid rgba(139, 69, 19, 0.3); }
   .stat-row:last-child { border-bottom: none; }
-  .stat-row .label { color: #90ee90; font-size: 13px; }
-  .stat-row .value { color: #ffd700; font-weight: bold; font-size: 15px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+  .stat-row .label { color: #daa520; font-size: 13px; }
+  .stat-row .value { color: #ffd700; font-weight: bold; font-size: 15px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
   
   /* Admin Panel */
   .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
@@ -850,17 +781,17 @@
   .tab {
     flex: 1; 
     padding: 10px; 
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 100%);
     border: 3px solid #8b4513; 
     border-radius: 8px; 
-    color: #90ee90; 
+    color: #daa520; 
     font-size: 12px;
     font-family: 'Cinzel Decorative', cursive; 
     cursor: pointer; 
     text-transform: uppercase; 
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 0 #1a0f0a, 0 6px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 0 #1a0f0a, 0 6px 10px rgba(0, 0, 0, 0.6);
   }
   
   .tab:hover { border-color: #ffd700; color: #ffd700; transform: translateY(-2px); }
@@ -868,21 +799,21 @@
     background: linear-gradient(135deg, #8b4513 0%, #654321 100%); 
     color: #ffd700; 
     border-color: #ffd700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 2px 8px rgba(255, 215, 0, 0.3);
   }
   
   .item-card { 
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    background: linear-gradient(135deg, #4a2f17 0%, #3d2817 100%); 
     border: 3px solid #8b4513; 
     border-left: 5px solid #ffd700; 
     border-radius: 8px; 
     padding: 15px; 
     margin: 10px 0; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   }
   
-  .item-card strong { font-size: 16px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
-  .item-card small { display: block; color: #90ee90; margin: 5px 0; font-size: 11px; }
+  .item-card strong { font-size: 16px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+  .item-card small { display: block; color: #daa520; margin: 5px 0; font-size: 11px; }
   
   .hidden { display: none; }
   
@@ -893,7 +824,7 @@
     text-align: center; 
     margin-bottom: 15px; 
     font-weight: 700;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
   }
   
   .toast {
@@ -907,7 +838,7 @@
     border-radius: 8px; 
     font-family: 'Cinzel Decorative', cursive; 
     font-weight: bold;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(144, 238, 144, 0.5); 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(144, 238, 144, 0.6); 
     z-index: 1000; 
     opacity: 0; 
     transition: opacity 0.3s ease;
@@ -919,27 +850,28 @@
   
   .click-hint {
     position: absolute; 
-    top: 10px; 
+    top: 110px; 
     left: 50%; 
     transform: translateX(-50%);
-    background: rgba(34, 139, 34, 0.3);
-    border: 2px solid #228B22; 
+    background: rgba(139, 69, 19, 0.4);
+    border: 2px solid #8b4513; 
     border-radius: 15px; 
     padding: 5px 12px; 
     font-size: 10px;
-    color: #90ee90; 
+    color: #ffd700; 
     font-family: 'Cinzel', serif; 
     font-weight: bold;
     animation: hintPulse 2s ease-in-out infinite;
+    z-index: 15;
   }
   
   @keyframes hintPulse {
-    0%, 100% { box-shadow: 0 0 10px rgba(34, 139, 34, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(34, 139, 34, 0.9); }
+    0%, 100% { box-shadow: 0 0 10px rgba(139, 69, 19, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.9); }
   }
   
   .error-message { 
-    background: linear-gradient(135deg, rgba(90, 30, 30, 0.4) 0%, rgba(60, 20, 20, 0.4) 100%); 
+    background: linear-gradient(135deg, rgba(90, 30, 30, 0.5) 0%, rgba(60, 20, 20, 0.5) 100%); 
     border: 3px solid #8b0000; 
     border-radius: 8px; 
     padding: 15px; 
@@ -950,35 +882,27 @@
   }
   
   @media (max-width: 500px) {
-    body::before, body::after { width: 30px; }
-    .forest-frame { padding: 15px; }
+    .wood-frame { padding: 15px; }
     h1 { font-size: 22px; }
-    .miner { font-size: 70px; }
-    .rock { font-size: 75px; }
+    .miner { font-size: 75px; }
+    .rock { font-size: 80px; }
+    .mining-counter .amount { font-size: 20px; }
   }
 </style>
 </head>
 <body>
-  <!-- Parıltı Efektleri -->
-  <div class="sparkle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
-  <div class="sparkle" style="top: 30%; left: 95%; animation-delay: 0.5s;"></div>
-  <div class="sparkle" style="top: 60%; left: 3%; animation-delay: 1s;"></div>
-  <div class="sparkle" style="top: 80%; left: 97%; animation-delay: 1.5s;"></div>
-  <div class="sparkle" style="top: 45%; left: 2%; animation-delay: 2s;"></div>
-  <div class="sparkle" style="top: 20%; left: 98%; animation-delay: 2.5s;"></div>
-  
   <div class="container">
     <!-- Ana Sayfa -->
     <div id="page-home">
-      <div class="forest-frame">
+      <div class="wood-frame">
         <div class="header">
-          <h1>️ FOREST MINE ⛏️</h1>
+          <h1>⛏️ WOOD MINE ⛏️</h1>
           <div class="subtitle">~ Hash Power Mining ~</div>
         </div>
         
         <div class="stats-row">
           <div class="stat-box">
-            <div class="icon">💰</div>
+            <div class="icon"></div>
             <div class="label" data-i18n="balance">Balance</div>
             <div class="value">$<span id="balance">0.00</span></div>
           </div>
@@ -988,7 +912,7 @@
             <div class="value"><span id="productCount">0</span></div>
           </div>
           <div class="stat-box">
-            <div class="icon"></div>
+            <div class="icon">💵</div>
             <div class="label" data-i18n="investment">Investment</div>
             <div class="value">$<span id="totalInvested">0</span></div>
           </div>
@@ -996,14 +920,15 @@
       </div>
       
       <div class="mine-scene" id="miningScene">
-        <div class="hanging-vines">
-          <div class="vine"></div>
-          <div class="vine"></div>
-          <div class="vine"></div>
-          <div class="vine"></div>
-          <div class="vine"></div>
-        </div>
+        <div class="wood-beams"></div>
         <div class="click-hint" data-i18n="clickMiner">Click Rock!</div>
+        
+        <!-- Kazım Miktarı Göstergesi -->
+        <div class="mining-counter">
+          <div class="label">⛏️ MINING</div>
+          <div class="amount">$<span id="miningAmount">0.00</span></div>
+        </div>
+        
         <div class="mining-stats">
           <div class="item">
             <div class="label" data-i18n="perSec">Per Sec</div>
@@ -1032,7 +957,7 @@
           <span class="label" data-i18n="buy">BUY</span>
         </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
-          <span class="icon"></span>
+          <span class="icon">💸</span>
           <span class="label" data-i18n="withdraw">WITHDRAW</span>
         </div>
         <div class="menu-btn profile" onclick="showPage('profile')">
@@ -1043,7 +968,7 @@
       
       <div class="menu-row">
         <div class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display: none;">
-          <span class="icon">🔐</span>
+          <span class="icon"></span>
           <span class="label" data-i18n="admin">ADMIN</span>
         </div>
       </div>
@@ -1051,12 +976,12 @@
 
     <!-- Satın Al -->
     <div id="page-buy" class="hidden">
-      <div class="forest-frame">
+      <div class="wood-frame">
         <div class="page-title" data-i18n="buyTitle">💎 Buy Mining Power</div>
         
         <div class="deposit-card">
           <div class="deposit-header">
-            <div class="deposit-logo"></div>
+            <div class="deposit-logo">₮</div>
             <div>
               <div class="title" data-i18n="trxInvest">TRX Investment</div>
               <div class="subtitle">TRON Network</div>
@@ -1109,13 +1034,13 @@
 
     <!-- Çekim -->
     <div id="page-withdraw" class="hidden">
-      <div class="forest-frame">
+      <div class="wood-frame">
         <div class="page-title" data-i18n="withdrawTitle">💸 Withdrawal Request</div>
         
         <div class="balance-box">
           <div class="label" data-i18n="currentBalance">Current Balance</div>
           <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-          <div style="font-size: 12px; margin-top: 8px; color: #90ee90;" data-i18n="minWithdraw">Min: $0.01</div>
+          <div style="font-size: 12px; margin-top: 8px; color: #daa520;" data-i18n="minWithdraw">Min: $0.01</div>
         </div>
         
         <div class="form-group">
@@ -1133,7 +1058,7 @@
         </div>
         
         <div class="form-group">
-          <label data-i18n="walletAddr">📍 Wallet Address</label>
+          <label data-i18n="walletAddr"> Wallet Address</label>
           <input type="text" id="walletAddress" placeholder="Wallet address...">
         </div>
         
@@ -1144,7 +1069,7 @@
 
     <!-- Profil -->
     <div id="page-profile" class="hidden">
-      <div class="forest-frame">
+      <div class="wood-frame">
         <div class="page-title" data-i18n="profileTitle">👤 Profile</div>
         
         <div class="profile-card">
@@ -1173,14 +1098,14 @@
               <span class="check">✓</span>
             </div>
             <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
-              <div class="lang-info"><span class="flag">🇪</span><span class="lang-name">Español</span></div>
+              <div class="lang-info"><span class="flag">🇪🇸</span><span class="lang-name">Español</span></div>
               <span class="check">✓</span>
             </div>
           </div>
         </div>
         
         <div class="stats-section">
-          <h3 data-i18n="myStats"> My Statistics</h3>
+          <h3 data-i18n="myStats">📊 My Statistics</h3>
           <div class="stat-row">
             <span class="label" data-i18n="totalEarned">Total Earned</span>
             <span class="value">$<span id="statEarned">0.00</span></span>
@@ -1205,7 +1130,7 @@
 
     <!-- Admin -->
     <div id="page-admin" class="hidden">
-      <div class="forest-frame">
+      <div class="wood-frame">
         <div class="page-title" data-i18n="adminTitle">🔐 Admin Panel</div>
         
         <div class="tabs">
@@ -1271,7 +1196,7 @@
         withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye', 
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)', 
         selectCrypto: '🪙 Kripto Seçimi', equivalent: 'Karşılık:', 
-        walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur', 
+        walletAddr: ' Cüzdan Adresi', createWithdraw: ' Çekim Oluştur', 
         profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi', 
         myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç', 
         totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün', 
@@ -1285,7 +1210,7 @@
         walletRequired: '❌ Cüzdan adresi gerekli!', 
         minWithdrawAmount: '❌ Minimum: $0.01', 
         approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!', 
-        error: '❌ Hata: ', adminPermissionError: '❌ Yetkiniz yok!' 
+        error: ' Hata: ', adminPermissionError: '❌ Yetkiniz yok!' 
       },
       en: { 
         balance: 'Balance', products: 'Products', investment: 'Investment', 
@@ -1297,13 +1222,13 @@
         rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)', 
         youWillGet: 'You will get: ', 
         trxWallet: '📍 TRX Wallet Address', 
-        copyAddress: ' Copy Address', warning: '⚠️ IMPORTANT', 
+        copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT', 
         warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes', 
         notifyDeposit: '📤 Notify Deposit', back: '← Back', 
         withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance', 
         minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)', 
         selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:', 
-        walletAddr: '📍 Wallet Address', createWithdraw: '💸 Create Withdrawal', 
+        walletAddr: ' Wallet Address', createWithdraw: '💸 Create Withdrawal', 
         profileTitle: '👤 Profile', selectLang: '🌐 Select Language', 
         myStats: '📊 My Statistics', totalEarned: 'Total Earned', 
         totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products', 
@@ -1316,7 +1241,7 @@
         insufficientBalance: '❌ Insufficient balance!', 
         walletRequired: '❌ Wallet address required!', 
         minWithdrawAmount: '❌ Minimum: $0.01', 
-        approved: '✅ Approved!', rejected: ' Rejected!', 
+        approved: '✅ Approved!', rejected: '❌ Rejected!', 
         error: '❌ Error: ', adminPermissionError: '❌ No permission!' 
       },
       ru: { 
@@ -1325,11 +1250,11 @@
         clickMiner: 'Кликни камень!', 
         buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН', 
         buyTitle: '💎 Купить мощность', trxInvest: 'Инвестиция TRX', 
-        minDeposit: '💰 Минимум', network: '🌐 Сеть', 
+        minDeposit: '💰 Минимум', network: ' Сеть', 
         rate: '💱 Курс', usdAmount: '💵 Сумма (USD)', 
         youWillGet: 'Получите: ', 
-        trxWallet: '📍 Адрес TRX', 
-        copyAddress: '📋 Копировать', warning: '⚠️ ВАЖНО', 
+        trxWallet: ' Адрес TRX', 
+        copyAddress: '📋 Копировать', warning: '️ ВАЖНО', 
         warningText: '• Только сеть <strong>TRON (TRC20)</strong><br>• Отправьте точную сумму<br>• Подтверждение 5-30 мин', 
         notifyDeposit: '📤 Уведомить', back: '← Назад', 
         withdrawTitle: '💸 Вывод', currentBalance: 'Баланс', 
@@ -1339,15 +1264,15 @@
         profileTitle: '👤 Профиль', selectLang: '🌐 Язык', 
         myStats: '📊 Статистика', totalEarned: 'Всего заработано', 
         totalWithdrawn: 'Всего выведено', activeProducts: 'Активные', 
-        totalInvestment: 'Инвестиции', adminTitle: '🔐 Админ', 
-        deposits: '💳 Депозиты', withdrawals: '💸 Выводы', 
+        totalInvestment: 'Инвестиции', adminTitle: ' Админ', 
+        deposits: '💳 Депозиты', withdrawals: ' Выводы', 
         noPending: '✅ Нет ожидающих', copied: '✅ Скопировано!', 
         minUsd: '❌ Минимум $0.24!', 
         depositSent: '✅ Уведомление отправлено!', 
         withdrawCreated: '✅ Запрос создан!', 
         insufficientBalance: '❌ Недостаточно!', 
         walletRequired: '❌ Адрес обязателен!', 
-        minWithdrawAmount: '❌ Мин: $0.01', 
+        minWithdrawAmount: ' Мин: $0.01', 
         approved: '✅ Одобрено!', rejected: '❌ Отклонено!', 
         error: '❌ Ошибка: ', adminPermissionError: '❌ Нет доступа!' 
       },
@@ -1371,7 +1296,7 @@
         profileTitle: '👤 الملف', selectLang: '🌐 اللغة', 
         myStats: '📊 الإحصائيات', totalEarned: 'الإجمالي', 
         totalWithdrawn: 'المسحوب', activeProducts: 'النشط', 
-        totalInvestment: 'الاستثمار', adminTitle: '🔐 المسؤول', 
+        totalInvestment: 'الاستثمار', adminTitle: ' المسؤول', 
         deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات', 
         noPending: '✅ لا يوجد', copied: '✅ تم النسخ!', 
         minUsd: '❌ الحد $0.24!', 
@@ -1392,21 +1317,21 @@
         minDeposit: '💰 Mínimo', network: ' Red', 
         rate: '💱 Tasa', usdAmount: '💵 Cantidad (USD)', 
         youWillGet: 'Recibirás: ', 
-        trxWallet: '📍 Dirección', 
+        trxWallet: ' Dirección', 
         copyAddress: '📋 Copiar', warning: '⚠️ IMPORTANTE', 
         warningText: '• Solo red <strong>TRON (TRC20)</strong><br>• Envíe cantidad exacta<br>• Confirmación 5-30 min', 
         notifyDeposit: '📤 Notificar', back: '← Atrás', 
         withdrawTitle: '💸 Retiro', currentBalance: 'Saldo', 
         minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad', 
         selectCrypto: '🪙 Cripto', equivalent: 'Equivalente:', 
-        walletAddr: '📍 Dirección', createWithdraw: '💸 Crear', 
-        profileTitle: '👤 Perfil', selectLang: ' Idioma', 
-        myStats: ' Estadísticas', totalEarned: 'Total Ganado', 
+        walletAddr: '📍 Dirección', createWithdraw: ' Crear', 
+        profileTitle: ' Perfil', selectLang: '🌐 Idioma', 
+        myStats: '📊 Estadísticas', totalEarned: 'Total Ganado', 
         totalWithdrawn: 'Total Retirado', activeProducts: 'Activos', 
         totalInvestment: 'Inversión', adminTitle: '🔐 Admin', 
         deposits: '💳 Depósitos', withdrawals: '💸 Retiros', 
         noPending: '✅ Sin pendientes', copied: '✅ Copiado!', 
-        minUsd: '❌ Mínimo $0.24!', 
+        minUsd: ' Mínimo $0.24!', 
         depositSent: '✅ Notificado!', 
         withdrawCreated: '✅ Creado!', 
         insufficientBalance: '❌ Saldo insuficiente!', 
@@ -1433,13 +1358,13 @@
         await loadUserData();
         setInterval(updateEarnings, 1000);
       } else {
-        console.error(' Kullanıcı bulunamadı');
+        console.error('❌ Kullanıcı bulunamadı');
       }
     }
     
     async function loadUserData() {
       try {
-        console.log('📥 Veriler yükleniyor...');
+        console.log(' Veriler yükleniyor...');
         const userRef = db.collection('users').doc(userId);
         const doc = await userRef.get();
         
@@ -1551,6 +1476,12 @@
       lifetimeEarnings = products.reduce((sum, p) => sum + p.earned, 0);
       balance = lifetimeEarnings - totalWithdrawn;
       
+      // Kazım miktarını güncelle
+      const miningAmountEl = document.getElementById('miningAmount');
+      if (miningAmountEl) {
+        miningAmountEl.textContent = lifetimeEarnings.toFixed(2);
+      }
+      
       try {
         await db.collection('users').doc(userId).update({ lifetimeEarnings: lifetimeEarnings });
       } catch (error) {
@@ -1636,13 +1567,22 @@
       }
     }
     
+    // Admin Panel - DÜZELTİLDİ
     async function loadAdminDeposits() {
       try {
-        const snapshot = await db.collectionGroup('deposits').where('status', '==', 'pending').get();
+        const allUsers = await db.collection('users').get();
         const pending = [];
-        snapshot.forEach(doc => {
-          pending.push({ id: doc.id, ...doc.data(), userDocId: doc.ref.parent.parent.id });
-        });
+        
+        for (const userDoc of allUsers.docs) {
+          const depositsSnapshot = await userDoc.ref.collection('deposits').where('status', '==', 'pending').get();
+          depositsSnapshot.forEach(doc => {
+            pending.push({
+              id: doc.id,
+              ...doc.data(),
+              userDocId: userDoc.id
+            });
+          });
+        }
         
         if (pending.length === 0) {
           return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
@@ -1663,11 +1603,19 @@
     
     async function loadAdminWithdrawals() {
       try {
-        const snapshot = await db.collectionGroup('withdrawals').where('status', '==', 'pending').get();
+        const allUsers = await db.collection('users').get();
         const pending = [];
-        snapshot.forEach(doc => {
-          pending.push({ id: doc.id, ...doc.data(), userDocId: doc.ref.parent.parent.id });
-        });
+        
+        for (const userDoc of allUsers.docs) {
+          const withdrawalsSnapshot = await userDoc.ref.collection('withdrawals').where('status', '==', 'pending').get();
+          withdrawalsSnapshot.forEach(doc => {
+            pending.push({
+              id: doc.id,
+              ...doc.data(),
+              userDocId: userDoc.id
+            });
+          });
+        }
         
         if (pending.length === 0) {
           return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
@@ -1761,7 +1709,7 @@
         showToast('✅ Çekim onaylandı!');
         loadAdmin();
       } catch (error) {
-        showToast('❌ Hata: ' + error.message);
+        showToast(' Hata: ' + error.message);
       }
     }
     
