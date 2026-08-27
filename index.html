@@ -32,6 +32,32 @@
   .tab-container { display: flex; gap: 10px; margin-bottom: 15px; }
   .tab { flex: 1; padding: 12px; background: #e5e7eb; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; }
   .tab.active { background: #4a9eff; color: white; }
+
+  /* Offline Kazanç Popup Stili */
+  .offline-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 1000;
+    border: 3px solid #10b981;
+    animation: popIn 0.3s ease-out;
+  }
+  @keyframes popIn {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+  .offline-popup h3 { color: #059669; margin-bottom: 10px; }
+  .offline-popup .amount { font-size: 36px; font-weight: bold; color: #10b981; margin: 15px 0; }
+  .overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 999;
+  }
 </style>
 </head>
 <body>
@@ -122,6 +148,17 @@
     </div>
   </div>
 
+  <!-- Offline Kazanç Popup -->
+  <div id="offlinePopup" class="hidden">
+    <div class="overlay" onclick="closeOfflinePopup()"></div>
+    <div class="offline-popup">
+      <h3>⛏️ Tekrar Hoşgeldin!</h3>
+      <p>Sen yokken madencilerin çalışmaya devam etti:</p>
+      <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
+      <button class="btn btn-approve" onclick="closeOfflinePopup()">Harika! Topla</button>
+    </div>
+  </div>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",
@@ -160,7 +197,7 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
-    auth.signInAnonymously().then(() => {
+    auth.signInAnonymously().then(async () => {
       userId = auth.currentUser.uid;
       console.log('✅ Giriş yapıldı:', userId);
       
@@ -168,11 +205,71 @@
         document.getElementById('adminBtn').style.display = 'inline-block';
       }
       
+      // 1. Önce offline kazancı hesapla ve veritabanını güncelle
+      await calculateOfflineEarnings();
+      
+      // 2. Sonra gerçek zamanlı dinlemeyi başlat
       listenToData();
+      
+      // 3. Her saniye kazançları güncelle
       setInterval(updateEarnings, 1000);
     }).catch(err => {
       console.error('Giriş hatası:', err);
     });
+    
+    // 🔧 OFFLINE KAZANÇ HESAPLAMA
+    async function calculateOfflineEarnings() {
+      try {
+        const doc = await db.collection('users').doc(userId).get();
+        if (doc.exists) {
+          const data = doc.data();
+          const now = Date.now();
+          const lastActive = data.lastActive || now;
+          const offlineSeconds = (now - lastActive) / 1000;
+          
+          // Eğer 10 saniyeden uzun süredir yoksa ve ürünü varsa
+          if (offlineSeconds > 10 && data.approvedPayments && data.approvedPayments.length > 0) {
+            const totalPower = data.approvedPayments.reduce((sum, p) => sum + p.amount, 0);
+            const offlineEarned = offlineSeconds * (totalPower * PER_SECOND);
+            
+            if (offlineEarned > 0.001) {
+              const newLifetime = (data.lifetimeEarnings || 0) + offlineEarned;
+              
+              // Veritabanını güncelle
+              await db.collection('users').doc(userId).update({
+                lifetimeEarnings: newLifetime,
+                lastActive: now
+              });
+              
+              // Popup göster
+              showOfflinePopup(offlineEarned);
+            }
+          } else {
+            // Sadece son aktif zamanı güncelle ki sürekli tetiklenmesin
+            await db.collection('users').doc(userId).update({ lastActive: now });
+          }
+        } else {
+          // Yeni kullanıcı oluştur
+          await db.collection('users').doc(userId).set({
+            lifetimeEarnings: 0,
+            totalWithdrawn: 0,
+            lastActive: Date.now(),
+            created_at: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+      } catch (error) {
+        console.error('Offline kazanç hesaplama hatası:', error);
+      }
+    }
+    
+    function showOfflinePopup(amount) {
+      document.getElementById('offlineEarnedAmount').textContent = amount.toFixed(4);
+      document.getElementById('offlinePopup').classList.remove('hidden');
+    }
+    
+    function closeOfflinePopup() {
+      document.getElementById('offlinePopup').classList.add('hidden');
+    }
     
     function listenToData() {
       if (unsubscribe) unsubscribe();
@@ -270,7 +367,8 @@
       try {
         await db.collection('users').doc(userId).set({
           approvedPayments: products,
-          lifetimeEarnings: lifetimeEarnings
+          lifetimeEarnings: lifetimeEarnings,
+          lastActive: Date.now() // Her güncellemede son aktif zamanı da kaydet
         }, { merge: true });
       } catch (error) {
         console.error('Kaydetme hatası:', error);
@@ -477,9 +575,7 @@
         const pendingPayments = data.pendingPayments || [];
         const newPending = pendingPayments.filter(p => p.id !== paymentId);
         
-        await userRef.set({
-          pendingPayments: newPending
-        }, { merge: true });
+        await userRef.set({ pendingPayments: newPending }, { merge: true });
         
         alert('❌ Ödeme reddedildi!');
         await loadAdmin();
@@ -533,9 +629,7 @@
         const withdrawalRequests = data.withdrawalRequests || [];
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         
-        await userRef.set({
-          withdrawalRequests: newWithdrawals
-        }, { merge: true });
+        await userRef.set({ withdrawalRequests: newWithdrawals }, { merge: true });
         
         alert('❌ Çekim reddedildi!');
         await loadAdmin();
@@ -548,15 +642,10 @@
       document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
       document.getElementById('page-' + page).classList.remove('hidden');
       
-      if (page === 'production') {
-        renderProducts();
-      } else if (page === 'withdraw') {
-        updateCryptoAmount();
-      } else if (page === 'admin') {
-        loadAdmin();
-      } else if (page === 'buy') {
-        updateBuyTRX();
-      }
+      if (page === 'production') renderProducts();
+      else if (page === 'withdraw') updateCryptoAmount();
+      else if (page === 'admin') loadAdmin();
+      else if (page === 'buy') updateBuyTRX();
       
       window.scrollTo(0, 0);
     }
