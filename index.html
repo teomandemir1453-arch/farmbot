@@ -110,6 +110,44 @@
   .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 158, 255, 0.25); z-index: 1000; backdrop-filter: blur(2px); }
   .notif-toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: bold; z-index: 2000; transform: translateX(150%); transition: transform 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .notif-toast.show { transform: translateX(0); }
+  
+  /* YENİ: Telegram Bildirim Butonu */
+  .telegram-notif-card {
+    background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 10px 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .telegram-notif-card:active { transform: scale(0.98); }
+  .telegram-notif-card.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+  .telegram-notif-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .telegram-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+  .telegram-content { flex: 1; }
+  .telegram-title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
+  .telegram-desc { font-size: 11px; opacity: 0.9; line-height: 1.3; }
+  .telegram-arrow { font-size: 20px; opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -129,6 +167,17 @@
           <div class="earnings-item"><div class="icon">📅</div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
         </div>
       </div>
+      
+      <!-- YENİ: Telegram Bildirim Butonu -->
+      <div class="telegram-notif-card" id="telegramNotifCard" onclick="activateTelegramNotif()">
+        <div class="telegram-icon">📱</div>
+        <div class="telegram-content">
+          <div class="telegram-title" id="telegramTitle"> Bildirimleri Aktif Et</div>
+          <div class="telegram-desc" id="telegramDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div>
+        </div>
+        <div class="telegram-arrow" id="telegramArrow">›</div>
+      </div>
+      
       <div class="packages-section-title">🎁 Özel Paket Fırsatları - %20 İndirim!</div>
       <div class="packages-grid" id="packagesContainer"></div>
     </div>
@@ -145,15 +194,15 @@
       <div class="crypto-info">
         <strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
         <strong>💰 Kabul Edilen Coin:</strong> TRX<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
+        <strong> Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 1px dashed #cbd5e1;">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
-        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
       </div>
       <div class="qr-container">
         <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
-        <div class="qr-label"> TRX Göndermek İçin QR Kodu Tara</div>
+        <div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
       </div>
-      <div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
+      <div class="network-info">️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
       <div class="amount-control">
         <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
@@ -190,12 +239,12 @@
       <h3>📍 Cüzdan Adresi</h3>
       <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
       <div id="addressValidationMsg" class="validation-message"></div>
-      <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
-      <div class="history-section"><div class="history-title"> Çekim Geçmişim</div><div id="withdrawalHistory"></div></div>
+      <button class="btn btn-withdraw" onclick="requestWithdrawal()"> Çekim Talebi Oluştur</button>
+      <div class="history-section"><div class="history-title">📜 Çekim Geçmişim</div><div id="withdrawalHistory"></div></div>
     </div>
 
     <div id="page-admin" class="card hidden">
-      <h2> Admin Panel</h2>
+      <h2>🔐 Admin Panel</h2>
       <p style="text-align:center; color:#64748b; padding:20px;">Yönetim için ayrı panelden giriş yapın:<br><br><a href="admin.html" target="_blank" class="btn">Admin Paneline Git</a></p>
     </div>
   </div>
@@ -233,12 +282,9 @@
     const auth = firebase.auth();
     const ADMIN_ID = "8974010159";
     
-    // ==========================================
-    // 🔔 TELEGRAM BİLDİRİM AYARLARI
-    // ✅ Token eklendi!
-    // ==========================================
     const BOT_TOKEN = "8759495457:AAF_ogmc63yXDtuUVidJwZPCaMXdFzx7VEg";
     const ADMIN_CHAT_ID = "8974010159";
+    const BOT_USERNAME = "hashmining_admin_bot";
     
     let currentUser = null;
     let userId = null;
@@ -285,7 +331,61 @@
     };
     const addressFormats = { trx: 'T ile başlayan 34 karakter', bnb: '0x ile başlayan 42 karakter', xrp: 'r ile başlayan 25-35 karakter' };
     
-    // 🔔 BİLDİRİM GÖNDERME FONKSİYONU
+    // 🔔 TELEGRAM BİLDİRİM AKTİF ETME
+    function activateTelegramNotif() {
+      const isActive = localStorage.getItem('telegramNotifActive') === 'true';
+      
+      if (isActive) {
+        alert('✅ Bildirimler zaten aktif!\n\nYatırım ve çekim onayları Telegram\'a gelecek.');
+        return;
+      }
+      
+      // Telegram bot linkini aç
+      const botUrl = `https://t.me/${BOT_USERNAME}?start=activate`;
+      
+      // Telegram WebApp içinde aç
+      if (tg.openTelegramLink) {
+        tg.openTelegramLink(botUrl);
+      } else {
+        window.open(botUrl, '_blank');
+      }
+      
+      // Kullanıcıya bilgi ver
+      setTimeout(() => {
+        alert('📱 Bot açıldı!\n\nLütfen sohbete "/start" yaz ve gönder.\n\nBöylece yatırım & çekim onaylarını Telegram\'dan anında alacaksın!');
+        
+        // Aktif olarak işaretle
+        localStorage.setItem('telegramNotifActive', 'true');
+        updateTelegramNotifUI();
+        
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      }, 1000);
+    }
+    
+    function updateTelegramNotifUI() {
+      const card = document.getElementById('telegramNotifCard');
+      const title = document.getElementById('telegramTitle');
+      const desc = document.getElementById('telegramDesc');
+      const arrow = document.getElementById('telegramArrow');
+      const icon = card.querySelector('.telegram-icon');
+      
+      const isActive = localStorage.getItem('telegramNotifActive') === 'true';
+      
+      if (isActive) {
+        card.classList.add('active');
+        title.textContent = '✅ Bildirimler Aktif';
+        desc.textContent = 'Yatırım & çekim onayları Telegram\'a gelecek!';
+        icon.textContent = '';
+        arrow.textContent = '✓';
+      } else {
+        card.classList.remove('active');
+        title.textContent = '🔔 Bildirimleri Aktif Et';
+        desc.textContent = 'Yatırım & çekim onaylarını Telegram\'dan anında al!';
+        icon.textContent = '📱';
+        arrow.textContent = '›';
+      }
+    }
+    
     async function sendTelegramNotification(message) {
       if (!BOT_TOKEN || !ADMIN_CHAT_ID) {
         console.warn("Bot token veya chat ID ayarlanmamış!");
@@ -353,7 +453,7 @@
     
     function setMaxAmount() {
       const maxVal = Math.max(0.01, balance);
-      if (maxVal < 0.01) { alert(' Çekilecek bakiye yok!'); return; }
+      if (maxVal < 0.01) { alert('❌ Çekilecek bakiye yok!'); return; }
       document.getElementById('withdrawAmount').value = maxVal.toFixed(2);
       updateCryptoAmount();
       if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -405,6 +505,7 @@
       userId = auth.currentUser.uid;
       if (currentUser && currentUser.id.toString() === ADMIN_ID) document.getElementById('adminNav').style.display = 'block';
       renderPackages();
+      updateTelegramNotifUI(); // YENİ: Bildirim durumunu güncelle
       await calculateOfflineEarnings();
       listenToData();
       setInterval(updateEarnings, 1000);
@@ -466,7 +567,6 @@
       document.getElementById('buyTrxAmount').textContent = (amount / TRX_PRICE).toFixed(2);
     }
     
-    // 💎 YATIRIM YAP + ADMİNE BİLDİR
     async function buyProduct() {
       const amount = selectedPackageOriginal > 0 ? selectedPackageOriginal : parseFloat(document.getElementById('buyAmount').value);
       if (amount < MIN_DEPOSIT) { alert(`❌ Minimum $${MIN_DEPOSIT} yatırabilirsiniz.`); return; }
@@ -487,26 +587,25 @@
         const data = doc.data() || {};
         await userRef.set({ pendingPayments: [...(data.pendingPayments || []), payment], totalInvested: (data.totalInvested || 0) + amount }, { merge: true });
         
-        // 🔔 ADMİNE BİLDİRİM GÖNDER
         const adminMsg = `
 🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>
 
 👤 <b>Kullanıcı:</b> ${payment.userName}
-🆔 <b>ID:</b> ${payment.userTelegramId || userId}
+ <b>ID:</b> ${payment.userTelegramId || userId}
 
 💵 <b>Tutar:</b> $${amount.toFixed(2)}
-🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX
+ <b>TRX Karşılığı:</b> ${trxAmount} TRX
 🌐 <b>Ağ:</b> TRON (TRC20)
 ${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}
 
 ⏳ <b>Durum:</b> Onay Bekliyor
 🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}
 
- <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         
         sendTelegramNotification(adminMsg);
         
-        alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
+        alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n🪙 TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
         resetAndGoHome();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) { alert(' Hata: ' + error.message); }
@@ -542,7 +641,6 @@ ${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}
       document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto];
     }
     
-    // 💸 ÇEKİM YAP + ADMİNE BİLDİR
     async function requestWithdrawal() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
       const crypto = document.getElementById('withdrawCrypto').value;
@@ -570,17 +668,16 @@ ${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}
         const data = doc.data() || {};
         await userRef.set({ withdrawalRequests: [...(data.withdrawalRequests || []), withdrawal] }, { merge: true });
         
-        // 🔔 ADMİNE BİLDİRİM GÖNDER
         const adminMsg = `
-💸 <b>YENİ ÇEKİM TALEBİ!</b>
+ <b>YENİ ÇEKİM TALEBİ!</b>
 
- <b>Kullanıcı:</b> ${withdrawal.userName}
-🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}
+👤 <b>Kullanıcı:</b> ${withdrawal.userName}
+ <b>ID:</b> ${withdrawal.userTelegramId || userId}
 
 💵 <b>Tutar:</b> $${amount.toFixed(2)}
-🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}
-🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}
- <b>Cüzdan:</b>
+ <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}
+ <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}
+📍 <b>Cüzdan:</b>
 <code>${walletAddress}</code>
 
 ✅ <b>Adres Doğrulandı:</b> Evet
@@ -615,7 +712,7 @@ ${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}
           const date = d.timestamp ? new Date(d.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor';
           const status = d.status || 'pending';
           const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
-          const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
+          const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? ' Reddedildi' : '⏳ Bekliyor');
           html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${d.packageName ? '📦 '+d.packageName : '💰 Manuel'}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount||0).toFixed(2)} (${d.trxAmount||0} TRX)</span></div><div class="h-date">🕐 ${date}</div></div>`;
         });
         container.innerHTML = html;
@@ -653,7 +750,7 @@ ${selectedPackageName ? `📦 <b>Paket:</b> ${selectedPackageName}` : ''}
         if (matchingNav) matchingNav.classList.add('active');
       }
       if (page === 'withdraw') { updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo(); loadWithdrawalHistory(); }
-      else if (page === 'admin') { /* Admin paneli ayrı sayfada açılır */ }
+      else if (page === 'admin') { }
       else if (page === 'buy') { updateBuyTRX(); loadDepositHistory(); }
       window.scrollTo(0, 0);
     }
