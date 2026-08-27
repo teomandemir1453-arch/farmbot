@@ -2,37 +2,381 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hash Power Mining</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-  body { background: #f0f2f5; padding: 20px; }
-  .container { max-width: 800px; margin: 0 auto; }
-  .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .stat { display: inline-block; padding: 15px 25px; background: #4a9eff; color: white; border-radius: 8px; margin: 5px; font-size: 18px; }
-  .btn { background: #4a9eff; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
-  .btn:active { transform: scale(0.98); }
-  .btn-approve { background: #4ade80; }
-  .btn-reject { background: #f87171; }
-  .btn-withdraw { background: #f59e0b; }
-  input, select { padding: 12px; border: 2px solid #ddd; border-radius: 8px; width: 100%; margin: 10px 0; font-size: 16px; }
-  h1, h2, h3 { margin-bottom: 15px; color: #1a2a3a; }
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  
+  body { 
+    background: #f0f2f5; 
+    padding: 0;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .container { 
+    max-width: 500px; 
+    margin: 0 auto;
+    padding: 10px;
+  }
+  
+  /* ÜST BİLGİ BAR - Kompakt İstatistikler */
+  .top-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: white;
+    border: 2px solid #4a9eff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2);
+  }
+  
+  .top-stat {
+    flex: 1;
+    text-align: center;
+    padding: 8px 4px;
+    border-right: 1px solid #e5e7eb;
+  }
+  
+  .top-stat:last-child {
+    border-right: none;
+  }
+  
+  .top-stat .icon { font-size: 18px; margin-bottom: 2px; }
+  .top-stat .label { font-size: 9px; color: #6b7280; text-transform: uppercase; font-weight: 600; }
+  .top-stat .value { 
+    font-size: 14px; 
+    font-weight: bold; 
+    color: #1a2a3a;
+    margin-top: 2px;
+  }
+  
+  /* ÜRETİM ALANI - Ana Odak */
+  .mining-area {
+    background: white;
+    border: 3px solid #4a9eff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
+    position: relative;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .mining-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a2a3a;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .mining-visual {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 10px 0;
+  }
+  
+  .miner-emoji {
+    font-size: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: minerBounce 2s ease-in-out infinite;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  @keyframes minerBounce {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+  }
+  
+  .miner-emoji.mining {
+    animation: minerStrike 0.5s ease-in-out;
+  }
+  
+  @keyframes minerStrike {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) rotate(-20deg) scale(1.15); }
+    50% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  }
+  
+  .rock-emoji {
+    font-size: 60px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  
+  .rock-emoji:active {
+    transform: translateX(-50%) scale(0.9);
+  }
+  
+  .rock-emoji.breaking {
+    animation: rockBreak 0.6s ease-out forwards;
+  }
+  
+  @keyframes rockBreak {
+    0% { transform: translateX(-50%) scale(1); opacity: 1; }
+    100% { transform: translateX(-50%) scale(0); opacity: 0; }
+  }
+  
+  .rock-emoji.spawn {
+    animation: rockSpawn 0.6s ease-out;
+  }
+  
+  @keyframes rockSpawn {
+    0% { transform: translateX(-50%) scale(0); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+  }
+  
+  .dollar-float {
+    position: absolute;
+    font-size: 28px;
+    font-weight: bold;
+    color: #10b981;
+    animation: dollarFloat 1.5s ease-out forwards;
+    pointer-events: none;
+    z-index: 100;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  @keyframes dollarFloat {
+    0% { opacity: 1; transform: translateY(0) scale(0.5); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+  }
+  
+  .mining-stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8fafc;
+    border: 2px solid #10b981;
+    border-radius: 10px;
+  }
+  
+  .mining-stat-item {
+    text-align: center;
+  }
+  
+  .mining-stat-item .label {
+    font-size: 10px;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  
+  .mining-stat-item .value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #10b981;
+    margin-top: 2px;
+  }
+  
+  /* ALT NAVİGASYON MENÜSÜ */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 3px solid #4a9eff;
+    padding: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+  }
+  
+  .nav-btn {
+    flex: 1;
+    background: #4a9eff;
+    color: white;
+    border: 2px solid #3a8eef;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .nav-btn:active {
+    transform: scale(0.95);
+  }
+  
+  .nav-btn .icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .nav-btn.withdraw {
+    background: #f59e0b;
+    border-color: #e5900a;
+  }
+  
+  .nav-btn.admin {
+    background: #6b7280;
+    border-color: #5b6270;
+  }
+  
+  /* SAYFA KARTLARI */
+  .page-card {
+    background: white;
+    border: 3px solid #4a9eff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .page-card h2 {
+    color: #1a2a3a;
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  .btn {
+    background: #4a9eff;
+    color: white;
+    border: 2px solid #3a8eef;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  
+  .btn:active {
+    transform: scale(0.98);
+  }
+  
+  .btn-approve { background: #10b981; border-color: #0ea569; }
+  .btn-reject { background: #ef4444; border-color: #dc2626; }
+  .btn-withdraw { background: #f59e0b; border-color: #e5900a; }
+  .btn-secondary { background: #6b7280; border-color: #5b6270; }
+  
+  input, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    background: white;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: #4a9eff;
+  }
+  
   .hidden { display: none; }
-  .pending-item { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #ffc107; }
-  .withdrawal-item { background: #e0f2fe; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #0ea5e9; }
-  .crypto-info { background: #f8fafc; padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 14px; border: 1px solid #e2e8f0; }
+  
+  .balance-display {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 15px 0;
+    border: 3px solid #059669;
+  }
+  
+  .balance-display .amount {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .crypto-info {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-size: 14px;
+    border: 2px solid #e2e8f0;
+  }
+  
   .crypto-info strong { color: #1a2a3a; }
-  .balance-display { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 12px; text-align: center; margin: 15px 0; }
-  .balance-display .amount { font-size: 32px; font-weight: bold; }
-  .tab-container { display: flex; gap: 10px; margin-bottom: 15px; }
-  .tab { flex: 1; padding: 12px; background: #e5e7eb; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; }
-  .tab.active { background: #4a9eff; color: white; }
-
-  /* Offline Kazanç Popup */
+  
+  .pending-item {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    border: 2px solid #ffc107;
+    border-left: 4px solid #ffc107;
+  }
+  
+  .withdrawal-item {
+    background: #e0f2fe;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    border: 2px solid #0ea5e9;
+    border-left: 4px solid #0ea5e9;
+  }
+  
+  .tab-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 12px;
+    background: #e5e7eb;
+    border: 2px solid #d1d5db;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .tab.active {
+    background: #4a9eff;
+    color: white;
+    border-color: #3a8eef;
+  }
+  
+  /* Offline Popup */
   .offline-popup {
     position: fixed;
     top: 50%;
@@ -40,104 +384,176 @@
     transform: translate(-50%, -50%);
     background: white;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     text-align: center;
     z-index: 1000;
     border: 3px solid #10b981;
     animation: popIn 0.3s ease-out;
     width: 90%;
-    max-width: 400px;
+    max-width: 350px;
   }
+  
   @keyframes popIn {
     from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
     to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   }
+  
   .offline-popup h3 { color: #059669; margin-bottom: 10px; }
   .offline-popup .amount { font-size: 36px; font-weight: bold; color: #10b981; margin: 15px 0; }
+  
   .overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6); z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+  }
+  
+  /* Mobil Uyumluluk */
+  @media (max-width: 500px) {
+    .container { padding: 8px; }
+    .mining-visual { width: 180px; height: 180px; }
+    .miner-emoji { font-size: 70px; }
+    .rock-emoji { font-size: 50px; }
+    .top-stat .value { font-size: 12px; }
+    .nav-btn { font-size: 11px; padding: 10px 6px; }
   }
 </style>
 </head>
 <body>
   <div class="container">
-    <!-- Ana Sayfa -->
-    <div id="page-home" class="card">
-      <h1>⚡ Hash Power Mining</h1>
-      <div>
-        <div class="stat"> Bakiye: $<span id="balance">0.00</span></div>
-        <div class="stat">📦 Ürün: <span id="productCount">0</span></div>
-        <div class="stat">💵 Yatırım: $<span id="totalInvested">0</span></div>
+    <!-- ÜST BİLGİ BAR -->
+    <div class="top-bar">
+      <div class="top-stat">
+        <div class="icon">💰</div>
+        <div class="label">Bakiye</div>
+        <div class="value">$<span id="balance">0.00</span></div>
       </div>
-      <br>
-      <button class="btn" onclick="showPage('buy')">💎 Satın Al</button>
-      <button class="btn btn-withdraw" onclick="showPage('withdraw')">💸 Çekim</button>
-      <button class="btn" onclick="showPage('admin')" id="adminBtn" style="display:none;">🔐 Admin</button>
+      <div class="top-stat">
+        <div class="icon">📦</div>
+        <div class="label">Ürün</div>
+        <div class="value"><span id="productCount">0</span></div>
+      </div>
+      <div class="top-stat">
+        <div class="icon">💵</div>
+        <div class="label">Yatırım</div>
+        <div class="value">$<span id="totalInvested">0</span></div>
+      </div>
     </div>
 
-    <!-- Satın Al -->
-    <div id="page-buy" class="card hidden">
-      <h2>💎 Satın Al</h2>
-      <div class="crypto-info">
-        <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
-        <span id="depositWallet" style="word-break: break-all; color: #0ea5e9; font-family: monospace; font-size: 13px;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
-        <br><br>
-        <button class="btn" style="padding: 8px 16px; font-size: 14px; width: 100%;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+    <!-- ANA SAYFA - ÜRETİM ALANI -->
+    <div id="page-home">
+      <div class="mining-area" id="miningArea">
+        <div class="mining-title">⛏️ Üretim Aktif</div>
+        
+        <div class="mining-visual">
+          <div class="miner-emoji" id="miner" onclick="breakRock()">👷</div>
+          <div class="rock-emoji" id="rock" onclick="breakRock()">🪨</div>
+        </div>
+        
+        <div class="mining-stats">
+          <div class="mining-stat-item">
+            <div class="label">Saniye</div>
+            <div class="value">$<span id="perSecond">0.00</span></div>
+          </div>
+          <div class="mining-stat-item">
+            <div class="label">Dakika</div>
+            <div class="value">$<span id="perMinute">0.00</span></div>
+          </div>
+          <div class="mining-stat-item">
+            <div class="label">Saat</div>
+            <div class="value">$<span id="perHour">0.00</span></div>
+          </div>
+        </div>
       </div>
-      
-      <h3>Yatırım Miktarı (USD)</h3>
-      <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10" oninput="updateBuyTRX()">
-      
-      <div class="crypto-info">
-        <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #059669; font-weight: bold;">83.33</span> TRX
-      </div>
-      
-      <button class="btn btn-approve" style="width: 100%;" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
-      <button class="btn" style="background:#666; width: 100%;" onclick="showPage('home')">← Geri</button>
     </div>
 
-    <!-- Çekim -->
-    <div id="page-withdraw" class="card hidden">
-      <h2>💸 Çekim Talebi</h2>
-      <div class="balance-display">
-        <div>Mevcut Bakiye</div>
-        <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 14px; margin-top: 5px;">Minimum çekim: $0.01</div>
+    <!-- Satın Al Sayfası -->
+    <div id="page-buy" class="hidden">
+      <div class="page-card">
+        <h2>💎 Satın Al</h2>
+        <div class="crypto-info">
+          <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
+          <strong>📍 Cüzdan Adresi:</strong><br>
+          <span id="depositWallet" style="word-break: break-all; color: #0ea5e9; font-family: monospace; font-size: 13px;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
+          <br><br>
+          <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+        </div>
+        
+        <h3 style="margin: 15px 0 10px 0;">Yatırım Miktarı (USD)</h3>
+        <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10" oninput="updateBuyTRX()">
+        
+        <div class="crypto-info">
+          <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: bold;">83.33</span> TRX
+        </div>
+        
+        <button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
+        <button class="btn btn-secondary" onclick="showPage('home')">← Geri</button>
       </div>
-      
-      <h3>Çekilecek Miktar (USD)</h3>
-      <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
-      
-      <h3>🪙 Kripto Seçimi</h3>
-      <select id="withdrawCrypto" onchange="updateCryptoAmount()">
-        <option value="trx">TRX (TRON) - ~$0.12</option>
-        <option value="bnb">BNB (Binance Coin) - ~$600</option>
-        <option value="xrp">XRP (Ripple) - ~$0.50</option>
-      </select>
-      
-      <div class="crypto-info">
-        <strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #059669; font-weight: bold;">0.00</span> <span id="cryptoSymbol">TRX</span>
-      </div>
-      
-      <h3>📍 Cüzdan Adresi</h3>
-      <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin...">
-      
-      <button class="btn btn-withdraw" style="width: 100%;" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
-      <button class="btn" style="background:#666; width: 100%;" onclick="showPage('home')">← Geri</button>
     </div>
 
-    <!-- Admin -->
-    <div id="page-admin" class="card hidden">
-      <h2>🔐 Admin Panel</h2>
-      <div class="tab-container">
-        <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Yatırımlar</button>
-        <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
+    <!-- Çekim Sayfası -->
+    <div id="page-withdraw" class="hidden">
+      <div class="page-card">
+        <h2>💸 Çekim Talebi</h2>
+        <div class="balance-display">
+          <div>Mevcut Bakiye</div>
+          <div class="amount">$<span id="withdrawBalance">0.00</span></div>
+          <div style="font-size: 14px; margin-top: 5px;">Minimum çekim: $0.01</div>
+        </div>
+        
+        <h3 style="margin: 15px 0 10px 0;">Çekilecek Miktar (USD)</h3>
+        <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
+        
+        <h3 style="margin: 15px 0 10px 0;">🪙 Kripto Seçimi</h3>
+        <select id="withdrawCrypto" onchange="updateCryptoAmount()">
+          <option value="trx">TRX (TRON) - ~$0.12</option>
+          <option value="bnb">BNB (Binance Coin) - ~$600</option>
+          <option value="xrp">XRP (Ripple) - ~$0.50</option>
+        </select>
+        
+        <div class="crypto-info">
+          <strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: bold;">0.00</span> <span id="cryptoSymbol">TRX</span>
+        </div>
+        
+        <h3 style="margin: 15px 0 10px 0;">📍 Cüzdan Adresi</h3>
+        <input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin...">
+        
+        <button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
+        <button class="btn btn-secondary" onclick="showPage('home')">← Geri</button>
       </div>
-      <div id="adminContent">Yükleniyor...</div>
-      <button class="btn" style="background:#666; width: 100%; margin-top: 15px;" onclick="showPage('home')">← Geri</button>
+    </div>
+
+    <!-- Admin Sayfası -->
+    <div id="page-admin" class="hidden">
+      <div class="page-card">
+        <h2>🔐 Admin Panel</h2>
+        <div class="tab-container">
+          <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Yatırımlar</button>
+          <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
+        </div>
+        <div id="adminContent">Yükleniyor...</div>
+        <button class="btn btn-secondary" onclick="showPage('home')">← Geri</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT NAVİGASYON MENÜSÜ -->
+  <div class="bottom-nav">
+    <div class="nav-btn" onclick="showPage('buy')">
+      <span class="icon">💎</span>
+      <span>Satın Al</span>
+    </div>
+    <div class="nav-btn withdraw" onclick="showPage('withdraw')">
+      <span class="icon">💸</span>
+      <span>Çekim</span>
+    </div>
+    <div class="nav-btn admin" onclick="showPage('admin')" id="adminNavBtn" style="display:none;">
+      <span class="icon">🔐</span>
+      <span>Admin</span>
     </div>
   </div>
 
@@ -145,8 +561,8 @@
   <div id="offlinePopup" class="hidden">
     <div class="overlay" onclick="closeOfflinePopup()"></div>
     <div class="offline-popup">
-      <h3>⛏️ Tekrar Hoşgeldin!</h3>
-      <p>Sen yokken madencilerin çalışmaya devam etti:</p>
+      <h3>️ Tekrar Hoşgeldin!</h3>
+      <p>Sen yokken madencilerin çalıştı:</p>
       <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
       <button class="btn btn-approve" onclick="closeOfflinePopup()">Harika! Topla</button>
     </div>
@@ -183,8 +599,10 @@
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
+    // Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.ready();
+    tg.expand(); // Tam ekran yap
     
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
       currentUser = tg.initDataUnsafe.user;
@@ -195,7 +613,7 @@
       console.log('✅ Giriş yapıldı:', userId);
       
       if (currentUser && currentUser.id.toString() === ADMIN_ID) {
-        document.getElementById('adminBtn').style.display = 'inline-block';
+        document.getElementById('adminNavBtn').style.display = 'block';
       }
       
       await calculateOfflineEarnings();
@@ -248,6 +666,7 @@
     function showOfflinePopup(amount) {
       document.getElementById('offlineEarnedAmount').textContent = amount.toFixed(4);
       document.getElementById('offlinePopup').classList.remove('hidden');
+      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
     }
     
     function closeOfflinePopup() {
@@ -274,6 +693,7 @@
     function copyDepositAddress() {
       navigator.clipboard.writeText(DEPOSIT_WALLET).then(() => {
         alert('✅ Cüzdan adresi kopyalandı!');
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       });
     }
     
@@ -310,10 +730,45 @@
         alert('✅ Ödeme bildirimi alındı! Admin onayından sonra üretiminiz başlayacaktır.');
         document.getElementById('buyAmount').value = '10';
         updateBuyTRX();
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Satın alma hatası:', error);
-        alert('❌ Hata: ' + error.message);
+        alert(' Hata: ' + error.message);
       }
+    }
+    
+    function breakRock() {
+      const rock = document.getElementById('rock');
+      const miner = document.getElementById('miner');
+      
+      rock.classList.remove('spawn');
+      void rock.offsetWidth;
+      rock.classList.add('breaking');
+      miner.classList.add('mining');
+      
+      const rect = rock.getBoundingClientRect();
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const dollar = document.createElement('div');
+          dollar.className = 'dollar-float';
+          dollar.textContent = '$';
+          dollar.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*100) + 'px';
+          dollar.style.top = (rect.top + rect.height/2) + 'px';
+          document.body.appendChild(dollar);
+          setTimeout(() => dollar.remove(), 1500);
+        }, i * 50);
+      }
+      
+      setTimeout(() => {
+        miner.classList.remove('mining');
+      }, 500);
+      
+      setTimeout(() => {
+        rock.classList.remove('breaking');
+        rock.classList.add('spawn');
+      }, 600);
+      
+      if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     }
     
     async function updateEarnings() {
@@ -345,6 +800,11 @@
       document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
       document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
+      
+      const perSec = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
+      document.getElementById('perSecond').textContent = perSec.toFixed(4);
+      document.getElementById('perMinute').textContent = (perSec * 60).toFixed(2);
+      document.getElementById('perHour').textContent = (perSec * 3600).toFixed(2);
     }
     
     function updateCryptoAmount() {
@@ -393,6 +853,7 @@
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
         updateCryptoAmount();
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Çekim hatası:', error);
         alert('❌ Hata: ' + error.message);
@@ -413,7 +874,7 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align:center; color:#059669; padding:20px;">✅ Bekleyen ödeme yok</p>';
+        if (pending.length === 0) return '<p style="text-align:center; color:#10b981; padding:20px;">✅ Bekleyen ödeme yok</p>';
         
         let html = '';
         pending.forEach(p => {
@@ -448,7 +909,7 @@
           }
         });
         
-        if (pending.length === 0) return '<p style="text-align:center; color:#059669; padding:20px;">✅ Bekleyen çekim yok</p>';
+        if (pending.length === 0) return '<p style="text-align:center; color:#10b981; padding:20px;">✅ Bekleyen çekim yok</p>';
         
         let html = '';
         pending.forEach(w => {
@@ -459,7 +920,7 @@
               <small>Cüzdan: ${w.walletAddress}</small><br>
               <small>ID: ${w.id}</small><br>
               <button class="btn btn-approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}', ${w.amount})">✓ Onayla</button>
-              <button class="btn btn-reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ Reddet</button>
+              <button class="btn btn-reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')"> Reddet</button>
             </div>
           `;
         });
@@ -519,8 +980,9 @@
           totalInvested: (data.totalInvested || 0) + payment.amount
         }, { merge: true });
         
-        alert('✅ Ödeme onaylandı! Kullanıcının üretimi başladı.');
+        alert('✅ Ödeme onaylandı!');
         await loadAdmin();
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         alert('❌ Hata: ' + error.message);
       }
@@ -573,8 +1035,9 @@
           totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
         }, { merge: true });
         
-        alert('✅ Çekim onaylandı! $' + withdrawal.amount + ' kullanıcının bakiyesinden düştü.');
+        alert('✅ Çekim onaylandı!');
         await loadAdmin();
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         alert('❌ Hata: ' + error.message);
       }
@@ -601,8 +1064,13 @@
     }
     
     function showPage(page) {
-      document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
-      document.getElementById('page-' + page).classList.remove('hidden');
+      document.querySelectorAll('.page-card, #page-home').forEach(c => c.classList.add('hidden'));
+      
+      if (page === 'home') {
+        document.getElementById('page-home').classList.remove('hidden');
+      } else {
+        document.getElementById('page-' + page).classList.remove('hidden');
+      }
       
       if (page === 'withdraw') updateCryptoAmount();
       else if (page === 'admin') loadAdmin();
