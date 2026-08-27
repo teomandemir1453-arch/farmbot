@@ -10,176 +10,52 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-  
-  /* YENİ: Açık mavi-beyaz arka plan */
-  body { 
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f2fe 100%);
-    padding: 10px; 
-    padding-bottom: calc(75px + env(safe-area-inset-bottom)); 
-    min-height: 100vh; 
-    position: relative; 
-  }
-  
+  body { background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f2fe 100%); padding: 10px; padding-bottom: calc(75px + env(safe-area-inset-bottom)); min-height: 100vh; position: relative; }
   .container { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
-  
-  /* YENİ: Beyaz kart, renkli çerçeveler */
-  .card { 
-    background: white; 
-    border-radius: 16px; 
-    padding: 15px; 
-    margin-bottom: 12px; 
-    border: 3px solid #3b82f6;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-  }
-  
+  .card { background: white; border-radius: 16px; padding: 15px; margin-bottom: 12px; border: 3px solid #3b82f6; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
   h1 { text-align: center; color: #1e293b; margin-bottom: 15px; font-size: 22px; font-weight: 800; }
   h2 { color: #1e293b; margin-bottom: 12px; font-size: 20px; font-weight: 700; }
   h3 { color: #475569; margin: 12px 0 8px 0; font-size: 14px; font-weight: 700; }
-  
-  /* YENİ: Renkli istatistik kutuları */
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-  
-  .stat-box { 
-    background: white; 
-    border-radius: 12px; 
-    padding: 12px 6px; 
-    text-align: center; 
-    border-width: 3px;
-    border-style: solid;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  
-  /* Her stat box farklı renk */
-  .stat-box:nth-child(1) { border-color: #22c55e; } /* Yeşil - Bakiye */
-  .stat-box:nth-child(2) { border-color: #3b82f6; } /* Mavi - Ürün */
-  .stat-box:nth-child(3) { border-color: #f97316; } /* Turuncu - Yatırım */
-  
+  .stat-box { background: white; border-radius: 12px; padding: 12px 6px; text-align: center; border-width: 3px; border-style: solid; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .stat-box:nth-child(1) { border-color: #22c55e; }
+  .stat-box:nth-child(2) { border-color: #3b82f6; }
+  .stat-box:nth-child(3) { border-color: #f97316; }
   .stat-box .label { font-size: 10px; color: #64748b; margin-bottom: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
   .stat-box .value { font-size: 16px; font-weight: 800; color: #1e293b; }
-  
-  /* YENİ: Mavi çerçeveli kazanç kutusu */
-  .earnings-estimate { 
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); 
-    border: 3px solid #3b82f6; 
-    border-radius: 14px; 
-    padding: 12px; 
-    margin: 12px 0; 
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-  }
-  
+  .earnings-estimate { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 3px solid #3b82f6; border-radius: 14px; padding: 12px; margin: 12px 0; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
   .earnings-title { text-align: center; font-size: 13px; font-weight: 800; color: #1e40af; margin-bottom: 10px; }
   .earnings-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  
-  .earnings-item { 
-    background: white; 
-    border: 2px solid #bfdbfe; 
-    border-radius: 10px; 
-    padding: 8px 4px; 
-    text-align: center; 
-  }
+  .earnings-item { background: white; border: 2px solid #bfdbfe; border-radius: 10px; padding: 8px 4px; text-align: center; }
   .earnings-item .icon { font-size: 16px; margin-bottom: 3px; }
   .earnings-item .label { font-size: 9px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
   .earnings-item .value { font-size: 13px; font-weight: 800; color: #1e40af; }
-  
-  /* YENİ: Yeşil bildirim kutusu */
-  .telegram-notif-card {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    border-radius: 12px;
-    padding: 14px;
-    margin: 12px 0;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .telegram-notif-card { background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 12px; padding: 14px; margin: 12px 0; color: white; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); cursor: pointer; transition: all 0.2s; }
   .telegram-notif-card:active { transform: scale(0.98); }
-  .telegram-notif-card.inactive {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-  }
+  .telegram-notif-card.inactive { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
   .telegram-icon { font-size: 28px; flex-shrink: 0; }
   .telegram-content { flex: 1; }
   .telegram-title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
   .telegram-desc { font-size: 11px; opacity: 0.95; }
   .telegram-check { font-size: 24px; font-weight: bold; }
-  
-  /* YENİ: Paket başlığı */
-  .packages-section-title { 
-    text-align: center; 
-    font-size: 15px; 
-    font-weight: 800; 
-    color: #1e293b; 
-    margin: 16px 0 12px 0; 
-  }
-  
-  /* YENİ: Paket grid - 2 sütun */
+  .packages-section-title { text-align: center; font-size: 15px; font-weight: 800; color: #1e293b; margin: 16px 0 12px 0; }
   .packages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  
-  /* YENİ: Paket kartları - farklı renkler */
-  .package-card { 
-    background: white;
-    border-radius: 12px; 
-    padding: 12px; 
-    cursor: pointer; 
-    transition: all 0.2s; 
-    position: relative; 
-    border-width: 3px;
-    border-style: solid;
-  }
-  
+  .package-card { background: white; border-radius: 12px; padding: 12px; cursor: pointer; transition: all 0.2s; position: relative; border-width: 3px; border-style: solid; }
   .package-card:active { transform: scale(0.97); }
   .package-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  
-  /* Her paket farklı renk */
-  .package-card:nth-child(1) { border-color: #fbbf24; } /* Mini - Sarı */
-  .package-card:nth-child(2) { border-color: #fbbf24; } /* Micro - Sarı */
-  .package-card:nth-child(3) { border-color: #f59e0b; background: #fffbeb; } /* Ultra - Turuncu + açık sarı */
-  .package-card:nth-child(4) { border-color: #f97316; } /* PRO Ultra - Turuncu-kırmızı */
-  .package-card:nth-child(5) { border-color: #dc2626; } /* Business - Kırmızı */
-  
-  .package-card.featured::before { 
-    content: '⭐'; 
-    position: absolute; 
-    top: 6px; 
-    right: 8px; 
-    font-size: 16px; 
-  }
-  
+  .package-card:nth-child(1) { border-color: #fbbf24; }
+  .package-card:nth-child(2) { border-color: #fbbf24; }
+  .package-card:nth-child(3) { border-color: #f59e0b; background: #fffbeb; }
+  .package-card:nth-child(4) { border-color: #f97316; }
+  .package-card:nth-child(5) { border-color: #dc2626; }
+  .package-card.featured::before { content: '⭐'; position: absolute; top: 6px; right: 8px; font-size: 16px; }
   .package-name { font-size: 14px; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 6px; }
-  
-  /* YENİ: Kırmızı %20 rozeti */
-  .discount-badge { 
-    background: #ef4444; 
-    color: white; 
-    font-size: 10px; 
-    font-weight: 800; 
-    padding: 3px 10px; 
-    border-radius: 12px; 
-    display: inline-block; 
-    margin-bottom: 6px; 
-  }
-  
+  .discount-badge { background: #ef4444; color: white; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 6px; }
   .package-pricing { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 6px; }
   .original-price { font-size: 11px; color: #94a3b8; text-decoration: line-through; font-weight: 600; }
   .discounted-price { font-size: 18px; font-weight: 800; color: #10b981; }
-  
-  /* YENİ: Açık yeşil tasarruf şeridi */
-  .package-savings { 
-    font-size: 10px; 
-    color: #059669; 
-    font-weight: 700; 
-    background: #d1fae5; 
-    padding: 4px 8px; 
-    border-radius: 6px; 
-    text-align: center; 
-    margin-bottom: 6px; 
-  }
-  
+  .package-savings { font-size: 10px; color: #059669; font-weight: 700; background: #d1fae5; padding: 4px 8px; border-radius: 6px; text-align: center; margin-bottom: 6px; }
   .package-cta { font-size: 11px; color: #3b82f6; font-weight: 700; text-align: center; }
-  
   input, select { padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; width: 100%; margin: 6px 0 12px 0; font-size: 15px; background: #f8fafc; transition: all 0.2s; }
   input:focus, select:focus { outline: none; border-color: #3b82f6; background: white; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
   input[readonly] { background: #f1f5f9; color: #64748b; cursor: not-allowed; border-color: #cbd5e1; }
@@ -189,7 +65,6 @@
   .validation-message.show { display: block; }
   .validation-message.valid { color: #065f46; background: #d1fae5; }
   .validation-message.invalid { color: #991b1b; background: #fee2e2; }
-  
   .btn { background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 700; margin: 4px 0; width: 100%; transition: transform 0.1s; box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3); }
   .btn:active { transform: scale(0.98); }
   .btn-approve { background: #10b981; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3); }
@@ -197,22 +72,17 @@
   .btn-withdraw { background: #f59e0b; box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3); }
   .btn-secondary { background: #64748b; box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3); }
   .btn-ctrl { width: 44px; height: 44px; padding: 0; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0; flex-shrink: 0; }
-  
   .crypto-info { background: #f1f5f9; padding: 12px; border-radius: 10px; margin: 10px 0; font-size: 13px; border: 2px solid #e2e8f0; line-height: 1.5; }
   .crypto-info strong { color: #1e293b; }
   .network-badge { display: inline-block; background: #3b82f6; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-top: 5px; }
-  
   .balance-display { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 18px; border-radius: 12px; text-align: center; margin: 10px 0; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
   .balance-display .amount { font-size: 32px; font-weight: 800; margin-top: 4px; }
-  
   .network-info { background: #dbeafe; border: 2px solid #3b82f6; border-radius: 8px; padding: 8px; margin: 8px 0; font-size: 11px; color: #1e40af; font-weight: 600; }
   .hidden { display: none !important; }
-  
   .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; padding-bottom: calc(8px + env(safe-area-inset-bottom)); border-top: 3px solid #3b82f6; box-shadow: 0 -3px 10px rgba(59, 130, 246, 0.15); z-index: 1000; }
   .nav-item { flex: 1; text-align: center; padding: 6px 4px; cursor: pointer; color: #94a3b8; transition: color 0.2s; font-size: 10px; font-weight: 700; }
   .nav-item.active { color: #3b82f6; }
   .nav-item .icon { font-size: 20px; display: block; margin-bottom: 2px; }
-  
   .package-summary { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 10px; padding: 12px; margin: 10px 0; display: none; }
   .package-summary.active { display: block; }
   .package-summary-title { font-size: 13px; font-weight: 800; color: #065f46; margin-bottom: 8px; text-align: center; }
@@ -221,7 +91,6 @@
   .package-summary-row .label { color: #64748b; }
   .package-summary-row .value { font-weight: 700; color: #059669; }
   .package-summary-row .value.original { color: #94a3b8; text-decoration: line-through; }
-  
   .qr-container { text-align: center; margin: 12px 0; padding: 12px; background: white; border-radius: 12px; border: 2px solid #e2e8f0; }
   .qr-container img { max-width: 180px; border-radius: 8px; }
   .qr-label { font-size: 11px; color: #64748b; margin-top: 6px; font-weight: 600; }
@@ -230,7 +99,6 @@
   .amount-info { display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: -6px; margin-bottom: 10px; padding: 0 4px; }
   .max-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; margin-left: 8px; }
   .max-btn:active { transform: scale(0.95); }
-  
   .history-section { margin-top: 15px; border-top: 2px solid #e2e8f0; padding-top: 12px; }
   .history-title { font-size: 13px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
   .history-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 6px; font-size: 12px; }
@@ -246,7 +114,6 @@
   .status-badge.pending { background: #fef3c7; color: #92400e; }
   .status-badge.rejected { background: #fee2e2; color: #991b1b; }
   .empty-history { text-align: center; color: #94a3b8; font-size: 12px; padding: 15px; font-style: italic; }
-  
   .offline-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 16px; box-shadow: 0 15px 50px rgba(59, 130, 246, 0.3); text-align: center; z-index: 1001; border: 3px solid #3b82f6; animation: popIn 0.3s ease-out; width: 90%; max-width: 320px; }
   @keyframes popIn { from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
   .offline-popup h3 { color: #1e40af; margin-bottom: 8px; font-size: 18px; font-weight: 800; }
@@ -268,7 +135,7 @@
       <div class="earnings-estimate">
         <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
         <div class="earnings-grid">
-          <div class="earnings-item"><div class="icon">⏱️</div><div class="label">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
+          <div class="earnings-item"><div class="icon">️</div><div class="label">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
           <div class="earnings-item"><div class="icon">🕐</div><div class="label">Saatlik</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
           <div class="earnings-item"><div class="icon">📅</div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
         </div>
@@ -276,7 +143,7 @@
       <div class="telegram-notif-card inactive" id="telegramNotifCard" onclick="activateTelegramNotif()">
         <div class="telegram-icon">📱</div>
         <div class="telegram-content">
-          <div class="telegram-title" id="telegramTitle"> Bildirimleri Aktif Et</div>
+          <div class="telegram-title" id="telegramTitle">🔔 Bildirimleri Aktif Et</div>
           <div class="telegram-desc" id="telegramDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div>
         </div>
         <div class="telegram-check" id="telegramCheck">›</div>
@@ -296,16 +163,16 @@
       </div>
       <div class="crypto-info">
         <strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
-        <strong>💰 Kabul Edilen Coin:</strong> TRX<br>
+        <strong> Kabul Edilen Coin:</strong> TRX<br>
         <strong>📍 Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #3b82f6; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 2px dashed #cbd5e1;">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
-        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
       </div>
       <div class="qr-container">
         <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
         <div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
       </div>
-      <div class="network-info">️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
+      <div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
       <div class="amount-control">
         <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
@@ -331,7 +198,7 @@
         <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex: 1; margin-right: 8px;">
         <button class="max-btn" onclick="setMaxAmount()">MAX</button>
       </div>
-      <h3> Kripto Seçimi</h3>
+      <h3>🪙 Kripto Seçimi</h3>
       <select id="withdrawCrypto" onchange="updateCryptoAmount(); clearAddressValidation(); updateNetworkInfo();">
         <option value="trx">TRX (TRON) - ~$0.12</option>
         <option value="bnb">BNB (Binance Coin) - ~$600</option>
@@ -354,7 +221,7 @@
 
   <div class="bottom-nav">
     <div class="nav-item active" onclick="showPage('home', this)"><span class="icon">🏠</span><span>Ana Sayfa</span></div>
-    <div class="nav-item" onclick="showPage('buy', this)"><span class="icon">💎</span><span>Satın Al</span></div>
+    <div class="nav-item" onclick="showPage('buy', this)"><span class="icon"></span><span>Satın Al</span></div>
     <div class="nav-item" onclick="showPage('withdraw', this)"><span class="icon">💸</span><span>Çekim</span></div>
     <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;"><span class="icon">🔐</span><span>Admin</span></div>
   </div>
@@ -362,7 +229,7 @@
   <div id="offlinePopup" class="hidden">
     <div class="overlay" onclick="closeOfflinePopup()"></div>
     <div class="offline-popup">
-      <h3>️ Tekrar Hoşgeldin!</h3>
+      <h3>⛏️ Tekrar Hoşgeldin!</h3>
       <p style="color: #64748b; font-size: 13px;">Sen yokken madencilerin çalıştı:</p>
       <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
       <button class="btn btn-approve" onclick="closeOfflinePopup()">Harika! Topla</button>
@@ -399,7 +266,7 @@
       const botUrl = `https://t.me/${BOT_USERNAME}?start=activate`;
       if (tg.openTelegramLink) tg.openTelegramLink(botUrl); else window.open(botUrl, '_blank');
       setTimeout(() => {
-        alert(' Bot açıldı!\n\nLütfen sohbete "/start" yaz ve gönder.\n\nBöylece yatırım & çekim onaylarını Telegram\'dan anında alacaksın!');
+        alert('📱 Bot açıldı!\n\nLütfen sohbete "/start" yaz ve gönder.\n\nBöylece yatırım & çekim onaylarını Telegram\'dan anında alacaksın!');
         localStorage.setItem('telegramNotifActive', 'true');
         updateTelegramNotifUI();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -421,7 +288,7 @@
         check.textContent = '✓';
       } else {
         card.classList.add('inactive');
-        title.textContent = ' Bildirimleri Aktif Et';
+        title.textContent = '🔔 Bildirimleri Aktif Et';
         desc.textContent = 'Yatırım & çekim onaylarını Telegram\'dan anında al!';
         icon.textContent = '📱';
         check.textContent = '›';
@@ -524,10 +391,10 @@
         await userRef.set({ pendingPayments: [...(data.pendingPayments || []), payment], totalInvested: (data.totalInvested || 0) + amount }, { merge: true });
         const adminMsg = `🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n🆔 <b>ID:</b> ${payment.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName ? ` <b>Paket:</b> ${selectedPackageName}` : ''}\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
-        alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n🪙 TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
+        alert(`✅ Ödeme bildirimi alındı!\n\n💰 Tutar: $${amount.toFixed(2)}\n TRX: ${trxAmount}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
         resetAndGoHome();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      } catch (error) { alert('❌ Hata: ' + error.message); }
+      } catch (error) { alert(' Hata: ' + error.message); }
     }
     
     async function updateEarnings() {
@@ -564,38 +431,89 @@
       try {
         const userRef = db.collection('users').doc(userId); const doc = await userRef.get(); const data = doc.data() || {};
         await userRef.set({ withdrawalRequests: [...(data.withdrawalRequests || []), withdrawal] }, { merge: true });
-        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n📍 <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+        const adminMsg = `💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId || userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n🌐 <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
         sendTelegramNotification(adminMsg);
-        alert(`✅ Çekim talebi oluşturuldu!\n\n🌐 Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
+        alert(`✅ Çekim talebi oluşturuldu!\n\n Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Miktar: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
         document.getElementById('withdrawAmount').value = ''; document.getElementById('walletAddress').value = '';
         clearAddressValidation(); updateCryptoAmount(); loadWithdrawalHistory();
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) { alert('❌ Hata: ' + error.message); }
     }
     
+    // 🔧 DÜZELTİLDİ: Yatırım Geçmişi - Hem pending hem approved göster
     async function loadDepositHistory() {
-      const container = document.getElementById('depositHistory'); container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
+      const container = document.getElementById('depositHistory');
+      container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
       try {
-        const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {};
-        let allDeposits = userData.pendingPayments || []; allDeposits.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        if (allDeposits.length === 0) { container.innerHTML = '<div class="empty-history">Henüz yatırım yapmadınız</div>'; return; }
+        const userDoc = await db.collection('users').doc(userId).get();
+        const userData = userDoc.data() || {};
+        
+        // Hem pending hem approved ödemeleri al
+        let allDeposits = [];
+        
+        // Pending ödemeler
+        if (userData.pendingPayments && Array.isArray(userData.pendingPayments)) {
+          userData.pendingPayments.forEach(p => {
+            allDeposits.push({ ...p, status: p.status || 'pending' });
+          });
+        }
+        
+        // Approved ödemeler
+        if (userData.approvedPayments && Array.isArray(userData.approvedPayments)) {
+          userData.approvedPayments.forEach(p => {
+            allDeposits.push({ ...p, status: 'approved' });
+          });
+        }
+        
+        // Tarihe göre sırala (en yeni en üstte)
+        allDeposits.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        
+        if (allDeposits.length === 0) {
+          container.innerHTML = '<div class="empty-history">Henüz yatırım yapmadınız</div>';
+          return;
+        }
+        
         let html = '';
-        allDeposits.slice(0, 10).forEach(d => {
+        allDeposits.slice(0, 20).forEach(d => {
           const date = d.timestamp ? new Date(d.timestamp).toLocaleString('tr-TR') : 'Bilinmiyor';
           const status = d.status || 'pending';
           const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
           const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
-          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${d.packageName ? '📦 '+d.packageName : '💰 Manuel'}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount||0).toFixed(2)} (${d.trxAmount||0} TRX)</span></div><div class="h-date">🕐 ${date}</div></div>`;
+          const packageText = d.packageName ? '📦 ' + d.packageName : '💰 Manuel';
+          const trxText = d.trxAmount ? `(${d.trxAmount} TRX)` : '';
+          
+          html += `<div class="history-item ${statusClass}">
+            <div class="h-row">
+              <span class="h-label">${packageText}</span>
+              <span class="status-badge ${statusClass}">${statusText}</span>
+            </div>
+            <div class="h-row">
+              <span class="h-label">Tutar:</span>
+              <span class="h-value">$${(d.amount || 0).toFixed(2)} ${trxText}</span>
+            </div>
+            <div class="h-row">
+              <span class="h-label">🌐 Ağ:</span>
+              <span class="h-value">${d.network || 'TRON (TRC20)'}</span>
+            </div>
+            <div class="h-date">🕐 ${date}</div>
+          </div>`;
         });
+        
         container.innerHTML = html;
-      } catch (error) { container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; }
+      } catch (error) {
+        console.error('Geçmiş yükleme hatası:', error);
+        container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>';
+      }
     }
     
     async function loadWithdrawalHistory() {
-      const container = document.getElementById('withdrawalHistory'); container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
+      const container = document.getElementById('withdrawalHistory');
+      container.innerHTML = '<div class="empty-history">Yükleniyor...</div>';
       try {
-        const userDoc = await db.collection('users').doc(userId).get(); const userData = userDoc.data() || {};
-        let allWithdrawals = userData.withdrawalRequests || []; allWithdrawals.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        const userDoc = await db.collection('users').doc(userId).get();
+        const userData = userDoc.data() || {};
+        let allWithdrawals = userData.withdrawalRequests || [];
+        allWithdrawals.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
         if (allWithdrawals.length === 0) { container.innerHTML = '<div class="empty-history">Henüz çekim yapmadınız</div>'; return; }
         let html = '';
         allWithdrawals.slice(0, 10).forEach(w => {
@@ -603,7 +521,7 @@
           const status = w.status || 'pending';
           const statusClass = status === 'approved' ? 'success' : (status === 'rejected' ? 'rejected' : 'pending');
           const statusText = status === 'approved' ? '✅ Onaylandı' : (status === 'rejected' ? '❌ Reddedildi' : '⏳ Bekliyor');
-          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount||0).toFixed(2)} = ${w.cryptoAmount||0} ${w.cryptoSymbol||''}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${w.network||''}</span></div><div class="h-date">🕐 ${date}</div></div>`;
+          html += `<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount || 0).toFixed(2)} = ${w.cryptoAmount || 0} ${w.cryptoSymbol || ''}</span></div><div class="h-row"><span class="h-label"> Ağ:</span><span class="h-value">${w.network || ''}</span></div><div class="h-date">🕐 ${date}</div></div>`;
         });
         container.innerHTML = html;
       } catch (error) { container.innerHTML = '<div class="empty-history">Geçmiş yüklenemedi</div>'; }
