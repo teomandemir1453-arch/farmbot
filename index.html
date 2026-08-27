@@ -56,6 +56,98 @@
   .stat-box .label { font-size: 11px; color: #64748b; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
   .stat-box .value { font-size: 16px; font-weight: bold; color: #1e293b; }
   
+  /* YENİ: Kazanç Tahmini Kutusu - Mavi Şeritli */
+  .earnings-estimate {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 3px solid #4a9eff;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 15px 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
+  }
+  
+  .earnings-estimate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4a9eff, #60a5fa, #93c5fd, #60a5fa, #4a9eff);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .earnings-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #1e40af;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .earnings-title .icon {
+    font-size: 16px;
+  }
+  
+  .earnings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .earnings-item {
+    background: white;
+    border: 2px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 10px 5px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  
+  .earnings-item:hover {
+    transform: translateY(-2px);
+    border-color: #4a9eff;
+  }
+  
+  .earnings-item .icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  
+  .earnings-item .label {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  
+  .earnings-item .value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1e40af;
+  }
+  
+  .earnings-empty {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    padding: 8px;
+    font-style: italic;
+  }
+  
   input, select { 
     padding: 14px; 
     border: 2px solid #e2e8f0; 
@@ -73,7 +165,6 @@
     background: white;
   }
   
-  /* YENİ: Readonly input stili */
   input[readonly] {
     background: #f1f5f9;
     color: #64748b;
@@ -271,7 +362,6 @@
   
   .package-cta { font-size: 11px; color: #4a9eff; font-weight: 600; text-align: center; }
   
-  /* Paket Özet Bilgi Kutusu */
   .package-summary {
     background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
     border: 2px solid #10b981;
@@ -364,6 +454,31 @@
         </div>
       </div>
       
+      <!-- YENİ: Kazanç Tahmini Kutusu -->
+      <div class="earnings-estimate">
+        <div class="earnings-title">
+          <span class="icon">📊</span>
+          <span>Tahmini Kazançlarınız</span>
+        </div>
+        <div class="earnings-grid">
+          <div class="earnings-item">
+            <div class="icon">⏱️</div>
+            <div class="label">Dakikalık</div>
+            <div class="value">$<span id="earnPerMin">0.00</span></div>
+          </div>
+          <div class="earnings-item">
+            <div class="icon">🕐</div>
+            <div class="label">Saatlik</div>
+            <div class="value">$<span id="earnPerHour">0.00</span></div>
+          </div>
+          <div class="earnings-item">
+            <div class="icon"></div>
+            <div class="label">Günlük</div>
+            <div class="value">$<span id="earnPerDay">0.00</span></div>
+          </div>
+        </div>
+      </div>
+      
       <h3 style="text-align: center; margin-top: 20px; color: #1e293b;">🎁 Özel Paket Fırsatları - %20 İndirim!</h3>
       
       <div class="packages-wrapper">
@@ -374,9 +489,8 @@
 
     <!-- Satın Al -->
     <div id="page-buy" class="card hidden">
-      <h2> Satın Al</h2>
+      <h2>💎 Satın Al</h2>
       
-      <!-- Paket Özet Kutusu -->
       <div class="package-summary" id="packageSummary">
         <div class="package-summary-title">📦 Seçtiğiniz Paket</div>
         <div class="package-summary-row">
@@ -399,9 +513,9 @@
       
       <div class="crypto-info">
         <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
-        <strong>📍 Cüzdan Adresi:</strong><br>
+        <strong> Cüzdan Adresi:</strong><br>
         <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 13px; background: white; padding: 8px; border-radius: 6px; display: block; margin-top: 5px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
-        <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+        <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
       </div>
       
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
@@ -567,7 +681,6 @@
       });
     }
     
-    // YENİ: Paket seçildiğinde indirimli fiyatı input'a yaz, readonly yap
     function selectPackage(originalPrice, discountedPrice, packageName) {
       selectedPackageName = packageName;
       selectedPackageOriginal = originalPrice;
@@ -576,19 +689,12 @@
       const buyAmountInput = document.getElementById('buyAmount');
       const amountLabel = document.getElementById('amountLabel');
       
-      // Input'a İNDİRİMLİ fiyatı yaz
       buyAmountInput.value = discountedPrice.toFixed(2);
-      
-      // Input'u readonly yap (müşteri değiştiremesin)
       buyAmountInput.readOnly = true;
-      
-      // Label'ı güncelle
       amountLabel.textContent = 'Gönderilecek Tutar (İndirimli)';
       
-      // TRX'i indirimli fiyata göre hesapla
       updateBuyTRX();
       
-      // Özet kutusunu doldur ve göster
       document.getElementById('summaryName').textContent = packageName;
       document.getElementById('summaryOriginal').textContent = '$' + originalPrice.toFixed(2);
       document.getElementById('summaryDiscounted').textContent = '$' + discountedPrice.toFixed(2);
@@ -696,14 +802,13 @@
     }
     
     async function buyProduct() {
-      // YENİ: Paket seçildiyse orijinal fiyatı kullan, yoksa input'taki değeri kullan
       const amount = selectedPackageOriginal > 0 ? selectedPackageOriginal : parseFloat(document.getElementById('buyAmount').value);
       
       if (amount < 1) { alert('❌ Minimum $1 yatırabilirsiniz.'); return; }
       
       const payment = {
         id: 'pay_' + Date.now(),
-        amount: amount, // Firebase'e orijinal fiyat gidiyor
+        amount: amount,
         packageName: selectedPackageName || null,
         originalPrice: selectedPackageOriginal || amount,
         discountedPrice: selectedPackageDiscounted || null,
@@ -727,18 +832,17 @@
         
         let successMsg = '✅ Ödeme bildirimi alındı!';
         if (selectedPackageName) {
-          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
+          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
         }
         successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
         
         alert(successMsg);
         
-        // Formu sıfırla
         const buyAmountInput = document.getElementById('buyAmount');
         const amountLabel = document.getElementById('amountLabel');
         
         buyAmountInput.value = '10';
-        buyAmountInput.readOnly = false; // Tekrar düzenlenebilir yap
+        buyAmountInput.readOnly = false;
         amountLabel.textContent = 'Gönderilecek Tutar (USD)';
         updateBuyTRX();
         
@@ -779,11 +883,23 @@
       updateUI();
     }
     
+    // YENİ: updateUI fonksiyonuna kazanç tahmini eklendi
     function updateUI() {
       document.getElementById('balance').textContent = balance.toFixed(2);
       document.getElementById('withdrawBalance').textContent = balance.toFixed(2);
       document.getElementById('productCount').textContent = products.length;
-      document.getElementById('totalInvested').textContent = products.reduce((sum, p) => sum + p.amount, 0);
+      
+      const totalInvested = products.reduce((sum, p) => sum + p.amount, 0);
+      document.getElementById('totalInvested').textContent = totalInvested.toFixed(2);
+      
+      // YENİ: Kazanç tahmini hesaplamaları
+      const earnPerMin = totalInvested * PER_SECOND * 60;
+      const earnPerHour = totalInvested * PER_SECOND * 3600;
+      const earnPerDay = totalInvested * PER_SECOND * 86400;
+      
+      document.getElementById('earnPerMin').textContent = earnPerMin.toFixed(4);
+      document.getElementById('earnPerHour').textContent = earnPerHour.toFixed(4);
+      document.getElementById('earnPerDay').textContent = earnPerDay.toFixed(4);
     }
     
     function updateCryptoAmount() {
@@ -917,7 +1033,7 @@
         });
         return html;
       } catch (error) {
-        return '<p style="color:red; text-align:center;">❌ Hata: ' + error.message + '</p>';
+        return '<p style="color:red; text-align:center;"> Hata: ' + error.message + '</p>';
       }
     }
     
