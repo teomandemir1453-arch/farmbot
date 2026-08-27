@@ -17,28 +17,23 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* YENİ: Mavi çevre glow efekti */
   body { 
     background: #f0f2f5; 
-    padding: 15px; 
-    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    padding: 10px; 
+    padding-bottom: calc(75px + env(safe-area-inset-bottom));
     min-height: 100vh;
     position: relative;
   }
   
-  /* Mavi çevre glow - sayfanın etrafında */
   body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: 
-      radial-gradient(circle at 0% 0%, rgba(74, 158, 255, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(74, 158, 255, 0.12) 0%, transparent 40%),
-      radial-gradient(circle at 0% 100%, rgba(74, 158, 255, 0.12) 0%, transparent 40%),
-      radial-gradient(circle at 100% 100%, rgba(74, 158, 255, 0.15) 0%, transparent 40%);
+      radial-gradient(circle at 0% 0%, rgba(74, 158, 255, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(74, 158, 255, 0.10) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(74, 158, 255, 0.10) 0%, transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(74, 158, 255, 0.12) 0%, transparent 40%);
     pointer-events: none;
     z-index: 0;
   }
@@ -48,75 +43,59 @@
     margin: 0 auto;
     position: relative;
     z-index: 1;
-    /* YENİ: Container çevresinde mavi şerit */
-    padding: 12px;
-    background: rgba(74, 158, 255, 0.03);
-    border: 2px solid rgba(74, 158, 255, 0.3);
-    border-radius: 20px;
-    box-shadow: 
-      0 0 0 1px rgba(74, 158, 255, 0.1),
-      0 0 20px rgba(74, 158, 255, 0.15),
-      0 0 40px rgba(74, 158, 255, 0.08);
   }
   
   .card { 
     background: white; 
-    border-radius: 16px; 
-    padding: 20px; 
-    margin-bottom: 15px; 
-    /* YENİ: Hafif mavi gölge */
+    border-radius: 14px; 
+    padding: 15px; 
+    margin-bottom: 12px; 
     box-shadow: 
       0 2px 8px rgba(74, 158, 255, 0.08),
-      0 4px 16px rgba(74, 158, 255, 0.06),
       0 0 0 1px rgba(74, 158, 255, 0.05);
-    border: 1px solid rgba(74, 158, 255, 0.08);
   }
   
-  h1 { text-align: center; color: #1a2a3a; margin-bottom: 20px; font-size: 22px; }
-  h2 { color: #1a2a3a; margin-bottom: 15px; font-size: 20px; }
-  h3 { color: #4b5563; margin: 15px 0 10px 0; font-size: 15px; font-weight: 600; }
+  h1 { text-align: center; color: #1a2a3a; margin-bottom: 15px; font-size: 20px; }
+  h2 { color: #1a2a3a; margin-bottom: 12px; font-size: 18px; }
+  h3 { color: #4b5563; margin: 12px 0 8px 0; font-size: 14px; font-weight: 600; }
   
+  /* Kompakt İstatistik Grid */
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 12px;
   }
   
   .stat-box {
     background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 12px 5px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 8px 4px;
     text-align: center;
-    /* YENİ: Hafif mavi gölge */
-    box-shadow: 0 2px 6px rgba(74, 158, 255, 0.06);
+    box-shadow: 0 2px 4px rgba(74, 158, 255, 0.05);
   }
   
-  .stat-box .label { font-size: 11px; color: #64748b; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
-  .stat-box .value { font-size: 16px; font-weight: bold; color: #1e293b; }
+  .stat-box .label { font-size: 9px; color: #64748b; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; }
+  .stat-box .value { font-size: 14px; font-weight: bold; color: #1e293b; }
   
-  /* Kazanç Tahmini Kutusu - Mavi Şeritli */
+  /* Kompakt Kazanç Kutusu */
   .earnings-estimate {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    border: 3px solid #4a9eff;
-    border-radius: 16px;
-    padding: 15px;
-    margin: 15px 0;
+    border: 2px solid #4a9eff;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 10px 0;
     position: relative;
     overflow: hidden;
-    box-shadow: 
-      0 4px 12px rgba(74, 158, 255, 0.25),
-      0 0 0 1px rgba(74, 158, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(74, 158, 255, 0.15);
   }
   
   .earnings-estimate::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
+    top: 0; left: 0; right: 0;
+    height: 3px;
     background: linear-gradient(90deg, #4a9eff, #60a5fa, #93c5fd, #60a5fa, #4a9eff);
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
@@ -129,50 +108,140 @@
   
   .earnings-title {
     text-align: center;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: bold;
     color: #1e40af;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    margin-bottom: 8px;
   }
-  
-  .earnings-title .icon { font-size: 16px; }
   
   .earnings-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+    gap: 6px;
   }
   
   .earnings-item {
     background: white;
-    border: 2px solid #bfdbfe;
-    border-radius: 10px;
-    padding: 10px 5px;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 6px 4px;
     text-align: center;
-    transition: transform 0.2s;
-    box-shadow: 0 2px 6px rgba(74, 158, 255, 0.1);
   }
   
-  .earnings-item:hover {
-    transform: translateY(-2px);
-    border-color: #4a9eff;
+  .earnings-item .icon { font-size: 14px; margin-bottom: 2px; }
+  .earnings-item .label { font-size: 8px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 2px; }
+  .earnings-item .value { font-size: 12px; font-weight: bold; color: #1e40af; }
+  
+  /* YENİ: 2 Sütunlu Paket Grid - Kaydırma Yok */
+  .packages-section-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #1e293b;
+    margin: 12px 0 10px 0;
   }
   
-  .earnings-item .icon { font-size: 18px; margin-bottom: 4px; }
-  .earnings-item .label { font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
-  .earnings-item .value { font-size: 14px; font-weight: bold; color: #1e40af; }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .package-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(74, 158, 255, 0.06);
+  }
+  
+  .package-card:active { 
+    transform: scale(0.97); 
+  }
+  
+  .package-card:hover { 
+    border-color: #4a9eff; 
+    box-shadow: 0 3px 10px rgba(74, 158, 255, 0.15); 
+  }
+  
+  .package-card.featured {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.12);
+  }
+  
+  .package-card.featured::before {
+    content: '⭐';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+  }
+  
+  .package-name { 
+    font-size: 12px; 
+    font-weight: bold; 
+    color: #1e293b; 
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  
+  .discount-badge {
+    background: #ef4444;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 4px;
+    animation: pulse-badge 2s infinite;
+  }
+  
+  @keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .package-pricing { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 1px; 
+    margin-bottom: 4px; 
+  }
+  .original-price { font-size: 10px; color: #94a3b8; text-decoration: line-through; }
+  .discounted-price { font-size: 14px; font-weight: bold; color: #10b981; }
+  
+  .package-savings {
+    font-size: 8px;
+    color: #059669;
+    font-weight: 600;
+    background: #d1fae5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  
+  .package-cta { 
+    font-size: 9px; 
+    color: #4a9eff; 
+    font-weight: 600; 
+    text-align: center; 
+  }
   
   input, select { 
-    padding: 14px; 
-    border: 2px solid #e2e8f0; 
-    border-radius: 12px; 
+    padding: 12px; 
+    border: 1.5px solid #e2e8f0; 
+    border-radius: 10px; 
     width: 100%; 
-    margin: 8px 0 16px 0; 
-    font-size: 16px; 
+    margin: 6px 0 12px 0; 
+    font-size: 15px; 
     background: #f8fafc;
     transition: border-color 0.2s;
   }
@@ -181,7 +250,7 @@
     outline: none;
     border-color: #4a9eff;
     background: white;
-    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+    box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.1);
   }
   
   input[readonly] {
@@ -195,30 +264,29 @@
     background: #4a9eff; 
     color: white; 
     border: none; 
-    padding: 14px 24px; 
-    border-radius: 12px; 
+    padding: 12px 20px; 
+    border-radius: 10px; 
     cursor: pointer; 
-    font-size: 16px; 
+    font-size: 14px; 
     font-weight: 600;
-    margin: 5px 0;
+    margin: 4px 0;
     width: 100%;
-    transition: transform 0.1s, background 0.2s;
-    /* YENİ: Mavi buton gölgesi */
-    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+    transition: transform 0.1s;
+    box-shadow: 0 3px 10px rgba(74, 158, 255, 0.25);
   }
   
   .btn:active { transform: scale(0.98); }
-  .btn-approve { background: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-  .btn-reject { background: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
-  .btn-withdraw { background: #f59e0b; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
-  .btn-secondary { background: #94a3b8; box-shadow: 0 4px 12px rgba(148, 163, 184, 0.3); }
+  .btn-approve { background: #10b981; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25); }
+  .btn-reject { background: #ef4444; box-shadow: 0 3px 10px rgba(239, 68, 68, 0.25); }
+  .btn-withdraw { background: #f59e0b; box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25); }
+  .btn-secondary { background: #94a3b8; box-shadow: 0 3px 10px rgba(148, 163, 184, 0.25); }
   
   .crypto-info { 
     background: #f1f5f9; 
-    padding: 15px; 
-    border-radius: 12px; 
-    margin: 15px 0; 
-    font-size: 14px; 
+    padding: 12px; 
+    border-radius: 10px; 
+    margin: 10px 0; 
+    font-size: 13px; 
     border: 1px solid #e2e8f0;
     line-height: 1.5;
   }
@@ -227,202 +295,103 @@
   .balance-display { 
     background: linear-gradient(135deg, #10b981, #059669); 
     color: white; 
-    padding: 25px; 
-    border-radius: 16px; 
+    padding: 18px; 
+    border-radius: 12px; 
     text-align: center; 
-    margin: 15px 0; 
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    margin: 10px 0; 
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2);
   }
-  .balance-display .amount { font-size: 36px; font-weight: bold; margin-top: 5px; }
+  .balance-display .amount { font-size: 28px; font-weight: bold; margin-top: 4px; }
   
   .pending-item { 
     background: #fffbeb; 
-    padding: 15px; 
-    border-radius: 12px; 
-    margin: 10px 0; 
-    border-left: 4px solid #f59e0b; 
-    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.1);
+    padding: 12px; 
+    border-radius: 10px; 
+    margin: 8px 0; 
+    border-left: 3px solid #f59e0b; 
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.08);
   }
   .withdrawal-item { 
     background: #eff6ff; 
-    padding: 15px; 
-    border-radius: 12px; 
-    margin: 10px 0; 
-    border-left: 4px solid #3b82f6; 
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
+    padding: 12px; 
+    border-radius: 10px; 
+    margin: 8px 0; 
+    border-left: 3px solid #3b82f6; 
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.08);
   }
   
-  .tab-container { display: flex; gap: 10px; margin-bottom: 15px; }
+  .tab-container { display: flex; gap: 8px; margin-bottom: 12px; }
   .tab { 
     flex: 1; 
-    padding: 12px; 
+    padding: 10px; 
     background: #f1f5f9; 
-    border: 2px solid #e2e8f0; 
-    border-radius: 12px; 
+    border: 1.5px solid #e2e8f0; 
+    border-radius: 10px; 
     cursor: pointer; 
-    font-size: 14px; 
+    font-size: 13px; 
     font-weight: 600;
     text-align: center;
     color: #64748b;
   }
-  .tab.active { background: #4a9eff; color: white; border-color: #4a9eff; box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3); }
+  .tab.active { background: #4a9eff; color: white; border-color: #4a9eff; box-shadow: 0 3px 8px rgba(74, 158, 255, 0.25); }
   
   .hidden { display: none !important; }
   
-  /* ALT NAVİGASYON MENÜSÜ - Mavi üst şerit */
+  /* Kompakt Alt Navigasyon */
   .bottom-nav {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     background: white;
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    /* YENİ: Mavi üst şerit ve gölge */
-    border-top: 3px solid #4a9eff;
-    box-shadow: 
-      0 -4px 15px rgba(74, 158, 255, 0.15),
-      0 -2px 8px rgba(74, 158, 255, 0.1);
+    padding: 8px 0;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    border-top: 2px solid #4a9eff;
+    box-shadow: 0 -3px 10px rgba(74, 158, 255, 0.12);
     z-index: 1000;
   }
   
   .nav-item {
     flex: 1;
     text-align: center;
-    padding: 8px 5px;
+    padding: 6px 4px;
     cursor: pointer;
     color: #94a3b8;
     transition: color 0.2s;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
   }
   
   .nav-item.active { color: #4a9eff; }
-  .nav-item .icon { font-size: 24px; display: block; margin-bottom: 4px; }
-  
-  .packages-wrapper { position: relative; margin-top: 15px; }
-  .scroll-hint { text-align: center; font-size: 11px; color: #94a3b8; margin-bottom: 8px; font-weight: 600; }
-  
-  .packages-container {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 5px 2px 12px 2px;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .packages-container::-webkit-scrollbar { height: 4px; }
-  .packages-container::-webkit-scrollbar-thumb { background: #4a9eff; border-radius: 2px; }
-  
-  .package-card {
-    min-width: 155px;
-    max-width: 155px;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border: 2px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-    /* YENİ: Hafif mavi gölge */
-    box-shadow: 0 2px 8px rgba(74, 158, 255, 0.08);
-  }
-  
-  .package-card:active { transform: scale(0.96); }
-  .package-card:hover { 
-    border-color: #4a9eff; 
-    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2); 
-  }
-  
-  .package-card.featured {
-    border-color: #f59e0b;
-    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
-  }
-  
-  .package-card.featured::before {
-    content: '⭐ POPÜLER';
-    position: absolute;
-    top: 6px;
-    right: -28px;
-    background: #f59e0b;
-    color: white;
-    font-size: 9px;
-    font-weight: bold;
-    padding: 3px 30px;
-    transform: rotate(45deg);
-    letter-spacing: 0.5px;
-  }
-  
-  .package-name { font-size: 14px; font-weight: bold; color: #1e293b; margin-bottom: 6px; text-align: center; }
-  
-  .discount-badge {
-    background: #ef4444;
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 12px;
-    display: inline-block;
-    margin-bottom: 8px;
-    animation: pulse-badge 2s infinite;
-  }
-  
-  @keyframes pulse-badge {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  
-  .package-pricing { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 6px; }
-  .original-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; }
-  .discounted-price { font-size: 18px; font-weight: bold; color: #10b981; }
-  
-  .package-savings {
-    font-size: 10px;
-    color: #059669;
-    font-weight: 600;
-    background: #d1fae5;
-    padding: 4px 8px;
-    border-radius: 6px;
-    text-align: center;
-    margin-bottom: 6px;
-  }
-  
-  .package-cta { font-size: 11px; color: #4a9eff; font-weight: 600; text-align: center; }
+  .nav-item .icon { font-size: 20px; display: block; margin-bottom: 2px; }
   
   .package-summary {
     background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-    border: 2px solid #10b981;
-    border-radius: 12px;
-    padding: 15px;
-    margin: 15px 0;
+    border: 1.5px solid #10b981;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 10px 0;
     display: none;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
   }
   
   .package-summary.active { display: block; }
   
   .package-summary-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #065f46;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-align: center;
   }
   
   .package-summary-row {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
-    font-size: 13px;
+    padding: 4px 0;
+    font-size: 12px;
     color: #1e293b;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
   }
   
   .package-summary-row:last-child { border-bottom: none; }
@@ -432,19 +401,18 @@
   
   .offline-popup {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    padding: 30px;
-    border-radius: 20px;
+    padding: 25px;
+    border-radius: 16px;
     box-shadow: 0 15px 50px rgba(74, 158, 255, 0.3);
     text-align: center;
     z-index: 1001;
-    border: 3px solid #4a9eff;
+    border: 2px solid #4a9eff;
     animation: popIn 0.3s ease-out;
     width: 90%;
-    max-width: 350px;
+    max-width: 320px;
   }
   
   @keyframes popIn {
@@ -452,16 +420,14 @@
     to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   }
   
-  .offline-popup h3 { color: #1e40af; margin-bottom: 10px; font-size: 20px; }
-  .offline-popup .amount { font-size: 36px; font-weight: bold; color: #4a9eff; margin: 15px 0; }
+  .offline-popup h3 { color: #1e40af; margin-bottom: 8px; font-size: 18px; }
+  .offline-popup .amount { font-size: 32px; font-weight: bold; color: #4a9eff; margin: 12px 0; }
   
   .overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(74, 158, 255, 0.3);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(74, 158, 255, 0.25);
     z-index: 1000;
     backdrop-filter: blur(2px);
   }
@@ -488,12 +454,9 @@
         </div>
       </div>
       
-      <!-- Kazanç Tahmini Kutusu -->
+      <!-- Kompakt Kazanç Kutusu -->
       <div class="earnings-estimate">
-        <div class="earnings-title">
-          <span class="icon"></span>
-          <span>Tahmini Kazançlarınız</span>
-        </div>
+        <div class="earnings-title">📊 Tahmini Kazançlarınız</div>
         <div class="earnings-grid">
           <div class="earnings-item">
             <div class="icon">⏱️</div>
@@ -506,19 +469,17 @@
             <div class="value">$<span id="earnPerHour">0.00</span></div>
           </div>
           <div class="earnings-item">
-            <div class="icon"></div>
+            <div class="icon">📅</div>
             <div class="label">Günlük</div>
             <div class="value">$<span id="earnPerDay">0.00</span></div>
           </div>
         </div>
       </div>
       
-      <h3 style="text-align: center; margin-top: 20px; color: #1e293b;">🎁 Özel Paket Fırsatları - %20 İndirim!</h3>
+      <!-- YENİ: 2 Sütunlu Paket Grid - Kaydırma Yok -->
+      <div class="packages-section-title">🎁 Özel Paket Fırsatları - %20 İndirim!</div>
       
-      <div class="packages-wrapper">
-        <div class="scroll-hint">← Kaydırarak tüm paketleri görün →</div>
-        <div class="packages-container" id="packagesContainer"></div>
-      </div>
+      <div class="packages-grid" id="packagesContainer"></div>
     </div>
 
     <!-- Satın Al -->
@@ -546,17 +507,17 @@
       </div>
       
       <div class="crypto-info">
-        <strong>🌐 Ağ:</strong> TRON (TRC20)<br>
-        <strong> Cüzdan Adresi:</strong><br>
-        <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 13px; background: white; padding: 8px; border-radius: 6px; display: block; margin-top: 5px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
-        <button class="btn" style="padding: 10px; font-size: 14px; margin-top: 10px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
+        <strong> Ağ:</strong> TRON (TRC20)<br>
+        <strong>📍 Cüzdan Adresi:</strong><br>
+        <span id="depositWallet" style="word-break: break-all; color: #4a9eff; font-family: monospace; font-size: 12px; background: white; padding: 6px; border-radius: 6px; display: block; margin-top: 4px; border: 1px dashed #cbd5e1;">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</span>
+        <button class="btn" style="padding: 8px; font-size: 13px; margin-top: 8px;" onclick="copyDepositAddress()">📋 Adresi Kopyala</button>
       </div>
       
       <h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
       <input type="number" id="buyAmount" placeholder="Miktar ($)" min="1" value="10" oninput="updateBuyTRX()">
       
       <div class="crypto-info" style="text-align: center;">
-        <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: bold; font-size: 18px;">83.33</span> TRX
+        <strong>Karşılık:</strong> <span id="buyTrxAmount" style="color: #10b981; font-weight: bold; font-size: 16px;">83.33</span> TRX
       </div>
       
       <button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
@@ -566,9 +527,9 @@
     <div id="page-withdraw" class="card hidden">
       <h2>💸 Çekim Talebi</h2>
       <div class="balance-display">
-        <div style="font-size: 14px; opacity: 0.9;">Mevcut Bakiye</div>
+        <div style="font-size: 13px; opacity: 0.9;">Mevcut Bakiye</div>
         <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 13px; margin-top: 5px; opacity: 0.8;">Minimum çekim: $0.01</div>
+        <div style="font-size: 12px; margin-top: 4px; opacity: 0.8;">Minimum çekim: $0.01</div>
       </div>
       
       <h3>Çekilecek Miktar (USD)</h3>
@@ -582,7 +543,7 @@
       </select>
       
       <div class="crypto-info" style="text-align: center;">
-        <strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: bold; font-size: 18px;">0.00</span> <span id="cryptoSymbol">TRX</span>
+        <strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color: #10b981; font-weight: bold; font-size: 16px;">0.00</span> <span id="cryptoSymbol">TRX</span>
       </div>
       
       <h3>📍 Cüzdan Adresi</h3>
@@ -593,7 +554,7 @@
 
     <!-- Admin -->
     <div id="page-admin" class="card hidden">
-      <h2>🔐 Admin Panel</h2>
+      <h2> Admin Panel</h2>
       <div class="tab-container">
         <button class="tab active" onclick="switchAdminTab('payments', this)">💳 Yatırımlar</button>
         <button class="tab" onclick="switchAdminTab('withdrawals', this)">💸 Çekimler</button>
@@ -603,7 +564,7 @@
 
   </div>
 
-  <!-- ALT NAVİGASYON MENÜSÜ -->
+  <!-- Kompakt Alt Navigasyon -->
   <div class="bottom-nav">
     <div class="nav-item active" onclick="showPage('home', this)">
       <span class="icon">🏠</span>
@@ -618,7 +579,7 @@
       <span>Çekim</span>
     </div>
     <div class="nav-item" id="adminNav" onclick="showPage('admin', this)" style="display:none;">
-      <span class="icon"></span>
+      <span class="icon">🔐</span>
       <span>Admin</span>
     </div>
   </div>
@@ -628,7 +589,7 @@
     <div class="overlay" onclick="closeOfflinePopup()"></div>
     <div class="offline-popup">
       <h3>⛏️ Tekrar Hoşgeldin!</h3>
-      <p style="color: #64748b;">Sen yokken madencilerin çalıştı:</p>
+      <p style="color: #64748b; font-size: 13px;">Sen yokken madencilerin çalıştı:</p>
       <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
       <button class="btn btn-approve" onclick="closeOfflinePopup()">Harika! Topla</button>
     </div>
@@ -686,6 +647,7 @@
       currentUser = tg.initDataUnsafe.user;
     }
     
+    // YENİ: 2 Sütunlu Grid Render
     function renderPackages() {
       const container = document.getElementById('packagesContainer');
       container.innerHTML = '';
@@ -701,13 +663,13 @@
         card.innerHTML = `
           <div class="package-name">${pkg.name}</div>
           <div style="text-align:center;">
-            <span class="discount-badge">%20 İNDİRİM</span>
+            <span class="discount-badge">%20</span>
           </div>
           <div class="package-pricing">
             <span class="original-price">$${pkg.price.toFixed(2)}</span>
             <span class="discounted-price">$${discountedPrice.toFixed(2)}</span>
           </div>
-          <div class="package-savings"> -$${savings.toFixed(2)}</div>
+          <div class="package-savings">-$${savings.toFixed(2)}</div>
           <div class="package-cta">Seç →</div>
         `;
         
@@ -866,7 +828,7 @@
         
         let successMsg = '✅ Ödeme bildirimi alındı!';
         if (selectedPackageName) {
-          successMsg += `\n\n Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
+          successMsg += `\n\n📦 Paket: ${selectedPackageName}\n💰 Kaydedilen Tutar: $${amount.toFixed(2)}\n🎉 Ödediğiniz Tutar: $${selectedPackageDiscounted.toFixed(2)}`;
         }
         successMsg += '\n\nAdmin onayından sonra üretiminiz başlayacaktır.';
         
@@ -950,7 +912,7 @@
       const walletAddress = document.getElementById('walletAddress').value.trim();
       
       if (amount < 0.01) { alert('❌ Minimum çekim: $0.01'); return; }
-      if (amount > balance) { alert('❌ Yetersiz bakiye!'); return; }
+      if (amount > balance) { alert(' Yetersiz bakiye!'); return; }
       if (!walletAddress) { alert('❌ Cüzdan adresi gerekli!'); return; }
       
       const withdrawal = {
@@ -984,7 +946,7 @@
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       } catch (error) {
         console.error('Çekim hatası:', error);
-        alert(' Hata: ' + error.message);
+        alert('❌ Hata: ' + error.message);
       }
     }
     
@@ -1006,7 +968,7 @@
         
         let html = '';
         pending.forEach(p => {
-          const packageInfo = p.packageName ? `<br><small style="color:#4a9eff;">📦 Paket: ${p.packageName}</small>` : '';
+          const packageInfo = p.packageName ? `<br><small style="color:#4a9eff;"> Paket: ${p.packageName}</small>` : '';
           const discountInfo = (p.originalPrice && p.discountedPrice && p.originalPrice !== p.discountedPrice) 
             ? `<br><small style="color:#10b981;">💰 Orijinal: $${p.originalPrice.toFixed(2)} | Ödenen: $${p.discountedPrice.toFixed(2)}</small>` 
             : '';
