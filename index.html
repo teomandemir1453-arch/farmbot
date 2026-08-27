@@ -3,88 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hash Power Mining - Stone Age</title>
+<title>⛏️ Forest Mine - Hash Power</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=MedievalSharp&family=Cinzel:wght@400;700&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
   body {
-    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 50%, #1a0f0a 100%);
+    background: #0a1a0a;
     background-image: 
-      radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 50%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 30%, rgba(34, 139, 34, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 50, 0, 0.3) 0%, transparent 70%);
     min-height: 100vh;
     font-family: 'Cinzel', serif;
-    color: #ffd700;
+    color: #d4af37;
     padding: 10px;
     overflow-x: hidden;
-  }
-  
-  .container { max-width: 500px; margin: 0 auto; }
-  
-  /* Şaşalı Altın Çerçeve */
-  .luxury-frame {
     position: relative;
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 6px solid #ffd700;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 
-      0 0 40px rgba(255, 215, 0, 0.4),
-      inset 0 0 50px rgba(0, 0, 0, 0.5),
-      0 10px 30px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
   }
   
-  .luxury-frame::before {
+  /* Sarmaşık Desenleri - Kenarlar */
+  body::before, body::after {
     content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    background: linear-gradient(45deg, #ffd700, #ff8c00, #ffd700, #ff8c00);
-    border-radius: 20px;
-    opacity: 0.3;
-    z-index: -1;
-    animation: shimmer 3s linear infinite;
-  }
-  
-  @keyframes shimmer {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .luxury-frame > * {
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* Altın Parıltı Efekti */
-  .gold-sparkle {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
     top: 0;
-    left: 0;
-    pointer-events: none;
+    bottom: 0;
+    width: 60px;
     z-index: 0;
+    pointer-events: none;
+    opacity: 0.6;
   }
   
+  body::before {
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M20,0 Q40,25 20,50 Q0,75 20,100 Q40,125 20,150 Q0,175 20,200' stroke='%23228B22' stroke-width='3' fill='none'/%3E%3Cpath d='M20,25 Q35,20 40,30 Q35,40 20,35' fill='%2332CD32'/%3E%3Cpath d='M20,75 Q35,70 40,80 Q35,90 20,85' fill='%2332CD32'/%3E%3Cpath d='M20,125 Q35,120 40,130 Q35,140 20,135' fill='%2332CD32'/%3E%3Cpath d='M20,175 Q35,170 40,180 Q35,190 20,185' fill='%2332CD32'/%3E%3Ccircle cx='15' cy='15' r='4' fill='%23FFD700'/%3E%3Ccircle cx='25' cy='65' r='3' fill='%23FFD700'/%3E%3Ccircle cx='15' cy='115' r='4' fill='%23FFD700'/%3E%3Ccircle cx='25' cy='165' r='3' fill='%23FFD700'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 60px 200px;
+    animation: vineSway 4s ease-in-out infinite;
+  }
+  
+  body::after {
+    right: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M80,0 Q60,25 80,50 Q100,75 80,100 Q60,125 80,150 Q100,175 80,200' stroke='%23228B22' stroke-width='3' fill='none'/%3E%3Cpath d='M80,25 Q65,20 60,30 Q65,40 80,35' fill='%2332CD32'/%3E%3Cpath d='M80,75 Q65,70 60,80 Q65,90 80,85' fill='%2332CD32'/%3E%3Cpath d='M80,125 Q65,120 60,130 Q65,140 80,135' fill='%2332CD32'/%3E%3Cpath d='M80,175 Q65,170 60,180 Q65,190 80,185' fill='%2332CD32'/%3E%3Ccircle cx='85' cy='15' r='4' fill='%23FFD700'/%3E%3Ccircle cx='75' cy='65' r='3' fill='%23FFD700'/%3E%3Ccircle cx='85' cy='115' r='4' fill='%23FFD700'/%3E%3Ccircle cx='75' cy='165' r='3' fill='%23FFD700'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 60px 200px;
+    animation: vineSway 4s ease-in-out infinite reverse;
+  }
+  
+  @keyframes vineSway {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+  }
+  
+  /* Parıltı Efektleri */
   .sparkle {
-    position: absolute;
+    position: fixed;
     width: 4px;
     height: 4px;
     background: #ffd700;
     border-radius: 50%;
-    animation: sparkle 2s ease-in-out infinite;
-    box-shadow: 0 0 10px #ffd700;
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    animation: sparkle 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
   }
   
   @keyframes sparkle {
@@ -92,205 +78,307 @@
     50% { opacity: 1; transform: scale(1); }
   }
   
+  .container { 
+    max-width: 500px; 
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Orman Ahşap Çerçeve */
+  .forest-frame {
+    background: 
+      linear-gradient(135deg, rgba(45, 24, 16, 0.95) 0%, rgba(26, 15, 10, 0.95) 100%);
+    border: 6px solid #5c3a21;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 
+      inset 0 0 30px rgba(0, 0, 0, 0.7),
+      0 0 0 3px #2d1810,
+      0 0 0 6px #8b4513,
+      0 0 0 9px #5c3a21,
+      0 10px 40px rgba(0, 0, 0, 0.8),
+      0 0 60px rgba(34, 139, 34, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Ahşap Damar Deseni */
+  .forest-frame::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      repeating-linear-gradient(90deg, 
+        transparent 0px, 
+        transparent 20px, 
+        rgba(139, 69, 19, 0.1) 20px, 
+        rgba(139, 69, 19, 0.1) 21px),
+      repeating-linear-gradient(0deg, 
+        transparent 0px, 
+        transparent 40px, 
+        rgba(139, 69, 19, 0.05) 40px, 
+        rgba(139, 69, 19, 0.05) 41px);
+    pointer-events: none;
+  }
+  
+  /* Köşe Sarmaşıkları */
+  .forest-frame::after {
+    content: '🌿';
+    position: absolute;
+    font-size: 30px;
+    filter: drop-shadow(0 0 10px rgba(50, 205, 50, 0.8));
+  }
+  
+  .corner-vine-tl { top: -10px; left: -10px; }
+  .corner-vine-tr { top: -10px; right: -10px; transform: scaleX(-1); }
+  .corner-vine-bl { bottom: -10px; left: -10px; transform: scaleY(-1); }
+  .corner-vine-br { bottom: -10px; right: -10px; transform: scale(-1, -1); }
+  
   .header { 
     text-align: center; 
-    padding: 15px 0;
+    padding: 15px 0; 
     position: relative;
   }
   
   h1 {
-    font-family: 'MedievalSharp', cursive;
+    font-family: 'Cinzel Decorative', cursive;
     font-size: 28px;
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
     letter-spacing: 3px;
-    animation: glow 2s ease-in-out infinite;
+    animation: titleShine 3s ease-in-out infinite;
+    position: relative;
   }
   
-  @keyframes glow {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.3); }
+  @keyframes titleShine {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+    50% { filter: brightness(1.3) drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+  }
+  
+  .subtitle {
+    font-size: 11px;
+    color: #90ee90;
+    margin-top: 5px;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+    letter-spacing: 2px;
   }
   
   .stats-row { 
     display: flex; 
     gap: 8px; 
-    margin-bottom: 15px;
+    margin-bottom: 15px; 
   }
   
+  /* 3D İstatistik Kartları */
   .stat-box {
     flex: 1;
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border: 3px solid #daa520;
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 50%, #3d2817 100%);
+    border: 3px solid #8b4513;
     border-radius: 12px;
     padding: 12px 8px;
     text-align: center;
     box-shadow: 
-      0 5px 15px rgba(255, 215, 0, 0.4),
-      inset 0 2px 10px rgba(255, 255, 255, 0.3);
+      inset 0 2px 10px rgba(0, 0, 0, 0.6),
+      inset 0 -2px 10px rgba(255, 215, 0, 0.1),
+      0 5px 15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(34, 139, 34, 0.3);
+    position: relative;
     transition: transform 0.3s ease;
   }
   
   .stat-box:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.05);
   }
   
-  .stat-box .icon { font-size: 28px; margin-bottom: 5px; }
-  .stat-box .label { 
-    font-size: 11px; 
-    color: #1a0f0a; 
-    margin-bottom: 3px; 
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  .stat-box .value {
-    font-size: 18px;
-    font-weight: bold;
-    color: #1a0f0a;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px; right: 2px; bottom: 2px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    pointer-events: none;
   }
   
-  /* Madenci Sahnesi - Taş Devri */
-  .mining-scene {
-    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
-    border: 4px solid #daa520;
+  .stat-box .icon { font-size: 26px; margin-bottom: 5px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)); }
+  .stat-box .label { font-size: 9px; color: #90ee90; margin-bottom: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+  .stat-box .value { font-size: 16px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+  
+  /* Maden Sahnesi - Orman Mağarası */
+  .mine-scene {
+    background: 
+      radial-gradient(ellipse at 50% 30%, rgba(34, 139, 34, 0.2) 0%, transparent 60%),
+      linear-gradient(180deg, #1a2a1a 0%, #0a1a0a 50%, #2d1810 100%);
+    border: 4px solid #5c3a21;
     border-radius: 15px;
     padding: 30px 20px;
     margin-bottom: 15px;
     position: relative;
     overflow: hidden;
     box-shadow: 
-      0 0 30px rgba(255, 215, 0, 0.3),
-      inset 0 0 40px rgba(0, 0, 0, 0.6);
+      inset 0 0 40px rgba(0, 0, 0, 0.9),
+      inset 0 0 80px rgba(34, 139, 34, 0.2),
+      0 0 30px rgba(34, 139, 34, 0.4),
+      0 10px 40px rgba(0, 0, 0, 0.8);
     min-height: 300px;
     cursor: pointer;
     user-select: none;
   }
   
-  .mining-scene::before {
+  /* Mağara Duvarı Deseni */
+  .mine-scene::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 70% 60%, rgba(255, 165, 0, 0.2) 0%, transparent 50%);
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 30%),
+      radial-gradient(circle at 80% 60%, rgba(101, 67, 33, 0.3) 0%, transparent 30%),
+      radial-gradient(circle at 40% 80%, rgba(85, 107, 47, 0.2) 0%, transparent 30%);
     pointer-events: none;
   }
   
-  /* Taş Devri Madenci */
-  .miner {
+  /* Üstten Sarkma Sarmaşıklar */
+  .hanging-vines {
     position: absolute;
-    bottom: 50px;
-    left: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    pointer-events: none;
+    z-index: 3;
+  }
+  
+  .vine {
+    position: absolute;
+    top: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #228B22, #32CD32);
+    animation: vineHang 3s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+  }
+  
+  .vine::after {
+    content: '🍃';
+    position: absolute;
+    bottom: -15px;
+    left: -10px;
+    font-size: 20px;
+    filter: drop-shadow(0 0 5px rgba(50, 205, 50, 0.8));
+  }
+  
+  .vine:nth-child(1) { left: 10%; height: 40px; animation-delay: 0s; }
+  .vine:nth-child(2) { left: 25%; height: 55px; animation-delay: 0.5s; }
+  .vine:nth-child(3) { left: 45%; height: 35px; animation-delay: 1s; }
+  .vine:nth-child(4) { left: 65%; height: 50px; animation-delay: 1.5s; }
+  .vine:nth-child(5) { left: 85%; height: 45px; animation-delay: 2s; }
+  
+  @keyframes vineHang {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  
+  .miner {
+    position: absolute; 
+    bottom: 50px; 
+    left: 50%; 
     transform: translateX(-50%);
-    font-size: 90px;
-    z-index: 10;
-    transition: transform 0.1s;
+    font-size: 85px; 
+    z-index: 10; 
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
     animation: minerBreathe 2s ease-in-out infinite;
   }
   
-  @keyframes minerBreathe {
-    0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.05); }
+  @keyframes minerBreathe { 
+    0%, 100% { transform: translateX(-50%) scale(1); } 
+    50% { transform: translateX(-50%) scale(1.05); } 
   }
   
-  .miner.mining {
-    animation: minerStrike 0.5s ease-in-out;
-  }
+  .miner.mining { animation: minerStrike 0.5s ease-in-out; }
   
   @keyframes minerStrike {
-    0%, 100% { transform: translateX(-50%) rotate(0deg) scale(1); }
-    25% { transform: translateX(-50%) rotate(-35deg) translateY(-15px) scale(1.1); }
-    50% { transform: translateX(-50%) rotate(0deg) translateY(0) scale(1); }
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(-30deg) translateY(-15px); }
+    50% { transform: translateX(-50%) rotate(0deg); }
   }
   
   .pickaxe {
-    position: absolute;
-    bottom: 90px;
-    left: calc(50% + 50px);
-    font-size: 55px;
-    transform: rotate(45deg);
-    z-index: 9;
-    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
+    position: absolute; 
+    bottom: 90px; 
+    left: calc(50% + 45px); 
+    font-size: 50px;
+    transform: rotate(45deg); 
+    z-index: 9; 
+    filter: drop-shadow(0 0 12px rgba(192, 192, 192, 0.7));
   }
   
-  .pickaxe.swing {
-    animation: pickaxeSwing 0.5s ease-in-out;
-  }
+  .pickaxe.swing { animation: pickaxeSwing 0.5s ease-in-out; }
   
   @keyframes pickaxeSwing {
-    0%, 100% { transform: rotate(45deg) translateY(0); }
-    50% { transform: rotate(-55deg) translateY(-40px); }
+    0%, 100% { transform: rotate(45deg); }
+    50% { transform: rotate(-50deg) translateY(-35px); }
   }
   
   .lantern {
-    position: absolute;
-    bottom: 70px;
-    left: calc(50% - 60px);
-    font-size: 45px;
+    position: absolute; 
+    bottom: 70px; 
+    left: calc(50% - 55px); 
+    font-size: 40px; 
     z-index: 9;
-    animation: lanternGlow 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.8));
+    animation: lanternGlow 2s ease-in-out infinite; 
+    filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.9));
   }
   
   @keyframes lanternGlow {
-    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.8)) brightness(1); }
-    50% { filter: drop-shadow(0 0 35px rgba(255, 220, 50, 1)) brightness(1.3); }
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.9)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 35px rgba(255, 220, 50, 1)); transform: scale(1.1); }
   }
   
   .light-beam {
-    position: absolute;
-    bottom: 80px;
-    left: calc(50% - 70px);
-    width: 140px;
-    height: 180px;
+    position: absolute; 
+    bottom: 80px; 
+    left: calc(50% - 65px); 
+    width: 130px; 
+    height: 160px;
     background: linear-gradient(to bottom, rgba(255, 220, 50, 0.3) 0%, transparent 100%);
-    border-radius: 50% 50% 0 0;
+    border-radius: 50% 50% 0 0; 
     transform-origin: bottom center;
-    animation: lightSweep 3s ease-in-out infinite;
-    pointer-events: none;
+    animation: lightSweep 3s ease-in-out infinite; 
+    pointer-events: none; 
     z-index: 1;
   }
   
-  @keyframes lightSweep {
-    0%, 100% { transform: rotate(-20deg); opacity: 0.6; }
-    50% { transform: rotate(20deg); opacity: 1; }
+  @keyframes lightSweep { 
+    0%, 100% { transform: rotate(-15deg); opacity: 0.5; } 
+    50% { transform: rotate(15deg); opacity: 0.9; } 
   }
   
   .rock {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
+    position: absolute; 
+    bottom: 20px; 
+    left: 50%; 
     transform: translateX(-50%);
-    font-size: 100px;
-    cursor: pointer;
-    z-index: 5;
+    font-size: 90px; 
+    cursor: pointer; 
+    z-index: 5; 
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
     transition: transform 0.1s;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
   }
   
-  .rock:active {
-    transform: translateX(-50%) scale(0.9);
-  }
-  
-  .rock.breaking {
-    animation: rockBreak 0.6s ease-out forwards;
-  }
+  .rock:active { transform: translateX(-50%) scale(0.9); }
+  .rock.breaking { animation: rockBreak 0.6s ease-out forwards; }
   
   @keyframes rockBreak {
-    0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
-    50% { transform: translateX(-50%) scale(1.2) rotate(5deg); opacity: 0.8; }
+    0% { transform: translateX(-50%) scale(1); opacity: 1; }
+    50% { transform: translateX(-50%) scale(1.15) rotate(5deg); opacity: 0.7; }
     100% { transform: translateX(-50%) scale(0) rotate(-10deg); opacity: 0; }
   }
   
-  .rock.spawn {
-    animation: rockSpawn 0.6s ease-out;
-  }
+  .rock.spawn { animation: rockSpawn 0.6s ease-out; }
   
   @keyframes rockSpawn {
     0% { transform: translateX(-50%) scale(0) rotate(-180deg); opacity: 0; }
@@ -298,768 +386,623 @@
   }
   
   .dollar-float {
-    position: absolute;
-    font-size: 35px;
-    font-weight: bold;
+    position: absolute; 
+    font-size: 32px; 
+    font-weight: bold; 
     color: #ffd700;
-    animation: dollarFloat 1.8s ease-out forwards;
-    pointer-events: none;
+    animation: dollarFloat 1.8s ease-out forwards; 
+    pointer-events: none; 
     z-index: 100;
-    text-shadow: 
-      0 0 15px rgba(255, 215, 0, 1),
-      0 0 30px rgba(255, 215, 0, 0.8),
-      0 0 45px rgba(255, 165, 0, 0.6);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8);
   }
   
   @keyframes dollarFloat {
-    0% {
-      opacity: 1;
-      transform: translateY(0) scale(0.5) rotate(0deg);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(-80px) scale(1.4) rotate(15deg);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-150px) scale(0.8) rotate(-15deg);
-    }
+    0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
+    50% { opacity: 1; transform: translateY(-70px) scale(1.3) rotate(15deg); }
+    100% { opacity: 0; transform: translateY(-140px) scale(0.7) rotate(-15deg); }
   }
   
   .mining-stats {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    display: flex;
+    position: absolute; 
+    top: 12px; 
+    left: 12px; 
+    right: 12px; 
+    display: flex; 
     justify-content: space-between;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    background: rgba(10, 26, 10, 0.8);
+    border: 2px solid #228B22; 
+    border-radius: 8px; 
+    padding: 8px;
+    box-shadow: 0 0 15px rgba(34, 139, 34, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
   }
   
   .mining-stats .item { text-align: center; }
-  .mining-stats .label { 
-    font-size: 10px; 
-    color: #ffd700; 
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  .mining-stats .value {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd700;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-  }
+  .mining-stats .label { font-size: 9px; color: #90ee90; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+  .mining-stats .value { font-size: 16px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
   
-  .gem-float {
-    position: absolute;
-    font-size: 25px;
-    animation: floatUp 2.5s ease-out infinite;
-    opacity: 0;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-  }
-  
-  @keyframes floatUp {
-    0% { opacity: 0; transform: translateY(0) scale(0.5); }
-    50% { opacity: 1; transform: translateY(-40px) scale(1); }
-    100% { opacity: 0; transform: translateY(-80px) scale(0.5); }
-  }
-  
+  /* 3D Orman Butonları */
   .menu-row { 
     display: flex; 
-    gap: 8px; 
-    margin-bottom: 12px;
+    gap: 10px; 
+    margin-bottom: 12px; 
   }
   
   .menu-btn {
-    flex: 1;
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border: 3px solid #daa520;
-    border-radius: 12px;
-    padding: 12px 8px;
+    flex: 1; 
+    background: linear-gradient(135deg, #5c3a21 0%, #3d2817 50%, #5c3a21 100%);
+    border: 3px solid #8b4513; 
+    border-radius: 12px; 
+    padding: 14px 8px; 
     text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
     box-shadow: 
-      0 5px 15px rgba(255, 215, 0, 0.4),
-      inset 0 2px 10px rgba(255, 255, 255, 0.3);
+      inset 0 2px 8px rgba(255, 215, 0, 0.2),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
+      0 6px 0 #2d1810,
+      0 8px 15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(34, 139, 34, 0.3);
     position: relative;
-    overflow: hidden;
+    transform: translateY(0);
   }
   
   .menu-btn::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.5s ease;
+    top: 2px; left: 2px; right: 2px; bottom: 2px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    pointer-events: none;
   }
   
-  .menu-btn:hover::before {
-    left: 100%;
-  }
-  
-  .menu-btn:hover {
-    transform: translateY(-5px);
-    border-color: #ffd700;
+  .menu-btn:hover { 
+    transform: translateY(-3px);
     box-shadow: 
-      0 8px 20px rgba(255, 215, 0, 0.6),
-      inset 0 2px 10px rgba(255, 255, 255, 0.4);
+      inset 0 2px 8px rgba(255, 215, 0, 0.3),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.6),
+      0 9px 0 #2d1810,
+      0 11px 20px rgba(255, 215, 0, 0.4),
+      0 0 30px rgba(255, 215, 0, 0.5);
   }
   
   .menu-btn:active { 
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(4px);
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 215, 0, 0.2),
+      inset 0 -2px 5px rgba(0, 0, 0, 0.6),
+      0 2px 0 #2d1810,
+      0 3px 8px rgba(0, 0, 0, 0.6);
   }
   
-  .menu-btn .icon { 
-    font-size: 32px; 
-    display: block; 
-    margin-bottom: 5px;
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
-  }
+  .menu-btn .icon { font-size: 30px; display: block; margin-bottom: 4px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
+  .menu-btn .label { font-size: 11px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
   
-  .menu-btn .label {
-    font-size: 12px;
-    color: #1a0f0a;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  .menu-btn.buy { 
+    background: linear-gradient(135deg, #6b4423 0%, #4a2f17 50%, #6b4423 100%);
+    border-color: #a0522d;
   }
   
   .menu-btn.withdraw { 
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-    border-color: #ff4757;
+    background: linear-gradient(135deg, #556b2f 0%, #3d4f22 50%, #556b2f 100%);
+    border-color: #6b8e23;
   }
   
   .menu-btn.profile { 
-    background: linear-gradient(135deg, #4ecdc4 0%, #44a3aa 100%);
-    border-color: #26a69a;
+    background: linear-gradient(135deg, #2f4f4f 0%, #1a3a3a 50%, #2f4f4f 100%);
+    border-color: #5f9ea0;
   }
   
   .menu-btn.admin { 
-    background: linear-gradient(135deg, #a55eea 0%, #8854d0 100%);
-    border-color: #7b3cbf;
+    background: linear-gradient(135deg, #4a0e4e 0%, #2d0830 50%, #4a0e4e 100%);
+    border-color: #8b008b;
   }
   
+  /* Form Elemanları */
   .form-group { margin-bottom: 15px; }
   
-  label {
-    display: block;
-    color: #ffd700;
-    font-family: 'Cinzel', serif;
-    font-size: 15px;
-    margin-bottom: 8px;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  label { 
+    display: block; 
+    color: #90ee90; 
+    font-family: 'Cinzel', serif; 
+    font-size: 14px; 
+    margin-bottom: 8px; 
+    font-weight: 700; 
+    text-shadow: 0 0 8px rgba(144, 238, 144, 0.4);
   }
   
-  input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    color: #ffd700;
-    font-size: 14px;
+  input, select {
+    width: 100%; 
+    padding: 12px; 
+    background: linear-gradient(135deg, #1a2a1a 0%, #0a1a0a 100%);
+    border: 3px solid #228B22; 
+    border-radius: 8px; 
+    color: #ffd700; 
+    font-size: 14px; 
     font-family: 'Cinzel', serif;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #ffd700;
-    box-shadow: 
-      inset 0 2px 10px rgba(0, 0, 0, 0.5),
-      0 0 15px rgba(255, 215, 0, 0.4);
-  }
-  
-  .btn {
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 12px 20px;
-    color: #1a0f0a;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
-    cursor: pointer;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(34, 139, 34, 0.3);
     transition: all 0.3s ease;
-    margin: 5px;
+  }
+  
+  input:focus, select:focus { 
+    outline: none; 
+    border-color: #ffd700; 
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  
+  /* 3D Aksiyon Butonları */
+  .btn {
+    background: linear-gradient(135deg, #8b4513 0%, #654321 50%, #8b4513 100%); 
+    border: 3px solid #a0522d;
+    border-radius: 10px; 
+    padding: 14px 24px; 
+    color: #ffd700; 
+    font-size: 14px; 
+    font-weight: bold;
+    font-family: 'Cinzel Decorative', cursive; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    margin: 5px; 
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 215, 0, 0.3),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      0 6px 0 #3d2817,
+      0 8px 15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(255, 215, 0, 0.3);
+    position: relative;
+    transform: translateY(0);
   }
   
-  .btn:hover {
+  .btn:hover { 
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
-    border-color: #ffd700;
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 215, 0, 0.4),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      0 9px 0 #3d2817,
+      0 11px 20px rgba(255, 215, 0, 0.5),
+      0 0 30px rgba(255, 215, 0, 0.6);
   }
   
   .btn:active { 
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(4px);
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 215, 0, 0.3),
+      inset 0 -2px 5px rgba(0, 0, 0, 0.5),
+      0 2px 0 #3d2817,
+      0 3px 8px rgba(0, 0, 0, 0.6);
   }
   
-  .btn.secondary {
-    background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
-    border-color: #636e72;
-    color: #dfe6e9;
+  .btn.secondary { 
+    background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 50%, #4a4a4a 100%); 
+    border-color: #6a6a6a; 
+    color: #c0c0c0; 
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 255, 255, 0.2),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      0 6px 0 #1a1a1a,
+      0 8px 15px rgba(0, 0, 0, 0.6);
   }
   
-  .btn.approve {
-    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-    border-color: #00b894;
-    color: white;
+  .btn.approve { 
+    background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 50%, #2d5a2d 100%); 
+    border-color: #3a7a3a; 
+    color: #90ee90; 
+    box-shadow: 
+      inset 0 2px 8px rgba(144, 238, 144, 0.3),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      0 6px 0 #0a1a0a,
+      0 8px 15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(144, 238, 144, 0.4);
   }
   
-  .btn.reject {
-    background: linear-gradient(135deg, #d63031 0%, #c0392b 100%);
-    border-color: #d63031;
-    color: white;
+  .btn.reject { 
+    background: linear-gradient(135deg, #5a2d2d 0%, #3a1a1a 50%, #5a2d2d 100%); 
+    border-color: #7a3a3a; 
+    color: #ff9999; 
+    box-shadow: 
+      inset 0 2px 8px rgba(255, 153, 153, 0.3),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+      0 6px 0 #1a0a0a,
+      0 8px 15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(255, 100, 100, 0.4);
   }
   
+  /* Bakiye Kutusu - Parlayan */
   .balance-box {
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border: 4px solid #daa520;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 50%, #3d2817 100%); 
+    border: 4px solid #8b4513;
+    border-radius: 15px; 
+    padding: 20px; 
+    text-align: center; 
     margin-bottom: 15px;
     box-shadow: 
-      0 0 30px rgba(255, 215, 0, 0.5),
-      inset 0 2px 15px rgba(255, 255, 255, 0.3);
-  }
-  
-  .balance-box .label {
-    font-size: 14px;
-    color: #1a0f0a;
-    font-family: 'Cinzel', serif;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-  
-  .balance-box .amount {
-    font-size: 36px;
-    font-weight: bold;
-    color: #1a0f0a;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
-  }
-  
-  .crypto-box {
-    background: linear-gradient(135deg, #1a0f0a 0%, #2d1810 100%);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    margin: 15px 0;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .crypto-box strong { 
-    color: #ffd700; 
-    font-size: 16px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .crypto-box .value {
-    color: #00b894;
-    font-size: 22px;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
-    text-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
-  }
-  
-  .deposit-card {
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 4px solid #daa520;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+      inset 0 2px 15px rgba(255, 215, 0, 0.2),
+      inset 0 -4px 20px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(255, 215, 0, 0.4),
+      0 10px 30px rgba(0, 0, 0, 0.7);
     position: relative;
     overflow: hidden;
-    box-shadow: 
-      0 0 30px rgba(255, 215, 0, 0.3),
-      inset 0 0 30px rgba(0, 0, 0, 0.6);
   }
   
-  .deposit-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+  .balance-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%);
+    animation: balanceShine 3s ease-in-out infinite;
+  }
+  
+  @keyframes balanceShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+  }
+  
+  .balance-box .label { font-size: 13px; color: #90ee90; font-family: 'Cinzel', serif; margin-bottom: 8px; font-weight: 700; position: relative; z-index: 1; }
+  .balance-box .amount { font-size: 36px; font-weight: bold; color: #ffd700; font-family: 'Cinzel Decorative', cursive; text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); position: relative; z-index: 1; }
+  
+  /* Yatırım Kartı */
+  .deposit-card {
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    border: 4px solid #8b4513;
+    border-radius: 15px; 
+    padding: 20px; 
     margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 3px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+      inset 0 0 30px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(139, 69, 19, 0.4);
+  }
+  
+  .deposit-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-bottom: 20px; 
+    padding-bottom: 15px; 
+    border-bottom: 3px solid rgba(139, 69, 19, 0.5); 
   }
   
   .deposit-logo {
-    width: 70px;
-    height: 70px;
+    width: 65px; 
+    height: 65px; 
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
     justify-content: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: #1a0f0a;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    font-size: 35px; 
+    font-weight: bold; 
+    color: #1a0f0a; 
     border: 3px solid #ffd700;
-    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+    animation: logoPulse 2s ease-in-out infinite;
   }
   
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+  @keyframes logoPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 215, 0, 1); }
   }
   
-  .deposit-header .title {
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    color: #ffd700;
+  .deposit-header .title { 
+    font-family: 'Cinzel Decorative', cursive; 
+    font-size: 18px; 
+    color: #ffd700; 
+    font-weight: 700; 
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-    font-weight: 700;
   }
   
-  .deposit-header .subtitle { 
-    font-size: 12px; 
-    color: #daa520;
-    font-family: 'Cinzel', serif;
+  .deposit-info { 
+    background: rgba(0, 0, 0, 0.4); 
+    border: 3px solid #8b4513; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 15px; 
   }
   
-  .deposit-info {
-    background: rgba(0, 0, 0, 0.4);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
+  .deposit-info .info-row { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 12px; 
+    padding-bottom: 12px; 
+    border-bottom: 2px solid rgba(139, 69, 19, 0.3); 
   }
   
-  .deposit-info .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  .deposit-info .info-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .deposit-info .info-label { font-size: 12px; color: #90ee90; }
+  .deposit-info .info-value { font-size: 14px; color: #ffd700; font-weight: bold; }
+  .deposit-info .info-value.highlight { color: #90ee90; font-size: 16px; text-shadow: 0 0 10px rgba(144, 238, 144, 0.6); }
+  
+  .wallet-box { 
+    background: rgba(0, 0, 0, 0.5); 
+    border: 3px solid #8b4513; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 15px; 
   }
   
-  .deposit-info .info-row:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-  
-  .deposit-info .info-label {
-    font-size: 12px;
-    color: #daa520;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .deposit-info .info-value {
-    font-size: 15px;
-    color: #ffd700;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .deposit-info .info-value.highlight {
-    color: #00b894;
-    font-size: 18px;
-    text-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
-  }
-  
-  .wallet-box {
-    background: rgba(0, 0, 0, 0.5);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .wallet-box .wallet-label {
-    font-size: 11px;
-    color: #daa520;
-    margin-bottom: 8px;
-    display: block;
-    font-family: 'Cinzel', serif;
-  }
-  
+  .wallet-box .wallet-label { font-size: 11px; color: #90ee90; margin-bottom: 8px; display: block; }
   .wallet-box .wallet-address {
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    color: #ffd700;
+    font-family: 'Courier New', monospace; 
+    font-size: 10px; 
+    color: #ffd700; 
     word-break: break-all;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border: 3px dashed rgba(255, 215, 0, 0.4);
+    padding: 10px; 
+    background: rgba(0, 0, 0, 0.4); 
+    border-radius: 6px; 
+    margin-bottom: 10px; 
+    border: 3px dashed rgba(139, 69, 19, 0.5);
   }
   
   .wallet-box .copy-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border: 3px solid #daa520;
-    border-radius: 8px;
-    padding: 10px;
-    color: #1a0f0a;
-    font-size: 13px;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
+    width: 100%; 
+    background: linear-gradient(135deg, #8b4513 0%, #654321 100%); 
+    border: 3px solid #a0522d;
+    border-radius: 6px; 
+    padding: 10px; 
+    color: #ffd700; 
+    font-size: 13px; 
+    font-weight: bold; 
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
+    box-shadow: 0 4px 0 #3d2817, 0 6px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
   }
   
-  .wallet-box .copy-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-    border-color: #ffd700;
+  .wallet-box .copy-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #3d2817, 0 2px 5px rgba(0, 0, 0, 0.5);
   }
   
-  .warning-box {
-    background: linear-gradient(135deg, rgba(214, 48, 49, 0.3) 0%, rgba(192, 57, 43, 0.3) 100%);
-    border: 3px solid #d63031;
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 15px;
+  .warning-box { 
+    background: linear-gradient(135deg, rgba(90, 30, 30, 0.3) 0%, rgba(60, 20, 20, 0.3) 100%); 
+    border: 3px solid #8b0000; 
+    border-radius: 8px; 
+    padding: 12px; 
+    margin-top: 15px; 
   }
   
-  .warning-box .warning-title {
-    color: #ff6b6b;
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-family: 'Cinzel', serif;
-  }
+  .warning-box .warning-title { color: #ff6b6b; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+  .warning-box .warning-text { color: #d4af37; font-size: 11px; line-height: 1.6; }
   
-  .warning-box .warning-text {
-    color: #ffd700;
-    font-size: 11px;
-    line-height: 1.6;
-    font-family: 'Cinzel', serif;
-  }
-  
+  /* Profil Kartı */
   .profile-card {
-    background: linear-gradient(135deg, #4ecdc4 0%, #44a3aa 100%);
-    border: 4px solid #26a69a;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+    background: linear-gradient(135deg, #2f4f4f 0%, #1a3a3a 100%); 
+    border: 4px solid #5f9ea0;
+    border-radius: 15px; 
+    padding: 20px; 
+    margin-bottom: 20px; 
     text-align: center;
     box-shadow: 
-      0 0 30px rgba(78, 205, 196, 0.4),
-      inset 0 2px 15px rgba(255, 255, 255, 0.2);
+      inset 0 2px 15px rgba(95, 158, 160, 0.3),
+      0 0 25px rgba(95, 158, 160, 0.4);
   }
   
   .profile-avatar {
-    width: 80px;
-    height: 80px;
+    width: 75px; 
+    height: 75px; 
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    display: flex;
-    align-items: center;
+    border-radius: 50%; 
+    margin: 0 auto 15px; 
+    display: flex; 
+    align-items: center; 
     justify-content: center;
-    font-size: 40px;
+    font-size: 38px; 
     border: 4px solid #ffd700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
   }
   
-  .profile-name {
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    color: #1a0f0a;
-    margin-bottom: 5px;
-    font-weight: 700;
+  .profile-name { font-family: 'Cinzel Decorative', cursive; font-size: 18px; color: #ffd700; margin-bottom: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+  .profile-id { font-size: 11px; color: #90ee90; font-family: 'Courier New', monospace; background: rgba(0, 0, 0, 0.4); padding: 4px 8px; border-radius: 6px; display: inline-block; }
+  
+  /* Dil Seçimi */
+  .lang-section { 
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    border: 3px solid #8b4513; 
+    border-radius: 10px; 
+    padding: 18px; 
+    margin-bottom: 15px; 
   }
   
-  .profile-id {
-    font-size: 12px;
-    color: #1a0f0a;
-    font-family: 'Courier New', monospace;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 4px 8px;
-    border-radius: 6px;
-    display: inline-block;
-  }
-  
-  .lang-section {
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #daa520;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 15px;
-  }
-  
-  .lang-section h3 {
-    font-family: 'Cinzel', serif;
-    color: #ffd700;
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  
-  .lang-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  .lang-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  .lang-list { display: flex; flex-direction: column; gap: 10px; }
   
   .lang-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
     background: rgba(0, 0, 0, 0.4);
-    border: 3px solid #daa520;
-    border-radius: 10px;
-    padding: 12px 15px;
-    cursor: pointer;
+    border: 3px solid #8b4513; 
+    border-radius: 8px; 
+    padding: 12px 15px; 
+    cursor: pointer; 
     transition: all 0.3s ease;
   }
   
-  .lang-option:hover {
-    border-color: #ffd700;
-    background: rgba(255, 215, 0, 0.1);
-    transform: translateX(5px);
+  .lang-option:hover { border-color: #ffd700; background: rgba(255, 215, 0, 0.1); transform: translateX(5px); }
+  .lang-option.active { border-color: #ffd700; background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+  .lang-option .lang-info { display: flex; align-items: center; gap: 12px; }
+  .lang-option .flag { font-size: 26px; }
+  .lang-option .lang-name { font-family: 'Cinzel', serif; color: #ffd700; font-size: 14px; font-weight: 600; }
+  .lang-option .check { color: #90ee90; font-size: 20px; display: none; }
+  .lang-option.active .check { display: block; }
+  
+  /* İstatistikler */
+  .stats-section { 
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    border: 3px solid #8b4513; 
+    border-radius: 10px; 
+    padding: 18px; 
+    margin-bottom: 15px; 
   }
   
-  .lang-option.active {
-    border-color: #ffd700;
-    background: rgba(255, 215, 0, 0.2);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-  }
-  
-  .lang-option .lang-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .lang-option .flag {
-    font-size: 28px;
-  }
-  
-  .lang-option .lang-name {
-    font-family: 'Cinzel', serif;
-    color: #ffd700;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  
-  .lang-option .check {
-    color: #00b894;
-    font-size: 22px;
-    display: none;
-  }
-  
-  .lang-option.active .check {
-    display: block;
-  }
-  
-  .stats-section {
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #daa520;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 15px;
-  }
-  
-  .stats-section h3 {
-    font-family: 'Cinzel', serif;
-    color: #ffd700;
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-  }
-  
+  .stats-section h3 { font-family: 'Cinzel Decorative', cursive; color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 2px solid rgba(139, 69, 19, 0.3); }
   .stat-row:last-child { border-bottom: none; }
+  .stat-row .label { color: #90ee90; font-size: 13px; }
+  .stat-row .value { color: #ffd700; font-weight: bold; font-size: 15px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
   
-  .stat-row .label {
-    color: #daa520;
-    font-size: 13px;
-    font-family: 'Cinzel', serif;
-  }
-  
-  .stat-row .value {
-    color: #ffd700;
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-  }
-  
-  .tabs { 
-    display: flex; 
-    gap: 8px; 
-    margin-bottom: 15px;
-  }
+  /* Admin Panel */
+  .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
   
   .tab {
-    flex: 1;
-    padding: 10px;
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #daa520;
-    border-radius: 8px;
-    color: #daa520;
+    flex: 1; 
+    padding: 10px; 
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%);
+    border: 3px solid #8b4513; 
+    border-radius: 8px; 
+    color: #90ee90; 
     font-size: 12px;
-    font-family: 'Cinzel', serif;
-    cursor: pointer;
-    text-transform: uppercase;
+    font-family: 'Cinzel Decorative', cursive; 
+    cursor: pointer; 
+    text-transform: uppercase; 
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 0 #1a0f0a, 0 6px 10px rgba(0, 0, 0, 0.5);
   }
   
-  .tab:hover {
+  .tab:hover { border-color: #ffd700; color: #ffd700; transform: translateY(-2px); }
+  .tab.active { 
+    background: linear-gradient(135deg, #8b4513 0%, #654321 100%); 
+    color: #ffd700; 
     border-color: #ffd700;
-    color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(255, 215, 0, 0.3);
   }
   
-  .tab.active {
-    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-    color: #1a0f0a;
-    border-color: #ffd700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  .item-card { 
+    background: linear-gradient(135deg, #3d2817 0%, #2d1810 100%); 
+    border: 3px solid #8b4513; 
+    border-left: 5px solid #ffd700; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin: 10px 0; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
   
-  .item-card {
-    background: linear-gradient(135deg, #2d1810 0%, #1a0f0a 100%);
-    border: 3px solid #daa520;
-    border-left: 5px solid #ffd700;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px 0;
-  }
-  
-  .item-card strong {
-    font-size: 18px;
-    color: #ffd700;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-  }
-  
-  .item-card small {
-    display: block;
-    color: #daa520;
-    margin: 5px 0;
-    font-size: 12px;
-    font-family: 'Cinzel', serif;
-  }
+  .item-card strong { font-size: 16px; color: #ffd700; font-family: 'Cinzel Decorative', cursive; font-weight: 700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+  .item-card small { display: block; color: #90ee90; margin: 5px 0; font-size: 11px; }
   
   .hidden { display: none; }
   
-  .page-title {
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    color: #ffd700;
-    text-align: center;
-    margin-bottom: 15px;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  .page-title { 
+    font-family: 'Cinzel Decorative', cursive; 
+    font-size: 20px; 
+    color: #ffd700; 
+    text-align: center; 
+    margin-bottom: 15px; 
     font-weight: 700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
   }
   
   .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
+    position: fixed; 
+    bottom: 30px; 
+    left: 50%; 
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-family: 'Cinzel', serif;
+    background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 100%); 
+    color: #90ee90;
+    padding: 12px 25px; 
+    border-radius: 8px; 
+    font-family: 'Cinzel Decorative', cursive; 
     font-weight: bold;
-    box-shadow: 0 5px 20px rgba(0, 184, 148, 0.6);
-    z-index: 1000;
-    opacity: 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(144, 238, 144, 0.5); 
+    z-index: 1000; 
+    opacity: 0; 
     transition: opacity 0.3s ease;
-    border: 3px solid #00b894;
+    border: 3px solid #3a7a3a;
     font-size: 14px;
   }
   
   .toast.show { opacity: 1; }
   
   .click-hint {
-    position: absolute;
-    top: 10px;
-    left: 50%;
+    position: absolute; 
+    top: 10px; 
+    left: 50%; 
     transform: translateX(-50%);
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
-    border: 3px solid #daa520;
-    border-radius: 20px;
-    padding: 6px 15px;
-    font-size: 11px;
-    color: #ffd700;
-    font-family: 'Cinzel', serif;
-    animation: pulse 2s ease-in-out infinite;
+    background: rgba(34, 139, 34, 0.3);
+    border: 2px solid #228B22; 
+    border-radius: 15px; 
+    padding: 5px 12px; 
+    font-size: 10px;
+    color: #90ee90; 
+    font-family: 'Cinzel', serif; 
     font-weight: bold;
+    animation: hintPulse 2s ease-in-out infinite;
   }
   
-  .error-message {
-    background: linear-gradient(135deg, rgba(214, 48, 49, 0.4) 0%, rgba(192, 57, 43, 0.4) 100%);
-    border: 3px solid #d63031;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 15px 0;
-    text-align: center;
-    color: #ff6b6b;
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
+  @keyframes hintPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(34, 139, 34, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(34, 139, 34, 0.9); }
   }
   
-  .error-icon {
-    font-size: 35px;
-    margin-bottom: 10px;
+  .error-message { 
+    background: linear-gradient(135deg, rgba(90, 30, 30, 0.4) 0%, rgba(60, 20, 20, 0.4) 100%); 
+    border: 3px solid #8b0000; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin: 15px 0; 
+    text-align: center; 
+    color: #ff6b6b; 
+    font-size: 14px; 
+  }
+  
+  @media (max-width: 500px) {
+    body::before, body::after { width: 30px; }
+    .forest-frame { padding: 15px; }
+    h1 { font-size: 22px; }
+    .miner { font-size: 70px; }
+    .rock { font-size: 75px; }
   }
 </style>
 </head>
 <body>
+  <!-- Parıltı Efektleri -->
+  <div class="sparkle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="sparkle" style="top: 30%; left: 95%; animation-delay: 0.5s;"></div>
+  <div class="sparkle" style="top: 60%; left: 3%; animation-delay: 1s;"></div>
+  <div class="sparkle" style="top: 80%; left: 97%; animation-delay: 1.5s;"></div>
+  <div class="sparkle" style="top: 45%; left: 2%; animation-delay: 2s;"></div>
+  <div class="sparkle" style="top: 20%; left: 98%; animation-delay: 2.5s;"></div>
+  
   <div class="container">
     <!-- Ana Sayfa -->
     <div id="page-home">
-      <div class="header">
-        <h1>⚡ HASH MINING ⚡</h1>
+      <div class="forest-frame">
+        <div class="header">
+          <h1>️ FOREST MINE ⛏️</h1>
+          <div class="subtitle">~ Hash Power Mining ~</div>
+        </div>
+        
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="icon">💰</div>
+            <div class="label" data-i18n="balance">Balance</div>
+            <div class="value">$<span id="balance">0.00</span></div>
+          </div>
+          <div class="stat-box">
+            <div class="icon">📦</div>
+            <div class="label" data-i18n="products">Products</div>
+            <div class="value"><span id="productCount">0</span></div>
+          </div>
+          <div class="stat-box">
+            <div class="icon"></div>
+            <div class="label" data-i18n="investment">Investment</div>
+            <div class="value">$<span id="totalInvested">0</span></div>
+          </div>
+        </div>
       </div>
       
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="icon">💰</div>
-          <div class="label" data-i18n="balance">Balance</div>
-          <div class="value">$<span id="balance">0.00</span></div>
+      <div class="mine-scene" id="miningScene">
+        <div class="hanging-vines">
+          <div class="vine"></div>
+          <div class="vine"></div>
+          <div class="vine"></div>
+          <div class="vine"></div>
+          <div class="vine"></div>
         </div>
-        <div class="stat-box">
-          <div class="icon">📦</div>
-          <div class="label" data-i18n="products">Products</div>
-          <div class="value"><span id="productCount">0</span></div>
-        </div>
-        <div class="stat-box">
-          <div class="icon">💵</div>
-          <div class="label" data-i18n="investment">Investment</div>
-          <div class="value">$<span id="totalInvested">0</span></div>
-        </div>
-      </div>
-      
-      <div class="mining-scene" id="miningScene">
         <div class="click-hint" data-i18n="clickMiner">Click Rock!</div>
         <div class="mining-stats">
           <div class="item">
@@ -1076,20 +1019,20 @@
           </div>
         </div>
         
-        <div class="miner" id="miner">️</div>
-        <div class="pickaxe" id="pickaxe">⚒️</div>
-        <div class="lantern"></div>
+        <div class="miner" id="miner">👷</div>
+        <div class="pickaxe" id="pickaxe">⛏️</div>
+        <div class="lantern">🏮</div>
         <div class="light-beam"></div>
         <div class="rock" id="rock" onclick="breakRock()">🪨</div>
       </div>
       
       <div class="menu-row">
-        <div class="menu-btn" onclick="showPage('buy')">
+        <div class="menu-btn buy" onclick="showPage('buy')">
           <span class="icon">💎</span>
           <span class="label" data-i18n="buy">BUY</span>
         </div>
         <div class="menu-btn withdraw" onclick="showPage('withdraw')">
-          <span class="icon">💸</span>
+          <span class="icon"></span>
           <span class="label" data-i18n="withdraw">WITHDRAW</span>
         </div>
         <div class="menu-btn profile" onclick="showPage('profile')">
@@ -1108,184 +1051,174 @@
 
     <!-- Satın Al -->
     <div id="page-buy" class="hidden">
-      <div class="page-title" data-i18n="buyTitle">💎 Buy Mining Power</div>
-      
-      <div class="deposit-card">
-        <div class="deposit-header">
-          <div class="deposit-logo">₮</div>
-          <div>
-            <div class="title" data-i18n="trxInvest">TRX Investment</div>
-            <div class="subtitle">TRON Network</div>
+      <div class="forest-frame">
+        <div class="page-title" data-i18n="buyTitle">💎 Buy Mining Power</div>
+        
+        <div class="deposit-card">
+          <div class="deposit-header">
+            <div class="deposit-logo"></div>
+            <div>
+              <div class="title" data-i18n="trxInvest">TRX Investment</div>
+              <div class="subtitle">TRON Network</div>
+            </div>
+          </div>
+          
+          <div class="deposit-info">
+            <div class="info-row">
+              <span class="info-label" data-i18n="minDeposit">💰 Minimum Deposit</span>
+              <span class="info-value highlight">2 TRX (~$0.24)</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label" data-i18n="network">🌐 Network</span>
+              <span class="info-value">TRON (TRC20)</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label" data-i18n="rate">💱 Rate</span>
+              <span class="info-value">1 TRX ≈ $0.12</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label data-i18n="usdAmount">💵 Amount to Receive (USD)</label>
+            <input type="number" id="usdAmount" placeholder="10" min="0.24" step="0.01" oninput="calculateTRX()">
+            <div style="margin-top: 8px; font-size: 12px; color: #90ee90;" data-i18n="youWillGet">
+              You will get: <span id="trxAmount" style="color: #90ee90; font-weight: bold;">0</span> TRX
+            </div>
+          </div>
+          
+          <div class="wallet-box">
+            <span class="wallet-label" data-i18n="trxWallet">📍 TRX Wallet Address</span>
+            <div class="wallet-address" id="walletAddressDisplay">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</div>
+            <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress"> Copy Address</button>
+          </div>
+          
+          <div class="warning-box">
+            <div class="warning-title" data-i18n="warning">⚠️ IMPORTANT</div>
+            <div class="warning-text" data-i18n="warningText">
+              • Use only <strong>TRON (TRC20)</strong> network<br>
+              • Send EXACT amount shown above<br>
+              • Confirmation may take 5-30 minutes
+            </div>
           </div>
         </div>
         
-        <div class="deposit-info">
-          <div class="info-row">
-            <span class="info-label" data-i18n="minDeposit">💰 Minimum Deposit</span>
-            <span class="info-value highlight">2 TRX (~$0.24)</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label" data-i18n="network">🌐 Network</span>
-            <span class="info-value">TRON (TRC20)</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label" data-i18n="rate"> Rate</span>
-            <span class="info-value">1 TRX ≈ $0.12</span>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label data-i18n="usdAmount">💵 Amount to Receive (USD)</label>
-          <input type="number" id="usdAmount" placeholder="10" min="0.24" step="0.01" oninput="calculateTRX()">
-          <div style="margin-top: 8px; font-size: 12px; color: #daa520;" data-i18n="youWillGet">You will get: <span id="trxAmount" style="color: #00b894; font-weight: bold;">0</span> TRX</div>
-        </div>
-        
-        <div class="wallet-box">
-          <span class="wallet-label" data-i18n="trxWallet">📍 TRX Wallet Address</span>
-          <div class="wallet-address" id="walletAddressDisplay">TXYZ1234567890abcdefghijklmnopqrstuvwxyz</div>
-          <button class="copy-btn" onclick="copyWalletAddress()" data-i18n="copyAddress"> Copy Address</button>
-        </div>
-        
-        <div class="warning-box">
-          <div class="warning-title" data-i18n="warning">⚠️ IMPORTANT</div>
-          <div class="warning-text" data-i18n="warningText">
-            • Use only <strong>TRON (TRC20)</strong> network<br>
-            • Send EXACT amount shown above<br>
-            • Confirmation may take 5-30 minutes
-          </div>
-        </div>
+        <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
+        <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
       </div>
-      
-      <button class="btn" onclick="submitDeposit()" data-i18n="notifyDeposit">📤 Notify Deposit</button>
-      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Çekim -->
     <div id="page-withdraw" class="hidden">
-      <div class="page-title" data-i18n="withdrawTitle"> Withdrawal Request</div>
-      
-      <div class="balance-box">
-        <div class="label" data-i18n="currentBalance">Current Balance</div>
-        <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-        <div style="font-size: 12px; margin-top: 8px; color: #1a0f0a;" data-i18n="minWithdraw">Min: $0.01</div>
+      <div class="forest-frame">
+        <div class="page-title" data-i18n="withdrawTitle">💸 Withdrawal Request</div>
+        
+        <div class="balance-box">
+          <div class="label" data-i18n="currentBalance">Current Balance</div>
+          <div class="amount">$<span id="withdrawBalance">0.00</span></div>
+          <div style="font-size: 12px; margin-top: 8px; color: #90ee90;" data-i18n="minWithdraw">Min: $0.01</div>
+        </div>
+        
+        <div class="form-group">
+          <label data-i18n="withdrawAmount">Withdrawal Amount (USD)</label>
+          <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
+        </div>
+        
+        <div class="form-group">
+          <label data-i18n="selectCrypto"> Select Crypto</label>
+          <select id="withdrawCrypto" onchange="updateCryptoAmount()">
+            <option value="trx">TRX (TRON) - ~$0.12</option>
+            <option value="bnb">BNB - ~$600</option>
+            <option value="xrp">XRP (Ripple) - ~$0.50</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label data-i18n="walletAddr">📍 Wallet Address</label>
+          <input type="text" id="walletAddress" placeholder="Wallet address...">
+        </div>
+        
+        <button class="btn" onclick="requestWithdrawal()" data-i18n="createWithdraw">💸 Create Withdrawal</button>
+        <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
       </div>
-      
-      <div class="form-group">
-        <label data-i18n="withdrawAmount">Withdrawal Amount (USD)</label>
-        <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()">
-      </div>
-      
-      <div class="form-group">
-        <label data-i18n="selectCrypto">🪙 Select Crypto</label>
-        <select id="withdrawCrypto" onchange="updateCryptoAmount()">
-          <option value="trx">TRX (TRON) - ~$0.12</option>
-          <option value="bnb">BNB - ~$600</option>
-          <option value="xrp">XRP (Ripple) - ~$0.50</option>
-        </select>
-      </div>
-      
-      <div class="crypto-box">
-        <strong data-i18n="equivalent">Equivalent:</strong><br>
-        <span class="value"><span id="cryptoEquivalent">0.00</span> <span id="cryptoSymbol">TRX</span></span>
-      </div>
-      
-      <div class="form-group">
-        <label data-i18n="walletAddr">📍 Wallet Address</label>
-        <input type="text" id="walletAddress" placeholder="Wallet address...">
-      </div>
-      
-      <button class="btn" onclick="requestWithdrawal()" data-i18n="createWithdraw">💸 Create Withdrawal</button>
-      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Profil -->
     <div id="page-profile" class="hidden">
-      <div class="page-title" data-i18n="profileTitle">👤 Profile</div>
-      
-      <div class="profile-card">
-        <div class="profile-avatar">⛏️</div>
-        <div class="profile-name" id="profileName">Miner</div>
-        <div class="profile-id" id="profileId">ID: ---</div>
+      <div class="forest-frame">
+        <div class="page-title" data-i18n="profileTitle">👤 Profile</div>
+        
+        <div class="profile-card">
+          <div class="profile-avatar">⛏️</div>
+          <div class="profile-name" id="profileName">Miner</div>
+          <div class="profile-id" id="profileId">ID: ---</div>
+        </div>
+        
+        <div class="lang-section">
+          <h3 data-i18n="selectLang">🌐 Select Language</h3>
+          <div class="lang-list">
+            <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
+              <div class="lang-info"><span class="flag">🇬🇧</span><span class="lang-name">English</span></div>
+              <span class="check">✓</span>
+            </div>
+            <div class="lang-option" data-lang="tr" onclick="changeLanguage('tr')">
+              <div class="lang-info"><span class="flag">🇹🇷</span><span class="lang-name">Türkçe</span></div>
+              <span class="check">✓</span>
+            </div>
+            <div class="lang-option" data-lang="ru" onclick="changeLanguage('ru')">
+              <div class="lang-info"><span class="flag">🇷🇺</span><span class="lang-name">Русский</span></div>
+              <span class="check">✓</span>
+            </div>
+            <div class="lang-option" data-lang="ar" onclick="changeLanguage('ar')">
+              <div class="lang-info"><span class="flag">🇸🇦</span><span class="lang-name">العربية</span></div>
+              <span class="check">✓</span>
+            </div>
+            <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
+              <div class="lang-info"><span class="flag">🇪</span><span class="lang-name">Español</span></div>
+              <span class="check">✓</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-section">
+          <h3 data-i18n="myStats"> My Statistics</h3>
+          <div class="stat-row">
+            <span class="label" data-i18n="totalEarned">Total Earned</span>
+            <span class="value">$<span id="statEarned">0.00</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="label" data-i18n="totalWithdrawn">Total Withdrawn</span>
+            <span class="value">$<span id="statWithdrawn">0.00</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="label" data-i18n="activeProducts">Active Products</span>
+            <span class="value" id="statProducts">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="label" data-i18n="totalInvestment">Total Investment</span>
+            <span class="value">$<span id="statInvested">0.00</span></span>
+          </div>
+        </div>
+        
+        <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
       </div>
-      
-      <div class="lang-section">
-        <h3 data-i18n="selectLang"> Select Language</h3>
-        <div class="lang-list">
-          <div class="lang-option active" data-lang="en" onclick="changeLanguage('en')">
-            <div class="lang-info">
-              <span class="flag">🇬🇧</span>
-              <span class="lang-name">English</span>
-            </div>
-            <span class="check">✓</span>
-          </div>
-          <div class="lang-option" data-lang="tr" onclick="changeLanguage('tr')">
-            <div class="lang-info">
-              <span class="flag">🇹</span>
-              <span class="lang-name">Türkçe</span>
-            </div>
-            <span class="check">✓</span>
-          </div>
-          <div class="lang-option" data-lang="ru" onclick="changeLanguage('ru')">
-            <div class="lang-info">
-              <span class="flag">🇷🇺</span>
-              <span class="lang-name">Русский</span>
-            </div>
-            <span class="check">✓</span>
-          </div>
-          <div class="lang-option" data-lang="ar" onclick="changeLanguage('ar')">
-            <div class="lang-info">
-              <span class="flag">🇸🇦</span>
-              <span class="lang-name">العربية</span>
-            </div>
-            <span class="check">✓</span>
-          </div>
-          <div class="lang-option" data-lang="es" onclick="changeLanguage('es')">
-            <div class="lang-info">
-              <span class="flag">🇪🇸</span>
-              <span class="lang-name">Español</span>
-            </div>
-            <span class="check">✓</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="stats-section">
-        <h3 data-i18n="myStats"> My Statistics</h3>
-        <div class="stat-row">
-          <span class="label" data-i18n="totalEarned">Total Earned</span>
-          <span class="value">$<span id="statEarned">0.00</span></span>
-        </div>
-        <div class="stat-row">
-          <span class="label" data-i18n="totalWithdrawn">Total Withdrawn</span>
-          <span class="value">$<span id="statWithdrawn">0.00</span></span>
-        </div>
-        <div class="stat-row">
-          <span class="label" data-i18n="activeProducts">Active Products</span>
-          <span class="value" id="statProducts">0</span>
-        </div>
-        <div class="stat-row">
-          <span class="label" data-i18n="totalInvestment">Total Investment</span>
-          <span class="value">$<span id="statInvested">0.00</span></span>
-        </div>
-      </div>
-      
-      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
 
     <!-- Admin -->
     <div id="page-admin" class="hidden">
-      <div class="page-title" data-i18n="adminTitle">🔐 Admin Panel</div>
-      
-      <div class="tabs">
-        <button class="tab active" onclick="switchAdminTab('deposits', this)" data-i18n="deposits">💳 Deposits</button>
-        <button class="tab" onclick="switchAdminTab('withdrawals', this)" data-i18n="withdrawals">💸 Withdrawals</button>
+      <div class="forest-frame">
+        <div class="page-title" data-i18n="adminTitle">🔐 Admin Panel</div>
+        
+        <div class="tabs">
+          <button class="tab active" onclick="switchAdminTab('deposits', this)" data-i18n="deposits">💳 Deposits</button>
+          <button class="tab" onclick="switchAdminTab('withdrawals', this)" data-i18n="withdrawals">💸 Withdrawals</button>
+        </div>
+        
+        <div id="adminContent">Loading...</div>
+        <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
       </div>
-      
-      <div id="adminContent">Loading...</div>
-      <button class="btn secondary" onclick="showPage('home')" data-i18n="back">← Back</button>
     </div>
   </div>
-
+  
   <div class="toast" id="toast"></div>
 
   <script>
@@ -1297,11 +1230,12 @@
       messagingSenderId: "266480566753",
       appId: "1:266480566753:web:835b6e5119e4d3e4eb92a0"
     };
+    
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
-    const ADMIN_ID = "8974010159";
     
+    const ADMIN_ID = "8974010159";
     let currentUser = null;
     let userId = null;
     let products = [];
@@ -1309,210 +1243,233 @@
     let totalWithdrawn = 0;
     let balance = 0;
     let currentAdminTab = 'deposits';
-    let unsubscribe = null;
     let currentLang = 'tr';
     
     const ROI_DAYS = 100;
     const DAILY_RATE = 1 / ROI_DAYS;
     const PER_SECOND = DAILY_RATE / 86400;
-    
     const TRX_PRICE = 0.12;
     const MIN_DEPOSIT_TRX = 2;
     const TRX_WALLET = "TXYZ1234567890abcdefghijklmnopqrstuvwxyz";
-    
     const CRYPTO_PRICES = { trx: 0.12, bnb: 600, xrp: 0.50 };
     const CRYPTO_SYMBOLS = { trx: 'TRX', bnb: 'BNB', xrp: 'XRP' };
     
     const translations = {
-      tr: {
-        balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım',
-        perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat',
-        clickMiner: 'Taşa Tıkla!',
-        buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN',
-        buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı',
-        minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ',
-        rate: '💱 Kur', usdAmount: ' Alınacak Miktar (USD)',
-        youWillGet: 'Alacağınız: ',
-        trxWallet: '📍 TRX Cüzdan Adresi',
-        copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ',
-        warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir',
-        notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri',
-        withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye',
-        minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)',
-        selectCrypto: ' Kripto Seçimi', equivalent: 'Karşılık:',
-        walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur',
-        profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi',
-        myStats: ' İstatistiklerim', totalEarned: 'Toplam Kazanç',
-        totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün',
-        totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel',
-        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler',
-        noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!',
-        minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} gerekli!`,
-        depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.',
-        withdrawCreated: '✅ Çekim talebi oluşturuldu!',
-        insufficientBalance: ' Yetersiz bakiye!',
-        walletRequired: '❌ Cüzdan adresi gerekli!',
-        minWithdrawAmount: '❌ Minimum: $0.01',
-        approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!',
-        error: '❌ Hata: ',
-        adminPermissionError: '❌ Yetkiniz yok! Bu sayfa sadece yönetici içindir.'
+      tr: { 
+        balance: 'Bakiye', products: 'Ürün', investment: 'Yatırım', 
+        perSec: 'Saniye', perMin: 'Dakika', perHour: 'Saat', 
+        clickMiner: 'Taşa Tıkla!', 
+        buy: 'SATIN AL', withdraw: 'ÇEKİM', profile: 'PROFİL', admin: 'ADMİN', 
+        buyTitle: '💎 Mining Gücü Satın Al', trxInvest: 'TRX Yatırımı', 
+        minDeposit: '💰 Minimum Yatırım', network: '🌐 Ağ', 
+        rate: '💱 Kur', usdAmount: '💵 Alınacak Miktar (USD)', 
+        youWillGet: 'Alacağınız: ', 
+        trxWallet: '📍 TRX Cüzdan Adresi', 
+        copyAddress: '📋 Adresi Kopyala', warning: '⚠️ ÖNEMLİ', 
+        warningText: '• Sadece <strong>TRON (TRC20)</strong> ağını kullanın<br>• Yukarıda gösterilen TAM miktarı gönderin<br>• Onay süreci 5-30 dakika sürebilir', 
+        notifyDeposit: '📤 Yatırımı Bildir', back: '← Geri', 
+        withdrawTitle: '💸 Çekim Talebi', currentBalance: 'Mevcut Bakiye', 
+        minWithdraw: 'Min: $0.01', withdrawAmount: 'Çekilecek Miktar (USD)', 
+        selectCrypto: '🪙 Kripto Seçimi', equivalent: 'Karşılık:', 
+        walletAddr: '📍 Cüzdan Adresi', createWithdraw: '💸 Çekim Oluştur', 
+        profileTitle: '👤 Profil', selectLang: '🌐 Dil Seçimi', 
+        myStats: '📊 İstatistiklerim', totalEarned: 'Toplam Kazanç', 
+        totalWithdrawn: 'Toplam Çekim', activeProducts: 'Aktif Ürün', 
+        totalInvestment: 'Toplam Yatırım', adminTitle: '🔐 Admin Panel', 
+        deposits: '💳 Yatırımlar', withdrawals: '💸 Çekimler', 
+        noPending: '✅ Bekleyen işlem yok', copied: '✅ Adres kopyalandı!', 
+        minUsd: '❌ Minimum $0.24 gerekli!', 
+        depositSent: '✅ Yatırım bildirimi gönderildi! Admin onayı bekleniyor.', 
+        withdrawCreated: '✅ Çekim talebi oluşturuldu!', 
+        insufficientBalance: '❌ Yetersiz bakiye!', 
+        walletRequired: '❌ Cüzdan adresi gerekli!', 
+        minWithdrawAmount: '❌ Minimum: $0.01', 
+        approved: '✅ Onaylandı!', rejected: '❌ Reddedildi!', 
+        error: '❌ Hata: ', adminPermissionError: '❌ Yetkiniz yok!' 
       },
-      en: {
-        balance: 'Balance', products: 'Products', investment: 'Investment',
-        perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour',
-        clickMiner: 'Click Rock!',
-        buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN',
-        buyTitle: ' Buy Mining Power', trxInvest: 'TRX Investment',
-        minDeposit: '💰 Minimum Deposit', network: '🌐 Network',
-        rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)',
-        youWillGet: 'You will get: ',
-        trxWallet: '📍 TRX Wallet Address',
-        copyAddress: '📋 Copy Address', warning: '⚠️ IMPORTANT',
-        warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes',
-        notifyDeposit: '📤 Notify Deposit', back: '← Back',
-        withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance',
-        minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)',
-        selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:',
-        walletAddr: ' Wallet Address', createWithdraw: '💸 Create Withdrawal',
-        profileTitle: '👤 Profile', selectLang: '🌐 Select Language',
-        myStats: '📊 My Statistics', totalEarned: 'Total Earned',
-        totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products',
-        totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel',
-        deposits: '💳 Deposits', withdrawals: ' Withdrawals',
-        noPending: '✅ No pending items', copied: '✅ Address copied!',
-        minUsd: `❌ Minimum $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)} required!`,
-        depositSent: '✅ Deposit notification sent! Waiting for admin approval.',
-        withdrawCreated: '✅ Withdrawal request created!',
-        insufficientBalance: '❌ Insufficient balance!',
-        walletRequired: '❌ Wallet address required!',
-        minWithdrawAmount: '❌ Minimum: $0.01',
-        approved: '✅ Approved!', rejected: '❌ Rejected!',
-        error: '❌ Error: ',
-        adminPermissionError: '❌ No permission! This page is for admin only.'
+      en: { 
+        balance: 'Balance', products: 'Products', investment: 'Investment', 
+        perSec: 'Per Sec', perMin: 'Per Min', perHour: 'Per Hour', 
+        clickMiner: 'Click Rock!', 
+        buy: 'BUY', withdraw: 'WITHDRAW', profile: 'PROFILE', admin: 'ADMIN', 
+        buyTitle: '💎 Buy Mining Power', trxInvest: 'TRX Investment', 
+        minDeposit: '💰 Minimum Deposit', network: '🌐 Network', 
+        rate: '💱 Rate', usdAmount: '💵 Amount to Receive (USD)', 
+        youWillGet: 'You will get: ', 
+        trxWallet: '📍 TRX Wallet Address', 
+        copyAddress: ' Copy Address', warning: '⚠️ IMPORTANT', 
+        warningText: '• Use only <strong>TRON (TRC20)</strong> network<br>• Send EXACT amount shown above<br>• Confirmation may take 5-30 minutes', 
+        notifyDeposit: '📤 Notify Deposit', back: '← Back', 
+        withdrawTitle: '💸 Withdrawal Request', currentBalance: 'Current Balance', 
+        minWithdraw: 'Min: $0.01', withdrawAmount: 'Withdrawal Amount (USD)', 
+        selectCrypto: '🪙 Select Crypto', equivalent: 'Equivalent:', 
+        walletAddr: '📍 Wallet Address', createWithdraw: '💸 Create Withdrawal', 
+        profileTitle: '👤 Profile', selectLang: '🌐 Select Language', 
+        myStats: '📊 My Statistics', totalEarned: 'Total Earned', 
+        totalWithdrawn: 'Total Withdrawn', activeProducts: 'Active Products', 
+        totalInvestment: 'Total Investment', adminTitle: '🔐 Admin Panel', 
+        deposits: '💳 Deposits', withdrawals: '💸 Withdrawals', 
+        noPending: '✅ No pending items', copied: '✅ Address copied!', 
+        minUsd: '❌ Minimum $0.24 required!', 
+        depositSent: '✅ Deposit notification sent!', 
+        withdrawCreated: '✅ Withdrawal request created!', 
+        insufficientBalance: '❌ Insufficient balance!', 
+        walletRequired: '❌ Wallet address required!', 
+        minWithdrawAmount: '❌ Minimum: $0.01', 
+        approved: '✅ Approved!', rejected: ' Rejected!', 
+        error: '❌ Error: ', adminPermissionError: '❌ No permission!' 
       },
-      ru: {
-        balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции',
-        perSec: 'В сек', perMin: 'В мин', perHour: 'В час',
-        clickMiner: 'Кликни камень!',
-        buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН',
-        buyTitle: '💎 Купить мощность', trxInvest: 'Инвестиция TRX',
-        minDeposit: ' Минимальный депозит', network: '🌐 Сеть',
-        rate: ' Курс', usdAmount: '💵 Сумма получения (USD)',
-        youWillGet: 'Вы получите: ',
-        trxWallet: ' Адрес кошелька TRX',
-        copyAddress: '📋 Копировать адрес', warning: '⚠️ ВАЖНО',
-        warningText: '• Используйте только сеть <strong>TRON (TRC20)</strong><br>• Отправьте ТОЧНУЮ сумму, показанную выше<br>• Подтверждение может занять 5-30 минут',
-        notifyDeposit: '📤 Уведомить о депозите', back: '← Назад',
-        withdrawTitle: '💸 Запрос на вывод', currentBalance: 'Текущий баланс',
-        minWithdraw: 'Мин: $0.01', withdrawAmount: 'Сумма вывода (USD)',
-        selectCrypto: '🪙 Выбрать крипто', equivalent: 'Эквивалент:',
-        walletAddr: '📍 Адрес кошелька', createWithdraw: '💸 Создать вывод',
-        profileTitle: '👤 Профиль', selectLang: '🌐 Выбор языка',
-        myStats: '📊 Моя статистика', totalEarned: 'Всего заработано',
-        totalWithdrawn: 'Всего выведено', activeProducts: 'Активные продукты',
-        totalInvestment: 'Всего инвестиций', adminTitle: '🔐 Панель админа',
-        deposits: '💳 Депозиты', withdrawals: '💸 Выводы',
-        noPending: '✅ Нет ожидающих', copied: '✅ Адрес скопирован!',
-        minUsd: `❌ Минимум $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
-        depositSent: '✅ Уведомление отправлено! Ожидание одобрения админа.',
-        withdrawCreated: '✅ Запрос на вывод создан!',
-        insufficientBalance: '❌ Недостаточно средств!',
-        walletRequired: '❌ Адрес кошелька обязателен!',
-        minWithdrawAmount: '❌ Минимум: $0.01',
-        approved: '✅ Одобрено!', rejected: '❌ Отклонено!',
-        error: '❌ Ошибка: ',
-        adminPermissionError: '❌ Нет доступа! Эта страница только для админа.'
+      ru: { 
+        balance: 'Баланс', products: 'Продукты', investment: 'Инвестиции', 
+        perSec: 'В сек', perMin: 'В мин', perHour: 'В час', 
+        clickMiner: 'Кликни камень!', 
+        buy: 'КУПИТЬ', withdraw: 'ВЫВОД', profile: 'ПРОФИЛЬ', admin: 'АДМИН', 
+        buyTitle: '💎 Купить мощность', trxInvest: 'Инвестиция TRX', 
+        minDeposit: '💰 Минимум', network: '🌐 Сеть', 
+        rate: '💱 Курс', usdAmount: '💵 Сумма (USD)', 
+        youWillGet: 'Получите: ', 
+        trxWallet: '📍 Адрес TRX', 
+        copyAddress: '📋 Копировать', warning: '⚠️ ВАЖНО', 
+        warningText: '• Только сеть <strong>TRON (TRC20)</strong><br>• Отправьте точную сумму<br>• Подтверждение 5-30 мин', 
+        notifyDeposit: '📤 Уведомить', back: '← Назад', 
+        withdrawTitle: '💸 Вывод', currentBalance: 'Баланс', 
+        minWithdraw: 'Мин: $0.01', withdrawAmount: 'Сумма (USD)', 
+        selectCrypto: '🪙 Крипто', equivalent: 'Эквивалент:', 
+        walletAddr: '📍 Адрес', createWithdraw: '💸 Создать вывод', 
+        profileTitle: '👤 Профиль', selectLang: '🌐 Язык', 
+        myStats: '📊 Статистика', totalEarned: 'Всего заработано', 
+        totalWithdrawn: 'Всего выведено', activeProducts: 'Активные', 
+        totalInvestment: 'Инвестиции', adminTitle: '🔐 Админ', 
+        deposits: '💳 Депозиты', withdrawals: '💸 Выводы', 
+        noPending: '✅ Нет ожидающих', copied: '✅ Скопировано!', 
+        minUsd: '❌ Минимум $0.24!', 
+        depositSent: '✅ Уведомление отправлено!', 
+        withdrawCreated: '✅ Запрос создан!', 
+        insufficientBalance: '❌ Недостаточно!', 
+        walletRequired: '❌ Адрес обязателен!', 
+        minWithdrawAmount: '❌ Мин: $0.01', 
+        approved: '✅ Одобрено!', rejected: '❌ Отклонено!', 
+        error: '❌ Ошибка: ', adminPermissionError: '❌ Нет доступа!' 
       },
-      ar: {
-        balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار',
-        perSec: 'في الثانية', perMin: 'في الدقيقة', perHour: 'في الساعة',
-        clickMiner: 'انقر على الصخرة!',
-        buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول',
-        buyTitle: '💎 شراء قوة التعدين', trxInvest: 'استثمار TRX',
-        minDeposit: '💰 الحد الأدنى للإيداع', network: ' الشبكة',
-        rate: '💱 السعر', usdAmount: '💵 المبلغ المستلم (USD)',
-        youWillGet: 'ستحصل على: ',
-        trxWallet: ' عنوان محفظة TRX',
-        copyAddress: '📋 نسخ العنوان', warning: '⚠️ مهم',
-        warningText: '• استخدم فقط شبكة <strong>TRON (TRC20)</strong><br>• أرسل المبلغ الدقيق الموضح أعلاه<br>• قد يستغرق التأكيد 5-30 دقيقة',
-        notifyDeposit: '📤 إعلام بالإيداع', back: '← رجوع',
-        withdrawTitle: '💸 طلب السحب', currentBalance: 'الرصيد الحالي',
-        minWithdraw: 'الحد الأدنى: $0.01', withdrawAmount: 'مبلغ السحب (USD)',
-        selectCrypto: '🪙 اختر العملة', equivalent: 'المعادل:',
-        walletAddr: ' عنوان المحفظة', createWithdraw: ' إنشاء سحب',
-        profileTitle: '👤 الملف الشخصي', selectLang: ' اختيار اللغة',
-        myStats: ' إحصائياتي', totalEarned: 'إجمالي الأرباح',
-        totalWithdrawn: 'إجمالي المسحوب', activeProducts: 'المنتجات النشطة',
-        totalInvestment: 'إجمالي الاستثمار', adminTitle: ' لوحة المسؤول',
-        deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات',
-        noPending: '✅ لا توجد معاملات معلقة', copied: '✅ تم نسخ العنوان!',
-        minUsd: `❌ الحد الأدنى $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
-        depositSent: '✅ تم إرسال الإشعار! في انتظار موافقة المسؤول.',
-        withdrawCreated: '✅ تم إنشاء طلب السحب!',
-        insufficientBalance: '❌ رصيد غير كافٍ!',
-        walletRequired: '❌ عنوان المحفظة مطلوب!',
-        minWithdrawAmount: '❌ الحد الأدنى: $0.01',
-        approved: '✅ تمت الموافقة!', rejected: '❌ مرفوض!',
-        error: '❌ خطأ: ',
-        adminPermissionError: '❌ لا صلاحية! هذه الصفحة للمسؤول فقط.'
+      ar: { 
+        balance: 'الرصيد', products: 'المنتجات', investment: 'الاستثمار', 
+        perSec: 'في الثانية', perMin: 'في الدقيقة', perHour: 'في الساعة', 
+        clickMiner: 'انقر!', 
+        buy: 'شراء', withdraw: 'سحب', profile: 'الملف', admin: 'المسؤول', 
+        buyTitle: '💎 شراء', trxInvest: 'استثمار TRX', 
+        minDeposit: '💰 الحد الأدنى', network: ' الشبكة', 
+        rate: '💱 السعر', usdAmount: '💵 المبلغ (USD)', 
+        youWillGet: 'ستحصل: ', 
+        trxWallet: '📍 العنوان', 
+        copyAddress: '📋 نسخ', warning: '⚠️ مهم', 
+        warningText: '• فقط شبكة <strong>TRON (TRC20)</strong><br>• أرسل المبلغ الدقيق<br>• التأكيد 5-30 دقيقة', 
+        notifyDeposit: '📤 إرسال', back: '← رجوع', 
+        withdrawTitle: '💸 سحب', currentBalance: 'الرصيد', 
+        minWithdraw: 'الحد: $0.01', withdrawAmount: 'المبلغ', 
+        selectCrypto: '🪙 العملة', equivalent: 'المعادل:', 
+        walletAddr: '📍 العنوان', createWithdraw: '💸 إنشاء', 
+        profileTitle: '👤 الملف', selectLang: '🌐 اللغة', 
+        myStats: '📊 الإحصائيات', totalEarned: 'الإجمالي', 
+        totalWithdrawn: 'المسحوب', activeProducts: 'النشط', 
+        totalInvestment: 'الاستثمار', adminTitle: '🔐 المسؤول', 
+        deposits: '💳 الإيداعات', withdrawals: '💸 السحوبات', 
+        noPending: '✅ لا يوجد', copied: '✅ تم النسخ!', 
+        minUsd: '❌ الحد $0.24!', 
+        depositSent: '✅ تم الإرسال!', 
+        withdrawCreated: '✅ تم الإنشاء!', 
+        insufficientBalance: '❌ غير كافٍ!', 
+        walletRequired: '❌ العنوان مطلوب!', 
+        minWithdrawAmount: '❌ الحد: $0.01', 
+        approved: '✅ تمت الموافقة!', rejected: '❌ مرفوض!', 
+        error: '❌ خطأ: ', adminPermissionError: '❌ لا صلاحية!' 
       },
-      es: {
-        balance: 'Saldo', products: 'Productos', investment: 'Inversión',
-        perSec: 'Por seg', perMin: 'Por min', perHour: 'Por hora',
-        clickMiner: '¡Clic Roca!',
-        buy: 'COMPRAR', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN',
-        buyTitle: '💎 Comprar Poder Minero', trxInvest: 'Inversión TRX',
-        minDeposit: '💰 Depósito Mínimo', network: '🌐 Red',
-        rate: ' Tasa', usdAmount: ' Cantidad a Recibir (USD)',
-        youWillGet: 'Recibirás: ',
-        trxWallet: '📍 Dirección TRX',
-        copyAddress: '📋 Copiar Dirección', warning: '⚠️ IMPORTANTE',
-        warningText: '• Use solo la red <strong>TRON (TRC20)</strong><br>• Envíe la cantidad EXACTA mostrada arriba<br>• La confirmación puede tardar 5-30 minutos',
-        notifyDeposit: ' Notificar Depósito', back: '← Atrás',
-        withdrawTitle: '💸 Solicitud de Retiro', currentBalance: 'Saldo Actual',
-        minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad de Retiro (USD)',
-        selectCrypto: '🪙 Seleccionar Cripto', equivalent: 'Equivalente:',
-        walletAddr: '📍 Dirección de Billetera', createWithdraw: '💸 Crear Retiro',
-        profileTitle: '👤 Perfil', selectLang: '🌐 Seleccionar Idioma',
-        myStats: '📊 Mis Estadísticas', totalEarned: 'Total Ganado',
-        totalWithdrawn: 'Total Retirado', activeProducts: 'Productos Activos',
-        totalInvestment: 'Inversión Total', adminTitle: '🔐 Panel Admin',
-        deposits: '💳 Depósitos', withdrawals: '💸 Retiros',
-        noPending: '✅ Sin pendientes', copied: '✅ ¡Dirección copiada!',
-        minUsd: ` ¡Mínimo $${(MIN_DEPOSIT_TRX * TRX_PRICE).toFixed(2)}!`,
-        depositSent: '✅ ¡Notificación enviada! Esperando aprobación del admin.',
-        withdrawCreated: '✅ ¡Solicitud de retiro creada!',
-        insufficientBalance: '❌ ¡Saldo insuficiente!',
-        walletRequired: ' ¡Dirección de billetera requerida!',
-        minWithdrawAmount: '❌ Mínimo: $0.01',
-        approved: '✅ ¡Aprobado!', rejected: '❌ ¡Rechazado!',
-        error: '❌ Error: ',
-        adminPermissionError: '❌ ¡Sin permiso! Esta página es solo para admin.'
+      es: { 
+        balance: 'Saldo', products: 'Productos', investment: 'Inversión', 
+        perSec: 'Por seg', perMin: 'Por min', perHour: 'Por hora', 
+        clickMiner: '¡Clic!', 
+        buy: 'COMPRAR', withdraw: 'RETIRAR', profile: 'PERFIL', admin: 'ADMIN', 
+        buyTitle: '💎 Comprar', trxInvest: 'Inversión TRX', 
+        minDeposit: '💰 Mínimo', network: ' Red', 
+        rate: '💱 Tasa', usdAmount: '💵 Cantidad (USD)', 
+        youWillGet: 'Recibirás: ', 
+        trxWallet: '📍 Dirección', 
+        copyAddress: '📋 Copiar', warning: '⚠️ IMPORTANTE', 
+        warningText: '• Solo red <strong>TRON (TRC20)</strong><br>• Envíe cantidad exacta<br>• Confirmación 5-30 min', 
+        notifyDeposit: '📤 Notificar', back: '← Atrás', 
+        withdrawTitle: '💸 Retiro', currentBalance: 'Saldo', 
+        minWithdraw: 'Mín: $0.01', withdrawAmount: 'Cantidad', 
+        selectCrypto: '🪙 Cripto', equivalent: 'Equivalente:', 
+        walletAddr: '📍 Dirección', createWithdraw: '💸 Crear', 
+        profileTitle: '👤 Perfil', selectLang: ' Idioma', 
+        myStats: ' Estadísticas', totalEarned: 'Total Ganado', 
+        totalWithdrawn: 'Total Retirado', activeProducts: 'Activos', 
+        totalInvestment: 'Inversión', adminTitle: '🔐 Admin', 
+        deposits: '💳 Depósitos', withdrawals: '💸 Retiros', 
+        noPending: '✅ Sin pendientes', copied: '✅ Copiado!', 
+        minUsd: '❌ Mínimo $0.24!', 
+        depositSent: '✅ Notificado!', 
+        withdrawCreated: '✅ Creado!', 
+        insufficientBalance: '❌ Saldo insuficiente!', 
+        walletRequired: '❌ Dirección requerida!', 
+        minWithdrawAmount: '❌ Mín: $0.01', 
+        approved: '✅ Aprobado!', rejected: '❌ Rechazado!', 
+        error: '❌ Error: ', adminPermissionError: '❌ Sin permiso!' 
       }
     };
     
     const tg = window.Telegram.WebApp;
     tg.ready();
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) currentUser = tg.initDataUnsafe.user;
     
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      currentUser = tg.initDataUnsafe.user;
+    async function initApp() {
+      console.log('🚀 Uygulama başlatılıyor...');
+      if (currentUser) {
+        userId = currentUser.id.toString();
+        console.log('👤 Kullanıcı ID:', userId);
+        if (userId === ADMIN_ID) {
+          document.getElementById('adminBtn').style.display = 'block';
+          console.log('🔐 Admin modu aktif');
+        }
+        await loadUserData();
+        setInterval(updateEarnings, 1000);
+      } else {
+        console.error(' Kullanıcı bulunamadı');
+      }
     }
     
-    auth.signInAnonymously().then(() => {
-      userId = auth.currentUser.uid;
-      listenToData();
-      setInterval(updateEarnings, 1000);
-      setInterval(createGem, 3000);
-      
-      if (currentUser) {
-        const userIdStr = currentUser.id ? currentUser.id.toString() : '';
-        if (userIdStr === ADMIN_ID) {
-          document.getElementById('adminBtn').style.display = 'block';
+    async function loadUserData() {
+      try {
+        console.log('📥 Veriler yükleniyor...');
+        const userRef = db.collection('users').doc(userId);
+        const doc = await userRef.get();
+        
+        if (doc.exists) {
+          const data = doc.data();
+          lifetimeEarnings = data.lifetimeEarnings || 0;
+          totalWithdrawn = data.totalWithdrawn || 0;
+          balance = lifetimeEarnings - totalWithdrawn;
+          
+          const approvedSnapshot = await userRef.collection('approvedDeposits').get();
+          products = approvedSnapshot.docs.map(doc => ({
+            id: doc.id,
+            amount: doc.data().usd_amount,
+            earned: 0
+          }));
+          
+          console.log('✅ Veriler yüklendi:', { balance, products: products.length });
+        } else {
+          await userRef.set({
+            id: userId,
+            lifetimeEarnings: 0,
+            totalWithdrawn: 0,
+            created_at: firebase.firestore.FieldValue.serverTimestamp()
+          });
         }
+        updateUI();
+      } catch (error) {
+        console.error('❌ Yükleme hatası:', error);
       }
-    }).catch(err => {
-      console.error('Giriş hatası:', err);
-    });
+    }
     
     function showToast(message) {
       const toast = document.getElementById('toast');
@@ -1522,36 +1479,21 @@
     }
     
     function copyWalletAddress() {
-      navigator.clipboard.writeText(TRX_WALLET).then(() => {
-        showToast(translations[currentLang].copied);
-      }).catch(() => {
-        const textArea = document.createElement('textarea');
-        textArea.value = TRX_WALLET;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showToast(translations[currentLang].copied);
-      });
+      navigator.clipboard.writeText(TRX_WALLET).then(() => showToast(translations[currentLang].copied));
     }
     
     function calculateTRX() {
       const usdAmount = parseFloat(document.getElementById('usdAmount').value) || 0;
-      const trxAmount = usdAmount / TRX_PRICE;
-      const trxElement = document.getElementById('trxAmount');
-      if (trxElement) {
-        trxElement.textContent = trxAmount.toFixed(2);
-      }
+      const el = document.getElementById('trxAmount');
+      if (el) el.textContent = (usdAmount / TRX_PRICE).toFixed(2);
     }
     
     function changeLanguage(lang) {
       currentLang = lang;
-      
       document.querySelectorAll('.lang-option').forEach(opt => {
         opt.classList.remove('active');
         if (opt.dataset.lang === lang) opt.classList.add('active');
       });
-      
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -1562,18 +1504,6 @@
           }
         }
       });
-      
-      document.documentElement.lang = lang;
-      
-      if (lang === 'ar') {
-        document.documentElement.dir = 'rtl';
-      } else {
-        document.documentElement.dir = 'ltr';
-      }
-      
-      try {
-        localStorage.setItem('selectedLang', lang);
-      } catch(e) {}
     }
     
     function breakRock() {
@@ -1584,29 +1514,17 @@
       rock.classList.remove('spawn');
       void rock.offsetWidth;
       rock.classList.add('breaking');
-      
       miner.classList.add('mining');
       pickaxe.classList.add('swing');
       
       const rect = rock.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
       for (let i = 0; i < 15; i++) {
         setTimeout(() => {
           const dollar = document.createElement('div');
           dollar.className = 'dollar-float';
           dollar.textContent = '$';
-          
-          const offsetX = (Math.random() - 0.5) * 150;
-          const offsetY = (Math.random() - 0.5) * 80;
-          
-          dollar.style.left = (centerX + offsetX) + 'px';
-          dollar.style.top = (centerY + offsetY) + 'px';
-          
-          const goldColors = ['#ffd700', '#ffd700', '#daa520', '#ffd700', '#ffb700'];
-          dollar.style.color = goldColors[Math.floor(Math.random() * goldColors.length)];
-          
+          dollar.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*150) + 'px';
+          dollar.style.top = (rect.top + rect.height/2 + (Math.random()-0.5)*80) + 'px';
           document.body.appendChild(dollar);
           setTimeout(() => dollar.remove(), 1800);
         }, i * 50);
@@ -1622,132 +1540,71 @@
         rock.classList.add('spawn');
       }, 600);
       
-      if (tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('medium');
-      }
+      if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     }
     
-    function listenToData() {
-      if (unsubscribe) unsubscribe();
-      
-      unsubscribe = db.collection('users').doc(userId).onSnapshot((doc) => {
-        if (doc.exists) {
-          const data = doc.data();
-          products = data.approvedPayments || [];
-          lifetimeEarnings = data.lifetimeEarnings || 0;
-          totalWithdrawn = data.totalWithdrawn || 0;
-          balance = lifetimeEarnings - totalWithdrawn;
-          
-          updateUI();
-        }
-      }, (error) => {
-        console.error('Dinleme hatası:', error);
+    async function updateEarnings() {
+      if (products.length === 0) return;
+      products.forEach(p => {
+        p.earned = (p.earned || 0) + (p.amount * PER_SECOND);
       });
+      lifetimeEarnings = products.reduce((sum, p) => sum + p.earned, 0);
+      balance = lifetimeEarnings - totalWithdrawn;
+      
+      try {
+        await db.collection('users').doc(userId).update({ lifetimeEarnings: lifetimeEarnings });
+      } catch (error) {
+        console.error('Güncelleme hatası:', error);
+      }
+      updateUI();
+    }
+    
+    function updateUI() {
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setVal('balance', balance.toFixed(2));
+      setVal('withdrawBalance', balance.toFixed(2));
+      setVal('productCount', products.length);
+      setVal('totalInvested', products.reduce((sum, p) => sum + p.amount, 0));
+      setVal('statEarned', lifetimeEarnings.toFixed(2));
+      setVal('statWithdrawn', totalWithdrawn.toFixed(2));
+      setVal('statProducts', products.length);
+      setVal('statInvested', products.reduce((sum, p) => sum + p.amount, 0).toFixed(2));
+      
+      const perSec = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
+      setVal('perSecond', perSec.toFixed(4));
+      setVal('perMinute', (perSec * 60).toFixed(2));
+      setVal('perHour', (perSec * 3600).toFixed(2));
     }
     
     async function submitDeposit() {
       const usdAmount = parseFloat(document.getElementById('usdAmount').value);
-      
       if (!usdAmount || usdAmount < MIN_DEPOSIT_TRX * TRX_PRICE) {
         alert(translations[currentLang].minUsd);
         return;
       }
-      
-      const trxAmount = usdAmount / TRX_PRICE;
-      
-      const deposit = {
-        id: 'dep_' + Date.now(),
-        usdAmount: usdAmount,
-        trxAmount: trxAmount,
-        status: 'pending',
-        userId: userId,
-        userName: currentUser ? currentUser.first_name : 'User',
-        timestamp: Date.now()
-      };
-      
+      const depositId = 'dep_' + Date.now();
       try {
-        const userRef = db.collection('users').doc(userId);
-        const doc = await userRef.get();
-        const data = doc.data() || {};
-        const currentDeposits = data.deposits || [];
-        
-        await userRef.set({
-          deposits: [...currentDeposits, deposit]
-        }, { merge: true });
-        
+        await db.collection('users').doc(userId).collection('deposits').doc(depositId).set({
+          id: depositId,
+          user_id: userId,
+          user_name: currentUser.first_name || 'User',
+          usd_amount: usdAmount,
+          trx_amount: usdAmount / TRX_PRICE,
+          status: 'pending',
+          timestamp: Date.now()
+        });
         alert(translations[currentLang].depositSent);
         document.getElementById('usdAmount').value = '';
-        const trxElement = document.getElementById('trxAmount');
-        if (trxElement) trxElement.textContent = '0';
       } catch (error) {
         alert(translations[currentLang].error + error.message);
       }
     }
     
-    async function updateEarnings() {
-      if (products.length === 0) return;
-      
-      products.forEach(p => {
-        p.earned = (p.earned || 0) + (p.amount * PER_SECOND);
-      });
-      
-      lifetimeEarnings = products.reduce((sum, p) => sum + p.earned, 0);
-      balance = lifetimeEarnings - totalWithdrawn;
-      
-      try {
-        await db.collection('users').doc(userId).set({
-          approvedPayments: products,
-          lifetimeEarnings: lifetimeEarnings
-        }, { merge: true });
-      } catch (error) {
-        console.error('Kaydetme hatası:', error);
-      }
-      
-      updateUI();
-    }
-    
-    function updateUI() {
-      const balanceEl = document.getElementById('balance');
-      const withdrawBalanceEl = document.getElementById('withdrawBalance');
-      const productCountEl = document.getElementById('productCount');
-      const totalInvestedEl = document.getElementById('totalInvested');
-      
-      if (balanceEl) balanceEl.textContent = balance.toFixed(2);
-      if (withdrawBalanceEl) withdrawBalanceEl.textContent = balance.toFixed(2);
-      if (productCountEl) productCountEl.textContent = products.length;
-      if (totalInvestedEl) totalInvestedEl.textContent = products.reduce((sum, p) => sum + p.amount, 0);
-      
-      const statEarnedEl = document.getElementById('statEarned');
-      const statWithdrawnEl = document.getElementById('statWithdrawn');
-      const statProductsEl = document.getElementById('statProducts');
-      const statInvestedEl = document.getElementById('statInvested');
-      
-      if (statEarnedEl) statEarnedEl.textContent = lifetimeEarnings.toFixed(2);
-      if (statWithdrawnEl) statWithdrawnEl.textContent = totalWithdrawn.toFixed(2);
-      if (statProductsEl) statProductsEl.textContent = products.length;
-      if (statInvestedEl) statInvestedEl.textContent = products.reduce((sum, p) => sum + p.amount, 0).toFixed(2);
-      
-      const perSec = products.reduce((sum, p) => sum + (p.amount * PER_SECOND), 0);
-      const perSecondEl = document.getElementById('perSecond');
-      const perMinuteEl = document.getElementById('perMinute');
-      const perHourEl = document.getElementById('perHour');
-      
-      if (perSecondEl) perSecondEl.textContent = perSec.toFixed(4);
-      if (perMinuteEl) perMinuteEl.textContent = (perSec * 60).toFixed(2);
-      if (perHourEl) perHourEl.textContent = (perSec * 3600).toFixed(2);
-    }
-    
     function updateCryptoAmount() {
       const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
       const crypto = document.getElementById('withdrawCrypto').value;
-      const price = CRYPTO_PRICES[crypto];
-      const equivalent = amount / price;
-      
-      const cryptoEquivalentEl = document.getElementById('cryptoEquivalent');
-      const cryptoSymbolEl = document.getElementById('cryptoSymbol');
-      
-      if (cryptoEquivalentEl) cryptoEquivalentEl.textContent = equivalent.toFixed(6);
-      if (cryptoSymbolEl) cryptoSymbolEl.textContent = CRYPTO_SYMBOLS[crypto];
+      document.getElementById('cryptoEquivalent').textContent = (amount / CRYPTO_PRICES[crypto]).toFixed(6);
+      document.getElementById('cryptoSymbol').textContent = CRYPTO_SYMBOLS[crypto];
     }
     
     async function requestWithdrawal() {
@@ -1759,33 +1616,21 @@
       if (amount > balance) { alert(translations[currentLang].insufficientBalance); return; }
       if (!walletAddress) { alert(translations[currentLang].walletRequired); return; }
       
-      const withdrawal = {
-        id: 'wd_' + Date.now(),
-        amount: amount,
-        crypto: crypto,
-        cryptoAmount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
-        cryptoSymbol: CRYPTO_SYMBOLS[crypto],
-        walletAddress: walletAddress,
-        status: 'pending',
-        userId: userId,
-        userName: currentUser ? currentUser.first_name : 'User',
-        timestamp: Date.now()
-      };
-      
       try {
-        const userRef = db.collection('users').doc(userId);
-        const doc = await userRef.get();
-        const data = doc.data() || {};
-        const currentWithdrawals = data.withdrawalRequests || [];
-        
-        await userRef.set({
-          withdrawalRequests: [...currentWithdrawals, withdrawal]
-        }, { merge: true });
-        
+        await db.collection('users').doc(userId).collection('withdrawals').doc('wd_' + Date.now()).set({
+          id: 'wd_' + Date.now(),
+          user_id: userId,
+          user_name: currentUser.first_name || 'User',
+          amount: amount,
+          crypto: crypto,
+          crypto_amount: (amount / CRYPTO_PRICES[crypto]).toFixed(6),
+          wallet_address: walletAddress,
+          status: 'pending',
+          timestamp: Date.now()
+        });
         alert(translations[currentLang].withdrawCreated);
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('walletAddress').value = '';
-        updateCryptoAmount();
       } catch (error) {
         alert(translations[currentLang].error + error.message);
       }
@@ -1793,105 +1638,71 @@
     
     async function loadAdminDeposits() {
       try {
-        const snapshot = await db.collection('users').get();
+        const snapshot = await db.collectionGroup('deposits').where('status', '==', 'pending').get();
         const pending = [];
-        
         snapshot.forEach(doc => {
-          const data = doc.data();
-          if (data.deposits && data.deposits.length > 0) {
-            data.deposits.forEach(d => {
-              if (d.status === 'pending') {
-                pending.push({ ...d, userDocId: doc.id });
-              }
-            });
-          }
+          pending.push({ id: doc.id, ...doc.data(), userDocId: doc.ref.parent.parent.id });
         });
         
-        if (pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        if (pending.length === 0) {
+          return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        }
         
-        let html = '';
-        pending.forEach(d => {
-          const approveText = currentLang === 'tr' ? 'Onayla' : currentLang === 'en' ? 'Approve' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar';
-          const rejectText = currentLang === 'tr' ? 'Reddet' : currentLang === 'en' ? 'Reject' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : 'Rechazar';
-          
-          html += `
-            <div class="item-card">
-              <strong>$${d.usdAmount.toFixed(2)}</strong> (${d.trxAmount.toFixed(2)} TRX) - ${d.userName}<br>
-              <small>ID: ${d.id}</small>
-              <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.usdAmount})">✓ ${approveText}</button>
-              <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ ${rejectText}</button>
-            </div>
-          `;
-        });
-        return html;
+        return pending.map(d => `
+          <div class="item-card">
+            <strong>$${d.usd_amount.toFixed(2)}</strong> (${(d.usd_amount/TRX_PRICE).toFixed(2)} TRX) - ${d.user_name}<br>
+            <small>ID: ${d.id}</small>
+            <button class="btn approve" onclick="approveDeposit('${d.userDocId}', '${d.id}', ${d.usd_amount})">✓ Onayla</button>
+            <button class="btn reject" onclick="rejectDeposit('${d.userDocId}', '${d.id}')">✕ Reddet</button>
+          </div>
+        `).join('');
       } catch (error) {
-        return `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].error} ${error.message}</div>`;
+        return `<div class="error-message">❌ ${error.message}</div>`;
       }
     }
     
     async function loadAdminWithdrawals() {
       try {
-        const snapshot = await db.collection('users').get();
+        const snapshot = await db.collectionGroup('withdrawals').where('status', '==', 'pending').get();
         const pending = [];
-        
         snapshot.forEach(doc => {
-          const data = doc.data();
-          if (data.withdrawalRequests && data.withdrawalRequests.length > 0) {
-            data.withdrawalRequests.forEach(w => {
-              if (w.status === 'pending') {
-                pending.push({ ...w, userDocId: doc.id });
-              }
-            });
-          }
+          pending.push({ id: doc.id, ...doc.data(), userDocId: doc.ref.parent.parent.id });
         });
         
-        if (pending.length === 0) return `<p style="text-align: center; color: #00b894; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        if (pending.length === 0) {
+          return `<p style="text-align: center; color: #90ee90; padding: 20px;">${translations[currentLang].noPending}</p>`;
+        }
         
-        let html = '';
-        pending.forEach(w => {
-          const userText = currentLang === 'tr' ? 'Kullanıcı' : currentLang === 'en' ? 'User' : currentLang === 'ru' ? 'Пользователь' : currentLang === 'ar' ? 'مستخدم' : 'Usuario';
-          const walletText = currentLang === 'tr' ? 'Cüzdan' : currentLang === 'en' ? 'Wallet' : currentLang === 'ru' ? 'Кошелек' : currentLang === 'ar' ? 'محفظة' : 'Billetera';
-          const approveText = currentLang === 'tr' ? 'Onayla' : currentLang === 'en' ? 'Approve' : currentLang === 'ru' ? 'Одобрить' : currentLang === 'ar' ? 'موافقة' : 'Aprobar';
-          const rejectText = currentLang === 'tr' ? 'Reddet' : currentLang === 'en' ? 'Reject' : currentLang === 'ru' ? 'Отклонить' : currentLang === 'ar' ? 'رفض' : 'Rechazar';
-          
-          html += `
-            <div class="item-card">
-              <strong>$${w.amount}</strong> = ${w.cryptoAmount} ${w.cryptoSymbol}<br>
-              <small>${userText}: ${w.userName}</small>
-              <small>${walletText}: ${w.walletAddress}</small>
-              <small>ID: ${w.id}</small>
-              <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}')">✓ ${approveText}</button>
-              <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')"> ${rejectText}</button>
-            </div>
-          `;
-        });
-        return html;
+        return pending.map(w => `
+          <div class="item-card">
+            <strong>$${w.amount}</strong> = ${w.crypto_amount} ${w.crypto}<br>
+            <small>Kullanıcı: ${w.user_name}</small>
+            <small>Cüzdan: ${w.wallet_address}</small>
+            <small>ID: ${w.id}</small>
+            <button class="btn approve" onclick="approveWithdrawal('${w.userDocId}', '${w.id}', ${w.amount})">✓ Onayla</button>
+            <button class="btn reject" onclick="rejectWithdrawal('${w.userDocId}', '${w.id}')">✕ Reddet</button>
+          </div>
+        `).join('');
       } catch (error) {
-        return `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].error} ${error.message}</div>`;
+        return `<div class="error-message">❌ ${error.message}</div>`;
       }
     }
     
     async function loadAdmin() {
-      if (!currentUser) {
-        document.getElementById('adminContent').innerHTML = `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].adminPermissionError}</div>`;
+      if (!currentUser || currentUser.id.toString() !== ADMIN_ID) {
+        document.getElementById('adminContent').innerHTML = `<div class="error-message">❌ ${translations[currentLang].adminPermissionError}</div>`;
         return;
       }
-      
-      const userIdStr = currentUser.id ? currentUser.id.toString() : '';
-      if (userIdStr !== ADMIN_ID) {
-        document.getElementById('adminContent').innerHTML = `<div class="error-message"><div class="error-icon">❌</div>${translations[currentLang].adminPermissionError}</div>`;
-        return;
-      }
-      
       const container = document.getElementById('adminContent');
-      const loadingText = currentLang === 'tr' ? 'Yükleniyor...' : currentLang === 'en' ? 'Loading...' : currentLang === 'ru' ? 'Загрузка...' : currentLang === 'ar' ? 'جاري التحميل...' : 'Cargando...';
-      
-      container.innerHTML = `<p style="text-align: center; color: #daa520; padding: 20px;">${loadingText}</p>`;
-      
-      if (currentAdminTab === 'deposits') {
-        container.innerHTML = await loadAdminDeposits();
-      } else if (currentAdminTab === 'withdrawals') {
-        container.innerHTML = await loadAdminWithdrawals();
+      container.innerHTML = '<p style="text-align: center; color: #90ee90; padding: 20px;">Yükleniyor...</p>';
+      try {
+        if (currentAdminTab === 'deposits') {
+          container.innerHTML = await loadAdminDeposits();
+        } else {
+          container.innerHTML = await loadAdminWithdrawals();
+        }
+      } catch (error) {
+        container.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
       }
     }
     
@@ -1904,189 +1715,85 @@
     
     async function approveDeposit(targetUserDocId, depositId, usdAmount) {
       try {
+        const depositRef = db.collection('users').doc(targetUserDocId).collection('deposits').doc(depositId);
+        const approvedRef = db.collection('users').doc(targetUserDocId).collection('approvedDeposits').doc(depositId);
+        
+        const depositDoc = await depositRef.get();
+        const depositData = depositDoc.data();
+        
+        await approvedRef.set({ ...depositData, status: 'approved', approvedAt: Date.now() });
+        await depositRef.delete();
+        
         const userRef = db.collection('users').doc(targetUserDocId);
-        const doc = await userRef.get();
+        const userDoc = await userRef.get();
+        const userData = userDoc.data();
         
-        if (!doc.exists) { 
-          alert(currentLang === 'tr' ? 'Kullanıcı bulunamadı!' : 'User not found!'); 
-          return; 
-        }
+        await userRef.update({ totalInvested: (userData.totalInvested || 0) + usdAmount });
         
-        const data = doc.data();
-        const deposits = data.deposits || [];
-        const approvedPayments = data.approvedPayments || [];
-        
-        const depositIndex = deposits.findIndex(d => d.id === depositId);
-        if (depositIndex === -1) { 
-          alert(currentLang === 'tr' ? 'Yatırım bulunamadı!' : 'Deposit not found!'); 
-          return; 
-        }
-        
-        const deposit = deposits[depositIndex];
-        const newDeposits = deposits.filter(d => d.id !== depositId);
-        
-        deposit.status = 'approved';
-        deposit.approvedAt = Date.now();
-        
-        const newPayment = {
-          id: 'pay_' + Date.now(),
-          amount: usdAmount,
-          earned: 0,
-          status: 'approved',
-          userId: targetUserDocId,
-          userName: deposit.userName,
-          timestamp: Date.now(),
-          approvedAt: Date.now()
-        };
-        
-        await userRef.set({
-          deposits: newDeposits,
-          approvedPayments: [...approvedPayments, newPayment],
-          totalInvested: (data.totalInvested || 0) + usdAmount
-        }, { merge: true });
-        
-        showToast(`${translations[currentLang].approved} $${usdAmount.toFixed(2)}`);
-        await loadAdmin();
+        showToast(`✅ Onaylandı! $${usdAmount.toFixed(2)}`);
+        loadAdmin();
       } catch (error) {
-        showToast(translations[currentLang].error + error.message);
+        showToast('❌ Hata: ' + error.message);
       }
     }
     
     async function rejectDeposit(targetUserDocId, depositId) {
       try {
-        const userRef = db.collection('users').doc(targetUserDocId);
-        const doc = await userRef.get();
-        
-        if (!doc.exists) { 
-          alert(currentLang === 'tr' ? 'Kullanıcı bulunamadı!' : 'User not found!'); 
-          return; 
-        }
-        
-        const data = doc.data();
-        const deposits = data.deposits || [];
-        const newDeposits = deposits.filter(d => d.id !== depositId);
-        
-        await userRef.set({ deposits: newDeposits }, { merge: true });
-        
-        showToast(translations[currentLang].rejected);
-        await loadAdmin();
+        await db.collection('users').doc(targetUserDocId).collection('deposits').doc(depositId).delete();
+        showToast('❌ Reddedildi!');
+        loadAdmin();
       } catch (error) {
-        showToast(translations[currentLang].error + error.message);
+        showToast('❌ Hata: ' + error.message);
       }
     }
     
-    async function approveWithdrawal(targetUserDocId, withdrawalId) {
+    async function approveWithdrawal(withdrawalId, amount, targetUserId) {
       try {
-        const userRef = db.collection('users').doc(targetUserDocId);
-        const doc = await userRef.get();
+        const withdrawalRef = db.collection('users').doc(targetUserId).collection('withdrawals').doc(withdrawalId);
+        await withdrawalRef.update({ status: 'approved', approvedAt: Date.now() });
         
-        if (!doc.exists) { 
-          alert(currentLang === 'tr' ? 'Kullanıcı bulunamadı!' : 'User not found!'); 
-          return; 
-        }
+        const userRef = db.collection('users').doc(targetUserId);
+        const userDoc = await userRef.get();
+        const userData = userDoc.data();
         
-        const data = doc.data();
-        const withdrawalRequests = data.withdrawalRequests || [];
+        await userRef.update({ totalWithdrawn: (userData.totalWithdrawn || 0) + amount });
         
-        const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
-        if (withdrawalIndex === -1) { 
-          alert(currentLang === 'tr' ? 'Çekim bulunamadı!' : 'Withdrawal not found!'); 
-          return; 
-        }
-        
-        const withdrawal = withdrawalRequests[withdrawalIndex];
-        const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
-        
-        withdrawal.status = 'approved';
-        withdrawal.approvedAt = Date.now();
-        newWithdrawals.push(withdrawal);
-        
-        const currentTotalWithdrawn = data.totalWithdrawn || 0;
-        
-        await userRef.set({
-          withdrawalRequests: newWithdrawals,
-          totalWithdrawn: currentTotalWithdrawn + withdrawal.amount
-        }, { merge: true });
-        
-        showToast(translations[currentLang].approved);
-        await loadAdmin();
+        showToast('✅ Çekim onaylandı!');
+        loadAdmin();
       } catch (error) {
-        showToast(translations[currentLang].error + error.message);
+        showToast('❌ Hata: ' + error.message);
       }
     }
     
-    async function rejectWithdrawal(targetUserDocId, withdrawalId) {
+    async function rejectWithdrawal(withdrawalId, targetUserId) {
       try {
-        const userRef = db.collection('users').doc(targetUserDocId);
-        const doc = await userRef.get();
-        
-        if (!doc.exists) { 
-          alert(currentLang === 'tr' ? 'Kullanıcı bulunamadı!' : 'User not found!'); 
-          return; 
-        }
-        
-        const data = doc.data();
-        const withdrawalRequests = data.withdrawalRequests || [];
-        const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
-        
-        await userRef.set({ withdrawalRequests: newWithdrawals }, { merge: true });
-        
-        showToast(translations[currentLang].rejected);
-        await loadAdmin();
+        await db.collection('users').doc(targetUserId).collection('withdrawals').doc(withdrawalId).delete();
+        showToast('❌ Çekim reddedildi!');
+        loadAdmin();
       } catch (error) {
-        showToast(translations[currentLang].error + error.message);
+        showToast('❌ Hata: ' + error.message);
       }
     }
     
     function showPage(page) {
       document.querySelectorAll('.container > div').forEach(c => c.classList.add('hidden'));
       const pageEl = document.getElementById('page-' + page);
-      if (pageEl) {
-        pageEl.classList.remove('hidden');
-      }
+      if (pageEl) pageEl.classList.remove('hidden');
       
-      if (page === 'withdraw') {
-        updateCryptoAmount();
-      } else if (page === 'admin') {
-        loadAdmin();
-      } else if (page === 'profile') {
+      if (page === 'withdraw') updateCryptoAmount();
+      else if (page === 'admin') loadAdmin();
+      else if (page === 'profile') {
         if (currentUser) {
-          const profileNameEl = document.getElementById('profileName');
-          const profileIdEl = document.getElementById('profileId');
-          if (profileNameEl) profileNameEl.textContent = currentUser.first_name || 'Miner';
-          if (profileIdEl) profileIdEl.textContent = 'ID: ' + (currentUser.id || '---');
+          document.getElementById('profileName').textContent = currentUser.first_name || 'Miner';
+          document.getElementById('profileId').textContent = 'ID: ' + (currentUser.id || '---');
         }
-      } else if (page === 'buy') {
-        calculateTRX();
-      }
+      } else if (page === 'buy') calculateTRX();
       
       window.scrollTo(0, 0);
     }
     
-    function createGem() {
-      if (products.length === 0) return;
-      
-      const scene = document.getElementById('miningScene');
-      if (!scene) return;
-      
-      const gem = document.createElement('div');
-      gem.className = 'gem-float';
-      gem.textContent = ['💎', '💰', '✨', '⭐'][Math.floor(Math.random() * 4)];
-      gem.style.left = (60 + Math.random() * 20) + '%';
-      gem.style.bottom = '40px';
-      scene.appendChild(gem);
-      
-      setTimeout(() => gem.remove(), 2500);
-    }
-    
-    try {
-      const savedLang = localStorage.getItem('selectedLang');
-      if (savedLang && translations[savedLang]) {
-        currentLang = savedLang;
-      }
-    } catch(e) {}
-    
     setTimeout(() => changeLanguage(currentLang), 100);
+    initApp();
   </script>
 </body>
 </html>
