@@ -30,8 +30,8 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 .status-dot{width:10px;height:10px;border-radius:50%;background:#B6410F;animation:pulse 2s infinite}
 .status-dot.active{background:#D59D80}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:2px solid rgba(192,117,77,.3)}
-.tab{flex:1;padding:12px;background:transparent;border:none;border-bottom:3px solid transparent;color:#C6C6D0;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
+.tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:2px solid rgba(192,117,77,.3);flex-wrap:wrap}
+.tab{flex:1;padding:12px;background:transparent;border:none;border-bottom:3px solid transparent;color:#C6C6D0;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;white-space:nowrap}
 .tab:hover{color:#fff}
 .tab.active{color:#D59D80;border-bottom-color:#D59D80}
 .tab .count{background:#C0754D;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:6px}
@@ -63,7 +63,7 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 .badge-pending{background:#C0754D;color:#fff}
 .badge-error{background:#B6410F;color:#fff}
 
-/* KUR GÜNCELLEME KARTI */
+/* KUR GÜNCELLEME & KULLANICI TABLOSU */
 .rate-card{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .rate-card h3{color:#D59D80;font-size:14px;margin-bottom:12px}
 .rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
@@ -74,19 +74,32 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 .rate-box input:focus{outline:none;border-color:#D59D80}
 .rate-actions{display:flex;gap:8px;flex-wrap:wrap}
 .rate-info{font-size:11px;color:#C6C6D0;opacity:.7;margin-top:8px}
+
+.users-table-container{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.4);overflow-x:auto}
+.users-table{width:100%;border-collapse:collapse;font-size:12px;color:#C6C6D0}
+.users-table th{background:rgba(192,117,77,0.2);text-align:left;padding:12px;font-weight:700;color:#D59D80;border-bottom:2px solid rgba(192,117,77,.3)}
+.users-table td{padding:12px;border-bottom:1px solid rgba(192,117,77,.1)}
+.users-table tr:hover{background:rgba(192,117,77,0.05)}
+.user-id{font-weight:bold;color:#D59D80}
+.user-city{font-size:10px;opacity:.6}
+.val-balance{color:#fff}
+.val-bonus{color:#fbbf24}
+.val-invested{color:#10b981}
+.val-withdrawn{color:#ef4444}
+
 @media(max-width:600px){body{padding:10px}.header h1{font-size:18px}.test-buttons{grid-template-columns:1fr}.rate-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="header">
-<h1>🔐 Admin Panel</h1>
+<h1> Admin Panel</h1>
 <div class="subtitle">Hash Power Mining - Yönetim Merkezi</div>
 </div>
 
 <!-- KUR GÜNCELLEME -->
 <div class="rate-card">
-<h3> Coin Kurları (Otomatik & Manuel Güncelleme)</h3>
+<h3>💱 Coin Kurları (Otomatik & Manuel)</h3>
 <div class="rate-grid">
 <div class="rate-box">
 <div class="coin-name">TRX (TRON)</div>
@@ -105,9 +118,9 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 </div>
 </div>
 <div class="rate-actions">
-<button class="btn btn-success" onclick="autoUpdateRates()">🔄 Otomatik Güncelle (CoinGecko)</button>
+<button class="btn btn-success" onclick="autoUpdateRates()">🔄 Otomatik Güncelle</button>
 <button class="btn" onclick="manualUpdateRates()">✏️ Manuel Güncelle</button>
-<button class="btn btn-secondary" onclick="loadCurrentRates()"> Mevcut Kurları Yükle</button>
+<button class="btn btn-secondary" onclick="loadCurrentRates()">📊 Mevcut Kurları Yükle</button>
 </div>
 <div class="rate-info">Son güncelleme: <span id="lastUpdate">-</span></div>
 </div>
@@ -132,10 +145,10 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 </div>
 
 <div class="test-section">
-<h3>🧪 Test Bildirimleri</h3>
+<h3> Test Bildirimleri</h3>
 <div class="test-buttons">
-<button class="btn btn-success btn-sm" onclick="sendTestNotification('deposit')">💰 Test Yatırım</button>
-<button class="btn btn-danger btn-sm" onclick="sendTestNotification('withdraw')"> Test Çekim</button>
+<button class="btn btn-success btn-sm" onclick="sendTestNotification('deposit')"> Test Yatırım</button>
+<button class="btn btn-danger btn-sm" onclick="sendTestNotification('withdraw')">💸 Test Çekim</button>
 <button class="btn btn-sm" onclick="sendTestNotification('approve')">✅ Test Onay</button>
 <button class="btn btn-secondary btn-sm" onclick="sendTestNotification('reject')">❌ Test Red</button>
 </div>
@@ -144,11 +157,32 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <div class="tabs">
 <button class="tab active" onclick="switchTab('deposits',this)">💳 Yatırımlar <span class="count" id="depositCount">0</span></button>
 <button class="tab" onclick="switchTab('withdrawals',this)">💸 Çekimler <span class="count" id="withdrawalCount">0</span></button>
+<button class="tab" onclick="switchTab('users',this)">👥 Kullanıcılar <span class="count" id="userCount">0</span></button>
 </div>
 
+<!-- Yatırım/Çekim İçeriği -->
 <div id="content">
 <div class="empty-state"><div class="icon">⏳</div><div>Yükleniyor...</div></div>
 </div>
+
+<!-- Kullanıcı Listesi İçeriği -->
+<div id="content-users" class="hidden users-table-container">
+<table class="users-table">
+<thead>
+<tr>
+<th>ID / Şehir</th>
+<th>Bakiye</th>
+<th>Bonus</th>
+<th>Yatırım</th>
+<th>Çekim</th>
+</tr>
+</thead>
+<tbody id="usersTableBody">
+<!-- Veriler JS ile dolacak -->
+</tbody>
+</table>
+</div>
+
 </div>
 
 <button class="refresh-btn" onclick="loadData()" title="Yenile">🔄</button>
@@ -186,7 +220,7 @@ loadData();
 setInterval(loadData,30000);
 });
 
-// 💱 KUR GÜNCELLEME FONKSİYONLARI
+// 💱 KUR GÜNCELLEME
 async function loadCurrentRates(){
 try{
 const d=await pricesRef.get();
@@ -209,13 +243,7 @@ addLog('info','CoinGecko\'dan kurlar çekiliyor...');
 try{
 const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron,binancecoin,ripple&vs_currencies=usd');
 const j=await r.json();
-const p={
-trx:j.tron?.usd||0.12,
-bnb:j.binancecoin?.usd||600,
-xrp:j.ripple?.usd||0.50,
-lastUpdated:Date.now(),
-source:'coingecko'
-};
+const p={trx:j.tron?.usd||0.12,bnb:j.binancecoin?.usd||600,xrp:j.ripple?.usd||0.50,lastUpdated:Date.now(),source:'coingecko'};
 await pricesRef.set(p,{merge:true});
 document.getElementById('currentTrx').textContent='$'+p.trx.toFixed(4);
 document.getElementById('currentBnb').textContent='$'+p.bnb.toFixed(2);
@@ -264,8 +292,8 @@ try{
 const r=await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
 const d=await r.json();
 if(d.ok){updateStatus(true,`✅ Bağlı: @${d.result.username}`);addLog('success',`Bot bağlantısı başarılı: @${d.result.username}`);alert(`✅ Bağlantı başarılı!\n\nBot: @${d.result.username}\nID: ${d.result.id}`)}
-else{updateStatus(false,'❌ Bağlantı başarısız');addLog('error','Bot bağlantısı başarısız: '+d.description);alert('❌ Bağlantı başarısız: '+d.description)}
-}catch(e){updateStatus(false,'❌ Bağlantı hatası');addLog('error','Bağlantı hatası: '+e.message);alert('❌ Bağlantı hatası: '+e.message)}
+else{updateStatus(false,' Bağlantı başarısız');addLog('error','Bot bağlantısı başarısız: '+d.description);alert('❌ Bağlantı başarısız: '+d.description)}
+}catch(e){updateStatus(false,' Bağlantı hatası');addLog('error','Bağlantı hatası: '+e.message);alert('❌ Bağlantı hatası: '+e.message)}
 }
 
 function updateStatus(a,t){
@@ -308,10 +336,10 @@ async function sendTestNotification(type){
 if(!botToken){alert('⚠️ Önce bot token ayarla!');return}
 let message='';
 switch(type){
-case'deposit':message=`🔔 <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n <b>Paket:</b> Ultra\n <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'deposit':message=` <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
 case'withdraw':message=`💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n📍 <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'reject':message=`❌ <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n💰 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'reject':message=`❌ <b>TEST: Yatırımın Reddedildi</b>\n\n <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
 }
 const s=await sendAdminNotification(message);
 if(s)alert('✅ Test bildirimi gönderildi! Telegram\'ını kontrol et.');
@@ -319,7 +347,8 @@ if(s)alert('✅ Test bildirimi gönderildi! Telegram\'ını kontrol et.');
 
 async function loadData(){
 if(currentTab==='deposits')await loadDeposits();
-else await loadWithdrawals();
+else if(currentTab==='withdrawals')await loadWithdrawals();
+else if(currentTab==='users')await loadUsers();
 }
 
 async function loadDeposits(){
@@ -355,13 +384,89 @@ let h='';
 p.forEach(w=>{
 const dt=w.timestamp?new Date(w.timestamp).toLocaleString('tr-TR'):'Bilinmiyor';
 const va=w.addressValidated?'<span class="badge badge-success">✓ Doğrulandı</span>':'<span class="badge badge-error">❌ Doğrulanmadı</span>';
-h+=`<div class="item-card withdrawal"><div class="item-header"><div class="item-amount">$${w.amount.toFixed(2)} = ${w.cryptoAmount} ${w.cryptoSymbol}</div><div class="item-user">${w.userName||'Bilinmiyor'} ${va}</div></div><div class="item-details"><strong> Coin:</strong> ${w.cryptoSymbol||w.crypto}<br><strong>🌐 Ağ:</strong> ${w.network||'-'}<br><strong> Cüzdan:</strong><br><code style="font-size:11px;word-break:break-all">${w.walletAddress}</code><br><strong>🆔 ID:</strong> ${w.userTelegramId||w.userId||'-'}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}','${w.cryptoAmount}','${w.cryptoSymbol}','${w.network}','${w.walletAddress}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}')">✕ Reddet</button></div></div>`;
+h+=`<div class="item-card withdrawal"><div class="item-header"><div class="item-amount">$${w.amount.toFixed(2)} = ${w.cryptoAmount} ${w.cryptoSymbol}</div><div class="item-user">${w.userName||'Bilinmiyor'} ${va}</div></div><div class="item-details"><strong>🪙 Coin:</strong> ${w.cryptoSymbol||w.crypto}<br><strong>🌐 Ağ:</strong> ${w.network||'-'}<br><strong>📍 Cüzdan:</strong><br><code style="font-size:11px;word-break:break-all">${w.walletAddress}</code><br><strong>🆔 ID:</strong> ${w.userTelegramId||w.userId||'-'}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}','${w.cryptoAmount}','${w.cryptoSymbol}','${w.network}','${w.walletAddress}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}')">✕ Reddet</button></div></div>`;
 });
 c.innerHTML=h;
 }catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Çekimler yüklenemedi: '+e.message)}
 }
 
-function switchTab(t,b){currentTab=t;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));b.classList.add('active');loadData()}
+// 👥 KULLANICI LİSTESİ
+async function loadUsers() {
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Yükleniyor...</td></tr>';
+    
+    try {
+        const snapshot = await db.collection('users').get();
+        const users = [];
+        
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            // Bakiye hesaplaması: lifetimeEarnings - totalWithdrawn
+            const balance = data.lifetimeEarnings ? (data.lifetimeEarnings - (data.totalWithdrawn || 0)).toFixed(2) : '0.00';
+            
+            users.push({
+                id: doc.id.substring(0, 8) + '...', 
+                fullId: doc.id,
+                balance: balance,
+                bonus: (data.bonusBalance || 0).toFixed(2),
+                invested: (data.totalInvested || 0).toFixed(2),
+                withdrawn: (data.totalWithdrawn || 0).toFixed(2),
+                city: data.city || 'Bilinmiyor'
+            });
+        });
+
+        document.getElementById('userCount').textContent = users.length;
+
+        if (users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Kayıtlı kullanıcı yok.</td></tr>';
+            return;
+        }
+
+        let html = '';
+        users.forEach(u => {
+            html += `
+            <tr>
+                <td>
+                    <div class="user-id">${u.id}</div>
+                    <div class="user-city">${u.city}</div>
+                </td>
+                <td class="val-balance">$${u.balance}</td>
+                <td class="val-bonus">$${u.bonus}</td>
+                <td class="val-invested">$${u.invested}</td>
+                <td class="val-withdrawn">$${u.withdrawn}</td>
+            </tr>`;
+        });
+        
+        tbody.innerHTML = html;
+
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#ef4444;">Hata: ${e.message}</td></tr>`;
+        addLog('error', 'Kullanıcı listesi yüklenemedi: ' + e.message);
+    }
+}
+
+function switchTab(t, b) {
+    currentTab = t;
+    
+    // Tüm tab butonlarını pasif yap
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    // Tıklananı aktif yap
+    b.classList.add('active');
+
+    // İçerikleri gizle/göster mantığı
+    const contentDiv = document.getElementById('content');
+    const usersDiv = document.getElementById('content-users');
+
+    if (t === 'users') {
+        contentDiv.classList.add('hidden');
+        usersDiv.classList.remove('hidden');
+        loadUsers(); // Kullanıcı listesini yükle
+    } else {
+        usersDiv.classList.add('hidden');
+        contentDiv.classList.remove('hidden');
+        loadData(); // Eski yatırımlar/çekimler yüklemesini yap
+    }
+}
 
 async function approvePayment(userDocId,paymentId,amount,userName,trxAmount,packageName){
 if(!confirm(`✅ $${amount.toFixed(2)} tutarlı yatırımı onaylamak istediğinize emin misiniz?\n\nKullanıcı: ${userName}`))return;
@@ -379,7 +484,7 @@ const np=pp.filter(p=>p.id!==paymentId);
 p.status='approved';p.approvedAt=Date.now();
 await ur.set({pendingPayments:np,approvedPayments:[...ap,p],totalInvested:(x.totalInvested||0)+p.amount},{merge:true});
 
-//  $3+ YATIRIM → $1 HOŞGELDİN BONUSU OTOMATİK AKTAR
+// 💰 $3+ YATIRIM → $1 HOŞGELDİN BONUSU OTOMATİK AKTAR
 if(amount >= 3 && x.welcomeBonusGiven && !x.welcomeBonusTransferred){
 const wb = x.bonusBalance || 0;
 if(wb >= 1){
@@ -414,7 +519,7 @@ addLog('success',`%10 komisyon: $${comm.toFixed(2)} → ${rdx.userName||rbd}`);
 
 // Kullanıcıya onay bildirimi
 if(p.userTelegramId){
-const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n💰 <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
+const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n💰 <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
 sendUserNotification(p.userTelegramId,um);
 }
 
@@ -442,7 +547,7 @@ sendUserNotification(p.userTelegramId,um);
 addLog('error',`Yatırım reddedildi: $${amount.toFixed(2)} - ${userName}`);
 alert('❌ Ödeme reddedildi!');
 loadData();
-}catch(e){addLog('error','Red hatası: '+e.message);alert('❌ Hata: '+e.message)}
+}catch(e){addLog('error','Red hatası: '+e.message);alert(' Hata: '+e.message)}
 }
 
 async function approveWithdrawal(userDocId,withdrawalId,amount,userName,cryptoAmount,cryptoSymbol,network,walletAddress){
@@ -462,7 +567,7 @@ nw.push(w);
 await ur.set({withdrawalRequests:nw},{merge:true});
 
 if(w.userTelegramId){
-const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n🪙 <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n📍 <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! 🎉`;
+const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n <b>Tutar:</b> $${w.amount.toFixed(2)}\n🪙 <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n📍 <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! 🎉`;
 sendUserNotification(w.userTelegramId,um);
 }
 
@@ -485,7 +590,7 @@ const nw=wr.filter(w=>w.id!==withdrawalId);
 const nl=(x.lifetimeEarnings||0)+amount;
 await ur.set({withdrawalRequests:nw,lifetimeEarnings:nl},{merge:true});
 if(w&&w.userTelegramId){
-const um=`❌ <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
+const um=`❌ <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
 sendUserNotification(w.userTelegramId,um);
 }
 addLog('error',`Çekim reddedildi: $${amount.toFixed(2)} - ${userName}`);
