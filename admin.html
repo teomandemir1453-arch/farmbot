@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Hash Mining - Admin Panel</title>
+<title>⚡ Hash Mining - Admin Panel</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -117,7 +117,7 @@
   <button class="refresh-btn" onclick="loadData()" title="Yenile">🔄</button>
   
   <div style="margin-top: 20px;">
-    <h3 style="color: #94a3b8; font-size: 13px; margin-bottom: 8px;"> İşlem Geçmişi</h3>
+    <h3 style="color: #94a3b8; font-size: 13px; margin-bottom: 8px;">📋 İşlem Geçmişi</h3>
     <div class="log-container" id="logContainer">
       <div class="log-entry"><span class="log-time">--:--</span><span class="log-info">Sistem hazır</span></div>
     </div>
@@ -135,7 +135,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     
-    // 🤖 BOT SİSTEMİ
     const NOTIFY_BOT_USERNAME = "hashmining_notify_bot";
     const NOTIFY_BOT_TOKEN = "8745298504:AAF7_8B-Jswwzat39FjiFRbQU5tuMGWe83w";
     let botToken = localStorage.getItem('botToken') || '8759495457:AAF_ogmc63yXDtuUVidJwZPCaMXdFzx7VEg';
@@ -196,7 +195,7 @@
       } catch (error) {
         updateStatus(false, '❌ Bağlantı hatası');
         addLog('error', 'Bağlantı hatası: ' + error.message);
-        alert('❌ Bağlantı hatası: ' + error.message);
+        alert(' Bağlantı hatası: ' + error.message);
       }
     }
     
@@ -232,7 +231,6 @@
       } catch (error) { addLog('error', 'Gönderme hatası: ' + error.message); return false; }
     }
     
-    // ✅ KULLANICIYA BİLDİRİM GÖNDER
     async function sendUserNotification(userTelegramId, message) {
       if (!NOTIFY_BOT_TOKEN || !userTelegramId) {
         console.log('Kullanıcı Telegram ID yok veya bot token yok');
@@ -251,23 +249,23 @@
         console.log('✅ Kullanıcıya bildirim gönderildi:', userTelegramId);
         addLog('success', `Kullanıcıya bildirim: ${userTelegramId}`);
       } catch (error) {
-        console.error(' Kullanıcı bildirim hatası:', error);
+        console.error('❌ Kullanıcı bildirim hatası:', error);
         addLog('error', 'Kullanıcı bildirim hatası: ' + error.message);
       }
     }
     
     async function sendTestNotification(type) {
-      if (!botToken) { alert(' Önce bot token ayarla!'); return; }
+      if (!botToken) { alert('️ Önce bot token ayarla!'); return; }
       let message = '';
       switch(type) {
         case 'deposit':
-          message = ` <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;
+          message = `🔔 <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;
           break;
         case 'withdraw':
-          message = `💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n <b>Ağ:</b> TRON (TRC20)\n📍 <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;
+          message = `💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n📍 <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;
           break;
         case 'approve':
-          message = `✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n💰 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;
+          message = `✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n💰 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;
           break;
         case 'reject':
           message = `❌ <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;
@@ -309,7 +307,7 @@
     
     async function loadWithdrawals() {
       const content = document.getElementById('content');
-      content.innerHTML = '<div class="empty-state"><div class="icon">⏳</div><div class="text">Yükleniyor...</div></div>';
+      content.innerHTML = '<div class="empty-state"><div class="icon"></div><div class="text">Yükleniyor...</div></div>';
       try {
         const snapshot = await db.collection('users').get();
         const pending = [];
@@ -359,9 +357,8 @@
           totalInvested: (data.totalInvested || 0) + payment.amount 
         }, { merge: true });
         
-        // ✅ KULLANICIYA BİLDİRİM GÖNDER
         if (payment.userTelegramId) {
-          const userMessage = `✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${payment.packageName || 'Manuel Yatırım'}\n💰 <b>Yatırdığınız Tutar:</b> $${payment.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${payment.trxAmount || '-'} TRX\n🌐 <b>Ağ:</b> ${payment.network || 'TRON (TRC20)'}\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(payment.amount * (1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(payment.amount * 2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
+          const userMessage = `✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${payment.packageName || 'Manuel Yatırım'}\n💰 <b>Yatırdığınız Tutar:</b> $${payment.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${payment.trxAmount || '-'} TRX\n🌐 <b>Ağ:</b> ${payment.network || 'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(payment.amount * (1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(payment.amount * 2).toFixed(2)}\n\nİyi kazançlar! `;
           sendUserNotification(payment.userTelegramId, userMessage);
         }
         
@@ -392,6 +389,7 @@
       } catch (error) { addLog('error', 'Red hatası: ' + error.message); alert('❌ Hata: ' + error.message); }
     }
     
+    // ✅ DÜZELTİLDİ: Onayda bakiye tekrar düşmüyor, sadece status güncelleniyor
     async function approveWithdrawal(userDocId, withdrawalId, amount, userName, cryptoAmount, cryptoSymbol, network, walletAddress) {
       if (!confirm(`✅ $${amount.toFixed(2)} tutarlı çekimi onaylamak istediğinize emin misiniz?\n\nKullanıcı: ${userName}\nCüzdan: ${walletAddress}`)) return;
       try {
@@ -403,12 +401,18 @@
         const withdrawalIndex = withdrawalRequests.findIndex(w => w.id === withdrawalId);
         if (withdrawalIndex === -1) return;
         const withdrawal = withdrawalRequests[withdrawalIndex];
+        
+        // ✅ SADECE status güncelle - bakiyeye dokunma!
+        // (Bakiye zaten talepte düştü, şimdi sadece onay durumunu kaydediyoruz)
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         withdrawal.status = 'approved';
         withdrawal.approvedAt = Date.now();
         newWithdrawals.push(withdrawal);
-        const currentTotalWithdrawn = data.totalWithdrawn || 0;
-        await userRef.set({ withdrawalRequests: newWithdrawals, totalWithdrawn: currentTotalWithdrawn + withdrawal.amount }, { merge: true });
+        
+        // ✅ SADECE withdrawalRequests güncelleniyor, lifetimeEarnings ve totalWithdrawn'a dokunulmuyor
+        await userRef.set({ 
+          withdrawalRequests: newWithdrawals
+        }, { merge: true });
         
         // ✅ KULLANICIYA BİLDİRİM GÖNDER
         if (withdrawal.userTelegramId) {
@@ -433,7 +437,7 @@
         const withdrawal = withdrawalRequests.find(w => w.id === withdrawalId);
         const newWithdrawals = withdrawalRequests.filter(w => w.id !== withdrawalId);
         
-        // ✅ BAKİYEYE GERİ EKLE
+        // ✅ BAKİYEYE GERİ EKLE (reddedilen çekim)
         const newLifetimeEarnings = (data.lifetimeEarnings || 0) + amount;
         
         await userRef.set({ 
@@ -442,7 +446,7 @@
         }, { merge: true });
         
         if (withdrawal && withdrawal.userTelegramId) {
-          const userMessage = `❌ <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${withdrawal.amount.toFixed(2)}\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
+          const userMessage = `❌ <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${withdrawal.amount.toFixed(2)}\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
           sendUserNotification(withdrawal.userTelegramId, userMessage);
         }
         addLog('error', `Çekim reddedildi: $${amount.toFixed(2)} - ${userName}`);
