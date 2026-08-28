@@ -10,274 +10,314 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);color:#C6C6D0;padding:10px;padding-bottom:calc(75px + env(safe-area-inset-bottom));min-height:100vh}
-.container{max-width:600px;margin:0 auto;position:relative;z-index:1}
-.card{background:#104C64;border-radius:16px;padding:15px;margin-bottom:12px;border:1px solid rgba(192,117,77,0.3);box-shadow:0 10px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05)}
+body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);color:#C6C6D0;padding:8px;padding-bottom:calc(70px + env(safe-area-inset-bottom));min-height:100vh;font-size:14px}
+.container{max-width:600px;margin:0 auto}
+.card{background:#104C64;border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(192,117,77,0.3);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
 .hidden{display:none !important}
-h1{text-align:center;color:#C6C6D0;margin-bottom:15px;font-size:22px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
-h2{color:#C6C6D0;margin-bottom:12px;font-size:20px;font-weight:700;text-shadow:0 2px 6px rgba(0,0,0,0.4)}
-h3{color:#D59D80;margin:12px 0 8px 0;font-size:14px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
-.stat-box{border-radius:12px;padding:12px 6px;text-align:center;border:1px solid rgba(255,255,255,0.1);position:relative;overflow:hidden}
-.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,0.15),transparent);pointer-events:none}
-.stat-box:nth-child(1){background:linear-gradient(135deg,#D59D80,#C0754D);box-shadow:0 8px 24px rgba(213,157,128,0.4),0 4px 12px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
-.stat-box:nth-child(2){background:linear-gradient(135deg,#1a5a78,#0D1D25);box-shadow:0 8px 24px rgba(26,90,120,0.5),0 4px 12px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1)}
-.stat-box:nth-child(3){background:linear-gradient(135deg,#B6410F,#C0754D);box-shadow:0 8px 24px rgba(182,65,15,0.5),0 4px 12px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2)}
-.stat-box .label{font-size:10px;color:white;margin-bottom:4px;font-weight:700;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,0.4);position:relative;z-index:1}
-.stat-box .value{font-size:16px;font-weight:800;color:white;text-shadow:0 2px 6px rgba(0,0,0,0.4);position:relative;z-index:1}
-@keyframes countUp{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
-.stat-box .value.updating{animation:countUp 0.4s ease}
-.quick-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.quick-action-btn{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:10px;padding:10px 6px;cursor:pointer;transition:all 0.2s;position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:0 6px 20px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)}
+h1{text-align:center;color:#C6C6D0;margin-bottom:12px;font-size:20px;font-weight:800}
+h2{color:#C6C6D0;margin-bottom:10px;font-size:18px;font-weight:700}
+h3{color:#D59D80;margin:10px 0 6px 0;font-size:13px;font-weight:700}
+
+/* Stats Grid - Eski Düzen */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.stat-box{background:#0D1D25;border-radius:8px;padding:10px 4px;text-align:center;border:1px solid rgba(192,117,77,0.3)}
+.stat-box:nth-child(1){border-color:#D59D80}
+.stat-box:nth-child(2){border-color:#C0754D}
+.stat-box:nth-child(3){border-color:#B6410F}
+.stat-box .label{font-size:9px;color:#C6C6D0;opacity:0.8;margin-bottom:3px;font-weight:700;text-transform:uppercase}
+.stat-box .value{font-size:14px;font-weight:800;color:#D59D80}
+
+/* Quick Actions - Eski Düzen */
+.quick-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.quick-action-btn{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:8px 4px;cursor:pointer;transition:all 0.2s;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px}
 .quick-action-btn:active{transform:scale(0.95)}
-.quick-action-btn .qa-icon{font-size:20px}
-.quick-action-btn .qa-label{font-size:9px;font-weight:700;color:#C6C6D0;text-transform:uppercase}
-.quick-action-btn.notif-btn{border-color:rgba(213,157,128,0.5);background:linear-gradient(135deg,rgba(213,157,128,0.15),rgba(192,117,77,0.1))}
-.quick-action-btn.bonus-btn{border-color:rgba(192,117,77,0.5);background:linear-gradient(135deg,rgba(192,117,77,0.15),rgba(182,65,15,0.1))}
-.quick-action-btn.tasks-btn{border-color:rgba(198,198,208,0.3);background:linear-gradient(135deg,rgba(198,198,208,0.08),rgba(16,76,100,0.2))}
-.qa-badge{position:absolute;top:-6px;right:-6px;background:#B6410F;color:white;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #104C64;box-shadow:0 4px 12px rgba(182,65,15,0.6);animation:badgePulse 1.5s ease-in-out infinite}
+.quick-action-btn .qa-icon{font-size:18px}
+.quick-action-btn .qa-label{font-size:8px;font-weight:700;color:#C6C6D0;text-transform:uppercase}
+.quick-action-btn.notif-btn{border-color:rgba(213,157,128,0.5)}
+.quick-action-btn.bonus-btn{border-color:rgba(192,117,77,0.5)}
+.quick-action-btn.tasks-btn{border-color:rgba(198,198,208,0.3)}
+.qa-badge{position:absolute;top:-5px;right:-5px;background:#B6410F;color:white;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid #104C64;animation:badgePulse 1.5s ease-in-out infinite}
 @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .qa-badge.hidden{display:none}
-.bonus-card{background:linear-gradient(135deg,#D59D80,#C0754D);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:12px;margin:12px 0;box-shadow:0 12px 40px rgba(213,157,128,0.4),inset 0 1px 0 rgba(255,255,255,0.3)}
-.bonus-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.bonus-title{font-size:13px;font-weight:800;color:white;text-shadow:0 2px 4px rgba(0,0,0,0.3)}
-.bonus-amount{font-size:20px;font-weight:800;color:white;text-shadow:0 2px 6px rgba(0,0,0,0.4)}
-.bonus-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
-.bonus-item{background:rgba(255,255,255,0.15);border-radius:8px;padding:6px 4px;text-align:center;border:1px solid rgba(255,255,255,0.2);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2)}
-.bonus-item .bi-label{font-size:8px;color:white;font-weight:700;text-transform:uppercase}
-.bonus-item .bi-value{font-size:11px;font-weight:800;color:white;margin-top:2px}
-.bonus-withdraw-btn{background:linear-gradient(135deg,#B6410F,#C0754D);color:white;border:none;padding:10px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;width:100%;box-shadow:0 6px 20px rgba(182,65,15,0.5),inset 0 1px 0 rgba(255,255,255,0.2);transition:all 0.2s}
-.bonus-withdraw-btn:active{transform:translateY(2px)}
+
+/* Bonus Card - Kompakt */
+.bonus-card{background:linear-gradient(135deg,#D59D80,#C0754D);border-radius:10px;padding:10px;margin:10px 0}
+.bonus-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.bonus-title{font-size:12px;font-weight:800;color:white}
+.bonus-amount{font-size:18px;font-weight:800;color:white}
+.bonus-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px}
+.bonus-item{background:rgba(255,255,255,0.15);border-radius:6px;padding:5px 3px;text-align:center}
+.bonus-item .bi-label{font-size:7px;color:white;font-weight:700;text-transform:uppercase}
+.bonus-item .bi-value{font-size:10px;font-weight:800;color:white;margin-top:1px}
+.bonus-withdraw-btn{background:linear-gradient(135deg,#B6410F,#C0754D);color:white;border:none;padding:8px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;width:100%}
 .bonus-withdraw-btn:disabled{background:#0D1D25;color:#C6C6D0;cursor:not-allowed}
-.bonus-lock-info{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px;font-size:10px;color:white;text-align:center;margin-top:8px;display:none}
+.bonus-lock-info{background:rgba(0,0,0,0.4);border-radius:6px;padding:6px;font-size:9px;color:white;text-align:center;margin-top:6px;display:none}
 .bonus-lock-info.show{display:block}
-.earnings-estimate{background:linear-gradient(135deg,#104C64,#0D1D25);border:1px solid rgba(213,157,128,0.4);border-radius:14px;padding:12px;margin:12px 0;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-.earnings-title{text-align:center;font-size:13px;font-weight:800;color:#D59D80;margin-bottom:10px}
-.earnings-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.earnings-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:10px;padding:8px 4px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05)}
-.earnings-item .icon{font-size:16px;margin-bottom:3px}
-.earnings-item .label{font-size:9px;color:#C6C6D0;opacity:0.8;font-weight:700;text-transform:uppercase;margin-bottom:3px}
-.earnings-item .value{font-size:13px;font-weight:800;color:#D59D80}
-.telegram-notif-card{background:linear-gradient(135deg,#C0754D,#B6410F);border-radius:12px;padding:14px;margin:12px 0;color:white;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 10px 30px rgba(182,65,15,0.4);transition:all 0.2s}
+
+/* Earnings - Kompakt */
+.earnings-estimate{background:#0D1D25;border:1px solid rgba(213,157,128,0.4);border-radius:10px;padding:10px;margin:10px 0}
+.earnings-title{text-align:center;font-size:12px;font-weight:800;color:#D59D80;margin-bottom:8px}
+.earnings-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.earnings-item{background:#104C64;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:6px 3px;text-align:center}
+.earnings-item .icon{font-size:14px;margin-bottom:2px}
+.earnings-item .label{font-size:8px;color:#C6C6D0;opacity:0.8;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.earnings-item .value{font-size:12px;font-weight:800;color:#D59D80}
+
+/* Telegram Card */
+.telegram-notif-card{background:linear-gradient(135deg,#C0754D,#B6410F);border-radius:10px;padding:12px;margin:10px 0;color:white;display:flex;align-items:center;gap:10px;cursor:pointer}
 .telegram-notif-card:active{transform:scale(0.98)}
-.telegram-notif-card.inactive{background:linear-gradient(135deg,#104C64,#0D1D25);border:1px solid rgba(198,198,208,0.3);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
-.telegram-icon{font-size:28px}
+.telegram-notif-card.inactive{background:#0D1D25;border:1px solid rgba(198,198,208,0.3)}
+.telegram-icon{font-size:24px}
 .telegram-content{flex:1}
-.telegram-title{font-size:14px;font-weight:800;margin-bottom:2px;color:white}
-.telegram-desc{font-size:11px;opacity:0.95;color:white}
-.telegram-check{font-size:24px;font-weight:bold;color:white}
-.packages-section-title{text-align:center;font-size:15px;font-weight:800;color:#D59D80;margin:16px 0 12px 0}
-.packages-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.package-card{background:#104C64;border-radius:12px;padding:12px;cursor:pointer;border:1px solid rgba(192,117,77,0.4);box-shadow:0 6px 20px rgba(0,0,0,0.3);transition:all 0.3s ease;position:relative}
+.telegram-title{font-size:13px;font-weight:800;color:white;margin-bottom:1px}
+.telegram-desc{font-size:10px;opacity:0.95;color:white}
+.telegram-check{font-size:20px;font-weight:bold;color:white}
+
+/* Packages - Eski Düzen 2 sütun */
+.packages-section-title{text-align:center;font-size:14px;font-weight:800;color:#D59D80;margin:14px 0 10px 0}
+.packages-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.package-card{background:#0D1D25;border-radius:10px;padding:10px;cursor:pointer;border:1px solid rgba(192,117,77,0.4);transition:all 0.2s;position:relative}
 .package-card:active{transform:scale(0.97)}
-.package-card:hover{border-color:rgba(213,157,128,0.6);transform:translateY(-2px)}
 .package-card:nth-child(3){background:linear-gradient(135deg,#C0754D,#B6410F)}
-.package-card.featured::before{content:'⭐';position:absolute;top:6px;right:8px;font-size:16px}
-.package-name{font-size:14px;font-weight:800;color:#C6C6D0;text-align:center;margin-bottom:6px}
-.discount-badge{background:#B6410F;color:white;font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;display:inline-block;margin-bottom:6px}
-.package-pricing{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:6px}
-.original-price{font-size:11px;color:#C6C6D0;opacity:0.6;text-decoration:line-through}
-.discounted-price{font-size:18px;font-weight:800;color:#D59D80}
-.package-savings{font-size:10px;color:white;font-weight:700;background:rgba(182,65,15,0.6);padding:4px 8px;border-radius:6px;text-align:center;margin-bottom:6px}
-.package-cta{font-size:11px;color:#D59D80;font-weight:700;text-align:center}
-.calc-main-btn{background:linear-gradient(135deg,#D59D80,#C0754D,#B6410F);color:white;border:none;padding:14px 20px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;width:100%;margin:12px 0;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 30px rgba(213,157,128,0.4);transition:all 0.2s}
-.calc-main-btn:active{transform:translateY(2px)}
-.calc-main-btn:hover{transform:translateY(-2px)}
-input,select{padding:12px;border:1px solid rgba(192,117,77,0.4);border-radius:10px;width:100%;margin:6px 0 12px 0;font-size:15px;background:#0D1D25;color:#C6C6D0;box-shadow:inset 0 2px 4px rgba(0,0,0,0.4)}
-input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px rgba(213,157,128,0.2)}
-.btn{background:linear-gradient(135deg,#C0754D,#B6410F);color:white;border:none;padding:14px 20px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:800;margin:6px 0;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 24px rgba(192,117,77,0.4);transition:all 0.2s}
-.btn:active{transform:translateY(2px)}
+.package-card.featured::before{content:'⭐';position:absolute;top:4px;right:6px;font-size:14px}
+.package-name{font-size:13px;font-weight:800;color:#C6C6D0;text-align:center;margin-bottom:4px}
+.discount-badge{background:#B6410F;color:white;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:4px}
+.package-pricing{display:flex;flex-direction:column;align-items:center;gap:1px;margin-bottom:4px}
+.original-price{font-size:10px;color:#C6C6D0;opacity:0.6;text-decoration:line-through}
+.discounted-price{font-size:16px;font-weight:800;color:#D59D80}
+.package-savings{font-size:9px;color:white;font-weight:700;background:rgba(182,65,15,0.6);padding:3px 6px;border-radius:5px;text-align:center;margin-bottom:4px}
+.package-cta{font-size:10px;color:#D59D80;font-weight:700;text-align:center}
+
+.calc-main-btn{background:linear-gradient(135deg,#D59D80,#C0754D,#B6410F);color:white;border:none;padding:12px 16px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;width:100%;margin:10px 0;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* Inputs - Kompakt */
+input,select{padding:10px;border:1px solid rgba(192,117,77,0.4);border-radius:8px;width:100%;margin:4px 0 8px 0;font-size:14px;background:#0D1D25;color:#C6C6D0}
+input:focus,select:focus{outline:none;border-color:#D59D80}
+
+/* Buttons - Kompakt */
+.btn{background:linear-gradient(135deg,#C0754D,#B6410F);color:white;border:none;padding:12px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:800;margin:4px 0;width:100%;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(0.98)}
 .btn-approve{background:linear-gradient(135deg,#D59D80,#C0754D)}
 .btn-secondary{background:#0D1D25;border:1px solid rgba(198,198,208,0.3);color:#C6C6D0}
 .btn-withdraw{background:linear-gradient(135deg,#C0754D,#B6410F)}
-.btn-ctrl{width:48px;height:48px;padding:0;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0;border-radius:10px;background:linear-gradient(135deg,#C0754D,#B6410F);color:white;border:none}
-.btn-ctrl:active{transform:scale(0.95)}
-.crypto-info{background:#0D1D25;padding:12px;border-radius:10px;margin:10px 0;font-size:13px;border:1px solid rgba(192,117,77,0.4);color:#C6C6D0;line-height:1.5}
+.btn-ctrl{width:44px;height:44px;padding:0;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0;border-radius:8px;background:linear-gradient(135deg,#C0754D,#B6410F);color:white;border:none}
+
+.crypto-info{background:#0D1D25;padding:10px;border-radius:8px;margin:8px 0;font-size:12px;border:1px solid rgba(192,117,77,0.4);color:#C6C6D0;line-height:1.4}
 .crypto-info strong{color:#D59D80}
-.network-badge{display:inline-block;background:#C0754D;color:white;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-top:5px}
-.balance-display{background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:18px;border-radius:12px;text-align:center;margin:10px 0;box-shadow:0 12px 32px rgba(213,157,128,0.4)}
-.balance-display .amount{font-size:32px;font-weight:800;margin-top:4px;color:white}
-.network-info{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:8px;margin:8px 0;font-size:11px;color:#D59D80}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,#0D1D25,#0a1519);display:flex;justify-content:space-around;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom));border-top:1px solid rgba(192,117,77,0.3);box-shadow:0 -8px 32px rgba(0,0,0,0.6);z-index:1000}
-.nav-item{flex:1;text-align:center;padding:6px 4px;cursor:pointer;color:#C6C6D0;font-size:10px;font-weight:700;transition:all 0.2s}
+.network-badge{display:inline-block;background:#C0754D;color:white;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:4px}
+.balance-display{background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:14px;border-radius:10px;text-align:center;margin:8px 0}
+.balance-display .amount{font-size:28px;font-weight:800;margin-top:2px;color:white}
+.network-info{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:6px;padding:6px;margin:6px 0;font-size:10px;color:#D59D80}
+
+/* Bottom Nav - Eski Düzen */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0D1D25;display:flex;justify-content:space-around;padding:6px 0;padding-bottom:calc(6px + env(safe-area-inset-bottom));border-top:1px solid rgba(192,117,77,0.3);z-index:1000}
+.nav-item{flex:1;text-align:center;padding:4px 2px;cursor:pointer;color:#C6C6D0;font-size:9px;font-weight:700}
 .nav-item.active{color:#D59D80}
-.nav-item .icon{font-size:22px;display:block;margin-bottom:2px}
-.history-section{margin-top:15px;border-top:1px solid rgba(192,117,77,0.3);padding-top:12px}
-.history-title{font-size:13px;font-weight:800;color:#D59D80;margin-bottom:8px}
-.history-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:8px;padding:10px;margin-bottom:6px;font-size:12px;color:#C6C6D0}
-.history-item .h-row{display:flex;justify-content:space-between;margin-bottom:3px}
+.nav-item .icon{font-size:20px;display:block;margin-bottom:1px}
+
+/* History - Kompakt */
+.history-section{margin-top:12px;border-top:1px solid rgba(192,117,77,0.3);padding-top:10px}
+.history-title{font-size:12px;font-weight:800;color:#D59D80;margin-bottom:6px}
+.history-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:6px;padding:8px;margin-bottom:4px;font-size:11px;color:#C6C6D0}
+.history-item .h-row{display:flex;justify-content:space-between;margin-bottom:2px}
 .history-item .h-label{color:#C6C6D0;opacity:0.8}
 .history-item .h-value{font-weight:700;color:#D59D80}
-.history-item .h-date{font-size:10px;color:#C6C6D0;opacity:0.6}
-.status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.status-badge{display:inline-block;padding:2px 6px;border-radius:8px;font-size:9px;font-weight:700}
 .status-badge.success{background:#D59D80;color:white}
 .status-badge.pending{background:#C0754D;color:white}
 .status-badge.rejected{background:#B6410F;color:white}
-.empty-history{text-align:center;color:#C6C6D0;opacity:0.6;font-size:12px;padding:15px}
-.profile-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.9);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:15px;opacity:0;visibility:hidden;transition:all 0.3s ease}
+.empty-history{text-align:center;color:#C6C6D0;opacity:0.6;font-size:11px;padding:10px}
+
+/* Profile - Kompakt */
+.profile-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.9);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:10px;opacity:0;visibility:hidden;transition:all 0.3s ease}
 .profile-overlay.show{opacity:1;visibility:visible}
-.profile-popup{background:#104C64;border-radius:20px;width:100%;max-width:420px;max-height:85vh;overflow-y:auto;border:1px solid rgba(192,117,77,0.3);box-shadow:0 24px 80px rgba(0,0,0,0.7)}
-.profile-header{background:linear-gradient(135deg,#C0754D,#B6410F);padding:20px;border-radius:19px 19px 0 0;position:relative;color:white}
-.profile-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.profile-avatar{width:70px;height:70px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 10px}
-.profile-name{font-size:18px;font-weight:800;text-align:center;color:white;margin-bottom:4px}
-.profile-id{font-size:11px;color:white;opacity:0.9;text-align:center}
-.profile-body{padding:15px;color:#C6C6D0}
-.profile-register-date{background:#0D1D25;border-radius:10px;padding:10px;text-align:center;font-size:12px;color:#C6C6D0;margin-bottom:12px;border:1px solid rgba(192,117,77,0.3)}
+.profile-popup{background:#104C64;border-radius:16px;width:100%;max-width:400px;max-height:90vh;overflow-y:auto;border:1px solid rgba(192,117,77,0.3)}
+.profile-header{background:linear-gradient(135deg,#C0754D,#B6410F);padding:16px;border-radius:15px 15px 0 0;position:relative;color:white}
+.profile-close{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.profile-avatar{width:60px;height:60px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 8px}
+.profile-name{font-size:16px;font-weight:800;text-align:center;color:white;margin-bottom:2px}
+.profile-id{font-size:10px;color:white;opacity:0.9;text-align:center}
+.profile-body{padding:12px;color:#C6C6D0}
+.profile-register-date{background:#0D1D25;border-radius:8px;padding:8px;text-align:center;font-size:11px;color:#C6C6D0;margin-bottom:10px;border:1px solid rgba(192,117,77,0.3)}
 .profile-register-date strong{color:#D59D80}
-.level-card{background:linear-gradient(135deg,#D59D80,#C0754D);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px;margin-bottom:12px}
-.level-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.level-badge{display:flex;align-items:center;gap:6px;font-weight:800;font-size:14px;color:white}
-.level-icon{font-size:22px}
-.level-progress-info{font-size:11px;color:white;font-weight:600}
-.level-progress-bar{height:8px;background:rgba(0,0,0,0.3);border-radius:10px;overflow:hidden}
-.level-progress-fill{height:100%;background:white;border-radius:10px;transition:width 0.5s ease}
-.profile-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.profile-stat{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:10px;padding:10px 8px;text-align:center}
-.profile-stat .p-icon{font-size:18px;margin-bottom:3px}
-.profile-stat .p-label{font-size:9px;color:#C6C6D0;opacity:0.8;font-weight:700;text-transform:uppercase}
-.profile-stat .p-value{font-size:14px;font-weight:800;color:#D59D80;margin-top:2px}
-.profile-menu{display:flex;flex-direction:column;gap:6px}
-.profile-menu-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:10px;padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.2s}
-.profile-menu-item:active{background:#104C64;transform:translateY(1px)}
-.profile-menu-item .m-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(192,117,77,0.2)}
+.level-card{background:linear-gradient(135deg,#D59D80,#C0754D);border-radius:10px;padding:10px;margin-bottom:10px}
+.level-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.level-badge{display:flex;align-items:center;gap:4px;font-weight:800;font-size:13px;color:white}
+.level-icon{font-size:20px}
+.level-progress-info{font-size:10px;color:white;font-weight:600}
+.level-progress-bar{height:6px;background:rgba(0,0,0,0.3);border-radius:8px;overflow:hidden}
+.level-progress-fill{height:100%;background:white;border-radius:8px;transition:width 0.5s ease}
+.profile-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.profile-stat{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:8px;padding:8px 6px;text-align:center}
+.profile-stat .p-icon{font-size:16px;margin-bottom:2px}
+.profile-stat .p-label{font-size:8px;color:#C6C6D0;opacity:0.8;font-weight:700;text-transform:uppercase}
+.profile-stat .p-value{font-size:13px;font-weight:800;color:#D59D80;margin-top:1px}
+.profile-menu{display:flex;flex-direction:column;gap:4px}
+.profile-menu-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.3);border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.profile-menu-item:active{background:#104C64}
+.profile-menu-item .m-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(192,117,77,0.2)}
 .profile-menu-item .m-content{flex:1}
-.profile-menu-item .m-title{font-size:13px;font-weight:700;color:#C6C6D0}
-.profile-menu-item .m-desc{font-size:10px;color:#C6C6D0;opacity:0.7;margin-top:1px}
-.profile-menu-item .m-arrow{color:#D59D80;font-size:18px}
+.profile-menu-item .m-title{font-size:12px;font-weight:700;color:#C6C6D0}
+.profile-menu-item .m-desc{font-size:9px;color:#C6C6D0;opacity:0.7;margin-top:1px}
+.profile-menu-item .m-arrow{color:#D59D80;font-size:16px}
+
+/* Sub Popup - Kompakt */
 .sub-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.9);backdrop-filter:blur(6px);z-index:3000;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:all 0.3s ease}
 .sub-overlay.show{opacity:1;visibility:visible}
-.sub-popup{background:#104C64;border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;padding:20px;border-top:1px solid rgba(192,117,77,0.4)}
-.sub-popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;padding-bottom:12px;border-bottom:1px solid rgba(192,117,77,0.3)}
-.sub-popup-title{font-size:18px;font-weight:800;color:#D59D80}
-.sub-popup-close{width:32px;height:32px;border-radius:50%;background:#0D1D25;border:1px solid rgba(192,117,77,0.4);font-size:16px;cursor:pointer;color:#C6C6D0;display:flex;align-items:center;justify-content:center}
-.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#0D1D25;border-radius:10px;margin-bottom:8px;border:1px solid rgba(192,117,77,0.3)}
-.toggle-row .t-label{font-size:13px;font-weight:600;color:#C6C6D0}
-.toggle-row .t-desc{font-size:11px;color:#C6C6D0;opacity:0.7;margin-top:2px}
-.toggle-switch{position:relative;width:48px;height:26px}
+.sub-popup{background:#104C64;border-radius:16px 16px 0 0;width:100%;max-width:400px;max-height:85vh;overflow-y:auto;padding:16px;border-top:1px solid rgba(192,117,77,0.4)}
+.sub-popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(192,117,77,0.3)}
+.sub-popup-title{font-size:16px;font-weight:800;color:#D59D80}
+.sub-popup-close{width:28px;height:28px;border-radius:50%;background:#0D1D25;border:1px solid rgba(192,117,77,0.4);font-size:14px;cursor:pointer;color:#C6C6D0;display:flex;align-items:center;justify-content:center}
+
+/* Toggle - Kompakt */
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#0D1D25;border-radius:8px;margin-bottom:6px;border:1px solid rgba(192,117,77,0.3)}
+.toggle-row .t-label{font-size:12px;font-weight:600;color:#C6C6D0}
+.toggle-row .t-desc{font-size:10px;color:#C6C6D0;opacity:0.7;margin-top:1px}
+.toggle-switch{position:relative;width:44px;height:24px}
 .toggle-switch input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#0D1D25;border-radius:26px;transition:0.3s;border:1px solid rgba(192,117,77,0.4)}
-.toggle-slider:before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#C6C6D0;border-radius:50%;transition:0.3s}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#0D1D25;border-radius:24px;transition:0.3s;border:1px solid rgba(192,117,77,0.4)}
+.toggle-slider:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#C6C6D0;border-radius:50%;transition:0.3s}
 .toggle-switch input:checked + .toggle-slider{background:#C0754D}
-.toggle-switch input:checked + .toggle-slider:before{transform:translateX(22px);background:white}
-.referral-box{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:12px;padding:15px;text-align:center;margin-bottom:12px}
-.referral-link{font-family:monospace;font-size:11px;color:#D59D80;background:#104C64;padding:8px;border-radius:8px;margin:8px 0;word-break:break-all;border:1px solid rgba(192,117,77,0.4)}
-.referral-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.ref-stat{background:#0D1D25;border-radius:8px;padding:10px;text-align:center;border:1px solid rgba(192,117,77,0.3)}
-.ref-stat .rs-value{font-size:18px;font-weight:800;color:#D59D80}
-.ref-stat .rs-label{font-size:10px;color:#C6C6D0;font-weight:600;margin-top:2px}
-.faq-item{background:#0D1D25;border-radius:10px;margin-bottom:8px;border:1px solid rgba(192,117,77,0.3)}
-.faq-question{padding:12px;font-size:13px;font-weight:700;color:#C6C6D0;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.faq-answer{padding:0 12px 12px;font-size:12px;color:#C6C6D0;opacity:0.8;line-height:1.5;display:none}
+.toggle-switch input:checked + .toggle-slider:before{transform:translateX(20px);background:white}
+
+/* Referral - Kompakt */
+.referral-box{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:10px;padding:12px;text-align:center;margin-bottom:10px}
+.referral-link{font-family:monospace;font-size:10px;color:#D59D80;background:#104C64;padding:6px;border-radius:6px;margin:6px 0;word-break:break-all;border:1px solid rgba(192,117,77,0.4)}
+.referral-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.ref-stat{background:#0D1D25;border-radius:6px;padding:8px;text-align:center;border:1px solid rgba(192,117,77,0.3)}
+.ref-stat .rs-value{font-size:16px;font-weight:800;color:#D59D80}
+.ref-stat .rs-label{font-size:9px;color:#C6C6D0;font-weight:600;margin-top:1px}
+
+/* FAQ - Kompakt */
+.faq-item{background:#0D1D25;border-radius:8px;margin-bottom:6px;border:1px solid rgba(192,117,77,0.3)}
+.faq-question{padding:10px;font-size:12px;font-weight:700;color:#C6C6D0;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-answer{padding:0 10px 10px;font-size:11px;color:#C6C6D0;opacity:0.8;line-height:1.4;display:none}
 .faq-item.open .faq-answer{display:block}
-.about-info{text-align:center;padding:20px;color:#C6C6D0}
-.about-logo{font-size:48px;margin-bottom:10px}
-.about-title{font-size:18px;font-weight:800;color:#D59D80;margin-bottom:4px}
-.about-version{font-size:12px;color:#C6C6D0;opacity:0.7;margin-bottom:15px}
-.about-desc{font-size:12px;color:#C6C6D0;line-height:1.6}
-.daily-bonus-card{background:linear-gradient(135deg,#D59D80,#C0754D);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:15px;text-align:center;margin-bottom:12px}
-.daily-bonus-card .db-icon{font-size:48px;margin-bottom:8px}
-.daily-bonus-card .db-title{font-size:16px;font-weight:800;color:white;margin-bottom:4px}
-.daily-bonus-card .db-amount{font-size:24px;font-weight:800;color:white;margin-bottom:4px}
-.daily-bonus-card .db-streak{font-size:12px;color:white;font-weight:600}
-.streak-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px}
-.streak-day{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:8px 4px;text-align:center}
-.streak-day .sd-num{font-size:10px;color:#C6C6D0;font-weight:700}
-.streak-day .sd-reward{font-size:11px;font-weight:800;color:#D59D80;margin-top:2px}
+
+/* Daily Bonus - Kompakt */
+.daily-bonus-card{background:linear-gradient(135deg,#D59D80,#C0754D);border-radius:10px;padding:12px;text-align:center;margin-bottom:10px}
+.daily-bonus-card .db-icon{font-size:40px;margin-bottom:6px}
+.daily-bonus-card .db-title{font-size:14px;font-weight:800;color:white;margin-bottom:2px}
+.daily-bonus-card .db-amount{font-size:20px;font-weight:800;color:white;margin-bottom:2px}
+.daily-bonus-card .db-streak{font-size:11px;color:white;font-weight:600}
+.streak-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px}
+.streak-day{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:6px;padding:6px 3px;text-align:center}
+.streak-day .sd-num{font-size:9px;color:#C6C6D0;font-weight:700}
+.streak-day .sd-reward{font-size:10px;font-weight:800;color:#D59D80;margin-top:1px}
 .streak-day.claimed{background:#C0754D;border-color:#D59D80}
 .streak-day.claimed .sd-reward{color:white}
 .streak-day.today{background:#D59D80;border-color:#B6410F;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.task-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+
+/* Tasks - Kompakt */
+.task-item{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:10px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
 .task-item.completed{background:linear-gradient(135deg,#D59D80,#C0754D);border-color:#D59D80}
-.task-item .task-icon{font-size:24px}
+.task-item .task-icon{font-size:20px}
 .task-item .task-content{flex:1}
-.task-item .task-title{font-size:13px;font-weight:700;color:#C6C6D0}
+.task-item .task-title{font-size:12px;font-weight:700;color:#C6C6D0}
 .task-item.completed .task-title{color:white}
-.task-item .task-desc{font-size:11px;color:#C6C6D0;opacity:0.7;margin-top:2px}
-.task-item .task-reward{font-size:12px;font-weight:800;color:#D59D80;margin-top:2px}
-.task-item .task-btn{padding:6px 12px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer}
+.task-item .task-desc{font-size:10px;color:#C6C6D0;opacity:0.7;margin-top:1px}
+.task-item .task-reward{font-size:11px;font-weight:800;color:#D59D80;margin-top:1px}
+.task-item .task-btn{padding:5px 10px;border-radius:6px;border:none;font-size:10px;font-weight:700;cursor:pointer}
 .task-item .task-btn.claim{background:#D59D80;color:white}
 .task-item .task-btn.done{background:rgba(255,255,255,0.3);color:white;cursor:default}
-.chart-container{background:#0D1D25;border-radius:12px;padding:15px;margin-bottom:12px;border:1px solid rgba(192,117,77,0.3)}
-.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.chart-title{font-size:13px;font-weight:700;color:#C6C6D0}
-.chart-period{display:flex;gap:4px}
-.chart-period button{padding:4px 10px;border-radius:6px;border:1px solid rgba(192,117,77,0.4);background:#104C64;font-size:10px;font-weight:600;cursor:pointer;color:#C6C6D0}
+
+/* Chart - Kompakt */
+.chart-container{background:#0D1D25;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid rgba(192,117,77,0.3)}
+.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.chart-title{font-size:12px;font-weight:700;color:#C6C6D0}
+.chart-period{display:flex;gap:3px}
+.chart-period button{padding:3px 8px;border-radius:5px;border:1px solid rgba(192,117,77,0.4);background:#104C64;font-size:9px;font-weight:600;cursor:pointer;color:#C6C6D0}
 .chart-period button.active{background:#D59D80;color:white;border-color:#D59D80}
-.chart-bars{display:flex;align-items:flex-end;gap:4px;height:120px;padding-top:10px}
-.chart-bar{flex:1;background:linear-gradient(180deg,#D59D80,#C0754D);border-radius:4px 4px 0 0;min-height:4px;position:relative;transition:height 0.3s ease}
-.chart-bar .bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#C6C6D0;font-weight:600}
-.chart-bar .bar-value{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;color:#D59D80;font-weight:700;white-space:nowrap}
-.chart-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:25px}
-.chart-summary-item{text-align:center;padding:8px;background:#104C64;border-radius:8px;border:1px solid rgba(192,117,77,0.3)}
-.chart-summary-item .csi-value{font-size:14px;font-weight:800;color:#D59D80}
-.chart-summary-item .csi-label{font-size:9px;color:#C6C6D0;font-weight:600;margin-top:2px}
-.notif-item{background:#0D1D25;border-radius:10px;padding:12px;margin-bottom:8px;border-left:3px solid #C0754D;display:flex;gap:10px}
+.chart-bars{display:flex;align-items:flex-end;gap:3px;height:100px;padding-top:8px}
+.chart-bar{flex:1;background:linear-gradient(180deg,#D59D80,#C0754D);border-radius:3px 3px 0 0;min-height:3px;position:relative}
+.chart-bar .bar-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:8px;color:#C6C6D0;font-weight:600}
+.chart-bar .bar-value{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:8px;color:#D59D80;font-weight:700;white-space:nowrap}
+.chart-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:20px}
+.chart-summary-item{text-align:center;padding:6px;background:#104C64;border-radius:6px;border:1px solid rgba(192,117,77,0.3)}
+.chart-summary-item .csi-value{font-size:12px;font-weight:800;color:#D59D80}
+.chart-summary-item .csi-label{font-size:8px;color:#C6C6D0;font-weight:600;margin-top:1px}
+
+/* Notifications - Kompakt */
+.notif-item{background:#0D1D25;border-radius:8px;padding:10px;margin-bottom:6px;border-left:3px solid #C0754D;display:flex;gap:8px}
 .notif-item.unread{background:#104C64;border-left-color:#D59D80}
-.notif-item .ni-icon{font-size:20px}
+.notif-item .ni-icon{font-size:18px}
 .notif-item .ni-content{flex:1}
-.notif-item .ni-title{font-size:13px;font-weight:700;color:#C6C6D0}
-.notif-item .ni-message{font-size:11px;color:#C6C6D0;opacity:0.8;margin-top:2px;line-height:1.4}
-.notif-item .ni-time{font-size:10px;color:#C6C6D0;opacity:0.6;margin-top:4px}
-.notif-empty{text-align:center;padding:30px;color:#C6C6D0;opacity:0.6}
-.notif-empty .ne-icon{font-size:48px;margin-bottom:8px}
-.mark-all-read{background:#C0754D;color:white;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:12px}
-.calc-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.9);backdrop-filter:blur(6px);z-index:4000;display:flex;align-items:center;justify-content:center;padding:15px;opacity:0;visibility:hidden;transition:all 0.3s ease}
+.notif-item .ni-title{font-size:12px;font-weight:700;color:#C6C6D0}
+.notif-item .ni-message{font-size:10px;color:#C6C6D0;opacity:0.8;margin-top:1px;line-height:1.3}
+.notif-item .ni-time{font-size:9px;color:#C6C6D0;opacity:0.6;margin-top:2px}
+.notif-empty{text-align:center;padding:20px;color:#C6C6D0;opacity:0.6}
+.notif-empty .ne-icon{font-size:40px;margin-bottom:6px}
+.mark-all-read{background:#C0754D;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;margin-bottom:10px}
+
+/* Calc Popup - Kompakt */
+.calc-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.9);backdrop-filter:blur(6px);z-index:4000;display:flex;align-items:center;justify-content:center;padding:10px;opacity:0;visibility:hidden;transition:all 0.3s ease}
 .calc-overlay.show{opacity:1;visibility:visible}
-.calc-popup{background:#104C64;border-radius:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto;border:1px solid rgba(192,117,77,0.3);box-shadow:0 24px 80px rgba(0,0,0,0.7)}
-.calc-header{background:linear-gradient(135deg,#C0754D,#B6410F);padding:18px;border-radius:19px 19px 0 0;position:relative;color:white;text-align:center}
-.calc-header h2{font-size:18px;font-weight:800;margin-bottom:4px;color:white}
-.calc-header p{font-size:12px;opacity:0.9;color:white}
-.calc-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.calc-body{padding:15px}
-.calc-package-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.calc-pkg-btn{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:10px;padding:10px 6px;cursor:pointer;text-align:center;transition:all 0.2s}
+.calc-popup{background:#104C64;border-radius:16px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto;border:1px solid rgba(192,117,77,0.3)}
+.calc-header{background:linear-gradient(135deg,#C0754D,#B6410F);padding:14px;border-radius:15px 15px 0 0;position:relative;color:white;text-align:center}
+.calc-header h2{font-size:16px;font-weight:800;margin-bottom:2px;color:white}
+.calc-header p{font-size:11px;opacity:0.9;color:white}
+.calc-close{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.calc-body{padding:12px}
+.calc-package-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:10px}
+.calc-pkg-btn{background:#0D1D25;border:1px solid rgba(192,117,77,0.4);border-radius:8px;padding:8px 4px;cursor:pointer;text-align:center}
 .calc-pkg-btn.active{background:#C0754D;border-color:#D59D80}
-.calc-pkg-btn .cp-name{font-size:11px;font-weight:700;color:#C6C6D0}
+.calc-pkg-btn .cp-name{font-size:10px;font-weight:700;color:#C6C6D0}
 .calc-pkg-btn.active .cp-name{color:white}
-.calc-pkg-btn .cp-price{font-size:10px;color:#D59D80;font-weight:800;margin-top:2px}
+.calc-pkg-btn .cp-price{font-size:9px;color:#D59D80;font-weight:800;margin-top:1px}
 .calc-pkg-btn.active .cp-price{color:white}
-.calc-custom-input{margin-top:12px;padding:12px;background:#0D1D25;border:1px dashed rgba(192,117,77,0.5);border-radius:10px}
-.calc-custom-input label{display:block;font-size:11px;font-weight:700;color:#D59D80;margin-bottom:6px;text-align:center}
-.calc-custom-input .input-wrapper{display:flex;align-items:center;background:#104C64;border-radius:8px;overflow:hidden;border:1px solid rgba(192,117,77,0.4)}
-.calc-custom-input .input-prefix{padding:10px;background:#C0754D;color:white;font-weight:800;font-size:14px}
-.calc-custom-input input{flex:1;border:none;padding:10px;font-size:16px;font-weight:800;color:#C6C6D0;text-align:center;outline:none;background:transparent;margin:0}
-.calc-results{background:linear-gradient(135deg,rgba(213,157,128,0.15),rgba(192,117,77,0.15));border:1px solid rgba(213,157,128,0.4);border-radius:12px;padding:12px;margin-top:12px}
-.calc-result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(213,157,128,0.2)}
+.calc-custom-input{margin-top:10px;padding:10px;background:#0D1D25;border:1px dashed rgba(192,117,77,0.5);border-radius:8px}
+.calc-custom-input label{display:block;font-size:10px;font-weight:700;color:#D59D80;margin-bottom:4px;text-align:center}
+.calc-custom-input .input-wrapper{display:flex;align-items:center;background:#104C64;border-radius:6px;overflow:hidden;border:1px solid rgba(192,117,77,0.4)}
+.calc-custom-input .input-prefix{padding:8px;background:#C0754D;color:white;font-weight:800;font-size:12px}
+.calc-custom-input input{flex:1;border:none;padding:8px;font-size:14px;font-weight:800;color:#C6C6D0;text-align:center;outline:none;background:transparent;margin:0}
+.calc-results{background:linear-gradient(135deg,rgba(213,157,128,0.15),rgba(192,117,77,0.15));border:1px solid rgba(213,157,128,0.4);border-radius:10px;padding:10px;margin-top:10px}
+.calc-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(213,157,128,0.2)}
 .calc-result-row:last-child{border-bottom:none}
-.calc-result-row .cr-period{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#C6C6D0}
-.calc-result-row .cr-period .cr-icon{font-size:18px}
-.calc-result-row .cr-amount{font-size:16px;font-weight:800;color:#D59D80}
-.calc-result-row.highlight{background:rgba(213,157,128,0.25);margin:0 -12px;padding:12px;border-radius:8px;border:1px solid rgba(213,157,128,0.5)}
-.calc-result-row.highlight .cr-amount{color:#D59D80;font-size:18px}
-.calc-total-box{background:linear-gradient(135deg,#D59D80,#C0754D);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px;margin-top:12px;text-align:center}
-.calc-total-box .ct-label{font-size:11px;color:white;font-weight:700}
-.calc-total-box .ct-value{font-size:24px;font-weight:800;color:white;margin-top:4px}
-.calc-total-box .ct-sub{font-size:10px;color:white;margin-top:2px}
-.offline-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.85);z-index:5000;backdrop-filter:blur(2px)}
-.offline-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#104C64;padding:25px;border-radius:16px;text-align:center;z-index:5001;border:1px solid rgba(192,117,77,0.4);width:90%;max-width:320px;box-shadow:0 24px 80px rgba(0,0,0,0.7)}
-.offline-popup h3{color:#D59D80;margin-bottom:8px;font-size:18px;font-weight:800}
-.offline-popup .amount{font-size:32px;font-weight:800;color:#D59D80;margin:12px 0}
-.notif-toast{position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:bold;z-index:6000;transform:translateX(150%);transition:transform 0.3s ease;box-shadow:0 8px 24px rgba(213,157,128,0.5)}
+.calc-result-row .cr-period{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#C6C6D0}
+.calc-result-row .cr-period .cr-icon{font-size:16px}
+.calc-result-row .cr-amount{font-size:14px;font-weight:800;color:#D59D80}
+.calc-result-row.highlight{background:rgba(213,157,128,0.25);margin:0 -10px;padding:10px;border-radius:6px;border:1px solid rgba(213,157,128,0.5)}
+.calc-result-row.highlight .cr-amount{color:#D59D80;font-size:16px}
+.calc-total-box{background:linear-gradient(135deg,#D59D80,#C0754D);border-radius:10px;padding:10px;margin-top:10px;text-align:center}
+.calc-total-box .ct-label{font-size:10px;color:white;font-weight:700}
+.calc-total-box .ct-value{font-size:20px;font-weight:800;color:white;margin-top:2px}
+.calc-total-box .ct-sub{font-size:9px;color:white;margin-top:1px}
+
+/* Offline Popup */
+.offline-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,29,37,0.85);z-index:5000}
+.offline-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#104C64;padding:20px;border-radius:14px;text-align:center;z-index:5001;border:1px solid rgba(192,117,77,0.4);width:85%;max-width:300px}
+.offline-popup h3{color:#D59D80;margin-bottom:6px;font-size:16px;font-weight:800}
+.offline-popup .amount{font-size:28px;font-weight:800;color:#D59D80;margin:10px 0}
+
+.notif-toast{position:fixed;top:15px;right:15px;background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:bold;z-index:6000;transform:translateX(150%);transition:transform 0.3s ease}
 .notif-toast.show{transform:translateX(0)}
-.package-summary{background:linear-gradient(135deg,rgba(213,157,128,0.15),rgba(192,117,77,0.15));border:1px solid rgba(213,157,128,0.4);border-radius:10px;padding:12px;margin:10px 0;display:none}
+
+.package-summary{background:linear-gradient(135deg,rgba(213,157,128,0.15),rgba(192,117,77,0.15));border:1px solid rgba(213,157,128,0.4);border-radius:8px;padding:10px;margin:8px 0;display:none}
 .package-summary.active{display:block}
-.package-summary-title{font-size:13px;font-weight:800;color:#D59D80;margin-bottom:8px;text-align:center}
-.package-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;color:#C6C6D0;border-bottom:1px solid rgba(213,157,128,0.2)}
+.package-summary-title{font-size:12px;font-weight:800;color:#D59D80;margin-bottom:6px;text-align:center}
+.package-summary-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px;color:#C6C6D0;border-bottom:1px solid rgba(213,157,128,0.2)}
 .package-summary-row:last-child{border-bottom:none}
 .package-summary-row .label{color:#C6C6D0;opacity:0.8}
 .package-summary-row .value{font-weight:700;color:#D59D80}
-.package-summary-row .value.original{color:#C6C6D0;opacity:0.6;text-decoration:line-through}
-.qr-container{text-align:center;margin:12px 0;padding:12px;background:#0D1D25;border-radius:12px;border:1px solid rgba(192,117,77,0.4)}
-.qr-container img{max-width:180px;border-radius:8px}
-.qr-label{font-size:11px;color:#C6C6D0;margin-top:6px;font-weight:600}
-.amount-control{display:flex;align-items:center;gap:10px;margin:8px 0}
-.amount-control input{flex:1;text-align:center;font-size:20px;font-weight:800;margin:0;background:#0D1D25;color:#D59D80;border:1px solid rgba(192,117,77,0.4)}
-.amount-info{display:flex;justify-content:space-between;font-size:11px;color:#C6C6D0;margin-top:-6px;margin-bottom:10px;padding:0 4px}
-.max-btn{background:linear-gradient(135deg,#D59D80,#C0754D);color:white;border:none;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;margin-left:8px}
-.max-btn:active{transform:translateY(2px)}
-@media(max-width:500px){.profile-popup{max-height:90vh}.nav-item{font-size:9px}.nav-item .icon{font-size:20px}.stats-grid{grid-template-columns:1fr}.packages-grid{grid-template-columns:1fr}}
+
+.qr-container{text-align:center;margin:10px 0;padding:10px;background:#0D1D25;border-radius:10px;border:1px solid rgba(192,117,77,0.4)}
+.qr-container img{max-width:160px;border-radius:6px}
+.qr-label{font-size:10px;color:#C6C6D0;margin-top:4px;font-weight:600}
+.amount-control{display:flex;align-items:center;gap:8px;margin:6px 0}
+.amount-control input{flex:1;text-align:center;font-size:18px;font-weight:800;margin:0;background:#0D1D25;color:#D59D80;border:1px solid rgba(192,117,77,0.4)}
+.amount-info{display:flex;justify-content:space-between;font-size:10px;color:#C6C6D0;margin-top:-4px;margin-bottom:8px;padding:0 3px}
+.max-btn{background:linear-gradient(135deg,#D59D80,#C0754D);color:white;border:none;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;margin-left:6px}
+
+@media(max-width:500px){
+body{padding:6px}
+.card{padding:10px}
+.stats-grid{gap:6px}
+.stat-box{padding:8px 3px}
+.stat-box .value{font-size:13px}
+.packages-grid{gap:6px}
+.package-card{padding:8px}
+}
 </style>
 </head>
 <body>
@@ -294,117 +334,117 @@ input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px 
 <div class="quick-actions">
 <div class="quick-action-btn notif-btn" onclick="openNotificationsQuick()"><div class="qa-icon">🔔</div><div class="qa-label">bildirimler</div><div class="qa-badge hidden" id="quickNotifBadge">0</div></div>
 <div class="quick-action-btn bonus-btn" onclick="openSubPopup('dailyBonus')"><div class="qa-icon">🎁</div><div class="qa-label">günlük bonus</div></div>
-<div class="quick-action-btn tasks-btn" onclick="openSubPopup('tasks')"><div class="qa-icon">🎯</div><div class="qa-label">görevler</div></div>
+<div class="quick-action-btn tasks-btn" onclick="openSubPopup('tasks')"><div class="qa-icon"></div><div class="qa-label">görevler</div></div>
 </div>
 <div class="bonus-card" id="bonusCard" style="display:none">
-<div class="bonus-header"><div class="bonus-title">🎁 Bonus Bakiyesi</div><div class="bonus-amount" id="bonusBalanceDisplay">$0.00</div></div>
+<div class="bonus-header"><div class="bonus-title">🎁 Bonus</div><div class="bonus-amount" id="bonusBalanceDisplay">$0.00</div></div>
 <div class="bonus-grid">
-<div class="bonus-item"><div class="bi-label">Dakikalık</div><div class="bi-value" id="bonusPerMin">$0.00</div></div>
-<div class="bonus-item"><div class="bi-label">Saatlik</div><div class="bi-value" id="bonusPerHour">$0.00</div></div>
-<div class="bonus-item"><div class="bi-label">Günlük</div><div class="bi-value" id="bonusPerDay">$0.00</div></div>
+<div class="bonus-item"><div class="bi-label">Dakika</div><div class="bi-value" id="bonusPerMin">$0.00</div></div>
+<div class="bonus-item"><div class="bi-label">Saat</div><div class="bi-value" id="bonusPerHour">$0.00</div></div>
+<div class="bonus-item"><div class="bi-label">Gün</div><div class="bi-value" id="bonusPerDay">$0.00</div></div>
 </div>
-<button class="bonus-withdraw-btn" id="bonusWithdrawBtn" onclick="withdrawBonuses()">💰 Bonusları Ana Bakiyeye Aktar</button>
-<div class="bonus-lock-info" id="bonusLockInfo">⚠️ Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız. Şu an: $<span id="currentInvestedForBonus">0.00</span> / $3.00</div>
+<button class="bonus-withdraw-btn" id="bonusWithdrawBtn" onclick="withdrawBonuses()">💰 Aktar</button>
+<div class="bonus-lock-info" id="bonusLockInfo">⚠️ Min $3 yatırım gerekli. Şu an: $<span id="currentInvestedForBonus">0.00</span></div>
 </div>
 <div class="earnings-estimate">
-<div class="earnings-title">📊 Tahmini Kazançlarınız</div>
+<div class="earnings-title">📊 Tahmini Kazanç</div>
 <div class="earnings-grid">
-<div class="earnings-item"><div class="icon">️</div><div class="label">Dakikalık</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
-<div class="earnings-item"><div class="icon">🕐</div><div class="label">Saatlik</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
-<div class="earnings-item"><div class="icon">📅</div><div class="label">Günlük</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
+<div class="earnings-item"><div class="icon">️</div><div class="label">Dakika</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
+<div class="earnings-item"><div class="icon">🕐</div><div class="label">Saat</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
+<div class="earnings-item"><div class="icon"></div><div class="label">Gün</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
 </div>
 </div>
 <div class="telegram-notif-card inactive" id="telegramNotifCard" onclick="activateTelegramNotif()">
 <div class="telegram-icon">📱</div>
-<div class="telegram-content"><div class="telegram-title" id="telegramTitle">🔔 Bildirimleri Aktif Et</div><div class="telegram-desc" id="telegramDesc">Yatırım & çekim onaylarını Telegram'dan anında al!</div></div>
+<div class="telegram-content"><div class="telegram-title" id="telegramTitle">🔔 Bildirimleri Aktif Et</div><div class="telegram-desc" id="telegramDesc">Telegram'dan anında al!</div></div>
 <div class="telegram-check" id="telegramCheck">›</div>
 </div>
-<div class="packages-section-title">🎁 Özel Paket Fırsatları - %20 İndirim!</div>
+<div class="packages-section-title"> %20 İndirimli Paketler!</div>
 <div class="packages-grid" id="packagesContainer"></div>
 <button class="calc-main-btn" onclick="openCalcPopup()">📊 Kazanç Hesaplama</button>
 </div>
 
 <!-- SATIN AL -->
 <div id="page-buy" class="card hidden">
-<h2>💎 Satın Al</h2>
+<h2> Satın Al</h2>
 <div class="package-summary" id="packageSummary">
 <div class="package-summary-title">📦 Seçtiğiniz Paket</div>
-<div class="package-summary-row"><span class="label">Paket Adı:</span><span class="value" id="summaryName">-</span></div>
-<div class="package-summary-row"><span class="label">Orijinal Fiyat:</span><span class="value original" id="summaryOriginal">-</span></div>
-<div class="package-summary-row"><span class="label">İndirimli Ödeme:</span><span class="value" id="summaryDiscounted">-</span></div>
-<div class="package-summary-row"><span class="label">Kaydedilecek Tutar:</span><span class="value" id="summaryRecord" style="color:#B6410F">-</span></div>
+<div class="package-summary-row"><span class="label">Paket:</span><span class="value" id="summaryName">-</span></div>
+<div class="package-summary-row"><span class="label">Orijinal:</span><span class="value" id="summaryOriginal">-</span></div>
+<div class="package-summary-row"><span class="label">İndirimli:</span><span class="value" id="summaryDiscounted">-</span></div>
+<div class="package-summary-row"><span class="label">Kaydedilecek:</span><span class="value" id="summaryRecord" style="color:#B6410F">-</span></div>
 </div>
 <div class="crypto-info">
-<strong>🌐 Ağ (Network):</strong> <span class="network-badge">TRON (TRC20)</span><br>
-<strong>💰 Kabul Edilen Coin:</strong> TRX<br>
-<strong>📍 Cüzdan Adresi:</strong><br>
-<span id="depositWallet" style="word-break:break-all;color:#D59D80;font-family:monospace;font-size:12px;background:#0D1D25;padding:6px;border-radius:6px;display:block;margin-top:4px;border:2px dashed #C0754D">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
-<button class="btn" style="padding:10px;font-size:14px;margin-top:10px" onclick="copyDepositAddress()"> Adresi Kopyala</button>
+<strong>🌐 Ağ:</strong> <span class="network-badge">TRON (TRC20)</span><br>
+<strong>💰 Coin:</strong> TRX<br>
+<strong>📍 Cüzdan:</strong><br>
+<span id="depositWallet" style="word-break:break-all;color:#D59D80;font-family:monospace;font-size:11px;background:#0D1D25;padding:5px;border-radius:5px;display:block;margin-top:3px;border:1px dashed #C0754D">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
+<button class="btn" style="padding:8px;font-size:12px;margin-top:8px" onclick="copyDepositAddress()">📋 Kopyala</button>
 </div>
 <div class="qr-container">
-<img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR Code">
-<div class="qr-label">📱 TRX Göndermek İçin QR Kodu Tara</div>
+<img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR">
+<div class="qr-label">📱 QR ile TRX Gönder</div>
 </div>
-<div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı üzerinden TRX gönderimi kabul edilmektedir. Yanlış ağdan gönderilen coinler iade edilemez!</div>
-<h3 id="amountLabel">Gönderilecek Tutar (USD)</h3>
+<div class="network-info">⚠️ <strong>ÖNEMLİ:</strong> Sadece TRON (TRC20) ağı kabul edilir!</div>
+<h3 id="amountLabel">Tutar (USD)</h3>
 <div class="amount-control">
 <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
 <input type="number" id="buyAmount" placeholder="1.00" min="1" max="9999" value="1" oninput="updateBuyTRX()">
 <button class="btn btn-ctrl" onclick="adjustAmount(1)">+</button>
 </div>
-<div class="amount-info"><span>Min: $1.00 (<span id="minTrx">8.33</span> TRX)</span><span>Max: $9,999.00</span></div>
-<div class="crypto-info" style="text-align:center"><strong>Karşılık</strong>: <span id="buyTrxAmount" style="color:#D59D80;font-weight:800;font-size:20px">8.33</span> TRX</div>
-<button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım, Bildir</button>
-<button class="btn btn-secondary" onclick="resetAndGoHome()">← Vazgeç / Ana Sayfa</button>
-<div class="history-section"><div class="history-title">📜 Yatırım Geçmişim</div><div id="depositHistory"></div></div>
+<div class="amount-info"><span>Min: $1 (<span id="minTrx">8.33</span> TRX)</span><span>Max: $9,999</span></div>
+<div class="crypto-info" style="text-align:center"><strong>Karşılık:</strong> <span id="buyTrxAmount" style="color:#D59D80;font-weight:800;font-size:18px">8.33</span> TRX</div>
+<button class="btn btn-approve" onclick="buyProduct()">✅ Ödemeyi Yaptım</button>
+<button class="btn btn-secondary" onclick="resetAndGoHome()">← Vazgeç</button>
+<div class="history-section"><div class="history-title">📜 Yatırım Geçmişi</div><div id="depositHistory"></div></div>
 </div>
 
 <!-- ÇEKİM -->
 <div id="page-withdraw" class="card hidden">
-<h2>💸 Çekim Talebi</h2>
+<h2>💸 Çekim</h2>
 <div class="balance-display">
-<div style="font-size:13px;opacity:0.9">Mevcut Bakiye</div>
+<div style="font-size:12px;opacity:0.9">Bakiye</div>
 <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-<div style="font-size:12px;margin-top:4px;opacity:0.8">Minimum çekim: $0.01</div>
+<div style="font-size:11px;margin-top:2px;opacity:0.8">Min: $0.01</div>
 </div>
-<h3>Çekilecek Miktar (USD)</h3>
+<h3>Miktar (USD)</h3>
 <div style="display:flex;align-items:center;margin-bottom:4px">
-<input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:8px">
+<input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:6px">
 <button class="max-btn" onclick="setMaxAmount()">MAX</button>
 </div>
-<h3>🪙 Kripto Seçimi</h3>
+<h3>🪙 Kripto</h3>
 <select id="withdrawCrypto" onchange="updateCryptoAmount();clearAddressValidation();updateNetworkInfo()">
-<option value="trx">TRX (TRON) - ~$0.12</option>
-<option value="bnb">BNB (Binance Coin) - ~$600</option>
-<option value="xrp">XRP (Ripple) - ~$0.50</option>
+<option value="trx">TRX (TRON)</option>
+<option value="bnb">BNB (Binance)</option>
+<option value="xrp">XRP (Ripple)</option>
 </select>
-<div class="network-info" id="networkInfo">🌐 <strong>Ağ</strong>: TRON (TRC20)<br><small>TRX coin'leri TRON ağı üzerinden gönderilecektir.</small></div>
-<div class="crypto-info" style="text-align:center"><strong>Karşılık</strong>: <span id="cryptoEquivalent" style="color:#D59D80;font-weight:800;font-size:18px">0.00</span> <span id="cryptoSymbol">TRX</span></div>
-<h3> Cüzdan Adresi</h3>
-<input type="text" id="walletAddress" placeholder="Cüzdan adresinizi girin..." oninput="validateAddressInput()">
-<div id="addressValidationMsg" style="font-size:11px;margin-top:-8px;margin-bottom:10px;font-weight:600;padding:4px 8px;border-radius:6px;display:none"></div>
-<button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Talebi Oluştur</button>
-<div class="history-section"><div class="history-title">📜 Çekim Geçmişim</div><div id="withdrawalHistory"></div></div>
+<div class="network-info" id="networkInfo"> <strong>Ağ:</strong> TRON (TRC20)</div>
+<div class="crypto-info" style="text-align:center"><strong>Karşılık:</strong> <span id="cryptoEquivalent" style="color:#D59D80;font-weight:800;font-size:16px">0.00</span> <span id="cryptoSymbol">TRX</span></div>
+<h3>📍 Cüzdan</h3>
+<input type="text" id="walletAddress" placeholder="Cüzdan adresi..." oninput="validateAddressInput()">
+<div id="addressValidationMsg" style="font-size:10px;margin-top:-6px;margin-bottom:8px;font-weight:600;padding:3px 6px;border-radius:5px;display:none"></div>
+<button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Çekim Yap</button>
+<div class="history-section"><div class="history-title">📜 Çekim Geçmişi</div><div id="withdrawalHistory"></div></div>
 </div>
 
 <!-- ADMIN -->
 <div id="page-admin" class="card hidden">
-<h2> Admin Panel</h2>
-<p style="text-align:center;color:#C6C6D0;padding:20px">Yönetim için ayrı panelden giriş yapın:<br><br><a href="admin.html" target="_blank" class="btn">🔐 Admin Paneline Git</a></p>
+<h2>🔐 Admin</h2>
+<p style="text-align:center;color:#C6C6D0;padding:15px">Admin paneli:<br><br><a href="admin.html" target="_blank" class="btn"> Admin Panel</a></p>
 </div>
 
 </div>
 
-<!-- ALT MENÜ - İKONLAR DÜZGÜN -->
+<!-- ALT MENÜ -->
 <div class="bottom-nav">
-<div class="nav-item active" onclick="showPage('home',this)"><span class="icon"></span><span>Ana Sayfa</span></div>
-<div class="nav-item" onclick="showPage('buy',this)"><span class="icon">💎</span><span>Satın Al</span></div>
+<div class="nav-item active" onclick="showPage('home',this)"><span class="icon">🏠</span><span>Ana Sayfa</span></div>
+<div class="nav-item" onclick="showPage('buy',this)"><span class="icon"></span><span>Satın Al</span></div>
 <div class="nav-item" onclick="openProfile()"><span class="icon">👤</span><span>Profil</span></div>
-<div class="nav-item" onclick="showPage('withdraw',this)"><span class="icon">💸</span><span>Çekim</span></div>
-<div class="nav-item" id="adminNav" onclick="showPage('admin',this)" style="display:none"><span class="icon">🔐</span><span>Admin</span></div>
+<div class="nav-item" onclick="showPage('withdraw',this)"><span class="icon"></span><span>Çekim</span></div>
+<div class="nav-item" id="adminNav" onclick="showPage('admin',this)" style="display:none"><span class="icon"></span><span>Admin</span></div>
 </div>
 
-<!-- PROFİL POPUP -->
+<!-- PROFİL -->
 <div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
 <div class="profile-popup" onclick="event.stopPropagation()">
 <div class="profile-header">
@@ -414,7 +454,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px 
 <div class="profile-id" id="profileId">ID: ---</div>
 </div>
 <div class="profile-body">
-<div class="profile-register-date"> <strong>Kayıt Tarihi</strong>: <span id="profileRegisterDate">Yükleniyor...</span></div>
+<div class="profile-register-date">📅 <strong>Kayıt:</strong> <span id="profileRegisterDate">Yükleniyor...</span></div>
 <div class="level-card" id="levelCard">
 <div class="level-header">
 <div class="level-badge"><span class="level-icon" id="levelIcon">🥉</span><span id="levelName">Bronze</span></div>
@@ -424,20 +464,20 @@ input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px 
 </div>
 <div class="profile-stats-grid">
 <div class="profile-stat"><div class="p-icon">💰</div><div class="p-label">Bakiye</div><div class="p-value" id="pBalance">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">🎁</div><div class="p-label">Bonus</div><div class="p-value" id="pBonus">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">💵</div><div class="p-label">Toplam Yatırım</div><div class="p-value" id="pInvested">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon"></div><div class="p-label">Toplam Çekim</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon"></div><div class="p-label">Bonus</div><div class="p-value" id="pBonus">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon">💵</div><div class="p-label">Yatırım</div><div class="p-value" id="pInvested">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon">💸</div><div class="p-label">Çekim</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
 </div>
 <div class="profile-menu">
-<div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon">🎁</div><div class="m-content"><div class="m-title">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Giriş bonusu al</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon">🎯</div><div class="m-content"><div class="m-title">Görevler</div><div class="m-desc" id="tasksDesc">Görevleri tamamla, bonus kazan</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon">📈</div><div class="m-content"><div class="m-title">Kazanç Grafiği</div><div class="m-desc">Kazançlarını görüntüle</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('notifications')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimlerini gör</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('settings')"><div class="m-icon">⚙️</div><div class="m-content"><div class="m-title">Ayarlar</div><div class="m-desc">Bildirim ve tercihler</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Referans Kodu</div><div class="m-desc" id="referralMenuDesc">Arkadaşlarını davet et, $0.50 kazan</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title">Sık Sorulan Sorular</div><div class="m-desc">Yardım ve bilgi</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"></div><div class="m-content"><div class="m-title">Destek</div><div class="m-desc">Telegram destek hattı</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('about')"><div class="m-icon">ℹ️</div><div class="m-content"><div class="m-title">Hakkında</div><div class="m-desc">Uygulama bilgisi</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon">🎁</div><div class="m-content"><div class="m-title">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Bonus al</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon">🎯</div><div class="m-content"><div class="m-title">Görevler</div><div class="m-desc" id="tasksDesc">Bonus kazan</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon">📈</div><div class="m-content"><div class="m-title">Grafik</div><div class="m-desc">Kazançları gör</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('notifications')"><div class="m-icon">🔔</div><div class="m-content"><div class="m-title">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimleri gör</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('settings')"><div class="m-icon">⚙️</div><div class="m-content"><div class="m-title">Ayarlar</div><div class="m-desc">Tercihler</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon">🔗</div><div class="m-content"><div class="m-title">Referans</div><div class="m-desc" id="referralMenuDesc">$0.50 kazan</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title">SSS</div><div class="m-desc">Yardım</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"></div><div class="m-content"><div class="m-title">Destek</div><div class="m-desc">Telegram</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('about')"><div class="m-icon">ℹ️</div><div class="m-content"><div class="m-title">Hakkında</div><div class="m-desc">Bilgi</div></div><div class="m-arrow">›</div></div>
 </div>
 </div>
 </div>
@@ -448,22 +488,22 @@ input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px 
 <div class="sub-popup" onclick="event.stopPropagation()" id="subPopupContent"></div>
 </div>
 
-<!-- HESAPLAMA POPUP -->
+<!-- HESAPLAMA -->
 <div class="calc-overlay" id="calcOverlay" onclick="closeCalcOutside(event)">
 <div class="calc-popup" onclick="event.stopPropagation()">
 <div class="calc-header">
 <button class="calc-close" onclick="closeCalcPopup()">✕</button>
-<h2> Kazanç Hesaplama</h2>
-<p>Paket seç veya kendi tutarını gir!</p>
+<h2>📊 Kazanç Hesaplama</h2>
+<p>Paket seç veya tutar gir!</p>
 </div>
 <div class="calc-body">
-<div style="font-size:12px;font-weight:700;color:#C6C6D0;margin-bottom:8px">📦 Paket Seç:</div>
+<div style="font-size:11px;font-weight:700;color:#C6C6D0;margin-bottom:6px"> Paket:</div>
 <div class="calc-package-selector" id="calcPackageSelector"></div>
 <div class="calc-custom-input">
-<label>💰 Kendi Tutarını Gir (USD)</label>
+<label>💰 Kendi Tutarın (USD)</label>
 <div class="input-wrapper">
 <div class="input-prefix">$</div>
-<input type="number" id="calcCustomAmount" placeholder="Örn: 50, 250, 1000..." min="1" max="9999" oninput="onCustomAmountChange()">
+<input type="number" id="calcCustomAmount" placeholder="50, 250..." min="1" max="9999" oninput="onCustomAmountChange()">
 </div>
 </div>
 <div class="calc-results" id="calcResults"></div>
@@ -472,14 +512,14 @@ input:focus,select:focus{outline:none;border-color:#D59D80;box-shadow:0 0 0 3px 
 </div>
 </div>
 
-<!-- OFFLINE POPUP -->
+<!-- OFFLINE -->
 <div id="offlinePopup" class="hidden">
 <div class="offline-overlay" onclick="closeOfflinePopup()"></div>
 <div class="offline-popup">
-<h3>⛏️ Tekrar Hoşgeldin!</h3>
-<p style="color:#C6C6D0;font-size:13px">Sen yokken madencilerin çalıştı:</p>
+<h3>⛏️ Hoşgeldin!</h3>
+<p style="color:#C6C6D0;font-size:12px">Madenciler çalıştı:</p>
 <div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
-<button class="btn btn-approve" onclick="closeOfflinePopup()">🎉 Harika! Topla</button>
+<button class="btn btn-approve" onclick="closeOfflinePopup()">🎉 Topla</button>
 </div>
 </div>
 
@@ -528,7 +568,7 @@ const cryptoSelect=document.getElementById('withdrawCrypto');
 if(cryptoSelect){
 const options=cryptoSelect.options;
 options[0].text=`TRX (TRON) - ~$${currentPrices.trx.toFixed(4)}`;
-options[1].text=`BNB (Binance Coin) - ~$${currentPrices.bnb.toFixed(2)}`;
+options[1].text=`BNB (Binance) - ~$${currentPrices.bnb.toFixed(2)}`;
 options[2].text=`XRP (Ripple) - ~$${currentPrices.xrp.toFixed(4)}`;
 }
 }
@@ -635,23 +675,23 @@ const halfYear=daily*180;
 const oneYear=daily*365;
 const total90Days=amount*2;
 document.getElementById('calcResults').innerHTML=`
-<div style="text-align:center;margin-bottom:10px;padding-bottom:10px;border-bottom:2px solid rgba(213,157,128,0.3)">
-<div style="font-size:10px;color:#D59D80;font-weight:700;text-transform:uppercase">Seçili Tutar</div>
-<div style="font-size:18px;font-weight:800;color:#D59D80">${label}</div>
+<div style="text-align:center;margin-bottom:8px;padding-bottom:8px;border-bottom:2px solid rgba(213,157,128,0.3)">
+<div style="font-size:9px;color:#D59D80;font-weight:700;text-transform:uppercase">Seçili</div>
+<div style="font-size:16px;font-weight:800;color:#D59D80">${label}</div>
 </div>
 <div class="calc-result-row"><div class="cr-period"><span class="cr-icon">⏱️</span> Saatlik</div><div class="cr-amount">$${hourly.toFixed(4)}</div></div>
 <div class="calc-result-row"><div class="cr-period"><span class="cr-icon">📅</span> Günlük</div><div class="cr-amount">$${daily.toFixed(4)}</div></div>
-<div class="calc-result-row"><div class="cr-period"><span class="cr-icon">🗓️</span> Aylık (30 gün)</div><div class="cr-amount">$${monthly.toFixed(2)}</div></div>
-<div class="calc-result-row"><div class="cr-period"><span class="cr-icon">📆</span> Yarım Yıl (180 gün)</div><div class="cr-amount">$${halfYear.toFixed(2)}</div></div>
-<div class="calc-result-row highlight"><div class="cr-period"><span class="cr-icon"></span> 1 Yıl (365 gün)</div><div class="cr-amount">$${oneYear.toFixed(2)}</div></div>`;
+<div class="calc-result-row"><div class="cr-period"><span class="cr-icon">️</span> Aylık</div><div class="cr-amount">$${monthly.toFixed(2)}</div></div>
+<div class="calc-result-row"><div class="cr-period"><span class="cr-icon">📆</span> Yarım Yıl</div><div class="cr-amount">$${halfYear.toFixed(2)}</div></div>
+<div class="calc-result-row highlight"><div class="cr-period"><span class="cr-icon">🎯</span> 1 Yıl</div><div class="cr-amount">$${oneYear.toFixed(2)}</div></div>`;
 const profit=oneYear-amount;
 const profitPercent=((profit/amount)*100).toFixed(0);
 const totalWithInvestment=amount+oneYear;
 document.getElementById('calcTotalBox').innerHTML=`
-<div class="ct-label">💰 1 Yılda Toplam Kazanç (Yatırım Dahil)</div>
+<div class="ct-label">💰 1 Yıl Toplam (Yatırım Dahil)</div>
 <div class="ct-value">$${totalWithInvestment.toFixed(2)}</div>
 <div class="ct-sub">Net Kâr: $${profit.toFixed(2)} (${profitPercent}%)</div>
-<div style="margin-top:8px;font-size:10px;color:white;background:rgba(0,0,0,0.3);padding:6px;border-radius:6px">⭐ 90 Gün Sonra: <strong>$${total90Days.toFixed(2)}</strong> (2x Kazanç)</div>`;
+<div style="margin-top:6px;font-size:9px;color:white;background:rgba(0,0,0,0.3);padding:4px;border-radius:5px">⭐ 90 Gün: <strong>$${total90Days.toFixed(2)}</strong> (2x)</div>`;
 }
 
 function openProfile(){updateProfileData();document.getElementById('profileOverlay').classList.add('show');if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}
@@ -663,7 +703,7 @@ const userName=currentUser?(currentUser.first_name||'Kullanıcı'):'Misafir';
 document.getElementById('profileName').textContent=userName;
 document.getElementById('profileAvatar').textContent=userName.charAt(0).toUpperCase();
 document.getElementById('profileId').textContent=`ID: ${currentUser?currentUser.id:userId}`;
-if(createdAt){const date=new Date(createdAt);document.getElementById('profileRegisterDate').innerHTML=`📅 <strong>Kayıt Tarihi</strong>: ${date.toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'})}`}
+if(createdAt){const date=new Date(createdAt);document.getElementById('profileRegisterDate').innerHTML=`📅 <strong>Kayıt:</strong> ${date.toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'})}`}
 document.getElementById('pBalance').textContent='$'+balance.toFixed(2);
 document.getElementById('pBonus').textContent='$'+bonusBalance.toFixed(2);
 document.getElementById('pInvested').textContent='$'+totalInvested.toFixed(2);
@@ -673,14 +713,14 @@ const today=new Date().toDateString();
 const lastClaim=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
 const canClaim=today!==lastClaim;
 const nextBonus=DAILY_BONUSES[Math.min(dailyBonusData.streak,6)];
-document.getElementById('dailyBonusDesc').textContent=canClaim?`Bugün $${nextBonus.toFixed(2)} al!`:`Yarın $${DAILY_BONUSES[Math.min(dailyBonusData.streak+1,6)].toFixed(2)} al`;
+document.getElementById('dailyBonusDesc').textContent=canClaim?`$${nextBonus.toFixed(2)} al!`:`Yarın $${DAILY_BONUSES[Math.min(dailyBonusData.streak+1,6)].toFixed(2)}`;
 const completedCount=completedTasks.length;
 document.getElementById('tasksDesc').textContent=`${completedCount} tamamlandı`;
 const unreadNotifs=notificationsData.filter(n=>!n.read).length;
 document.getElementById('notifDesc').textContent=unreadNotifs>0?`${unreadNotifs} okunmamış`:'Tümü okundu';
 const refDesc=document.getElementById('referralMenuDesc');
-if(referralCount>0)refDesc.textContent=`${referralCount} kişi davet ettin • $${pendingReferralBonus.toFixed(2)} bekliyor`;
-else refDesc.textContent='Arkadaşlarını davet et, $0.50 kazan';
+if(referralCount>0)refDesc.textContent=`${referralCount} kişi • $${pendingReferralBonus.toFixed(2)}`;
+else refDesc.textContent='$0.50 kazan';
 updateQuickNotifBadge();
 }
 
@@ -690,10 +730,10 @@ const levelName=document.getElementById('levelName');
 const levelProgressInfo=document.getElementById('levelProgressInfo');
 const levelProgressFill=document.getElementById('levelProgressFill');
 let icon;
-if(invested>=5000){icon='';levelName.textContent='Platinum';levelProgressInfo.textContent='Maksimum Seviye!';levelProgressFill.style.width='100%'}
-else if(invested>=500){icon='🥇';levelName.textContent='Gold';const progress=((invested-500)/(5000-500))*100;levelProgressInfo.textContent=`$${invested.toFixed(0)} / $5,000`;levelProgressFill.style.width=progress+'%'}
-else if(invested>=50){icon='🥈';levelName.textContent='Silver';const progress=((invested-50)/(500-50))*100;levelProgressInfo.textContent=`$${invested.toFixed(0)} / $500`;levelProgressFill.style.width=progress+'%'}
-else{icon='';levelName.textContent='Bronze';const progress=(invested/50)*100;levelProgressInfo.textContent=`$${invested.toFixed(0)} / $50`;levelProgressFill.style.width=progress+'%'}
+if(invested>=5000){icon='';levelName.textContent='Platinum';levelProgressInfo.textContent='Max!';levelProgressFill.style.width='100%'}
+else if(invested>=500){icon='🥇';levelName.textContent='Gold';const progress=((invested-500)/(5000-500))*100;levelProgressInfo.textContent=`$${invested.toFixed(0)}/$5,000`;levelProgressFill.style.width=progress+'%'}
+else if(invested>=50){icon='🥈';levelName.textContent='Silver';const progress=((invested-50)/(500-50))*100;levelProgressInfo.textContent=`$${invested.toFixed(0)}/$500`;levelProgressFill.style.width=progress+'%'}
+else{icon='🥉';levelName.textContent='Bronze';const progress=(invested/50)*100;levelProgressInfo.textContent=`$${invested.toFixed(0)}/$50`;levelProgressFill.style.width=progress+'%'}
 levelIcon.textContent=icon;
 }
 
@@ -703,28 +743,28 @@ let html='';
 if(type==='settings'){
 const notifEnabled=localStorage.getItem('telegramNotifActive')==='true';
 html=`<div class="sub-popup-header"><div class="sub-popup-title">⚙️ Ayarlar</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="toggle-row"><div><div class="t-label">🔔 Telegram Bildirimleri</div><div class="t-desc">Yatırım ve çekim onayları</div></div><label class="toggle-switch"><input type="checkbox" ${notifEnabled?'checked':''} onchange="toggleNotif(this.checked)"><span class="toggle-slider"></span></label></div>`;
+<div class="toggle-row"><div><div class="t-label">🔔 Telegram</div><div class="t-desc">Bildirimler</div></div><label class="toggle-switch"><input type="checkbox" ${notifEnabled?'checked':''} onchange="toggleNotif(this.checked)"><span class="toggle-slider"></span></label></div>`;
 }else if(type==='referral'){
 const referralCode='ref_'+(currentUser?currentUser.id:userId);
 const referralLink=`https://t.me/${GAME_BOT_USERNAME}?start=${referralCode}`;
 const canUnlock=totalInvested>=MIN_INVESTMENT_TO_UNLOCK;
-html=`<div class="sub-popup-header"><div class="sub-popup-title">🔗 Referans Sistemi</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="referral-box"><div style="font-size:13px;color:#D59D80;font-weight:700;margin-bottom:8px">Senin Özel Linkin</div><div class="referral-link">${referralLink}</div><button class="btn" style="padding:10px;font-size:13px" onclick="copyReferralLink()">📋 Linki Kopyala</button></div>
-<div class="referral-stats"><div class="ref-stat"><div class="rs-value">${referralCount}</div><div class="rs-label">Davet Edilen</div></div><div class="ref-stat"><div class="rs-value">$${pendingReferralBonus.toFixed(2)}</div><div class="rs-label">${referralBonusUnlocked?'Kazanılan':'Bekleyen'}</div></div></div>
-<div style="background:${canUnlock?'rgba(213,157,128,0.3)':'rgba(192,117,77,0.3)'};padding:12px;border-radius:10px;font-size:12px;color:white;line-height:1.6;margin-top:12px;border:1px solid ${canUnlock?'#D59D80':'#C0754D'}">
-${canUnlock?'✅ Harika! $3 yatırım şartını sağladın. Davet bonusu bakiyene eklendi!':`⏳ Bonus Kilidi: Bonuslar için minimum <strong>$3.00</strong> yatırım gerekli. Şu an: <strong>$${totalInvested.toFixed(2)}</strong> / $3.00`}
+html=`<div class="sub-popup-header"><div class="sub-popup-title">🔗 Referans</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+<div class="referral-box"><div style="font-size:12px;color:#D59D80;font-weight:700;margin-bottom:6px">Linkin</div><div class="referral-link">${referralLink}</div><button class="btn" style="padding:8px;font-size:11px" onclick="copyReferralLink()">📋 Kopyala</button></div>
+<div class="referral-stats"><div class="ref-stat"><div class="rs-value">${referralCount}</div><div class="rs-label">Davet</div></div><div class="ref-stat"><div class="rs-value">$${pendingReferralBonus.toFixed(2)}</div><div class="rs-label">${referralBonusUnlocked?'Kazanılan':'Bekleyen'}</div></div></div>
+<div style="background:${canUnlock?'rgba(213,157,128,0.3)':'rgba(192,117,77,0.3)'};padding:10px;border-radius:8px;font-size:11px;color:white;line-height:1.5;margin-top:10px;border:1px solid ${canUnlock?'#D59D80':'#C0754D'}">
+${canUnlock?'✅ $3 şartı sağlandı!':'⏳ Min $3 yatırım gerekli. Şu an: $'+totalInvested.toFixed(2)}
 </div>`;
 }else if(type==='faq'){
-html=`<div class="sub-popup-header"><div class="sub-popup-title">❓ Sık Sorulan Sorular</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💰 Nasıl yatırım yapabilirim?</span><span>▼</span></div><div class="faq-answer">Ana sayfadaki paketlerden birini seç, TRX cüzdanımıza TRX gönder, ardından "Ödemeyi Yaptım" butonuna bas. Admin onayından sonra kazancın başlar.</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>⏰ Kazancım ne zaman başlar?</span><span>▼</span></div><div class="faq-answer">Admin ödemeni onayladıktan sonra otomatik olarak başlar. Günlük %1.11 oranında kazanırsın (90 günde 2x).</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💸 Nasıl çekim yapabilirim?</span><span>▼</span></div><div class="faq-answer">Alt menüden "Çekim" butonuna bas, miktarı gir, kripto türünü ve cüzdan adresini seç. Minimum çekim $0.01'dir.</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎁 Bonuslar nasıl çalışır?</span><span>▼</span></div><div class="faq-answer">Günlük bonus, görevler ve şans çarkından kazandığın bonuslar ayrı bir bakiyede birikir. Bonuslar da üretim yapar! Min $3 yatırım yapınca ana bakiyene aktarabilirsin.</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Hangi ağları destekliyorsunuz?</span><span>▼</span></div><div class="faq-answer">Yatırım için sadece TRON (TRC20) ağı. Çekim için TRX (TRC20), BNB (BEP20) ve XRP desteklenmektedir.</div></div>`;
+html=`<div class="sub-popup-header"><div class="sub-popup-title">❓ SSS</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💰 Nasıl yatırım?</span><span>▼</span></div><div class="faq-answer">Paket seç, TRX gönder, "Ödemeyi Yaptım" de. Admin onayından sonra kazanç başlar.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>⏰ Kazanç ne zaman?</span><span>▼</span></div><div class="faq-answer">Admin onayından sonra otomatik başlar. Günlük %1.11 (90 günde 2x).</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💸 Nasıl çekim?</span><span>▼</span></div><div class="faq-answer">"Çekim" butonuna bas, miktar gir, kripto ve cüzdan seç. Min $0.01.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎁 Bonuslar?</span><span>▼</span></div><div class="faq-answer">Günlük bonus, görevler ayrı bakiyede birikir. Min $3 yatırım ile ana bakiyeye aktar.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🌐 Hangi ağlar?</span><span>▼</span></div><div class="faq-answer">Yatırım: TRON (TRC20). Çekim: TRX, BNB, XRP.</div></div>`;
 }else if(type==='about'){
-html=`<div class="sub-popup-header"><div class="sub-popup-title">ℹ️ Hakkında</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="about-info"><div class="about-logo"></div><div class="about-title">Hash Power Mining</div><div class="about-version">Sürüm 2.7.0</div>
-<div class="about-desc">Kripto madencilik platformu ile pasif gelir elde et.<br><br>🌐 TRON (TRC20)<br>📊 1.11% Günlük<br>💸 TRX, BNB, XRP<br>🔔 Telegram<br> Görevler<br>🎁 $0.50/davet<br><br><strong style="color:#D59D80">© 2026 Hash Power Mining</strong></div></div>`;
+html=`<div class="sub-popup-header"><div class="sub-popup-title">️ Hakkında</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+<div class="about-info" style="text-align:center;padding:15px;color:#C6C6D0"><div style="font-size:40px;margin-bottom:8px">⚡</div><div style="font-size:16px;font-weight:800;color:#D59D80;margin-bottom:2px">Hash Power Mining</div><div style="font-size:11px;color:#C6C6D0;opacity:0.7;margin-bottom:10px">v2.7.0</div>
+<div style="font-size:11px;color:#C6C6D0;line-height:1.5">Kripto madencilik ile pasif gelir.<br><br>🌐 TRON (TRC20)<br>📊 %1.11 Günlük<br>💸 TRX, BNB, XRP<br>🔔 Telegram<br> $0.50/davet<br><br><strong style="color:#D59D80">© 2026</strong></div></div>`;
 }else if(type==='dailyBonus'){html=renderDailyBonus()}
 else if(type==='tasks'){html=renderTasks()}
 else if(type==='chart'){html=renderChart()}
@@ -738,15 +778,15 @@ function closeSubPopup(){document.getElementById('subOverlay').classList.remove(
 function closeSubOutside(event){if(event.target===document.getElementById('subOverlay'))closeSubPopup()}
 
 function toggleNotif(enabled){
-if(enabled){localStorage.setItem('telegramNotifActive','true');alert('✅ Bildirimler aktif edildi!')}
-else{localStorage.setItem('telegramNotifActive','false');alert('️ Bildirimler kapatıldı.')}
+if(enabled){localStorage.setItem('telegramNotifActive','true');alert('✅ Aktif!')}
+else{localStorage.setItem('telegramNotifActive','false');alert('⏸️ Kapalı.')}
 updateTelegramNotifUI();
 }
 
 function copyReferralLink(){
 const referralCode='ref_'+(currentUser?currentUser.id:userId);
 const referralLink=`https://t.me/${GAME_BOT_USERNAME}?start=${referralCode}`;
-navigator.clipboard.writeText(referralLink).then(()=>{alert('✅ Referans linki kopyalandı!\n\nArkadaşlarınla paylaş, her davet için $0.50 kazan!')});
+navigator.clipboard.writeText(referralLink).then(()=>{alert('✅ Link kopyalandı!')});
 }
 
 function toggleFaq(element){element.classList.toggle('open')}
@@ -762,25 +802,25 @@ let streakHtml='<div class="streak-days">';
 for(let i=0;i<7;i++){
 const claimed=i<currentStreak;
 const isToday=i===currentStreak&&canClaim;
-streakHtml+=`<div class="streak-day ${claimed?'claimed':''} ${isToday?'today':''}"><div class="sd-num">${i+1}. Gün</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`;
+streakHtml+=`<div class="streak-day ${claimed?'claimed':''} ${isToday?'today':''}"><div class="sd-num">${i+1}.Gün</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`;
 }
 streakHtml+='</div>';
-return`<div class="sub-popup-header"><div class="sub-popup-title"> Günlük Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+return`<div class="sub-popup-header"><div class="sub-popup-title">🎁 Günlük Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
 <div class="daily-bonus-card">
 <div class="db-icon">🎁</div>
-<div class="db-title">${canClaim?'Bugünün Bonusu Hazır!':'Yarın Tekrar Gel!'}</div>
+<div class="db-title">${canClaim?'Hazır!':'Yarın Gel!'}</div>
 <div class="db-amount">$${canClaim?nextBonus.toFixed(2):DAILY_BONUSES[Math.min(currentStreak+1,6)].toFixed(2)}</div>
-<div class="db-streak">🔥 ${currentStreak} gün seri</div>
+<div class="db-streak"> ${currentStreak} gün</div>
 </div>
 ${streakHtml}
-${canClaim?`<button class="btn btn-approve" style="margin-top:15px" onclick="claimDailyBonus()">🎁 Bonusu Al ($${nextBonus.toFixed(2)})</button>`:`<div style="background:#0D1D25;padding:12px;border-radius:10px;text-align:center;margin-top:15px;font-size:12px;color:#C6C6D0;border:1px solid #C0754D">🌙 Yarın tekrar gel, daha büyük bonus kazan!</div>`}
-<div style="background:#0D1D25;padding:12px;border-radius:10px;font-size:11px;color:#C6C6D0;line-height:1.6;margin-top:12px;border:1px solid #C0754D">💡 <strong>Seri Bonusu:</strong> Her gün ardışık giriş yap, bonuslar artsın! 7. gün $0.10 kazan!</div>`;
+${canClaim?`<button class="btn btn-approve" style="margin-top:12px" onclick="claimDailyBonus()">🎁 Al ($${nextBonus.toFixed(2)})</button>`:`<div style="background:#0D1D25;padding:10px;border-radius:8px;text-align:center;margin-top:12px;font-size:11px;color:#C6C6D0;border:1px solid #C0754D"> Yarın gel!</div>`}
+<div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:10px;color:#C6C6D0;line-height:1.5;margin-top:10px;border:1px solid #C0754D">💡 <strong>Seri:</strong> Her gün gir, bonus artsın! 7. gün $0.10!</div>`;
 }
 
 async function claimDailyBonus(){
 const today=new Date().toDateString();
 const lastClaim=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
-if(today===lastClaim){alert('⏰ Bugün zaten aldın! Yarın tekrar gel.');return}
+if(today===lastClaim){alert('⏰ Bugün aldın!');return}
 const currentStreak=dailyBonusData.streak||0;
 const bonus=DAILY_BONUSES[Math.min(currentStreak,6)];
 const newStreak=currentStreak+1;
@@ -789,8 +829,8 @@ const userRef=db.collection('users').doc(userId);
 await userRef.set({dailyBonus:{lastClaim:Date.now(),streak:newStreak},bonusBalance:(bonusBalance||0)+bonus},{merge:true});
 bonusBalance=(bonusBalance||0)+bonus;
 dailyBonusData={lastClaim:Date.now(),streak:newStreak};
-addNotification('🎁 Günlük Bonus',`$${bonus.toFixed(2)} bonus kazandın! Seri: ${newStreak} gün`,'bonus');
-alert(`🎉 Tebrikler!\n\n$${bonus.toFixed(2)} bonus kazandın!\n🔥 Seri: ${newStreak} gün\n\nYarın $${DAILY_BONUSES[Math.min(newStreak,6)].toFixed(2)} alacaksın!`);
+addNotification('🎁 Günlük Bonus',`$${bonus.toFixed(2)} kazandın! Seri: ${newStreak}`,'bonus');
+alert(`🎉 $${bonus.toFixed(2)} bonus!\n🔥 Seri: ${newStreak}\n\nYarın $${DAILY_BONUSES[Math.min(newStreak,6)].toFixed(2)}!`);
 updateUI();
 openSubPopup('dailyBonus');
 if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
@@ -799,15 +839,15 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 
 function renderTasks(){
 const defaultTasks=[
-{id:'first_deposit',title:'İlk Yatırım',desc:'İlk yatırımını yap',reward:0.50,icon:'💰',completed:totalInvested>=1},
-{id:'invest_10',title:'$10 Yatırım',desc:'Toplam $10 yatırım yap',reward:1.00,icon:'💵',completed:totalInvested>=10},
-{id:'invest_100',title:'$100 Yatırım',desc:'Toplam $100 yatırım yap',reward:5.00,icon:'💎',completed:totalInvested>=100},
-{id:'refer_1',title:'İlk Referans',desc:'1 arkadaş davet et',reward:0.50,icon:'👥',completed:referralCount>=1},
-{id:'refer_5',title:'5 Referans',desc:'5 arkadaş davet et',reward:2.50,icon:'🎯',completed:referralCount>=5},
-{id:'daily_7',title:'7 Gün Seri',desc:'7 gün ardışık giriş yap',reward:1.00,icon:'🔥',completed:dailyBonusData.streak>=7}
+{id:'first_deposit',title:'İlk Yatırım',desc:'İlk yatırım',reward:0.50,icon:'💰',completed:totalInvested>=1},
+{id:'invest_10',title:'$10 Yatırım',desc:'$10 yatırım',reward:1.00,icon:'💵',completed:totalInvested>=10},
+{id:'invest_100',title:'$100 Yatırım',desc:'$100 yatırım',reward:5.00,icon:'💎',completed:totalInvested>=100},
+{id:'refer_1',title:'İlk Referans',desc:'1 davet',reward:0.50,icon:'👥',completed:referralCount>=1},
+{id:'refer_5',title:'5 Referans',desc:'5 davet',reward:2.50,icon:'🎯',completed:referralCount>=5},
+{id:'daily_7',title:'7 Gün Seri',desc:'7 gün giriş',reward:1.00,icon:'🔥',completed:dailyBonusData.streak>=7}
 ];
 let html=`<div class="sub-popup-header"><div class="sub-popup-title">🎯 Görevler</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div style="background:#0D1D25;padding:12px;border-radius:10px;font-size:12px;color:#C6C6D0;margin-bottom:12px;border:1px solid #C0754D">Görevleri tamamla, otomatik bonus kazan!</div>`;
+<div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:11px;color:#C6C6D0;margin-bottom:10px;border:1px solid #C0754D">Tamamla, bonus kazan!</div>`;
 defaultTasks.forEach(task=>{
 const isCompleted=completedTasks.includes(task.id);
 html+=`<div class="task-item ${isCompleted?'completed':''}">
@@ -817,21 +857,21 @@ html+=`<div class="task-item ${isCompleted?'completed':''}">
 <div class="task-desc">${task.desc}</div>
 <div class="task-reward">🎁 $${task.reward.toFixed(2)}</div>
 </div>
-${isCompleted?`<button class="task-btn done">✅ Tamamlandı</button>`:(task.completed?`<button class="task-btn claim" onclick="claimTaskReward('${task.id}',${task.reward},'${task.title.replace(/'/g,"\\'")}')">🎁 Al</button>`:`<button class="task-btn" style="background:#0D1D25;color:#C6C6D0;border:1px solid #C0754D">Bekliyor</button>`)}
+${isCompleted?`<button class="task-btn done">✅</button>`:(task.completed?`<button class="task-btn claim" onclick="claimTaskReward('${task.id}',${task.reward},'${task.title.replace(/'/g,"\\'")}')">🎁</button>`:`<button class="task-btn" style="background:#0D1D25;color:#C6C6D0;border:1px solid #C0754D">⏳</button>`)}
 </div>`;
 });
 return html;
 }
 
 async function claimTaskReward(taskId,reward,taskTitle){
-if(completedTasks.includes(taskId)){alert('⚠️ Bu görevi zaten tamamladın!');return}
+if(completedTasks.includes(taskId)){alert('⚠️ Tamamlandı!');return}
 try{
 const userRef=db.collection('users').doc(userId);
 await userRef.set({completedTasks:[...completedTasks,taskId],bonusBalance:(bonusBalance||0)+reward},{merge:true});
 completedTasks.push(taskId);
 bonusBalance=(bonusBalance||0)+reward;
-addNotification('🎯 Görev Tamamlandı',`${taskTitle} görevi tamamlandı! +$${reward.toFixed(2)} bonus`,'bonus');
-alert(`🎉 Tebrikler!\n\n${taskTitle} görevi tamamlandı!\n+$${reward.toFixed(2)} bonus kazandın!`);
+addNotification('🎯 Görev',`${taskTitle} +$${reward.toFixed(2)}`,'bonus');
+alert(`🎉 ${taskTitle}!\n+$${reward.toFixed(2)} bonus!`);
 updateUI();
 openSubPopup('tasks');
 if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
@@ -853,10 +893,10 @@ const label=currentChartPeriod==='7d'?date.toLocaleDateString('tr-TR',{weekday:'
 barsHtml+=`<div class="chart-bar" style="height:${Math.max(height,3)}%"><div class="bar-value">$${d.earnings.toFixed(2)}</div><div class="bar-label">${label}</div></div>`;
 });
 barsHtml+='</div>';
-return`<div class="sub-popup-header"><div class="sub-popup-title">📈 Kazanç Grafiği</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+return`<div class="sub-popup-header"><div class="sub-popup-title">📈 Grafik</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
 <div class="chart-container">
 <div class="chart-header">
-<div class="chart-title">Son ${days} Gün Kazançların</div>
+<div class="chart-title">Son ${days} Gün</div>
 <div class="chart-period">
 <button class="${currentChartPeriod==='7d'?'active':''}" onclick="changeChartPeriod('7d')">7G</button>
 <button class="${currentChartPeriod==='30d'?'active':''}" onclick="changeChartPeriod('30d')">30G</button>
@@ -865,8 +905,8 @@ return`<div class="sub-popup-header"><div class="sub-popup-title">📈 Kazanç G
 ${barsHtml}
 <div class="chart-summary">
 <div class="chart-summary-item"><div class="csi-value">$${totalEarnings.toFixed(2)}</div><div class="csi-label">Toplam</div></div>
-<div class="chart-summary-item"><div class="csi-value">$${avgEarnings.toFixed(2)}</div><div class="csi-label">Ortalama</div></div>
-<div class="chart-summary-item"><div class="csi-value">$${maxEarnings.toFixed(2)}</div><div class="csi-label">En Yüksek</div></div>
+<div class="chart-summary-item"><div class="csi-value">$${avgEarnings.toFixed(2)}</div><div class="csi-label">Ort.</div></div>
+<div class="chart-summary-item"><div class="csi-value">$${maxEarnings.toFixed(2)}</div><div class="csi-label">Max</div></div>
 </div>
 </div>`;
 }
@@ -875,9 +915,9 @@ function changeChartPeriod(period){currentChartPeriod=period;openSubPopup('chart
 
 function renderNotifications(){
 const unreadCount=notificationsData.filter(n=>!n.read).length;
-let html=`<div class="sub-popup-header"><div class="sub-popup-title">🔔 Bildirimler (${unreadCount})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
-if(unreadCount>0)html+=`<button class="mark-all-read" onclick="markAllRead()">✅ Tümünü Okundu İşaretle</button>`;
-if(notificationsData.length===0)html+=`<div class="notif-empty"><div class="ne-icon"></div><div>Henüz bildirim yok</div></div>`;
+let html=`<div class="sub-popup-header"><div class="sub-popup-title"> Bildirimler (${unreadCount})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+if(unreadCount>0)html+=`<button class="mark-all-read" onclick="markAllRead()">✅ Tümünü Oku</button>`;
+if(notificationsData.length===0)html+=`<div class="notif-empty"><div class="ne-icon"></div><div>Bildirim yok</div></div>`;
 else{
 notificationsData.slice(0,20).forEach(notif=>{
 const time=new Date(notif.timestamp).toLocaleString('tr-TR');
@@ -912,7 +952,7 @@ updateQuickNotifBadge();
 
 function saveNotifications(){
 try{db.collection('users').doc(userId).set({notifications:notificationsData},{merge:true})}
-catch(e){console.error('Bildirim kaydetme hatası:',e)}
+catch(e){console.error('Bildirim hatası:',e)}
 }
 
 async function processReferral(){
@@ -942,7 +982,7 @@ await userRef.set({bonusBalance:newBonusBalance,referralBonusUnlocked:true,pendi
 bonusBalance=newBonusBalance;
 referralBonusUnlocked=true;
 pendingReferralBonus=0;
-addNotification('🎁 Referans Bonusu','Bonus kilidi açıldı! Bonus bakiyene eklendi.','bonus');
+addNotification('🎁 Referans','Bonus kilidi açıldı!','bonus');
 updateUI();
 }catch(error){console.error('Bonus kilit hatası:',error)}
 }
@@ -950,10 +990,10 @@ updateUI();
 async function withdrawBonuses(){
 if(totalInvested<MIN_INVESTMENT_TO_UNLOCK){
 const needed=MIN_INVESTMENT_TO_UNLOCK-totalInvested;
-alert(`⚠️ Bonusları aktarmak için minimum $3.00 yatırım yapmalısınız.\n\nŞu an: $${totalInvested.toFixed(2)}\nGerekli: $${needed.toFixed(2)} daha`);
+alert(`️ Min $3 yatırım gerekli.\nŞu an: $${totalInvested.toFixed(2)}\nGerekli: $${needed.toFixed(2)}`);
 return;
 }
-if(bonusBalance<=0){alert('💰 Aktarılacak bonus yok!');return}
+if(bonusBalance<=0){alert('💰 Bonus yok!');return}
 try{
 const userRef=db.collection('users').doc(userId);
 await userRef.set({bonusBalance:0,lifetimeEarnings:lifetimeEarnings+bonusBalance},{merge:true});
@@ -961,8 +1001,8 @@ const transferredAmount=bonusBalance;
 lifetimeEarnings+=bonusBalance;
 balance=lifetimeEarnings-totalWithdrawn;
 bonusBalance=0;
-addNotification('💰 Bonus Aktarıldı',`$${transferredAmount.toFixed(2)} bonus ana bakiyeye aktarıldı!`,'success');
-alert(`✅ Başarılı!\n\n$${transferredAmount.toFixed(2)} bonus ana bakiyene aktarıldı!\n\nYeni bakiye: $${balance.toFixed(2)}`);
+addNotification(' Bonus',`$${transferredAmount.toFixed(2)} aktarıldı!`,'success');
+alert(`✅ $${transferredAmount.toFixed(2)} aktarıldı!\nYeni bakiye: $${balance.toFixed(2)}`);
 updateUI();
 if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }catch(error){alert('❌ Hata: '+error.message)}
@@ -970,14 +1010,14 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 
 function activateTelegramNotif(){
 const isActive=localStorage.getItem('telegramNotifActive')==='true';
-if(isActive){alert('✅ Bildirimler zaten aktif!\n\nYatırım ve çekim onayları Telegram\'a gelecek.');return}
+if(isActive){alert('✅ Zaten aktif!');return}
 const botUrl=`https://t.me/${NOTIFY_BOT_USERNAME}?start=activate`;
 if(tg.openTelegramLink)tg.openTelegramLink(botUrl);
 else window.open(botUrl,'_blank');
 setTimeout(()=>{
 const toast=document.createElement('div');
-toast.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:bold;z-index:9999;box-shadow:0 4px 12px rgba(213,157,128,0.4);text-align:center;max-width:280px';
-toast.innerHTML='📱 Bot açıldı!<br><small style="opacity:0.9">"/start" yazarak başlat</small>';
+toast.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D59D80,#C0754D);color:white;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:bold;z-index:9999;text-align:center;max-width:260px';
+toast.innerHTML='📱 Bot açıldı!<br><small style="opacity:0.9">/start yaz</small>';
 document.body.appendChild(toast);
 setTimeout(()=>{toast.style.opacity='0';toast.style.transition='opacity 0.3s';setTimeout(()=>toast.remove(),300)},3000);
 },800);
@@ -995,24 +1035,24 @@ const icon=card.querySelector('.telegram-icon');
 const isActive=localStorage.getItem('telegramNotifActive')==='true';
 if(isActive){
 card.classList.remove('inactive');
-title.innerHTML='✅ Bildirimler Aktif';
-desc.textContent='Yatırım & çekim onayları Telegram\'a gelecek!';
-icon.textContent='📱';
+title.innerHTML='✅ Aktif';
+desc.textContent='Telegram\'a gelecek!';
+icon.textContent='';
 check.textContent='✓';
 }else{
 card.classList.add('inactive');
-title.innerHTML='🔔 Bildirimleri Aktif Et';
-desc.textContent='Yatırım & çekim onaylarını Telegram\'dan anında al!';
-icon.textContent='📱';
+title.innerHTML=' Aktif Et';
+desc.textContent='Telegram\'dan al!';
+icon.textContent='';
 check.textContent='›';
 }
 }
 
 function validateAddress(address,crypto){
 const validator=addressValidators[crypto];
-if(!validator)return{valid:false,message:'Geçersiz coin'};
+if(!validator)return{valid:false,message:'Geçersiz'};
 const isValid=validator(address);
-return{valid:isValid,message:isValid?'✅ Geçerli adres formatı':'❌ Geçersiz format'};
+return{valid:isValid,message:isValid?'✅ Geçerli':'❌ Geçersiz'};
 }
 
 function validateAddressInput(){
@@ -1045,7 +1085,7 @@ document.getElementById('addressValidationMsg').style.display='none';
 function updateNetworkInfo(){
 const crypto=document.getElementById('withdrawCrypto').value;
 const ni=NETWORK_INFO[crypto];
-document.getElementById('networkInfo').innerHTML=`🌐 <strong>Ağ:</strong> ${ni.fullName}<br><small>${ni.description}</small>`;
+document.getElementById('networkInfo').innerHTML=`🌐 <strong>Ağ:</strong> ${ni.fullName}`;
 }
 
 function adjustAmount(delta){
@@ -1060,7 +1100,7 @@ updateBuyTRX();
 
 function setMaxAmount(){
 const maxVal=Math.max(0.01,balance);
-if(maxVal<0.01){alert('❌ Çekilecek bakiye yok!');return}
+if(maxVal<0.01){alert('❌ Bakiye yok!');return}
 document.getElementById('withdrawAmount').value=maxVal.toFixed(2);
 updateCryptoAmount();
 if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
@@ -1087,7 +1127,7 @@ selectedPackageDiscounted=discountedPrice;
 const buyAmountInput=document.getElementById('buyAmount');
 buyAmountInput.value=discountedPrice.toFixed(2);
 buyAmountInput.readOnly=true;
-document.getElementById('amountLabel').textContent='Gönderilecek Tutar (İndirimli)';
+document.getElementById('amountLabel').textContent='Tutar (İndirimli)';
 updateBuyTRX();
 document.getElementById('summaryName').textContent=packageName;
 document.getElementById('summaryOriginal').textContent='$'+originalPrice.toFixed(2);
@@ -1105,7 +1145,7 @@ selectedPackageDiscounted=0;
 const buyAmountInput=document.getElementById('buyAmount');
 buyAmountInput.value='1';
 buyAmountInput.readOnly=false;
-document.getElementById('amountLabel').textContent='Gönderilecek Tutar (USD)';
+document.getElementById('amountLabel').textContent='Tutar (USD)';
 updateBuyTRX();
 document.getElementById('packageSummary').classList.remove('active');
 showPage('home');
@@ -1151,7 +1191,7 @@ await db.collection('users').doc(userId).update({lastActive:now});
 await db.collection('users').doc(userId).set({lifetimeEarnings:0,totalWithdrawn:0,lastActive:Date.now(),created_at:firebase.firestore.FieldValue.serverTimestamp()});
 }
 updateQuickNotifBadge();
-}catch(error){console.error('Offline kazanç hatası:',error)}
+}catch(error){console.error('Offline hata:',error)}
 }
 
 function showOfflinePopup(amount){
@@ -1188,7 +1228,7 @@ updateQuickNotifBadge();
 
 function copyDepositAddress(){
 navigator.clipboard.writeText(DEPOSIT_WALLET).then(()=>{
-alert('✅ Cüzdan adresi kopyalandı!');
+alert('✅ Kopyalandı!');
 if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 });
 }
@@ -1200,8 +1240,8 @@ document.getElementById('buyTrxAmount').textContent=(amount/currentPrices.trx).t
 
 async function buyProduct(){
 const amount=selectedPackageOriginal>0?selectedPackageOriginal:parseFloat(document.getElementById('buyAmount').value);
-if(amount<MIN_DEPOSIT){alert(`Minimum $${MIN_DEPOSIT} yatırabilirsiniz.`);return}
-if(amount>MAX_DEPOSIT){alert(`Maximum $${MAX_DEPOSIT} yatırabilirsiniz.`);return}
+if(amount<MIN_DEPOSIT){alert(`Min $${MIN_DEPOSIT}`);return}
+if(amount>MAX_DEPOSIT){alert(`Max $${MAX_DEPOSIT}`);return}
 const trxAmount=(amount/currentPrices.trx).toFixed(2);
 const payment={id:'pay_'+Date.now(),amount:amount,packageName:selectedPackageName||null,originalPrice:selectedPackageOriginal||amount,discountedPrice:selectedPackageDiscounted||null,network:'TRON (TRC20)',coin:'TRX',trxAmount:trxAmount,earned:0,status:'pending',userId:userId,userName:currentUser?currentUser.first_name:'User',userTelegramId:currentUser?currentUser.id:null,timestamp:Date.now()};
 try{
@@ -1209,9 +1249,9 @@ const userRef=db.collection('users').doc(userId);
 const doc=await userRef.get();
 const data=doc.data()||{};
 await userRef.set({pendingPayments:[...(data.pendingPayments||[]),payment]},{merge:true});
-const adminMsg=`🔔 <b>YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> ${payment.userName}\n🆔 <b>ID:</b> ${payment.userTelegramId||userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${trxAmount} TRX\n <b>TRX Fiyatı:</b> $${currentPrices.trx.toFixed(4)}\n🌐 <b>Ağ:</b> TRON (TRC20)\n${selectedPackageName?`📦 <b>Paket:</b> ${selectedPackageName}`:''}\n\n⏳ <b>Durum:</b> Onay Bekliyor\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+const adminMsg=`🔔 <b>YENİ YATIRIM!</b>\n\n ${payment.userName}\n🆔 ${payment.userTelegramId||userId}\n\n💵 $${amount.toFixed(2)}\n🪙 ${trxAmount} TRX\n💰 TRX: $${currentPrices.trx.toFixed(4)}\n🌐 TRON (TRC20)\n${selectedPackageName?`📦 ${selectedPackageName}`:''}\n\n Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
 sendAdminNotification(adminMsg);
-alert(`✅ Ödeme bildirimi alındı!\n\n💰 Yatırım: $${amount.toFixed(2)}\n🪙 TRX: ${trxAmount}\n💵 TRX Fiyatı: $${currentPrices.trx.toFixed(4)}\n\nAdmin onayından sonra üretiminiz başlayacaktır.`);
+alert(`✅ Bildirim alındı!\n\n💰 $${amount.toFixed(2)}\n🪙 ${trxAmount} TRX\n\nAdmin onayından sonra başlayacak.`);
 resetAndGoHome();
 if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }catch(error){alert('❌ Hata: '+error.message)}
@@ -1256,11 +1296,11 @@ const hasApprovedInvestment=products.length>0;
 const totalApprovedInvestment=products.reduce((sum,p)=>sum+(p.amount||0),0);
 if(hasApprovedInvestment&&totalApprovedInvestment>=MIN_INVESTMENT_TO_UNLOCK){
 bonusBtn.disabled=false;
-bonusBtn.innerHTML='💰 Bonusları Ana Bakiyeye Aktar';
+bonusBtn.innerHTML=' Aktar';
 lockInfo.classList.remove('show');
 }else{
 bonusBtn.disabled=true;
-bonusBtn.innerHTML='🔒 ⏳ Admin Onayı Bekleniyor';
+bonusBtn.innerHTML='🔒 Onay Bekleniyor';
 lockInfo.classList.add('show');
 document.getElementById('currentInvestedForBonus').textContent=totalApprovedInvestment.toFixed(2);
 }
@@ -1280,9 +1320,9 @@ async function requestWithdrawal(){
 const amount=parseFloat(document.getElementById('withdrawAmount').value);
 const crypto=document.getElementById('withdrawCrypto').value;
 const walletAddress=document.getElementById('walletAddress').value.trim();
-if(amount<0.01){alert('❌ Minimum çekim: $0.01');return}
+if(amount<0.01){alert('❌ Min $0.01');return}
 if(amount>balance){alert('❌ Yetersiz bakiye!');return}
-if(!walletAddress){alert('❌ Cüzdan adresi gerekli!');return}
+if(!walletAddress){alert('❌ Cüzdan gerekli!');return}
 const validation=validateAddress(walletAddress,crypto);
 if(!validation.valid){alert('❌ Geçersiz adres!\n'+validation.message);return}
 const cryptoAmount=(amount/currentPrices[crypto]).toFixed(6);
@@ -1295,9 +1335,9 @@ const newLifetimeEarnings=lifetimeEarnings-amount;
 await userRef.set({withdrawalRequests:[...(data.withdrawalRequests||[]),withdrawal],lifetimeEarnings:newLifetimeEarnings},{merge:true});
 lifetimeEarnings=newLifetimeEarnings;
 balance=lifetimeEarnings-totalWithdrawn;
-const adminMsg=`💸 <b>YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> ${withdrawal.userName}\n🆔 <b>ID:</b> ${withdrawal.userTelegramId||userId}\n\n💵 <b>Tutar:</b> $${amount.toFixed(2)}\n <b>Coin:</b> ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n <b>Fiyat:</b> $${currentPrices[crypto].toFixed(4)}\n <b>Ağ:</b> ${NETWORK_INFO[crypto].fullName}\n📍 <b>Cüzdan:</b>\n<code>${walletAddress}</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n <a href="https://farmbot-giuy.vercel.app/admin.html">Admin Panelinden Onayla</a>`;
+const adminMsg=`💸 <b>YENİ ÇEKİM!</b>\n\n ${withdrawal.userName}\n🆔 ${withdrawal.userTelegramId||userId}\n\n💵 $${amount.toFixed(2)}\n ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n💰 Fiyat: $${currentPrices[crypto].toFixed(4)}\n🌐 ${NETWORK_INFO[crypto].fullName}\n📍 <code>${walletAddress}</code>\n\n✅ Doğrulandı\n⏳ Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
 sendAdminNotification(adminMsg);
-alert(`✅ Çekim talebi oluşturuldu!\n\n🌐 Ağ: ${NETWORK_INFO[crypto].fullName}\n💰 Karşılık: ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n💵 Fiyat: $${currentPrices[crypto].toFixed(4)}\n\nAdmin onayı bekleniyor.`);
+alert(`✅ Çekim talebi!\n\n ${NETWORK_INFO[crypto].fullName}\n💰 ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\nAdmin onayı bekleniyor.`);
 document.getElementById('withdrawAmount').value='';
 document.getElementById('walletAddress').value='';
 clearAddressValidation();
@@ -1318,19 +1358,19 @@ let allDeposits=[];
 if(userData.pendingPayments&&Array.isArray(userData.pendingPayments))userData.pendingPayments.forEach(p=>{allDeposits.push({...p,status:p.status||'pending'})});
 if(userData.approvedPayments&&Array.isArray(userData.approvedPayments))userData.approvedPayments.forEach(p=>{allDeposits.push({...p,status:'approved'})});
 allDeposits.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-if(allDeposits.length===0){container.innerHTML='<div class="empty-history">Henüz yatırım yapmadınız</div>';return}
+if(allDeposits.length===0){container.innerHTML='<div class="empty-history">Yatırım yok</div>';return}
 let html='';
 allDeposits.slice(0,20).forEach(d=>{
 const date=d.timestamp?new Date(d.timestamp).toLocaleString('tr-TR'):'Yükleniyor...';
 const status=d.status||'pending';
 const statusClass=status==='approved'?'success':(status==='rejected'?'rejected':'pending');
-const statusText=status==='approved'?'✅ Onaylandı':(status==='rejected'?'❌ Reddedildi':'⏳ Bekliyor');
-const packageText=d.packageName?'📦 '+d.packageName:'💰 Manuel';
+const statusText=status==='approved'?'✅ Onaylandı':(status==='rejected'?'❌ Red':'⏳ Bekliyor');
+const packageText=d.packageName?' '+d.packageName:'💰 Manuel';
 const trxText=d.trxAmount?`(${d.trxAmount} TRX)`:'';
-html+=`<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Yatırım:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${d.network||'TRON (TRC20)'}</span></div><div class="h-date">🕐 ${date}</div></div>`;
+html+=`<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">${packageText}</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${trxText}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${d.network||'TRON'}</span></div><div class="h-date">🕐 ${date}</div></div>`;
 });
 container.innerHTML=html;
-}catch(error){console.error('Geçmiş yükleme hatası:',error);container.innerHTML='<div class="empty-history">Geçmiş yüklenemedi</div>'}
+}catch(error){console.error('Geçmiş hatası:',error);container.innerHTML='<div class="empty-history">Yüklenemedi</div>'}
 }
 
 async function loadWithdrawalHistory(){
@@ -1341,17 +1381,17 @@ const userDoc=await db.collection('users').doc(userId).get();
 const userData=userDoc.data()||{};
 let allWithdrawals=userData.withdrawalRequests||[];
 allWithdrawals.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-if(allWithdrawals.length===0){container.innerHTML='<div class="empty-history">Henüz çekim yapmadınız</div>';return}
+if(allWithdrawals.length===0){container.innerHTML='<div class="empty-history">Çekim yok</div>';return}
 let html='';
 allWithdrawals.slice(0,10).forEach(w=>{
 const date=w.timestamp?new Date(w.timestamp).toLocaleString('tr-TR'):'Yükleniyor...';
 const status=w.status||'pending';
 const statusClass=status==='approved'?'success':(status==='rejected'?'rejected':'pending');
-const statusText=status==='approved'?'✅ Onaylandı':(status==='rejected'?'❌ Reddedildi':'⏳ Bekliyor');
+const statusText=status==='approved'?'✅ Onaylandı':(status==='rejected'?'❌ Red':'⏳ Bekliyor');
 html+=`<div class="history-item ${statusClass}"><div class="h-row"><span class="h-label">💸 Çekim</span><span class="status-badge ${statusClass}">${statusText}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(w.amount||0).toFixed(2)} = ${w.cryptoAmount||0} ${w.cryptoSymbol||''}</span></div><div class="h-row"><span class="h-label">🌐 Ağ:</span><span class="h-value">${w.network||''}</span></div><div class="h-date">🕐 ${date}</div></div>`;
 });
 container.innerHTML=html;
-}catch(error){container.innerHTML='<div class="empty-history">Geçmiş yüklenemedi</div>'}
+}catch(error){container.innerHTML='<div class="empty-history">Yüklenemedi</div>'}
 }
 
 function showPage(page,navElement){
