@@ -93,7 +93,7 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <body>
 <div class="container">
 <div class="header">
-<h1>🔐 Admin Panel</h1>
+<h1> Admin Panel</h1>
 <div class="subtitle">Hash Power Mining - Yönetim Merkezi</div>
 </div>
 
@@ -202,7 +202,7 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
         <input type="number" id="manualAmountInput" placeholder="Tutar (USD)" style="width:100%; padding:10px; background:#0D1D25; border:1px solid #C0754D; color:#fff; border-radius:6px; margin-bottom:15px;">
         <div style="display:flex; gap:10px;">
             <button onclick="submitManualDeposit()" class="btn btn-success" style="flex:1;">✅ Ekle</button>
-            <button onclick="document.getElementById('manualDepositModal').style.display='none'" class="btn btn-secondary" style="flex:1;">❌ İptal</button>
+            <button onclick="document.getElementById('manualDepositModal').style.display='none'" class="btn btn-secondary" style="flex:1;"> İptal</button>
         </div>
     </div>
 </div>
@@ -351,9 +351,9 @@ if(!botToken){alert('⚠️ Önce bot token ayarla!');return}
 let message='';
 switch(type){
 case'deposit':message=`🔔 <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'withdraw':message=`💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n📍 <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'reject':message=`❌ <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'withdraw':message=`💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n <b>Tutar:</b> $100.00\n <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'reject':message=` <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
 }
 const s=await sendAdminNotification(message);
 if(s)alert('✅ Test bildirimi gönderildi! Telegram\'ını kontrol et.');
@@ -387,7 +387,7 @@ c.innerHTML=h;
 
 async function loadWithdrawals(){
 const c=document.getElementById('content');
-c.innerHTML='<div class="empty-state"><div class="icon">⏳</div><div>Yükleniyor...</div></div>';
+c.innerHTML='<div class="empty-state"><div class="icon"></div><div>Yükleniyor...</div></div>';
 try{
 const s=await db.collection('users').get();
 const p=[];
@@ -398,7 +398,7 @@ let h='';
 p.forEach(w=>{
 const dt=w.timestamp?new Date(w.timestamp).toLocaleString('tr-TR'):'Bilinmiyor';
 const va=w.addressValidated?'<span class="badge badge-success">✓ Doğrulandı</span>':'<span class="badge badge-error">❌ Doğrulanmadı</span>';
-h+=`<div class="item-card withdrawal"><div class="item-header"><div class="item-amount">$${w.amount.toFixed(2)} = ${w.cryptoAmount} ${w.cryptoSymbol}</div><div class="item-user">${w.userName||'Bilinmiyor'} ${va}</div></div><div class="item-details"><strong>🪙 Coin:</strong> ${w.cryptoSymbol||w.crypto}<br><strong>🌐 Ağ:</strong> ${w.network||'-'}<br><strong>📍 Cüzdan:</strong><br><code style="font-size:11px;word-break:break-all">${w.walletAddress}</code><br><strong>🆔 ID:</strong> ${w.userTelegramId||w.userId||'-'}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}','${w.cryptoAmount}','${w.cryptoSymbol}','${w.network}','${w.walletAddress}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}')">✕ Reddet</button></div></div>`;
+h+=`<div class="item-card withdrawal"><div class="item-header"><div class="item-amount">$${w.amount.toFixed(2)} = ${w.cryptoAmount} ${w.cryptoSymbol}</div><div class="item-user">${w.userName||'Bilinmiyor'} ${va}</div></div><div class="item-details"><strong> Coin:</strong> ${w.cryptoSymbol||w.crypto}<br><strong>🌐 Ağ:</strong> ${w.network||'-'}<br><strong> Cüzdan:</strong><br><code style="font-size:11px;word-break:break-all">${w.walletAddress}</code><br><strong>🆔 ID:</strong> ${w.userTelegramId||w.userId||'-'}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}','${w.cryptoAmount}','${w.cryptoSymbol}','${w.network}','${w.walletAddress}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}')">✕ Reddet</button></div></div>`;
 });
 c.innerHTML=h;
 }catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Çekimler yüklenemedi: '+e.message)}
@@ -503,7 +503,7 @@ async function submitManualDeposit() {
         loadUsers(); // Listeyi yenile
         
     } catch (e) {
-        alert('❌ Hata: ' + e.message);
+        alert(' Hata: ' + e.message);
         addLog('error', 'Manuel yatırım ekleme hatası: ' + e.message);
     }
 }
@@ -560,7 +560,7 @@ const rdx=rd.data();
 const comm=p.amount*0.10;
 await rr.set({bonusBalance:(rdx.bonusBalance||0)+comm,referralEarnings:(rdx.referralEarnings||0)+comm},{merge:true});
 if(rdx.telegramId){
-const rm=`🎉 <b>REFERANS KOMİSYONU!</b>\n\n <b>Üyen:</b> ${p.userName||'User'}\n💵 <b>Yatırımı:</b> $${p.amount.toFixed(2)}\n💰 <b>Komisyonun (%10):</b> $${comm.toFixed(2)}\n\n✅ Bonus bakiyene eklendi!`;
+const rm=` <b>REFERANS KOMİSYONU!</b>\n\n <b>Üyen:</b> ${p.userName||'User'}\n💵 <b>Yatırımı:</b> $${p.amount.toFixed(2)}\n💰 <b>Komisyonun (%10):</b> $${comm.toFixed(2)}\n\n✅ Bonus bakiyene eklendi!`;
 sendUserNotification(rdx.telegramId,rm);
 }
 addLog('success',`%10 komisyon: $${comm.toFixed(2)} → ${rdx.userName||rbd}`);
@@ -570,7 +570,7 @@ addLog('success',`%10 komisyon: $${comm.toFixed(2)} → ${rdx.userName||rbd}`);
 
 // Kullanıcıya onay bildirimi
 if(p.userTelegramId){
-const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
+const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
 sendUserNotification(p.userTelegramId,um);
 }
 
@@ -618,14 +618,14 @@ nw.push(w);
 await ur.set({withdrawalRequests:nw},{merge:true});
 
 if(w.userTelegramId){
-const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! `;
+const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! `;
 sendUserNotification(w.userTelegramId,um);
 }
 
 addLog('success',`Çekim onaylandı: $${amount.toFixed(2)} - ${userName}`);
 alert('✅ Çekim onaylandı! Kullanıcıya bildirim gönderildi.');
 loadData();
-}catch(e){addLog('error','Onay hatası: '+e.message);alert('❌ Hata: '+e.message)}
+}catch(e){addLog('error','Onay hatası: '+e.message);alert(' Hata: '+e.message)}
 }
 
 async function rejectWithdrawal(userDocId,withdrawalId,amount,userName){
