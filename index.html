@@ -19,33 +19,51 @@ h1{text-align:center;color:#C6C6D0;margin-bottom:12px;font-size:20px;font-weight
 h2{color:#C6C6D0;margin-bottom:10px;font-size:18px;font-weight:700}
 h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 
-/* YAN YANA BAKİYE DÜZENİ - TIKLANABİLİR */
+/* YAN YANA BAKİYE DÜZENİ - HER İKİSİ DE NEON */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .stat-box{background:#0D1D25;border-radius:8px;padding:12px 4px;text-align:center;border:1px solid rgba(192,117,77,.3);position:relative;overflow:hidden;cursor:pointer;transition:all .2s}
 .stat-box:active{transform:scale(.95)}
 .stat-box .label{font-size:9px;color:#C6C6D0;opacity:.8;margin-bottom:4px;font-weight:700;text-transform:uppercase}
 
-/* CANLI BAKİYE ANİMASYONU */
+/* CANLI BAKİYE ANİMASYONU (NEON YEŞİL) */
 .live-balance-box {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border: 2px solid rgba(16, 185, 129, 0.5);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2), inset 0 0 15px rgba(16, 185, 129, 0.1);
+    border: 2px solid rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 15px rgba(16, 185, 129, 0.1);
     padding: 15px;
 }
 .live-balance-box::before {
     content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
     animation: rotateGlow 6s linear infinite;
 }
 @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 .live-balance-value {
     font-size: 28px; font-weight: 900; color: #10b981; /* Neon Yeşil */
-    text-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
     position: relative; z-index: 2; transition: all 0.1s ease-out;
     font-variant-numeric: tabular-nums;
 }
 .live-balance-label { font-size: 10px; color: #D59D80; margin-top: 5px; letter-spacing: 1px;}
+
+/* BAKİYE EKLE KUTUSU (NEON TURUNCU) */
+.add-balance-box {
+    background: linear-gradient(135deg, #2a1a0f 0%, #3b291e 100%);
+    border: 2px solid rgba(213, 157, 128, 0.6);
+    box-shadow: 0 0 25px rgba(213, 157, 128, 0.3), inset 0 0 15px rgba(213, 157, 128, 0.1);
+    padding: 15px;
+}
+.add-balance-box::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(213,157,128,0.15) 0%, transparent 70%);
+    animation: rotateGlow 6s linear infinite reverse;
+}
+.add-balance-value {
+    font-size: 24px; font-weight: 900; color: #D59D80;
+    text-shadow: 0 0 15px rgba(213, 157, 128, 0.8);
+    position: relative; z-index: 2;
+}
 
 .production-line {
     position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
@@ -83,39 +101,41 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 /* 3'LÜ PAKET DÜZENİ */
 .packages-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
 
-/* NEON PAKET KARTLARI - GELİŞTİRİLDİ */
+/* NEON PAKET KARTLARI - GELİŞTİRİLDİ VE NETLEŞTİRİLDİ */
 .package-card{
     background:#0D1D25;border-radius:10px;padding:10px 6px;cursor:pointer;
     border:1px solid rgba(192,117,77,.4);position:relative;transition:all 0.3s;
     display: flex; flex-direction: column; justify-content: space-between;
+    /* Neon efektin her zaman görünmesi için base shadow */
+    box-shadow: 0 0 5px rgba(192, 117, 77, 0.1); 
 }
 .package-card:hover, .package-card:active{transform:scale(.97)}
 
-/* CEO PAKETİ ÖZEL EFEKTLERİ */
+/* CEO PAKETİ ÖZEL EFEKTLERİ - DAHA PARLAK */
 .ceo-package {
     background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
     border: 2px solid #a855f7; /* Mor Neon Çerçeve */
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), inset 0 0 15px rgba(168, 85, 247, 0.2);
-    animation: ceoPulse 2s infinite alternate;
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.6), inset 0 0 20px rgba(168, 85, 247, 0.3);
+    animation: ceoPulse 1.5s infinite alternate;
 }
 @keyframes ceoPulse {
-    0% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); border-color: #a855f7; }
-    100% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.7); border-color: #d8b4fe; }
+    0% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); border-color: #a855f7; }
+    100% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.9); border-color: #d8b4fe; }
 }
 .ceo-badge {
     position: absolute; top: -8px; right: 50%; transform: translateX(50%);
     background: #a855f7; color: #fff; font-size: 9px; font-weight: 800;
     padding: 2px 6px; border-radius: 10px; text-transform: uppercase; white-space: nowrap;
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.8); z-index: 10;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 1); z-index: 10;
 }
 
-/* STANDART PAKETLER İÇİN HAFİF NEON */
+/* STANDART PAKETLER İÇİN HAFİF NEON - DAHA BELİRGİN */
 .standard-neon {
-    border: 1px solid rgba(213, 157, 128, 0.6);
-    box-shadow: 0 0 10px rgba(213, 157, 128, 0.1);
+    border: 1px solid rgba(213, 157, 128, 0.8);
+    box-shadow: 0 0 12px rgba(213, 157, 128, 0.2);
 }
 .standard-neon:hover {
-    box-shadow: 0 0 15px rgba(213, 157, 128, 0.4);
+    box-shadow: 0 0 20px rgba(213, 157, 128, 0.6);
     border-color: #D59D80;
 }
 
@@ -135,7 +155,7 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .btn-withdraw{background:linear-gradient(135deg,#C0754D,#B6410F)}
 .btn-ctrl{width:44px;height:44px;padding:0;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0;border-radius:8px;background:linear-gradient(135deg,#C0754D,#B6410F);color:#fff;border:none}
 
-/* SAĞ MENÜ (FAB TARZI) - VARSAYILAN AÇIK */
+/* SAĞ MENÜ (FAB TARZI) - TEMİZLENDİ */
 .right-menu-container {
     position: fixed;
     right: 15px;
@@ -162,14 +182,14 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
     transition: all 0.2s;
 }
 .menu-fab:active { transform: scale(0.9); }
-.menu-fab.closed { transform: rotate(0deg); } /* Kapalıyken düz durur */
-.menu-fab.open { transform: rotate(45deg); } /* Açıkken çarpı olur */
+.menu-fab.closed { transform: rotate(0deg); } 
+.menu-fab.open { transform: rotate(45deg); } 
 
 .menu-items {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    opacity: 1; /* Varsayılan açık */
+    opacity: 1; 
     visibility: visible;
     transform: translateY(0);
     transition: all 0.3s ease;
@@ -370,7 +390,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div id="page-home" class="card">
 <h1 data-i18n="app_title"> Micro Monetize <small style="font-size:12px;opacity:.6">v1.2.1</small></h1>
 
-<!-- YAN YANA BAKİYE VE YATIRIM - TIKLANABİLİR & ETİKETLER DEĞİŞTİ -->
+<!-- YAN YANA BAKİYE VE YATIRIM - HER İKİSİ DE NEON & TIKLANABİLİR -->
 <div class="stats-grid">
     <div class="stat-box live-balance-box" onclick="showPage('withdraw')">
         <div class="live-balance-value" id="balance">$0.000000</div>
@@ -378,10 +398,10 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
         <div class="production-line"></div>
     </div>
     
-    <!-- TOPLAM YATIRIM KUTUSU - TIKLANABİLİR & ETİKET DEĞİŞTİ -->
-    <div class="stat-box" onclick="showPage('buy')">
-        <div class="label" data-i18n="deposit_label">📊 ADD BALANCE</div>
-        <div class="value" id="totalInvested">$0</div>
+    <!-- TOPLAM YATIRIM KUTUSU - NEON TURUNCU -->
+    <div class="stat-box add-balance-box" onclick="showPage('buy')">
+        <div class="add-balance-value" id="totalInvested">$0</div>
+        <div class="label" data-i18n="deposit_label" style="margin-top:5px">📊 ADD BALANCE</div>
     </div>
 </div>
 
@@ -405,7 +425,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 </div>
 <div class="packages-section-title" data-i18n="pkg_title">%20-%30 Discounted Packages!</div>
 <div class="packages-grid" id="packagesContainer"></div>
-<button class="calc-main-btn" onclick="openCalcPopup()" data-i18n="calc_btn">📊 Profit Calculator</button>
+<button class="calc-main-btn" onclick="openCalcPopup()" data-i18n="calc_btn"> Profit Calculator</button>
 </div>
 
 <div id="page-buy" class="card hidden">
@@ -426,9 +446,9 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 </div>
 <div class="qr-container">
 <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR">
-<div class="qr-label" data-i18n="qr_label">📱 Send TRX via QR</div>
+<div class="qr-label" data-i18n="qr_label"> Send TRX via QR</div>
 </div>
-<div class="network-info">⚠️ <strong data-i18n="warn_net">IMPORTANT:</strong> <span data-i18n="warn_net_desc">Only TRON (TRC20) network is accepted!</span></div>
+<div class="network-info">️ <strong data-i18n="warn_net">IMPORTANT:</strong> <span data-i18n="warn_net_desc">Only TRON (TRC20) network is accepted!</span></div>
 <h3 id="amountLabel" data-i18n="amt_label">Amount (USD)</h3>
 <div class="amount-control">
 <button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
@@ -466,6 +486,8 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <input type="text" id="walletAddress" placeholder="Enter wallet address..." oninput="validateAddressInput()">
 <div id="addressValidationMsg" style="font-size:10px;margin-top:-6px;margin-bottom:8px;font-weight:600;padding:3px 6px;border-radius:5px;display:none"></div>
 <button class="btn btn-withdraw" onclick="requestWithdrawal()" data-i18n="wd_btn"> Withdraw</button>
+<!-- VAZGEÇ BUTONU EKLENDİ -->
+<button class="btn btn-secondary" onclick="showPage('home')" data-i18n="cancel_btn" style="margin-top:8px">← Cancel</button>
 <div class="history-section"><div class="history-title" data-i18n="wd_hist">📜 Withdrawal History</div><div id="withdrawalHistory"></div></div>
 </div>
 
@@ -476,13 +498,11 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 
 </div>
 
-<!-- SAĞ MENÜ (FAB) - VARSAYILAN AÇIK -->
+<!-- SAĞ MENÜ (FAB) - TEMİZLENDİ (SADECE HOME, PROFIL, ADMIN) -->
 <div class="right-menu-container">
     <div class="menu-items" id="menuItems">
         <div class="menu-item active" onclick="showPage('home',this)" title="Home" data-i18n-title="nav_home">🏠</div>
-        <div class="menu-item" onclick="showPage('buy',this)" title="Buy" data-i18n-title="nav_buy">💎</div>
         <div class="menu-item" onclick="openProfile()" title="Profile" data-i18n-title="nav_profile">👤</div>
-        <div class="menu-item" onclick="showPage('withdraw',this)" title="Withdraw" data-i18n-title="nav_withdraw">💸</div>
         <div class="menu-item" id="adminNavItem" onclick="showPage('admin',this)" title="Admin" style="display:none" data-i18n-title="nav_admin">🔐</div>
     </div>
     <button class="menu-fab open" id="menuFab" onclick="toggleMenu()">☰</button>
@@ -499,7 +519,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-register-date">📅 <strong data-i18n="reg_date">Joined:</strong> <span id="profileRegisterDate">Loading...</span></div>
 <div class="level-card" id="levelCard">
 <div class="level-header">
-<div class="level-badge"><span class="level-icon" id="levelIcon">🥉</span><span id="levelName">Bronze</span></div>
+<div class="level-badge"><span class="level-icon" id="levelIcon"></span><span id="levelName">Bronze</span></div>
 <div class="level-progress-info" id="levelProgressInfo">$0 / $50</div>
 </div>
 <div class="level-progress-bar"><div class="level-progress-fill" id="levelProgressFill" style="width:0%"></div></div>
@@ -520,6 +540,8 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title" data-i18n="prof_faq">FAQ</div><div class="m-desc" data-i18n="prof_faq_desc">Help & Support</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSupport()"><div class="m-icon">📞</div><div class="m-content"><div class="m-title" data-i18n="prof_support">Support</div><div class="m-desc" data-i18n="prof_support_desc">Telegram</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('about')"><div class="m-icon">ℹ️</div><div class="m-content"><div class="m-title" data-i18n="prof_about">About</div><div class="m-desc" data-i18n="prof_about_desc">Info</div></div><div class="m-arrow">›</div></div>
+<!-- DİL SEÇİMİ EKLENDİ -->
+<div class="profile-menu-item" onclick="openLanguageSelector()"><div class="m-icon"></div><div class="m-content"><div class="m-title" data-i18n="prof_lang">Language</div><div class="m-desc" id="currentLangDesc">English</div></div><div class="m-arrow">›</div></div>
 </div>
 </div>
 </div>
@@ -612,13 +634,13 @@ const i18n = {
         prof_daily: "Daily Bonus", prof_tasks: "Tasks", prof_chart: "Chart", prof_chart_desc: "View earnings",
         prof_notif: "Notifications", prof_settings: "Settings", prof_settings_desc: "Preferences",
         prof_ref: "Referral", prof_faq: "FAQ", prof_faq_desc: "Help & Support", prof_support: "Support", prof_support_desc: "Telegram",
-        prof_about: "About", prof_about_desc: "Info",
+        prof_about: "About", prof_about_desc: "Info", prof_lang: "Language",
         calc_title: "📊 Profit Calculator", calc_desc: "Enter amount manually!", calc_manual_label: "💰 Enter Amount (USD)",
         offline_title: "⛏️ Welcome Back!", offline_desc: "Miners were working:", collect_btn: "🎉 Collect",
         welcome_title: "🎉 Welcome!", welcome_desc: "New member investment bonus:", welcome_note: "Added directly to your total investment!", great_btn: "🎉 Great!"
     },
     ru: {
-        app_title: "Micro Monetize", withdraw_label: "💰 ВЫВОД", deposit_label: "📊 ПОПОЛНИТЬ",
+        app_title: "Micro Monetize", withdraw_label: "💰 ВЫВОД", deposit_label: " ПОПОЛНИТЬ",
         notif_btn: "уведомления", bonus_btn: "ежедневный бонус", tasks_btn: "задания",
         est_earnings: " Ожидаемый доход", per_min: "Минута", per_hour: "Час", per_day: "День",
         tg_activate: " Включить уведомления", tg_desc: "Получайте мгновенные оповещения в Telegram!",
@@ -636,7 +658,7 @@ const i18n = {
         prof_daily: "Ежедневный бонус", prof_tasks: "Задания", prof_chart: "График", prof_chart_desc: "Просмотр доходов",
         prof_notif: "Уведомления", prof_settings: "Настройки", prof_settings_desc: "Предпочтения",
         prof_ref: "Рефералы", prof_faq: "FAQ", prof_faq_desc: "Помощь и поддержка", prof_support: "Поддержка", prof_support_desc: "Telegram",
-        prof_about: "О нас", prof_about_desc: "Информация",
+        prof_about: "О нас", prof_about_desc: "Информация", prof_lang: "Язык",
         calc_title: " Калькулятор прибыли", calc_desc: "Введите сумму вручную!", calc_manual_label: "💰 Введите сумму (USD)",
         offline_title: "️ С возвращением!", offline_desc: "Майнеры работали:", collect_btn: " Собрать",
         welcome_title: "🎉 Добро пожаловать!", welcome_desc: "Бонус за первую инвестицию:", welcome_note: "Добавлено прямо в ваши общие инвестиции!", great_btn: "🎉 Отлично!"
@@ -660,7 +682,7 @@ const i18n = {
         prof_daily: "Günlük Bonus", prof_tasks: "Görevler", prof_chart: "Grafik", prof_chart_desc: "Kazançları gör",
         prof_notif: "Bildirimler", prof_settings: "Ayarlar", prof_settings_desc: "Tercihler",
         prof_ref: "Referans", prof_faq: "SSS", prof_faq_desc: "Yardım", prof_support: "Destek", prof_support_desc: "Telegram",
-        prof_about: "Hakkında", prof_about_desc: "Bilgi",
+        prof_about: "Hakkında", prof_about_desc: "Bilgi", prof_lang: "Dil",
         calc_title: "📊 Kazanç Hesaplama", calc_desc: "Tutarı manuel girin!", calc_manual_label: "💰 Kendi Tutarın (USD)",
         offline_title: "⛏️ Hoşgeldin!", offline_desc: "Madenciler çalıştı:", collect_btn: "🎉 Topla",
         welcome_title: "🎉 Hoşgeldin!", welcome_desc: "Yeni üye yatırım bonusun:", welcome_note: "Doğrudan toplam yatırımına eklendi!", great_btn: "🎉 Harika!"
@@ -668,8 +690,8 @@ const i18n = {
     es: {
         app_title: "Micro Monetize", withdraw_label: "💰 RETIRAR", deposit_label: "📊 AGREGAR SALDO",
         notif_btn: "notificaciones", bonus_btn: "bono diario", tasks_btn: "tareas",
-        est_earnings: "📊 Ganancias Estimadas", per_min: "Minuto", per_hour: "Hora", per_day: "Día",
-        tg_activate: "🔔 Activar Notificaciones", tg_desc: "¡Recibe alertas instantáneas en Telegram!",
+        est_earnings: " Ganancias Estimadas", per_min: "Minuto", per_hour: "Hora", per_day: "Día",
+        tg_activate: " Activar Notificaciones", tg_desc: "¡Recibe alertas instantáneas en Telegram!",
         pkg_title: "¡Paquetes con %20-%30 de descuento!", calc_btn: "📊 Calculadora de Ganancias",
         buy_title: " Comprar", pkg_summary_title: "📦 Paquete Seleccionado", pkg_name: "Paquete:", pkg_orig: "Original:",
         pkg_disc: "Con descuento:", pkg_save: "Ahorrado:", net_label: "🌐 Red:", wallet_label: "📍 Billetera:",
@@ -677,23 +699,23 @@ const i18n = {
         amt_label: "Cantidad (USD)", min_amt: "Mín: $1", max_amt: "Máx: $9,999", equiv_label: "Equivalente:",
         pay_btn: "✅ Pago Enviado", cancel_btn: "← Cancelar", dep_hist: "📜 Historial de Depósitos",
         wd_title: "💸 Retirar", bal_label: "Saldo", min_wd: "Mín: $0.01", amt_usd: "Cantidad (USD)",
-        crypto_label: "🪙 Cripto", wallet_addr: "📍 Dirección de Billetera", wd_btn: "💸 Retirar", wd_hist: "📜 Historial de Retiros",
+        crypto_label: "🪙 Cripto", wallet_addr: " Dirección de Billetera", wd_btn: " Retirar", wd_hist: "📜 Historial de Retiros",
         admin_title: " Admin", admin_desc: "Panel de Administrador:", admin_link: "🛡️ Abrir Panel",
         nav_home: "Inicio", nav_buy: "Comprar", nav_profile: "Perfil", nav_withdraw: "Retirar", nav_admin: "Admin",
         reg_date: "Registrado:", prof_bal: "Saldo", prof_inv: "Inversión", prof_wd: "Retirado", prof_comm: "Comisión",
         prof_daily: "Bono Diario", prof_tasks: "Tareas", prof_chart: "Gráfico", prof_chart_desc: "Ver ganancias",
         prof_notif: "Notificaciones", prof_settings: "Configuración", prof_settings_desc: "Preferencias",
         prof_ref: "Referidos", prof_faq: "FAQ", prof_faq_desc: "Ayuda y Soporte", prof_support: "Soporte", prof_support_desc: "Telegram",
-        prof_about: "Acerca de", prof_about_desc: "Información",
+        prof_about: "Acerca de", prof_about_desc: "Información", prof_lang: "Idioma",
         calc_title: " Calculadora de Ganancias", calc_desc: "¡Ingrese el monto manualmente!", calc_manual_label: "💰 Ingrese Monto (USD)",
         offline_title: "⛏️ ¡Bienvenido de nuevo!", offline_desc: "Los mineros estaban trabajando:", collect_btn: " Recoger",
         welcome_title: "🎉 ¡Bienvenido!", welcome_desc: "Bono de inversión para nuevos miembros:", welcome_note: "¡Agregado directamente a su inversión total!", great_btn: "🎉 ¡Genial!"
     },
     de: {
-        app_title: "Micro Monetize", withdraw_label: "💰 AUSZAHLEN", deposit_label: "📊 GUTHABEN EINZAHLEN",
+        app_title: "Micro Monetize", withdraw_label: " AUSZAHLEN", deposit_label: " GUTHABEN EINZAHLEN",
         notif_btn: "Benachrichtigungen", bonus_btn: "Tagesbonus", tasks_btn: "Aufgaben",
-        est_earnings: "📊 Geschätzte Einnahmen", per_min: "Minute", per_hour: "Stunde", per_day: "Tag",
-        tg_activate: "🔔 Benachrichtigungen aktivieren", tg_desc: "Erhalten Sie sofortige Warnungen auf Telegram!",
+        est_earnings: " Geschätzte Einnahmen", per_min: "Minute", per_hour: "Stunde", per_day: "Tag",
+        tg_activate: " Benachrichtigungen aktivieren", tg_desc: "Erhalten Sie sofortige Warnungen auf Telegram!",
         pkg_title: "Pakete mit %20-%30 Rabatt!", calc_btn: "📊 Gewinnrechner",
         buy_title: "💎 Kaufen", pkg_summary_title: " Ausgewähltes Paket", pkg_name: "Paket:", pkg_orig: "Original:",
         pkg_disc: "Rabattiert:", pkg_save: "Gespart:", net_label: "🌐 Netzwerk:", wallet_label: "📍 Wallet:",
@@ -708,13 +730,14 @@ const i18n = {
         prof_daily: "Tagesbonus", prof_tasks: "Aufgaben", prof_chart: "Diagramm", prof_chart_desc: "Einnahmen ansehen",
         prof_notif: "Benachrichtigungen", prof_settings: "Einstellungen", prof_settings_desc: "Präferenzen",
         prof_ref: "Empfehlungen", prof_faq: "FAQ", prof_faq_desc: "Hilfe & Support", prof_support: "Support", prof_support_desc: "Telegram",
-        prof_about: "Über uns", prof_about_desc: "Info",
+        prof_about: "Über uns", prof_about_desc: "Info", prof_lang: "Sprache",
         calc_title: "📊 Gewinnrechner", calc_desc: "Betrag manuell eingeben!", calc_manual_label: "💰 Betrag eingeben (USD)",
-        offline_title: "⛏️ Willkommen zurück!", offline_desc: "Miner waren aktiv:", collect_btn: "🎉 Sammeln",
+        offline_title: "️ Willkommen zurück!", offline_desc: "Miner waren aktiv:", collect_btn: "🎉 Sammeln",
         welcome_title: "🎉 Willkommen!", welcome_desc: "Investitionsbonus für neue Mitglieder:", welcome_note: "Direkt zu Ihrer Gesamtinvestition hinzugefügt!", great_btn: "🎉 Großartig!"
     }
 };
 
+const langFlags = { en: '🇺🇸 English', ru: '🇷🇺 Русский', tr: '🇹🇷 Türkçe', es: '🇪🇸 Español', de: '🇩🇪 Deutsch' };
 let currentLang = 'en'; // Varsayılan İngilizce
 
 function setLanguage(lang) {
@@ -727,7 +750,7 @@ function setLanguage(lang) {
         if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
     });
     
-    // İkonları güncelle (emoji değişmiyorsa bile yapı korunur)
+    // İkonları güncelle
     document.querySelectorAll('[data-i18n-icon]').forEach(el => {
         const key = el.getAttribute('data-i18n-icon');
         if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
@@ -738,6 +761,24 @@ function setLanguage(lang) {
         const key = el.getAttribute('data-i18n-title');
         if (i18n[lang][key]) el.setAttribute('title', i18n[lang][key]);
     });
+
+    // Dil seçici açıklamasını güncelle
+    const langDesc = document.getElementById('currentLangDesc');
+    if(langDesc) langDesc.textContent = langFlags[lang] || 'English';
+}
+
+function openLanguageSelector() {
+    let h = `<div class="sub-popup-header"><div class="sub-popup-title">🌐 Select Language</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+    Object.keys(langFlags).forEach(code => {
+        const isActive = code === currentLang ? 'style="background:#D59D80;color:#fff;"' : '';
+        h += `<div class="profile-menu-item" onclick="setLanguage('${code}'); closeSubPopup();" ${isActive}>
+            <div class="m-icon">${langFlags[code].split(' ')[0]}</div>
+            <div class="m-content"><div class="m-title">${langFlags[code].substring(2)}</div></div>
+        </div>`;
+    });
+    const c=document.getElementById('subPopupContent');
+    c.innerHTML=h;
+    document.getElementById('subOverlay').classList.add('show');
 }
 
 async function getCryptoPrices(){
@@ -821,7 +862,7 @@ function renderCalcResults(){
         return;
     }
     const a=customAmount;
-    const h=a*CALC_RATE/24,d=a*CALC_RATE,m=d*30,hy=d*180,oy=d*365,t90=a*2;
+    const h=a*CALC_RATE/24,d=a*CALC_RATE,m=d*30,hy=d*180,oy=d*365;
     
     document.getElementById('calcResults').innerHTML=`
     <div class="calc-result-row"><div class="cr-period"><span class="cr-icon">⏱️</span> Hourly</div><div class="cr-amount">$${h.toFixed(4)}</div></div>
@@ -831,7 +872,8 @@ function renderCalcResults(){
     <div class="calc-result-row highlight"><div class="cr-period"><span class="cr-icon">🎯</span> 1 Year</div><div class="cr-amount">$${oy.toFixed(2)}</div></div>`;
     
     const p=oy-a,pp=((p/a)*100).toFixed(0);
-    document.getElementById('calcTotalBox').innerHTML=`<div class="ct-label">💰 1 Year Total (Investment Included)</div><div class="ct-value">$${(a+oy).toFixed(2)}</div><div class="ct-sub">Net Profit: $${p.toFixed(2)} (${pp}%)</div><div style="margin-top:6px;font-size:9px;color:#fff;background:rgba(0,0,0,.3);padding:4px;border-radius:5px">⭐ 90 Days: <strong>$${t90.toFixed(2)}</strong> (2x)</div>`;
+    // 90 DAYS (2X) KALDIRILDI
+    document.getElementById('calcTotalBox').innerHTML=`<div class="ct-label">💰 1 Year Total (Investment Included)</div><div class="ct-value">$${(a+oy).toFixed(2)}</div><div class="ct-sub">Net Profit: $${p.toFixed(2)} (${pp}%)</div>`;
 }
 
 function openProfile(){updateProfileData();document.getElementById('profileOverlay').classList.add('show');if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}
@@ -842,7 +884,7 @@ function updateProfileData(){
 const un=currentUser?(currentUser.first_name||'User'):'Guest';
 document.getElementById('profileName').textContent=un;
 document.getElementById('profileId').textContent=`ID: ${currentUser?currentUser.id:userId}`;
-if(createdAt)document.getElementById('profileRegisterDate').innerHTML=`📅 <strong>${i18n[currentLang].reg_date || 'Joined:'}</strong> ${createdAt.toLocaleDateString(currentLang==='tr'?'tr-TR':'en-US',{day:'2-digit',month:'long',year:'numeric'})}`;
+if(createdAt)document.getElementById('profileRegisterDate').innerHTML=` 📅 <strong>${i18n[currentLang].reg_date || 'Joined:'}</strong> ${createdAt.toLocaleDateString(currentLang==='tr'?'tr-TR':'en-US',{day:'2-digit',month:'long',year:'numeric'})}`;
 document.getElementById('pBalance').textContent='$'+balance.toFixed(2);
 document.getElementById('pInvested').textContent='$'+totalInvested.toFixed(2);
 document.getElementById('pWithdrawn').textContent='$'+totalWithdrawn.toFixed(2);
@@ -889,12 +931,12 @@ h=`<div class="sub-popup-header"><div class="sub-popup-title">❓ FAQ</div><butt
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💰 How to invest?</span><span>▼</span></div><div class="faq-answer">Select a package, send TRX, click "Payment Sent". Earnings start after admin approval.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>⏰ When do earnings start?</span><span>▼</span></div><div class="faq-answer">Automatically after admin approval. Daily rate: 1.11% (2x in 90 days).</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💸 How to withdraw?</span><span>▼</span></div><div class="faq-answer">Click "Withdraw", enter amount, select crypto and wallet. Min: $0.01.</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎁 Bonuses?</span><span>▼</span></div><div class="faq-answer">Daily bonuses and task rewards are added directly to your investment balance.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Bonuses?</span><span>▼</span></div><div class="faq-answer">Daily bonuses and task rewards are added directly to your investment balance.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Referrals?</span><span>▼</span></div><div class="faq-answer">Share your link, earn 10% commission on every investment made by your referrals. New members get a $1 welcome bonus.</div></div>`;
 }else if(type==='about'){
 h=`<div class="sub-popup-header"><div class="sub-popup-title">ℹ️ About</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
 <div style="text-align:center;padding:15px;color:#C6C6D0"><div style="font-size:40px;margin-bottom:8px"></div><div style="font-size:16px;font-weight:800;color:#D59D80;margin-bottom:2px">Micro Monetize</div><div style="font-size:11px;color:#C6C6D0;opacity:.7;margin-bottom:10px">v1.2.1</div>
-<div style="font-size:11px;color:#C6C6D0;line-height:1.5">Passive income through crypto mining.<br><br>🌐 TRON (TRC20)<br>📊 1.11% Daily<br>💸 TRX, BNB, XRP<br>🔔 Telegram Alerts<br>🎁 $1 Welcome + 10% Referral<br><br><strong style="color:#D59D80">© 2026</strong></div></div>`;
+<div style="font-size:11px;color:#C6C6D0;line-height:1.5">Passive income through crypto mining.<br><br>🌐 TRON (TRC20)<br>📊 1.11% Daily<br>💸 TRX, BNB, XRP<br>🔔 Telegram Alerts<br> $1 Welcome + 10% Referral<br><br><strong style="color:#D59D80">© 2026</strong></div></div>`;
 }else if(type==='dailyBonus'){h=renderDailyBonus()}
 else if(type==='tasks'){h=renderTasks()}
 else if(type==='chart'){h=renderChart()}
@@ -930,7 +972,7 @@ ${cc?`<button class="btn btn-approve" style="margin-top:12px" onclick="claimDail
 async function claimDailyBonus(){
 const today=new Date().toDateString();
 const lc=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
-if(today===lc){alert('⏰ Already claimed today!');return}
+if(today===lc){alert(' Already claimed today!');return}
 const cs=dailyBonusData.streak||0;
 const b=DAILY_BONUSES[Math.min(cs,6)];
 const ns=cs+1;
@@ -955,14 +997,14 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 
 function renderTasks(){
 const tasks=[
-{id:'first_deposit',title:'First Investment',desc:'Make your first deposit',reward:0.50,icon:'💰',completed:totalInvested>=1},
-{id:'invest_10',title:'$10 Investment',desc:'Reach $10 total investment',reward:1.00,icon:'',completed:totalInvested>=10},
+{id:'first_deposit',title:'First Investment',desc:'Make your first deposit',reward:0.50,icon:'',completed:totalInvested>=1},
+{id:'invest_10',title:'$10 Investment',desc:'Reach $10 total investment',reward:1.00,icon:'💵',completed:totalInvested>=10},
 {id:'invest_100',title:'$100 Investment',desc:'Reach $100 total investment',reward:5.00,icon:'💎',completed:totalInvested>=100},
-{id:'refer_1',title:'First Referral',desc:'Invite 1 friend',reward:0.50,icon:'👥',completed:referralCount>=1},
+{id:'refer_1',title:'First Referral',desc:'Invite 1 friend',reward:0.50,icon:'',completed:referralCount>=1},
 {id:'refer_5',title:'5 Referrals',desc:'Invite 5 friends',reward:2.50,icon:'',completed:referralCount>=5},
 {id:'daily_7',title:'7 Day Streak',desc:'Login for 7 consecutive days',reward:1.00,icon:'🔥',completed:dailyBonusData.streak>=7}
 ];
-let h=`<div class="sub-popup-header"><div class="sub-popup-title">🎯 Tasks</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+let h=`<div class="sub-popup-header"><div class="sub-popup-title"> Tasks</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
 <div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:11px;color:#C6C6D0;margin-bottom:10px;border:1px solid #C0754D">Complete tasks to earn bonuses!</div>`;
 tasks.forEach(t=>{
 const ic=completedTasks.includes(t.id);
@@ -1026,14 +1068,14 @@ function changeChartPeriod(p){currentChartPeriod=p;openSubPopup('chart')}
 
 function renderNotifications(){
 const u=notificationsData.filter(n=>!n.read).length;
-let h=`<div class="sub-popup-header"><div class="sub-popup-title">🔔 Notifications (${u})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+let h=`<div class="sub-popup-header"><div class="sub-popup-title"> Notifications (${u})</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
 if(u>0)h+=`<button class="mark-all-read" onclick="markAllRead()">✅ Mark All Read</button>`;
 if(notificationsData.length===0)h+=`<div class="notif-empty"><div class="ne-icon">🔔</div><div>No notifications</div></div>`;
 else{notificationsData.slice(0,20).forEach(n=>{const t=new Date(n.timestamp).toLocaleString('en-US');h+=`<div class="notif-item ${n.read?'':'unread'}"><div class="ni-icon">${n.icon||'🔔'}</div><div class="ni-content"><div class="ni-title">${n.title}</div><div class="ni-message">${n.message}</div><div class="ni-time">${t}</div></div></div>`})}
 return h;
 }
 function markAllRead(){notificationsData=notificationsData.map(n=>({...n,read:true}));saveNotifications();updateQuickNotifBadge();updateProfileData();if(document.getElementById('subOverlay').classList.contains('show'))openSubPopup('notifications')}
-function addNotification(t,m,tp='info'){const ic={success:'✅',error:'❌',info:'ℹ️',bonus:'🎁',referral:''};notificationsData.unshift({id:'notif_'+Date.now(),title:t,message:m,icon:ic[tp]||'',read:false,timestamp:Date.now()});if(notificationsData.length>50)notificationsData=notificationsData.slice(0,50);saveNotifications();updateQuickNotifBadge()}
+function addNotification(t,m,tp='info'){const ic={success:'✅',error:'',info:'ℹ️',bonus:'',referral:''};notificationsData.unshift({id:'notif_'+Date.now(),title:t,message:m,icon:ic[tp]||'',read:false,timestamp:Date.now()});if(notificationsData.length>50)notificationsData=notificationsData.slice(0,50);saveNotifications();updateQuickNotifBadge()}
 function saveNotifications(){try{db.collection('users').doc(userId).set({notifications:notificationsData},{merge:true})}catch(e){console.error(e)}}
 
 async function processReferral(){
@@ -1085,7 +1127,7 @@ if(tg.openTelegramLink)tg.openTelegramLink(bu);else window.open(bu,'_blank');
 setTimeout(()=>{
 const t=document.createElement('div');
 t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D59D80,#C0754D);color:#fff;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:bold;z-index:9999;text-align:center;max-width:260px';
-t.innerHTML='📱 Bot opened!<br><small style="opacity:.9">Type /start</small>';
+t.innerHTML=' Bot opened!<br><small style="opacity:.9">Type /start</small>';
 document.body.appendChild(t);
 setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300)},3000);
 },800);
@@ -1292,7 +1334,7 @@ const ur=db.collection('users').doc(userId);
 const d=await ur.get();
 const x=d.data()||{};
 await ur.set({pendingPayments:[...(x.pendingPayments||[]),p]},{merge:true});
-const am=`🔔 <b>NEW INVESTMENT!</b>\n\n ${p.userName}\n🆔 ${p.userTelegramId||userId}\n\n💵 $${a.toFixed(2)}\n🪙 ${ta} TRX\n💰 TRX: $${currentPrices.trx.toFixed(4)}\n🌐 TRON (TRC20)\n${selectedPackageName?`📦 ${selectedPackageName}`:''}\n\n⏳ Pending Approval\n🕐 ${new Date().toLocaleString('en-US')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Approve</a>`;
+const am=`🔔 <b>NEW INVESTMENT!</b>\n\n 👤 ${p.userName}\n🆔 ${p.userTelegramId||userId}\n\n💵 $${a.toFixed(2)}\n🪙 ${ta} TRX\n💰 TRX: $${currentPrices.trx.toFixed(4)}\n🌐 TRON (TRC20)\n${selectedPackageName?` ${selectedPackageName}`:''}\n\n⏳ Pending Approval\n🕐 ${new Date().toLocaleString('en-US')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Approve</a>`;
 sendAdminNotification(am);
 alert(`✅ Notification sent!\n\n💰 $${a.toFixed(2)}\n🪙 ${ta} TRX\n\nEarnings will start after admin approval.`);
 resetAndGoHome();
@@ -1375,7 +1417,7 @@ const dt=d.timestamp?new Date(d.timestamp).toLocaleString('en-US'):'Loading...';
 const st=d.status||'pending';
 const sc=st==='approved'?'success':(st==='rejected'?'rejected':'pending');
 const sx=st==='approved'?'✅ Approved':(st==='rejected'?'❌ Rejected':'⏳ Pending');
-const pt=d.packageName?'📦 '+d.packageName:'💰 Manual';
+const pt=d.packageName?' '+d.packageName:'💰 Manual';
 const tt=d.trxAmount?`(${d.trxAmount} TRX)`:'';
 h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Amount:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label">🌐 Network:</span><span class="h-value">${d.network||'TRON'}</span></div><div class="h-date">🕐 ${dt}</div></div>`;
 });
