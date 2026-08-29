@@ -327,7 +327,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="earnings-estimate">
 <div class="earnings-title">📊 Tahmini Kazanç</div>
 <div class="earnings-grid">
-<div class="earnings-item"><div class="icon">⏱️</div><div class="label">Dakika</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
+<div class="earnings-item"><div class="icon">️</div><div class="label">Dakika</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
 <div class="earnings-item"><div class="icon">🕐</div><div class="label">Saat</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
 <div class="earnings-item"><div class="icon"></div><div class="label">Gün</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
 </div>
@@ -356,7 +356,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <strong> Coin:</strong> TRX<br>
 <strong>📍 Cüzdan:</strong><br>
 <span id="depositWallet" style="word-break:break-all;color:#D59D80;font-family:monospace;font-size:11px;background:#0D1D25;padding:5px;border-radius:5px;display:block;margin-top:3px;border:1px dashed #C0754D">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
-<button class="btn" style="padding:8px;font-size:12px;margin-top:8px" onclick="copyDepositAddress()">📋 Kopyala</button>
+<button class="btn" style="padding:8px;font-size:12px;margin-top:8px" onclick="copyDepositAddress()"> Kopyala</button>
 </div>
 <div class="qr-container">
 <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR">
@@ -388,7 +388,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:6px">
 <button class="max-btn" onclick="setMaxAmount()">MAX</button>
 </div>
-<h3>🪙 Kripto</h3>
+<h3> Kripto</h3>
 <select id="withdrawCrypto" onchange="updateCryptoAmount();clearAddressValidation();updateNetworkInfo()">
 <option value="trx">TRX (TRON)</option>
 <option value="bnb">BNB (Binance)</option>
@@ -404,7 +404,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 </div>
 
 <div id="page-admin" class="card hidden">
-<h2>🔐 Admin</h2>
+<h2> Admin</h2>
 <p style="text-align:center;color:#C6C6D0;padding:15px">Admin paneli:<br><br><a href="admin.html" target="_blank" class="btn"> Admin Panel</a></p>
 </div>
 
@@ -438,7 +438,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-stat"><div class="p-icon">💰</div><div class="p-label">Bakiye</div><div class="p-value" id="pBalance">$0.00</div></div>
 <div class="profile-stat"><div class="p-icon"></div><div class="p-label">Yatırım</div><div class="p-value" id="pInvested">$0.00</div></div>
 <div class="profile-stat"><div class="p-icon">💸</div><div class="p-label">Çekim</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">📈</div><div class="p-label">Komisyon</div><div class="p-value" id="pCommission">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon"></div><div class="p-label">Komisyon</div><div class="p-value" id="pCommission">$0.00</div></div>
 </div>
 <div class="profile-menu">
 <div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Bonus al</div></div><div class="m-arrow">›</div></div>
@@ -446,7 +446,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon">📈</div><div class="m-content"><div class="m-title">Grafik</div><div class="m-desc">Kazançları gör</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('notifications')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimleri gör</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('settings')"><div class="m-icon">️</div><div class="m-content"><div class="m-title">Ayarlar</div><div class="m-desc">Tercihler</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon">🔗</div><div class="m-content"><div class="m-title">Referans</div><div class="m-desc" id="referralMenuDesc">%10 komisyon kazan</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Referans</div><div class="m-desc" id="referralMenuDesc">%10 komisyon kazan</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title">SSS</div><div class="m-desc">Yardım</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"></div><div class="m-content"><div class="m-title">Destek</div><div class="m-desc">Telegram</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('about')"><div class="m-icon">ℹ️</div><div class="m-content"><div class="m-title">Hakkında</div><div class="m-desc">Bilgi</div></div><div class="m-arrow">›</div></div>
@@ -637,7 +637,7 @@ h=`<div class="sub-popup-header"><div class="sub-popup-title">🔗 Referans</div
 <div style="background:rgba(213,157,128,.2);border:1px solid #D59D80;border-radius:8px;padding:10px;font-size:11px;color:#fff;line-height:1.5;margin-top:10px"> Her davet ettiğin üyenin <b>HER yatırımından %10</b> komisyon kazanırsın! Doğrudan yatırım bakiyene eklenir.</div>`;
 }else if(type==='faq'){
 h=`<div class="sub-popup-header"><div class="sub-popup-title"> SSS</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💰 Nasıl yatırım?</span><span>▼</span></div><div class="faq-answer">Paket seç, TRX gönder, "Ödemeyi Yaptım" de. Admin onayından sonra kazanç başlar.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Nasıl yatırım?</span><span>▼</span></div><div class="faq-answer">Paket seç, TRX gönder, "Ödemeyi Yaptım" de. Admin onayından sonra kazanç başlar.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>⏰ Kazanç ne zaman?</span><span>▼</span></div><div class="faq-answer">Admin onayından sonra otomatik başlar. Günlük %1.11 (90 günde 2x).</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>💸 Nasıl çekim?</span><span>▼</span></div><div class="faq-answer">"Çekim" butonuna bas, miktar gir, kripto ve cüzdan seç. Min $0.01.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span>🎁 Bonuslar?</span><span>▼</span></div><div class="faq-answer">Günlük bonus ve görev ödülleri doğrudan yatırım bakiyene eklenir.</div></div>
@@ -712,7 +712,7 @@ const tasks=[
 {id:'invest_100',title:'$100 Yatırım',desc:'$100 yatırım',reward:5.00,icon:'💎',completed:totalInvested>=100},
 {id:'refer_1',title:'İlk Referans',desc:'1 davet',reward:0.50,icon:'',completed:referralCount>=1},
 {id:'refer_5',title:'5 Referans',desc:'5 davet',reward:2.50,icon:'',completed:referralCount>=5},
-{id:'daily_7',title:'7 Gün Seri',desc:'7 gün giriş',reward:1.00,icon:'🔥',completed:dailyBonusData.streak>=7}
+{id:'daily_7',title:'7 Gün Seri',desc:'7 gün giriş',reward:1.00,icon:'',completed:dailyBonusData.streak>=7}
 ];
 let h=`<div class="sub-popup-header"><div class="sub-popup-title">🎯 Görevler</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
 <div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:11px;color:#C6C6D0;margin-bottom:10px;border:1px solid #C0754D">Tamamla, bonus kazan!</div>`;
@@ -867,7 +867,7 @@ if(v.valid){ie.style.borderColor='#D59D80';me.textContent=v.message;me.style.dis
 else{ie.style.borderColor='#B6410F';me.textContent=v.message;me.style.display='block';me.style.color='#B6410F';me.style.background='rgba(182,65,15,.2)'}
 }
 function clearAddressValidation(){document.getElementById('walletAddress').style.borderColor='#C0754D';document.getElementById('addressValidationMsg').style.display='none'}
-function updateNetworkInfo(){const c=document.getElementById('withdrawCrypto').value;const n=NETWORK_INFO[c];document.getElementById('networkInfo').innerHTML=`🌐 <strong>Ağ:</strong> ${n.fullName}`}
+function updateNetworkInfo(){const c=document.getElementById('withdrawCrypto').value;const n=NETWORK_INFO[c];document.getElementById('networkInfo').innerHTML=` <strong>Ağ:</strong> ${n.fullName}`}
 
 function adjustAmount(d){const i=document.getElementById('buyAmount');let v=parseFloat(i.value)||0;v=Math.round((v+d)*100)/100;if(v<MIN_DEPOSIT)v=MIN_DEPOSIT;if(v>MAX_DEPOSIT)v=MAX_DEPOSIT;i.value=v.toFixed(2);updateBuyTRX()}
 function setMaxAmount(){const m=Math.max(0.01,balance);if(m<0.01){alert(' Bakiye yok!');return}document.getElementById('withdrawAmount').value=m.toFixed(2);updateCryptoAmount();if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}
@@ -979,6 +979,7 @@ setTimeout(() => showRecentAnnouncements(), 1000);
 setInterval(updateEarnings,1000);
 }).catch(e=>console.error('Giriş hatası:',e));
 
+// ⚡ DÜZELTİLMİŞ OFFLINE KAZANÇ HESAPLAMA
 async function calculateOfflineEarnings(){
 try{
 const d=await db.collection('users').doc(userId).get();
@@ -990,12 +991,26 @@ if(x.completedTasks)completedTasks=x.completedTasks;
 if(x.notifications)notificationsData=x.notifications;
 if(x.earningsHistory)earningsHistory=x.earningsHistory;
 if(x.referralEarnings!==undefined)referralEarnings=x.referralEarnings;
-if(os>5&&x.approvedPayments&&x.approvedPayments.length>0){
-const tp=x.approvedPayments.reduce((s,p)=>s+p.amount,0);
-const oe=os*(tp*PER_SECOND);
-if(oe>0.001){await db.collection('users').doc(userId).update({lifetimeEarnings:(x.lifetimeEarnings||0)+oe,lastActive:now});showOfflinePopup(oe)}
-}else{await db.collection('users').doc(userId).update({lastActive:now})}
-}else{await db.collection('users').doc(userId).set({lifetimeEarnings:0,totalWithdrawn:0,lastActive:Date.now(),created_at:firebase.firestore.FieldValue.serverTimestamp()})}
+
+// ✅ OFFLINE KAZANCI totalInvested ÜZERİNDEN HESAPLA
+if(os > 5 && x.totalInvested > 0){
+const oe = os * (x.totalInvested * PER_SECOND);
+if(oe > 0.001){
+await db.collection('users').doc(userId).update({
+lifetimeEarnings: (x.lifetimeEarnings||0) + oe, 
+lastActive: now
+});
+showOfflinePopup(oe);
+}
+}else{
+await db.collection('users').doc(userId).update({lastActive:now});
+}
+}else{
+await db.collection('users').doc(userId).set({
+lifetimeEarnings:0,totalWithdrawn:0,lastActive:Date.now(),
+created_at:firebase.firestore.FieldValue.serverTimestamp()
+});
+}
 updateQuickNotifBadge();
 }catch(e){console.error('Offline hata:',e)}
 }
@@ -1047,7 +1062,7 @@ const ur=db.collection('users').doc(userId);
 const d=await ur.get();
 const x=d.data()||{};
 await ur.set({pendingPayments:[...(x.pendingPayments||[]),p]},{merge:true});
-const am=`🔔 <b>YENİ YATIRIM!</b>\n\n ${p.userName}\n🆔 ${p.userTelegramId||userId}\n\n💵 $${a.toFixed(2)}\n ${ta} TRX\n💰 TRX: $${currentPrices.trx.toFixed(4)}\n🌐 TRON (TRC20)\n${selectedPackageName?` ${selectedPackageName}`:''}\n\n Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
+const am=` <b>YENİ YATIRIM!</b>\n\n ${p.userName}\n🆔 ${p.userTelegramId||userId}\n\n💵 $${a.toFixed(2)}\n ${ta} TRX\n💰 TRX: $${currentPrices.trx.toFixed(4)}\n TRON (TRC20)\n${selectedPackageName?` ${selectedPackageName}`:''}\n\n Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
 sendAdminNotification(am);
 alert(`✅ Bildirim alındı!\n\n💰 $${a.toFixed(2)}\n🪙 ${ta} TRX\n\nAdmin onayından sonra başlayacak.`);
 resetAndGoHome();
@@ -1129,7 +1144,7 @@ const x=d.data()||{};
 const nl=lifetimeEarnings-a;
 await ur.set({withdrawalRequests:[...(x.withdrawalRequests||[]),wd],lifetimeEarnings:nl},{merge:true});
 lifetimeEarnings=nl;balance=lifetimeEarnings-totalWithdrawn;
-const am=`💸 <b>YENİ ÇEKİM!</b>\n\n ${wd.userName}\n ${wd.userTelegramId||userId}\n\n $${a.toFixed(2)}\n ${ca} ${CRYPTO_SYMBOLS[c]}\n Fiyat: $${currentPrices[c].toFixed(4)}\n ${NETWORK_INFO[c].fullName}\n <code>${w}</code>\n\n✅ Doğrulandı\n⏳ Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
+const am=`💸 <b>YENİ ÇEKİM!</b>\n\n ${wd.userName}\n ${wd.userTelegramId||userId}\n\n $${a.toFixed(2)}\n ${ca} ${CRYPTO_SYMBOLS[c]}\n Fiyat: $${currentPrices[c].toFixed(4)}\n ${NETWORK_INFO[c].fullName}\n <code>${w}</code>\n\n✅ Doğrulandı\n Onay Bekliyor\n🕐 ${new Date().toLocaleString('tr-TR')}\n\n👉 <a href="https://farmbot-giuy.vercel.app/admin.html">Onayla</a>`;
 sendAdminNotification(am);
 alert(`✅ Çekim talebi!\n\n ${NETWORK_INFO[c].fullName}\n ${ca} ${CRYPTO_SYMBOLS[c]}\n\nAdmin onayı bekleniyor.`);
 document.getElementById('withdrawAmount').value='';
@@ -1157,7 +1172,7 @@ ad.slice(0,20).forEach(d=>{
 const dt=d.timestamp?new Date(d.timestamp).toLocaleString('tr-TR'):'Yükleniyor...';
 const st=d.status||'pending';
 const sc=st==='approved'?'success':(st==='rejected'?'rejected':'pending');
-const sx=st==='approved'?'✅ Onaylandı':(st==='rejected'?'❌ Red':'⏳ Bekliyor');
+const sx=st==='approved'?'✅ Onaylandı':(st==='rejected'?'❌ Red':' Bekliyor');
 const pt=d.packageName?'📦 '+d.packageName:'💰 Manuel';
 const tt=d.trxAmount?`(${d.trxAmount} TRX)`:'';
 h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Tutar:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label"> Ağ:</span><span class="h-value">${d.network||'TRON'}</span></div><div class="h-date"> ${dt}</div></div>`;
