@@ -93,13 +93,13 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <body>
 <div class="container">
 <div class="header">
-<h1> Admin Panel</h1>
+<h1>🔐 Admin Panel</h1>
 <div class="subtitle">Hash Power Mining - Yönetim Merkezi</div>
 </div>
 
 <!-- KUR GÜNCELLEME -->
 <div class="rate-card">
-<h3>💱 Coin Kurları (Otomatik & Manuel)</h3>
+<h3> Coin Kurları (Otomatik & Manuel)</h3>
 <div class="rate-grid">
 <div class="rate-box">
 <div class="coin-name">TRX (TRON)</div>
@@ -135,8 +135,8 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <label>Admin Chat ID (Senin Telegram ID'n)</label>
 <input type="text" id="adminChatId" placeholder="8974010159">
 </div>
-<button class="btn" onclick="saveBotSettings()">💾 Ayarları Kaydet</button>
-<button class="btn btn-secondary" onclick="testBotConnection()">🔌 Bağlantıyı Test Et</button>
+<button class="btn" onclick="saveBotSettings()"> Ayarları Kaydet</button>
+<button class="btn btn-secondary" onclick="testBotConnection()"> Bağlantıyı Test Et</button>
 </div>
 
 <div class="status-bar">
@@ -145,9 +145,9 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 </div>
 
 <div class="test-section">
-<h3> Test Bildirimleri</h3>
+<h3>🧪 Test Bildirimleri</h3>
 <div class="test-buttons">
-<button class="btn btn-success btn-sm" onclick="sendTestNotification('deposit')"> Test Yatırım</button>
+<button class="btn btn-success btn-sm" onclick="sendTestNotification('deposit')">💰 Test Yatırım</button>
 <button class="btn btn-danger btn-sm" onclick="sendTestNotification('withdraw')">💸 Test Çekim</button>
 <button class="btn btn-sm" onclick="sendTestNotification('approve')">✅ Test Onay</button>
 <button class="btn btn-secondary btn-sm" onclick="sendTestNotification('reject')">❌ Test Red</button>
@@ -157,7 +157,7 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <div class="tabs">
 <button class="tab active" onclick="switchTab('deposits',this)">💳 Yatırımlar <span class="count" id="depositCount">0</span></button>
 <button class="tab" onclick="switchTab('withdrawals',this)">💸 Çekimler <span class="count" id="withdrawalCount">0</span></button>
-<button class="tab" onclick="switchTab('users',this)">👥 Kullanıcılar <span class="count" id="userCount">0</span></button>
+<button class="tab" onclick="switchTab('users',this)"> Kullanıcılar <span class="count" id="userCount">0</span></button>
 </div>
 
 <!-- Yatırım/Çekim İçeriği -->
@@ -170,11 +170,11 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 <table class="users-table">
 <thead>
 <tr>
-<th>ID / Şehir</th>
+<th>ID / İsim</th>
 <th>Bakiye</th>
-<th>Bonus</th>
 <th>Yatırım</th>
 <th>Çekim</th>
+<th>İşlem</th>
 </tr>
 </thead>
 <tbody id="usersTableBody">
@@ -194,6 +194,19 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 </div>
 </div>
 
+<!-- MANUEL YATIRIM MODALI -->
+<div id="manualDepositModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#104C64; padding:20px; border-radius:12px; width:300px; border:1px solid rgba(192,117,77,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h3 style="color:#D59D80; margin-bottom:15px;">💰 Manuel Yatırım Ekle</h3>
+        <p id="modalUserName" style="font-size:12px; color:#fff; margin-bottom:10px;"></p>
+        <input type="number" id="manualAmountInput" placeholder="Tutar (USD)" style="width:100%; padding:10px; background:#0D1D25; border:1px solid #C0754D; color:#fff; border-radius:6px; margin-bottom:15px;">
+        <div style="display:flex; gap:10px;">
+            <button onclick="submitManualDeposit()" class="btn btn-success" style="flex:1;">✅ Ekle</button>
+            <button onclick="document.getElementById('manualDepositModal').style.display='none'" class="btn btn-secondary" style="flex:1;">❌ İptal</button>
+        </div>
+    </div>
+</div>
+
 <script>
 const firebaseConfig={apiKey:"AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",authDomain:"hash-power-mining.firebaseapp.com",projectId:"hash-power-mining",storageBucket:"hash-power-mining.firebasestorage.app",messagingSenderId:"266480566753",appId:"1:266480566753:web:835b6e5119e4d3e4eb92a0"};
 firebase.initializeApp(firebaseConfig);
@@ -205,6 +218,7 @@ const pricesRef=db.collection('settings').doc('cryptoPrices');
 let botToken=localStorage.getItem('botToken')||'8759495457:AAF_ogmc63yXDtuUVidJwZPCaMXdFzx7VEg';
 let adminChatId=localStorage.getItem('adminChatId')||'8974010159';
 let currentTab='deposits';
+let selectedUserIdForDeposit = null; // Manuel ekleme için seçili kullanıcı
 
 document.addEventListener('DOMContentLoaded',()=>{
 document.getElementById('botToken').value=botToken;
@@ -274,7 +288,7 @@ alert('✅ Kurlar manuel güncellendi!');
 function saveBotSettings(){
 botToken=document.getElementById('botToken').value.trim();
 adminChatId=document.getElementById('adminChatId').value.trim();
-if(!botToken){alert('❌ Bot token gerekli!');return}
+if(!botToken){alert(' Bot token gerekli!');return}
 if(!botToken.includes(':')){alert('❌ Geçersiz token formatı!');return}
 localStorage.setItem('botToken',botToken);
 localStorage.setItem('adminChatId',adminChatId);
@@ -336,10 +350,10 @@ async function sendTestNotification(type){
 if(!botToken){alert('⚠️ Önce bot token ayarla!');return}
 let message='';
 switch(type){
-case'deposit':message=` <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'deposit':message=`🔔 <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
 case'withdraw':message=`💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n📍 <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n💰 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'reject':message=`❌ <b>TEST: Yatırımın Reddedildi</b>\n\n <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
+case'reject':message=`❌ <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
 }
 const s=await sendAdminNotification(message);
 if(s)alert('✅ Test bildirimi gönderildi! Telegram\'ını kontrol et.');
@@ -365,7 +379,7 @@ p.forEach(pm=>{
 const dt=pm.timestamp?new Date(pm.timestamp).toLocaleString('tr-TR'):'Bilinmiyor';
 const pt=pm.packageName?`<br><strong>📦 Paket:</strong> ${pm.packageName}`:'';
 const dc=(pm.originalPrice&&pm.discountedPrice&&pm.originalPrice!==pm.discountedPrice)?`<br><strong>💰 Orijinal:</strong> $${pm.originalPrice.toFixed(2)} | <strong>Ödenen:</strong> $${pm.discountedPrice.toFixed(2)}`:'';
-h+=`<div class="item-card"><div class="item-header"><div class="item-amount">$${pm.amount.toFixed(2)}</div><div class="item-user">${pm.userName||'Bilinmiyor'}</div></div><div class="item-details"><strong>🪙 TRX:</strong> ${pm.trxAmount||'-'} TRX<br><strong>🌐 Ağ:</strong> ${pm.network||'TRON (TRC20)'}<br><strong>🆔 ID:</strong> ${pm.userTelegramId||pm.userId||'-'}${pt}${dc}<br><strong> Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approvePayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}',${pm.trxAmount||0},'${pm.packageName||''}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectPayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}')">✕ Reddet</button></div></div>`;
+h+=`<div class="item-card"><div class="item-header"><div class="item-amount">$${pm.amount.toFixed(2)}</div><div class="item-user">${pm.userName||'Bilinmiyor'}</div></div><div class="item-details"><strong>🪙 TRX:</strong> ${pm.trxAmount||'-'} TRX<br><strong>🌐 Ağ:</strong> ${pm.network||'TRON (TRC20)'}<br><strong>🆔 ID:</strong> ${pm.userTelegramId||pm.userId||'-'}${pt}${dc}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approvePayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}',${pm.trxAmount||0},'${pm.packageName||''}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectPayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}')">✕ Reddet</button></div></div>`;
 });
 c.innerHTML=h;
 }catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Yatırımlar yüklenemedi: '+e.message)}
@@ -390,7 +404,7 @@ c.innerHTML=h;
 }catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Çekimler yüklenemedi: '+e.message)}
 }
 
-// 👥 KULLANICI LİSTESİ
+// 👥 KULLANICI LİSTESİ VE MANUEL EKLEME
 async function loadUsers() {
     const tbody = document.getElementById('usersTableBody');
     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Yükleniyor...</td></tr>';
@@ -401,17 +415,16 @@ async function loadUsers() {
         
         snapshot.forEach(doc => {
             const data = doc.data();
-            // Bakiye hesaplaması: lifetimeEarnings - totalWithdrawn
-            const balance = data.lifetimeEarnings ? (data.lifetimeEarnings - (data.totalWithdrawn || 0)).toFixed(2) : '0.00';
+            // Telegram adı yoksa ID'nin ilk 8 karakterini göster
+            const displayName = data.userName || data.telegramName || doc.id.substring(0, 8);
             
             users.push({
-                id: doc.id.substring(0, 8) + '...', 
-                fullId: doc.id,
-                balance: balance,
-                bonus: (data.bonusBalance || 0).toFixed(2),
+                id: doc.id,
+                shortId: doc.id.substring(0, 8) + '...',
+                name: displayName,
+                balance: data.lifetimeEarnings ? (data.lifetimeEarnings - (data.totalWithdrawn || 0)).toFixed(2) : '0.00',
                 invested: (data.totalInvested || 0).toFixed(2),
-                withdrawn: (data.totalWithdrawn || 0).toFixed(2),
-                city: data.city || 'Bilinmiyor'
+                withdrawn: (data.totalWithdrawn || 0).toFixed(2)
             });
         });
 
@@ -427,13 +440,18 @@ async function loadUsers() {
             html += `
             <tr>
                 <td>
-                    <div class="user-id">${u.id}</div>
-                    <div class="user-city">${u.city}</div>
+                    <div class="user-id">${u.shortId}</div>
+                    <div class="user-city" style="color:#D59D80; font-weight:bold;">${u.name}</div>
                 </td>
                 <td class="val-balance">$${u.balance}</td>
-                <td class="val-bonus">$${u.bonus}</td>
                 <td class="val-invested">$${u.invested}</td>
                 <td class="val-withdrawn">$${u.withdrawn}</td>
+                <td>
+                    <button onclick="openManualDeposit('${u.id}', '${u.name}')" 
+                            style="background:#D59D80; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:11px;">
+                        💰 Ekle
+                    </button>
+                </td>
             </tr>`;
         });
         
@@ -442,6 +460,51 @@ async function loadUsers() {
     } catch (e) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#ef4444;">Hata: ${e.message}</td></tr>`;
         addLog('error', 'Kullanıcı listesi yüklenemedi: ' + e.message);
+    }
+}
+
+function openManualDeposit(userId, userName) {
+    selectedUserIdForDeposit = userId;
+    document.getElementById('modalUserName').textContent = `Kullanıcı: ${userName}`;
+    document.getElementById('manualAmountInput').value = '';
+    document.getElementById('manualDepositModal').style.display = 'flex';
+}
+
+async function submitManualDeposit() {
+    const amount = parseFloat(document.getElementById('manualAmountInput').value);
+    
+    if (!amount || amount <= 0) {
+        alert(' Lütfen geçerli bir tutar girin!');
+        return;
+    }
+
+    if (!confirm(`✅ $${amount.toFixed(2)} tutarı ${selectedUserIdForDeposit} kullanıcısına manuel olarak eklenecek. Emin misiniz?`)) {
+        return;
+    }
+
+    try {
+        const userRef = db.collection('users').doc(selectedUserIdForDeposit);
+        
+        // Doğrudan lifetimeEarnings ve totalInvested'e ekle
+        await userRef.update({
+            lifetimeEarnings: firebase.firestore.FieldValue.increment(amount),
+            totalInvested: firebase.firestore.FieldValue.increment(amount),
+            manualDepositHistory: firebase.firestore.FieldValue.arrayUnion({
+                amount: amount,
+                date: new Date().toISOString(),
+                addedBy: 'admin'
+            })
+        });
+
+        addLog('success', `Manuel yatırım eklendi: $${amount.toFixed(2)} → ${selectedUserIdForDeposit}`);
+        alert('✅ Yatırım başarıyla eklendi!');
+        
+        document.getElementById('manualDepositModal').style.display = 'none';
+        loadUsers(); // Listeyi yenile
+        
+    } catch (e) {
+        alert('❌ Hata: ' + e.message);
+        addLog('error', 'Manuel yatırım ekleme hatası: ' + e.message);
     }
 }
 
@@ -484,19 +547,7 @@ const np=pp.filter(p=>p.id!==paymentId);
 p.status='approved';p.approvedAt=Date.now();
 await ur.set({pendingPayments:np,approvedPayments:[...ap,p],totalInvested:(x.totalInvested||0)+p.amount},{merge:true});
 
-// 💰 $3+ YATIRIM → $1 HOŞGELDİN BONUSU OTOMATİK AKTAR
-if(amount >= 3 && x.welcomeBonusGiven && !x.welcomeBonusTransferred){
-const wb = x.bonusBalance || 0;
-if(wb >= 1){
-await ur.set({
-bonusBalance: wb - 1,
-lifetimeEarnings: (x.lifetimeEarnings||0) + 1,
-welcomeBonusTransferred: true,
-welcomeBonusTransferredAt: Date.now()
-},{merge:true});
-addLog('success',`$1 hoşgeldin bonusu otomatik aktarıldı → ${userName}`);
-}
-}
+// ❌ OTOMATİK BONUS AKTARIMI KALDIRILDI ($3 kuralı kullanıcı tarafında)
 
 // 💰 REFERANS KOMİSYONU %10
 try{
@@ -519,7 +570,7 @@ addLog('success',`%10 komisyon: $${comm.toFixed(2)} → ${rdx.userName||rbd}`);
 
 // Kullanıcıya onay bildirimi
 if(p.userTelegramId){
-const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n💰 <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
+const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n📊 <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
 sendUserNotification(p.userTelegramId,um);
 }
 
@@ -547,7 +598,7 @@ sendUserNotification(p.userTelegramId,um);
 addLog('error',`Yatırım reddedildi: $${amount.toFixed(2)} - ${userName}`);
 alert('❌ Ödeme reddedildi!');
 loadData();
-}catch(e){addLog('error','Red hatası: '+e.message);alert(' Hata: '+e.message)}
+}catch(e){addLog('error','Red hatası: '+e.message);alert('❌ Hata: '+e.message)}
 }
 
 async function approveWithdrawal(userDocId,withdrawalId,amount,userName,cryptoAmount,cryptoSymbol,network,walletAddress){
@@ -567,7 +618,7 @@ nw.push(w);
 await ur.set({withdrawalRequests:nw},{merge:true});
 
 if(w.userTelegramId){
-const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n <b>Tutar:</b> $${w.amount.toFixed(2)}\n🪙 <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n📍 <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! 🎉`;
+const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! `;
 sendUserNotification(w.userTelegramId,um);
 }
 
@@ -590,7 +641,7 @@ const nw=wr.filter(w=>w.id!==withdrawalId);
 const nl=(x.lifetimeEarnings||0)+amount;
 await ur.set({withdrawalRequests:nw,lifetimeEarnings:nl},{merge:true});
 if(w&&w.userTelegramId){
-const um=`❌ <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
+const um=` <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
 sendUserNotification(w.userTelegramId,um);
 }
 addLog('error',`Çekim reddedildi: $${amount.toFixed(2)} - ${userName}`);
