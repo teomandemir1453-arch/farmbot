@@ -421,7 +421,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
 <div class="profile-popup" onclick="event.stopPropagation()">
 <div class="profile-header">
-<button class="profile-close" onclick="closeProfile()">✕</button>
+<button class="profile-close" onclick="closeProfile()"></button>
 <div class="profile-name" id="profileName">Kullanıcı</div>
 <div class="profile-id" id="profileId">ID: ---</div>
 </div>
@@ -443,11 +443,11 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="profile-menu">
 <div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Günlük Bonus</div><div class="m-desc" id="dailyBonusDesc">Bonus al</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon">🎯</div><div class="m-content"><div class="m-title">Görevler</div><div class="m-desc" id="tasksDesc">Bonus kazan</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon">📈</div><div class="m-content"><div class="m-title">Grafik</div><div class="m-desc">Kazançları gör</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Grafik</div><div class="m-desc">Kazançları gör</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('notifications')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Bildirimler</div><div class="m-desc" id="notifDesc">Bildirimleri gör</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('settings')"><div class="m-icon">️</div><div class="m-content"><div class="m-title">Ayarlar</div><div class="m-desc">Tercihler</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon"></div><div class="m-content"><div class="m-title">Referans</div><div class="m-desc" id="referralMenuDesc">%10 komisyon kazan</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title">SSS</div><div class="m-desc">Yardım</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon"></div><div class="m-content"><div class="m-title">SSS</div><div class="m-desc">Yardım</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"></div><div class="m-content"><div class="m-title">Destek</div><div class="m-desc">Telegram</div></div><div class="m-arrow">›</div></div>
 <div class="profile-menu-item" onclick="openSubPopup('about')"><div class="m-icon">ℹ️</div><div class="m-content"><div class="m-title">Hakkında</div><div class="m-desc">Bilgi</div></div><div class="m-arrow">›</div></div>
 </div>
@@ -672,7 +672,7 @@ let sh='<div class="streak-days">';
 for(let i=0;i<7;i++){const cl=i<cs;const td=i===cs&&cc;sh+=`<div class="streak-day ${cl?'claimed':''} ${td?'today':''}"><div class="sd-num">${i+1}.Gün</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`}
 sh+='</div>';
 return`<div class="sub-popup-header"><div class="sub-popup-title"> Günlük Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
-<div class="daily-bonus-card"><div class="db-icon">🎁</div><div class="db-title">${cc?'Hazır!':'Yarın Gel!'}</div><div class="db-amount">$${cc?nb.toFixed(2):DAILY_BONUSES[Math.min(cs+1,6)].toFixed(2)}</div><div class="db-streak"> ${cs} gün</div></div>
+<div class="daily-bonus-card"><div class="db-icon"></div><div class="db-title">${cc?'Hazır!':'Yarın Gel!'}</div><div class="db-amount">$${cc?nb.toFixed(2):DAILY_BONUSES[Math.min(cs+1,6)].toFixed(2)}</div><div class="db-streak"> ${cs} gün</div></div>
 ${sh}
 ${cc?`<button class="btn btn-approve" style="margin-top:12px" onclick="claimDailyBonus()">🎁 Al ($${nb.toFixed(2)})</button>`:`<div style="background:#0D1D25;padding:10px;border-radius:8px;text-align:center;margin-top:12px;font-size:11px;color:#C6C6D0;border:1px solid #C0754D">🌙 Yarın gel!</div>`}
 <div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:10px;color:#C6C6D0;line-height:1.5;margin-top:10px;border:1px solid #C0754D"> <strong>Seri:</strong> Her gün gir, bonus artsın! 7. gün $0.10!</div>`;
@@ -690,10 +690,12 @@ const ur=db.collection('users').doc(userId);
 // ✅ DOĞRUDAN ANA BAKİYEYE EKLE
 await ur.set({
 dailyBonus:{lastClaim:Date.now(),streak:ns},
-lifetimeEarnings:(lifetimeEarnings||0)+b
+lifetimeEarnings:(lifetimeEarnings||0)+b,
+totalInvested:(totalInvested||0)+b // ✅ HOŞGELDİN BONUSU YATIRIMA DA EKLENSİN
 },{merge:true});
 
 lifetimeEarnings=(lifetimeEarnings||0)+b;
+totalInvested=(totalInvested||0)+b;
 balance=lifetimeEarnings-totalWithdrawn;
 dailyBonusData={lastClaim:Date.now(),streak:ns};
 
@@ -734,11 +736,13 @@ const ur=db.collection('users').doc(userId);
 // ✅ DOĞRUDAN ANA BAKİYEYE EKLE
 await ur.set({
 completedTasks:[...completedTasks,id],
-lifetimeEarnings:(lifetimeEarnings||0)+rw
+lifetimeEarnings:(lifetimeEarnings||0)+rw,
+totalInvested:(totalInvested||0)+rw // ✅ GÖREV ÖDÜLLERİ DE YATIRIMA EKLENSİN
 },{merge:true});
 
 completedTasks.push(id);
 lifetimeEarnings=(lifetimeEarnings||0)+rw;
+totalInvested=(totalInvested||0)+rw;
 balance=lifetimeEarnings-totalWithdrawn;
 
 addNotification(' Görev',`${tt} tamamlandı! +$${rw.toFixed(2)} yatırım bakiyene eklendi.`,'bonus');
@@ -813,14 +817,16 @@ const ur=db.collection('users').doc(userId);
 const ud=await ur.get();
 if(ud.exists&&ud.data().welcomeBonusGiven)return;
 
-// ✅ DOĞRUDAN ANA BAKİYEYE EKLE
+// ✅ DOĞRUDAN ANA BAKİYEYE VE YATIRIMA EKLE
 await ur.set({
 lifetimeEarnings:(lifetimeEarnings||0)+WELCOME_BONUS,
+totalInvested:(totalInvested||0)+WELCOME_BONUS, // ✅ YATIRIM BAKİYESİNE DE EKLENDİ
 welcomeBonusGiven:true,
 welcomeBonusAt:Date.now()
 },{merge:true});
 
 lifetimeEarnings=(lifetimeEarnings||0)+WELCOME_BONUS;
+totalInvested=(totalInvested||0)+WELCOME_BONUS;
 balance=lifetimeEarnings-totalWithdrawn;
 
 document.getElementById('welcomeAmount').textContent=WELCOME_BONUS.toFixed(2);
@@ -916,7 +922,6 @@ async function loadSiteBanner() {
         if (doc.exists && doc.data().activeBannerUrl) {
             document.getElementById('siteBannerImg').src = doc.data().activeBannerUrl;
             document.getElementById('bannerLink').classList.remove('hidden');
-            // Opsiyonel: Banner'a tıklanınca gidecek link
             if(doc.data().bannerLink) {
                 document.getElementById('bannerLink').href = doc.data().bannerLink;
             }
@@ -947,7 +952,6 @@ function showRecentAnnouncements() {
         
         html += '</div>';
         
-        // Ana sayfanın en altına ekle (earnings-estimate'ten sonra)
         const earningsDiv = document.querySelector('.earnings-estimate');
         if (earningsDiv && !document.getElementById('recentAnnouncements')) {
             const div = document.createElement('div');
@@ -969,11 +973,9 @@ await processReferral();
 await calculateOfflineEarnings();
 await giveWelcomeBonus();
 
-// YENİ EKLENENLER
-await loadSiteBanner(); // Banner'ı yükle
+await loadSiteBanner();
 listenToData();
 
-// Banner yüklendikten sonra duyuruları göster
 setTimeout(() => showRecentAnnouncements(), 1000);
 
 setInterval(updateEarnings,1000);
@@ -1023,7 +1025,6 @@ db.collection('users').doc(userId).onSnapshot(d=>{
 if(d.exists){
 const x=d.data();
 
-// KULLANICI ADINI GÜNCELLE (Admin manuel eklerse veya sistem güncellerse)
 if(x.userName) {
     currentUser = { ...currentUser, first_name: x.userName };
 }
@@ -1073,7 +1074,6 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 // ⚡ DÜZELTİLMİŞ ÜRETİM FONKSİYONU
 async function updateEarnings(){
     // Artık sadece products'a değil, totalInvested'e göre de üretim yapıyoruz!
-    // Manuel eklenen paralar da artık saniyelik kazanç üretir.
     const ps = totalInvested * PER_SECOND; 
     
     lifetimeEarnings += ps;
@@ -1101,24 +1101,21 @@ function updateUI(){
         setTimeout(()=>be.classList.remove('updating'), 600);
     }
     
-    // SANİYELİK ÜRETİM HESAPLAMA VE GÖSTERİM
+    // ✅ SANİYELİK ÜRETİMİ HER GÜNCELLEMEDE YENİLE
     const perSecond = totalInvested * PER_SECOND;
     const psElement = document.getElementById('perSecondEarn');
     const currentPs = '+$' + perSecond.toFixed(4);
     
-    if(psElement.textContent !== currentPs) {
-        psElement.textContent = currentPs;
-        // Saniyelik kazanç değiştiğinde hafif parlama efekti
-        psElement.style.textShadow = '0 0 20px rgba(16, 185, 129, 0.8)';
-        setTimeout(() => {
-            psElement.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.5)';
-        }, 300);
-    }
+    // Saniyelik kazancı her zaman güncelle (hareket hissi için)
+    psElement.textContent = currentPs;
+    psElement.style.textShadow = '0 0 20px rgba(16, 185, 129, 0.8)';
+    setTimeout(() => {
+        psElement.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.5)';
+    }, 300);
     
     document.getElementById('withdrawBalance').textContent=balance.toFixed(2);
     document.getElementById('totalInvested').textContent='$'+totalInvested.toFixed(2);
     
-    // Diğer earnings hesaplamaları aynı kalacak...
     document.getElementById('earnPerMin').textContent=(totalInvested*PER_SECOND*60).toFixed(4);
     document.getElementById('earnPerHour').textContent=(totalInvested*PER_SECOND*3600).toFixed(4);
     document.getElementById('earnPerDay').textContent=(totalInvested*PER_SECOND*86400).toFixed(4);
