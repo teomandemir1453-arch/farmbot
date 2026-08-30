@@ -1,3 +1,19 @@
+<style id="mr-modal-css">
+.mr-modal{display:none;position:fixed;inset:0;z-index:100000}.mr-modal.show{display:block}.mr-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(9px)}
+.mr-modal-dialog{position:relative;width:min(900px,calc(100% - 28px));max-height:calc(100vh - 28px);margin:14px auto;overflow:auto;background:#07100d;border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.65);animation:mrModalIn .22s ease-out}
+.mr-modal-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(7,16,13,.96);border-bottom:1px solid rgba(255,255,255,.08)}
+.mr-modal-header strong{display:block;font-size:13px;letter-spacing:.8px}.mr-modal-header span{display:block;font-size:10px;opacity:.5;margin-top:3px}.mr-modal-close{width:38px;height:38px;border:0;border-radius:12px;background:rgba(255,255,255,.08);color:inherit;font-size:25px;cursor:pointer}.mr-modal-body{padding:14px}.mr-modal-body .mr-card{margin:0!important}body.mr-modal-open{overflow:hidden}
+@keyframes mrModalIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:650px){.mr-modal-dialog{width:100%;height:100%;max-height:100vh;margin:0;border-radius:0}.mr-modal-body{padding:8px}.mr-arena{height:calc(100vh - 300px)!important;min-height:300px}}
+</style>
+<style id="mr-transfer-style">
+#mrTransfer{width:100%;margin-top:12px;border:0;border-radius:12px;padding:13px 16px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#00e676,#00bfa5);color:#07110e}
+#mrTransfer:disabled{opacity:.7;cursor:wait}
+.mr-transfer-status{min-height:22px}
+.mr-transfer-loader{display:inline-flex;align-items:center;gap:8px}
+.mr-transfer-ring{width:18px;height:18px;border:3px solid rgba(255,255,255,.25);border-top-color:currentColor;border-radius:50%;animation:mrspin .7s linear infinite}
+@keyframes mrspin{to{transform:rotate(360deg)}}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,22 +137,6 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .btn-secondary{background:#0D1D25;border:1px solid rgba(198,198,208,.3);color:#C6C6D0}
 .btn-withdraw{background:linear-gradient(135deg,#C0754D,#B6410F)}
 .btn-ctrl{width:44px;height:44px;padding:0;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0;border-radius:8px;background:linear-gradient(135deg,#C0754D,#B6410F);color:#fff;border:none}
-
-
-/* === LANGUAGE FLAGS + RIGHT NAV === */
-.mm-marquee{position:relative;padding-right:8px!important}
-.language-flags{margin-left:auto;display:flex;align-items:center;gap:3px;flex-shrink:0}
-.language-flags button{width:30px;height:30px;padding:0;border:1px solid rgba(166,116,255,.28);border-radius:9px;background:rgba(20,20,58,.72);font-size:18px;line-height:1;cursor:pointer}
-.language-flags button:active{transform:scale(.9)}
-.language-flags button.active{background:rgba(166,92,255,.3);border-color:#a65cff;box-shadow:0 0 10px rgba(166,92,255,.35)}
-.right-menu-container{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;top:56%!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:5000!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:9px!important}
-.menu-items{display:flex!important;flex-direction:column!important;align-items:center!important;gap:8px!important}
-.menu-item{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;flex-direction:column!important;gap:2px!important;font-size:19px!important}
-.menu-item span{font-size:7px!important;font-weight:800!important;line-height:1!important;white-space:nowrap!important}
-.menu-fab{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important}
-.mm-bottom-nav{display:none!important}
-@media(max-width:520px){.language-flags{gap:2px}.language-flags button{width:27px;height:27px;font-size:16px}.mm-marquee{font-size:11px;gap:6px}.right-menu-container{right:max(7px,env(safe-area-inset-right))!important}.menu-item{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important}.menu-fab{width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important}.menu-item span{font-size:6.5px!important}}
-@media(max-width:390px){.language-flags button{width:25px;height:25px;font-size:15px}.menu-item{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}.menu-fab{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important}}
 
 /* SAĞ MENÜ (FAB) */
 .right-menu-container {
@@ -365,7 +365,7 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .card{background:transparent;border:0;box-shadow:none;padding:0;margin:0 0 14px}
 #page-home{padding-top:0}
 .brand-wrap{display:none}
-.mm-topbar{height:2px;margin:0 -12px 12px;padding:10px 16px;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;background:linear-gradient(180deg,#0d0a2c,#080d24);border-bottom:1px solid rgba(166,116,255,.28);position:relative;z-index:5}
+.mm-topbar{height:82px;margin:0 -12px 12px;padding:10px 16px;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;background:linear-gradient(180deg,#0d0a2c,#080d24);border-bottom:1px solid rgba(166,116,255,.28);position:relative;z-index:5}
 .mm-logo{width:190px;max-width:100%;height:72px;object-fit:contain;display:block;margin:auto;filter:drop-shadow(0 4px 12px rgba(150,70,255,.45))}
 .mm-icon-btn{width:44px;height:44px;border-radius:13px;border:1px solid rgba(178,126,255,.28);background:rgba(20,20,58,.82);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;position:relative}
 .mm-icon-btn:active{transform:scale(.94)}
@@ -394,19 +394,9 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .telegram-notif-card{border-radius:16px;background:linear-gradient(135deg,#7037e8,#9b4dff);border:1px solid rgba(217,156,255,.55);box-shadow:0 8px 25px rgba(109,49,220,.25)}
 .packages-section-title{color:#d7c1ff;font-size:15px}.package-card{background:linear-gradient(145deg,#101735,#0b1029);border-color:rgba(135,107,220,.35)}
 .calc-main-btn{background:linear-gradient(135deg,#a74cff,#6c25df);border:1px solid #c28bff;box-shadow:0 8px 22px rgba(116,46,224,.25)}
-.right-menu-container{position:fixed;right:max(10px,env(safe-area-inset-right));top:56%;bottom:auto;transform:translateY(-50%);z-index:5000;display:flex;flex-direction:column;align-items:center;gap:9px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.menu-items{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .25s ease,transform .25s ease,visibility .25s ease}
-.menu-items.hide{opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);pointer-events:none}
-.menu-fab{width:54px;height:54px;min-width:54px;min-height:54px;border-radius:50%;background:linear-gradient(135deg,#a65cff,#6d36d8);color:#fff;border:1px solid rgba(255,255,255,.16);box-shadow:0 6px 20px rgba(100,45,190,.45);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:23px;transition:transform .22s ease,box-shadow .22s ease;touch-action:manipulation}
-.menu-fab:active{transform:scale(.9)}
-.menu-fab.closed{transform:rotate(0deg)}
-.menu-fab.open{transform:rotate(45deg)}
-.menu-item{width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;background:#111a38;border:1px solid rgba(166,92,255,.5);color:#eef1ff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .18s ease,background .18s ease,box-shadow .18s ease;touch-action:manipulation}
-.menu-item:active{transform:scale(.88);background:#9b4dff;color:#fff}
-.menu-item.active{background:#9b4dff;color:#fff;border-color:#c76cff;box-shadow:0 0 16px rgba(199,108,255,.55)}
-.mm-bottom-nav{display:none!important}
-@media(max-width:600px){.right-menu-container{right:max(8px,env(safe-area-inset-right));top:56%}.menu-fab{width:52px;height:52px;min-width:52px;min-height:52px}.menu-item{width:46px;height:46px;min-width:46px;min-height:46px}}
-@media(max-width:380px){.right-menu-container{right:6px;top:55%;gap:7px}.menu-fab{width:48px;height:48px;min-width:48px;min-height:48px}.menu-item{width:43px;height:43px;min-width:43px;min-height:43px}}
+.right-menu-container{display:none!important}
+.mm-bottom-nav{position:fixed;left:0;right:0;bottom:0;height:76px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(10,15,39,.96);backdrop-filter:blur(14px);border-top:1px solid rgba(150,122,255,.25);display:grid;grid-template-columns:repeat(5,1fr);z-index:1200;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
+.mm-nav-item{border:0;background:transparent;color:#9da8ca;font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px;cursor:pointer}.mm-nav-item span{font-size:24px;line-height:1}.mm-nav-item.active,.mm-nav-item:active{color:#c76cff}.mm-nav-item.active span{filter:drop-shadow(0 0 8px rgba(199,108,255,.65))}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
 </style>
@@ -1019,93 +1009,30 @@ img{max-width:100%}
 }
 </style>
 
-<style id="mm-language-final">
-.right-menu-container{display:flex!important;position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;top:56%!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:5000!important}
-.mm-bottom-nav{display:none!important}
-</style>
 
-<style id="mm-logo-welcome-style">
-.mm-logo-welcome{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:12px!important;
-  min-height:50px!important;
-  padding:3px 10px!important;
-  overflow:visible!important;
-}
-.mm-welcome-logo{
-  width:min(210px,58vw)!important;
-  height:auto!important;
-  max-height:42px!important;
-  object-fit:contain!important;
-  display:block!important;
-}
-.mm-logo-welcome .language-flags{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:5px!important;
-  flex-wrap:nowrap!important;
-  position:static!important;
-  transform:none!important;
-}
-.mm-logo-welcome .language-flags button{
-  width:34px!important;
-  height:30px!important;
-  padding:0!important;
-  border-radius:8px!important;
-  font-size:18px!important;
-  line-height:1!important;
-}
-@media(max-width:600px){
-  .mm-logo-welcome{
-    gap:7px!important;
-    min-height:46px!important;
-    padding:2px 7px!important;
-  }
-  .mm-welcome-logo{
-    width:min(165px,52vw)!important;
-    max-height:46px!important;
-  }
-  .mm-logo-welcome .language-flags{gap:3px!important}
-  .mm-logo-welcome .language-flags button{
-    width:29px!important;
-    height:27px!important;
-    font-size:16px!important;
-    border-radius:7px!important;
-  }
-}
-@media(max-width:380px){
-  .mm-logo-welcome{
-    gap:5px!important;
-  }
-  .mm-welcome-logo{
-    width:145px!important;
-  }
-  .mm-logo-welcome .language-flags button{
-    width:26px!important;
-    height:25px!important;
-    font-size:15px!important;
-  }
-}
+<style id="mining-rush-game">
+.mr-card{margin:0 0 14px;border:1px solid rgba(166,116,255,.34);border-radius:22px;background:radial-gradient(circle at 50% 0%,rgba(145,74,255,.22),transparent 46%),linear-gradient(145deg,#151d45,#090f29);box-shadow:0 14px 35px rgba(0,0,0,.34);overflow:hidden}
+.mr-head{padding:15px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}.mr-title{font-size:18px;font-weight:900;color:#fff}.mr-sub{font-size:10px;color:#aebbe0;margin-top:3px}.mr-live{font-size:9px;font-weight:900;color:#7dffba;background:rgba(49,233,129,.12);border:1px solid rgba(49,233,129,.25);padding:5px 8px;border-radius:9px}
+.mr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 12px 10px}.mr-stat{background:#0a122d;border:1px solid rgba(112,137,220,.25);border-radius:11px;padding:8px;text-align:center}.mr-stat b{display:block;font-size:15px;color:#fff;font-variant-numeric:tabular-nums}.mr-stat span{display:block;font-size:8px;color:#8f9dc4;margin-top:2px;text-transform:uppercase;font-weight:800}
+.mr-arena{position:relative;margin:0 12px;height:360px;border-radius:18px;overflow:hidden;border:1px solid rgba(145,104,255,.35);background:radial-gradient(circle at 50% 35%,rgba(106,58,174,.32),transparent 42%),linear-gradient(180deg,#11183a,#080d23)}
+.mr-arena:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(151,111,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(151,111,255,.06) 1px,transparent 1px);background-size:36px 36px;opacity:.45}.mr-ground{position:absolute;left:-5%;right:-5%;bottom:-35px;height:105px;background:radial-gradient(circle at 25% 25%,#5b3c37 0 3px,transparent 4px),radial-gradient(circle at 70% 45%,#3d3040 0 4px,transparent 5px),linear-gradient(180deg,#211a2e,#100f20);border-top:1px solid rgba(199,139,83,.25);transform:rotate(-2deg)}
+.mr-object{transition:filter .12s,transform .12s}.mr-rock{filter:drop-shadow(0 5px 10px rgba(0,0,0,.55))}.mr-crystal{filter:drop-shadow(0 0 12px rgba(108,190,255,.8))}.mr-gold{filter:drop-shadow(0 0 14px rgba(255,195,54,.85))}.mr-diamond{filter:drop-shadow(0 0 18px rgba(111,238,255,.95));animation:mrSpawn .22s ease-out,mrGemPulse 1s ease-in-out infinite}.mr-burst{position:absolute;z-index:12;pointer-events:none;color:#7ff7ff;font-weight:1000;font-size:14px;text-shadow:0 0 14px rgba(100,240,255,.9);animation:mrBurst .9s ease-out forwards}@keyframes mrGemPulse{50%{transform:scale(1.12)}100%{transform:scale(1)}}@keyframes mrBurst{0%{opacity:0;transform:translateY(10px) scale(.7)}20%{opacity:1;transform:translateY(0) scale(1.05)}100%{opacity:0;transform:translateY(-48px) scale(1.15)}}.mr-object{position:absolute;width:64px;height:64px;border:0;background:transparent;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;font-size:38px;filter:drop-shadow(0 5px 10px rgba(0,0,0,.5));animation:mrSpawn .22s ease-out}.mr-object:active{transform:scale(.84)}.mr-object:focus-visible{outline:2px solid #c76cff;outline-offset:3px;border-radius:50%}@keyframes mrSpawn{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:scale(1)}}
+.mr-float{position:absolute;z-index:10;font-size:15px;font-weight:900;pointer-events:none;animation:mrFloat .75s ease-out forwards;text-shadow:0 2px 8px rgba(0,0,0,.7)}@keyframes mrFloat{0%{opacity:1;transform:translateY(0) scale(.8)}100%{opacity:0;transform:translateY(-45px) scale(1.1)}}
+.mr-combo{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:5;background:rgba(8,12,35,.82);border:1px solid rgba(255,200,61,.4);border-radius:10px;padding:5px 10px;color:#ffc83d;font-size:10px;font-weight:900;opacity:0;transition:.18s}.mr-combo.show{opacity:1}.mr-center{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none}.mr-start{pointer-events:auto;width:210px;padding:14px;border:1px solid #d49cff;border-radius:14px;background:linear-gradient(135deg,#a74cff,#6722db);color:#fff;font-weight:900;font-size:14px;box-shadow:0 0 25px rgba(166,92,255,.35);cursor:pointer}.mr-count{font-size:58px;font-weight:1000;color:#fff;text-shadow:0 0 25px rgba(199,108,255,.75)}.mr-result{position:absolute;inset:0;z-index:20;background:rgba(6,9,25,.94);display:none;align-items:center;justify-content:center;text-align:center;padding:20px}.mr-result.show{display:flex}.mr-result-box{width:min(100%,300px)}.mr-result h3{font-size:22px;color:#fff;margin:0 0 6px}.mr-score{font-size:38px;font-weight:1000;color:#ffc83d}.mr-reward{font-size:18px;font-weight:900;color:#48e79a;margin:5px 0 14px}.mr-result small{color:#9da8ca;display:block;margin-bottom:14px}.mr-result button{width:100%;padding:12px;border:0;border-radius:11px;background:linear-gradient(135deg,#a74cff,#6d36d8);color:#fff;font-weight:900;cursor:pointer}.mr-bottom{padding:11px 12px 13px}.mr-progress{height:7px;background:#070b20;border-radius:8px;overflow:hidden;border:1px solid #283357}.mr-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,#a65cff,#ffc83d);transition:width .2s}.mr-help{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:#8f9dc4}.mr-help b{color:#dce4ff}
+@media(max-width:430px){.mr-arena{height:310px}.mr-object{width:58px;height:58px;font-size:34px}.mr-title{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.mr-object,.mr-float{animation:none}}
 </style>
 </head>
 <body>
 <div class="container">
 
 <div id="page-home" class="card">
-<div class="mm-topbar" aria-hidden="true"></div>
-<div class="mm-marquee mm-logo-welcome">
-  <img src="assets/logo.png" class="mm-welcome-logo" alt="Micro Monetize">
-  <div class="language-flags" id="languageFlags">
-    <button onclick="setLanguage('en')" aria-label="English" title="English">🇬🇧</button>
-    <button onclick="setLanguage('tr')" aria-label="Türkçe" title="Türkçe">🇹🇷</button>
-    <button onclick="setLanguage('de')" aria-label="Deutsch" title="Deutsch">🇩🇪</button>
-    <button onclick="setLanguage('es')" aria-label="Español" title="Español">🇪🇸</button>
-    <button onclick="setLanguage('ru')" aria-label="Русский" title="Русский">🇷🇺</button>
-  </div>
+<div class="mm-topbar">
+  <button class="mm-icon-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <img class="mm-logo" src="assets/logo.png" alt="Micro Monetize">
+  <button class="mm-icon-btn" onclick="openNotificationsQuick()" aria-label="Notifications">🔔<span class="mm-badge" id="topNotifBadge">0</span></button>
 </div>
+<div class="mm-marquee"><span class="speaker">📢</span><span>Welcome to Micro Monetize! Grow your wealth every day.</span></div>
 
 <div class="mm-finance-card">
   <div class="mm-finance-side balance-side" onclick="showPage('withdraw')">
@@ -1164,6 +1091,42 @@ img{max-width:100%}
       <div class="mm-finance-value investment-value" id="totalInvested">$0</div>
       <div class="mm-finance-sub">Active Investments</div>
     </div>
+  </div>
+</div>
+
+
+<div id="gameHub" class="game-hub">
+<style>
+.game-hub{margin:0 0 16px}.game-hub-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.game-hub-title strong{font-size:19px}.game-hub-title span{font-size:11px;opacity:.55}.game-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.game-card{position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);color:inherit;padding:0;text-align:left;cursor:pointer;transition:.2s;min-width:0}.game-card.active{border-color:rgba(0,230,118,.6);box-shadow:0 0 0 1px rgba(0,230,118,.12),0 8px 25px rgba(0,0,0,.18)}.game-card.locked{opacity:.5;cursor:not-allowed}.game-art{height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;background:radial-gradient(circle at 50% 25%,rgba(0,230,118,.18),transparent 58%),linear-gradient(145deg,#15221d,#080d0b)}.game-art:after{content:'✦';position:absolute;right:12px;top:8px;font-size:14px;opacity:.35}.game-card-body{padding:9px}.game-card-body strong,.game-card-body span,.game-card-body b{display:block}.game-card-body strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.game-card-body span{font-size:10px;opacity:.55;margin:4px 0}.game-card-body b{font-size:9px}.game-active-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676;margin-right:5px;vertical-align:1px}@media(max-width:800px){.game-grid{grid-template-columns:repeat(2,1fr)}.game-card:first-child{grid-column:span 2}.game-art{height:74px}}
+</style>
+<div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Aktif oyunu seç ve kazanmaya başla.</span></div></div>
+<div class="game-grid">
+<button class="game-card active" type="button"><div class="game-art">⛏️💎🪙</div><div class="game-card-body"><strong><i class="game-active-dot"></i>GOLD RUSH</strong><span>60 saniye • Aktif</span><b>▶ OYNA</b></div></button>
+<button class="game-card locked" type="button"><div class="game-art">💠</div><div class="game-card-body"><strong>CRYSTAL HUNT</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
+<button class="game-card locked" type="button"><div class="game-art">🏃⛏️</div><div class="game-card-body"><strong>MINER RUN</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
+<button class="game-card locked" type="button"><div class="game-art">🏆🪙</div><div class="game-card-body"><strong>TREASURE CAVE</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
+<button class="game-card locked" type="button"><div class="game-art">⚡💎</div><div class="game-card-body"><strong>POWER MINE</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
+</div></div>
+<div id="miningRushModal" class="mr-modal" aria-hidden="true">
+  <div class="mr-modal-backdrop" id="mrModalBackdrop"></div>
+  <div class="mr-modal-dialog" role="dialog" aria-modal="true" aria-label="Gold Rush">
+    <div class="mr-modal-header"><div><strong>⛏️ GOLD RUSH</strong><span>60 saniyelik madencilik oyunu</span></div><button type="button" id="mrCloseModal" class="mr-modal-close" aria-label="Kapat">×</button></div>
+    <div class="mr-modal-body"><div class="mr-card" id="miningRushCard">
+  <div class="mr-head"><div><div class="mr-title">⛏️ Mining Rush</div><div class="mr-sub">Break rocks, find rare gems & grow your investment balance.</div></div><div class="mr-live">● LIVE</div></div>
+  <div class="mr-stats">
+    <div class="mr-stat"><b id="mrScore">0</b><span>Score</span></div>
+    <div class="mr-stat"><b id="mrTime">60s</b><span>Time</span></div>
+    <div class="mr-stat"><b id="mrReward">$0.0000</b><span>Reward</span></div>
+  </div>
+  <div class="mr-arena" id="mrArena">
+    <div class="mr-combo" id="mrCombo">🔥 COMBO x0</div><div class="mr-ground"></div>
+    <div class="mr-center" id="mrCenter"><button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 60s</button></div>
+    <div class="mr-result" id="mrResult"><div class="mr-result-box"><h3>⛏️ Mining Complete!</h3><div class="mr-score" id="mrFinalScore">0</div><div class="mr-reward" id="mrFinalReward">+$0.0000</div><small id="mrFinalNote">Your game reward is calculated from your verified score.</small><button type="button" id="mrTransfer">💰 TRANSFER REWARD</button>
+<div class="mr-transfer-status" id="mrTransferStatus" style="display:none;margin-top:10px;font-weight:700;"></div>
+<button type="button" id="mrPlayAgain">Play Again</button></div></div>
+  </div>
+  <div class="mr-bottom"><div class="mr-progress"><i id="mrProgress"></i></div><div class="mr-help"><span>Daily reward</span><b id="mrDaily">$0.000 / $0.001</b></div></div>
+</div></div>
   </div>
 </div>
 
@@ -1273,17 +1236,14 @@ img{max-width:100%}
 
 </div>
 
-<!-- SAĞ MENÜ - MOBİL / ANDROID -->
+<!-- SAĞ MENÜ -->
 <div class="right-menu-container">
     <div class="menu-items" id="menuItems">
-        <div class="menu-item active" onclick="showPage('home',this)" title="Home" aria-label="Home">🏠<span data-i18n="nav_home">Home</span></div>
-        <div class="menu-item" onclick="showPage('buy',this)" title="Investment" aria-label="Investment">💰<span data-i18n="nav_investment">Investment</span></div>
-        <div class="menu-item" onclick="showPage('withdraw',this)" title="Withdraw" aria-label="Withdraw">💸<span data-i18n="nav_withdraw">Withdraw</span></div>
-        <div class="menu-item" onclick="openProfile()" title="Profile" aria-label="Profile">👤<span data-i18n="nav_profile">Profile</span></div>
-        <div class="menu-item" onclick="openSupport()" title="Support" aria-label="Support">🎧<span data-i18n="nav_support">Support</span></div>
+        <div class="menu-item active" onclick="showPage('home',this)" title="Home">🏠</div>
+        <div class="menu-item" onclick="openProfile()" title="Profile">👤</div>
         <div class="menu-item" id="adminNavItem" onclick="showPage('admin',this)" title="Admin" style="display:none"></div>
     </div>
-    <button class="menu-fab open" id="menuFab" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <button class="menu-fab open" id="menuFab" onclick="toggleMenu()"></button>
 </div>
 
 <div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
@@ -1389,7 +1349,7 @@ let currentPrices={trx:0.12,bnb:600,xrp:0.50};
 // TAM DİL SÖZLÜĞÜ
 const i18n = {
     en: {
-        app_title: "Micro Monetize",welcome_marquee:"Welcome to Micro Monetize! Grow your wealth every day.", nav_home:"Home", nav_investment:"Investment", nav_withdraw:"Withdraw", nav_profile:"Profile", nav_support:"Support", language_select:"Select Language", withdraw_label: "💰 WITHDRAW", deposit_label: " ADD BALANCE",
+        app_title: "Micro Monetize", withdraw_label: "💰 WITHDRAW", deposit_label: " ADD BALANCE",
         notif_btn: "notifications", bonus_btn: "daily bonus", tasks_btn: "tasks",
         est_earnings: " Estimated Earnings", per_min: "Minute", per_hour: "Hour", per_day: "Day",
         tg_activate: "🔔 Activate Notifications", tg_desc: "Get instant alerts on Telegram!",
@@ -1411,7 +1371,7 @@ const i18n = {
         welcome_title: " Welcome!", welcome_desc: "New member investment bonus:", welcome_note: "Added directly to your total investment!", great_btn: "🎉 Great!"
     },
     tr: {
-        app_title: "Micro Monetize",welcome_marquee:"Micro Monetize'a hoş geldin! Her gün servetini büyüt.", nav_home:"Ana Sayfa", nav_investment:"Yatırım", nav_withdraw:"Çekim", nav_profile:"Profil", nav_support:"Destek", language_select:"Dil Seçimi", withdraw_label: "💰 ÇEK", deposit_label: " BAKİYE EKLE",
+        app_title: "Micro Monetize", withdraw_label: "💰 ÇEK", deposit_label: " BAKİYE EKLE",
         notif_btn: "bildirimler", bonus_btn: "günlük bonus", tasks_btn: "görevler",
         est_earnings: " Tahmini Kazanç", per_min: "Dakika", per_hour: "Saat", per_day: "Gün",
         tg_activate: " Bildirimleri Aktif Et", tg_desc: "Telegram'dan anında al!",
@@ -1433,7 +1393,7 @@ const i18n = {
         welcome_title: "🎉 Hoşgeldin!", welcome_desc: "Yeni üye yatırım bonusun:", welcome_note: "Doğrudan toplam yatırımına eklendi!", great_btn: "🎉 Harika!"
     },
     ru: {
-        app_title: "Micro Monetize",welcome_marquee:"Добро пожаловать в Micro Monetize! Увеличивайте свой капитал каждый день.", nav_home:"Главная", nav_investment:"Инвестиции", nav_withdraw:"Вывод", nav_profile:"Профиль", nav_support:"Поддержка", language_select:"Выбор языка", withdraw_label: "💰 ВЫВОД", deposit_label: " ПОПОЛНИТЬ",
+        app_title: "Micro Monetize", withdraw_label: "💰 ВЫВОД", deposit_label: " ПОПОЛНИТЬ",
         notif_btn: "уведомления", bonus_btn: "ежедневный бонус", tasks_btn: "задания",
         est_earnings: " Ожидаемый доход", per_min: "Минута", per_hour: "Час", per_day: "День",
         tg_activate: " Включить уведомления", tg_desc: "Получайте мгновенные оповещения в Telegram!",
@@ -1455,7 +1415,7 @@ const i18n = {
         welcome_title: " Добро пожаловать!", welcome_desc: "Бонус за первую инвестицию:", welcome_note: "Добавлено прямо в ваши общие инвестиции!", great_btn: " Отлично!"
     },
     es: {
-        app_title: "Micro Monetize",welcome_marquee:"¡Bienvenido a Micro Monetize! Haz crecer tu patrimonio cada día.", nav_home:"Inicio", nav_investment:"Inversión", nav_withdraw:"Retirar", nav_profile:"Perfil", nav_support:"Soporte", language_select:"Seleccionar idioma", withdraw_label: "💰 RETIRAR", deposit_label: "📊 AGREGAR SALDO",
+        app_title: "Micro Monetize", withdraw_label: "💰 RETIRAR", deposit_label: "📊 AGREGAR SALDO",
         notif_btn: "notificaciones", bonus_btn: "bono diario", tasks_btn: "tareas",
         est_earnings: " Ganancias Estimadas", per_min: "Minuto", per_hour: "Hora", per_day: "Día",
         tg_activate: " Activar Notificaciones", tg_desc: "¡Recibe alertas instantáneas en Telegram!",
@@ -1477,7 +1437,7 @@ const i18n = {
         welcome_title: " ¡Bienvenido!", welcome_desc: "Bono de inversión para nuevos miembros:", welcome_note: "¡Agregado directamente a su inversión total!", great_btn: " ¡Genial!"
     },
     de: {
-        app_title: "Micro Monetize",welcome_marquee:"Willkommen bei Micro Monetize! Vergrößern Sie Ihr Vermögen jeden Tag.", nav_home:"Startseite", nav_investment:"Investition", nav_withdraw:"Auszahlen", nav_profile:"Profil", nav_support:"Support", language_select:"Sprache auswählen", withdraw_label: " AUSZAHLEN", deposit_label: " GUTHABEN EINZAHLEN",
+        app_title: "Micro Monetize", withdraw_label: " AUSZAHLEN", deposit_label: " GUTHABEN EINZAHLEN",
         notif_btn: "Benachrichtigungen", bonus_btn: "Tagesbonus", tasks_btn: "Aufgaben",
         est_earnings: " Geschätzte Einnahmen", per_min: "Minute", per_hour: "Stunde", per_day: "Tag",
         tg_activate: " Benachrichtigungen aktivieren", tg_desc: "Erhalten Sie sofortige Warnungen auf Telegram!",
@@ -1500,27 +1460,22 @@ const i18n = {
     }
 };
 
-const langFlags = { en: '🇬🇧 English', tr: '🇹🇷 Türkçe', de: '🇩🇪 Deutsch', es: '🇪🇸 Español', ru: '🇷🇺 Русский' };
+const langFlags = { en: '🇺 English', ru: '🇷 Русский', tr: '🇹 Türkçe', es: ' Español', de: ' Deutsch' };
 let currentLang = 'en';
-try { currentLang = localStorage.getItem('mm_language') || 'en'; } catch(e) {}
 
 function setLanguage(lang) {
     if (!i18n[lang]) lang = 'en';
     currentLang = lang;
-    try { localStorage.setItem('mm_language', lang); } catch(e) {}
-    document.documentElement.lang = lang;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
     });
     const langDesc = document.getElementById('currentLangDesc');
-    if(langDesc) langDesc.textContent = langFlags[lang] || '🇬🇧 English';
-    document.querySelectorAll('#languageFlags button').forEach(b => b.classList.toggle('active', b.getAttribute('aria-label') === ({en:'English',tr:'Türkçe',de:'Deutsch',es:'Español',ru:'Русский'}[lang])));
+    if(langDesc) langDesc.textContent = langFlags[lang] || 'English';
 }
 
-
 function openLanguageSelector() {
-    let h = `<div class="sub-popup-header"><div class="sub-popup-title">🌐 ${i18n[currentLang].language_select || 'Select Language'}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+    let h = `<div class="sub-popup-header"><div class="sub-popup-title"> Select Language</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
     Object.keys(langFlags).forEach(code => {
         const isActive = code === currentLang ? 'style="background:#D59D80;color:#fff;"' : '';
         h += `<div class="profile-menu-item" onclick="setLanguage('${code}'); closeSubPopup();" ${isActive}>
@@ -1532,8 +1487,6 @@ function openLanguageSelector() {
     c.innerHTML=h;
     document.getElementById('subOverlay').classList.add('show');
 }
-
-setLanguage(currentLang);
 
 async function getCryptoPrices(){
 try{
@@ -1553,7 +1506,7 @@ const s=document.getElementById('withdrawCrypto');
 if(s){s.options[0].text=`TRX (TRON) - ~$${currentPrices.trx.toFixed(4)}`;s.options[1].text=`BNB (Binance) - ~$${currentPrices.bnb.toFixed(2)}`;s.options[2].text=`XRP (Ripple) - ~$${currentPrices.xrp.toFixed(4)}`;}
 }
 
-let currentUser=null,userId=null,products=[],lifetimeEarnings=0,totalWithdrawn=0,balance=0,totalInvested=0,createdAt=null;
+let currentUser=null,userId=null,products=[],lifetimeEarnings=0,totalWithdrawn=0,balance=0,totalInvested=0,estimatedEarnings=0,createdAt=null;
 let referralCount=0,pendingReferralBonus=0,referralBonusUnlocked=false,referralEarnings=0;
 let selectedPackageName='',selectedPackageOriginal=0,selectedPackageDiscounted=0;
 let referredByUserId=null;
@@ -2134,6 +2087,12 @@ if(x.notifications)notificationsData=x.notifications;
 if(x.earningsHistory)earningsHistory=x.earningsHistory;
 taskClaims=x.taskClaims||{};
 taskRewardTotal=Number(x.taskRewardTotal||0);
+estimatedEarnings=Number(x.estimatedEarnings||0);
+const mrDaily=x.miningRushDaily||{};
+const mrToday=new Date().toISOString().slice(0,10);
+mr.dailyDate=mrDaily.date===mrToday?mrToday:'';
+mr.daily=mrDaily.date===mrToday?Math.min(MR_DAILY_LIMIT,Number(mrDaily.amount||0)):0;
+mrUpdate();
 updateUI();
 updateQuickNotifBadge();
 }
@@ -2171,6 +2130,9 @@ async function updateEarnings(){
 }
 
 function updateUI(){
+const estEl=document.getElementById('estimatedEarnings');
+if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
+
     const be=document.getElementById('balance');
     const nv='$'+balance.toFixed(6);
     if(be.textContent !== nv){
@@ -2288,162 +2250,152 @@ function showPage(p, element) {
     window.scrollTo(0,0);
     if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
-</script>
 
 
-<script id="mm-full-language-v2">
-(function(){
-  const extra = {
-    en:{
-      "No notifications":"No notifications","No deposits":"No deposits","No withdrawals":"No withdrawals",
-      "View earnings":"View earnings","Your Link":"Your Link","Invites":"Invites","Commission":"Commission",
-      "Earn 10% commission":"Earn 10% commission","Claim bonus":"Claim bonus","Come back tomorrow!":"Come back tomorrow!",
-      "Complete a 7 day login streak":"Complete a 7 day login streak","Task":"Task","Claimed":"Claimed","Collect":"Collect",
-      "First Investment":"First Investment","First Referral":"First Referral","Welcome Back!":"Welcome Back!",
-      "NEW INVESTMENT!":"NEW INVESTMENT!","NEW WITHDRAWAL!":"NEW WITHDRAWAL!","Recent Announcements":"Recent Announcements",
-      "Withdrawal History":"Withdrawal History","Deposit History":"Deposit History","Active Investments":"Active Investments",
-      "Estimated Earnings":"Estimated Earnings","Daily Bonus":"Daily Bonus","Daily bonuses are added directly to your investment balance.":"Daily bonuses are added directly to your investment balance.",
-      "How to invest?":"How to invest?","How to withdraw?":"How to withdraw?","When do earnings start?":"When do earnings start?",
-      "Secure • Stable • Profitable":"Secure • Stable • Profitable","Select →":"Select →","Loading...":"Loading...",
-      "Pending Approval":"Pending Approval","Approved":"Approved","Rejected":"Rejected","Success!":"Success!","Error:":"Error:",
-      "Insufficient balance!":"Insufficient balance!","No balance to withdraw!":"No balance to withdraw!",
-      "Only TRON (TRC20) network is accepted!":"Only TRON (TRC20) network is accepted!",
-      "Network:":"Network:","Wallet:":"Wallet:","Amount:":"Amount:","Status:":"Status:","Package:":"Package:",
-      "Original:":"Original:","Discounted:":"Discounted:","Saved:":"Saved:","Equivalent:":"Equivalent:",
-      "Day":"Day","Daily":"Daily","Hourly":"Hourly","Monthly":"Monthly","Half Year":"Half Year","1 Year":"1 Year",
-      "Total":"Total","Max":"Max","Min":"Min","Copy":"Copy","Save":"Save","Cancel":"Cancel","Close":"Close",
-      "Confirm":"Confirm","User":"User","Telegram":"Telegram","Admin Panel:":"Admin Panel:"
-    },
-    tr:{
-      "No notifications":"Bildirim yok","No deposits":"Yatırım yok","No withdrawals":"Çekim yok",
-      "View earnings":"Kazançları gör","Your Link":"Bağlantınız","Invites":"Davetler","Commission":"Komisyon",
-      "Earn 10% commission":"%10 komisyon kazan","Claim bonus":"Bonusu al","Come back tomorrow!":"Yarın tekrar gel!",
-      "Complete a 7 day login streak":"7 günlük giriş serisini tamamla","Task":"Görev","Claimed":"Alındı","Collect":"Topla",
-      "First Investment":"İlk Yatırım","First Referral":"İlk Referans","Welcome Back!":"Tekrar Hoş Geldin!",
-      "NEW INVESTMENT!":"YENİ YATIRIM!","NEW WITHDRAWAL!":"YENİ ÇEKİM!","Recent Announcements":"Son Duyurular",
-      "Withdrawal History":"Çekim Geçmişi","Deposit History":"Yatırım Geçmişi","Active Investments":"Aktif Yatırımlar",
-      "Estimated Earnings":"Tahmini Kazanç","Daily Bonus":"Günlük Bonus","Daily bonuses are added directly to your investment balance.":"Günlük bonuslar doğrudan yatırım bakiyenize eklenir.",
-      "How to invest?":"Nasıl yatırım yapılır?","How to withdraw?":"Nasıl çekim yapılır?","When do earnings start?":"Kazançlar ne zaman başlar?",
-      "Secure • Stable • Profitable":"Güvenli • İstikrarlı • Karlı","Select →":"Seç →","Loading...":"Yükleniyor...",
-      "Pending Approval":"Onay Bekliyor","Approved":"Onaylandı","Rejected":"Reddedildi","Success!":"Başarılı!","Error:":"Hata:",
-      "Insufficient balance!":"Yetersiz bakiye!","No balance to withdraw!":"Çekilecek bakiye yok!",
-      "Only TRON (TRC20) network is accepted!":"Sadece TRON (TRC20) ağı kabul edilir!",
-      "Network:":"Ağ:","Wallet:":"Cüzdan:","Amount:":"Tutar:","Status:":"Durum:","Package:":"Paket:",
-      "Original:":"Orijinal:","Discounted:":"İndirimli:","Saved:":"Tasarruf:","Equivalent:":"Karşılığı:",
-      "Day":"Gün","Daily":"Günlük","Hourly":"Saatlik","Monthly":"Aylık","Half Year":"6 Ay","1 Year":"1 Yıl",
-      "Total":"Toplam","Max":"Maks","Min":"Min","Copy":"Kopyala","Save":"Kaydet","Cancel":"İptal","Close":"Kapat",
-      "Confirm":"Onayla","User":"Kullanıcı","Telegram":"Telegram","Admin Panel:":"Admin Paneli:"
-    },
-    de:{
-      "No notifications":"Keine Benachrichtigungen","No deposits":"Keine Einzahlungen","No withdrawals":"Keine Auszahlungen",
-      "View earnings":"Einnahmen ansehen","Your Link":"Ihr Link","Invites":"Einladungen","Commission":"Provision",
-      "Earn 10% commission":"10 % Provision verdienen","Claim bonus":"Bonus erhalten","Come back tomorrow!":"Kommen Sie morgen wieder!",
-      "Complete a 7 day login streak":"7-tägige Anmeldeserie abschließen","Task":"Aufgabe","Claimed":"Erhalten","Collect":"Sammeln",
-      "First Investment":"Erste Investition","First Referral":"Erste Empfehlung","Welcome Back!":"Willkommen zurück!",
-      "NEW INVESTMENT!":"NEUE INVESTITION!","NEW WITHDRAWAL!":"NEUE AUSZAHLUNG!","Recent Announcements":"Aktuelle Ankündigungen",
-      "Withdrawal History":"Auszahlungsverlauf","Deposit History":"Einzahlungsverlauf","Active Investments":"Aktive Investitionen",
-      "Estimated Earnings":"Geschätzte Einnahmen","Daily Bonus":"Tagesbonus","Daily bonuses are added directly to your investment balance.":"Tagesboni werden direkt Ihrem Anlageguthaben gutgeschrieben.",
-      "How to invest?":"Wie investiere ich?","How to withdraw?":"Wie zahle ich aus?","When do earnings start?":"Wann beginnen die Einnahmen?",
-      "Secure • Stable • Profitable":"Sicher • Stabil • Profitabel","Select →":"Auswählen →","Loading...":"Wird geladen...",
-      "Pending Approval":"Genehmigung ausstehend","Approved":"Genehmigt","Rejected":"Abgelehnt","Success!":"Erfolgreich!","Error:":"Fehler:",
-      "Insufficient balance!":"Unzureichendes Guthaben!","No balance to withdraw!":"Kein Guthaben zum Auszahlen!",
-      "Only TRON (TRC20) network is accepted!":"Nur das TRON-Netzwerk (TRC20) wird akzeptiert!",
-      "Network:":"Netzwerk:","Wallet:":"Wallet:","Amount:":"Betrag:","Status:":"Status:","Package:":"Paket:",
-      "Original:":"Original:","Discounted:":"Reduziert:","Saved:":"Gespart:","Equivalent:":"Gegenwert:",
-      "Day":"Tag","Daily":"Täglich","Hourly":"Stündlich","Monthly":"Monatlich","Half Year":"Halbes Jahr","1 Year":"1 Jahr",
-      "Total":"Gesamt","Max":"Max","Min":"Min","Copy":"Kopieren","Save":"Speichern","Cancel":"Abbrechen","Close":"Schließen",
-      "Confirm":"Bestätigen","User":"Benutzer","Telegram":"Telegram","Admin Panel:":"Admin-Panel:"
-    },
-    es:{
-      "No notifications":"No hay notificaciones","No deposits":"No hay depósitos","No withdrawals":"No hay retiros",
-      "View earnings":"Ver ganancias","Your Link":"Tu enlace","Invites":"Invitaciones","Commission":"Comisión",
-      "Earn 10% commission":"Gana un 10 % de comisión","Claim bonus":"Reclamar bono","Come back tomorrow!":"¡Vuelve mañana!",
-      "Complete a 7 day login streak":"Completa una racha de 7 días de inicio de sesión","Task":"Tarea","Claimed":"Reclamado","Collect":"Recoger",
-      "First Investment":"Primera inversión","First Referral":"Primera referencia","Welcome Back!":"¡Bienvenido de nuevo!",
-      "NEW INVESTMENT!":"¡NUEVA INVERSIÓN!","NEW WITHDRAWAL!":"¡NUEVO RETIRO!","Recent Announcements":"Anuncios recientes",
-      "Withdrawal History":"Historial de retiros","Deposit History":"Historial de depósitos","Active Investments":"Inversiones activas",
-      "Estimated Earnings":"Ganancias estimadas","Daily Bonus":"Bono diario","Daily bonuses are added directly to your investment balance.":"Los bonos diarios se añaden directamente a tu saldo de inversión.",
-      "How to invest?":"¿Cómo invertir?","How to withdraw?":"¿Cómo retirar?","When do earnings start?":"¿Cuándo empiezan las ganancias?",
-      "Secure • Stable • Profitable":"Seguro • Estable • Rentable","Select →":"Seleccionar →","Loading...":"Cargando...",
-      "Pending Approval":"Pendiente de aprobación","Approved":"Aprobado","Rejected":"Rechazado","Success!":"¡Éxito!","Error:":"Error:",
-      "Insufficient balance!":"¡Saldo insuficiente!","No balance to withdraw!":"¡No hay saldo para retirar!",
-      "Only TRON (TRC20) network is accepted!":"¡Solo se acepta la red TRON (TRC20)!",
-      "Network:":"Red:","Wallet:":"Billetera:","Amount:":"Importe:","Status:":"Estado:","Package:":"Paquete:",
-      "Original:":"Original:","Discounted:":"Con descuento:","Saved:":"Ahorrado:","Equivalent:":"Equivalente:",
-      "Day":"Día","Daily":"Diario","Hourly":"Cada hora","Monthly":"Mensual","Half Year":"Medio año","1 Year":"1 año",
-      "Total":"Total","Max":"Máx","Min":"Mín","Copy":"Copiar","Save":"Guardar","Cancel":"Cancelar","Close":"Cerrar",
-      "Confirm":"Confirmar","User":"Usuario","Telegram":"Telegram","Admin Panel:":"Panel de administración:"
-    },
-    ru:{
-      "No notifications":"Нет уведомлений","No deposits":"Нет пополнений","No withdrawals":"Нет выводов",
-      "View earnings":"Просмотреть доходы","Your Link":"Ваша ссылка","Invites":"Приглашения","Commission":"Комиссия",
-      "Earn 10% commission":"Получайте 10% комиссии","Claim bonus":"Получить бонус","Come back tomorrow!":"Возвращайтесь завтра!",
-      "Complete a 7 day login streak":"Выполните серию входов 7 дней","Task":"Задание","Claimed":"Получено","Collect":"Забрать",
-      "First Investment":"Первая инвестиция","First Referral":"Первый реферал","Welcome Back!":"С возвращением!",
-      "NEW INVESTMENT!":"НОВАЯ ИНВЕСТИЦИЯ!","NEW WITHDRAWAL!":"НОВЫЙ ВЫВОД!","Recent Announcements":"Последние объявления",
-      "Withdrawal History":"История выводов","Deposit History":"История пополнений","Active Investments":"Активные инвестиции",
-      "Estimated Earnings":"Расчётный доход","Daily Bonus":"Ежедневный бонус","Daily bonuses are added directly to your investment balance.":"Ежедневные бонусы добавляются прямо к вашему инвестиционному балансу.",
-      "How to invest?":"Как инвестировать?","How to withdraw?":"Как вывести средства?","When do earnings start?":"Когда начинается доход?",
-      "Secure • Stable • Profitable":"Безопасно • Стабильно • Прибыльно","Select →":"Выбрать →","Loading...":"Загрузка...",
-      "Pending Approval":"Ожидает одобрения","Approved":"Одобрено","Rejected":"Отклонено","Success!":"Успешно!","Error:":"Ошибка:",
-      "Insufficient balance!":"Недостаточно средств!","No balance to withdraw!":"Нет средств для вывода!",
-      "Only TRON (TRC20) network is accepted!":"Принимается только сеть TRON (TRC20)!",
-      "Network:":"Сеть:","Wallet:":"Кошелёк:","Amount:":"Сумма:","Status:":"Статус:","Package:":"Пакет:",
-      "Original:":"Оригинал:","Discounted:":"Со скидкой:","Saved:":"Экономия:","Equivalent:":"Эквивалент:",
-      "Day":"День","Daily":"Ежедневно","Hourly":"Почасовой","Monthly":"Ежемесячно","Half Year":"Полгода","1 Year":"1 год",
-      "Total":"Всего","Max":"Макс","Min":"Мин","Copy":"Копировать","Save":"Сохранить","Cancel":"Отмена","Close":"Закрыть",
-      "Confirm":"Подтвердить","User":"Пользователь","Telegram":"Telegram","Admin Panel:":"Панель администратора:"
+/* === MINING RUSH GAME === */
+const MR_GAME_SECONDS=60,MR_MAX_SECONDS=75,MR_POINTS_TO_USD=0.0000005,MR_DAILY_LIMIT=0.001;
+let mr={running:false,score:0,time:60,combo:0,bestCombo:0,spawnTimer:null,timer:null,remaining:60,earned:0,daily:0,dailyDate:'',pendingTransfer:0};
+function mrEl(id){return document.getElementById(id)}
+function mrUpdate(){
+  mrEl('mrScore').textContent=mr.score.toLocaleString();
+  mrEl('mrTime').textContent=mr.running?mr.remaining+'s':'60s';
+  mrEl('mrReward').textContent='$'+Math.max(0,mr.score*MR_POINTS_TO_USD).toFixed(4);
+  mrEl('mrProgress').style.width=Math.max(0,Math.min(100,(1-mr.remaining/MR_GAME_SECONDS)*100))+'%';
+  mrEl('mrDaily').textContent='$'+mr.daily.toFixed(3)+' / $'+MR_DAILY_LIMIT.toFixed(3);
+}
+function mrClearObjects(){mrArena.querySelectorAll('.mr-object,.mr-float').forEach(x=>x.remove())}
+function mrFloat(x,y,text){
+  const f=document.createElement('div');f.className='mr-float';f.textContent=text;
+  f.style.left=Math.max(2,Math.min(90,x))+'%';f.style.top=Math.max(8,Math.min(82,y))+'%';
+  mrArena.appendChild(f);setTimeout(()=>f.remove(),760)
+}
+function mrSpawn(){
+  if(!mr.running)return;
+  const types=[['rock',10,36,'🪨'],['rock',15,28,'⛰️'],['crystal',50,18,'💎'],['gold',100,9,'🪙'],['diamond',250,3,'💠'],['energy',0,4,'⚡'],['bomb',-75,2,'💣']];
+  let r=Math.random()*100,c=0,t=types[0];
+  for(const a of types){c+=a[2];if(r<=c){t=a;break}}
+  const o=document.createElement('button');o.type='button';o.className='mr-object mr-'+t[0];o.textContent=t[3];
+  o.dataset.points=t[1];o.dataset.type=t[0];o.style.left=(5+Math.random()*82)+'%';o.style.top=(12+Math.random()*68)+'%';
+  o.addEventListener('click',()=>mrHit(o));mrArena.appendChild(o);
+  setTimeout(()=>{if(o.isConnected)o.remove()},Math.max(850,1700-Math.min(700,mr.score/8)))
+}
+let mrAudioCtx=null;
+function mrAudio(){
+  if(!mrAudioCtx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;mrAudioCtx=new C()}
+  if(mrAudioCtx.state==='suspended')mrAudioCtx.resume();return mrAudioCtx
+}
+function mrTone(freq,dur,type='sine',gain=.045,slide=0){
+  const c=mrAudio();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(freq,c.currentTime);
+  if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(40,freq+slide),c.currentTime+dur);
+  g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(gain,c.currentTime+.008);
+  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+dur+.02)
+}
+function mrSound(type){
+  if(type==='rock')mrTone(105,.09,'triangle',.055,-25);
+  else if(type==='crystal'){mrTone(660,.13,'sine',.045,180);setTimeout(()=>mrTone(990,.16,'sine',.035,120),45)}
+  else if(type==='gold'){mrTone(520,.12,'triangle',.055,180);setTimeout(()=>mrTone(780,.18,'sine',.04,240),55)}
+  else if(type==='diamond'){mrTone(740,.15,'sine',.065,420);setTimeout(()=>mrTone(1100,.18,'sine',.055,300),55);setTimeout(()=>mrTone(1480,.22,'sine',.04,180),110)}
+  else if(type==='energy')mrTone(420,.2,'sine',.04,420);
+  else if(type==='bomb')mrTone(75,.22,'sawtooth',.07,-30)
+}
+function mrHit(o){
+  if(!mr.running)return;
+  const type=o.dataset.type,pts=Number(o.dataset.points),x=parseFloat(o.style.left),y=parseFloat(o.style.top);o.remove();
+  let add=pts;
+  if(type==='energy'){mr.remaining=Math.min(MR_MAX_SECONDS,mr.remaining+5);mrFloat(x,y,'+5s ⚡');mr.combo++;mrSound('energy')}
+  else if(type==='bomb'){mr.score=Math.max(0,mr.score+pts);mr.combo=0;mrFloat(x,y,'-75 💥');mrSound('bomb')}
+  else{
+    mr.combo++;mr.bestCombo=Math.max(mr.bestCombo,mr.combo);
+    const mult=mr.combo>=15?1.3:mr.combo>=10?1.2:mr.combo>=5?1.1:1;
+    add=Math.round(add*mult);mr.score+=add;mrFloat(x,y,'+'+add+(type==='diamond'?' 💠':''));mrSound(type);
+    if(type==='diamond'){
+      const burst=document.createElement('div');burst.className='mr-burst';burst.textContent='💠 RARE FIND!';
+      burst.style.left=x+'%';burst.style.top=y+'%';mrArena.appendChild(burst);setTimeout(()=>burst.remove(),900)
     }
-  };
-
-  const oldSetLanguage = window.setLanguage;
-  function translateRenderedUI(lang){
-    const map=extra[lang]||extra.en;
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(n=>{
-      if(n.parentElement && n.parentElement.closest('#languageFlags,#languageSelector,#mm-language-switcher')) return;
-      const raw=n.nodeValue;
-      const trimmed=raw.trim();
-      if(!trimmed) return;
-      let out=map[trimmed];
-      if(out) n.nodeValue=raw.replace(trimmed,out);
-      else {
-        // Handle common dynamic strings while preserving numbers/amounts.
-        const rules=[
-          [/^(\d+) members • \$([\d.]+) commission$/i, (m)=>({
-            tr:`${m[1]} üye • $${m[2]} komisyon`,de:`${m[1]} Mitglieder • $${m[2]} Provision`,
-            es:`${m[1]} miembros • $${m[2]} comisión`,ru:`${m[1]} участников • $${m[2]} комиссия`,en:m[0]
-          }[lang])],
-          [/^(\d+) day streak$/i, (m)=>({tr:`${m[1]} günlük seri`,de:`${m[1]} Tage in Folge`,es:`racha de ${m[1]} días`,ru:`серия ${m[1]} дней`,en:m[0]}[lang])],
-          [/^Earn 10% commission/i, ()=>({tr:"%10 komisyon kazan",de:"10 % Provision verdienen",es:"Gana un 10 % de comisión",ru:"Получайте 10% комиссии",en:"Earn 10% commission"}[lang])],
-          [/^Day (\d+)$/i, (m)=>({tr:`${m[1]}. Gün`,de:`Tag ${m[1]}`,es:`Día ${m[1]}`,ru:`День ${m[1]}`,en:m[0]}[lang])]
-        ];
-        for(const [rx,fn] of rules){ if(rx.test(trimmed)){n.nodeValue=raw.replace(trimmed,fn(trimmed.match(rx)));break;} }
-      }
+  }
+  const cb=mrEl('mrCombo');cb.textContent='🔥 COMBO x'+mr.combo+(mr.combo>=5?'  +'+(mr.combo>=15?30:mr.combo>=10?20:10)+'%':'');
+  cb.classList.add('show');setTimeout(()=>cb.classList.remove('show'),550);mrUpdate();
+  if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred(type==='bomb'?'heavy':'light')
+}
+function mrStartGame(){
+  if(mr.running)return;
+  mrClearObjects();
+  mr={running:false,score:0,time:60,combo:0,bestCombo:0,remaining:60,earned:0,daily:mr.daily,dailyDate:mr.dailyDate,pendingTransfer:0};
+  mrEl('mrResult').classList.remove('show');
+  mrEl('mrCenter').innerHTML='<div class="mr-count" id="mrCount">3</div>';
+  let n=3;
+  const cd=setInterval(()=>{n--;if(n>0)mrEl('mrCount').textContent=n;else{clearInterval(cd);mr.running=true;mrEl('mrCenter').innerHTML='';mrStartLoops();mrUpdate()}},650);
+  if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('medium')
+}
+function mrStartLoops(){
+  mr.spawnTimer=setInterval(mrSpawn,520);
+  mr.timer=setInterval(()=>{if(!mr.running)return;mr.remaining--;if(mr.remaining<=0)mrEndGame();mrUpdate()},1000);
+  for(let i=0;i<3;i++)setTimeout(mrSpawn,i*220)
+}
+function mrEndGame(){
+  if(!mr.running)return;
+  mr.running=false;clearInterval(mr.spawnTimer);clearInterval(mr.timer);mr.spawnTimer=null;mr.timer=null;mrClearObjects();
+  const reward=Math.max(0,mr.score*MR_POINTS_TO_USD);
+  mr.earned=reward;mr.pendingTransfer=reward;
+  mrEl('mrFinalScore').textContent=mr.score.toLocaleString()+' pts';
+  mrEl('mrFinalReward').textContent='+$'+reward.toFixed(4);
+  mrEl('mrFinalNote').textContent=reward>0?'Ödülün hazır. Yatırım bakiyene aktarmak için butona bas.':'Bugün için maksimum $0.001 ödül hakkın var.';
+  const btn=mrEl('mrTransfer');
+  if(btn){btn.disabled=reward<=0;btn.dataset.done='0';btn.textContent=reward>0?'💰 TRANSFER REWARD':'LIMIT REACHED'}
+  const st=mrEl('mrTransferStatus');if(st){st.style.display='none';st.textContent=''}
+  mrEl('mrResult').classList.add('show');mrUpdate();
+}
+async function mrTransferReward(){
+  const btn=mrEl('mrTransfer'),status=mrEl('mrTransferStatus');
+  if(!btn||!status||mr.pendingTransfer<=0||btn.dataset.done==='1')return;
+  const amount=mr.pendingTransfer;
+  btn.disabled=true;status.style.display='block';
+  status.innerHTML='<span class="mr-transfer-loader"><span class="mr-transfer-ring"></span> Hesaba aktarılıyor...</span>';
+  try{
+    const ur=db.collection('users').doc(userId),today=new Date().toISOString().slice(0,10);
+    await db.runTransaction(async tx=>{
+      const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
+      const x=snap.data()||{},md=x.miningRushDaily||{},used=md.date===today?Number(md.amount||0):0;
+      const available=Math.max(0,MR_DAILY_LIMIT-used);
+      const credit=Math.min(amount,available);
+      if(credit<=0)throw new Error('Daily game limit reached');
+      tx.set(ur,{
+        totalInvested:Number(x.totalInvested||0)+credit,
+        miningRushDaily:{date:today,amount:used+credit},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:Date.now(),earnings:credit,source:'mining_rush_investment',score:mr.score}],
+        lastActive:Date.now()
+      },{merge:true});
     });
+    mr.daily=(mr.dailyDate===today?mr.daily:0)+amount;mr.daily=Math.min(MR_DAILY_LIMIT,mr.daily);
+    mr.dailyDate=today;mr.pendingTransfer=0;
+    status.textContent='✓ $'+credited.toFixed(4)+' yatırım bakiyene aktarıldı.';
+    btn.textContent='✓ AKTARILDI';btn.dataset.done='1';mrUpdate();updateUI();
+    if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')
+  }catch(e){
+    console.error('Mining transfer error:',e);
+    btn.disabled=false;status.textContent=e.message==='Daily game limit reached'?'⚠️ Bugünkü $0.001 oyun ödülü zaten aktarıldı.':'❌ Aktarım başarısız. Tekrar deneyin.'
   }
+}
 
-  function setFullLanguage(lang){
-    if(typeof oldSetLanguage==='function') oldSetLanguage(lang);
-    setTimeout(()=>translateRenderedUI(lang),0);
-    setTimeout(()=>translateRenderedUI(lang),250);
-  }
-  window.setLanguage=setFullLanguage;
+const mrArena=document.getElementById('mrArena');
+mrEl('mrStart').addEventListener('click',mrStartGame);mrEl('mrPlayAgain').addEventListener('click',mrStartGame);mrEl('mrTransfer').addEventListener('click',mrTransferReward);document.querySelector('.game-card.active').addEventListener('click',()=>mrEl('miningRushCard').scrollIntoView({behavior:'smooth',block:'center'}));mrUpdate();
+const mrModal=document.getElementById('miningRushModal'),mrGoldCard=document.querySelector('.game-grid .game-card.active'),mrCloseBtn=document.getElementById('mrCloseModal'),mrBackdrop=document.getElementById('mrModalBackdrop');
+function openMiningRushModal(){if(!mrModal)return;mrModal.classList.add('show');mrModal.setAttribute('aria-hidden','false');document.body.classList.add('mr-modal-open')}
+function closeMiningRushModal(){if(mr&&mr.running)return;if(mrModal){mrModal.classList.remove('show');mrModal.setAttribute('aria-hidden','true')}document.body.classList.remove('mr-modal-open')}
+if(mrGoldCard)mrGoldCard.addEventListener('click',openMiningRushModal);
+if(mrCloseBtn)mrCloseBtn.addEventListener('click',closeMiningRushModal);
+if(mrBackdrop)mrBackdrop.addEventListener('click',closeMiningRushModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.classList.contains('show'))closeMiningRushModal()});
 
-  // The app creates investment/withdrawal/task/notification cards dynamically.
-  const observer=new MutationObserver(()=>{
-    clearTimeout(window.__mmI18nTimer);
-    window.__mmI18nTimer=setTimeout(()=>translateRenderedUI(window.currentLang||localStorage.getItem('mm_language')||'en'),20);
-  });
-  const start=()=>observer.observe(document.body,{childList:true,subtree:true});
-  if(document.body) start(); else document.addEventListener('DOMContentLoaded',start);
-
-  // Re-apply the user's saved language after all original scripts have initialized.
-  setTimeout(()=>setFullLanguage(localStorage.getItem('mm_language')||'en'),400);
-})();
 </script>
 
+<div class="mm-bottom-nav">
+ <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
+ <button class="mm-nav-item" onclick="showPage('buy',this)"><img src="assets/icons/investment.png" alt=""><span class="nav-label">Investment</span></button>
+ <button class="mm-nav-item" onclick="showPage('withdraw',this)"><img src="assets/icons/withdraw.png" alt=""><span class="nav-label">Withdraw</span></button>
+ <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
+ <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
+</div>
 </body>
 </html>
