@@ -80,8 +80,8 @@ body{
 }
 
 .login-box{
-    max-width:400px;
-    margin:50px auto
+    max-width:420px;
+    margin:60px auto
 }
 
 .login-box h2{
@@ -91,7 +91,7 @@ body{
 .login-box p{
     color:#9da8ca;
     font-size:12px;
-    line-height:1.5;
+    line-height:1.6;
     margin-bottom:15px
 }
 
@@ -110,17 +110,14 @@ input:focus,select:focus{
     border-color:#a65cff
 }
 
-button{
-    border:0;
-    cursor:pointer;
-    font-weight:800
-}
-
 .btn{
     padding:10px 14px;
     border-radius:9px;
     color:#fff;
-    background:linear-gradient(135deg,#9b4dff,#6125ce)
+    background:linear-gradient(135deg,#9b4dff,#6125ce);
+    border:none;
+    cursor:pointer;
+    font-weight:800
 }
 
 .btn:hover{
@@ -167,7 +164,9 @@ button{
     border-radius:9px;
     background:#0d1530;
     color:#9da8ca;
-    border:1px solid rgba(111,132,190,.2)
+    border:1px solid rgba(111,132,190,.2);
+    cursor:pointer;
+    font-weight:800
 }
 
 .tab.active{
@@ -209,7 +208,7 @@ button{
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:720px
+    min-width:760px
 }
 
 th,td{
@@ -226,6 +225,13 @@ th{
 
 td{
     color:#dce4ff
+}
+
+.empty{
+    text-align:center;
+    padding:35px 10px;
+    color:#7f8aac;
+    font-size:12px
 }
 
 .badge{
@@ -249,13 +255,6 @@ td{
 .rejected{
     background:rgba(255,75,90,.15);
     color:#ff7280
-}
-
-.empty{
-    text-align:center;
-    padding:35px 10px;
-    color:#7f8aac;
-    font-size:12px
 }
 
 .log{
@@ -330,15 +329,15 @@ td{
     margin-top:2px
 }
 
-.money-green{
+.green{
     color:#48e79a
 }
 
-.money-gold{
+.gold{
     color:#ffd34f
 }
 
-.money-red{
+.red{
     color:#ff6977
 }
 
@@ -368,8 +367,8 @@ td{
         <h2>🔐 Admin Girişi</h2>
 
         <p>
-            Bu panel PostgreSQL backend üzerinden çalışır.
-            Admin anahtarı yalnızca sunucu tarafında doğrulanır.
+            Admin paneli PostgreSQL backend üzerinden çalışır.
+            Admin anahtarı tarayıcıya sabit olarak yazılmamıştır.
         </p>
 
         <input
@@ -379,15 +378,20 @@ td{
             autocomplete="off"
         >
 
-        <button class="btn" style="width:100%" onclick="loginAdmin()">
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="loginAdmin()">
             🔑 Giriş Yap
         </button>
 
-        <div id="loginError"
-             style="color:#ff6977;font-size:11px;margin-top:10px">
+        <div
+            id="loginError"
+            style="color:#ff6977;font-size:11px;margin-top:10px">
         </div>
 
     </div>
+
 
     <!-- ADMIN -->
     <div id="adminApp" class="hidden">
@@ -398,19 +402,32 @@ td{
         </div>
 
         <div class="status">
-            <span class="status-dot" id="statusDot"></span>
-            <span id="statusText">Bağlantı kontrol ediliyor...</span>
+            <span
+                class="status-dot"
+                id="statusDot">
+            </span>
+
+            <span id="statusText">
+                Bağlantı kontrol ediliyor...
+            </span>
         </div>
 
         <div class="top-actions">
-            <button class="btn" onclick="loadAll()">
+
+            <button
+                class="btn"
+                onclick="loadAll()">
                 🔄 Yenile
             </button>
 
-            <button class="btn btn-secondary" onclick="logoutAdmin()">
+            <button
+                class="btn btn-secondary"
+                onclick="logoutAdmin()">
                 🚪 Çıkış
             </button>
+
         </div>
+
 
         <!-- STATS -->
         <div class="stats">
@@ -432,10 +449,13 @@ td{
 
             <div class="stat">
                 <span>Toplam Yatırım</span>
-                <strong id="statTotalInvested">$0.00</strong>
+                <strong id="statTotalInvested">
+                    $0.00
+                </strong>
             </div>
 
         </div>
+
 
         <!-- TABS -->
         <div class="tabs">
@@ -463,8 +483,11 @@ td{
 
         </div>
 
+
         <!-- USERS -->
-        <div id="panelUsers" class="card">
+        <div
+            id="panelUsers"
+            class="card">
 
             <h3 style="margin-bottom:12px">
                 👥 Kullanıcılar
@@ -493,27 +516,34 @@ td{
 
         </div>
 
+
         <!-- INVESTMENTS -->
-        <div id="panelInvestments" class="card hidden">
+        <div
+            id="panelInvestments"
+            class="card hidden">
 
             <h3 style="margin-bottom:12px">
-                💳 Yatırım Talepleri
+                💳 Demo Yatırım Talepleri
             </h3>
 
             <div id="investmentsContainer"></div>
 
         </div>
 
+
         <!-- WITHDRAWALS -->
-        <div id="panelWithdrawals" class="card hidden">
+        <div
+            id="panelWithdrawals"
+            class="card hidden">
 
             <h3 style="margin-bottom:12px">
-                💸 Çekim Talepleri
+                💸 Demo Çekim Talepleri
             </h3>
 
             <div id="withdrawalsContainer"></div>
 
         </div>
+
 
         <!-- LOG -->
         <div class="card">
@@ -522,15 +552,22 @@ td{
                 📋 İşlem Günlüğü
             </h3>
 
-            <div class="log" id="logContainer"></div>
+            <div
+                class="log"
+                id="logContainer">
+            </div>
 
         </div>
 
     </div>
+
 </div>
 
+
 <!-- BALANCE MODAL -->
-<div class="modal" id="balanceModal">
+<div
+    class="modal"
+    id="balanceModal">
 
     <div class="modal-box">
 
@@ -543,12 +580,18 @@ td{
             id="balanceAmount"
             placeholder="Tutar"
             min="0.01"
-            step="0.01"
-        >
+            step="0.01">
 
         <select id="balanceOperation">
-            <option value="add">Demo bakiye ekle</option>
-            <option value="remove">Demo bakiye düş</option>
+
+            <option value="add">
+                Demo bakiye ekle
+            </option>
+
+            <option value="remove">
+                Demo bakiye düş
+            </option>
+
         </select>
 
         <div class="modal-actions">
@@ -571,22 +614,66 @@ td{
 
 </div>
 
+
 <script>
 
 /*
 ========================================================
-GENEL AYARLAR
+API ADRESİ
+========================================================
+
+Bu adres senin PC'ndeki server.js'ye
+Cloudflare Tunnel üzerinden gidiyor.
+
+Quick Tunnel yeniden oluşturulursa bu adres değişebilir.
 ========================================================
 */
 
-const API_BASE = '';
+const API_BASE =
+    'https://java-philips-demanding-rpm.trycloudflare.com';
+
 
 let adminKey = '';
 let currentTab = 'users';
 let selectedUserId = null;
 
-const money = value =>
-    '$' + Number(value || 0).toFixed(2);
+let usersCache = [];
+let investmentsCache = [];
+let withdrawalsCache = [];
+
+
+/*
+========================================================
+YARDIMCI
+========================================================
+*/
+
+function money(value){
+    return '$' + Number(value || 0).toFixed(2);
+}
+
+function formatDate(value){
+
+    if(!value) return '-';
+
+    const d = new Date(value);
+
+    if(Number.isNaN(d.getTime())){
+        return '-';
+    }
+
+    return d.toLocaleString('tr-TR');
+}
+
+function escapeHtml(value){
+
+    return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+}
 
 
 /*
@@ -595,7 +682,7 @@ LOG
 ========================================================
 */
 
-function addLog(message) {
+function addLog(message){
 
     const container =
         document.getElementById('logContainer');
@@ -612,49 +699,133 @@ function addLog(message) {
         `[${time}] ${message}`;
 
     container.prepend(item);
+
+    while(container.children.length > 50){
+        container.removeChild(
+            container.lastChild
+        );
+    }
 }
 
 
 /*
 ========================================================
-LOGIN
+STATUS
 ========================================================
 */
 
-async function loginAdmin() {
+function setStatus(ok,text){
 
-    const key =
-        document.getElementById('adminKey').value.trim();
+    const dot =
+        document.getElementById('statusDot');
+
+    const status =
+        document.getElementById('statusText');
+
+    dot.classList.toggle('ok',ok);
+
+    status.textContent = text;
+}
+
+
+/*
+========================================================
+API REQUEST
+========================================================
+*/
+
+async function apiFetch(endpoint,options = {}){
+
+    const headers = {
+        ...(options.headers || {}),
+        'x-admin-key': adminKey,
+        'Content-Type':'application/json'
+    };
+
+    const response =
+        await fetch(
+            API_BASE + endpoint,
+            {
+                ...options,
+                headers
+            }
+        );
+
+    let data = {};
+
+    try{
+        data = await response.json();
+    }catch{}
+
+    if(
+        !response.ok ||
+        data.ok === false
+    ){
+
+        throw new Error(
+            data.message ||
+            `HTTP ${response.status}`
+        );
+    }
+
+    return data;
+}
+
+
+/*
+========================================================
+ADMIN LOGIN
+========================================================
+*/
+
+async function loginAdmin(){
+
+    const input =
+        document.getElementById('adminKey');
 
     const error =
         document.getElementById('loginError');
 
+    const key =
+        input.value.trim();
+
     error.textContent = '';
 
-    if (!key) {
+    if(!key){
+
         error.textContent =
             'Admin anahtarı gerekli.';
+
         return;
     }
 
-    try {
+    try{
 
-        const response = await fetch(
-            API_BASE + '/api/admin/health',
-            {
-                method:'GET',
-                headers:{
-                    'x-admin-key':key
+        const response =
+            await fetch(
+                API_BASE + '/api/admin/health',
+                {
+                    headers:{
+                        'x-admin-key':key
+                    }
                 }
-            }
-        );
+            );
 
-        const data =
-            await response.json();
+        let data = {};
 
-        if (!response.ok || !data.ok) {
+        try{
+            data = await response.json();
+        }catch{}
+
+        if(
+            !response.ok ||
+            !data.ok
+        ){
+
             error.textContent =
-                data.message || 'Admin doğrulaması başarısız.';
+                data.message ||
+                'Admin doğrulaması başarısız.';
+
             return;
         }
 
@@ -673,21 +844,24 @@ async function loginAdmin() {
             '✅ Backend ve PostgreSQL bağlantısı aktif'
         );
 
-        addLog('Admin girişi başarılı.');
+        addLog(
+            'Admin girişi başarılı.'
+        );
 
         await loadAll();
 
-    } catch (error) {
+    }catch(error){
 
         console.error(error);
 
         error.textContent =
-            'Backend bağlantısı kurulamadı.';
+            'Backend bağlantısı kurulamadı: ' +
+            error.message;
     }
 }
 
 
-function logoutAdmin() {
+function logoutAdmin(){
 
     adminKey = '';
 
@@ -703,68 +877,9 @@ function logoutAdmin() {
         .getElementById('adminKey')
         .value = '';
 
-    addLog('Admin çıkışı yapıldı.');
-}
-
-
-/*
-========================================================
-STATUS
-========================================================
-*/
-
-function setStatus(ok, text) {
-
-    const dot =
-        document.getElementById('statusDot');
-
-    const status =
-        document.getElementById('statusText');
-
-    dot.classList.toggle('ok', ok);
-
-    status.textContent = text;
-}
-
-
-/*
-========================================================
-API
-========================================================
-*/
-
-async function apiFetch(endpoint, options = {}) {
-
-    const headers = {
-        ...(options.headers || {}),
-        'x-admin-key': adminKey,
-        'Content-Type': 'application/json'
-    };
-
-    const response =
-        await fetch(
-            API_BASE + endpoint,
-            {
-                ...options,
-                headers
-            }
-        );
-
-    let data = {};
-
-    try {
-        data = await response.json();
-    } catch {}
-
-    if (!response.ok || data.ok === false) {
-
-        throw new Error(
-            data.message ||
-            `HTTP ${response.status}`
-        );
-    }
-
-    return data;
+    addLog(
+        'Admin çıkışı yapıldı.'
+    );
 }
 
 
@@ -774,9 +889,9 @@ LOAD ALL
 ========================================================
 */
 
-async function loadAll() {
+async function loadAll(){
 
-    try {
+    try{
 
         setStatus(
             true,
@@ -796,7 +911,7 @@ async function loadAll() {
             '✅ Veriler güncel'
         );
 
-    } catch (error) {
+    }catch(error){
 
         console.error(error);
 
@@ -818,9 +933,7 @@ USERS
 ========================================================
 */
 
-let usersCache = [];
-
-async function loadUsers() {
+async function loadUsers(){
 
     const data =
         await apiFetch('/api/admin/users');
@@ -833,13 +946,18 @@ async function loadUsers() {
     const body =
         document.getElementById('usersBody');
 
-    if (usersCache.length === 0) {
+    document.getElementById(
+        'statUsers'
+    ).textContent =
+        usersCache.length;
+
+    if(usersCache.length === 0){
 
         body.innerHTML = `
             <tr>
                 <td colspan="6">
                     <div class="empty">
-                        Kayıtlı kullanıcı bulunamadı.
+                        Kayıtlı kullanıcı yok.
                     </div>
                 </td>
             </tr>
@@ -854,6 +972,7 @@ async function loadUsers() {
         <tr>
 
             <td>
+
                 <div class="user-name">
                     ${escapeHtml(
                         user.first_name || 'User'
@@ -864,19 +983,22 @@ async function loadUsers() {
                     @${escapeHtml(
                         user.username || '-'
                     )}
-                    • TG ${user.telegram_id}
+                    • TG ${escapeHtml(
+                        user.telegram_id
+                    )}
                 </div>
+
             </td>
 
-            <td class="money-green">
+            <td class="green">
                 ${money(user.balance)}
             </td>
 
-            <td class="money-gold">
+            <td class="gold">
                 ${money(user.total_invested)}
             </td>
 
-            <td class="money-red">
+            <td class="red">
                 ${money(user.total_withdrawn)}
             </td>
 
@@ -888,7 +1010,7 @@ async function loadUsers() {
 
                 <button
                     class="btn btn-small"
-                    onclick="openBalanceModal(${user.id})">
+                    onclick="openBalanceModal(${Number(user.id)})">
                     💰 Bakiye
                 </button>
 
@@ -906,33 +1028,38 @@ INVESTMENTS
 ========================================================
 */
 
-let investmentsCache = [];
-
-async function loadInvestments() {
+async function loadInvestments(){
 
     const data =
-        await apiFetch('/api/admin/investments');
+        await apiFetch(
+            '/api/admin/investments'
+        );
 
     investmentsCache =
         Array.isArray(data.investments)
             ? data.investments
             : [];
 
-    const container =
-        document.getElementById(
-            'investmentsContainer'
-        );
-
     const pending =
         investmentsCache.filter(
             item => item.status === 'pending'
         );
 
-    if (pending.length === 0) {
+    document.getElementById(
+        'statInvestments'
+    ).textContent =
+        pending.length;
+
+    const container =
+        document.getElementById(
+            'investmentsContainer'
+        );
+
+    if(pending.length === 0){
 
         container.innerHTML = `
             <div class="empty">
-                ✅ Bekleyen yatırım talebi yok.
+                ✅ Bekleyen demo yatırım yok.
             </div>
         `;
 
@@ -947,7 +1074,6 @@ async function loadInvestments() {
             <div style="
                 display:flex;
                 justify-content:space-between;
-                gap:10px;
                 margin-bottom:10px">
 
                 <strong>
@@ -973,7 +1099,9 @@ async function loadInvestments() {
                 </b><br>
 
                 Telegram:
-                ${item.telegram_id}<br>
+                ${escapeHtml(
+                    item.telegram_id
+                )}<br>
 
                 Paket:
                 ${escapeHtml(
@@ -990,13 +1118,13 @@ async function loadInvestments() {
 
                 <button
                     class="btn btn-success btn-small"
-                    onclick="approveInvestment(${item.id})">
+                    onclick="approveInvestment(${Number(item.id)})">
                     ✅ Onayla
                 </button>
 
                 <button
                     class="btn btn-danger btn-small"
-                    onclick="rejectInvestment(${item.id})">
+                    onclick="rejectInvestment(${Number(item.id)})">
                     ❌ Reddet
                 </button>
 
@@ -1014,33 +1142,38 @@ WITHDRAWALS
 ========================================================
 */
 
-let withdrawalsCache = [];
-
-async function loadWithdrawals() {
+async function loadWithdrawals(){
 
     const data =
-        await apiFetch('/api/admin/withdrawals');
+        await apiFetch(
+            '/api/admin/withdrawals'
+        );
 
     withdrawalsCache =
         Array.isArray(data.withdrawals)
             ? data.withdrawals
             : [];
 
-    const container =
-        document.getElementById(
-            'withdrawalsContainer'
-        );
-
     const pending =
         withdrawalsCache.filter(
             item => item.status === 'pending'
         );
 
-    if (pending.length === 0) {
+    document.getElementById(
+        'statWithdrawals'
+    ).textContent =
+        pending.length;
+
+    const container =
+        document.getElementById(
+            'withdrawalsContainer'
+        );
+
+    if(pending.length === 0){
 
         container.innerHTML = `
             <div class="empty">
-                ✅ Bekleyen çekim talebi yok.
+                ✅ Bekleyen demo çekim yok.
             </div>
         `;
 
@@ -1055,7 +1188,6 @@ async function loadWithdrawals() {
             <div style="
                 display:flex;
                 justify-content:space-between;
-                gap:10px;
                 margin-bottom:10px">
 
                 <strong>
@@ -1081,7 +1213,9 @@ async function loadWithdrawals() {
                 </b><br>
 
                 Telegram:
-                ${item.telegram_id}<br>
+                ${escapeHtml(
+                    item.telegram_id
+                )}<br>
 
                 Coin:
                 ${escapeHtml(
@@ -1093,7 +1227,7 @@ async function loadWithdrawals() {
                     item.network || '-'
                 )}<br>
 
-                Adres:
+                Cüzdan:
                 <code style="
                     word-break:break-all;
                     color:#d9c7ff">
@@ -1112,13 +1246,13 @@ async function loadWithdrawals() {
 
                 <button
                     class="btn btn-success btn-small"
-                    onclick="approveWithdrawal(${item.id})">
+                    onclick="approveWithdrawal(${Number(item.id)})">
                     ✅ Onayla
                 </button>
 
                 <button
                     class="btn btn-danger btn-small"
-                    onclick="rejectWithdrawal(${item.id})">
+                    onclick="rejectWithdrawal(${Number(item.id)})">
                     ❌ Reddet
                 </button>
 
@@ -1132,167 +1266,21 @@ async function loadWithdrawals() {
 
 /*
 ========================================================
-INVESTMENT ACTIONS
+DEMO BALANCE
 ========================================================
 */
 
-async function approveInvestment(id) {
-
-    if (!confirm(
-        'Bu demo yatırım talebi onaylansın mı?'
-    )) return;
-
-    try {
-
-        await apiFetch(
-            '/api/admin/investments/' +
-            id +
-            '/approve',
-            {
-                method:'POST'
-            }
-        );
-
-        addLog(
-            `Demo yatırım #${id} onaylandı.`
-        );
-
-        await loadAll();
-
-    } catch (error) {
-
-        alert(error.message);
-
-        addLog(
-            'Hata: ' + error.message
-        );
-    }
-}
-
-
-async function rejectInvestment(id) {
-
-    if (!confirm(
-        'Bu demo yatırım talebi reddedilsin mi?'
-    )) return;
-
-    try {
-
-        await apiFetch(
-            '/api/admin/investments/' +
-            id +
-            '/reject',
-            {
-                method:'POST'
-            }
-        );
-
-        addLog(
-            `Demo yatırım #${id} reddedildi.`
-        );
-
-        await loadAll();
-
-    } catch (error) {
-
-        alert(error.message);
-        addLog(
-            'Hata: ' + error.message
-        );
-    }
-}
-
-
-/*
-========================================================
-WITHDRAWAL ACTIONS
-========================================================
-*/
-
-async function approveWithdrawal(id) {
-
-    if (!confirm(
-        'Bu demo çekim talebi onaylansın mı?'
-    )) return;
-
-    try {
-
-        await apiFetch(
-            '/api/admin/withdrawals/' +
-            id +
-            '/approve',
-            {
-                method:'POST'
-            }
-        );
-
-        addLog(
-            `Demo çekim #${id} onaylandı.`
-        );
-
-        await loadAll();
-
-    } catch (error) {
-
-        alert(error.message);
-
-        addLog(
-            'Hata: ' + error.message
-        );
-    }
-}
-
-
-async function rejectWithdrawal(id) {
-
-    if (!confirm(
-        'Bu demo çekim talebi reddedilsin mi?'
-    )) return;
-
-    try {
-
-        await apiFetch(
-            '/api/admin/withdrawals/' +
-            id +
-            '/reject',
-            {
-                method:'POST'
-            }
-        );
-
-        addLog(
-            `Demo çekim #${id} reddedildi.`
-        );
-
-        await loadAll();
-
-    } catch (error) {
-
-        alert(error.message);
-
-        addLog(
-            'Hata: ' + error.message
-        );
-    }
-}
-
-
-/*
-========================================================
-MANUAL DEMO BALANCE
-========================================================
-*/
-
-function openBalanceModal(id) {
+function openBalanceModal(id){
 
     const user =
         usersCache.find(
-            item => Number(item.id) === Number(id)
+            x => Number(x.id) === Number(id)
         );
 
-    if (!user) return;
+    if(!user) return;
 
-    selectedUserId = user.id;
+    selectedUserId =
+        Number(user.id);
 
     document.getElementById(
         'balanceModalUser'
@@ -1307,23 +1295,23 @@ function openBalanceModal(id) {
         'balanceOperation'
     ).value = 'add';
 
-    document.getElementById(
-        'balanceModal'
-    ).classList.add('show');
+    document
+        .getElementById('balanceModal')
+        .classList.add('show');
 }
 
 
-function closeBalanceModal() {
+function closeBalanceModal(){
 
-    document.getElementById(
-        'balanceModal'
-    ).classList.remove('show');
+    document
+        .getElementById('balanceModal')
+        .classList.remove('show');
 
     selectedUserId = null;
 }
 
 
-async function submitBalanceChange() {
+async function submitBalanceChange(){
 
     const amount =
         Number(
@@ -1337,24 +1325,26 @@ async function submitBalanceChange() {
             'balanceOperation'
         ).value;
 
-    if (
+    if(
         !Number.isFinite(amount) ||
         amount <= 0
-    ) {
-        alert('Geçerli bir tutar gir.');
+    ){
+        alert(
+            'Geçerli bir tutar gir.'
+        );
         return;
     }
 
-    if (!selectedUserId) return;
+    if(!selectedUserId) return;
 
     const text =
         operation === 'add'
             ? `Demo bakiyeye $${amount.toFixed(2)} eklensin mi?`
             : `Demo bakiyeden $${amount.toFixed(2)} düşülsün mü?`;
 
-    if (!confirm(text)) return;
+    if(!confirm(text)) return;
 
-    try {
+    try{
 
         await apiFetch(
             `/api/admin/users/${selectedUserId}/balance`,
@@ -1368,19 +1358,180 @@ async function submitBalanceChange() {
         );
 
         addLog(
-            `Kullanıcı #${selectedUserId} demo bakiye işlemi: ${operation} $${amount.toFixed(2)}`
+            `Kullanıcı #${selectedUserId} için demo bakiye işlemi yapıldı: ${operation} $${amount.toFixed(2)}`
         );
 
         closeBalanceModal();
 
         await loadAll();
 
-    } catch (error) {
+        alert(
+            '✅ İşlem başarıyla tamamlandı.'
+        );
 
-        alert(error.message);
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            '❌ Bakiye işlemi başarısız: ' +
+            error.message
+        );
 
         addLog(
-            'Bakiye işlemi hatası: ' +
+            'Bakiye hatası: ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+INVESTMENT ACTIONS
+========================================================
+*/
+
+async function approveInvestment(id){
+
+    if(!confirm(
+        'Bu demo yatırım talebi onaylansın mı?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/investments/${id}/approve`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' + error.message
+        );
+
+        addLog(
+            'Yatırım onay hatası: ' +
+            error.message
+        );
+    }
+}
+
+
+async function rejectInvestment(id){
+
+    if(!confirm(
+        'Bu demo yatırım talebi reddedilsin mi?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/investments/${id}/reject`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' + error.message
+        );
+
+        addLog(
+            'Yatırım red hatası: ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+WITHDRAWAL ACTIONS
+========================================================
+*/
+
+async function approveWithdrawal(id){
+
+    if(!confirm(
+        'Bu demo çekim talebi onaylansın mı?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/withdrawals/${id}/approve`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' + error.message
+        );
+
+        addLog(
+            'Çekim onay hatası: ' +
+            error.message
+        );
+    }
+}
+
+
+async function rejectWithdrawal(id){
+
+    if(!confirm(
+        'Bu demo çekim talebi reddedilsin mi?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/withdrawals/${id}/reject`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' + error.message
+        );
+
+        addLog(
+            'Çekim red hatası: ' +
             error.message
         );
     }
@@ -1393,23 +1544,26 @@ TABS
 ========================================================
 */
 
-function switchTab(tab) {
+function switchTab(tab){
 
     currentTab = tab;
 
     document
         .querySelectorAll('.tab')
         .forEach(
-            item => item.classList.remove('active')
+            x => x.classList.remove('active')
         );
 
-    document
-        .getElementById(
+    const target =
+        document.getElementById(
             'tab' +
             tab.charAt(0).toUpperCase() +
             tab.slice(1)
-        )
-        .classList.add('active');
+        );
+
+    if(target){
+        target.classList.add('active');
+    }
 
     document
         .getElementById('panelUsers')
@@ -1440,14 +1594,14 @@ STATS
 ========================================================
 */
 
-function updateStats() {
+function updateStats(){
 
     document.getElementById(
         'statUsers'
     ).textContent =
         usersCache.length;
 
-    const pendingInv =
+    const pendingInvestments =
         investmentsCache.filter(
             x => x.status === 'pending'
         ).length;
@@ -1455,9 +1609,9 @@ function updateStats() {
     document.getElementById(
         'statInvestments'
     ).textContent =
-        pendingInv;
+        pendingInvestments;
 
-    const pendingWd =
+    const pendingWithdrawals =
         withdrawalsCache.filter(
             x => x.status === 'pending'
         ).length;
@@ -1465,11 +1619,11 @@ function updateStats() {
     document.getElementById(
         'statWithdrawals'
     ).textContent =
-        pendingWd;
+        pendingWithdrawals;
 
     const total =
         usersCache.reduce(
-            (sum, user) =>
+            (sum,user) =>
                 sum +
                 Number(
                     user.total_invested || 0
@@ -1486,51 +1640,35 @@ function updateStats() {
 
 /*
 ========================================================
-HELPERS
-========================================================
-*/
-
-function escapeHtml(value) {
-
-    return String(value ?? '')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-}
-
-
-function formatDate(value) {
-
-    if (!value) return '-';
-
-    const date =
-        new Date(value);
-
-    if (Number.isNaN(
-        date.getTime()
-    )) return '-';
-
-    return date.toLocaleString(
-        'tr-TR'
-    );
-}
-
-
-/*
-========================================================
 AUTO REFRESH
 ========================================================
 */
 
 setInterval(() => {
 
-    if (adminKey) {
+    if(adminKey){
         loadAll();
     }
 
-}, 30000);
+},30000);
+
+
+/*
+========================================================
+ENTER TUŞU İLE GİRİŞ
+========================================================
+*/
+
+document
+    .getElementById('adminKey')
+    .addEventListener(
+        'keydown',
+        event => {
+            if(event.key === 'Enter'){
+                loginAdmin();
+            }
+        }
+    );
 
 </script>
 
