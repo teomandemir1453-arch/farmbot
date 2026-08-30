@@ -122,6 +122,22 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .btn-withdraw{background:linear-gradient(135deg,#C0754D,#B6410F)}
 .btn-ctrl{width:44px;height:44px;padding:0;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0;border-radius:8px;background:linear-gradient(135deg,#C0754D,#B6410F);color:#fff;border:none}
 
+
+/* === LANGUAGE FLAGS + RIGHT NAV === */
+.mm-marquee{position:relative;padding-right:8px!important}
+.language-flags{margin-left:auto;display:flex;align-items:center;gap:3px;flex-shrink:0}
+.language-flags button{width:30px;height:30px;padding:0;border:1px solid rgba(166,116,255,.28);border-radius:9px;background:rgba(20,20,58,.72);font-size:18px;line-height:1;cursor:pointer}
+.language-flags button:active{transform:scale(.9)}
+.language-flags button.active{background:rgba(166,92,255,.3);border-color:#a65cff;box-shadow:0 0 10px rgba(166,92,255,.35)}
+.right-menu-container{position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;top:56%!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:5000!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:9px!important}
+.menu-items{display:flex!important;flex-direction:column!important;align-items:center!important;gap:8px!important}
+.menu-item{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;flex-direction:column!important;gap:2px!important;font-size:19px!important}
+.menu-item span{font-size:7px!important;font-weight:800!important;line-height:1!important;white-space:nowrap!important}
+.menu-fab{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important}
+.mm-bottom-nav{display:none!important}
+@media(max-width:520px){.language-flags{gap:2px}.language-flags button{width:27px;height:27px;font-size:16px}.mm-marquee{font-size:11px;gap:6px}.right-menu-container{right:max(7px,env(safe-area-inset-right))!important}.menu-item{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important}.menu-fab{width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important}.menu-item span{font-size:6.5px!important}}
+@media(max-width:390px){.language-flags button{width:25px;height:25px;font-size:15px}.menu-item{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}.menu-fab{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important}}
+
 /* SAĞ MENÜ (FAB) */
 .right-menu-container {
     position: fixed; right: 15px; bottom: 20px; z-index: 1000;
@@ -378,9 +394,19 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .telegram-notif-card{border-radius:16px;background:linear-gradient(135deg,#7037e8,#9b4dff);border:1px solid rgba(217,156,255,.55);box-shadow:0 8px 25px rgba(109,49,220,.25)}
 .packages-section-title{color:#d7c1ff;font-size:15px}.package-card{background:linear-gradient(145deg,#101735,#0b1029);border-color:rgba(135,107,220,.35)}
 .calc-main-btn{background:linear-gradient(135deg,#a74cff,#6c25df);border:1px solid #c28bff;box-shadow:0 8px 22px rgba(116,46,224,.25)}
-.right-menu-container{display:none!important}
-.mm-bottom-nav{position:fixed;left:0;right:0;bottom:0;height:76px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(10,15,39,.96);backdrop-filter:blur(14px);border-top:1px solid rgba(150,122,255,.25);display:grid;grid-template-columns:repeat(5,1fr);z-index:1200;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
-.mm-nav-item{border:0;background:transparent;color:#9da8ca;font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px;cursor:pointer}.mm-nav-item span{font-size:24px;line-height:1}.mm-nav-item.active,.mm-nav-item:active{color:#c76cff}.mm-nav-item.active span{filter:drop-shadow(0 0 8px rgba(199,108,255,.65))}
+.right-menu-container{position:fixed;right:max(10px,env(safe-area-inset-right));top:56%;bottom:auto;transform:translateY(-50%);z-index:5000;display:flex;flex-direction:column;align-items:center;gap:9px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.menu-items{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .25s ease,transform .25s ease,visibility .25s ease}
+.menu-items.hide{opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);pointer-events:none}
+.menu-fab{width:54px;height:54px;min-width:54px;min-height:54px;border-radius:50%;background:linear-gradient(135deg,#a65cff,#6d36d8);color:#fff;border:1px solid rgba(255,255,255,.16);box-shadow:0 6px 20px rgba(100,45,190,.45);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:23px;transition:transform .22s ease,box-shadow .22s ease;touch-action:manipulation}
+.menu-fab:active{transform:scale(.9)}
+.menu-fab.closed{transform:rotate(0deg)}
+.menu-fab.open{transform:rotate(45deg)}
+.menu-item{width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;background:#111a38;border:1px solid rgba(166,92,255,.5);color:#eef1ff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .18s ease,background .18s ease,box-shadow .18s ease;touch-action:manipulation}
+.menu-item:active{transform:scale(.88);background:#9b4dff;color:#fff}
+.menu-item.active{background:#9b4dff;color:#fff;border-color:#c76cff;box-shadow:0 0 16px rgba(199,108,255,.55)}
+.mm-bottom-nav{display:none!important}
+@media(max-width:600px){.right-menu-container{right:max(8px,env(safe-area-inset-right));top:56%}.menu-fab{width:52px;height:52px;min-width:52px;min-height:52px}.menu-item{width:46px;height:46px;min-width:46px;min-height:46px}}
+@media(max-width:380px){.right-menu-container{right:6px;top:55%;gap:7px}.menu-fab{width:48px;height:48px;min-width:48px;min-height:48px}.menu-item{width:43px;height:43px;min-width:43px;min-height:43px}}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
 </style>
@@ -993,17 +1019,21 @@ img{max-width:100%}
 }
 </style>
 
+<style id="mm-language-final">
+.right-menu-container{display:flex!important;position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;top:56%!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:5000!important}
+.mm-bottom-nav{display:none!important}
+</style>
 </head>
 <body>
 <div class="container">
 
 <div id="page-home" class="card">
 <div class="mm-topbar">
-  <button class="mm-icon-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div aria-hidden="true"></div>
   <img class="mm-logo" src="assets/logo.png" alt="Micro Monetize">
   <button class="mm-icon-btn" onclick="openNotificationsQuick()" aria-label="Notifications">🔔<span class="mm-badge" id="topNotifBadge">0</span></button>
 </div>
-<div class="mm-marquee"><span class="speaker">📢</span><span>Welcome to Micro Monetize! Grow your wealth every day.</span></div>
+<div class="mm-marquee"><span class="speaker">📢</span><span data-i18n="welcome_marquee">Welcome to Micro Monetize! Grow your wealth every day.</span><div class="language-flags" id="languageFlags"><button onclick="setLanguage('en')" aria-label="English">🇬🇧</button><button onclick="setLanguage('tr')" aria-label="Türkçe">🇹🇷</button><button onclick="setLanguage('de')" aria-label="Deutsch">🇩🇪</button><button onclick="setLanguage('es')" aria-label="Español">🇪🇸</button><button onclick="setLanguage('ru')" aria-label="Русский">🇷🇺</button></div></div>
 
 <div class="mm-finance-card">
   <div class="mm-finance-side balance-side" onclick="showPage('withdraw')">
@@ -1171,14 +1201,17 @@ img{max-width:100%}
 
 </div>
 
-<!-- SAĞ MENÜ -->
+<!-- SAĞ MENÜ - MOBİL / ANDROID -->
 <div class="right-menu-container">
     <div class="menu-items" id="menuItems">
-        <div class="menu-item active" onclick="showPage('home',this)" title="Home">🏠</div>
-        <div class="menu-item" onclick="openProfile()" title="Profile">👤</div>
+        <div class="menu-item active" onclick="showPage('home',this)" title="Home" aria-label="Home">🏠<span data-i18n="nav_home">Home</span></div>
+        <div class="menu-item" onclick="showPage('buy',this)" title="Investment" aria-label="Investment">💰<span data-i18n="nav_investment">Investment</span></div>
+        <div class="menu-item" onclick="showPage('withdraw',this)" title="Withdraw" aria-label="Withdraw">💸<span data-i18n="nav_withdraw">Withdraw</span></div>
+        <div class="menu-item" onclick="openProfile()" title="Profile" aria-label="Profile">👤<span data-i18n="nav_profile">Profile</span></div>
+        <div class="menu-item" onclick="openSupport()" title="Support" aria-label="Support">🎧<span data-i18n="nav_support">Support</span></div>
         <div class="menu-item" id="adminNavItem" onclick="showPage('admin',this)" title="Admin" style="display:none"></div>
     </div>
-    <button class="menu-fab open" id="menuFab" onclick="toggleMenu()"></button>
+    <button class="menu-fab open" id="menuFab" onclick="toggleMenu()" aria-label="Menu">☰</button>
 </div>
 
 <div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
@@ -1284,7 +1317,7 @@ let currentPrices={trx:0.12,bnb:600,xrp:0.50};
 // TAM DİL SÖZLÜĞÜ
 const i18n = {
     en: {
-        app_title: "Micro Monetize", withdraw_label: "💰 WITHDRAW", deposit_label: " ADD BALANCE",
+        app_title: "Micro Monetize",welcome_marquee:"Welcome to Micro Monetize! Grow your wealth every day.", nav_home:"Home", nav_investment:"Investment", nav_withdraw:"Withdraw", nav_profile:"Profile", nav_support:"Support", language_select:"Select Language", withdraw_label: "💰 WITHDRAW", deposit_label: " ADD BALANCE",
         notif_btn: "notifications", bonus_btn: "daily bonus", tasks_btn: "tasks",
         est_earnings: " Estimated Earnings", per_min: "Minute", per_hour: "Hour", per_day: "Day",
         tg_activate: "🔔 Activate Notifications", tg_desc: "Get instant alerts on Telegram!",
@@ -1306,7 +1339,7 @@ const i18n = {
         welcome_title: " Welcome!", welcome_desc: "New member investment bonus:", welcome_note: "Added directly to your total investment!", great_btn: "🎉 Great!"
     },
     tr: {
-        app_title: "Micro Monetize", withdraw_label: "💰 ÇEK", deposit_label: " BAKİYE EKLE",
+        app_title: "Micro Monetize",welcome_marquee:"Micro Monetize'a hoş geldin! Her gün servetini büyüt.", nav_home:"Ana Sayfa", nav_investment:"Yatırım", nav_withdraw:"Çekim", nav_profile:"Profil", nav_support:"Destek", language_select:"Dil Seçimi", withdraw_label: "💰 ÇEK", deposit_label: " BAKİYE EKLE",
         notif_btn: "bildirimler", bonus_btn: "günlük bonus", tasks_btn: "görevler",
         est_earnings: " Tahmini Kazanç", per_min: "Dakika", per_hour: "Saat", per_day: "Gün",
         tg_activate: " Bildirimleri Aktif Et", tg_desc: "Telegram'dan anında al!",
@@ -1328,7 +1361,7 @@ const i18n = {
         welcome_title: "🎉 Hoşgeldin!", welcome_desc: "Yeni üye yatırım bonusun:", welcome_note: "Doğrudan toplam yatırımına eklendi!", great_btn: "🎉 Harika!"
     },
     ru: {
-        app_title: "Micro Monetize", withdraw_label: "💰 ВЫВОД", deposit_label: " ПОПОЛНИТЬ",
+        app_title: "Micro Monetize",welcome_marquee:"Добро пожаловать в Micro Monetize! Увеличивайте свой капитал каждый день.", nav_home:"Главная", nav_investment:"Инвестиции", nav_withdraw:"Вывод", nav_profile:"Профиль", nav_support:"Поддержка", language_select:"Выбор языка", withdraw_label: "💰 ВЫВОД", deposit_label: " ПОПОЛНИТЬ",
         notif_btn: "уведомления", bonus_btn: "ежедневный бонус", tasks_btn: "задания",
         est_earnings: " Ожидаемый доход", per_min: "Минута", per_hour: "Час", per_day: "День",
         tg_activate: " Включить уведомления", tg_desc: "Получайте мгновенные оповещения в Telegram!",
@@ -1350,7 +1383,7 @@ const i18n = {
         welcome_title: " Добро пожаловать!", welcome_desc: "Бонус за первую инвестицию:", welcome_note: "Добавлено прямо в ваши общие инвестиции!", great_btn: " Отлично!"
     },
     es: {
-        app_title: "Micro Monetize", withdraw_label: "💰 RETIRAR", deposit_label: "📊 AGREGAR SALDO",
+        app_title: "Micro Monetize",welcome_marquee:"¡Bienvenido a Micro Monetize! Haz crecer tu patrimonio cada día.", nav_home:"Inicio", nav_investment:"Inversión", nav_withdraw:"Retirar", nav_profile:"Perfil", nav_support:"Soporte", language_select:"Seleccionar idioma", withdraw_label: "💰 RETIRAR", deposit_label: "📊 AGREGAR SALDO",
         notif_btn: "notificaciones", bonus_btn: "bono diario", tasks_btn: "tareas",
         est_earnings: " Ganancias Estimadas", per_min: "Minuto", per_hour: "Hora", per_day: "Día",
         tg_activate: " Activar Notificaciones", tg_desc: "¡Recibe alertas instantáneas en Telegram!",
@@ -1372,7 +1405,7 @@ const i18n = {
         welcome_title: " ¡Bienvenido!", welcome_desc: "Bono de inversión para nuevos miembros:", welcome_note: "¡Agregado directamente a su inversión total!", great_btn: " ¡Genial!"
     },
     de: {
-        app_title: "Micro Monetize", withdraw_label: " AUSZAHLEN", deposit_label: " GUTHABEN EINZAHLEN",
+        app_title: "Micro Monetize",welcome_marquee:"Willkommen bei Micro Monetize! Vergrößern Sie Ihr Vermögen jeden Tag.", nav_home:"Startseite", nav_investment:"Investition", nav_withdraw:"Auszahlen", nav_profile:"Profil", nav_support:"Support", language_select:"Sprache auswählen", withdraw_label: " AUSZAHLEN", deposit_label: " GUTHABEN EINZAHLEN",
         notif_btn: "Benachrichtigungen", bonus_btn: "Tagesbonus", tasks_btn: "Aufgaben",
         est_earnings: " Geschätzte Einnahmen", per_min: "Minute", per_hour: "Stunde", per_day: "Tag",
         tg_activate: " Benachrichtigungen aktivieren", tg_desc: "Erhalten Sie sofortige Warnungen auf Telegram!",
@@ -1395,22 +1428,27 @@ const i18n = {
     }
 };
 
-const langFlags = { en: '🇺 English', ru: '🇷 Русский', tr: '🇹 Türkçe', es: ' Español', de: ' Deutsch' };
+const langFlags = { en: '🇬🇧 English', tr: '🇹🇷 Türkçe', de: '🇩🇪 Deutsch', es: '🇪🇸 Español', ru: '🇷🇺 Русский' };
 let currentLang = 'en';
+try { currentLang = localStorage.getItem('mm_language') || 'en'; } catch(e) {}
 
 function setLanguage(lang) {
     if (!i18n[lang]) lang = 'en';
     currentLang = lang;
+    try { localStorage.setItem('mm_language', lang); } catch(e) {}
+    document.documentElement.lang = lang;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
     });
     const langDesc = document.getElementById('currentLangDesc');
-    if(langDesc) langDesc.textContent = langFlags[lang] || 'English';
+    if(langDesc) langDesc.textContent = langFlags[lang] || '🇬🇧 English';
+    document.querySelectorAll('#languageFlags button').forEach(b => b.classList.toggle('active', b.getAttribute('aria-label') === ({en:'English',tr:'Türkçe',de:'Deutsch',es:'Español',ru:'Русский'}[lang])));
 }
 
+
 function openLanguageSelector() {
-    let h = `<div class="sub-popup-header"><div class="sub-popup-title"> Select Language</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
+    let h = `<div class="sub-popup-header"><div class="sub-popup-title">🌐 ${i18n[currentLang].language_select || 'Select Language'}</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>`;
     Object.keys(langFlags).forEach(code => {
         const isActive = code === currentLang ? 'style="background:#D59D80;color:#fff;"' : '';
         h += `<div class="profile-menu-item" onclick="setLanguage('${code}'); closeSubPopup();" ${isActive}>
@@ -1422,6 +1460,8 @@ function openLanguageSelector() {
     c.innerHTML=h;
     document.getElementById('subOverlay').classList.add('show');
 }
+
+setLanguage(currentLang);
 
 async function getCryptoPrices(){
 try{
@@ -2178,12 +2218,5 @@ function showPage(p, element) {
 }
 </script>
 
-<div class="mm-bottom-nav">
- <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
- <button class="mm-nav-item" onclick="showPage('buy',this)"><img src="assets/icons/investment.png" alt=""><span class="nav-label">Investment</span></button>
- <button class="mm-nav-item" onclick="showPage('withdraw',this)"><img src="assets/icons/withdraw.png" alt=""><span class="nav-label">Withdraw</span></button>
- <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
- <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
-</div>
 </body>
 </html>
