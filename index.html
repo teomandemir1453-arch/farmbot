@@ -1,19 +1,3 @@
-<style id="mr-modal-css">
-.mr-modal{display:none;position:fixed;inset:0;z-index:100000}.mr-modal.show{display:block}.mr-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(9px)}
-.mr-modal-dialog{position:relative;width:min(900px,calc(100% - 28px));max-height:calc(100vh - 28px);margin:14px auto;overflow:auto;background:#07100d;border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.65);animation:mrModalIn .22s ease-out}
-.mr-modal-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(7,16,13,.96);border-bottom:1px solid rgba(255,255,255,.08)}
-.mr-modal-header strong{display:block;font-size:13px;letter-spacing:.8px}.mr-modal-header span{display:block;font-size:10px;opacity:.5;margin-top:3px}.mr-modal-close{width:38px;height:38px;border:0;border-radius:12px;background:rgba(255,255,255,.08);color:inherit;font-size:25px;cursor:pointer}.mr-modal-body{padding:14px}.mr-modal-body .mr-card{margin:0!important}body.mr-modal-open{overflow:hidden}
-@keyframes mrModalIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:650px){.mr-modal-dialog{width:100%;height:100%;max-height:100vh;margin:0;border-radius:0}.mr-modal-body{padding:8px}.mr-arena{height:calc(100vh - 300px)!important;min-height:300px}}
-</style>
-<style id="mr-transfer-style">
-#mrTransfer{width:100%;margin-top:12px;border:0;border-radius:12px;padding:13px 16px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#00e676,#00bfa5);color:#07110e}
-#mrTransfer:disabled{opacity:.7;cursor:wait}
-.mr-transfer-status{min-height:22px}
-.mr-transfer-loader{display:inline-flex;align-items:center;gap:8px}
-.mr-transfer-ring{width:18px;height:18px;border:3px solid rgba(255,255,255,.25);border-top-color:currentColor;border-radius:50%;animation:mrspin .7s linear infinite}
-@keyframes mrspin{to{transform:rotate(360deg)}}
-</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -399,6 +383,73 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .mm-nav-item{border:0;background:transparent;color:#9da8ca;font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px;cursor:pointer}.mm-nav-item span{font-size:24px;line-height:1}.mm-nav-item.active,.mm-nav-item:active{color:#c76cff}.mm-nav-item.active span{filter:drop-shadow(0 0 8px rgba(199,108,255,.65))}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
+
+/* === MINING RUSH: OPEN ONLY AS POPUP === */
+.mr-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+.mr-modal.show{visibility:visible;opacity:1;pointer-events:auto}
+.mr-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,5,18,.82);
+  backdrop-filter:blur(9px);
+}
+.mr-modal-dialog{
+  position:relative;
+  z-index:1;
+  width:min(720px,100%);
+  max-height:calc(100vh - 28px);
+  overflow:auto;
+  border-radius:22px;
+  background:#080d23;
+  border:1px solid rgba(145,104,255,.42);
+  box-shadow:0 28px 90px rgba(0,0,0,.7);
+  transform:translateY(12px) scale(.98);
+  transition:transform .18s ease;
+}
+.mr-modal.show .mr-modal-dialog{transform:translateY(0) scale(1)}
+.mr-modal-header{
+  min-height:60px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(10,15,39,.97);
+  border-bottom:1px solid rgba(150,122,255,.2);
+}
+.mr-modal-header>div{flex:1}
+.mr-modal-header strong{display:block;color:#fff;font-size:16px}
+.mr-modal-header span{display:block;color:#8f9dc4;font-size:9px;margin-top:3px}
+.mr-modal-close{
+  width:38px;height:38px;border:0;border-radius:11px;
+  background:rgba(255,255,255,.08);color:#fff;font-size:24px;
+  line-height:1;cursor:pointer;
+}
+.mr-modal-body{padding:10px}
+.mr-modal .mr-card{margin:0}
+body.mr-modal-open{overflow:hidden}
+@media(max-width:520px){
+  .mr-modal{padding:0}
+  .mr-modal-dialog{
+    width:100%;height:100%;max-height:none;border-radius:0;border:0
+  }
+  .mr-modal-body{padding:7px}
+}
+
 </style>
 
 
@@ -1097,7 +1148,70 @@ img{max-width:100%}
 
 <div id="gameHub" class="game-hub">
 <style>
-.game-hub{margin:0 0 16px}.game-hub-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.game-hub-title strong{font-size:19px}.game-hub-title span{font-size:11px;opacity:.55}.game-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.game-card{position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);color:inherit;padding:0;text-align:left;cursor:pointer;transition:.2s;min-width:0}.game-card.active{border-color:rgba(0,230,118,.6);box-shadow:0 0 0 1px rgba(0,230,118,.12),0 8px 25px rgba(0,0,0,.18)}.game-card.locked{opacity:.5;cursor:not-allowed}.game-art{height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;background:radial-gradient(circle at 50% 25%,rgba(0,230,118,.18),transparent 58%),linear-gradient(145deg,#15221d,#080d0b)}.game-art:after{content:'✦';position:absolute;right:12px;top:8px;font-size:14px;opacity:.35}.game-card-body{padding:9px}.game-card-body strong,.game-card-body span,.game-card-body b{display:block}.game-card-body strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.game-card-body span{font-size:10px;opacity:.55;margin:4px 0}.game-card-body b{font-size:9px}.game-active-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676;margin-right:5px;vertical-align:1px}@media(max-width:800px){.game-grid{grid-template-columns:repeat(2,1fr)}.game-card:first-child{grid-column:span 2}.game-art{height:74px}}
+.game-hub{margin:0 0 16px}.game-hub-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.game-hub-title strong{font-size:19px}.game-hub-title span{font-size:11px;opacity:.55}.game-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.game-card{position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);color:inherit;padding:0;text-align:left;cursor:pointer;transition:.2s;min-width:0}.game-card.active{border-color:rgba(0,230,118,.6);box-shadow:0 0 0 1px rgba(0,230,118,.12),0 8px 25px rgba(0,0,0,.18)}.game-card.locked{opacity:.5;cursor:not-allowed}.game-art{height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;background:radial-gradient(circle at 50% 25%,rgba(0,230,118,.18),transparent 58%),linear-gradient(145deg,#15221d,#080d0b)}.game-art:after{content:'✦';position:absolute;right:12px;top:8px;font-size:14px;opacity:.35}.game-card-body{padding:9px}.game-card-body strong,.game-card-body span,.game-card-body b{display:block}.game-card-body strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.game-card-body span{font-size:10px;opacity:.55;margin:4px 0}.game-card-body b{font-size:9px}.game-active-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676;margin-right:5px;vertical-align:1px}@media(max-width:800px){.game-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.game-card:first-child{grid-column:auto}.game-art{height:74px}.game-card-body{padding:7px}.game-card-body strong{font-size:9px}.game-card-body span{font-size:8px}.game-card-body b{font-size:8px}}
+
+/* === GAME GRID + POPUP === */
+.mm-games-section{margin:14px 0 16px}
+.mm-games-title{font-size:15px;font-weight:900;color:#dfe5ff;margin:0 0 10px}
+.mm-games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.mm-game-card{
+  min-width:0;min-height:132px;padding:10px 7px;border-radius:16px;
+  background:linear-gradient(145deg,#121a3b,#0a112b);
+  border:1px solid rgba(156,105,255,.38);
+  box-shadow:0 8px 22px rgba(0,0,0,.24);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;cursor:pointer;transition:transform .16s ease,border-color .16s ease;
+}
+.mm-game-card:active{transform:scale(.96)}
+.mm-game-card .game-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;font-size:42px;margin-bottom:7px}
+.mm-game-card .game-name{font-size:11px;font-weight:900;color:#eef1ff;line-height:1.15}
+.mm-game-card .game-desc{font-size:8px;color:#9da8ca;margin-top:4px;line-height:1.2}
+.mm-game-card .game-play{margin-top:7px;padding:5px 9px;border-radius:8px;background:linear-gradient(135deg,#a74cff,#6c25df);color:#fff;font-size:8px;font-weight:900}
+
+.mm-game-overlay{
+  position:fixed;inset:0;z-index:10000;background:rgba(3,6,20,.86);
+  backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;
+  padding:12px;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
+}
+.mm-game-overlay.show{opacity:1;visibility:visible}
+.mm-game-popup{
+  width:min(720px,100%);height:min(88vh,760px);background:#0a102b;
+  border:1px solid rgba(166,116,255,.45);border-radius:22px;overflow:hidden;
+  box-shadow:0 25px 90px rgba(0,0,0,.65);display:flex;flex-direction:column;
+}
+.mm-game-popup-header{
+  min-height:58px;padding:9px 12px;display:flex;align-items:center;gap:10px;
+  background:linear-gradient(180deg,#17113b,#0b112b);border-bottom:1px solid rgba(166,116,255,.25);
+}
+.mm-game-popup-title{flex:1;font-size:15px;font-weight:900;color:#fff}
+.mm-game-popup-close{
+  width:38px;height:38px;border:0;border-radius:11px;background:rgba(255,255,255,.08);
+  color:#fff;font-size:23px;cursor:pointer
+}
+.mm-game-popup-body{flex:1;overflow:auto;padding:14px}
+.mm-game-screen{
+  min-height:100%;border-radius:16px;padding:18px;
+  background:radial-gradient(circle at 50% 20%,#241153,#0a102b 65%);
+  border:1px solid rgba(166,116,255,.22);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+}
+.mm-game-screen .big-icon{font-size:72px;margin-bottom:12px}
+.mm-game-screen h2{color:#fff;font-size:24px;margin-bottom:7px}
+.mm-game-screen p{color:#aebbe0;font-size:12px;max-width:430px;line-height:1.5}
+.mm-game-action{
+  margin-top:18px;border:0;border-radius:12px;padding:12px 22px;
+  background:linear-gradient(135deg,#a74cff,#6c25df);color:#fff;font-weight:900;cursor:pointer
+}
+@media(max-width:520px){
+  .mm-games-grid{gap:6px}
+  .mm-game-card{min-height:112px;padding:8px 4px;border-radius:13px}
+  .mm-game-card .game-icon{width:45px;height:45px;font-size:32px}
+  .mm-game-card .game-name{font-size:9px}
+  .mm-game-card .game-desc{font-size:7px}
+  .mm-game-card .game-play{font-size:7px;padding:4px 7px}
+  .mm-game-overlay{padding:0}
+  .mm-game-popup{width:100%;height:100%;border-radius:0}
+}
 </style>
 <div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Aktif oyunu seç ve kazanmaya başla.</span></div></div>
 <div class="game-grid">
@@ -1198,7 +1312,7 @@ img{max-width:100%}
 <div class="crypto-info" style="text-align:center"><strong data-i18n="equiv_label">Equivalent:</strong> <span id="buyTrxAmount" style="color:#D59D80;font-weight:800;font-size:18px">8.33</span> TRX</div>
 <button class="btn btn-approve" onclick="buyProduct()" data-i18n="pay_btn">✅ Payment Sent</button>
 <button class="btn btn-secondary" onclick="resetAndGoHome()" data-i18n="cancel_btn">← Cancel</button>
-<div class="history-section"><div class="history-title" data-i18n="dep_hist"> Deposit History</div><div id="depositHistory"></div></div>
+<div id="investmentRoiStatus" style="margin:10px 0;padding:9px;border-radius:9px;background:rgba(167,76,255,.10);border:1px solid rgba(167,76,255,.25);color:#cfc7ff;font-size:10px;font-weight:800;text-align:center">100 günlük ROI • Aktif yatırım: $0.00</div><div class="history-section"><div class="history-title" data-i18n="dep_hist"> Deposit History</div><div id="depositHistory"></div></div>
 </div>
 
 <div id="page-withdraw" class="card hidden">
@@ -1514,8 +1628,9 @@ let dailyBonusData={lastClaim:0,streak:0};
 let notificationsData=[],earningsHistory=[],currentChartPeriod='7d';
 let taskClaims={};
 let taskRewardTotal=0;
+let gameInvestments=[];
 
-const DAILY_RATE=1/90,PER_SECOND=DAILY_RATE/86400;
+const ROI_DAYS=100,DAILY_RATE=1/ROI_DAYS,PER_SECOND=DAILY_RATE/86400,ROI_MS=ROI_DAYS*86400000;
 const DEPOSIT_WALLET="TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN",DISCOUNT_RATE=0.20,MIN_DEPOSIT=1,MAX_DEPOSIT=9999;
 const CRYPTO_SYMBOLS={trx:'TRX',bnb:'BNB',xrp:'XRP'};
 const NETWORK_INFO={trx:{fullName:'TRON (TRC20)',description:'TRX coin\'leri TRON ağı üzerinden gönderilecektir.'},bnb:{fullName:'BSC (BEP20)',description:'BNB coin\'leri BSC ağı üzerinden gönderilecektir.'},xrp:{fullName:'XRP Ledger',description:'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.'}};
@@ -2038,28 +2153,65 @@ setTimeout(() => showRecentAnnouncements(), 1000);
 setInterval(updateEarnings,1000);
 }).catch(e=>console.error('Login error:',e));
 
+function toMs(v){
+  if(v==null)return 0;
+  if(typeof v==='number')return v;
+  if(v.toDate)return v.toDate().getTime();
+  const n=Date.parse(v);return Number.isFinite(n)?n:0;
+}
+function investmentPrincipal(item){
+  const n=Number(item?.principal ?? item?.amount ?? item?.discountedPrice ?? 0);
+  return Number.isFinite(n)&&n>0?n:0;
+}
+function investmentStart(item){return toMs(item?.startAt ?? item?.approvedAt ?? item?.timestamp) || Date.now()}
+function investmentEnd(item){return investmentStart(item)+ROI_MS}
+function getAllInvestments(data={}){
+  const approved=Array.isArray(data.approvedPayments)?data.approvedPayments:[];
+  const games=Array.isArray(data.gameInvestments)?data.gameInvestments:[];
+  return approved.map(p=>({...p,sourceType:'deposit'})).concat(games.map(p=>({...p,sourceType:'game'})));
+}
+function getActivePrincipal(data={},now=Date.now()){
+  return getAllInvestments(data).reduce((sum,p)=>{
+    const principal=investmentPrincipal(p),start=investmentStart(p),end=investmentEnd(p);
+    return sum+(principal>0 && now>=start && now<end ? principal:0);
+  },0);
+}
+function getProductionBetween(data,fromMs,toMs){
+  if(toMs<=fromMs)return 0;
+  return getAllInvestments(data).reduce((sum,p)=>{
+    const principal=investmentPrincipal(p);if(principal<=0)return sum;
+    const start=investmentStart(p),end=investmentEnd(p);
+    const a=Math.max(fromMs,start),b=Math.min(toMs,end);
+    if(b<=a)return sum;
+    return sum+principal*((b-a)/ROI_MS);
+  },0);
+}
+function refreshActiveInvestmentState(now=Date.now()){
+  const data={approvedPayments:products,gameInvestments};
+  totalInvested=getActivePrincipal(data,now);
+  return totalInvested;
+}
+
 async function calculateOfflineEarnings(){
 try{
 const d=await db.collection('users').doc(userId).get();
 if(d.exists){
-const x=d.data();const now=Date.now();const la=x.lastActive||now;const os=(now-la)/1000;
+const x=d.data()||{},now=Date.now(),la=x.lastActive||now;
 createdAt=x.created_at?(x.created_at.toDate?x.created_at.toDate():new Date(x.created_at)):null;
 if(x.dailyBonus)dailyBonusData=x.dailyBonus;
 if(x.notifications)notificationsData=x.notifications;
 if(x.earningsHistory)earningsHistory=x.earningsHistory;
 if(x.referralEarnings!==undefined)referralEarnings=x.referralEarnings;
-if(os > 5 && x.totalInvested > 0){
-const oe = os * (x.totalInvested * PER_SECOND);
-if(oe > 0.001){
-await db.collection('users').doc(userId).update({lifetimeEarnings: (x.lifetimeEarnings||0) + oe, lastActive: now});
-showOfflinePopup(oe);
-}
+const oe=getProductionBetween(x,la,now);
+if(oe>0){
+  await db.collection('users').doc(userId).update({lifetimeEarnings:Number(x.lifetimeEarnings||0)+oe,lastActive:now});
+  showOfflinePopup(oe);
 }else{ await db.collection('users').doc(userId).update({lastActive:now}); }
 }else{
 await db.collection('users').doc(userId).set({lifetimeEarnings:0,totalWithdrawn:0,lastActive:Date.now(),created_at:firebase.firestore.FieldValue.serverTimestamp()});
 }
 updateQuickNotifBadge();
-}catch(e){console.error('Offline error:',e)}
+}catch(e){console.error('Offline earnings error:',e)}
 }
 
 function showOfflinePopup(a){document.getElementById('offlineEarnedAmount').textContent=a.toFixed(4);document.getElementById('offlinePopup').classList.remove('hidden');if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')}
@@ -2071,9 +2223,10 @@ if(d.exists){
 const x=d.data();
 if(x.userName) currentUser = { ...currentUser, first_name: x.userName };
 products=(x.approvedPayments||[]).map(p=>({...p,earned:0}));
-lifetimeEarnings=x.lifetimeEarnings||0;
-totalWithdrawn=x.totalWithdrawn||0;
-totalInvested=x.totalInvested||0;
+gameInvestments=Array.isArray(x.gameInvestments)?x.gameInvestments:[];
+lifetimeEarnings=Number(x.lifetimeEarnings||0);
+totalWithdrawn=Number(x.totalWithdrawn||0);
+totalInvested=getActivePrincipal({approvedPayments:products,gameInvestments},Date.now());
 balance=lifetimeEarnings-totalWithdrawn;
 const btcEl=document.getElementById('balanceBtc');
 if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
@@ -2122,14 +2275,21 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }
 
 async function updateEarnings(){
-    const ps = totalInvested * PER_SECOND; 
-    lifetimeEarnings += ps;
-    balance = lifetimeEarnings - totalWithdrawn;
-    try{ await db.collection('users').doc(userId).set({ lifetimeEarnings: lifetimeEarnings, lastActive: Date.now() },{merge:true}); }catch(e){console.error(e)}
-    updateUI();
+  if(!userId)return;
+  const now=Date.now();
+  const activePrincipal=refreshActiveInvestmentState(now);
+  const ps=activePrincipal*PER_SECOND;
+  if(ps<=0){updateUI();return;}
+  lifetimeEarnings+=ps;
+  balance=lifetimeEarnings-totalWithdrawn;
+  try{
+    await db.collection('users').doc(userId).set({lifetimeEarnings,lastActive:now},{merge:true});
+  }catch(e){console.error('Earnings update error:',e)}
+  updateUI();
 }
 
 function updateUI(){
+refreshActiveInvestmentState(Date.now());
 const estEl=document.getElementById('estimatedEarnings');
 if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
 
@@ -2143,6 +2303,7 @@ if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
     
     document.getElementById('withdrawBalance').textContent=balance.toFixed(2);
     document.getElementById('totalInvested').textContent='$'+totalInvested.toFixed(2);
+    const roiEl=document.getElementById('investmentRoiStatus'); if(roiEl) roiEl.textContent='100 günlük ROI • Aktif yatırım: $'+totalInvested.toFixed(2);
     document.getElementById('earnPerMin').textContent=(totalInvested*PER_SECOND*60).toFixed(4);
     document.getElementById('earnPerHour').textContent=(totalInvested*PER_SECOND*3600).toFixed(4);
     document.getElementById('earnPerDay').textContent=(totalInvested*PER_SECOND*86400).toFixed(4);
@@ -2189,8 +2350,9 @@ try{
 const d=await db.collection('users').doc(userId).get();
 const x=d.data()||{};
 let ad=[];
-if(x.pendingPayments&&Array.isArray(x.pendingPayments))x.pendingPayments.forEach(p=>ad.push({...p,status:p.status||'pending'}));
-if(x.approvedPayments&&Array.isArray(x.approvedPayments))x.approvedPayments.forEach(p=>ad.push({...p,status:'approved'}));
+if(x.pendingPayments&&Array.isArray(x.pendingPayments))x.pendingPayments.forEach(p=>ad.push({...p,status:p.status||'pending',sourceType:'deposit'}));
+if(x.approvedPayments&&Array.isArray(x.approvedPayments))x.approvedPayments.forEach(p=>ad.push({...p,status:'approved',sourceType:'deposit'}));
+if(x.gameInvestments&&Array.isArray(x.gameInvestments))x.gameInvestments.forEach(p=>ad.push({...p,status:'approved',sourceType:'game',packageName:'⛏️ Mining Rush Reinvestment',network:'IN-APP',coin:'USD'}));
 ad.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
 if(ad.length===0){c.innerHTML='<div class="empty-history">No deposits</div>';return}
 let h='';
@@ -2199,9 +2361,10 @@ const dt=d.timestamp?new Date(d.timestamp).toLocaleString('en-US'):'Loading...';
 const st=d.status||'pending';
 const sc=st==='approved'?'success':(st==='rejected'?'rejected':'pending');
 const sx=st==='approved'?'✅ Approved':(st==='rejected'?'❌ Rejected':' Pending');
-const pt=d.packageName?' '+d.packageName:'💰 Manual';
+const pt=d.sourceType==='game'?' ⛏️ Mining Rush Reinvestment':(d.packageName?' '+d.packageName:'💰 Manual');
 const tt=d.trxAmount?`(${d.trxAmount} TRX)`:'';
-h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Amount:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label"> Network:</span><span class="h-value">${d.network||'TRON'}</span></div><div class="h-date"> ${dt}</div></div>`;
+const roi=d.sourceType==='game'?' • 100-Day ROI':'';
+h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Amount:</span><span class="h-value">$${Number(d.amount||d.principal||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label"> Network:</span><span class="h-value">${d.network||'TRON'}${roi}</span></div><div class="h-date"> ${dt}</div></div>`;
 });
 c.innerHTML=h;
 }catch(e){console.error(e);c.innerHTML='<div class="empty-history">Failed to load</div>'}
@@ -2340,7 +2503,7 @@ function mrEndGame(){
   mr.earned=reward;mr.pendingTransfer=reward;
   mrEl('mrFinalScore').textContent=mr.score.toLocaleString()+' pts';
   mrEl('mrFinalReward').textContent='+$'+reward.toFixed(4);
-  mrEl('mrFinalNote').textContent=reward>0?'Ödülün hazır. Yatırım bakiyene aktarmak için butona bas.':'Bugün için maksimum $0.001 ödül hakkın var.';
+  mrEl('mrFinalNote').textContent=reward>0?'Ödülün yatırım bakiyene eklenir ve 100 gün boyunca üretim yapar.':'Bugün için maksimum $0.001 ödül hakkın var.';
   const btn=mrEl('mrTransfer');
   if(btn){btn.disabled=reward<=0;btn.dataset.done='0';btn.textContent=reward>0?'💰 TRANSFER REWARD':'LIMIT REACHED'}
   const st=mrEl('mrTransferStatus');if(st){st.style.display='none';st.textContent=''}
@@ -2354,23 +2517,43 @@ async function mrTransferReward(){
   status.innerHTML='<span class="mr-transfer-loader"><span class="mr-transfer-ring"></span> Hesaba aktarılıyor...</span>';
   try{
     const ur=db.collection('users').doc(userId),today=new Date().toISOString().slice(0,10);
+    let credited=0;
     await db.runTransaction(async tx=>{
       const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
       const x=snap.data()||{},md=x.miningRushDaily||{},used=md.date===today?Number(md.amount||0):0;
       const available=Math.max(0,MR_DAILY_LIMIT-used);
-      const credit=Math.min(amount,available);
-      if(credit<=0)throw new Error('Daily game limit reached');
+      credited=Math.min(amount,available);
+      if(credited<=0)throw new Error('Daily game limit reached');
+      const startAt=Date.now();
+      const gameInvestment={
+        id:'mri_'+startAt+'_'+Math.random().toString(36).slice(2,8),
+        principal:credited,
+        amount:credited,
+        source:'mining_rush',
+        score:mr.score,
+        startAt:startAt,
+        endAt:startAt+ROI_MS,
+        roiDays:ROI_DAYS,
+        createdAt:startAt,
+        timestamp:startAt,
+        status:'approved'
+      };
+      const games=Array.isArray(x.gameInvestments)?x.gameInvestments.slice(-99):[];
+      games.push(gameInvestment);
       tx.set(ur,{
-        totalInvested:Number(x.totalInvested||0)+credit,
-        miningRushDaily:{date:today,amount:used+credit},
-        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:Date.now(),earnings:credit,source:'mining_rush_investment',score:mr.score}],
-        lastActive:Date.now()
+        totalInvested:Number(x.totalInvested||0)+credited,
+        gameInvestments:games,
+        miningRushDaily:{date:today,amount:used+credited},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:startAt,earnings:credited,source:'mining_rush_investment',score:mr.score,roiDays:ROI_DAYS}],
+        lastActive:startAt
       },{merge:true});
     });
     mr.daily=(mr.dailyDate===today?mr.daily:0)+amount;mr.daily=Math.min(MR_DAILY_LIMIT,mr.daily);
     mr.dailyDate=today;mr.pendingTransfer=0;
-    status.textContent='✓ $'+credited.toFixed(4)+' yatırım bakiyene aktarıldı.';
-    btn.textContent='✓ AKTARILDI';btn.dataset.done='1';mrUpdate();updateUI();
+    totalInvested += credited;
+    balance=lifetimeEarnings-totalWithdrawn;
+    status.textContent='✓ $'+credited.toFixed(4)+' total investment bakiyene eklendi. 100 günlük üretim başladı.';
+    btn.textContent='✓ AKTARILDI';btn.dataset.done='1';mrUpdate();updateUI();loadDepositHistory();
     if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')
   }catch(e){
     console.error('Mining transfer error:',e);
@@ -2379,7 +2562,7 @@ async function mrTransferReward(){
 }
 
 const mrArena=document.getElementById('mrArena');
-mrEl('mrStart').addEventListener('click',mrStartGame);mrEl('mrPlayAgain').addEventListener('click',mrStartGame);mrEl('mrTransfer').addEventListener('click',mrTransferReward);document.querySelector('.game-card.active').addEventListener('click',()=>mrEl('miningRushCard').scrollIntoView({behavior:'smooth',block:'center'}));mrUpdate();
+mrEl('mrStart').addEventListener('click',mrStartGame);mrEl('mrPlayAgain').addEventListener('click',mrStartGame);mrEl('mrTransfer').addEventListener('click',mrTransferReward);mrUpdate();
 const mrModal=document.getElementById('miningRushModal'),mrGoldCard=document.querySelector('.game-grid .game-card.active'),mrCloseBtn=document.getElementById('mrCloseModal'),mrBackdrop=document.getElementById('mrModalBackdrop');
 function openMiningRushModal(){if(!mrModal)return;mrModal.classList.add('show');mrModal.setAttribute('aria-hidden','false');document.body.classList.add('mr-modal-open')}
 function closeMiningRushModal(){if(mr&&mr.running)return;if(mrModal){mrModal.classList.remove('show');mrModal.setAttribute('aria-hidden','true')}document.body.classList.remove('mr-modal-open')}
@@ -2390,6 +2573,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.cl
 
 </script>
 
+
 <div class="mm-bottom-nav">
  <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
  <button class="mm-nav-item" onclick="showPage('buy',this)"><img src="assets/icons/investment.png" alt=""><span class="nav-label">Investment</span></button>
@@ -2397,5 +2581,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.cl
  <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
  <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
 </div>
+
+
+
 </body>
 </html>
