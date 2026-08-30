@@ -450,7 +450,7 @@ body.mr-modal-open{overflow:hidden}
   .mr-modal-body{padding:7px}
 }
 
-</style>
+.daily-game-reward-card{margin:0 0 12px;padding:13px;border:1px solid rgba(0,230,118,.3);border-radius:16px;background:rgba(0,230,118,.06);text-align:center}.dgr-title{font-size:12px;font-weight:900}.dgr-amount{font-size:25px;font-weight:900;color:#7dffb2}.dgr-sub{font-size:9px;opacity:.65;margin:4px 0 9px}.daily-game-reward-card button{border:0;border-radius:10px;padding:9px 16px;background:#087d49;color:#fff;font-weight:900}.daily-game-reward-card button:disabled{opacity:.4}</style>
 
 
 <style id="mm-finance-reference">
@@ -1213,9 +1213,9 @@ img{max-width:100%}
   .mm-game-popup{width:100%;height:100%;border-radius:0}
 }
 </style>
-<div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Aktif oyunu seç ve kazanmaya başla.</span></div></div>
+<div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Bir oyun 30 saniye sürer • Her oyun günlük $0.001 kazanır.</span></div></div>
 <div class="game-grid">
-<button class="game-card active" type="button"><div class="game-art">⛏️💎🪙</div><div class="game-card-body"><strong><i class="game-active-dot"></i>GOLD RUSH</strong><span>60 saniye • Aktif</span><b>▶ OYNA</b></div></button>
+<button class="game-card active" type="button"><div class="game-art">⛏️💎🪙</div><div class="game-card-body"><strong><i class="game-active-dot"></i>GOLD RUSH</strong><span>30 saniye • Günlük $0.001</span><b>▶ OYNA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">💠</div><div class="game-card-body"><strong>CRYSTAL HUNT</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">🏃⛏️</div><div class="game-card-body"><strong>MINER RUN</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">🏆🪙</div><div class="game-card-body"><strong>TREASURE CAVE</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
@@ -1224,7 +1224,7 @@ img{max-width:100%}
 <div id="miningRushModal" class="mr-modal" aria-hidden="true">
   <div class="mr-modal-backdrop" id="mrModalBackdrop"></div>
   <div class="mr-modal-dialog" role="dialog" aria-modal="true" aria-label="Gold Rush">
-    <div class="mr-modal-header"><div><strong>⛏️ GOLD RUSH</strong><span>60 saniyelik madencilik oyunu</span></div><button type="button" id="mrCloseModal" class="mr-modal-close" aria-label="Kapat">×</button></div>
+    <div class="mr-modal-header"><div><strong>⛏️ GOLD RUSH</strong><span>30 saniyelik madencilik oyunu</span></div><button type="button" id="mrCloseModal" class="mr-modal-close" aria-label="Kapat">×</button></div>
     <div class="mr-modal-body"><div class="mr-card" id="miningRushCard">
   <div class="mr-head"><div><div class="mr-title">⛏️ Mining Rush</div><div class="mr-sub">Break rocks, find rare gems & grow your investment balance.</div></div><div class="mr-live">● LIVE</div></div>
   <div class="mr-stats">
@@ -1234,7 +1234,7 @@ img{max-width:100%}
   </div>
   <div class="mr-arena" id="mrArena">
     <div class="mr-combo" id="mrCombo">🔥 COMBO x0</div><div class="mr-ground"></div>
-    <div class="mr-center" id="mrCenter"><button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 60s</button></div>
+    <div class="mr-center" id="mrCenter"><button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 30s</button></div>
     <div class="mr-result" id="mrResult"><div class="mr-result-box"><h3>⛏️ Mining Complete!</h3><div class="mr-score" id="mrFinalScore">0</div><div class="mr-reward" id="mrFinalReward">+$0.0000</div><small id="mrFinalNote">Your game reward is calculated from your verified score.</small><button type="button" id="mrTransfer">💰 TRANSFER REWARD</button>
 <div class="mr-transfer-status" id="mrTransferStatus" style="display:none;margin-top:10px;font-weight:700;"></div>
 <button type="button" id="mrPlayAgain">Play Again</button></div></div>
@@ -1244,6 +1244,7 @@ img{max-width:100%}
   </div>
 </div>
 
+<div id="dailyGameRewardCard" class="daily-game-reward-card"></div>
 <div class="quick-actions">
 <div class="quick-action-btn notif-btn" onclick="openNotificationsQuick()"><div class="qa-icon"></div><div class="qa-label" data-i18n="notif_btn">notifications</div><div class="qa-badge hidden" id="quickNotifBadge">0</div></div>
 <div class="quick-action-btn bonus-btn" onclick="openSubPopup('dailyBonus')"><div class="qa-icon"></div><div class="qa-label" data-i18n="bonus_btn">daily bonus</div></div>
@@ -1628,6 +1629,7 @@ let dailyBonusData={lastClaim:0,streak:0};
 let notificationsData=[],earningsHistory=[],currentChartPeriod='7d';
 let taskClaims={};
 let taskRewardTotal=0;
+let dailyRewardPool=0,dailyGameRewards={};
 let gameInvestments=[];
 
 const ROI_DAYS=100,DAILY_RATE=1/ROI_DAYS,PER_SECOND=DAILY_RATE/86400,ROI_MS=ROI_DAYS*86400000;
@@ -1706,7 +1708,7 @@ document.getElementById('profileName').textContent=un;
 document.getElementById('profileId').textContent=`ID: ${currentUser?currentUser.id:userId}`;
 if(createdAt)document.getElementById('profileRegisterDate').innerHTML=` 📅 <strong>${i18n[currentLang].reg_date || 'Joined:'}</strong> ${createdAt.toLocaleDateString(currentLang==='tr'?'tr-TR':'en-US',{day:'2-digit',month:'long',year:'numeric'})}`;
 document.getElementById('pBalance').textContent='$'+balance.toFixed(2);
-document.getElementById('pInvested').textContent='$'+totalInvested.toFixed(2);
+document.getElementById('pInvested').textContent='$'+totalInvested.toFixed(4);
 document.getElementById('pWithdrawn').textContent='$'+totalWithdrawn.toFixed(2);
 document.getElementById('pCommission').textContent='$'+(referralEarnings||0).toFixed(2);
 updateLevel(totalInvested);
@@ -1762,6 +1764,37 @@ function closeSubOutside(e){if(e.target===document.getElementById('subOverlay'))
 function toggleFaq(el){el.classList.toggle('open')}
 function openSupport(){const u=`https://t.me/${GAME_BOT_USERNAME}`;if(tg.openTelegramLink)tg.openTelegramLink(u);else window.open(u,'_blank')}
 
+
+async function claimDailyGameReward(){
+  const amount=Number(dailyRewardPool||0);
+  if(amount<=0){alert('Daily Reward bakiyeniz henüz birikmedi.');return;}
+  try{
+    const ur=db.collection('users').doc(userId),now=Date.now();
+    await db.runTransaction(async tx=>{
+      const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
+      const x=snap.data()||{},pool=x.dailyRewardPool||{},poolAmount=Number(pool.amount||0);
+      if(poolAmount<=0)throw new Error('Daily Reward boş');
+      const invs=Array.isArray(x.gameInvestments)?x.gameInvestments.slice():[];
+      invs.push({id:'daily_game_'+now,amount:poolAmount,source:'Daily Reward',roiDays:100,
+        startAt:now,endAt:now+100*86400000,status:'active',createdAt:now});
+      tx.set(ur,{
+        totalInvested:Number(x.totalInvested||0)+poolAmount,
+        gameInvestments:invs,
+        dailyRewardPool:{date:new Date().toISOString().slice(0,10),amount:0,games:{}},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),
+          {date:now,earnings:poolAmount,source:'daily_reward_to_investment',roiDays:100}]
+      },{merge:true});
+    });
+    totalInvested+=amount;dailyRewardPool=0;dailyGameRewards={};mr.daily=0;
+    mrUpdate();updateUI();renderDailyGameRewardCard();
+    alert('✓ $'+amount.toFixed(4)+' üretim yatırımına eklendi.\n100 günlük ROI başladı.');
+  }catch(e){console.error(e);alert('❌ '+e.message);}
+}
+function renderDailyGameRewardCard(){
+  const el=document.getElementById('dailyGameRewardCard');if(!el)return;
+  const a=Number(dailyRewardPool||0);
+  el.innerHTML='<div class="dgr-title">🎁 DAILY REWARD</div><div class="dgr-amount">$'+a.toFixed(4)+'</div><div class="dgr-sub">Tüm oyun ödülleri burada birikir • Günlük toplam $'+ALL_GAMES_DAILY_LIMIT.toFixed(2)+'</div><button '+(a>0?'':'disabled')+' onclick="claimDailyGameReward()">⚡ ÜRETİME EKLE</button>';
+}
 function renderDailyBonus(){
 const today=new Date().toDateString();
 const lc=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
@@ -2245,6 +2278,10 @@ const mrDaily=x.miningRushDaily||{};
 const mrToday=new Date().toISOString().slice(0,10);
 mr.dailyDate=mrDaily.date===mrToday?mrToday:'';
 mr.daily=mrDaily.date===mrToday?Math.min(MR_DAILY_LIMIT,Number(mrDaily.amount||0)):0;
+    const dr=x.dailyRewardPool||{};
+    dailyRewardPool=dr.date===mrToday?Math.min(ALL_GAMES_DAILY_LIMIT,Number(dr.amount||0)):0;
+    dailyGameRewards=dr.games||{};
+    mr.daily=Number(dailyGameRewards.gold_rush||0);
 mrUpdate();
 updateUI();
 updateQuickNotifBadge();
@@ -2302,8 +2339,8 @@ if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
     }
     
     document.getElementById('withdrawBalance').textContent=balance.toFixed(2);
-    document.getElementById('totalInvested').textContent='$'+totalInvested.toFixed(2);
-    const roiEl=document.getElementById('investmentRoiStatus'); if(roiEl) roiEl.textContent='100 günlük ROI • Aktif yatırım: $'+totalInvested.toFixed(2);
+    document.getElementById('totalInvested').textContent='$'+totalInvested.toFixed(4);
+    const roiEl=document.getElementById('investmentRoiStatus'); if(roiEl) roiEl.textContent='100 günlük ROI • Aktif yatırım: $'+totalInvested.toFixed(4);
     document.getElementById('earnPerMin').textContent=(totalInvested*PER_SECOND*60).toFixed(4);
     document.getElementById('earnPerHour').textContent=(totalInvested*PER_SECOND*3600).toFixed(4);
     document.getElementById('earnPerDay').textContent=(totalInvested*PER_SECOND*86400).toFixed(4);
@@ -2416,15 +2453,15 @@ function showPage(p, element) {
 
 
 /* === MINING RUSH GAME === */
-const MR_GAME_SECONDS=60,MR_MAX_SECONDS=75,MR_POINTS_TO_USD=0.0000005,MR_DAILY_LIMIT=0.001;
-let mr={running:false,score:0,time:60,combo:0,bestCombo:0,spawnTimer:null,timer:null,remaining:60,earned:0,daily:0,dailyDate:'',pendingTransfer:0};
+const MR_GAME_SECONDS=30,MR_MAX_SECONDS=30,MR_POINTS_TO_USD=0.0000005,MR_DAILY_LIMIT=0.001,ALL_GAMES_DAILY_LIMIT=0.01;
+let mr={running:false,score:0,time:30,combo:0,bestCombo:0,spawnTimer:null,timer:null,remaining:30,earned:0,daily:0,dailyDate:'',pendingTransfer:0};
 function mrEl(id){return document.getElementById(id)}
 function mrUpdate(){
   mrEl('mrScore').textContent=mr.score.toLocaleString();
-  mrEl('mrTime').textContent=mr.running?mr.remaining+'s':'60s';
+  mrEl('mrTime').textContent=mr.running?mr.remaining+'s':'30s';
   mrEl('mrReward').textContent='$'+Math.max(0,mr.score*MR_POINTS_TO_USD).toFixed(4);
   mrEl('mrProgress').style.width=Math.max(0,Math.min(100,(1-mr.remaining/MR_GAME_SECONDS)*100))+'%';
-  mrEl('mrDaily').textContent='$'+mr.daily.toFixed(3)+' / $'+MR_DAILY_LIMIT.toFixed(3);
+  mrEl('mrDaily').textContent='$'+dailyRewardPool.toFixed(3)+' / $'+ALL_GAMES_DAILY_LIMIT.toFixed(2);
 }
 function mrClearObjects(){mrArena.querySelectorAll('.mr-object,.mr-float').forEach(x=>x.remove())}
 function mrFloat(x,y,text){
@@ -2484,7 +2521,7 @@ function mrHit(o){
 function mrStartGame(){
   if(mr.running)return;
   mrClearObjects();
-  mr={running:false,score:0,time:60,combo:0,bestCombo:0,remaining:60,earned:0,daily:mr.daily,dailyDate:mr.dailyDate,pendingTransfer:0};
+  mr={running:false,score:0,time:30,combo:0,bestCombo:0,remaining:30,earned:0,daily:mr.daily,dailyDate:mr.dailyDate,pendingTransfer:0};
   mrEl('mrResult').classList.remove('show');
   mrEl('mrCenter').innerHTML='<div class="mr-count" id="mrCount">3</div>';
   let n=3;
@@ -2512,52 +2549,37 @@ function mrEndGame(){
 async function mrTransferReward(){
   const btn=mrEl('mrTransfer'),status=mrEl('mrTransferStatus');
   if(!btn||!status||mr.pendingTransfer<=0||btn.dataset.done==='1')return;
-  const amount=mr.pendingTransfer;
+  const amount=Math.min(Number(mr.pendingTransfer||0),MR_DAILY_LIMIT);
   btn.disabled=true;status.style.display='block';
-  status.innerHTML='<span class="mr-transfer-loader"><span class="mr-transfer-ring"></span> Hesaba aktarılıyor...</span>';
+  status.textContent='Daily Reward’a ekleniyor...';
   try{
     const ur=db.collection('users').doc(userId),today=new Date().toISOString().slice(0,10);
     let credited=0;
     await db.runTransaction(async tx=>{
       const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
-      const x=snap.data()||{},md=x.miningRushDaily||{},used=md.date===today?Number(md.amount||0):0;
-      const available=Math.max(0,MR_DAILY_LIMIT-used);
-      credited=Math.min(amount,available);
+      const x=snap.data()||{},dr=x.dailyRewardPool||{};
+      const usedTotal=dr.date===today?Number(dr.amount||0):0;
+      const games=dr.date===today&&dr.games?{...dr.games}:{};
+      const gameUsed=Number(games.gold_rush||0);
+      credited=Math.min(amount,Math.max(0,MR_DAILY_LIMIT-gameUsed),Math.max(0,ALL_GAMES_DAILY_LIMIT-usedTotal));
       if(credited<=0)throw new Error('Daily game limit reached');
-      const startAt=Date.now();
-      const gameInvestment={
-        id:'mri_'+startAt+'_'+Math.random().toString(36).slice(2,8),
-        principal:credited,
-        amount:credited,
-        source:'mining_rush',
-        score:mr.score,
-        startAt:startAt,
-        endAt:startAt+ROI_MS,
-        roiDays:ROI_DAYS,
-        createdAt:startAt,
-        timestamp:startAt,
-        status:'approved'
-      };
-      const games=Array.isArray(x.gameInvestments)?x.gameInvestments.slice(-99):[];
-      games.push(gameInvestment);
+      games.gold_rush=gameUsed+credited;
       tx.set(ur,{
-        totalInvested:Number(x.totalInvested||0)+credited,
-        gameInvestments:games,
-        miningRushDaily:{date:today,amount:used+credited},
-        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:startAt,earnings:credited,source:'mining_rush_investment',score:mr.score,roiDays:ROI_DAYS}],
-        lastActive:startAt
+        dailyRewardPool:{date:today,amount:usedTotal+credited,games},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),
+          {date:Date.now(),earnings:credited,source:'gold_rush_daily_reward',score:mr.score}],
+        lastActive:Date.now()
       },{merge:true});
     });
-    mr.daily=(mr.dailyDate===today?mr.daily:0)+amount;mr.daily=Math.min(MR_DAILY_LIMIT,mr.daily);
-    mr.dailyDate=today;mr.pendingTransfer=0;
-    totalInvested += credited;
-    balance=lifetimeEarnings-totalWithdrawn;
-    status.textContent='✓ $'+credited.toFixed(4)+' total investment bakiyene eklendi. 100 günlük üretim başladı.';
-    btn.textContent='✓ AKTARILDI';btn.dataset.done='1';mrUpdate();updateUI();loadDepositHistory();
-    if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')
+    dailyRewardPool+=credited;
+    dailyGameRewards.gold_rush=Number(dailyGameRewards.gold_rush||0)+credited;
+    mr.daily=dailyGameRewards.gold_rush;mr.dailyDate=today;mr.pendingTransfer=0;
+    status.textContent='✓ $'+credited.toFixed(4)+' Daily Reward bakiyesine eklendi.';
+    btn.textContent='✓ DAILY REWARD’A EKLENDİ';btn.dataset.done='1';mrUpdate();updateUI();renderDailyGameRewardCard();
+    if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
   }catch(e){
-    console.error('Mining transfer error:',e);
-    btn.disabled=false;status.textContent=e.message==='Daily game limit reached'?'⚠️ Bugünkü $0.001 oyun ödülü zaten aktarıldı.':'❌ Aktarım başarısız. Tekrar deneyin.'
+    console.error('Mining transfer error:',e);btn.disabled=false;
+    status.textContent=e.message==='Daily game limit reached'?'⚠️ Bu oyun için günlük $0.001 limitine ulaşıldı.':'❌ Daily Reward aktarımı başarısız. Tekrar deneyin.';
   }
 }
 
