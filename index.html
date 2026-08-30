@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Micro Monetize v1.3.4 Secure</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -17,6 +18,8 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 .card{background:#104C64;border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(192,117,77,.3);box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .hidden{display:none!important}
 h1{text-align:center;color:#C6C6D0;margin-bottom:12px;font-size:20px;font-weight:800}
+.brand-logo{display:block;width:min(92%,430px);height:auto;max-height:190px;object-fit:contain;margin:0 auto 6px;filter:drop-shadow(0 5px 14px rgba(132,62,255,.35))}
+.brand-version{display:block;text-align:center;font-size:10px;color:#C6C6D0;opacity:.55;margin-bottom:12px}
 h2{color:#C6C6D0;margin-bottom:10px;font-size:18px;font-weight:700}
 h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 
@@ -381,7 +384,7 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="container">
 
 <div id="page-home" class="card">
-<h1 data-i18n="app_title"> Micro Monetize <small style="font-size:12px;opacity:.6">v1.3.4</small></h1>
+<div class="brand-wrap"><img class="brand-logo" src="assets/logo.png" alt="Micro Monetize"><div class="brand-version">v1.3.4</div></div>
 
 <div class="stats-grid">
     <div class="stat-box live-balance-box" onclick="showPage('withdraw')">
