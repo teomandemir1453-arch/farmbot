@@ -1,19 +1,3 @@
-<style id="mr-modal-css">
-.mr-modal{display:none;position:fixed;inset:0;z-index:100000}.mr-modal.show{display:block}.mr-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(9px)}
-.mr-modal-dialog{position:relative;width:min(900px,calc(100% - 28px));max-height:calc(100vh - 28px);margin:14px auto;overflow:auto;background:#07100d;border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.65);animation:mrModalIn .22s ease-out}
-.mr-modal-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(7,16,13,.96);border-bottom:1px solid rgba(255,255,255,.08)}
-.mr-modal-header strong{display:block;font-size:13px;letter-spacing:.8px}.mr-modal-header span{display:block;font-size:10px;opacity:.5;margin-top:3px}.mr-modal-close{width:38px;height:38px;border:0;border-radius:12px;background:rgba(255,255,255,.08);color:inherit;font-size:25px;cursor:pointer}.mr-modal-body{padding:14px}.mr-modal-body .mr-card{margin:0!important}body.mr-modal-open{overflow:hidden}
-@keyframes mrModalIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:650px){.mr-modal-dialog{width:100%;height:100%;max-height:100vh;margin:0;border-radius:0}.mr-modal-body{padding:8px}.mr-arena{height:calc(100vh - 300px)!important;min-height:300px}}
-</style>
-<style id="mr-transfer-style">
-#mrTransfer{width:100%;margin-top:12px;border:0;border-radius:12px;padding:13px 16px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#00e676,#00bfa5);color:#07110e}
-#mrTransfer:disabled{opacity:.7;cursor:wait}
-.mr-transfer-status{min-height:22px}
-.mr-transfer-loader{display:inline-flex;align-items:center;gap:8px}
-.mr-transfer-ring{width:18px;height:18px;border:3px solid rgba(255,255,255,.25);border-top-color:currentColor;border-radius:50%;animation:mrspin .7s linear infinite}
-@keyframes mrspin{to{transform:rotate(360deg)}}
-</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -399,6 +383,102 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .mm-nav-item{border:0;background:transparent;color:#9da8ca;font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px;cursor:pointer}.mm-nav-item span{font-size:24px;line-height:1}.mm-nav-item.active,.mm-nav-item:active{color:#c76cff}.mm-nav-item.active span{filter:drop-shadow(0 0 8px rgba(199,108,255,.65))}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
+
+/* === MINING RUSH: OPEN ONLY AS POPUP === */
+.mr-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+.mr-modal.show{visibility:visible;opacity:1;pointer-events:auto}
+.mr-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,5,18,.82);
+  backdrop-filter:blur(9px);
+}
+.mr-modal-dialog{
+  position:relative;
+  z-index:1;
+  width:min(720px,100%);
+  max-height:calc(100vh - 28px);
+  overflow:auto;
+  border-radius:22px;
+  background:#080d23;
+  border:1px solid rgba(145,104,255,.42);
+  box-shadow:0 28px 90px rgba(0,0,0,.7);
+  transform:translateY(12px) scale(.98);
+  transition:transform .18s ease;
+}
+.mr-modal.show .mr-modal-dialog{transform:translateY(0) scale(1)}
+.mr-modal-header{
+  min-height:60px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(10,15,39,.97);
+  border-bottom:1px solid rgba(150,122,255,.2);
+}
+.mr-modal-header>div{flex:1}
+.mr-modal-header strong{display:block;color:#fff;font-size:16px}
+.mr-modal-header span{display:block;color:#8f9dc4;font-size:9px;margin-top:3px}
+.mr-modal-close{
+  width:38px;height:38px;border:0;border-radius:11px;
+  background:rgba(255,255,255,.08);color:#fff;font-size:24px;
+  line-height:1;cursor:pointer;
+}
+.mr-modal-body{padding:10px}
+.mr-modal .mr-card{margin:0}
+body.mr-modal-open{overflow:hidden}
+@media(max-width:520px){
+  .mr-modal{padding:0}
+  .mr-modal-dialog{
+    width:100%;height:100%;max-height:none;border-radius:0;border:0
+  }
+  .mr-modal-body{padding:7px}
+}
+
+.daily-game-reward-card{margin:0 0 12px;padding:13px;border:1px solid rgba(0,230,118,.3);border-radius:16px;background:rgba(0,230,118,.06);text-align:center}.dgr-title{font-size:12px;font-weight:900}.dgr-amount{font-size:25px;font-weight:900;color:#7dffb2}.dgr-sub{font-size:9px;opacity:.65;margin:4px 0 9px}.daily-game-reward-card button{border:0;border-radius:10px;padding:9px 16px;background:#087d49;color:#fff;font-weight:900}.daily-game-reward-card button:disabled{opacity:.4}
+/* MOBILE / TELEGRAM MINI APP FIXES */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+*{box-sizing:border-box}
+button{touch-action:manipulation}
+@media(max-width:600px){
+  body{font-size:14px}
+  .container,.wrap,.page,.content,.main-content{width:100%;max-width:100%;padding-left:10px;padding-right:10px}
+  .game-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+  .game-card{min-width:0;overflow:hidden}
+  .game-card-body{padding:7px 5px!important}
+  .game-card-body strong,.game-card-body span,.game-card-body b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .mr-modal{padding:0!important;align-items:stretch!important}
+  .mr-modal-dialog{width:100%!important;height:100%!important;max-height:100%!important;border-radius:0!important;overflow-y:auto!important}
+  .mr-modal-header{min-height:54px;padding:8px 10px}
+  .mr-modal-body{padding:7px!important}
+  #mrTransfer{display:block!important;width:100%!important;min-height:48px!important;padding:13px 12px!important;font-size:13px!important;position:relative!important;z-index:20!important}
+  #mrTransferStatus{display:block;width:100%;margin-top:8px;min-height:20px}
+  .mr-actions,.mr-controls,.game-actions{display:flex;flex-wrap:wrap;gap:7px;width:100%}
+  .mr-actions button,.mr-controls button,.game-actions button{flex:1 1 140px;min-height:44px}
+  input,select,textarea{max-width:100%;font-size:16px!important}
+  .stats-grid,.stats,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:380px){
+  .game-grid{gap:4px!important}
+  .game-card-body{padding:5px 3px!important}
+  .game-card-body strong{font-size:8px!important}
+  .game-card-body span,.game-card-body b{font-size:7px!important}
+}
 </style>
 
 
@@ -1097,11 +1177,74 @@ img{max-width:100%}
 
 <div id="gameHub" class="game-hub">
 <style>
-.game-hub{margin:0 0 16px}.game-hub-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.game-hub-title strong{font-size:19px}.game-hub-title span{font-size:11px;opacity:.55}.game-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.game-card{position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);color:inherit;padding:0;text-align:left;cursor:pointer;transition:.2s;min-width:0}.game-card.active{border-color:rgba(0,230,118,.6);box-shadow:0 0 0 1px rgba(0,230,118,.12),0 8px 25px rgba(0,0,0,.18)}.game-card.locked{opacity:.5;cursor:not-allowed}.game-art{height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;background:radial-gradient(circle at 50% 25%,rgba(0,230,118,.18),transparent 58%),linear-gradient(145deg,#15221d,#080d0b)}.game-art:after{content:'✦';position:absolute;right:12px;top:8px;font-size:14px;opacity:.35}.game-card-body{padding:9px}.game-card-body strong,.game-card-body span,.game-card-body b{display:block}.game-card-body strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.game-card-body span{font-size:10px;opacity:.55;margin:4px 0}.game-card-body b{font-size:9px}.game-active-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676;margin-right:5px;vertical-align:1px}@media(max-width:800px){.game-grid{grid-template-columns:repeat(2,1fr)}.game-card:first-child{grid-column:span 2}.game-art{height:74px}}
+.game-hub{margin:0 0 16px}.game-hub-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.game-hub-title strong{font-size:19px}.game-hub-title span{font-size:11px;opacity:.55}.game-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.game-card{position:relative;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);color:inherit;padding:0;text-align:left;cursor:pointer;transition:.2s;min-width:0}.game-card.active{border-color:rgba(0,230,118,.6);box-shadow:0 0 0 1px rgba(0,230,118,.12),0 8px 25px rgba(0,0,0,.18)}.game-card.locked{opacity:.5;cursor:not-allowed}.game-art{height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;background:radial-gradient(circle at 50% 25%,rgba(0,230,118,.18),transparent 58%),linear-gradient(145deg,#15221d,#080d0b)}.game-art:after{content:'✦';position:absolute;right:12px;top:8px;font-size:14px;opacity:.35}.game-card-body{padding:9px}.game-card-body strong,.game-card-body span,.game-card-body b{display:block}.game-card-body strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.game-card-body span{font-size:10px;opacity:.55;margin:4px 0}.game-card-body b{font-size:9px}.game-active-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676;margin-right:5px;vertical-align:1px}@media(max-width:800px){.game-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.game-card:first-child{grid-column:auto}.game-art{height:74px}.game-card-body{padding:7px}.game-card-body strong{font-size:9px}.game-card-body span{font-size:8px}.game-card-body b{font-size:8px}}
+
+/* === GAME GRID + POPUP === */
+.mm-games-section{margin:14px 0 16px}
+.mm-games-title{font-size:15px;font-weight:900;color:#dfe5ff;margin:0 0 10px}
+.mm-games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.mm-game-card{
+  min-width:0;min-height:132px;padding:10px 7px;border-radius:16px;
+  background:linear-gradient(145deg,#121a3b,#0a112b);
+  border:1px solid rgba(156,105,255,.38);
+  box-shadow:0 8px 22px rgba(0,0,0,.24);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;cursor:pointer;transition:transform .16s ease,border-color .16s ease;
+}
+.mm-game-card:active{transform:scale(.96)}
+.mm-game-card .game-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;font-size:42px;margin-bottom:7px}
+.mm-game-card .game-name{font-size:11px;font-weight:900;color:#eef1ff;line-height:1.15}
+.mm-game-card .game-desc{font-size:8px;color:#9da8ca;margin-top:4px;line-height:1.2}
+.mm-game-card .game-play{margin-top:7px;padding:5px 9px;border-radius:8px;background:linear-gradient(135deg,#a74cff,#6c25df);color:#fff;font-size:8px;font-weight:900}
+
+.mm-game-overlay{
+  position:fixed;inset:0;z-index:10000;background:rgba(3,6,20,.86);
+  backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;
+  padding:12px;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
+}
+.mm-game-overlay.show{opacity:1;visibility:visible}
+.mm-game-popup{
+  width:min(720px,100%);height:min(88vh,760px);background:#0a102b;
+  border:1px solid rgba(166,116,255,.45);border-radius:22px;overflow:hidden;
+  box-shadow:0 25px 90px rgba(0,0,0,.65);display:flex;flex-direction:column;
+}
+.mm-game-popup-header{
+  min-height:58px;padding:9px 12px;display:flex;align-items:center;gap:10px;
+  background:linear-gradient(180deg,#17113b,#0b112b);border-bottom:1px solid rgba(166,116,255,.25);
+}
+.mm-game-popup-title{flex:1;font-size:15px;font-weight:900;color:#fff}
+.mm-game-popup-close{
+  width:38px;height:38px;border:0;border-radius:11px;background:rgba(255,255,255,.08);
+  color:#fff;font-size:23px;cursor:pointer
+}
+.mm-game-popup-body{flex:1;overflow:auto;padding:14px}
+.mm-game-screen{
+  min-height:100%;border-radius:16px;padding:18px;
+  background:radial-gradient(circle at 50% 20%,#241153,#0a102b 65%);
+  border:1px solid rgba(166,116,255,.22);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+}
+.mm-game-screen .big-icon{font-size:72px;margin-bottom:12px}
+.mm-game-screen h2{color:#fff;font-size:24px;margin-bottom:7px}
+.mm-game-screen p{color:#aebbe0;font-size:12px;max-width:430px;line-height:1.5}
+.mm-game-action{
+  margin-top:18px;border:0;border-radius:12px;padding:12px 22px;
+  background:linear-gradient(135deg,#a74cff,#6c25df);color:#fff;font-weight:900;cursor:pointer
+}
+@media(max-width:520px){
+  .mm-games-grid{gap:6px}
+  .mm-game-card{min-height:112px;padding:8px 4px;border-radius:13px}
+  .mm-game-card .game-icon{width:45px;height:45px;font-size:32px}
+  .mm-game-card .game-name{font-size:9px}
+  .mm-game-card .game-desc{font-size:7px}
+  .mm-game-card .game-play{font-size:7px;padding:4px 7px}
+  .mm-game-overlay{padding:0}
+  .mm-game-popup{width:100%;height:100%;border-radius:0}
+}
 </style>
-<div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Aktif oyunu seç ve kazanmaya başla.</span></div></div>
+<div class="game-hub-title"><div><strong>🎮 OYUNLAR</strong><span>Bir oyun 30 saniye sürer • Her oyun günlük $0.001 kazanır.</span></div></div>
 <div class="game-grid">
-<button class="game-card active" type="button"><div class="game-art">⛏️💎🪙</div><div class="game-card-body"><strong><i class="game-active-dot"></i>GOLD RUSH</strong><span>60 saniye • Aktif</span><b>▶ OYNA</b></div></button>
+<button class="game-card active" type="button"><div class="game-art">⛏️💎🪙</div><div class="game-card-body"><strong><i class="game-active-dot"></i>GOLD RUSH</strong><span>30 saniye • Günlük $0.001</span><b>▶ OYNA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">💠</div><div class="game-card-body"><strong>CRYSTAL HUNT</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">🏃⛏️</div><div class="game-card-body"><strong>MINER RUN</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
 <button class="game-card locked" type="button"><div class="game-art">🏆🪙</div><div class="game-card-body"><strong>TREASURE CAVE</strong><span>Yakında</span><b>🔒 YAKINDA</b></div></button>
@@ -1110,7 +1253,7 @@ img{max-width:100%}
 <div id="miningRushModal" class="mr-modal" aria-hidden="true">
   <div class="mr-modal-backdrop" id="mrModalBackdrop"></div>
   <div class="mr-modal-dialog" role="dialog" aria-modal="true" aria-label="Gold Rush">
-    <div class="mr-modal-header"><div><strong>⛏️ GOLD RUSH</strong><span>60 saniyelik madencilik oyunu</span></div><button type="button" id="mrCloseModal" class="mr-modal-close" aria-label="Kapat">×</button></div>
+    <div class="mr-modal-header"><div><strong>⛏️ GOLD RUSH</strong><span>30 saniyelik madencilik oyunu</span></div><button type="button" id="mrCloseModal" class="mr-modal-close" aria-label="Kapat">×</button></div>
     <div class="mr-modal-body"><div class="mr-card" id="miningRushCard">
   <div class="mr-head"><div><div class="mr-title">⛏️ Mining Rush</div><div class="mr-sub">Break rocks, find rare gems & grow your investment balance.</div></div><div class="mr-live">● LIVE</div></div>
   <div class="mr-stats">
@@ -1120,7 +1263,7 @@ img{max-width:100%}
   </div>
   <div class="mr-arena" id="mrArena">
     <div class="mr-combo" id="mrCombo">🔥 COMBO x0</div><div class="mr-ground"></div>
-    <div class="mr-center" id="mrCenter"><button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 60s</button></div>
+    <div class="mr-center" id="mrCenter"><button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 30s</button></div>
     <div class="mr-result" id="mrResult"><div class="mr-result-box"><h3>⛏️ Mining Complete!</h3><div class="mr-score" id="mrFinalScore">0</div><div class="mr-reward" id="mrFinalReward">+$0.0000</div><small id="mrFinalNote">Your game reward is calculated from your verified score.</small><button type="button" id="mrTransfer">💰 TRANSFER REWARD</button>
 <div class="mr-transfer-status" id="mrTransferStatus" style="display:none;margin-top:10px;font-weight:700;"></div>
 <button type="button" id="mrPlayAgain">Play Again</button></div></div>
@@ -1130,6 +1273,7 @@ img{max-width:100%}
   </div>
 </div>
 
+<div id="dailyGameRewardCard" class="daily-game-reward-card"></div>
 <div class="quick-actions">
 <div class="quick-action-btn notif-btn" onclick="openNotificationsQuick()"><div class="qa-icon"></div><div class="qa-label" data-i18n="notif_btn">notifications</div><div class="qa-badge hidden" id="quickNotifBadge">0</div></div>
 <div class="quick-action-btn bonus-btn" onclick="openSubPopup('dailyBonus')"><div class="qa-icon"></div><div class="qa-label" data-i18n="bonus_btn">daily bonus</div></div>
@@ -1198,7 +1342,7 @@ img{max-width:100%}
 <div class="crypto-info" style="text-align:center"><strong data-i18n="equiv_label">Equivalent:</strong> <span id="buyTrxAmount" style="color:#D59D80;font-weight:800;font-size:18px">8.33</span> TRX</div>
 <button class="btn btn-approve" onclick="buyProduct()" data-i18n="pay_btn">✅ Payment Sent</button>
 <button class="btn btn-secondary" onclick="resetAndGoHome()" data-i18n="cancel_btn">← Cancel</button>
-<div class="history-section"><div class="history-title" data-i18n="dep_hist"> Deposit History</div><div id="depositHistory"></div></div>
+<div id="investmentRoiStatus" style="margin:10px 0;padding:9px;border-radius:9px;background:rgba(167,76,255,.10);border:1px solid rgba(167,76,255,.25);color:#cfc7ff;font-size:10px;font-weight:800;text-align:center">100 günlük ROI • Aktif yatırım: $0.00</div><div class="history-section"><div class="history-title" data-i18n="dep_hist"> Deposit History</div><div id="depositHistory"></div></div>
 </div>
 
 <div id="page-withdraw" class="card hidden">
@@ -1206,11 +1350,11 @@ img{max-width:100%}
 <div class="balance-display">
 <div style="font-size:12px;opacity:.9" data-i18n="bal_label">Balance</div>
 <div class="amount">$<span id="withdrawBalance">0.00</span></div>
-<div style="font-size:11px;margin-top:2px;opacity:.8" data-i18n="min_wd">Min: $0.01</div>
+<div style="font-size:11px;margin-top:2px;opacity:.8" data-i18n="min_wd">Min: $0.25</div>
 </div>
 <h3 data-i18n="amt_usd">Amount (USD)</h3>
 <div style="display:flex;align-items:center;margin-bottom:4px">
-<input type="number" id="withdrawAmount" placeholder="0.00" min="0.01" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:6px">
+<input type="number" id="withdrawAmount" placeholder="0.00" min="0.25" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:6px">
 <button class="max-btn" onclick="setMaxAmount()" data-i18n="max_btn">MAX</button>
 </div>
 <h3 data-i18n="crypto_label"> Crypto</h3>
@@ -1359,7 +1503,7 @@ const i18n = {
         copy_btn: " Copy", qr_label: " Send TRX via QR", warn_net: "IMPORTANT:", warn_net_desc: "Only TRON (TRC20) network is accepted!",
         amt_label: "Amount (USD)", min_amt: "Min: $1", max_amt: "Max: $9,999", equiv_label: "Equivalent:",
         pay_btn: "✅ Payment Sent", cancel_btn: "← Cancel", dep_hist: " Deposit History",
-        wd_title: " Withdraw", bal_label: "Balance", min_wd: "Min: $0.01", amt_usd: "Amount (USD)",
+        wd_title: " Withdraw", bal_label: "Balance", min_wd: "Min: $0.25", amt_usd: "Amount (USD)",
         crypto_label: " Crypto", wallet_addr: " Wallet Address", wd_btn: " Withdraw", wd_hist: " Withdrawal History",
         admin_title: "🔐 Admin", admin_desc: "Admin Panel:", admin_link: "🛡️ Open Admin Panel",
         reg_date: "Joined:", prof_bal: "Balance", prof_inv: "Investment", prof_wd: "Withdrawn", prof_comm: "Commission",
@@ -1381,7 +1525,7 @@ const i18n = {
         copy_btn: "📋 Kopyala", qr_label: " QR ile TRX Gönder", warn_net: "ÖNEMLİ:", warn_net_desc: "Sadece TRON (TRC20) ağı kabul edilir!",
         amt_label: "Tutar (USD)", min_amt: "Min: $1", max_amt: "Max: $9,999", equiv_label: "Karşılık:",
         pay_btn: "✅ Ödemeyi Yaptım", cancel_btn: "← Vazgeç", dep_hist: " Yatırım Geçmişi",
-        wd_title: "💸 Çekim", bal_label: "Bakiye", min_wd: "Min: $0.01", amt_usd: "Miktar (USD)",
+        wd_title: "💸 Çekim", bal_label: "Bakiye", min_wd: "Min: $0.25", amt_usd: "Miktar (USD)",
         crypto_label: " Kripto", wallet_addr: "📍 Cüzdan Adresi", wd_btn: "💸 Çekim Yap", wd_hist: "📜 Çekim Geçmişi",
         admin_title: " Admin", admin_desc: "Admin paneli:", admin_link: "️ Admin Panel",
         reg_date: "Kayıt:", prof_bal: "Bakiye", prof_inv: "Yatırım", prof_wd: "Çekim", prof_comm: "Komisyon",
@@ -1425,7 +1569,7 @@ const i18n = {
         copy_btn: "📋 Copiar", qr_label: "📱 Enviar TRX por QR", warn_net: "IMPORTANTE:", warn_net_desc: "¡Solo se acepta la red TRON (TRC20)!",
         amt_label: "Cantidad (USD)", min_amt: "Mín: $1", max_amt: "Máx: $9,999", equiv_label: "Equivalente:",
         pay_btn: "✅ Pago Enviado", cancel_btn: "← Cancelar", dep_hist: " Historial de Depósitos",
-        wd_title: "💸 Retirar", bal_label: "Saldo", min_wd: "Mín: $0.01", amt_usd: "Cantidad (USD)",
+        wd_title: "💸 Retirar", bal_label: "Saldo", min_wd: "Mín: $0.25", amt_usd: "Cantidad (USD)",
         crypto_label: " Cripto", wallet_addr: " Dirección de Billetera", wd_btn: " Retirar", wd_hist: " Historial de Retiros",
         admin_title: " Admin", admin_desc: "Panel de Administrador:", admin_link: "🛡️ Abrir Panel",
         reg_date: "Registrado:", prof_bal: "Saldo", prof_inv: "Inversión", prof_wd: "Retirado", prof_comm: "Comisión",
@@ -1447,7 +1591,7 @@ const i18n = {
         copy_btn: " Kopieren", qr_label: " TRX per QR senden", warn_net: "WICHTIG:", warn_net_desc: "Nur TRON (TRC20) Netzwerk wird akzeptiert!",
         amt_label: "Betrag (USD)", min_amt: "Min: $1", max_amt: "Max: $9,999", equiv_label: "Äquivalent:",
         pay_btn: "✅ Zahlung gesendet", cancel_btn: "← Abbrechen", dep_hist: " Einzahlungshistorie",
-        wd_title: " Auszahlen", bal_label: "Guthaben", min_wd: "Min: $0.01", amt_usd: "Betrag (USD)",
+        wd_title: " Auszahlen", bal_label: "Guthaben", min_wd: "Min: $0.25", amt_usd: "Betrag (USD)",
         crypto_label: "🪙 Krypto", wallet_addr: " Wallet-Adresse", wd_btn: " Auszahlen", wd_hist: " Auszahlungshistorie",
         admin_title: " Admin", admin_desc: "Admin-Panel:", admin_link: "🛡️ Panel öffnen",
         reg_date: "Beigetreten:", prof_bal: "Guthaben", prof_inv: "Investition", prof_wd: "Ausgezahlt", prof_comm: "Provision",
@@ -1514,8 +1658,10 @@ let dailyBonusData={lastClaim:0,streak:0};
 let notificationsData=[],earningsHistory=[],currentChartPeriod='7d';
 let taskClaims={};
 let taskRewardTotal=0;
+let dailyRewardPool=0,dailyGameRewards={};
+let gameInvestments=[];
 
-const DAILY_RATE=1/90,PER_SECOND=DAILY_RATE/86400;
+const ROI_DAYS=100,DAILY_RATE=1/ROI_DAYS,PER_SECOND=DAILY_RATE/86400,ROI_MS=ROI_DAYS*86400000;
 const DEPOSIT_WALLET="TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN",DISCOUNT_RATE=0.20,MIN_DEPOSIT=1,MAX_DEPOSIT=9999;
 const CRYPTO_SYMBOLS={trx:'TRX',bnb:'BNB',xrp:'XRP'};
 const NETWORK_INFO={trx:{fullName:'TRON (TRC20)',description:'TRX coin\'leri TRON ağı üzerinden gönderilecektir.'},bnb:{fullName:'BSC (BEP20)',description:'BNB coin\'leri BSC ağı üzerinden gönderilecektir.'},xrp:{fullName:'XRP Ledger',description:'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.'}};
@@ -1630,7 +1776,7 @@ h=`<div class="sub-popup-header"><div class="sub-popup-title"> Referral</div><bu
 h=`<div class="sub-popup-header"><div class="sub-popup-title">❓ FAQ</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> How to invest?</span><span>▼</span></div><div class="faq-answer">Select a package, send TRX, click "Payment Sent". Earnings start after admin approval.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> When do earnings start?</span><span>▼</span></div><div class="faq-answer">Automatically after admin approval. Daily rate: 1.11% (2x in 90 days).</div></div>
-<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> How to withdraw?</span><span>▼</span></div><div class="faq-answer">Click "Withdraw", enter amount, select crypto and wallet. Min: $0.01.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> How to withdraw?</span><span>▼</span></div><div class="faq-answer">Click "Withdraw", enter amount, select crypto and wallet. Min: $0.25.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Bonuses?</span><span>▼</span></div><div class="faq-answer">Daily bonuses are added directly to your investment balance.</div></div>
 <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question"><span> Referrals?</span><span>▼</span></div><div class="faq-answer">Share your link, earn 10% commission on every investment made by your referrals. New members get a $1 welcome bonus.</div></div>`;
 }else if(type==='dailyBonus'){h=renderDailyBonus()}
@@ -1647,6 +1793,37 @@ function closeSubOutside(e){if(e.target===document.getElementById('subOverlay'))
 function toggleFaq(el){el.classList.toggle('open')}
 function openSupport(){const u=`https://t.me/${GAME_BOT_USERNAME}`;if(tg.openTelegramLink)tg.openTelegramLink(u);else window.open(u,'_blank')}
 
+
+async function claimDailyGameReward(){
+  const amount=Number(dailyRewardPool||0);
+  if(amount<=0){alert('Daily Reward bakiyeniz henüz birikmedi.');return;}
+  try{
+    const ur=db.collection('users').doc(userId),now=Date.now();
+    await db.runTransaction(async tx=>{
+      const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
+      const x=snap.data()||{},pool=x.dailyRewardPool||{},poolAmount=Number(pool.amount||0);
+      if(poolAmount<=0)throw new Error('Daily Reward boş');
+      const invs=Array.isArray(x.gameInvestments)?x.gameInvestments.slice():[];
+      invs.push({id:'daily_game_'+now,amount:poolAmount,source:'Daily Reward',roiDays:100,
+        startAt:now,endAt:now+100*86400000,status:'active',createdAt:now});
+      tx.set(ur,{
+        totalInvested:Number(x.totalInvested||0)+poolAmount,
+        gameInvestments:invs,
+        dailyRewardPool:{date:new Date().toISOString().slice(0,10),amount:0,games:{}},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),
+          {date:now,earnings:poolAmount,source:'daily_reward_to_investment',roiDays:100}]
+      },{merge:true});
+    });
+    totalInvested+=amount;dailyRewardPool=0;dailyGameRewards={};mr.daily=0;
+    mrUpdate();updateUI();renderDailyGameRewardCard();
+    alert('✓ $'+amount.toFixed(4)+' üretim yatırımına eklendi.\n100 günlük ROI başladı.');
+  }catch(e){console.error(e);alert('❌ '+e.message);}
+}
+function renderDailyGameRewardCard(){
+  const el=document.getElementById('dailyGameRewardCard');if(!el)return;
+  const a=Number(dailyRewardPool||0);
+  el.innerHTML='<div class="dgr-title">🎁 DAILY REWARD</div><div class="dgr-amount">$'+a.toFixed(4)+'</div><div class="dgr-sub">Tüm oyun ödülleri burada birikir • Günlük toplam $'+ALL_GAMES_DAILY_LIMIT.toFixed(2)+'</div><button '+(a>0?'':'disabled')+' onclick="claimDailyGameReward()">⚡ ÜRETİME EKLE</button>';
+}
 function renderDailyBonus(){
 const today=new Date().toDateString();
 const lc=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
@@ -1664,28 +1841,33 @@ ${cc?`<button class="btn btn-approve" style="margin-top:12px" onclick="claimDail
 }
 
 async function claimDailyBonus(){
- const today=new Date().toDateString();
- const lc=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
- if(today===lc){alert('Already claimed today!');return}
- const cs=dailyBonusData.streak||0,b=DAILY_BONUSES[Math.min(cs,6)],ns=cs+1;
- try{
-  const ur=db.collection('users').doc(userId);
-  await db.runTransaction(async tx=>{
-   const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
-   const x=snap.data()||{};
-   if(x.dailyBonus?.lastClaim&&new Date(x.dailyBonus.lastClaim).toDateString()===today)throw new Error('Already claimed today!');
-   tx.set(ur,{dailyBonus:{lastClaim:Date.now(),streak:ns},totalInvested:Number(x.totalInvested||0)+b,bonusInvestmentTotal:Number(x.bonusInvestmentTotal||0)+b,earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:Date.now(),earnings:b,source:'daily_bonus_investment'}],lastActive:Date.now()},{merge:true});
-  });
-  totalInvested+=b;dailyBonusData={lastClaim:Date.now(),streak:ns};
-  addNotification('Daily Bonus',`$${b.toFixed(2)} added to Total Investment!`,'bonus');
-  alert(`$${b.toFixed(2)} added to Total Investment!`);
-  updateUI();openSubPopup('dailyBonus');
- }catch(e){alert('Error: '+e.message)}
+const today=new Date().toDateString();
+const lc=dailyBonusData.lastClaim?new Date(dailyBonusData.lastClaim).toDateString():'';
+if(today===lc){alert('Already claimed today!');return}
+const cs=dailyBonusData.streak||0;
+const b=DAILY_BONUSES[Math.min(cs,6)],ns=cs+1;
+try{
+ const ur=db.collection('users').doc(userId);
+ await db.runTransaction(async tx=>{
+  const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
+  const x=snap.data()||{};
+  if(x.dailyBonus?.lastClaim&&new Date(x.dailyBonus.lastClaim).toDateString()===today)throw new Error('Already claimed today!');
+  const now=Date.now(),invs=Array.isArray(x.gameInvestments)?x.gameInvestments.slice():[];
+  invs.push({id:'bonus_daily_'+now+'_'+Math.random().toString(36).slice(2,8),amount:b,principal:b,source:'Daily Bonus',roiDays:100,startAt:now,endAt:now+100*86400000,status:'active',createdAt:now});
+  tx.set(ur,{dailyBonus:{lastClaim:now,streak:ns},gameInvestments:invs,bonusInvestmentTotal:Number(x.bonusInvestmentTotal||0)+b,earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:now,earnings:b,source:'daily_bonus_investment',roiDays:100}],lastActive:now},{merge:true});
+ });
+ totalInvested=(totalInvested||0)+b;
+ dailyBonusData={lastClaim:Date.now(),streak:ns};
+ addNotification('🎁 Daily Bonus',`$${b.toFixed(2)} added to Total Investment! Streak: ${ns}`,'bonus');
+ alert(`$${b.toFixed(2)} added to Total Investment!\n🔥 Streak: ${ns}`);
+ updateUI();openSubPopup('dailyBonus');
+ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
+}catch(e){console.error('Daily bonus error:',e);alert('❌ '+e.message)}
 }
 
 // GÖREVLER - GÜVENLİ CLAIM SİSTEMİ
 // Gerçek yatırım tutarı yalnızca onaylanmış yatırımlardan hesaplanır.
-// Görev ödülleri totalInvested'e eklenmez; doğrudan lifetimeEarnings/balance'a eklenir.
+// Görev ödülleri doğrudan Total Investment'a eklenir; balance'a yazılmaz.
 function getVerifiedInvestmentAmount(userData){
     const payments = Array.isArray(userData?.approvedPayments) ? userData.approvedPayments : [];
     return payments.reduce((sum,p)=>{
@@ -1775,13 +1957,16 @@ async function claimTaskReward(id){
 
             claimedTask=task;
             claims[id]=true;
+            const now=Date.now(),invs=Array.isArray(x.gameInvestments)?x.gameInvestments.slice():[];
+            invs.push({id:'bonus_task_'+id+'_'+now,amount:task.reward,principal:task.reward,source:'Task Bonus',taskId:id,roiDays:100,startAt:now,endAt:now+100*86400000,status:'active',createdAt:now});
 
             transaction.set(ur,{
                 taskClaims:claims,
                 taskRewardTotal:Number(x.taskRewardTotal||0)+task.reward,
-                totalInvested:Number(x.totalInvested||0)+task.reward,
+                gameInvestments:invs,
                 bonusInvestmentTotal:Number(x.bonusInvestmentTotal||0)+task.reward,
-                lastActive:Date.now()
+                earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:now,earnings:task.reward,source:'task_bonus_investment',taskId:id,roiDays:100}],
+                lastActive:now
             },{merge:true});
         });
 
@@ -1794,7 +1979,7 @@ const btcEl=document.getElementById('balanceBtc');
 if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
 
         addNotification('🎯 Task',`${claimedTask.title} claimed! +$${claimedTask.reward.toFixed(2)} added to Total Investment.`,'bonus');
-        alert(`✅ ${claimedTask.title}\n+$${claimedTask.reward.toFixed(2)} added to your balance!`);
+        alert(`✅ ${claimedTask.title}\n+$${claimedTask.reward.toFixed(2)} added to Total Investment!\n100-day production started.`);
         updateUI();
         closeSubPopup();
         if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
@@ -1864,23 +2049,23 @@ await rd.ref.set({referralCount:((rd.data().referralCount)||0)+1},{merge:true});
 
 async function giveWelcomeBonus(){
 try{
-const ur=db.collection('users').doc(userId);
-const ud=await ur.get();
-if(ud.exists&&ud.data().welcomeBonusGiven)return;
-
-await ur.set({
-totalInvested:(totalInvested||0)+WELCOME_BONUS,
-bonusInvestmentTotal:Number((ud.data()||{}).bonusInvestmentTotal||0)+WELCOME_BONUS,
-welcomeBonusGiven:true,
-welcomeBonusAt:Date.now()
-},{merge:true});
-
-totalInvested=(totalInvested||0)+WELCOME_BONUS;
-
-document.getElementById('welcomeAmount').textContent=WELCOME_BONUS.toFixed(2);
-document.getElementById('welcomePopup').classList.remove('hidden');
-addNotification(' Welcome!',`$${WELCOME_BONUS.toFixed(2)} added to your investment!`,'bonus');
-if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
+ const ur=db.collection('users').doc(userId);
+ let given=false;
+ await db.runTransaction(async tx=>{
+  const ud=await tx.get(ur);const x=ud.exists?ud.data()||{}:{};
+  if(x.welcomeBonusGiven)return;
+  const now=Date.now(),invs=Array.isArray(x.gameInvestments)?x.gameInvestments.slice():[];
+  invs.push({id:'bonus_welcome_'+now,amount:WELCOME_BONUS,principal:WELCOME_BONUS,source:'Welcome Bonus',roiDays:100,startAt:now,endAt:now+100*86400000,status:'active',createdAt:now});
+  tx.set(ur,{gameInvestments:invs,bonusInvestmentTotal:Number(x.bonusInvestmentTotal||0)+WELCOME_BONUS,welcomeBonusGiven:true,welcomeBonusAt:now,lastActive:now},{merge:true});
+  given=true;
+ });
+ if(!given)return;
+ totalInvested=(totalInvested||0)+WELCOME_BONUS;
+ document.getElementById('welcomeAmount').textContent=WELCOME_BONUS.toFixed(2);
+ document.getElementById('welcomePopup').classList.remove('hidden');
+ addNotification('🎁 Welcome!',`$${WELCOME_BONUS.toFixed(2)} added to your investment!`,'bonus');
+ updateUI();
+ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }catch(e){console.error('Welcome bonus error:',e)}
 }
 function closeWelcomePopup(){document.getElementById('welcomePopup').classList.add('hidden')}
@@ -1924,7 +2109,7 @@ function clearAddressValidation(){document.getElementById('walletAddress').style
 function updateNetworkInfo(){const c=document.getElementById('withdrawCrypto').value;const n=NETWORK_INFO[c];document.getElementById('networkInfo').innerHTML=` <strong>Network:</strong> ${n.fullName}`}
 
 function adjustAmount(d){const i=document.getElementById('buyAmount');let v=parseFloat(i.value)||0;v=Math.round((v+d)*100)/100;if(v<MIN_DEPOSIT)v=MIN_DEPOSIT;if(v>MAX_DEPOSIT)v=MAX_DEPOSIT;i.value=v.toFixed(2);updateBuyTRX()}
-function setMaxAmount(){const m=Math.max(0.01,balance);if(m<0.01){alert('❌ No balance to withdraw!');return}document.getElementById('withdrawAmount').value=m.toFixed(2);updateCryptoAmount();if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}
+function setMaxAmount(){const m=Math.max(0.25,balance);if(balance<0.25){alert('❌ Minimum withdrawal is $0.25');return}document.getElementById('withdrawAmount').value=m.toFixed(2);updateCryptoAmount();if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}
 
 function renderPackages(){
 const c=document.getElementById('packagesContainer');c.innerHTML='';
@@ -2032,28 +2217,65 @@ setTimeout(() => showRecentAnnouncements(), 1000);
 setInterval(updateEarnings,1000);
 }).catch(e=>console.error('Login error:',e));
 
+function toMs(v){
+  if(v==null)return 0;
+  if(typeof v==='number')return v;
+  if(v.toDate)return v.toDate().getTime();
+  const n=Date.parse(v);return Number.isFinite(n)?n:0;
+}
+function investmentPrincipal(item){
+  const n=Number(item?.principal ?? item?.amount ?? item?.discountedPrice ?? 0);
+  return Number.isFinite(n)&&n>0?n:0;
+}
+function investmentStart(item){return toMs(item?.startAt ?? item?.approvedAt ?? item?.timestamp) || Date.now()}
+function investmentEnd(item){return investmentStart(item)+ROI_MS}
+function getAllInvestments(data={}){
+  const approved=Array.isArray(data.approvedPayments)?data.approvedPayments:[];
+  const games=Array.isArray(data.gameInvestments)?data.gameInvestments:[];
+  return approved.map(p=>({...p,sourceType:'deposit'})).concat(games.map(p=>({...p,sourceType:'game'})));
+}
+function getActivePrincipal(data={},now=Date.now()){
+  return getAllInvestments(data).reduce((sum,p)=>{
+    const principal=investmentPrincipal(p),start=investmentStart(p),end=investmentEnd(p);
+    return sum+(principal>0 && now>=start && now<end ? principal:0);
+  },0);
+}
+function getProductionBetween(data,fromMs,toMs){
+  if(toMs<=fromMs)return 0;
+  return getAllInvestments(data).reduce((sum,p)=>{
+    const principal=investmentPrincipal(p);if(principal<=0)return sum;
+    const start=investmentStart(p),end=investmentEnd(p);
+    const a=Math.max(fromMs,start),b=Math.min(toMs,end);
+    if(b<=a)return sum;
+    return sum+principal*((b-a)/ROI_MS);
+  },0);
+}
+function refreshActiveInvestmentState(now=Date.now()){
+  const data={approvedPayments:products,gameInvestments};
+  totalInvested=getActivePrincipal(data,now);
+  return totalInvested;
+}
+
 async function calculateOfflineEarnings(){
 try{
 const d=await db.collection('users').doc(userId).get();
 if(d.exists){
-const x=d.data();const now=Date.now();const la=x.lastActive||now;const os=(now-la)/1000;
+const x=d.data()||{},now=Date.now(),la=x.lastActive||now;
 createdAt=x.created_at?(x.created_at.toDate?x.created_at.toDate():new Date(x.created_at)):null;
 if(x.dailyBonus)dailyBonusData=x.dailyBonus;
 if(x.notifications)notificationsData=x.notifications;
 if(x.earningsHistory)earningsHistory=x.earningsHistory;
 if(x.referralEarnings!==undefined)referralEarnings=x.referralEarnings;
-if(os > 5 && x.totalInvested > 0){
-const oe = os * (x.totalInvested * PER_SECOND);
-if(oe > 0.001){
-await db.collection('users').doc(userId).update({lifetimeEarnings: (x.lifetimeEarnings||0) + oe, lastActive: now});
-showOfflinePopup(oe);
-}
+const oe=getProductionBetween(x,la,now);
+if(oe>0){
+  await db.collection('users').doc(userId).update({lifetimeEarnings:Number(x.lifetimeEarnings||0)+oe,lastActive:now});
+  showOfflinePopup(oe);
 }else{ await db.collection('users').doc(userId).update({lastActive:now}); }
 }else{
 await db.collection('users').doc(userId).set({lifetimeEarnings:0,totalWithdrawn:0,lastActive:Date.now(),created_at:firebase.firestore.FieldValue.serverTimestamp()});
 }
 updateQuickNotifBadge();
-}catch(e){console.error('Offline error:',e)}
+}catch(e){console.error('Offline earnings error:',e)}
 }
 
 function showOfflinePopup(a){document.getElementById('offlineEarnedAmount').textContent=a.toFixed(4);document.getElementById('offlinePopup').classList.remove('hidden');if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')}
@@ -2065,9 +2287,10 @@ if(d.exists){
 const x=d.data();
 if(x.userName) currentUser = { ...currentUser, first_name: x.userName };
 products=(x.approvedPayments||[]).map(p=>({...p,earned:0}));
-lifetimeEarnings=x.lifetimeEarnings||0;
-totalWithdrawn=x.totalWithdrawn||0;
-totalInvested=x.totalInvested||0;
+gameInvestments=Array.isArray(x.gameInvestments)?x.gameInvestments:[];
+lifetimeEarnings=Number(x.lifetimeEarnings||0);
+totalWithdrawn=Number(x.totalWithdrawn||0);
+totalInvested=getActivePrincipal({approvedPayments:products,gameInvestments},Date.now());
 balance=lifetimeEarnings-totalWithdrawn;
 const btcEl=document.getElementById('balanceBtc');
 if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
@@ -2086,6 +2309,10 @@ const mrDaily=x.miningRushDaily||{};
 const mrToday=new Date().toISOString().slice(0,10);
 mr.dailyDate=mrDaily.date===mrToday?mrToday:'';
 mr.daily=mrDaily.date===mrToday?Math.min(MR_DAILY_LIMIT,Number(mrDaily.amount||0)):0;
+    const dr=x.dailyRewardPool||{};
+    dailyRewardPool=dr.date===mrToday?Math.min(ALL_GAMES_DAILY_LIMIT,Number(dr.amount||0)):0;
+    dailyGameRewards=dr.games||{};
+    mr.daily=Number(dailyGameRewards.gold_rush||0);
 mrUpdate();
 updateUI();
 updateQuickNotifBadge();
@@ -2116,14 +2343,21 @@ if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }
 
 async function updateEarnings(){
-    const ps = totalInvested * PER_SECOND; 
-    lifetimeEarnings += ps;
-    balance = lifetimeEarnings - totalWithdrawn;
-    try{ await db.collection('users').doc(userId).set({ lifetimeEarnings: lifetimeEarnings, lastActive: Date.now() },{merge:true}); }catch(e){console.error(e)}
-    updateUI();
+  if(!userId)return;
+  const now=Date.now();
+  const activePrincipal=refreshActiveInvestmentState(now);
+  const ps=activePrincipal*PER_SECOND;
+  if(ps<=0){updateUI();return;}
+  lifetimeEarnings+=ps;
+  balance=lifetimeEarnings-totalWithdrawn;
+  try{
+    await db.collection('users').doc(userId).set({lifetimeEarnings,lastActive:now},{merge:true});
+  }catch(e){console.error('Earnings update error:',e)}
+  updateUI();
 }
 
 function updateUI(){
+refreshActiveInvestmentState(Date.now());
 const estEl=document.getElementById('estimatedEarnings');
 if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
 
@@ -2137,6 +2371,7 @@ if(estEl)estEl.textContent='$'+Number(estimatedEarnings||0).toFixed(4);
     
     document.getElementById('withdrawBalance').textContent=balance.toFixed(2);
     document.getElementById('totalInvested').textContent='$'+totalInvested.toFixed(4);
+    const roiEl=document.getElementById('investmentRoiStatus'); if(roiEl) roiEl.textContent='100 günlük ROI • Aktif yatırım: $'+totalInvested.toFixed(4);
     document.getElementById('earnPerMin').textContent=(totalInvested*PER_SECOND*60).toFixed(4);
     document.getElementById('earnPerHour').textContent=(totalInvested*PER_SECOND*3600).toFixed(4);
     document.getElementById('earnPerDay').textContent=(totalInvested*PER_SECOND*86400).toFixed(4);
@@ -2148,7 +2383,7 @@ async function requestWithdrawal(){
 const a=parseFloat(document.getElementById('withdrawAmount').value);
 const c=document.getElementById('withdrawCrypto').value;
 const w=document.getElementById('walletAddress').value.trim();
-if(a<0.01){alert(' Min $0.01');return}
+if(!Number.isFinite(a)||a<0.25){alert('❌ Minimum withdrawal is $0.25');return}
 if(a>balance){alert('❌ Insufficient balance!');return}
 if(!w){alert('❌ Wallet address required!');return}
 const v=validateAddress(w,c);
@@ -2183,8 +2418,9 @@ try{
 const d=await db.collection('users').doc(userId).get();
 const x=d.data()||{};
 let ad=[];
-if(x.pendingPayments&&Array.isArray(x.pendingPayments))x.pendingPayments.forEach(p=>ad.push({...p,status:p.status||'pending'}));
-if(x.approvedPayments&&Array.isArray(x.approvedPayments))x.approvedPayments.forEach(p=>ad.push({...p,status:'approved'}));
+if(x.pendingPayments&&Array.isArray(x.pendingPayments))x.pendingPayments.forEach(p=>ad.push({...p,status:p.status||'pending',sourceType:'deposit'}));
+if(x.approvedPayments&&Array.isArray(x.approvedPayments))x.approvedPayments.forEach(p=>ad.push({...p,status:'approved',sourceType:'deposit'}));
+if(x.gameInvestments&&Array.isArray(x.gameInvestments))x.gameInvestments.forEach(p=>ad.push({...p,status:'approved',sourceType:'game',packageName:'⛏️ Mining Rush Reinvestment',network:'IN-APP',coin:'USD'}));
 ad.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
 if(ad.length===0){c.innerHTML='<div class="empty-history">No deposits</div>';return}
 let h='';
@@ -2193,9 +2429,10 @@ const dt=d.timestamp?new Date(d.timestamp).toLocaleString('en-US'):'Loading...';
 const st=d.status||'pending';
 const sc=st==='approved'?'success':(st==='rejected'?'rejected':'pending');
 const sx=st==='approved'?'✅ Approved':(st==='rejected'?'❌ Rejected':' Pending');
-const pt=d.packageName?' '+d.packageName:'💰 Manual';
+const pt=d.sourceType==='game'?' ⛏️ Mining Rush Reinvestment':(d.packageName?' '+d.packageName:'💰 Manual');
 const tt=d.trxAmount?`(${d.trxAmount} TRX)`:'';
-h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Amount:</span><span class="h-value">$${(d.amount||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label"> Network:</span><span class="h-value">${d.network||'TRON'}</span></div><div class="h-date"> ${dt}</div></div>`;
+const roi=d.sourceType==='game'?' • 100-Day ROI':'';
+h+=`<div class="history-item ${sc}"><div class="h-row"><span class="h-label">${pt}</span><span class="status-badge ${sc}">${sx}</span></div><div class="h-row"><span class="h-label">Amount:</span><span class="h-value">$${Number(d.amount||d.principal||0).toFixed(2)} ${tt}</span></div><div class="h-row"><span class="h-label"> Network:</span><span class="h-value">${d.network||'TRON'}${roi}</span></div><div class="h-date"> ${dt}</div></div>`;
 });
 c.innerHTML=h;
 }catch(e){console.error(e);c.innerHTML='<div class="empty-history">Failed to load</div>'}
@@ -2247,15 +2484,15 @@ function showPage(p, element) {
 
 
 /* === MINING RUSH GAME === */
-const MR_GAME_SECONDS=60,MR_MAX_SECONDS=75,MR_POINTS_TO_USD=0.0000005,MR_DAILY_LIMIT=0.001;
-let mr={running:false,score:0,time:60,combo:0,bestCombo:0,spawnTimer:null,timer:null,remaining:60,earned:0,daily:0,dailyDate:'',pendingTransfer:0};
+const MR_GAME_SECONDS=30,MR_MAX_SECONDS=30,MR_POINTS_TO_USD=0.0000005,MR_DAILY_LIMIT=0.001,ALL_GAMES_DAILY_LIMIT=0.01;
+let mr={running:false,score:0,time:30,combo:0,bestCombo:0,spawnTimer:null,timer:null,remaining:30,earned:0,daily:0,dailyDate:'',pendingTransfer:0};
 function mrEl(id){return document.getElementById(id)}
 function mrUpdate(){
   mrEl('mrScore').textContent=mr.score.toLocaleString();
-  mrEl('mrTime').textContent=mr.running?mr.remaining+'s':'60s';
+  mrEl('mrTime').textContent=mr.running?mr.remaining+'s':'30s';
   mrEl('mrReward').textContent='$'+Math.max(0,mr.score*MR_POINTS_TO_USD).toFixed(4);
   mrEl('mrProgress').style.width=Math.max(0,Math.min(100,(1-mr.remaining/MR_GAME_SECONDS)*100))+'%';
-  mrEl('mrDaily').textContent='$'+mr.daily.toFixed(3)+' / $'+MR_DAILY_LIMIT.toFixed(3);
+  mrEl('mrDaily').textContent='$'+dailyRewardPool.toFixed(3)+' / $'+ALL_GAMES_DAILY_LIMIT.toFixed(2);
 }
 function mrClearObjects(){mrArena.querySelectorAll('.mr-object,.mr-float').forEach(x=>x.remove())}
 function mrFloat(x,y,text){
@@ -2315,7 +2552,7 @@ function mrHit(o){
 function mrStartGame(){
   if(mr.running)return;
   mrClearObjects();
-  mr={running:false,score:0,time:60,combo:0,bestCombo:0,remaining:60,earned:0,daily:mr.daily,dailyDate:mr.dailyDate,pendingTransfer:0};
+  mr={running:false,score:0,time:30,combo:0,bestCombo:0,remaining:30,earned:0,daily:mr.daily,dailyDate:mr.dailyDate,pendingTransfer:0};
   mrEl('mrResult').classList.remove('show');
   mrEl('mrCenter').innerHTML='<div class="mr-count" id="mrCount">3</div>';
   let n=3;
@@ -2334,7 +2571,7 @@ function mrEndGame(){
   mr.earned=reward;mr.pendingTransfer=reward;
   mrEl('mrFinalScore').textContent=mr.score.toLocaleString()+' pts';
   mrEl('mrFinalReward').textContent='+$'+reward.toFixed(4);
-  mrEl('mrFinalNote').textContent=reward>0?'Ödülün hazır. Yatırım bakiyene aktarmak için butona bas.':'Bugün için maksimum $0.001 ödül hakkın var.';
+  mrEl('mrFinalNote').textContent=reward>0?'Ödülün yatırım bakiyene eklenir ve 100 gün boyunca üretim yapar.':'Bugün için maksimum $0.001 ödül hakkın var.';
   const btn=mrEl('mrTransfer');
   if(btn){btn.disabled=reward<=0;btn.dataset.done='0';btn.textContent=reward>0?'💰 TRANSFER REWARD':'LIMIT REACHED'}
   const st=mrEl('mrTransferStatus');if(st){st.style.display='none';st.textContent=''}
@@ -2343,37 +2580,42 @@ function mrEndGame(){
 async function mrTransferReward(){
   const btn=mrEl('mrTransfer'),status=mrEl('mrTransferStatus');
   if(!btn||!status||mr.pendingTransfer<=0||btn.dataset.done==='1')return;
-  const amount=mr.pendingTransfer;
+  const amount=Math.min(Number(mr.pendingTransfer||0),MR_DAILY_LIMIT);
   btn.disabled=true;status.style.display='block';
-  status.innerHTML='<span class="mr-transfer-loader"><span class="mr-transfer-ring"></span> Hesaba aktarılıyor...</span>';
+  status.textContent='Daily Reward’a ekleniyor...';
   try{
     const ur=db.collection('users').doc(userId),today=new Date().toISOString().slice(0,10);
+    let credited=0;
     await db.runTransaction(async tx=>{
       const snap=await tx.get(ur);if(!snap.exists)throw new Error('User account not found');
-      const x=snap.data()||{},md=x.miningRushDaily||{},used=md.date===today?Number(md.amount||0):0;
-      const available=Math.max(0,MR_DAILY_LIMIT-used);
-      const credit=Math.min(amount,available);
-      if(credit<=0)throw new Error('Daily game limit reached');
+      const x=snap.data()||{},dr=x.dailyRewardPool||{};
+      const usedTotal=dr.date===today?Number(dr.amount||0):0;
+      const games=dr.date===today&&dr.games?{...dr.games}:{};
+      const gameUsed=Number(games.gold_rush||0);
+      credited=Math.min(amount,Math.max(0,MR_DAILY_LIMIT-gameUsed),Math.max(0,ALL_GAMES_DAILY_LIMIT-usedTotal));
+      if(credited<=0)throw new Error('Daily game limit reached');
+      games.gold_rush=gameUsed+credited;
       tx.set(ur,{
-        totalInvested:Number(x.totalInvested||0)+credit,
-        miningRushDaily:{date:today,amount:used+credit},
-        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),{date:Date.now(),earnings:credit,source:'mining_rush_investment',score:mr.score}],
+        dailyRewardPool:{date:today,amount:usedTotal+credited,games},
+        earningsHistory:[...(Array.isArray(x.earningsHistory)?x.earningsHistory.slice(-99):[]),
+          {date:Date.now(),earnings:credited,source:'gold_rush_daily_reward',score:mr.score}],
         lastActive:Date.now()
       },{merge:true});
     });
-    mr.daily=(mr.dailyDate===today?mr.daily:0)+amount;mr.daily=Math.min(MR_DAILY_LIMIT,mr.daily);
-    mr.dailyDate=today;mr.pendingTransfer=0;
-    status.textContent='✓ $'+credited.toFixed(4)+' yatırım bakiyene aktarıldı.';
-    btn.textContent='✓ AKTARILDI';btn.dataset.done='1';mrUpdate();updateUI();
-    if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')
+    dailyRewardPool+=credited;
+    dailyGameRewards.gold_rush=Number(dailyGameRewards.gold_rush||0)+credited;
+    mr.daily=dailyGameRewards.gold_rush;mr.dailyDate=today;mr.pendingTransfer=0;
+    status.textContent='✓ $'+credited.toFixed(4)+' Daily Reward bakiyesine eklendi.';
+    btn.textContent='✓ DAILY REWARD’A EKLENDİ';btn.dataset.done='1';mrUpdate();updateUI();renderDailyGameRewardCard();
+    if(tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
   }catch(e){
-    console.error('Mining transfer error:',e);
-    btn.disabled=false;status.textContent=e.message==='Daily game limit reached'?'⚠️ Bugünkü $0.001 oyun ödülü zaten aktarıldı.':'❌ Aktarım başarısız. Tekrar deneyin.'
+    console.error('Mining transfer error:',e);btn.disabled=false;
+    status.textContent=e.message==='Daily game limit reached'?'⚠️ Bu oyun için günlük $0.001 limitine ulaşıldı.':'❌ Daily Reward aktarımı başarısız. Tekrar deneyin.';
   }
 }
 
 const mrArena=document.getElementById('mrArena');
-mrEl('mrStart').addEventListener('click',mrStartGame);mrEl('mrPlayAgain').addEventListener('click',mrStartGame);mrEl('mrTransfer').addEventListener('click',mrTransferReward);document.querySelector('.game-card.active').addEventListener('click',()=>mrEl('miningRushCard').scrollIntoView({behavior:'smooth',block:'center'}));mrUpdate();
+mrEl('mrStart').addEventListener('click',mrStartGame);mrEl('mrPlayAgain').addEventListener('click',mrStartGame);mrEl('mrTransfer').addEventListener('click',mrTransferReward);mrUpdate();
 const mrModal=document.getElementById('miningRushModal'),mrGoldCard=document.querySelector('.game-grid .game-card.active'),mrCloseBtn=document.getElementById('mrCloseModal'),mrBackdrop=document.getElementById('mrModalBackdrop');
 function openMiningRushModal(){if(!mrModal)return;mrModal.classList.add('show');mrModal.setAttribute('aria-hidden','false');document.body.classList.add('mr-modal-open')}
 function closeMiningRushModal(){if(mr&&mr.running)return;if(mrModal){mrModal.classList.remove('show');mrModal.setAttribute('aria-hidden','true')}document.body.classList.remove('mr-modal-open')}
@@ -2382,7 +2624,23 @@ if(mrCloseBtn)mrCloseBtn.addEventListener('click',closeMiningRushModal);
 if(mrBackdrop)mrBackdrop.addEventListener('click',closeMiningRushModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.classList.contains('show'))closeMiningRushModal()});
 
+
+(function(){
+  function ensureMobileTransfer(){
+    var b=document.getElementById('mrTransfer');
+    if(!b)return;
+    b.style.display='block';
+    b.style.visibility='visible';
+    b.style.opacity='1';
+    b.style.width='100%';
+    b.style.minHeight='48px';
+  }
+  document.addEventListener('DOMContentLoaded',ensureMobileTransfer);
+  window.addEventListener('resize',ensureMobileTransfer);
+})();
+
 </script>
+
 
 <div class="mm-bottom-nav">
  <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
@@ -2391,5 +2649,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.cl
  <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
  <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
 </div>
+
+
+
 </body>
 </html>
