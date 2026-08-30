@@ -3,652 +3,1536 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ Hash Mining - Admin Panel</title>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<title>⚡ Micro Monetize - Admin Panel</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
-body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);color:#C6C6D0;padding:20px;min-height:100vh}
-.container{max-width:900px;margin:0 auto}
-.header{background:linear-gradient(135deg,#C0754D,#B6410F);border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 20px rgba(192,117,77,.3);color:#fff}
-.header h1{font-size:24px;margin-bottom:8px}
-.header .subtitle{font-size:13px;opacity:.9}
-.settings-card{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.settings-card h3{color:#D59D80;font-size:14px;margin-bottom:12px}
-.input-group{margin-bottom:12px}
-.input-group label{display:block;color:#C6C6D0;font-size:12px;margin-bottom:6px;font-weight:600}
-.input-group input{width:100%;padding:10px 12px;background:#0D1D25;border:1px solid rgba(192,117,77,.4);border-radius:8px;color:#C6C6D0;font-size:13px;font-family:monospace}
-.input-group input:focus{outline:none;border-color:#D59D80}
-.btn{background:linear-gradient(135deg,#C0754D,#B6410F);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(192,117,77,.4)}
-.btn-success{background:linear-gradient(135deg,#D59D80,#C0754D)}
-.btn-danger{background:linear-gradient(135deg,#B6410F,#8B2F0F)}
-.btn-secondary{background:#0D1D25;border:1px solid rgba(198,198,208,.3);color:#C6C6D0}
-.btn-sm{padding:6px 12px;font-size:12px}
-.status-bar{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px}
-.status-dot{width:10px;height:10px;border-radius:50%;background:#B6410F;animation:pulse 2s infinite}
-.status-dot.active{background:#D59D80}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:2px solid rgba(192,117,77,.3);flex-wrap:wrap}
-.tab{flex:1;padding:12px;background:transparent;border:none;border-bottom:3px solid transparent;color:#C6C6D0;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;white-space:nowrap}
-.tab:hover{color:#fff}
-.tab.active{color:#D59D80;border-bottom-color:#D59D80}
-.tab .count{background:#C0754D;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:6px}
-.item-card{background:#104C64;border:1px solid rgba(192,117,77,.3);border-left:4px solid #C0754D;border-radius:10px;padding:14px;margin-bottom:10px}
-.item-card.withdrawal{border-left-color:#D59D80}
-.item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.item-amount{font-size:18px;font-weight:bold;color:#D59D80}
-.item-user{font-size:13px;color:#C6C6D0}
-.item-details{font-size:12px;color:#C6C6D0;margin-bottom:10px;line-height:1.6}
-.item-details strong{color:#D59D80}
-.item-actions{display:flex;gap:8px}
-.item-actions .btn{flex:1;justify-content:center}
-.empty-state{text-align:center;padding:40px 20px;color:#C6C6D0;opacity:.6}
-.empty-state .icon{font-size:48px;margin-bottom:12px}
-.test-section{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;margin-bottom:16px}
-.test-section h3{color:#D59D80;font-size:14px;margin-bottom:12px}
-.test-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.log-container{background:#0D1D25;border:1px solid rgba(192,117,77,.3);border-radius:8px;padding:12px;max-height:300px;overflow-y:auto;font-family:monospace;font-size:11px}
-.log-entry{padding:6px 0;border-bottom:1px solid rgba(192,117,77,.1);display:flex;gap:8px}
-.log-entry:last-child{border-bottom:none}
-.log-time{color:#C6C6D0;opacity:.6;min-width:70px}
-.log-success{color:#D59D80}
-.log-error{color:#B6410F}
-.log-info{color:#C6C6D0}
-.refresh-btn{position:fixed;bottom:20px;right:20px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#D59D80,#C0754D);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 4px 12px rgba(213,157,128,.4);transition:all .2s}
-.refresh-btn:hover{transform:scale(1.1)}
-.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold}
-.badge-success{background:#D59D80;color:#fff}
-.badge-pending{background:#C0754D;color:#fff}
-.badge-error{background:#B6410F;color:#fff}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+}
 
-/* KUR GÜNCELLEME & KULLANICI TABLOSU */
-.rate-card{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.rate-card h3{color:#D59D80;font-size:14px;margin-bottom:12px}
-.rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.rate-box{background:#0D1D25;border:1px solid rgba(192,117,77,.4);border-radius:10px;padding:12px;text-align:center}
-.rate-box .coin-name{font-size:11px;color:#C6C6D0;font-weight:700;margin-bottom:6px}
-.rate-box .coin-price{font-size:20px;font-weight:800;color:#D59D80;margin-bottom:8px}
-.rate-box input{width:100%;padding:8px;background:#104C64;border:1px solid rgba(192,117,77,.4);border-radius:6px;color:#fff;font-size:13px;text-align:center;font-family:monospace}
-.rate-box input:focus{outline:none;border-color:#D59D80}
-.rate-actions{display:flex;gap:8px;flex-wrap:wrap}
-.rate-info{font-size:11px;color:#C6C6D0;opacity:.7;margin-top:8px}
+body{
+    background:radial-gradient(circle at 50% -10%,#20104d,#090d27 40%,#05091b 100%);
+    color:#eef1ff;
+    min-height:100vh;
+    padding:20px
+}
 
-.users-table-container{background:#104C64;border:1px solid rgba(192,117,77,.3);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.4);overflow-x:auto}
-.users-table{width:100%;border-collapse:collapse;font-size:12px;color:#C6C6D0}
-.users-table th{background:rgba(192,117,77,0.2);text-align:left;padding:12px;font-weight:700;color:#D59D80;border-bottom:2px solid rgba(192,117,77,.3)}
-.users-table td{padding:12px;border-bottom:1px solid rgba(192,117,77,.1)}
-.users-table tr:hover{background:rgba(192,117,77,0.05)}
-.user-id{font-weight:bold;color:#D59D80}
-.user-city{font-size:10px;opacity:.6}
-.val-balance{color:#fff}
-.val-bonus{color:#fbbf24}
-.val-invested{color:#10b981}
-.val-withdrawn{color:#ef4444}
+.container{
+    max-width:1000px;
+    margin:auto
+}
 
-@media(max-width:600px){body{padding:10px}.header h1{font-size:18px}.test-buttons{grid-template-columns:1fr}.rate-grid{grid-template-columns:1fr}}
+.hidden{
+    display:none!important
+}
+
+.card{
+    background:linear-gradient(145deg,#111a39,#0a102b);
+    border:1px solid rgba(111,132,190,.28);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25)
+}
+
+.header{
+    background:linear-gradient(135deg,#7435d9,#4d1ca8);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 10px 35px rgba(100,50,200,.25)
+}
+
+.header h1{
+    font-size:24px;
+    margin-bottom:5px
+}
+
+.header p{
+    color:#ddd4ff;
+    font-size:12px
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:#0a112b;
+    border:1px solid rgba(111,132,190,.25);
+    margin-bottom:16px;
+    font-size:12px
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+    background:#ff4d5d;
+    border-radius:50%
+}
+
+.status-dot.ok{
+    background:#31e981
+}
+
+.login-box{
+    max-width:400px;
+    margin:50px auto
+}
+
+.login-box h2{
+    margin-bottom:8px
+}
+
+.login-box p{
+    color:#9da8ca;
+    font-size:12px;
+    line-height:1.5;
+    margin-bottom:15px
+}
+
+input,select{
+    width:100%;
+    padding:11px 12px;
+    margin-bottom:10px;
+    border-radius:9px;
+    border:1px solid rgba(111,132,190,.3);
+    background:#070d22;
+    color:#eef1ff;
+    outline:none
+}
+
+input:focus,select:focus{
+    border-color:#a65cff
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    font-weight:800
+}
+
+.btn{
+    padding:10px 14px;
+    border-radius:9px;
+    color:#fff;
+    background:linear-gradient(135deg,#9b4dff,#6125ce)
+}
+
+.btn:hover{
+    filter:brightness(1.08)
+}
+
+.btn-success{
+    background:linear-gradient(135deg,#1fcf79,#087c49)
+}
+
+.btn-danger{
+    background:linear-gradient(135deg,#ff5262,#a91425)
+}
+
+.btn-secondary{
+    background:#101735;
+    border:1px solid rgba(150,170,220,.25)
+}
+
+.btn-small{
+    padding:7px 10px;
+    font-size:11px;
+    border-radius:7px
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:16px
+}
+
+.tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:16px
+}
+
+.tab{
+    flex:1;
+    min-width:120px;
+    padding:11px;
+    border-radius:9px;
+    background:#0d1530;
+    color:#9da8ca;
+    border:1px solid rgba(111,132,190,.2)
+}
+
+.tab.active{
+    background:linear-gradient(135deg,#8f45ee,#6024c8);
+    color:#fff;
+    border-color:#a65cff
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:16px
+}
+
+.stat{
+    background:#0a112b;
+    border:1px solid rgba(111,132,190,.24);
+    border-radius:12px;
+    padding:14px;
+    text-align:center
+}
+
+.stat span{
+    display:block;
+    color:#9da8ca;
+    font-size:10px;
+    margin-bottom:5px
+}
+
+.stat strong{
+    font-size:20px
+}
+
+.table-wrap{
+    overflow:auto
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:720px
+}
+
+th,td{
+    padding:11px;
+    border-bottom:1px solid rgba(111,132,190,.15);
+    text-align:left;
+    font-size:11px
+}
+
+th{
+    color:#c9b4ff;
+    background:#0a112b
+}
+
+td{
+    color:#dce4ff
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:900
+}
+
+.pending{
+    background:rgba(255,200,61,.16);
+    color:#ffd34f
+}
+
+.approved{
+    background:rgba(49,233,129,.15);
+    color:#67f5a6
+}
+
+.rejected{
+    background:rgba(255,75,90,.15);
+    color:#ff7280
+}
+
+.empty{
+    text-align:center;
+    padding:35px 10px;
+    color:#7f8aac;
+    font-size:12px
+}
+
+.log{
+    max-height:250px;
+    overflow:auto;
+    background:#060b1c;
+    border-radius:10px;
+    padding:10px;
+    border:1px solid rgba(111,132,190,.2)
+}
+
+.log-item{
+    padding:7px 0;
+    border-bottom:1px solid rgba(111,132,190,.1);
+    font-family:monospace;
+    font-size:10px
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(2,5,18,.84);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px
+}
+
+.modal.show{
+    display:flex
+}
+
+.modal-box{
+    width:min(420px,100%);
+    background:#0d1530;
+    border:1px solid rgba(166,116,255,.4);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 20px 70px rgba(0,0,0,.55)
+}
+
+.modal-box h3{
+    margin-bottom:8px
+}
+
+.modal-box p{
+    color:#9da8ca;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:12px
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px
+}
+
+.modal-actions .btn{
+    flex:1
+}
+
+.user-name{
+    font-weight:900;
+    color:#fff
+}
+
+.user-id{
+    color:#8f9dc4;
+    font-size:9px;
+    margin-top:2px
+}
+
+.money-green{
+    color:#48e79a
+}
+
+.money-gold{
+    color:#ffd34f
+}
+
+.money-red{
+    color:#ff6977
+}
+
+@media(max-width:700px){
+    body{
+        padding:10px
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr
+    }
+
+    .header h1{
+        font-size:19px
+    }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<div class="header">
-<h1> Admin Panel</h1>
-<div class="subtitle">Hash Power Mining - Yönetim Merkezi</div>
-</div>
 
-<!-- KUR GÜNCELLEME -->
-<div class="rate-card">
-<h3> Coin Kurları (Otomatik & Manuel)</h3>
-<div class="rate-grid">
-<div class="rate-box">
-<div class="coin-name">TRX (TRON)</div>
-<div class="coin-price" id="currentTrx">$0.12</div>
-<input type="number" id="manualTrx" step="0.0001" placeholder="Manuel TRX">
-</div>
-<div class="rate-box">
-<div class="coin-name">BNB (Binance)</div>
-<div class="coin-price" id="currentBnb">$600</div>
-<input type="number" id="manualBnb" step="0.01" placeholder="Manuel BNB">
-</div>
-<div class="rate-box">
-<div class="coin-name">XRP (Ripple)</div>
-<div class="coin-price" id="currentXrp">$0.50</div>
-<input type="number" id="manualXrp" step="0.0001" placeholder="Manuel XRP">
-</div>
-</div>
-<div class="rate-actions">
-<button class="btn btn-success" onclick="autoUpdateRates()">🔄 Otomatik Güncelle</button>
-<button class="btn" onclick="manualUpdateRates()">✏️ Manuel Güncelle</button>
-<button class="btn btn-secondary" onclick="loadCurrentRates()">📊 Mevcut Kurları Yükle</button>
-</div>
-<div class="rate-info">Son güncelleme: <span id="lastUpdate">-</span></div>
-</div>
+    <!-- LOGIN -->
+    <div id="loginScreen" class="card login-box">
 
-<div class="settings-card">
-<h3>🤖 Telegram Bot Ayarları</h3>
-<div class="input-group">
-<label>Admin Bot Token (BotFather'dan al)</label>
-<input type="password" id="botToken" placeholder="7123456789:AAHxxxxx...">
-</div>
-<div class="input-group">
-<label>Admin Chat ID (Senin Telegram ID'n)</label>
-<input type="text" id="adminChatId" placeholder="8974010159">
-</div>
-<button class="btn" onclick="saveBotSettings()"> Ayarları Kaydet</button>
-<button class="btn btn-secondary" onclick="testBotConnection()"> Bağlantıyı Test Et</button>
-</div>
+        <h2>🔐 Admin Girişi</h2>
 
-<div class="status-bar">
-<div class="status-dot" id="statusDot"></div>
-<span id="statusText">Bot bağlantısı bekleniyor...</span>
-</div>
+        <p>
+            Bu panel PostgreSQL backend üzerinden çalışır.
+            Admin anahtarı yalnızca sunucu tarafında doğrulanır.
+        </p>
 
-<div class="test-section">
-<h3>🧪 Test Bildirimleri</h3>
-<div class="test-buttons">
-<button class="btn btn-success btn-sm" onclick="sendTestNotification('deposit')">💰 Test Yatırım</button>
-<button class="btn btn-danger btn-sm" onclick="sendTestNotification('withdraw')">💸 Test Çekim</button>
-<button class="btn btn-sm" onclick="sendTestNotification('approve')">✅ Test Onay</button>
-<button class="btn btn-secondary btn-sm" onclick="sendTestNotification('reject')">❌ Test Red</button>
-</div>
-</div>
+        <input
+            type="password"
+            id="adminKey"
+            placeholder="Admin anahtarı"
+            autocomplete="off"
+        >
 
-<div class="tabs">
-<button class="tab active" onclick="switchTab('deposits',this)">💳 Yatırımlar <span class="count" id="depositCount">0</span></button>
-<button class="tab" onclick="switchTab('withdrawals',this)">💸 Çekimler <span class="count" id="withdrawalCount">0</span></button>
-<button class="tab" onclick="switchTab('users',this)"> Kullanıcılar <span class="count" id="userCount">0</span></button>
-</div>
+        <button class="btn" style="width:100%" onclick="loginAdmin()">
+            🔑 Giriş Yap
+        </button>
 
-<!-- Yatırım/Çekim İçeriği -->
-<div id="content">
-<div class="empty-state"><div class="icon">⏳</div><div>Yükleniyor...</div></div>
-</div>
-
-<!-- Kullanıcı Listesi İçeriği -->
-<div id="content-users" class="hidden users-table-container">
-<table class="users-table">
-<thead>
-<tr>
-<th>ID / İsim</th>
-<th>Bakiye</th>
-<th>Yatırım</th>
-<th>Çekim</th>
-<th>İşlem</th>
-</tr>
-</thead>
-<tbody id="usersTableBody">
-<!-- Veriler JS ile dolacak -->
-</tbody>
-</table>
-</div>
-
-</div>
-
-<button class="refresh-btn" onclick="loadData()" title="Yenile">🔄</button>
-
-<div style="margin-top:20px">
-<h3 style="color:#C6C6D0;font-size:13px;margin-bottom:8px">📋 İşlem Geçmişi</h3>
-<div class="log-container" id="logContainer">
-<div class="log-entry"><span class="log-time">--:--</span><span class="log-info">Sistem hazır</span></div>
-</div>
-</div>
-
-<!-- MANUEL YATIRIM MODALI -->
-<div id="manualDepositModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center;">
-    <div style="background:#104C64; padding:20px; border-radius:12px; width:300px; border:1px solid rgba(192,117,77,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <h3 style="color:#D59D80; margin-bottom:15px;">💰 Manuel Yatırım Ekle</h3>
-        <p id="modalUserName" style="font-size:12px; color:#fff; margin-bottom:10px;"></p>
-        <input type="number" id="manualAmountInput" placeholder="Tutar (USD)" style="width:100%; padding:10px; background:#0D1D25; border:1px solid #C0754D; color:#fff; border-radius:6px; margin-bottom:15px;">
-        <div style="display:flex; gap:10px;">
-            <button onclick="submitManualDeposit()" class="btn btn-success" style="flex:1;">✅ Ekle</button>
-            <button onclick="document.getElementById('manualDepositModal').style.display='none'" class="btn btn-secondary" style="flex:1;"> İptal</button>
+        <div id="loginError"
+             style="color:#ff6977;font-size:11px;margin-top:10px">
         </div>
+
+    </div>
+
+    <!-- ADMIN -->
+    <div id="adminApp" class="hidden">
+
+        <div class="header">
+            <h1>⚡ Micro Monetize Admin</h1>
+            <p>PostgreSQL Yönetim Merkezi</p>
+        </div>
+
+        <div class="status">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Bağlantı kontrol ediliyor...</span>
+        </div>
+
+        <div class="top-actions">
+            <button class="btn" onclick="loadAll()">
+                🔄 Yenile
+            </button>
+
+            <button class="btn btn-secondary" onclick="logoutAdmin()">
+                🚪 Çıkış
+            </button>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat">
+                <span>Kullanıcı</span>
+                <strong id="statUsers">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Bekleyen Yatırım</span>
+                <strong id="statInvestments">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Bekleyen Çekim</span>
+                <strong id="statWithdrawals">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Toplam Yatırım</span>
+                <strong id="statTotalInvested">$0.00</strong>
+            </div>
+
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+
+            <button
+                class="tab active"
+                id="tabUsers"
+                onclick="switchTab('users')">
+                👥 Kullanıcılar
+            </button>
+
+            <button
+                class="tab"
+                id="tabInvestments"
+                onclick="switchTab('investments')">
+                💳 Yatırımlar
+            </button>
+
+            <button
+                class="tab"
+                id="tabWithdrawals"
+                onclick="switchTab('withdrawals')">
+                💸 Çekimler
+            </button>
+
+        </div>
+
+        <!-- USERS -->
+        <div id="panelUsers" class="card">
+
+            <h3 style="margin-bottom:12px">
+                👥 Kullanıcılar
+            </h3>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı</th>
+                            <th>Bakiye</th>
+                            <th>Yatırım</th>
+                            <th>Çekim</th>
+                            <th>Komisyon</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="usersBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- INVESTMENTS -->
+        <div id="panelInvestments" class="card hidden">
+
+            <h3 style="margin-bottom:12px">
+                💳 Yatırım Talepleri
+            </h3>
+
+            <div id="investmentsContainer"></div>
+
+        </div>
+
+        <!-- WITHDRAWALS -->
+        <div id="panelWithdrawals" class="card hidden">
+
+            <h3 style="margin-bottom:12px">
+                💸 Çekim Talepleri
+            </h3>
+
+            <div id="withdrawalsContainer"></div>
+
+        </div>
+
+        <!-- LOG -->
+        <div class="card">
+
+            <h3 style="margin-bottom:10px">
+                📋 İşlem Günlüğü
+            </h3>
+
+            <div class="log" id="logContainer"></div>
+
+        </div>
+
     </div>
 </div>
 
+<!-- BALANCE MODAL -->
+<div class="modal" id="balanceModal">
+
+    <div class="modal-box">
+
+        <h3>💰 Demo Bakiye İşlemi</h3>
+
+        <p id="balanceModalUser"></p>
+
+        <input
+            type="number"
+            id="balanceAmount"
+            placeholder="Tutar"
+            min="0.01"
+            step="0.01"
+        >
+
+        <select id="balanceOperation">
+            <option value="add">Demo bakiye ekle</option>
+            <option value="remove">Demo bakiye düş</option>
+        </select>
+
+        <div class="modal-actions">
+
+            <button
+                class="btn btn-success"
+                onclick="submitBalanceChange()">
+                ✅ Uygula
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeBalanceModal()">
+                İptal
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <script>
-const firebaseConfig={apiKey:"AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",authDomain:"hash-power-mining.firebaseapp.com",projectId:"hash-power-mining",storageBucket:"hash-power-mining.firebasestorage.app",messagingSenderId:"266480566753",appId:"1:266480566753:web:835b6e5119e4d3e4eb92a0"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
 
-const NOTIFY_BOT_USERNAME="hashmining_notify_bot";
-const NOTIFY_BOT_TOKEN="8745298504:AAF7_8B-Jswwzat39FjiFRbQU5tuMGWe83w";
-const pricesRef=db.collection('settings').doc('cryptoPrices');
-let botToken=localStorage.getItem('botToken')||'8759495457:AAF_ogmc63yXDtuUVidJwZPCaMXdFzx7VEg';
-let adminChatId=localStorage.getItem('adminChatId')||'8974010159';
-let currentTab='deposits';
-let selectedUserIdForDeposit = null; // Manuel ekleme için seçili kullanıcı
+/*
+========================================================
+GENEL AYARLAR
+========================================================
+*/
 
-document.addEventListener('DOMContentLoaded',()=>{
-document.getElementById('botToken').value=botToken;
-document.getElementById('adminChatId').value=adminChatId;
-if(botToken&&botToken.includes(':')){
-updateStatus(true,'✅ Bot yapılandırıldı - '+botToken.split(':')[0]);
-addLog('success','Bot token otomatik yüklendi');
-}else{
-updateStatus(false,'❌ Bot token ayarlanmamış');
-}
-loadCurrentRates();
-loadData();
-setInterval(loadData,30000);
-});
+const API_BASE = '';
 
-// 💱 KUR GÜNCELLEME
-async function loadCurrentRates(){
-try{
-const d=await pricesRef.get();
-if(d.exists){
-const x=d.data();
-document.getElementById('currentTrx').textContent='$'+(x.trx||0.12).toFixed(4);
-document.getElementById('currentBnb').textContent='$'+(x.bnb||600).toFixed(2);
-document.getElementById('currentXrp').textContent='$'+(x.xrp||0.50).toFixed(4);
-document.getElementById('lastUpdate').textContent=x.lastUpdated?new Date(x.lastUpdated).toLocaleString('tr-TR'):'-';
-addLog('info','Mevcut kurlar yüklendi');
-}else{
-addLog('info','Kayıtlı kur yok, CoinGecko\'dan çekiliyor...');
-await autoUpdateRates();
-}
-}catch(e){addLog('error','Kur yükleme hatası: '+e.message)}
+let adminKey = '';
+let currentTab = 'users';
+let selectedUserId = null;
+
+const money = value =>
+    '$' + Number(value || 0).toFixed(2);
+
+
+/*
+========================================================
+LOG
+========================================================
+*/
+
+function addLog(message) {
+
+    const container =
+        document.getElementById('logContainer');
+
+    const item =
+        document.createElement('div');
+
+    item.className = 'log-item';
+
+    const time =
+        new Date().toLocaleTimeString('tr-TR');
+
+    item.textContent =
+        `[${time}] ${message}`;
+
+    container.prepend(item);
 }
 
-async function autoUpdateRates(){
-addLog('info','CoinGecko\'dan kurlar çekiliyor...');
-try{
-const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron,binancecoin,ripple&vs_currencies=usd');
-const j=await r.json();
-const p={trx:j.tron?.usd||0.12,bnb:j.binancecoin?.usd||600,xrp:j.ripple?.usd||0.50,lastUpdated:Date.now(),source:'coingecko'};
-await pricesRef.set(p,{merge:true});
-document.getElementById('currentTrx').textContent='$'+p.trx.toFixed(4);
-document.getElementById('currentBnb').textContent='$'+p.bnb.toFixed(2);
-document.getElementById('currentXrp').textContent='$'+p.xrp.toFixed(4);
-document.getElementById('lastUpdate').textContent=new Date().toLocaleString('tr-TR');
-addLog('success',`Otomatik güncelleme: TRX $${p.trx.toFixed(4)}, BNB $${p.bnb.toFixed(2)}, XRP $${p.xrp.toFixed(4)}`);
-alert('✅ Kurlar otomatik güncellendi!');
-}catch(e){addLog('error','CoinGecko hatası: '+e.message);alert('❌ CoinGecko\'dan çekilemedi: '+e.message)}
-}
 
-async function manualUpdateRates(){
-const trx=parseFloat(document.getElementById('manualTrx').value);
-const bnb=parseFloat(document.getElementById('manualBnb').value);
-const xrp=parseFloat(document.getElementById('manualXrp').value);
-if(isNaN(trx)||isNaN(bnb)||isNaN(xrp)){alert('❌ Tüm alanları doldurun!');return}
-try{
-const p={trx,bnb,xrp,lastUpdated:Date.now(),source:'manual'};
-await pricesRef.set(p,{merge:true});
-document.getElementById('currentTrx').textContent='$'+trx.toFixed(4);
-document.getElementById('currentBnb').textContent='$'+bnb.toFixed(2);
-document.getElementById('currentXrp').textContent='$'+xrp.toFixed(4);
-document.getElementById('lastUpdate').textContent=new Date().toLocaleString('tr-TR');
-addLog('success',`Manuel güncelleme: TRX $${trx.toFixed(4)}, BNB $${bnb.toFixed(2)}, XRP $${xrp.toFixed(4)}`);
-alert('✅ Kurlar manuel güncellendi!');
-}catch(e){addLog('error','Manuel güncelleme hatası: '+e.message);alert('❌ Hata: '+e.message)}
-}
+/*
+========================================================
+LOGIN
+========================================================
+*/
 
-function saveBotSettings(){
-botToken=document.getElementById('botToken').value.trim();
-adminChatId=document.getElementById('adminChatId').value.trim();
-if(!botToken){alert(' Bot token gerekli!');return}
-if(!botToken.includes(':')){alert('❌ Geçersiz token formatı!');return}
-localStorage.setItem('botToken',botToken);
-localStorage.setItem('adminChatId',adminChatId);
-updateStatus(true,'✅ Bot yapılandırıldı - '+botToken.split(':')[0]);
-addLog('success','Bot ayarları kaydedildi');
-alert('✅ Ayarlar kaydedildi!');
-}
+async function loginAdmin() {
 
-async function testBotConnection(){
-botToken=document.getElementById('botToken').value.trim();
-adminChatId=document.getElementById('adminChatId').value.trim();
-if(!botToken){alert('⚠️ Önce bot token gir!');return}
-addLog('info','Bağlantı test ediliyor...');
-try{
-const r=await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
-const d=await r.json();
-if(d.ok){updateStatus(true,`✅ Bağlı: @${d.result.username}`);addLog('success',`Bot bağlantısı başarılı: @${d.result.username}`);alert(`✅ Bağlantı başarılı!\n\nBot: @${d.result.username}\nID: ${d.result.id}`)}
-else{updateStatus(false,' Bağlantı başarısız');addLog('error','Bot bağlantısı başarısız: '+d.description);alert('❌ Bağlantı başarısız: '+d.description)}
-}catch(e){updateStatus(false,' Bağlantı hatası');addLog('error','Bağlantı hatası: '+e.message);alert('❌ Bağlantı hatası: '+e.message)}
-}
+    const key =
+        document.getElementById('adminKey').value.trim();
 
-function updateStatus(a,t){
-const d=document.getElementById('statusDot');
-const s=document.getElementById('statusText');
-if(a)d.classList.add('active');else d.classList.remove('active');
-s.textContent=t;
-}
+    const error =
+        document.getElementById('loginError');
 
-function addLog(type,message){
-const c=document.getElementById('logContainer');
-const t=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
-const e=document.createElement('div');
-e.className='log-entry';
-e.innerHTML=`<span class="log-time">${t}</span><span class="log-${type}">${message}</span>`;
-c.insertBefore(e,c.firstChild);
-while(c.children.length>50)c.removeChild(c.lastChild);
-}
+    error.textContent = '';
 
-async function sendAdminNotification(message){
-if(!botToken||!adminChatId){addLog('error','Bot ayarları eksik!');return false}
-try{
-const r=await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:adminChatId,text:message,parse_mode:'HTML'})});
-const d=await r.json();
-if(d.ok){addLog('success','Admin bildirimi gönderildi');return true}
-else{addLog('error','Telegram hatası: '+d.description);return false}
-}catch(e){addLog('error','Gönderme hatası: '+e.message);return false}
-}
+    if (!key) {
+        error.textContent =
+            'Admin anahtarı gerekli.';
+        return;
+    }
 
-async function sendUserNotification(userTelegramId,message){
-if(!NOTIFY_BOT_TOKEN||!userTelegramId){console.log('Kullanıcı ID veya token yok');return}
-try{
-await fetch(`https://api.telegram.org/bot${NOTIFY_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:userTelegramId,text:message,parse_mode:'HTML'})});
-console.log('✅ Kullanıcıya bildirim gönderildi:',userTelegramId);
-addLog('success',`Kullanıcıya bildirim: ${userTelegramId}`);
-}catch(e){console.error('❌ Kullanıcı bildirim hatası:',e);addLog('error','Kullanıcı bildirim hatası: '+e.message)}
-}
-
-async function sendTestNotification(type){
-if(!botToken){alert('⚠️ Önce bot token ayarla!');return}
-let message='';
-switch(type){
-case'deposit':message=`🔔 <b>TEST: YENİ YATIRIM BİLDİRİMİ!</b>\n\n <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $100.00\n🪙 <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n🌐 <b>Ağ:</b> TRON (TRC20)\n\n⏳ <b>Durum:</b> Onay Bekliyor\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'withdraw':message=`💸 <b>TEST: YENİ ÇEKİM TALEBİ!</b>\n\n👤 <b>Kullanıcı:</b> Test Kullanıcı\n💵 <b>Tutar:</b> $50.00\n🪙 <b>Coin:</b> 416.67 TRX\n🌐 <b>Ağ:</b> TRON (TRC20)\n <b>Cüzdan:</b>\n<code>TXYZ1234567890abcdefghijklmnopqrstuvwxyz</code>\n\n✅ <b>Adres Doğrulandı:</b> Evet\n⏳ <b>Durum:</b> Onay Bekliyor\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'approve':message=`✅ <b>TEST: Yatırımın Onaylandı!</b>\n\n <b>Tutar:</b> $100.00\n <b>TRX:</b> 833.33 TRX\n📦 <b>Paket:</b> Ultra\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n Üretiminiz başladı! İyi kazançlar!\n\n<i>Bu bir test bildirimidir.</i>`;break;
-case'reject':message=` <b>TEST: Yatırımın Reddedildi</b>\n\n💰 <b>Tutar:</b> $100.00\n <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n️ Lütfen destek ile iletişime geçin.\n\n<i>Bu bir test bildirimidir.</i>`;break;
-}
-const s=await sendAdminNotification(message);
-if(s)alert('✅ Test bildirimi gönderildi! Telegram\'ını kontrol et.');
-}
-
-async function loadData(){
-if(currentTab==='deposits')await loadDeposits();
-else if(currentTab==='withdrawals')await loadWithdrawals();
-else if(currentTab==='users')await loadUsers();
-}
-
-async function loadDeposits(){
-const c=document.getElementById('content');
-c.innerHTML='<div class="empty-state"><div class="icon">⏳</div><div>Yükleniyor...</div></div>';
-try{
-const s=await db.collection('users').get();
-const p=[];
-s.forEach(d=>{const x=d.data();if(x.pendingPayments&&x.pendingPayments.length>0){x.pendingPayments.forEach(pm=>p.push({...pm,userDocId:d.id}))}});
-document.getElementById('depositCount').textContent=p.length;
-if(p.length===0){c.innerHTML='<div class="empty-state"><div class="icon">✅</div><div>Bekleyen yatırım yok</div></div>';return}
-let h='';
-p.forEach(pm=>{
-const dt=pm.timestamp?new Date(pm.timestamp).toLocaleString('tr-TR'):'Bilinmiyor';
-const pt=pm.packageName?`<br><strong>📦 Paket:</strong> ${pm.packageName}`:'';
-const dc=(pm.originalPrice&&pm.discountedPrice&&pm.originalPrice!==pm.discountedPrice)?`<br><strong>💰 Orijinal:</strong> $${pm.originalPrice.toFixed(2)} | <strong>Ödenen:</strong> $${pm.discountedPrice.toFixed(2)}`:'';
-h+=`<div class="item-card"><div class="item-header"><div class="item-amount">$${pm.amount.toFixed(2)}</div><div class="item-user">${pm.userName||'Bilinmiyor'}</div></div><div class="item-details"><strong>🪙 TRX:</strong> ${pm.trxAmount||'-'} TRX<br><strong>🌐 Ağ:</strong> ${pm.network||'TRON (TRC20)'}<br><strong>🆔 ID:</strong> ${pm.userTelegramId||pm.userId||'-'}${pt}${dc}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approvePayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}',${pm.trxAmount||0},'${pm.packageName||''}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectPayment('${pm.userDocId}','${pm.id}',${pm.amount},'${pm.userName||'User'}')">✕ Reddet</button></div></div>`;
-});
-c.innerHTML=h;
-}catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Yatırımlar yüklenemedi: '+e.message)}
-}
-
-async function loadWithdrawals(){
-const c=document.getElementById('content');
-c.innerHTML='<div class="empty-state"><div class="icon"></div><div>Yükleniyor...</div></div>';
-try{
-const s=await db.collection('users').get();
-const p=[];
-s.forEach(d=>{const x=d.data();if(x.withdrawalRequests&&x.withdrawalRequests.length>0){x.withdrawalRequests.forEach(w=>{if(w.status==='pending')p.push({...w,userDocId:d.id})})}});
-document.getElementById('withdrawalCount').textContent=p.length;
-if(p.length===0){c.innerHTML='<div class="empty-state"><div class="icon">✅</div><div>Bekleyen çekim yok</div></div>';return}
-let h='';
-p.forEach(w=>{
-const dt=w.timestamp?new Date(w.timestamp).toLocaleString('tr-TR'):'Bilinmiyor';
-const va=w.addressValidated?'<span class="badge badge-success">✓ Doğrulandı</span>':'<span class="badge badge-error">❌ Doğrulanmadı</span>';
-h+=`<div class="item-card withdrawal"><div class="item-header"><div class="item-amount">$${w.amount.toFixed(2)} = ${w.cryptoAmount} ${w.cryptoSymbol}</div><div class="item-user">${w.userName||'Bilinmiyor'} ${va}</div></div><div class="item-details"><strong> Coin:</strong> ${w.cryptoSymbol||w.crypto}<br><strong>🌐 Ağ:</strong> ${w.network||'-'}<br><strong> Cüzdan:</strong><br><code style="font-size:11px;word-break:break-all">${w.walletAddress}</code><br><strong>🆔 ID:</strong> ${w.userTelegramId||w.userId||'-'}<br><strong>🕐 Tarih:</strong> ${dt}</div><div class="item-actions"><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}','${w.cryptoAmount}','${w.cryptoSymbol}','${w.network}','${w.walletAddress}')">✓ Onayla</button><button class="btn btn-danger btn-sm" onclick="rejectWithdrawal('${w.userDocId}','${w.id}',${w.amount},'${w.userName||'User'}')">✕ Reddet</button></div></div>`;
-});
-c.innerHTML=h;
-}catch(e){c.innerHTML=`<div class="empty-state"><div class="icon">❌</div><div>Hata: ${e.message}</div></div>`;addLog('error','Çekimler yüklenemedi: '+e.message)}
-}
-
-// 👥 KULLANICI LİSTESİ VE MANUEL EKLEME
-async function loadUsers() {
-    const tbody = document.getElementById('usersTableBody');
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Yükleniyor...</td></tr>';
-    
     try {
-        const snapshot = await db.collection('users').get();
-        const users = [];
-        
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            // Telegram adı yoksa ID'nin ilk 8 karakterini göster
-            const displayName = data.userName || data.telegramName || doc.id.substring(0, 8);
-            
-            users.push({
-                id: doc.id,
-                shortId: doc.id.substring(0, 8) + '...',
-                name: displayName,
-                balance: data.lifetimeEarnings ? (data.lifetimeEarnings - (data.totalWithdrawn || 0)).toFixed(2) : '0.00',
-                invested: (data.totalInvested || 0).toFixed(2),
-                withdrawn: (data.totalWithdrawn || 0).toFixed(2)
-            });
-        });
 
-        document.getElementById('userCount').textContent = users.length;
+        const response = await fetch(
+            API_BASE + '/api/admin/health',
+            {
+                method:'GET',
+                headers:{
+                    'x-admin-key':key
+                }
+            }
+        );
 
-        if (users.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Kayıtlı kullanıcı yok.</td></tr>';
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.ok) {
+            error.textContent =
+                data.message || 'Admin doğrulaması başarısız.';
             return;
         }
 
-        let html = '';
-        users.forEach(u => {
-            html += `
-            <tr>
-                <td>
-                    <div class="user-id">${u.shortId}</div>
-                    <div class="user-city" style="color:#D59D80; font-weight:bold;">${u.name}</div>
-                </td>
-                <td class="val-balance">$${u.balance}</td>
-                <td class="val-invested">$${u.invested}</td>
-                <td class="val-withdrawn">$${u.withdrawn}</td>
-                <td>
-                    <button onclick="openManualDeposit('${u.id}', '${u.name}')" 
-                            style="background:#D59D80; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:11px;">
-                        💰 Ekle
-                    </button>
-                </td>
-            </tr>`;
-        });
-        
-        tbody.innerHTML = html;
+        adminKey = key;
 
-    } catch (e) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#ef4444;">Hata: ${e.message}</td></tr>`;
-        addLog('error', 'Kullanıcı listesi yüklenemedi: ' + e.message);
+        document
+            .getElementById('loginScreen')
+            .classList.add('hidden');
+
+        document
+            .getElementById('adminApp')
+            .classList.remove('hidden');
+
+        setStatus(
+            true,
+            '✅ Backend ve PostgreSQL bağlantısı aktif'
+        );
+
+        addLog('Admin girişi başarılı.');
+
+        await loadAll();
+
+    } catch (error) {
+
+        console.error(error);
+
+        error.textContent =
+            'Backend bağlantısı kurulamadı.';
     }
 }
 
-function openManualDeposit(userId, userName) {
-    selectedUserIdForDeposit = userId;
-    document.getElementById('modalUserName').textContent = `Kullanıcı: ${userName}`;
-    document.getElementById('manualAmountInput').value = '';
-    document.getElementById('manualDepositModal').style.display = 'flex';
+
+function logoutAdmin() {
+
+    adminKey = '';
+
+    document
+        .getElementById('adminApp')
+        .classList.add('hidden');
+
+    document
+        .getElementById('loginScreen')
+        .classList.remove('hidden');
+
+    document
+        .getElementById('adminKey')
+        .value = '';
+
+    addLog('Admin çıkışı yapıldı.');
 }
 
-async function submitManualDeposit() {
-    const amount = parseFloat(document.getElementById('manualAmountInput').value);
-    
-    if (!amount || amount <= 0) {
-        alert(' Lütfen geçerli bir tutar girin!');
-        return;
-    }
 
-    if (!confirm(`✅ $${amount.toFixed(2)} tutarı ${selectedUserIdForDeposit} kullanıcısına manuel olarak eklenecek. Emin misiniz?`)) {
-        return;
-    }
+/*
+========================================================
+STATUS
+========================================================
+*/
+
+function setStatus(ok, text) {
+
+    const dot =
+        document.getElementById('statusDot');
+
+    const status =
+        document.getElementById('statusText');
+
+    dot.classList.toggle('ok', ok);
+
+    status.textContent = text;
+}
+
+
+/*
+========================================================
+API
+========================================================
+*/
+
+async function apiFetch(endpoint, options = {}) {
+
+    const headers = {
+        ...(options.headers || {}),
+        'x-admin-key': adminKey,
+        'Content-Type': 'application/json'
+    };
+
+    const response =
+        await fetch(
+            API_BASE + endpoint,
+            {
+                ...options,
+                headers
+            }
+        );
+
+    let data = {};
 
     try {
-        const userRef = db.collection('users').doc(selectedUserIdForDeposit);
-        
-        // Doğrudan lifetimeEarnings ve totalInvested'e ekle
-        await userRef.update({
-            lifetimeEarnings: firebase.firestore.FieldValue.increment(amount),
-            totalInvested: firebase.firestore.FieldValue.increment(amount),
-            manualDepositHistory: firebase.firestore.FieldValue.arrayUnion({
-                amount: amount,
-                date: new Date().toISOString(),
-                addedBy: 'admin'
-            })
-        });
+        data = await response.json();
+    } catch {}
 
-        addLog('success', `Manuel yatırım eklendi: $${amount.toFixed(2)} → ${selectedUserIdForDeposit}`);
-        alert('✅ Yatırım başarıyla eklendi!');
-        
-        document.getElementById('manualDepositModal').style.display = 'none';
-        loadUsers(); // Listeyi yenile
-        
-    } catch (e) {
-        alert(' Hata: ' + e.message);
-        addLog('error', 'Manuel yatırım ekleme hatası: ' + e.message);
+    if (!response.ok || data.ok === false) {
+
+        throw new Error(
+            data.message ||
+            `HTTP ${response.status}`
+        );
+    }
+
+    return data;
+}
+
+
+/*
+========================================================
+LOAD ALL
+========================================================
+*/
+
+async function loadAll() {
+
+    try {
+
+        setStatus(
+            true,
+            '🔄 Veriler yükleniyor...'
+        );
+
+        await Promise.all([
+            loadUsers(),
+            loadInvestments(),
+            loadWithdrawals()
+        ]);
+
+        updateStats();
+
+        setStatus(
+            true,
+            '✅ Veriler güncel'
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            false,
+            '❌ Veri yükleme hatası'
+        );
+
+        addLog(
+            'Hata: ' + error.message
+        );
     }
 }
 
-function switchTab(t, b) {
-    currentTab = t;
-    
-    // Tüm tab butonlarını pasif yap
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    // Tıklananı aktif yap
-    b.classList.add('active');
 
-    // İçerikleri gizle/göster mantığı
-    const contentDiv = document.getElementById('content');
-    const usersDiv = document.getElementById('content-users');
+/*
+========================================================
+USERS
+========================================================
+*/
 
-    if (t === 'users') {
-        contentDiv.classList.add('hidden');
-        usersDiv.classList.remove('hidden');
-        loadUsers(); // Kullanıcı listesini yükle
-    } else {
-        usersDiv.classList.add('hidden');
-        contentDiv.classList.remove('hidden');
-        loadData(); // Eski yatırımlar/çekimler yüklemesini yap
+let usersCache = [];
+
+async function loadUsers() {
+
+    const data =
+        await apiFetch('/api/admin/users');
+
+    usersCache =
+        Array.isArray(data.users)
+            ? data.users
+            : [];
+
+    const body =
+        document.getElementById('usersBody');
+
+    if (usersCache.length === 0) {
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="empty">
+                        Kayıtlı kullanıcı bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    body.innerHTML =
+        usersCache.map(user => `
+
+        <tr>
+
+            <td>
+                <div class="user-name">
+                    ${escapeHtml(
+                        user.first_name || 'User'
+                    )}
+                </div>
+
+                <div class="user-id">
+                    @${escapeHtml(
+                        user.username || '-'
+                    )}
+                    • TG ${user.telegram_id}
+                </div>
+            </td>
+
+            <td class="money-green">
+                ${money(user.balance)}
+            </td>
+
+            <td class="money-gold">
+                ${money(user.total_invested)}
+            </td>
+
+            <td class="money-red">
+                ${money(user.total_withdrawn)}
+            </td>
+
+            <td>
+                ${money(user.referral_earnings)}
+            </td>
+
+            <td>
+
+                <button
+                    class="btn btn-small"
+                    onclick="openBalanceModal(${user.id})">
+                    💰 Bakiye
+                </button>
+
+            </td>
+
+        </tr>
+
+    `).join('');
+}
+
+
+/*
+========================================================
+INVESTMENTS
+========================================================
+*/
+
+let investmentsCache = [];
+
+async function loadInvestments() {
+
+    const data =
+        await apiFetch('/api/admin/investments');
+
+    investmentsCache =
+        Array.isArray(data.investments)
+            ? data.investments
+            : [];
+
+    const container =
+        document.getElementById(
+            'investmentsContainer'
+        );
+
+    const pending =
+        investmentsCache.filter(
+            item => item.status === 'pending'
+        );
+
+    if (pending.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                ✅ Bekleyen yatırım talebi yok.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        pending.map(item => `
+
+        <div class="card">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                gap:10px;
+                margin-bottom:10px">
+
+                <strong>
+                    ${money(item.amount)}
+                </strong>
+
+                <span class="badge pending">
+                    BEKLEMEDE
+                </span>
+
+            </div>
+
+            <div style="
+                font-size:11px;
+                color:#9da8ca;
+                line-height:1.7">
+
+                Kullanıcı:
+                <b style="color:#fff">
+                    ${escapeHtml(
+                        item.first_name || 'User'
+                    )}
+                </b><br>
+
+                Telegram:
+                ${item.telegram_id}<br>
+
+                Paket:
+                ${escapeHtml(
+                    item.package_name || '-'
+                )}<br>
+
+                Tarih:
+                ${formatDate(item.created_at)}
+
+            </div>
+
+            <div class="modal-actions"
+                 style="margin-top:12px">
+
+                <button
+                    class="btn btn-success btn-small"
+                    onclick="approveInvestment(${item.id})">
+                    ✅ Onayla
+                </button>
+
+                <button
+                    class="btn btn-danger btn-small"
+                    onclick="rejectInvestment(${item.id})">
+                    ❌ Reddet
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join('');
+}
+
+
+/*
+========================================================
+WITHDRAWALS
+========================================================
+*/
+
+let withdrawalsCache = [];
+
+async function loadWithdrawals() {
+
+    const data =
+        await apiFetch('/api/admin/withdrawals');
+
+    withdrawalsCache =
+        Array.isArray(data.withdrawals)
+            ? data.withdrawals
+            : [];
+
+    const container =
+        document.getElementById(
+            'withdrawalsContainer'
+        );
+
+    const pending =
+        withdrawalsCache.filter(
+            item => item.status === 'pending'
+        );
+
+    if (pending.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                ✅ Bekleyen çekim talebi yok.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        pending.map(item => `
+
+        <div class="card">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                gap:10px;
+                margin-bottom:10px">
+
+                <strong>
+                    ${money(item.amount)}
+                </strong>
+
+                <span class="badge pending">
+                    BEKLEMEDE
+                </span>
+
+            </div>
+
+            <div style="
+                font-size:11px;
+                color:#9da8ca;
+                line-height:1.7">
+
+                Kullanıcı:
+                <b style="color:#fff">
+                    ${escapeHtml(
+                        item.first_name || 'User'
+                    )}
+                </b><br>
+
+                Telegram:
+                ${item.telegram_id}<br>
+
+                Coin:
+                ${escapeHtml(
+                    item.crypto || '-'
+                )}<br>
+
+                Ağ:
+                ${escapeHtml(
+                    item.network || '-'
+                )}<br>
+
+                Adres:
+                <code style="
+                    word-break:break-all;
+                    color:#d9c7ff">
+                    ${escapeHtml(
+                        item.wallet_address || '-'
+                    )}
+                </code><br>
+
+                Tarih:
+                ${formatDate(item.created_at)}
+
+            </div>
+
+            <div class="modal-actions"
+                 style="margin-top:12px">
+
+                <button
+                    class="btn btn-success btn-small"
+                    onclick="approveWithdrawal(${item.id})">
+                    ✅ Onayla
+                </button>
+
+                <button
+                    class="btn btn-danger btn-small"
+                    onclick="rejectWithdrawal(${item.id})">
+                    ❌ Reddet
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join('');
+}
+
+
+/*
+========================================================
+INVESTMENT ACTIONS
+========================================================
+*/
+
+async function approveInvestment(id) {
+
+    if (!confirm(
+        'Bu demo yatırım talebi onaylansın mı?'
+    )) return;
+
+    try {
+
+        await apiFetch(
+            '/api/admin/investments/' +
+            id +
+            '/approve',
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    } catch (error) {
+
+        alert(error.message);
+
+        addLog(
+            'Hata: ' + error.message
+        );
     }
 }
 
-async function approvePayment(userDocId,paymentId,amount,userName,trxAmount,packageName){
-if(!confirm(`✅ $${amount.toFixed(2)} tutarlı yatırımı onaylamak istediğinize emin misiniz?\n\nKullanıcı: ${userName}`))return;
-try{
-const ur=db.collection('users').doc(userDocId);
-const d=await ur.get();
-if(!d.exists){alert('Kullanıcı bulunamadı!');return}
-const x=d.data();
-const pp=x.pendingPayments||[];
-const ap=x.approvedPayments||[];
-const pi=pp.findIndex(p=>p.id===paymentId);
-if(pi===-1){alert('Ödeme bulunamadı!');return}
-const p=pp[pi];
-const np=pp.filter(p=>p.id!==paymentId);
-p.status='approved';p.approvedAt=Date.now();
-await ur.set({pendingPayments:np,approvedPayments:[...ap,p],totalInvested:(x.totalInvested||0)+p.amount},{merge:true});
 
-// ❌ OTOMATİK BONUS AKTARIMI KALDIRILDI ($3 kuralı kullanıcı tarafında)
+async function rejectInvestment(id) {
 
-// 💰 REFERANS KOMİSYONU %10
-try{
-const rbd=x.referredByDoc||null;
-if(rbd){
-const rr=db.collection('users').doc(rbd);
-const rd=await rr.get();
-if(rd.exists){
-const rdx=rd.data();
-const comm=p.amount*0.10;
-await rr.set({bonusBalance:(rdx.bonusBalance||0)+comm,referralEarnings:(rdx.referralEarnings||0)+comm},{merge:true});
-if(rdx.telegramId){
-const rm=` <b>REFERANS KOMİSYONU!</b>\n\n <b>Üyen:</b> ${p.userName||'User'}\n💵 <b>Yatırımı:</b> $${p.amount.toFixed(2)}\n💰 <b>Komisyonun (%10):</b> $${comm.toFixed(2)}\n\n✅ Bonus bakiyene eklendi!`;
-sendUserNotification(rdx.telegramId,rm);
-}
-addLog('success',`%10 komisyon: $${comm.toFixed(2)} → ${rdx.userName||rbd}`);
-}
-}
-}catch(e){console.error('Komisyon hatası:',e)}
+    if (!confirm(
+        'Bu demo yatırım talebi reddedilsin mi?'
+    )) return;
 
-// Kullanıcıya onay bildirimi
-if(p.userTelegramId){
-const um=`✅ <b>YATIRIMINIZ ONAYLANDI!</b>\n\n📦 <b>Paket:</b> ${p.packageName||'Manuel Yatırım'}\n <b>Yatırdığınız Tutar:</b> $${p.amount.toFixed(2)}\n🪙 <b>TRX Karşılığı:</b> ${p.trxAmount||'-'} TRX\n🌐 <b>Ağ:</b> ${p.network||'TRON (TRC20)'}\n\n⏰ <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n🚀 <b>Üretiminiz Başladı!</b>\n <b>Günlük Kazanç:</b> $${(p.amount*(1/90)).toFixed(4)}\n💵 <b>90 Gün Sonra:</b> $${(p.amount*2).toFixed(2)}\n\nİyi kazançlar! 🎉`;
-sendUserNotification(p.userTelegramId,um);
+    try {
+
+        await apiFetch(
+            '/api/admin/investments/' +
+            id +
+            '/reject',
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    } catch (error) {
+
+        alert(error.message);
+        addLog(
+            'Hata: ' + error.message
+        );
+    }
 }
 
-addLog('success',`Yatırım onaylandı: $${amount.toFixed(2)} - ${userName}`);
-alert('✅ Ödeme onaylandı! Kullanıcıya bildirim gönderildi.');
-loadData();
-}catch(e){addLog('error','Onay hatası: '+e.message);alert(' Hata: '+e.message)}
+
+/*
+========================================================
+WITHDRAWAL ACTIONS
+========================================================
+*/
+
+async function approveWithdrawal(id) {
+
+    if (!confirm(
+        'Bu demo çekim talebi onaylansın mı?'
+    )) return;
+
+    try {
+
+        await apiFetch(
+            '/api/admin/withdrawals/' +
+            id +
+            '/approve',
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    } catch (error) {
+
+        alert(error.message);
+
+        addLog(
+            'Hata: ' + error.message
+        );
+    }
 }
 
-async function rejectPayment(userDocId,paymentId,amount,userName){
-if(!confirm(`❌ $${amount.toFixed(2)} tutarlı yatırımı reddetmek istediğinize emin misiniz?\n\nKullanıcı: ${userName}`))return;
-try{
-const ur=db.collection('users').doc(userDocId);
-const d=await ur.get();
-if(!d.exists)return;
-const x=d.data();
-const pp=x.pendingPayments||[];
-const p=pp.find(p=>p.id===paymentId);
-const np=pp.filter(p=>p.id!==paymentId);
-await ur.set({pendingPayments:np},{merge:true});
-if(p&&p.userTelegramId){
-const um=`❌ <b>YATIRIMINIZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${p.amount.toFixed(2)}\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Lütfen destek ile iletişime geçin.`;
-sendUserNotification(p.userTelegramId,um);
-}
-addLog('error',`Yatırım reddedildi: $${amount.toFixed(2)} - ${userName}`);
-alert('❌ Ödeme reddedildi!');
-loadData();
-}catch(e){addLog('error','Red hatası: '+e.message);alert('❌ Hata: '+e.message)}
+
+async function rejectWithdrawal(id) {
+
+    if (!confirm(
+        'Bu demo çekim talebi reddedilsin mi?'
+    )) return;
+
+    try {
+
+        await apiFetch(
+            '/api/admin/withdrawals/' +
+            id +
+            '/reject',
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    } catch (error) {
+
+        alert(error.message);
+
+        addLog(
+            'Hata: ' + error.message
+        );
+    }
 }
 
-async function approveWithdrawal(userDocId,withdrawalId,amount,userName,cryptoAmount,cryptoSymbol,network,walletAddress){
-if(!confirm(`✅ $${amount.toFixed(2)} tutarlı çekimi onaylamak istediğinize emin misiniz?\n\nKullanıcı: ${userName}\nCüzdan: ${walletAddress}`))return;
-try{
-const ur=db.collection('users').doc(userDocId);
-const d=await ur.get();
-if(!d.exists)return;
-const x=d.data();
-const wr=x.withdrawalRequests||[];
-const wi=wr.findIndex(w=>w.id===withdrawalId);
-if(wi===-1)return;
-const w=wr[wi];
-const nw=wr.filter(w=>w.id!==withdrawalId);
-w.status='approved';w.approvedAt=Date.now();
-nw.push(w);
-await ur.set({withdrawalRequests:nw},{merge:true});
 
-if(w.userTelegramId){
-const um=`✅ <b>ÇEKİM TALEBİNİZ ONAYLANDI!</b>\n\n <b>Tutar:</b> $${w.amount.toFixed(2)}\n <b>Coin:</b> ${w.cryptoAmount} ${w.cryptoSymbol}\n🌐 <b>Ağ:</b> ${w.network}\n <b>Cüzdan:</b>\n<code>${w.walletAddress}</code>\n\n <b>Onay Saati:</b> ${new Date().toLocaleString('tr-TR')}\n\n💸 Coin'leriniz cüzdanınıza gönderiliyor!\n\nİyi günler! `;
-sendUserNotification(w.userTelegramId,um);
+/*
+========================================================
+MANUAL DEMO BALANCE
+========================================================
+*/
+
+function openBalanceModal(id) {
+
+    const user =
+        usersCache.find(
+            item => Number(item.id) === Number(id)
+        );
+
+    if (!user) return;
+
+    selectedUserId = user.id;
+
+    document.getElementById(
+        'balanceModalUser'
+    ).textContent =
+        `${user.first_name || 'User'} • Telegram ID: ${user.telegram_id}`;
+
+    document.getElementById(
+        'balanceAmount'
+    ).value = '';
+
+    document.getElementById(
+        'balanceOperation'
+    ).value = 'add';
+
+    document.getElementById(
+        'balanceModal'
+    ).classList.add('show');
 }
 
-addLog('success',`Çekim onaylandı: $${amount.toFixed(2)} - ${userName}`);
-alert('✅ Çekim onaylandı! Kullanıcıya bildirim gönderildi.');
-loadData();
-}catch(e){addLog('error','Onay hatası: '+e.message);alert(' Hata: '+e.message)}
+
+function closeBalanceModal() {
+
+    document.getElementById(
+        'balanceModal'
+    ).classList.remove('show');
+
+    selectedUserId = null;
 }
 
-async function rejectWithdrawal(userDocId,withdrawalId,amount,userName){
-if(!confirm(`❌ $${amount.toFixed(2)} tutarlı çekimi reddetmek istediğinize emin misiniz?\n\nKullanıcı: ${userName}`))return;
-try{
-const ur=db.collection('users').doc(userDocId);
-const d=await ur.get();
-if(!d.exists)return;
-const x=d.data();
-const wr=x.withdrawalRequests||[];
-const w=wr.find(w=>w.id===withdrawalId);
-const nw=wr.filter(w=>w.id!==withdrawalId);
-const nl=(x.lifetimeEarnings||0)+amount;
-await ur.set({withdrawalRequests:nw,lifetimeEarnings:nl},{merge:true});
-if(w&&w.userTelegramId){
-const um=` <b>ÇEKİM TALEBİNİZ REDDEDİLDİ</b>\n\n💰 <b>Tutar:</b> $${w.amount.toFixed(2)}\n🕐 <b>Saat:</b> ${new Date().toLocaleString('tr-TR')}\n\n⚠️ Tutar bakiyenize geri eklendi.\nLütfen destek ile iletişime geçin.`;
-sendUserNotification(w.userTelegramId,um);
+
+async function submitBalanceChange() {
+
+    const amount =
+        Number(
+            document.getElementById(
+                'balanceAmount'
+            ).value
+        );
+
+    const operation =
+        document.getElementById(
+            'balanceOperation'
+        ).value;
+
+    if (
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ) {
+        alert('Geçerli bir tutar gir.');
+        return;
+    }
+
+    if (!selectedUserId) return;
+
+    const text =
+        operation === 'add'
+            ? `Demo bakiyeye $${amount.toFixed(2)} eklensin mi?`
+            : `Demo bakiyeden $${amount.toFixed(2)} düşülsün mü?`;
+
+    if (!confirm(text)) return;
+
+    try {
+
+        await apiFetch(
+            `/api/admin/users/${selectedUserId}/balance`,
+            {
+                method:'POST',
+                body:JSON.stringify({
+                    amount,
+                    operation
+                })
+            }
+        );
+
+        addLog(
+            `Kullanıcı #${selectedUserId} demo bakiye işlemi: ${operation} $${amount.toFixed(2)}`
+        );
+
+        closeBalanceModal();
+
+        await loadAll();
+
+    } catch (error) {
+
+        alert(error.message);
+
+        addLog(
+            'Bakiye işlemi hatası: ' +
+            error.message
+        );
+    }
 }
-addLog('error',`Çekim reddedildi: $${amount.toFixed(2)} - ${userName}`);
-alert('❌ Çekim reddedildi! Tutar bakiyeye geri eklendi.');
-loadData();
-}catch(e){addLog('error','Red hatası: '+e.message);alert('❌ Hata: '+e.message)}
+
+
+/*
+========================================================
+TABS
+========================================================
+*/
+
+function switchTab(tab) {
+
+    currentTab = tab;
+
+    document
+        .querySelectorAll('.tab')
+        .forEach(
+            item => item.classList.remove('active')
+        );
+
+    document
+        .getElementById(
+            'tab' +
+            tab.charAt(0).toUpperCase() +
+            tab.slice(1)
+        )
+        .classList.add('active');
+
+    document
+        .getElementById('panelUsers')
+        .classList.toggle(
+            'hidden',
+            tab !== 'users'
+        );
+
+    document
+        .getElementById('panelInvestments')
+        .classList.toggle(
+            'hidden',
+            tab !== 'investments'
+        );
+
+    document
+        .getElementById('panelWithdrawals')
+        .classList.toggle(
+            'hidden',
+            tab !== 'withdrawals'
+        );
 }
+
+
+/*
+========================================================
+STATS
+========================================================
+*/
+
+function updateStats() {
+
+    document.getElementById(
+        'statUsers'
+    ).textContent =
+        usersCache.length;
+
+    const pendingInv =
+        investmentsCache.filter(
+            x => x.status === 'pending'
+        ).length;
+
+    document.getElementById(
+        'statInvestments'
+    ).textContent =
+        pendingInv;
+
+    const pendingWd =
+        withdrawalsCache.filter(
+            x => x.status === 'pending'
+        ).length;
+
+    document.getElementById(
+        'statWithdrawals'
+    ).textContent =
+        pendingWd;
+
+    const total =
+        usersCache.reduce(
+            (sum, user) =>
+                sum +
+                Number(
+                    user.total_invested || 0
+                ),
+            0
+        );
+
+    document.getElementById(
+        'statTotalInvested'
+    ).textContent =
+        money(total);
+}
+
+
+/*
+========================================================
+HELPERS
+========================================================
+*/
+
+function escapeHtml(value) {
+
+    return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+}
+
+
+function formatDate(value) {
+
+    if (!value) return '-';
+
+    const date =
+        new Date(value);
+
+    if (Number.isNaN(
+        date.getTime()
+    )) return '-';
+
+    return date.toLocaleString(
+        'tr-TR'
+    );
+}
+
+
+/*
+========================================================
+AUTO REFRESH
+========================================================
+*/
+
+setInterval(() => {
+
+    if (adminKey) {
+        loadAll();
+    }
+
+}, 30000);
+
 </script>
+
 </body>
 </html>
