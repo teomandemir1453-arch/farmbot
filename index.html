@@ -426,18 +426,349 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
 </style>
+<style id="mm-final-two-column-fix">
+.mm-finance-card{
+  width:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:0!important;
+  min-height:145px!important;
+  padding:12px 14px!important;
+  margin:10px 0 14px!important;
+  overflow:hidden!important;
+  border-radius:20px!important;
+}
+.mm-finance-side{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:118px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  position:relative!important;
+  overflow:hidden!important;
+  padding:8px 10px!important;
+  gap:10px!important;
+}
+.mm-finance-side + .mm-finance-side{
+  border-left:1px solid rgba(125,142,190,.38)!important;
+}
+.mm-finance-divider{display:none!important}
+.mm-finance-icon{
+  flex:0 0 64px!important;
+  width:64px!important;
+  height:64px!important;
+}
+.mm-finance-icon img{
+  width:50px!important;
+  height:50px!important;
+  object-fit:contain!important;
+}
+.mm-finance-content{
+  min-width:0!important;
+  position:relative!important;
+  z-index:3!important;
+}
+.mm-finance-title{
+  font-size:13px!important;
+  white-space:nowrap!important;
+}
+.mm-finance-value{
+  font-size:28px!important;
+  white-space:nowrap!important;
+  line-height:1.05!important;
+  margin-top:6px!important;
+}
+.mm-finance-sub{
+  font-size:11px!important;
+  white-space:nowrap!important;
+  margin-top:5px!important;
+}
+.balance-side .mm-miner-scene{
+  position:absolute!important;
+  right:-8px!important;
+  bottom:-7px!important;
+  width:78px!important;
+  height:70px!important;
+  min-width:78px!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  opacity:.92!important;
+}
+.balance-side .mm-miner-svg{
+  width:88px!important;
+  height:68px!important;
+}
+.balance-side .mm-mine-glow{
+  position:absolute!important;
+  right:7px!important;
+  bottom:3px!important;
+  width:48px!important;
+  height:27px!important;
+  border-radius:50%!important;
+  background:rgba(157,74,255,.18)!important;
+  filter:blur(10px)!important;
+}
+.balance-side .mm-pickaxe-group{
+  transform-origin:137px 93px!important;
+  animation:mmPickFinal 1.05s ease-in-out infinite!important;
+}
+.balance-side .mm-dust{
+  animation:mmDustFinal .9s ease-out infinite!important;
+}
+@keyframes mmPickFinal{
+  0%,100%{transform:rotate(0)}
+  45%{transform:rotate(15deg)}
+  62%{transform:rotate(-4deg)}
+}
+@keyframes mmDustFinal{
+  0%,55%{opacity:0;transform:translate(0,4px) scale(.65)}
+  65%{opacity:1}
+  100%{opacity:0;transform:translate(13px,-15px) scale(1.3)}
+}
+@media(max-width:700px){
+  .mm-finance-card{
+    min-height:122px!important;
+    padding:8px 6px!important;
+  }
+  .mm-finance-side{
+    min-height:104px!important;
+    padding:6px 5px!important;
+    gap:7px!important;
+  }
+  .mm-finance-icon{
+    flex-basis:54px!important;
+    width:54px!important;
+    height:54px!important;
+  }
+  .mm-finance-icon img{width:42px!important;height:42px!important}
+  .mm-finance-title{font-size:10px!important}
+  .mm-finance-value{font-size:21px!important}
+  .mm-finance-sub{font-size:9px!important}
+  .balance-side .mm-miner-scene{
+    width:62px!important;height:58px!important;min-width:62px!important;
+  }
+  .balance-side .mm-miner-svg{width:70px!important;height:56px!important}
+}
+@media(max-width:430px){
+  .mm-finance-card{
+    min-height:105px!important;
+    padding:6px 3px!important;
+  }
+  .mm-finance-side{
+    min-height:91px!important;
+    gap:4px!important;
+    padding:4px 3px!important;
+  }
+  .mm-finance-icon{
+    flex-basis:45px!important;
+    width:45px!important;
+    height:45px!important;
+  }
+  .mm-finance-icon img{width:35px!important;height:35px!important}
+  .mm-finance-title{font-size:8px!important}
+  .mm-finance-value{font-size:16px!important}
+  .mm-finance-sub{font-size:7px!important}
+  .balance-side .mm-miner-scene{
+    width:48px!important;height:48px!important;min-width:48px!important;right:-4px!important;
+  }
+  .balance-side .mm-miner-svg{width:55px!important;height:45px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .balance-side .mm-pickaxe-group,.balance-side .mm-dust{animation:none!important}
+}
+</style>
+<style id="mm-visual-system">
+/* === MICRO MONOTIZE VISUAL SYSTEM === */
+:root{
+  --mm-bg:#070b20;
+  --mm-panel:#111936;
+  --mm-panel-2:#0d1530;
+  --mm-border:rgba(111,132,190,.30);
+  --mm-purple:#a65cff;
+  --mm-purple2:#6d36d8;
+  --mm-gold:#f5bd36;
+  --mm-green:#48e79a;
+  --mm-text:#e8edff;
+  --mm-muted:#aebbe0;
+}
+body{background:radial-gradient(circle at 50% -10%,rgba(103,52,184,.18),transparent 42%),var(--mm-bg)}
+.mm-finance-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);
+  align-items:center;
+  min-height:154px;
+  margin:10px 0 14px;
+  padding:16px 18px;
+  gap:0;
+  border-radius:22px;
+  background:linear-gradient(145deg,#111b3b,#0a112b 58%,#111a37);
+  border:1px solid var(--mm-border);
+  box-shadow:0 14px 35px rgba(0,0,0,.34),inset 0 0 28px rgba(115,83,210,.06);
+  overflow:hidden;
+}
+.mm-finance-side{
+  min-width:0;
+  min-height:118px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:5px 8px;
+  border-radius:16px;
+}
+.mm-finance-side .mm-finance-icon{
+  width:76px;height:76px;min-width:76px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#0a1730;
+}
+.mm-finance-side .mm-finance-icon img{
+  width:60px;height:60px;object-fit:contain;
+  display:block;
+}
+.balance-side .mm-finance-icon{
+  border:2px solid #20e892;
+  box-shadow:0 0 20px rgba(32,232,146,.13);
+}
+.investment-side .mm-finance-icon{
+  border:2px solid #eab72d;
+  box-shadow:0 0 20px rgba(234,183,45,.13);
+}
+.mm-finance-content{min-width:0}
+.mm-finance-title{
+  color:#b8c6e9;
+  font-size:15px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.mm-finance-value{
+  font-size:30px!important;
+  line-height:1.05!important;
+  font-weight:900!important;
+  margin-top:7px!important;
+}
+.mm-finance-sub{
+  color:#aebbe0!important;
+  font-size:13px!important;
+  margin-top:6px!important;
+}
+.mm-finance-divider{
+  width:1px;height:86px;
+  background:linear-gradient(180deg,transparent,#7180a8,transparent);
+}
 
-<style id="mm-polished-icon-nav">
-.mm-nav-item{gap:3px}
-.mm-nav-item img{width:34px;height:34px;object-fit:contain;display:block;filter:drop-shadow(0 4px 8px rgba(153,77,255,.30))}
-.mm-nav-item.active img{filter:drop-shadow(0 0 10px rgba(199,108,255,.75))}
-.mm-nav-item .nav-label{font-size:9px;line-height:1;font-weight:800}
-@media(max-width:520px){
-  .mm-nav-item img{width:31px;height:31px}
-  .mm-nav-item .nav-label{font-size:8px}
+/* Miner belongs visually to Total Balance and does not create a new card. */
+.balance-side .mm-miner-scene{
+  width:116px;height:98px;min-width:116px;
+  margin-left:auto;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.balance-side .mm-miner-svg{width:125px;height:95px;overflow:visible;filter:drop-shadow(0 7px 10px rgba(0,0,0,.4))}
+.balance-side .mm-mine-glow{
+  position:absolute;right:12px;bottom:8px;width:58px;height:30px;
+  border-radius:50%;background:rgba(157,74,255,.18);filter:blur(12px)
+}
+.balance-side .mm-pickaxe-group{
+  transform-origin:137px 93px;
+  animation:mmPickUnified 1.05s ease-in-out infinite
+}
+.balance-side .mm-dust{animation:mmDustUnified .9s ease-out infinite}
+@keyframes mmPickUnified{0%,100%{transform:rotate(0)}45%{transform:rotate(15deg)}62%{transform:rotate(-4deg)}}
+@keyframes mmDustUnified{0%,55%{opacity:0;transform:translate(0,4px) scale(.65)}65%{opacity:1}100%{opacity:0;transform:translate(13px,-15px) scale(1.3)}}
+
+/* Quick-action icons: identical box, size and alignment. */
+.mm-quick-action,.quick-action,.action-card{
+  display:flex;align-items:center;justify-content:center;
+}
+.mm-quick-action img,.quick-action img,.action-card img,
+.task-icon img,.notification-icon img{
+  width:44px;height:44px;object-fit:contain;display:block;
+  filter:drop-shadow(0 5px 9px rgba(0,0,0,.32));
+}
+.task-icon,.notification-icon{
+  display:flex;align-items:center;justify-content:center;
+}
+.task-icon img,.notification-icon img{width:42px;height:42px}
+
+/* Keep every image from stretching its parent. */
+img{max-width:100%}
+.card img,.mm-info-card img{object-fit:contain}
+
+/* Info cards use one shared card language. */
+.mm-info-card{
+  background:linear-gradient(145deg,#111a39,#0b122b)!important;
+  border:1px solid rgba(111,132,190,.28)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 25px rgba(0,0,0,.25)!important;
+}
+.mm-info-title{color:#b9c7e9!important;font-weight:900!important}
+.mm-info-value{font-weight:900!important}
+
+/* Bottom navigation uses the same icon sizing. */
+.mm-nav-item{
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  gap:3px!important;
+}
+.mm-nav-item img{
+  width:31px!important;height:31px!important;
+  object-fit:contain!important;display:block!important;
+}
+.mm-nav-item .nav-label{font-size:8px!important;font-weight:800!important}
+
+/* Reduce visual noise from old emoji icons in dashboard text areas. */
+.telegram-title,.package-summary-title,h2 .emoji{line-height:1.2}
+
+/* Responsive */
+@media(max-width:700px){
+  .mm-finance-card{min-height:132px;padding:12px 9px;border-radius:18px}
+  .mm-finance-side{min-height:104px;gap:8px;padding:4px}
+  .mm-finance-side .mm-finance-icon{width:60px;height:60px;min-width:60px}
+  .mm-finance-side .mm-finance-icon img{width:47px;height:47px}
+  .mm-finance-title{font-size:11px}
+  .mm-finance-value{font-size:23px!important}
+  .mm-finance-sub{font-size:10px!important}
+  .mm-finance-divider{height:72px}
+  .balance-side .mm-miner-scene{width:86px;height:78px;min-width:86px}
+  .balance-side .mm-miner-svg{width:98px;height:76px}
+}
+@media(max-width:430px){
+  .mm-finance-card{padding:10px 6px}
+  .mm-finance-side{gap:5px}
+  .mm-finance-side .mm-finance-icon{width:52px;height:52px;min-width:52px}
+  .mm-finance-side .mm-finance-icon img{width:40px;height:40px}
+  .mm-finance-title{font-size:9px}
+  .mm-finance-value{font-size:19px!important}
+  .mm-finance-sub{font-size:8px!important}
+  .balance-side .mm-miner-scene{width:68px;height:64px;min-width:68px;margin-left:-4px}
+  .balance-side .mm-miner-svg{width:82px;height:63px}
+}
+@media(prefers-reduced-motion:reduce){
+  .balance-side .mm-pickaxe-group,.balance-side .mm-dust{animation:none}
 }
 </style>
 
+<style id="mm-final-clean-visual-override">
+.mm-finance-card{
+ width:100%!important;box-sizing:border-box!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ align-items:stretch!important;gap:0!important;overflow:hidden!important;
+}
+.mm-finance-side{min-width:0!important;width:100%!important;box-sizing:border-box!important;
+ display:flex!important;flex-direction:row!important;align-items:center!important;position:relative!important;
+ overflow:hidden!important}
+.mm-finance-side + .mm-finance-side{border-left:1px solid rgba(125,142,190,.38)!important}
+.mm-finance-divider{display:none!important}
+.balance-side .mm-miner-scene{position:absolute!important;right:-8px!important;bottom:-7px!important;
+ width:78px!important;height:70px!important;min-width:78px!important;z-index:1!important;pointer-events:none!important}
+.balance-side .mm-miner-svg{width:88px!important;height:68px!important}
+</style>
 </head>
 <body>
 <div class="container">
@@ -451,13 +782,13 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 <div class="mm-marquee"><span class="speaker">📢</span><span>Welcome to Micro Monetize! Grow your wealth every day.</span></div>
 
 <div class="stats-grid">
-    <div class="stat-box live-balance-box" onclick="showPage('withdraw')">
+    <div class="stat-box live-balance-box" onclick="openWithdrawPage(event)">
         <div class="live-balance-value" id="balance">$0.000000</div>
         <div class="live-balance-label" data-i18n="withdraw_label">💰 WITHDRAW</div>
         <div class="production-line"></div>
     </div>
     
-    <div class="stat-box add-balance-box" onclick="showPage('buy')">
+    <div class="stat-box add-balance-box" onclick="openInvestmentPage(event)">
         <div class="add-balance-value" id="totalInvested">$0</div>
         <div class="label" data-i18n="deposit_label" style="margin-top:5px">📊 ADD BALANCE</div>
     </div>
@@ -487,7 +818,7 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 <div class="mm-promo">
   <h3>INVEST TODAY<br><strong>EARN EVERY DAY!</strong></h3>
   <p>Secure • Stable • Profitable</p>
-  <button class="promo-btn" onclick="showPage('buy')">INVEST NOW ›</button>
+  <button class="promo-btn" onclick="openInvestmentPage(event)">INVEST NOW ›</button>
 </div>
 
 <div class="mm-two">
@@ -1553,6 +1884,41 @@ function toggleMenu() {
     if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
 
+
+function openInvestmentPage(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    const page=document.getElementById('page-buy');
+    if(!page){console.error('Investment page (#page-buy) not found');return false;}
+    // Close overlays that could block clicks.
+    const sub=document.getElementById('subOverlay');
+    const prof=document.getElementById('profileOverlay');
+    if(sub)sub.classList.remove('show');
+    if(prof)prof.classList.remove('show');
+    showPage('buy');
+    const amount=document.getElementById('buyAmount');
+    if(amount) updateBuyTRX();
+    loadDepositHistory();
+    window.scrollTo({top:0,behavior:'smooth'});
+    return false;
+}
+
+function openWithdrawPage(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    const page=document.getElementById('page-withdraw');
+    if(!page){console.error('Withdraw page (#page-withdraw) not found');return false;}
+    const sub=document.getElementById('subOverlay');
+    const prof=document.getElementById('profileOverlay');
+    if(sub)sub.classList.remove('show');
+    if(prof)prof.classList.remove('show');
+    showPage('withdraw');
+    updateCryptoAmount();
+    clearAddressValidation();
+    updateNetworkInfo();
+    loadWithdrawalHistory();
+    window.scrollTo({top:0,behavior:'smooth'});
+    return false;
+}
+
 function showPage(p, element) {
     document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
     document.getElementById('page-'+p).classList.remove('hidden');
@@ -1569,11 +1935,11 @@ function showPage(p, element) {
 </script>
 
 <div class="mm-bottom-nav">
- <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
- <button class="mm-nav-item" onclick="showPage('buy',this)"><img src="assets/icons/investment.png" alt=""><span class="nav-label">Investment</span></button>
- <button class="mm-nav-item" onclick="showPage('withdraw',this)"><img src="assets/icons/withdraw.png" alt=""><span class="nav-label">Withdraw</span></button>
- <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
- <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
+ <button class="mm-nav-item active" onclick="showPage('home',this)"><span>⌂</span>Home</button>
+ <button class="mm-nav-item" onclick="openInvestmentPage(event)"><span>💳</span>Investment</button>
+ <button class="mm-nav-item" onclick="openWithdrawPage(event)"><span>₿</span>Withdraw</button>
+ <button class="mm-nav-item" onclick="openProfile()"><span>👤</span>Profile</button>
+ <button class="mm-nav-item" onclick="openSupport()"><span>◉</span>Support</button>
 </div>
 </body>
 </html>
