@@ -1680,6 +1680,38 @@ const CALC_RATE = 0.0111;
 let customAmount=0;
 
 const tg=window.Telegram.WebApp;tg.ready();tg.expand();
+    async function registerTelegramUserWithBackend() {
+    try {
+        if (!tg.initData) {
+            console.warn('Telegram initData bulunamadı.');
+            return null;
+        }
+
+        const response = await fetch('http://localhost:3000/api/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                initData: tg.initData
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+            console.error('PostgreSQL kayıt hatası:', data);
+            return null;
+        }
+
+        console.log('✅ PostgreSQL kullanıcı:', data.user);
+        return data.user;
+
+    } catch (error) {
+        console.error('Backend bağlantı hatası:', error);
+        return null;
+    }
+}
 if(tg.initDataUnsafe&&tg.initDataUnsafe.user)currentUser=tg.initDataUnsafe.user;
 const startParam=tg.initDataUnsafe?.start_param||'';
 if(startParam&&startParam.startsWith('ref_'))referredByUserId=startParam.replace('ref_','');
