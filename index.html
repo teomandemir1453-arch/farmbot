@@ -29,44 +29,6 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .stat-box:active{transform:scale(.95)}
 .stat-box .label{font-size:9px;color:#C6C6D0;opacity:.8;margin-bottom:4px;font-weight:700;text-transform:uppercase}
 
-.live-balance-box {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border: 2px solid rgba(16, 185, 129, 0.6);
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 15px rgba(16, 185, 129, 0.1);
-    padding: 15px;
-}
-.live-balance-box::before {
-    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
-    animation: rotateGlow 6s linear infinite;
-}
-@keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-.live-balance-value {
-    font-size: 28px; font-weight: 900; color: #10b981;
-    text-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
-    position: relative; z-index: 2; transition: all 0.1s ease-out;
-    font-variant-numeric: tabular-nums;
-}
-.live-balance-label { font-size: 10px; color: #D59D80; margin-top: 5px; letter-spacing: 1px;}
-
-.add-balance-box {
-    background: linear-gradient(135deg, #2a1a0f 0%, #3b291e 100%);
-    border: 2px solid rgba(213, 157, 128, 0.6);
-    box-shadow: 0 0 25px rgba(213, 157, 128, 0.3), inset 0 0 15px rgba(213, 157, 128, 0.1);
-    padding: 15px;
-}
-.add-balance-box::before {
-    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(213,157,128,0.15) 0%, transparent 70%);
-    animation: rotateGlow 6s linear infinite reverse;
-}
-.add-balance-value {
-    font-size: 24px; font-weight: 900; color: #D59D80;
-    text-shadow: 0 0 15px rgba(213, 157, 128, 0.8);
-    position: relative; z-index: 2;
-}
-
 .production-line {
     position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
     background: linear-gradient(90deg, transparent, #10b981, transparent);
@@ -397,10 +359,6 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 .mm-marquee .speaker{font-size:22px;color:#d98cff}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .stat-box{min-height:126px;border-radius:18px;padding:16px 12px;text-align:left;background:linear-gradient(145deg,#121b3d,#0b1230);border:1px solid rgba(133,155,231,.25);box-shadow:0 12px 30px rgba(0,0,0,.28);display:flex;flex-direction:column;justify-content:center;align-items:center}
-.live-balance-box,.add-balance-box{border:1px solid rgba(145,105,255,.35);box-shadow:inset 0 0 30px rgba(103,61,205,.08),0 12px 30px rgba(0,0,0,.25);background:linear-gradient(145deg,#111a39,#0a102b)}
-.live-balance-value{font-size:29px;color:var(--green);text-shadow:0 0 18px rgba(49,233,129,.28)}
-.live-balance-label,.stat-box .label{font-size:10px;color:#aeb9db;letter-spacing:.5px}
-.add-balance-value{font-size:29px;color:var(--gold);text-shadow:0 0 18px rgba(255,200,61,.2)}
 .production-line{background:linear-gradient(90deg,transparent,var(--green),transparent)}
 .quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 14px}
 .quick-action-btn{min-height:102px;padding:10px 4px;border-radius:16px;background:linear-gradient(145deg,#17123c,#0d1531);border:1px solid rgba(156,105,255,.4);box-shadow:0 8px 22px rgba(0,0,0,.25);gap:7px}
@@ -426,161 +384,152 @@ body{padding:0;padding-bottom:90px;min-height:100vh}
 @media(max-width:520px){.mm-logo{width:170px}.quick-actions{gap:5px}.quick-action-btn{min-height:92px}.quick-action-btn .qa-icon{width:43px;height:43px}.quick-action-btn .qa-label{font-size:8px}.mm-promo{padding-right:132px}.mm-promo h3{font-size:18px}.mm-promo .promo-btn{right:10px;padding:11px 9px}.mm-two{gap:7px}.mm-info-card{padding:13px}.mm-info-value{font-size:24px}}
 @media(max-width:390px){.quick-action-btn .qa-icon{width:38px;height:38px}.quick-action-btn{min-height:86px}.quick-action-btn .qa-label{font-size:7px}.mm-logo{width:150px}.stats-grid{gap:7px}.stat-box{min-height:112px}.live-balance-value,.add-balance-value{font-size:24px}}
 </style>
-<style id="mm-final-two-column-fix">
+
+
+<style id="mm-finance-reference">
 .mm-finance-card{
-  width:100%!important;
-  box-sizing:border-box!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-  align-items:stretch!important;
-  gap:0!important;
-  min-height:145px!important;
-  padding:12px 14px!important;
-  margin:10px 0 14px!important;
-  overflow:hidden!important;
-  border-radius:20px!important;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);
+  align-items:center;
+  gap:0;
+  min-height:145px;
+  margin:10px 0 12px;
+  padding:18px 24px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#111a39 0%,#0b122d 55%,#101a38 100%);
+  border:2px solid rgba(111,131,190,.30);
+  box-shadow:0 14px 35px rgba(0,0,0,.32), inset 0 0 35px rgba(72,91,170,.07);
+  overflow:hidden;
 }
 .mm-finance-side{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  min-height:118px!important;
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:center!important;
-  position:relative!important;
-  overflow:hidden!important;
-  padding:8px 10px!important;
-  gap:10px!important;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  cursor:pointer;
+  padding:4px 10px;
+  border-radius:16px;
+  transition:transform .18s ease,background .18s ease;
 }
-.mm-finance-side + .mm-finance-side{
-  border-left:1px solid rgba(125,142,190,.38)!important;
-}
-.mm-finance-divider{display:none!important}
+.mm-finance-side:active{transform:scale(.98)}
+.mm-finance-side:hover{background:rgba(255,255,255,.025)}
 .mm-finance-icon{
-  flex:0 0 64px!important;
-  width:64px!important;
-  height:64px!important;
+  width:88px;
+  height:88px;
+  min-width:88px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#0c1830;
+  overflow:hidden;
 }
 .mm-finance-icon img{
-  width:50px!important;
-  height:50px!important;
-  object-fit:contain!important;
+  width:72px;
+  height:72px;
+  object-fit:contain;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.35));
 }
-.mm-finance-content{
-  min-width:0!important;
-  position:relative!important;
-  z-index:3!important;
+.balance-side .mm-finance-icon{
+  border:2px solid #18e58b;
+  box-shadow:0 0 22px rgba(24,229,139,.16),inset 0 0 18px rgba(24,229,139,.08);
 }
+.investment-side .mm-finance-icon{
+  border:2px solid #e8b52d;
+  box-shadow:0 0 22px rgba(232,181,45,.16),inset 0 0 18px rgba(232,181,45,.08);
+}
+.mm-finance-content{min-width:0}
 .mm-finance-title{
-  font-size:13px!important;
-  white-space:nowrap!important;
+  color:#b9c8ed;
+  font-size:18px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.mm-info{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;
+  height:22px;
+  margin-left:6px;
+  border:2px solid #a9b9df;
+  border-radius:50%;
+  color:#b8c8eb;
+  font-size:13px;
+  font-weight:900;
+  vertical-align:2px;
 }
 .mm-finance-value{
-  font-size:28px!important;
-  white-space:nowrap!important;
-  line-height:1.05!important;
-  margin-top:6px!important;
+  margin-top:8px;
+  font-size:34px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.3px;
+  font-variant-numeric:tabular-nums;
+}
+.balance-value{
+  color:#42ef99;
+  text-shadow:0 0 18px rgba(66,239,153,.28);
+}
+.investment-value{
+  color:#ffd34f;
+  text-shadow:0 0 18px rgba(255,211,79,.20);
 }
 .mm-finance-sub{
-  font-size:11px!important;
-  white-space:nowrap!important;
-  margin-top:5px!important;
+  margin-top:8px;
+  color:#aebcf0;
+  font-size:16px;
+  font-weight:600;
 }
-.balance-side .mm-miner-scene{
-  position:absolute!important;
-  right:-8px!important;
-  bottom:-7px!important;
-  width:78px!important;
-  height:70px!important;
-  min-width:78px!important;
-  z-index:1!important;
-  pointer-events:none!important;
-  opacity:.92!important;
+.mm-finance-divider{
+  width:1px;
+  height:82px;
+  background:linear-gradient(180deg,transparent,#8795bc,transparent);
 }
-.balance-side .mm-miner-svg{
-  width:88px!important;
-  height:68px!important;
-}
-.balance-side .mm-mine-glow{
-  position:absolute!important;
-  right:7px!important;
-  bottom:3px!important;
-  width:48px!important;
-  height:27px!important;
-  border-radius:50%!important;
-  background:rgba(157,74,255,.18)!important;
-  filter:blur(10px)!important;
-}
-.balance-side .mm-pickaxe-group{
-  transform-origin:137px 93px!important;
-  animation:mmPickFinal 1.05s ease-in-out infinite!important;
-}
-.balance-side .mm-dust{
-  animation:mmDustFinal .9s ease-out infinite!important;
-}
-@keyframes mmPickFinal{
-  0%,100%{transform:rotate(0)}
-  45%{transform:rotate(15deg)}
-  62%{transform:rotate(-4deg)}
-}
-@keyframes mmDustFinal{
-  0%,55%{opacity:0;transform:translate(0,4px) scale(.65)}
-  65%{opacity:1}
-  100%{opacity:0;transform:translate(13px,-15px) scale(1.3)}
-}
-@media(max-width:700px){
+@media(max-width:600px){
   .mm-finance-card{
-    min-height:122px!important;
-    padding:8px 6px!important;
+    min-height:124px;
+    padding:14px 10px;
+    border-radius:18px;
   }
-  .mm-finance-side{
-    min-height:104px!important;
-    padding:6px 5px!important;
-    gap:7px!important;
-  }
-  .mm-finance-icon{
-    flex-basis:54px!important;
-    width:54px!important;
-    height:54px!important;
-  }
-  .mm-finance-icon img{width:42px!important;height:42px!important}
-  .mm-finance-title{font-size:10px!important}
-  .mm-finance-value{font-size:21px!important}
-  .mm-finance-sub{font-size:9px!important}
-  .balance-side .mm-miner-scene{
-    width:62px!important;height:58px!important;min-width:62px!important;
-  }
-  .balance-side .mm-miner-svg{width:70px!important;height:56px!important}
+  .mm-finance-side{gap:11px;padding:3px 4px}
+  .mm-finance-icon{width:64px;height:64px;min-width:64px}
+  .mm-finance-icon img{width:53px;height:53px}
+  .mm-finance-title{font-size:12px}
+  .mm-info{width:17px;height:17px;font-size:10px;border-width:1.5px;margin-left:3px}
+  .mm-finance-value{font-size:25px;margin-top:6px}
+  .mm-finance-sub{font-size:11px;margin-top:6px}
+  .mm-finance-divider{height:70px}
 }
-@media(max-width:430px){
-  .mm-finance-card{
-    min-height:105px!important;
-    padding:6px 3px!important;
-  }
-  .mm-finance-side{
-    min-height:91px!important;
-    gap:4px!important;
-    padding:4px 3px!important;
-  }
-  .mm-finance-icon{
-    flex-basis:45px!important;
-    width:45px!important;
-    height:45px!important;
-  }
-  .mm-finance-icon img{width:35px!important;height:35px!important}
-  .mm-finance-title{font-size:8px!important}
-  .mm-finance-value{font-size:16px!important}
-  .mm-finance-sub{font-size:7px!important}
-  .balance-side .mm-miner-scene{
-    width:48px!important;height:48px!important;min-width:48px!important;right:-4px!important;
-  }
-  .balance-side .mm-miner-svg{width:55px!important;height:45px!important}
-}
-@media(prefers-reduced-motion:reduce){
-  .balance-side .mm-pickaxe-group,.balance-side .mm-dust{animation:none!important}
+@media(max-width:390px){
+  .mm-finance-card{padding:12px 7px}
+  .mm-finance-side{gap:8px}
+  .mm-finance-icon{width:56px;height:56px;min-width:56px}
+  .mm-finance-icon img{width:46px;height:46px}
+  .mm-finance-title{font-size:10px}
+  .mm-finance-value{font-size:21px}
+  .mm-finance-sub{font-size:9px}
 }
 </style>
+
+<style id="mm-polished-icon-nav">
+.mm-nav-item{gap:3px}
+.mm-nav-item img{width:34px;height:34px;object-fit:contain;display:block;filter:drop-shadow(0 4px 8px rgba(153,77,255,.30))}
+.mm-nav-item.active img{filter:drop-shadow(0 0 10px rgba(199,108,255,.75))}
+.mm-nav-item .nav-label{font-size:9px;line-height:1;font-weight:800}
+@media(max-width:520px){
+  .mm-nav-item img{width:31px;height:31px}
+  .mm-nav-item .nav-label{font-size:8px}
+}
+</style>
+
+
+
+
+
+
 <style id="mm-visual-system">
 /* === MICRO MONOTIZE VISUAL SYSTEM === */
 :root{
@@ -754,21 +703,296 @@ img{max-width:100%}
 }
 </style>
 
-<style id="mm-final-clean-visual-override">
+
+<style id="mm-final-finance-layout">
 .mm-finance-card{
- width:100%!important;box-sizing:border-box!important;
- display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
- align-items:stretch!important;gap:0!important;overflow:hidden!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:0!important;
+  min-height:154px!important;
+  padding:14px 16px!important;
 }
-.mm-finance-side{min-width:0!important;width:100%!important;box-sizing:border-box!important;
- display:flex!important;flex-direction:row!important;align-items:center!important;position:relative!important;
- overflow:hidden!important}
-.mm-finance-side + .mm-finance-side{border-left:1px solid rgba(125,142,190,.38)!important}
-.mm-finance-divider{display:none!important}
-.balance-side .mm-miner-scene{position:absolute!important;right:-8px!important;bottom:-7px!important;
- width:78px!important;height:70px!important;min-width:78px!important;z-index:1!important;pointer-events:none!important}
-.balance-side .mm-miner-svg{width:88px!important;height:68px!important}
+.mm-finance-side{
+  position:relative!important;
+  min-width:0!important;
+  min-height:126px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:13px!important;
+  padding:8px 14px!important;
+  overflow:hidden!important;
+}
+.mm-finance-divider{
+  display:none!important;
+}
+.mm-finance-side + .mm-finance-side{
+  border-left:1px solid rgba(125,142,190,.35)!important;
+}
+.mm-finance-side .mm-finance-icon{
+  flex:0 0 76px!important;
+  width:76px!important;
+  height:76px!important;
+}
+.mm-finance-side .mm-finance-content{
+  min-width:0!important;
+  position:relative;
+  z-index:3;
+}
+.mm-finance-title{
+  font-size:15px!important;
+  letter-spacing:.2px;
+}
+.mm-finance-value{
+  font-size:31px!important;
+  white-space:nowrap!important;
+}
+.mm-finance-sub{
+  white-space:nowrap!important;
+}
+.balance-side .mm-miner-scene{
+  position:absolute!important;
+  right:-4px!important;
+  bottom:-4px!important;
+  width:94px!important;
+  height:82px!important;
+  min-width:94px!important;
+  opacity:.98!important;
+  z-index:1!important;
+  pointer-events:none!important;
+}
+.balance-side .mm-miner-svg{
+  width:104px!important;
+  height:80px!important;
+}
+.balance-side .mm-mine-glow{
+  right:8px!important;
+  bottom:5px!important;
+}
+@media(max-width:700px){
+  .mm-finance-card{
+    min-height:128px!important;
+    padding:9px 7px!important;
+  }
+  .mm-finance-side{
+    min-height:106px!important;
+    gap:7px!important;
+    padding:5px 7px!important;
+  }
+  .mm-finance-side .mm-finance-icon{
+    flex-basis:58px!important;
+    width:58px!important;
+    height:58px!important;
+  }
+  .mm-finance-side .mm-finance-icon img{
+    width:45px!important;
+    height:45px!important;
+  }
+  .mm-finance-title{font-size:10px!important}
+  .mm-finance-value{font-size:22px!important}
+  .mm-finance-sub{font-size:9px!important}
+  .balance-side .mm-miner-scene{
+    width:70px!important;
+    height:65px!important;
+    min-width:70px!important;
+    right:-3px!important;
+  }
+  .balance-side .mm-miner-svg{
+    width:78px!important;
+    height:62px!important;
+  }
+}
+@media(max-width:430px){
+  .mm-finance-card{
+    min-height:112px!important;
+    padding:7px 4px!important;
+  }
+  .mm-finance-side{
+    min-height:94px!important;
+    gap:4px!important;
+    padding:4px!important;
+  }
+  .mm-finance-side .mm-finance-icon{
+    flex-basis:48px!important;
+    width:48px!important;
+    height:48px!important;
+  }
+  .mm-finance-side .mm-finance-icon img{
+    width:37px!important;
+    height:37px!important;
+  }
+  .mm-finance-title{font-size:8px!important}
+  .mm-finance-value{font-size:17px!important}
+  .mm-finance-sub{font-size:7px!important}
+  .balance-side .mm-miner-scene{
+    width:56px!important;
+    height:54px!important;
+    min-width:56px!important;
+  }
+  .balance-side .mm-miner-svg{
+    width:64px!important;
+    height:52px!important;
+  }
+}
 </style>
+
+
+<style id="mm-final-two-column-fix">
+.mm-finance-card{
+  width:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:0!important;
+  min-height:145px!important;
+  padding:12px 14px!important;
+  margin:10px 0 14px!important;
+  overflow:hidden!important;
+  border-radius:20px!important;
+}
+.mm-finance-side{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:118px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  position:relative!important;
+  overflow:hidden!important;
+  padding:8px 10px!important;
+  gap:10px!important;
+}
+.mm-finance-side + .mm-finance-side{
+  border-left:1px solid rgba(125,142,190,.38)!important;
+}
+.mm-finance-divider{display:none!important}
+.mm-finance-icon{
+  flex:0 0 64px!important;
+  width:64px!important;
+  height:64px!important;
+}
+.mm-finance-icon img{
+  width:50px!important;
+  height:50px!important;
+  object-fit:contain!important;
+}
+.mm-finance-content{
+  min-width:0!important;
+  position:relative!important;
+  z-index:3!important;
+}
+.mm-finance-title{
+  font-size:13px!important;
+  white-space:nowrap!important;
+}
+.mm-finance-value{
+  font-size:28px!important;
+  white-space:nowrap!important;
+  line-height:1.05!important;
+  margin-top:6px!important;
+}
+.mm-finance-sub{
+  font-size:11px!important;
+  white-space:nowrap!important;
+  margin-top:5px!important;
+}
+.balance-side .mm-miner-scene{
+  position:absolute!important;
+  right:-8px!important;
+  bottom:-7px!important;
+  width:78px!important;
+  height:70px!important;
+  min-width:78px!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  opacity:.92!important;
+}
+.balance-side .mm-miner-svg{
+  width:88px!important;
+  height:68px!important;
+}
+.balance-side .mm-mine-glow{
+  position:absolute!important;
+  right:7px!important;
+  bottom:3px!important;
+  width:48px!important;
+  height:27px!important;
+  border-radius:50%!important;
+  background:rgba(157,74,255,.18)!important;
+  filter:blur(10px)!important;
+}
+.balance-side .mm-pickaxe-group{
+  transform-origin:137px 93px!important;
+  animation:mmPickFinal 1.05s ease-in-out infinite!important;
+}
+.balance-side .mm-dust{
+  animation:mmDustFinal .9s ease-out infinite!important;
+}
+@keyframes mmPickFinal{
+  0%,100%{transform:rotate(0)}
+  45%{transform:rotate(15deg)}
+  62%{transform:rotate(-4deg)}
+}
+@keyframes mmDustFinal{
+  0%,55%{opacity:0;transform:translate(0,4px) scale(.65)}
+  65%{opacity:1}
+  100%{opacity:0;transform:translate(13px,-15px) scale(1.3)}
+}
+@media(max-width:700px){
+  .mm-finance-card{
+    min-height:122px!important;
+    padding:8px 6px!important;
+  }
+  .mm-finance-side{
+    min-height:104px!important;
+    padding:6px 5px!important;
+    gap:7px!important;
+  }
+  .mm-finance-icon{
+    flex-basis:54px!important;
+    width:54px!important;
+    height:54px!important;
+  }
+  .mm-finance-icon img{width:42px!important;height:42px!important}
+  .mm-finance-title{font-size:10px!important}
+  .mm-finance-value{font-size:21px!important}
+  .mm-finance-sub{font-size:9px!important}
+  .balance-side .mm-miner-scene{
+    width:62px!important;height:58px!important;min-width:62px!important;
+  }
+  .balance-side .mm-miner-svg{width:70px!important;height:56px!important}
+}
+@media(max-width:430px){
+  .mm-finance-card{
+    min-height:105px!important;
+    padding:6px 3px!important;
+  }
+  .mm-finance-side{
+    min-height:91px!important;
+    gap:4px!important;
+    padding:4px 3px!important;
+  }
+  .mm-finance-icon{
+    flex-basis:45px!important;
+    width:45px!important;
+    height:45px!important;
+  }
+  .mm-finance-icon img{width:35px!important;height:35px!important}
+  .mm-finance-title{font-size:8px!important}
+  .mm-finance-value{font-size:16px!important}
+  .mm-finance-sub{font-size:7px!important}
+  .balance-side .mm-miner-scene{
+    width:48px!important;height:48px!important;min-width:48px!important;right:-4px!important;
+  }
+  .balance-side .mm-miner-svg{width:55px!important;height:45px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .balance-side .mm-pickaxe-group,.balance-side .mm-dust{animation:none!important}
+}
+</style>
+
 </head>
 <body>
 <div class="container">
@@ -781,17 +1005,64 @@ img{max-width:100%}
 </div>
 <div class="mm-marquee"><span class="speaker">📢</span><span>Welcome to Micro Monetize! Grow your wealth every day.</span></div>
 
-<div class="stats-grid">
-    <div class="stat-box live-balance-box" onclick="openWithdrawPage(event)">
-        <div class="live-balance-value" id="balance">$0.000000</div>
-        <div class="live-balance-label" data-i18n="withdraw_label">💰 WITHDRAW</div>
-        <div class="production-line"></div>
+<div class="mm-finance-card">
+  <div class="mm-finance-side balance-side" onclick="showPage('withdraw')">
+    <div class="mm-finance-icon">
+      <img src="assets/icons/balance.png" alt="Balance">
     </div>
-    
-    <div class="stat-box add-balance-box" onclick="openInvestmentPage(event)">
-        <div class="add-balance-value" id="totalInvested">$0</div>
-        <div class="label" data-i18n="deposit_label" style="margin-top:5px">📊 ADD BALANCE</div>
+    <div class="mm-finance-content">
+      <div class="mm-finance-title">TOTAL BALANCE <span class="mm-info">i</span></div>
+      <div class="mm-finance-value balance-value" id="balance">$0.000000</div>
+      <div class="mm-finance-sub" id="balanceBtc">≈ 0.000000 BTC</div>
     </div>
+    <div class="mm-miner-scene" aria-hidden="true">
+      <div class="mm-mine-glow"></div>
+      <svg class="mm-miner-svg" viewBox="0 0 260 190">
+        <defs>
+          <linearGradient id="tbHelmet" x1="0" x2="1"><stop offset="0" stop-color="#6424d9"/><stop offset="1" stop-color="#d16cff"/></linearGradient>
+          <linearGradient id="tbSuit" x1="0" x2="1"><stop offset="0" stop-color="#20234d"/><stop offset="1" stop-color="#55319c"/></linearGradient>
+          <linearGradient id="tbRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#98704a"/><stop offset="1" stop-color="#32273b"/></linearGradient>
+        </defs>
+        <path d="M143 166 L151 113 L178 93 L211 113 L226 166 Z" fill="url(#tbRock)" stroke="#d89b3e" stroke-width="3"/>
+        <path d="M155 133 L181 113 L196 132 L184 154 Z" fill="#7e4cff" opacity=".8"/>
+        <circle cx="187" cy="139" r="28" fill="#f4b51f" stroke="#ffd85b" stroke-width="3"/>
+        <text x="187" y="151" text-anchor="middle" font-size="38" font-weight="900" fill="#432400">₿</text>
+        <path d="M57 119 Q74 101 101 106 L118 145 L77 151 Z" fill="url(#tbSuit)" stroke="#a978ff" stroke-width="2"/>
+        <circle cx="82" cy="82" r="22" fill="#e8b48c"/>
+        <path d="M62 76 Q66 50 86 48 Q106 49 110 72 L104 67 Q85 59 66 70 Z" fill="url(#tbHelmet)" stroke="#e7b9ff" stroke-width="2"/>
+        <rect x="65" y="68" width="39" height="7" rx="3.5" fill="#ffd34e"/>
+        <circle cx="75" cy="84" r="2.5" fill="#33202a"/><circle cx="91" cy="84" r="2.5" fill="#33202a"/>
+        <path d="M73 143 L69 171 L84 171 L91 146 Z" fill="#25254d"/>
+        <path d="M94 144 L102 170 L117 168 L108 139 Z" fill="#25254d"/>
+        <path d="M67 169 L84 169 L87 178 L62 178 Z" fill="#19192f"/>
+        <path d="M101 167 L118 165 L125 174 L102 177 Z" fill="#19192f"/>
+        <g class="mm-pickaxe-group">
+          <path d="M101 111 Q119 104 137 93" fill="none" stroke="#e8b48c" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="137" cy="93" r="7" fill="#e8b48c"/>
+          <g transform="translate(136 93) rotate(-37)">
+            <rect x="-5" y="-64" width="10" height="80" rx="5" fill="#a85e2f"/>
+            <path d="M-40 -64 Q0 -83 40 -64 L36 -55 Q0 -65 -36 -55 Z" fill="#d7dbea" stroke="#777b8b" stroke-width="2"/>
+          </g>
+        </g>
+        <g class="mm-dust">
+          <circle cx="145" cy="119" r="3" fill="#ffd34e"/>
+          <circle cx="156" cy="107" r="2" fill="#c86cff"/>
+          <circle cx="133" cy="126" r="2.5" fill="#fff1a2"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="mm-finance-side investment-side" onclick="showPage('buy')">
+    <div class="mm-finance-icon">
+      <img src="assets/icons/investment.png" alt="Investment">
+    </div>
+    <div class="mm-finance-content">
+      <div class="mm-finance-title">TOTAL INVESTMENT <span class="mm-info">i</span></div>
+      <div class="mm-finance-value investment-value" id="totalInvested">$0</div>
+      <div class="mm-finance-sub">Active Investments</div>
+    </div>
+  </div>
 </div>
 
 <div class="quick-actions">
@@ -818,12 +1089,12 @@ img{max-width:100%}
 <div class="mm-promo">
   <h3>INVEST TODAY<br><strong>EARN EVERY DAY!</strong></h3>
   <p>Secure • Stable • Profitable</p>
-  <button class="promo-btn" onclick="openInvestmentPage(event)">INVEST NOW ›</button>
+  <button class="promo-btn" onclick="showPage('buy')">INVEST NOW ›</button>
 </div>
 
 <div class="mm-two">
-  <div class="mm-info-card"><div class="mm-info-title">DAILY PROFIT <span class="mm-live">LIVE</span></div><div class="mm-info-value green" id="dashDailyProfit">$0.00</div><div style="color:#9da8ca;font-size:10px;margin-top:5px">Updated every 24 hours</div></div>
-  <div class="mm-info-card"><div class="mm-info-title">INVESTMENT PROGRESS</div><div class="mm-info-value gold" id="dashProgress">0%</div><div style="color:#d7def7;font-size:11px" id="dashProgressText">$0.00 / $0.00</div><div class="mm-progress"><i id="dashProgressBar"></i></div></div>
+  
+
 </div>
 
 <div class="packages-section-title" data-i18n="pkg_title">%20-%30 Discounted Packages!</div>
@@ -1343,6 +1614,8 @@ lifetimeEarnings:(lifetimeEarnings||0)+b
 
 lifetimeEarnings=(lifetimeEarnings||0)+b;
 balance=lifetimeEarnings-totalWithdrawn;
+const btcEl=document.getElementById('balanceBtc');
+if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
 dailyBonusData={lastClaim:Date.now(),streak:ns};
 
 addNotification(' Daily Bonus',`$${b.toFixed(2)} added to investment! Streak: ${ns}`,'bonus');
@@ -1459,6 +1732,8 @@ async function claimTaskReward(id){
         taskRewardTotal+=claimedTask.reward;
         lifetimeEarnings+=claimedTask.reward;
         balance=lifetimeEarnings-totalWithdrawn;
+const btcEl=document.getElementById('balanceBtc');
+if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
 
         addNotification('🎯 Task',`${claimedTask.title} claimed! +$${claimedTask.reward.toFixed(2)} added to your balance.`,'bonus');
         alert(`✅ ${claimedTask.title}\n+$${claimedTask.reward.toFixed(2)} added to your balance!`);
@@ -1735,6 +2010,8 @@ lifetimeEarnings=x.lifetimeEarnings||0;
 totalWithdrawn=x.totalWithdrawn||0;
 totalInvested=x.totalInvested||0;
 balance=lifetimeEarnings-totalWithdrawn;
+const btcEl=document.getElementById('balanceBtc');
+if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
 referralCount=x.referralCount||0;
 pendingReferralBonus=x.pendingReferralBonus||0;
 referralBonusUnlocked=x.referralBonusUnlocked||false;
@@ -1817,6 +2094,8 @@ const x=d.data()||{};
 const nl=lifetimeEarnings-a;
 await ur.set({withdrawalRequests:[...(x.withdrawalRequests||[]),wd],lifetimeEarnings:nl},{merge:true});
 lifetimeEarnings=nl;balance=lifetimeEarnings-totalWithdrawn;
+const btcEl=document.getElementById('balanceBtc');
+if(btcEl) btcEl.textContent='≈ '+(balance/60000).toFixed(6)+' BTC';
 const am=` <b>NEW WITHDRAWAL!</b>\n\n ${wd.userName}\n ${wd.userTelegramId||userId}\n\n💵 $${a.toFixed(2)}\n ${ca} ${CRYPTO_SYMBOLS[c]}\n💰 Rate: $${currentPrices[c].toFixed(4)}\n ${NETWORK_INFO[c].fullName}\n <code>${w}</code>\n\n✅ Validated\n Pending Approval\n ${new Date().toLocaleString('en-US')}\n\n <a href="https://farmbot-giuy.vercel.app/admin.html">Approve</a>`;
 sendAdminNotification(am);
 alert(`✅ Withdrawal requested!\n\n🌐 ${NETWORK_INFO[c].fullName}\n💰 ${ca} ${CRYPTO_SYMBOLS[c]}\n\nWaiting for admin approval.`);
@@ -1884,41 +2163,6 @@ function toggleMenu() {
     if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
 
-
-function openInvestmentPage(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    const page=document.getElementById('page-buy');
-    if(!page){console.error('Investment page (#page-buy) not found');return false;}
-    // Close overlays that could block clicks.
-    const sub=document.getElementById('subOverlay');
-    const prof=document.getElementById('profileOverlay');
-    if(sub)sub.classList.remove('show');
-    if(prof)prof.classList.remove('show');
-    showPage('buy');
-    const amount=document.getElementById('buyAmount');
-    if(amount) updateBuyTRX();
-    loadDepositHistory();
-    window.scrollTo({top:0,behavior:'smooth'});
-    return false;
-}
-
-function openWithdrawPage(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    const page=document.getElementById('page-withdraw');
-    if(!page){console.error('Withdraw page (#page-withdraw) not found');return false;}
-    const sub=document.getElementById('subOverlay');
-    const prof=document.getElementById('profileOverlay');
-    if(sub)sub.classList.remove('show');
-    if(prof)prof.classList.remove('show');
-    showPage('withdraw');
-    updateCryptoAmount();
-    clearAddressValidation();
-    updateNetworkInfo();
-    loadWithdrawalHistory();
-    window.scrollTo({top:0,behavior:'smooth'});
-    return false;
-}
-
 function showPage(p, element) {
     document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
     document.getElementById('page-'+p).classList.remove('hidden');
@@ -1935,11 +2179,11 @@ function showPage(p, element) {
 </script>
 
 <div class="mm-bottom-nav">
- <button class="mm-nav-item active" onclick="showPage('home',this)"><span>⌂</span>Home</button>
- <button class="mm-nav-item" onclick="openInvestmentPage(event)"><span>💳</span>Investment</button>
- <button class="mm-nav-item" onclick="openWithdrawPage(event)"><span>₿</span>Withdraw</button>
- <button class="mm-nav-item" onclick="openProfile()"><span>👤</span>Profile</button>
- <button class="mm-nav-item" onclick="openSupport()"><span>◉</span>Support</button>
+ <button class="mm-nav-item active" onclick="showPage('home',this)"><img src="assets/icons/home.png" alt=""><span class="nav-label">Home</span></button>
+ <button class="mm-nav-item" onclick="showPage('buy',this)"><img src="assets/icons/investment.png" alt=""><span class="nav-label">Investment</span></button>
+ <button class="mm-nav-item" onclick="showPage('withdraw',this)"><img src="assets/icons/withdraw.png" alt=""><span class="nav-label">Withdraw</span></button>
+ <button class="mm-nav-item" onclick="openProfile()"><img src="assets/icons/profile.png" alt=""><span class="nav-label">Profile</span></button>
+ <button class="mm-nav-item" onclick="openSupport()"><img src="assets/icons/support.png" alt=""><span class="nav-label">Support</span></button>
 </div>
 </body>
 </html>
