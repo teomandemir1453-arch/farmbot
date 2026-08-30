@@ -1023,17 +1023,89 @@ img{max-width:100%}
 .right-menu-container{display:flex!important;position:fixed!important;right:max(10px,env(safe-area-inset-right))!important;top:56%!important;bottom:auto!important;transform:translateY(-50%)!important;z-index:5000!important}
 .mm-bottom-nav{display:none!important}
 </style>
+
+<style id="mm-logo-welcome-style">
+.mm-logo-welcome{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  min-height:50px!important;
+  padding:3px 10px!important;
+  overflow:visible!important;
+}
+.mm-welcome-logo{
+  width:min(210px,58vw)!important;
+  height:auto!important;
+  max-height:42px!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+.mm-logo-welcome .language-flags{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  flex-wrap:nowrap!important;
+  position:static!important;
+  transform:none!important;
+}
+.mm-logo-welcome .language-flags button{
+  width:34px!important;
+  height:30px!important;
+  padding:0!important;
+  border-radius:8px!important;
+  font-size:18px!important;
+  line-height:1!important;
+}
+@media(max-width:600px){
+  .mm-logo-welcome{
+    gap:7px!important;
+    min-height:46px!important;
+    padding:2px 7px!important;
+  }
+  .mm-welcome-logo{
+    width:min(165px,52vw)!important;
+    max-height:46px!important;
+  }
+  .mm-logo-welcome .language-flags{gap:3px!important}
+  .mm-logo-welcome .language-flags button{
+    width:29px!important;
+    height:27px!important;
+    font-size:16px!important;
+    border-radius:7px!important;
+  }
+}
+@media(max-width:380px){
+  .mm-logo-welcome{
+    gap:5px!important;
+  }
+  .mm-welcome-logo{
+    width:145px!important;
+  }
+  .mm-logo-welcome .language-flags button{
+    width:26px!important;
+    height:25px!important;
+    font-size:15px!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="container">
 
 <div id="page-home" class="card">
-<div class="mm-topbar">
-  <div aria-hidden="true"></div>
-  <img class="mm-logo" src="assets/logo.png" alt="Micro Monetize">
-  <button class="mm-icon-btn" onclick="openNotificationsQuick()" aria-label="Notifications">🔔<span class="mm-badge" id="topNotifBadge">0</span></button>
+<div class="mm-topbar" aria-hidden="true"></div>
+<div class="mm-marquee mm-logo-welcome">
+  <img src="assets/logo.png" class="mm-welcome-logo" alt="Micro Monetize">
+  <div class="language-flags" id="languageFlags">
+    <button onclick="setLanguage('en')" aria-label="English" title="English">🇬🇧</button>
+    <button onclick="setLanguage('tr')" aria-label="Türkçe" title="Türkçe">🇹🇷</button>
+    <button onclick="setLanguage('de')" aria-label="Deutsch" title="Deutsch">🇩🇪</button>
+    <button onclick="setLanguage('es')" aria-label="Español" title="Español">🇪🇸</button>
+    <button onclick="setLanguage('ru')" aria-label="Русский" title="Русский">🇷🇺</button>
+  </div>
 </div>
-<div class="mm-marquee"><span class="speaker">📢</span><span data-i18n="welcome_marquee">Welcome to Micro Monetize! Grow your wealth every day.</span><div class="language-flags" id="languageFlags"><button onclick="setLanguage('en')" aria-label="English">🇬🇧</button><button onclick="setLanguage('tr')" aria-label="Türkçe">🇹🇷</button><button onclick="setLanguage('de')" aria-label="Deutsch">🇩🇪</button><button onclick="setLanguage('es')" aria-label="Español">🇪🇸</button><button onclick="setLanguage('ru')" aria-label="Русский">🇷🇺</button></div></div>
 
 <div class="mm-finance-card">
   <div class="mm-finance-side balance-side" onclick="showPage('withdraw')">
@@ -2216,6 +2288,161 @@ function showPage(p, element) {
     window.scrollTo(0,0);
     if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
+</script>
+
+
+<script id="mm-full-language-v2">
+(function(){
+  const extra = {
+    en:{
+      "No notifications":"No notifications","No deposits":"No deposits","No withdrawals":"No withdrawals",
+      "View earnings":"View earnings","Your Link":"Your Link","Invites":"Invites","Commission":"Commission",
+      "Earn 10% commission":"Earn 10% commission","Claim bonus":"Claim bonus","Come back tomorrow!":"Come back tomorrow!",
+      "Complete a 7 day login streak":"Complete a 7 day login streak","Task":"Task","Claimed":"Claimed","Collect":"Collect",
+      "First Investment":"First Investment","First Referral":"First Referral","Welcome Back!":"Welcome Back!",
+      "NEW INVESTMENT!":"NEW INVESTMENT!","NEW WITHDRAWAL!":"NEW WITHDRAWAL!","Recent Announcements":"Recent Announcements",
+      "Withdrawal History":"Withdrawal History","Deposit History":"Deposit History","Active Investments":"Active Investments",
+      "Estimated Earnings":"Estimated Earnings","Daily Bonus":"Daily Bonus","Daily bonuses are added directly to your investment balance.":"Daily bonuses are added directly to your investment balance.",
+      "How to invest?":"How to invest?","How to withdraw?":"How to withdraw?","When do earnings start?":"When do earnings start?",
+      "Secure • Stable • Profitable":"Secure • Stable • Profitable","Select →":"Select →","Loading...":"Loading...",
+      "Pending Approval":"Pending Approval","Approved":"Approved","Rejected":"Rejected","Success!":"Success!","Error:":"Error:",
+      "Insufficient balance!":"Insufficient balance!","No balance to withdraw!":"No balance to withdraw!",
+      "Only TRON (TRC20) network is accepted!":"Only TRON (TRC20) network is accepted!",
+      "Network:":"Network:","Wallet:":"Wallet:","Amount:":"Amount:","Status:":"Status:","Package:":"Package:",
+      "Original:":"Original:","Discounted:":"Discounted:","Saved:":"Saved:","Equivalent:":"Equivalent:",
+      "Day":"Day","Daily":"Daily","Hourly":"Hourly","Monthly":"Monthly","Half Year":"Half Year","1 Year":"1 Year",
+      "Total":"Total","Max":"Max","Min":"Min","Copy":"Copy","Save":"Save","Cancel":"Cancel","Close":"Close",
+      "Confirm":"Confirm","User":"User","Telegram":"Telegram","Admin Panel:":"Admin Panel:"
+    },
+    tr:{
+      "No notifications":"Bildirim yok","No deposits":"Yatırım yok","No withdrawals":"Çekim yok",
+      "View earnings":"Kazançları gör","Your Link":"Bağlantınız","Invites":"Davetler","Commission":"Komisyon",
+      "Earn 10% commission":"%10 komisyon kazan","Claim bonus":"Bonusu al","Come back tomorrow!":"Yarın tekrar gel!",
+      "Complete a 7 day login streak":"7 günlük giriş serisini tamamla","Task":"Görev","Claimed":"Alındı","Collect":"Topla",
+      "First Investment":"İlk Yatırım","First Referral":"İlk Referans","Welcome Back!":"Tekrar Hoş Geldin!",
+      "NEW INVESTMENT!":"YENİ YATIRIM!","NEW WITHDRAWAL!":"YENİ ÇEKİM!","Recent Announcements":"Son Duyurular",
+      "Withdrawal History":"Çekim Geçmişi","Deposit History":"Yatırım Geçmişi","Active Investments":"Aktif Yatırımlar",
+      "Estimated Earnings":"Tahmini Kazanç","Daily Bonus":"Günlük Bonus","Daily bonuses are added directly to your investment balance.":"Günlük bonuslar doğrudan yatırım bakiyenize eklenir.",
+      "How to invest?":"Nasıl yatırım yapılır?","How to withdraw?":"Nasıl çekim yapılır?","When do earnings start?":"Kazançlar ne zaman başlar?",
+      "Secure • Stable • Profitable":"Güvenli • İstikrarlı • Karlı","Select →":"Seç →","Loading...":"Yükleniyor...",
+      "Pending Approval":"Onay Bekliyor","Approved":"Onaylandı","Rejected":"Reddedildi","Success!":"Başarılı!","Error:":"Hata:",
+      "Insufficient balance!":"Yetersiz bakiye!","No balance to withdraw!":"Çekilecek bakiye yok!",
+      "Only TRON (TRC20) network is accepted!":"Sadece TRON (TRC20) ağı kabul edilir!",
+      "Network:":"Ağ:","Wallet:":"Cüzdan:","Amount:":"Tutar:","Status:":"Durum:","Package:":"Paket:",
+      "Original:":"Orijinal:","Discounted:":"İndirimli:","Saved:":"Tasarruf:","Equivalent:":"Karşılığı:",
+      "Day":"Gün","Daily":"Günlük","Hourly":"Saatlik","Monthly":"Aylık","Half Year":"6 Ay","1 Year":"1 Yıl",
+      "Total":"Toplam","Max":"Maks","Min":"Min","Copy":"Kopyala","Save":"Kaydet","Cancel":"İptal","Close":"Kapat",
+      "Confirm":"Onayla","User":"Kullanıcı","Telegram":"Telegram","Admin Panel:":"Admin Paneli:"
+    },
+    de:{
+      "No notifications":"Keine Benachrichtigungen","No deposits":"Keine Einzahlungen","No withdrawals":"Keine Auszahlungen",
+      "View earnings":"Einnahmen ansehen","Your Link":"Ihr Link","Invites":"Einladungen","Commission":"Provision",
+      "Earn 10% commission":"10 % Provision verdienen","Claim bonus":"Bonus erhalten","Come back tomorrow!":"Kommen Sie morgen wieder!",
+      "Complete a 7 day login streak":"7-tägige Anmeldeserie abschließen","Task":"Aufgabe","Claimed":"Erhalten","Collect":"Sammeln",
+      "First Investment":"Erste Investition","First Referral":"Erste Empfehlung","Welcome Back!":"Willkommen zurück!",
+      "NEW INVESTMENT!":"NEUE INVESTITION!","NEW WITHDRAWAL!":"NEUE AUSZAHLUNG!","Recent Announcements":"Aktuelle Ankündigungen",
+      "Withdrawal History":"Auszahlungsverlauf","Deposit History":"Einzahlungsverlauf","Active Investments":"Aktive Investitionen",
+      "Estimated Earnings":"Geschätzte Einnahmen","Daily Bonus":"Tagesbonus","Daily bonuses are added directly to your investment balance.":"Tagesboni werden direkt Ihrem Anlageguthaben gutgeschrieben.",
+      "How to invest?":"Wie investiere ich?","How to withdraw?":"Wie zahle ich aus?","When do earnings start?":"Wann beginnen die Einnahmen?",
+      "Secure • Stable • Profitable":"Sicher • Stabil • Profitabel","Select →":"Auswählen →","Loading...":"Wird geladen...",
+      "Pending Approval":"Genehmigung ausstehend","Approved":"Genehmigt","Rejected":"Abgelehnt","Success!":"Erfolgreich!","Error:":"Fehler:",
+      "Insufficient balance!":"Unzureichendes Guthaben!","No balance to withdraw!":"Kein Guthaben zum Auszahlen!",
+      "Only TRON (TRC20) network is accepted!":"Nur das TRON-Netzwerk (TRC20) wird akzeptiert!",
+      "Network:":"Netzwerk:","Wallet:":"Wallet:","Amount:":"Betrag:","Status:":"Status:","Package:":"Paket:",
+      "Original:":"Original:","Discounted:":"Reduziert:","Saved:":"Gespart:","Equivalent:":"Gegenwert:",
+      "Day":"Tag","Daily":"Täglich","Hourly":"Stündlich","Monthly":"Monatlich","Half Year":"Halbes Jahr","1 Year":"1 Jahr",
+      "Total":"Gesamt","Max":"Max","Min":"Min","Copy":"Kopieren","Save":"Speichern","Cancel":"Abbrechen","Close":"Schließen",
+      "Confirm":"Bestätigen","User":"Benutzer","Telegram":"Telegram","Admin Panel:":"Admin-Panel:"
+    },
+    es:{
+      "No notifications":"No hay notificaciones","No deposits":"No hay depósitos","No withdrawals":"No hay retiros",
+      "View earnings":"Ver ganancias","Your Link":"Tu enlace","Invites":"Invitaciones","Commission":"Comisión",
+      "Earn 10% commission":"Gana un 10 % de comisión","Claim bonus":"Reclamar bono","Come back tomorrow!":"¡Vuelve mañana!",
+      "Complete a 7 day login streak":"Completa una racha de 7 días de inicio de sesión","Task":"Tarea","Claimed":"Reclamado","Collect":"Recoger",
+      "First Investment":"Primera inversión","First Referral":"Primera referencia","Welcome Back!":"¡Bienvenido de nuevo!",
+      "NEW INVESTMENT!":"¡NUEVA INVERSIÓN!","NEW WITHDRAWAL!":"¡NUEVO RETIRO!","Recent Announcements":"Anuncios recientes",
+      "Withdrawal History":"Historial de retiros","Deposit History":"Historial de depósitos","Active Investments":"Inversiones activas",
+      "Estimated Earnings":"Ganancias estimadas","Daily Bonus":"Bono diario","Daily bonuses are added directly to your investment balance.":"Los bonos diarios se añaden directamente a tu saldo de inversión.",
+      "How to invest?":"¿Cómo invertir?","How to withdraw?":"¿Cómo retirar?","When do earnings start?":"¿Cuándo empiezan las ganancias?",
+      "Secure • Stable • Profitable":"Seguro • Estable • Rentable","Select →":"Seleccionar →","Loading...":"Cargando...",
+      "Pending Approval":"Pendiente de aprobación","Approved":"Aprobado","Rejected":"Rechazado","Success!":"¡Éxito!","Error:":"Error:",
+      "Insufficient balance!":"¡Saldo insuficiente!","No balance to withdraw!":"¡No hay saldo para retirar!",
+      "Only TRON (TRC20) network is accepted!":"¡Solo se acepta la red TRON (TRC20)!",
+      "Network:":"Red:","Wallet:":"Billetera:","Amount:":"Importe:","Status:":"Estado:","Package:":"Paquete:",
+      "Original:":"Original:","Discounted:":"Con descuento:","Saved:":"Ahorrado:","Equivalent:":"Equivalente:",
+      "Day":"Día","Daily":"Diario","Hourly":"Cada hora","Monthly":"Mensual","Half Year":"Medio año","1 Year":"1 año",
+      "Total":"Total","Max":"Máx","Min":"Mín","Copy":"Copiar","Save":"Guardar","Cancel":"Cancelar","Close":"Cerrar",
+      "Confirm":"Confirmar","User":"Usuario","Telegram":"Telegram","Admin Panel:":"Panel de administración:"
+    },
+    ru:{
+      "No notifications":"Нет уведомлений","No deposits":"Нет пополнений","No withdrawals":"Нет выводов",
+      "View earnings":"Просмотреть доходы","Your Link":"Ваша ссылка","Invites":"Приглашения","Commission":"Комиссия",
+      "Earn 10% commission":"Получайте 10% комиссии","Claim bonus":"Получить бонус","Come back tomorrow!":"Возвращайтесь завтра!",
+      "Complete a 7 day login streak":"Выполните серию входов 7 дней","Task":"Задание","Claimed":"Получено","Collect":"Забрать",
+      "First Investment":"Первая инвестиция","First Referral":"Первый реферал","Welcome Back!":"С возвращением!",
+      "NEW INVESTMENT!":"НОВАЯ ИНВЕСТИЦИЯ!","NEW WITHDRAWAL!":"НОВЫЙ ВЫВОД!","Recent Announcements":"Последние объявления",
+      "Withdrawal History":"История выводов","Deposit History":"История пополнений","Active Investments":"Активные инвестиции",
+      "Estimated Earnings":"Расчётный доход","Daily Bonus":"Ежедневный бонус","Daily bonuses are added directly to your investment balance.":"Ежедневные бонусы добавляются прямо к вашему инвестиционному балансу.",
+      "How to invest?":"Как инвестировать?","How to withdraw?":"Как вывести средства?","When do earnings start?":"Когда начинается доход?",
+      "Secure • Stable • Profitable":"Безопасно • Стабильно • Прибыльно","Select →":"Выбрать →","Loading...":"Загрузка...",
+      "Pending Approval":"Ожидает одобрения","Approved":"Одобрено","Rejected":"Отклонено","Success!":"Успешно!","Error:":"Ошибка:",
+      "Insufficient balance!":"Недостаточно средств!","No balance to withdraw!":"Нет средств для вывода!",
+      "Only TRON (TRC20) network is accepted!":"Принимается только сеть TRON (TRC20)!",
+      "Network:":"Сеть:","Wallet:":"Кошелёк:","Amount:":"Сумма:","Status:":"Статус:","Package:":"Пакет:",
+      "Original:":"Оригинал:","Discounted:":"Со скидкой:","Saved:":"Экономия:","Equivalent:":"Эквивалент:",
+      "Day":"День","Daily":"Ежедневно","Hourly":"Почасовой","Monthly":"Ежемесячно","Half Year":"Полгода","1 Year":"1 год",
+      "Total":"Всего","Max":"Макс","Min":"Мин","Copy":"Копировать","Save":"Сохранить","Cancel":"Отмена","Close":"Закрыть",
+      "Confirm":"Подтвердить","User":"Пользователь","Telegram":"Telegram","Admin Panel:":"Панель администратора:"
+    }
+  };
+
+  const oldSetLanguage = window.setLanguage;
+  function translateRenderedUI(lang){
+    const map=extra[lang]||extra.en;
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      if(n.parentElement && n.parentElement.closest('#languageFlags,#languageSelector,#mm-language-switcher')) return;
+      const raw=n.nodeValue;
+      const trimmed=raw.trim();
+      if(!trimmed) return;
+      let out=map[trimmed];
+      if(out) n.nodeValue=raw.replace(trimmed,out);
+      else {
+        // Handle common dynamic strings while preserving numbers/amounts.
+        const rules=[
+          [/^(\d+) members • \$([\d.]+) commission$/i, (m)=>({
+            tr:`${m[1]} üye • $${m[2]} komisyon`,de:`${m[1]} Mitglieder • $${m[2]} Provision`,
+            es:`${m[1]} miembros • $${m[2]} comisión`,ru:`${m[1]} участников • $${m[2]} комиссия`,en:m[0]
+          }[lang])],
+          [/^(\d+) day streak$/i, (m)=>({tr:`${m[1]} günlük seri`,de:`${m[1]} Tage in Folge`,es:`racha de ${m[1]} días`,ru:`серия ${m[1]} дней`,en:m[0]}[lang])],
+          [/^Earn 10% commission/i, ()=>({tr:"%10 komisyon kazan",de:"10 % Provision verdienen",es:"Gana un 10 % de comisión",ru:"Получайте 10% комиссии",en:"Earn 10% commission"}[lang])],
+          [/^Day (\d+)$/i, (m)=>({tr:`${m[1]}. Gün`,de:`Tag ${m[1]}`,es:`Día ${m[1]}`,ru:`День ${m[1]}`,en:m[0]}[lang])]
+        ];
+        for(const [rx,fn] of rules){ if(rx.test(trimmed)){n.nodeValue=raw.replace(trimmed,fn(trimmed.match(rx)));break;} }
+      }
+    });
+  }
+
+  function setFullLanguage(lang){
+    if(typeof oldSetLanguage==='function') oldSetLanguage(lang);
+    setTimeout(()=>translateRenderedUI(lang),0);
+    setTimeout(()=>translateRenderedUI(lang),250);
+  }
+  window.setLanguage=setFullLanguage;
+
+  // The app creates investment/withdrawal/task/notification cards dynamically.
+  const observer=new MutationObserver(()=>{
+    clearTimeout(window.__mmI18nTimer);
+    window.__mmI18nTimer=setTimeout(()=>translateRenderedUI(window.currentLang||localStorage.getItem('mm_language')||'en'),20);
+  });
+  const start=()=>observer.observe(document.body,{childList:true,subtree:true});
+  if(document.body) start(); else document.addEventListener('DOMContentLoaded',start);
+
+  // Re-apply the user's saved language after all original scripts have initialized.
+  setTimeout(()=>setFullLanguage(localStorage.getItem('mm_language')||'en'),400);
+})();
 </script>
 
 </body>
