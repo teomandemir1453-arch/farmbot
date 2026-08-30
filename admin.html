@@ -361,14 +361,12 @@ td{
 
 <div class="container">
 
-    <!-- LOGIN -->
     <div id="loginScreen" class="card login-box">
 
         <h2>🔐 Admin Girişi</h2>
 
         <p>
             Admin paneli PostgreSQL backend üzerinden çalışır.
-            Admin anahtarı tarayıcıya sabit olarak yazılmamıştır.
         </p>
 
         <input
@@ -393,7 +391,6 @@ td{
     </div>
 
 
-    <!-- ADMIN -->
     <div id="adminApp" class="hidden">
 
         <div class="header">
@@ -429,7 +426,6 @@ td{
         </div>
 
 
-        <!-- STATS -->
         <div class="stats">
 
             <div class="stat">
@@ -449,15 +445,12 @@ td{
 
             <div class="stat">
                 <span>Toplam Yatırım</span>
-                <strong id="statTotalInvested">
-                    $0.00
-                </strong>
+                <strong id="statTotalInvested">$0.00</strong>
             </div>
 
         </div>
 
 
-        <!-- TABS -->
         <div class="tabs">
 
             <button
@@ -484,10 +477,7 @@ td{
         </div>
 
 
-        <!-- USERS -->
-        <div
-            id="panelUsers"
-            class="card">
+        <div id="panelUsers" class="card">
 
             <h3 style="margin-bottom:12px">
                 👥 Kullanıcılar
@@ -517,10 +507,7 @@ td{
         </div>
 
 
-        <!-- INVESTMENTS -->
-        <div
-            id="panelInvestments"
-            class="card hidden">
+        <div id="panelInvestments" class="card hidden">
 
             <h3 style="margin-bottom:12px">
                 💳 Demo Yatırım Talepleri
@@ -531,10 +518,7 @@ td{
         </div>
 
 
-        <!-- WITHDRAWALS -->
-        <div
-            id="panelWithdrawals"
-            class="card hidden">
+        <div id="panelWithdrawals" class="card hidden">
 
             <h3 style="margin-bottom:12px">
                 💸 Demo Çekim Talepleri
@@ -545,7 +529,6 @@ td{
         </div>
 
 
-        <!-- LOG -->
         <div class="card">
 
             <h3 style="margin-bottom:10px">
@@ -564,7 +547,6 @@ td{
 </div>
 
 
-<!-- BALANCE MODAL -->
 <div
     class="modal"
     id="balanceModal">
@@ -619,19 +601,14 @@ td{
 
 /*
 ========================================================
-API ADRESİ
+BURASI ÖNEMLİ
 ========================================================
-
-Bu adres senin PC'ndeki server.js'ye
-Cloudflare Tunnel üzerinden gidiyor.
-
-Quick Tunnel yeniden oluşturulursa bu adres değişebilir.
+PC'deki server.js'ye Cloudflare Tunnel üzerinden bağlanıyoruz.
 ========================================================
 */
 
 const API_BASE =
-    'https://java-philips-demanding-rpm.trycloudflare.com';
-
+    'https://cargo-tba-herbs-sheffield.trycloudflare.com';
 
 let adminKey = '';
 let currentTab = 'users';
@@ -649,21 +626,31 @@ YARDIMCI
 */
 
 function money(value){
-    return '$' + Number(value || 0).toFixed(2);
+
+    return '$' +
+        Number(value || 0)
+        .toFixed(2);
 }
+
 
 function formatDate(value){
 
     if(!value) return '-';
 
-    const d = new Date(value);
+    const date =
+        new Date(value);
 
-    if(Number.isNaN(d.getTime())){
+    if(Number.isNaN(
+        date.getTime()
+    )){
         return '-';
     }
 
-    return d.toLocaleString('tr-TR');
+    return date.toLocaleString(
+        'tr-TR'
+    );
 }
+
 
 function escapeHtml(value){
 
@@ -685,26 +672,23 @@ LOG
 function addLog(message){
 
     const container =
-        document.getElementById('logContainer');
+        document.getElementById(
+            'logContainer'
+        );
 
     const item =
         document.createElement('div');
 
-    item.className = 'log-item';
-
-    const time =
-        new Date().toLocaleTimeString('tr-TR');
+    item.className =
+        'log-item';
 
     item.textContent =
-        `[${time}] ${message}`;
+        '[' +
+        new Date().toLocaleTimeString('tr-TR') +
+        '] ' +
+        message;
 
     container.prepend(item);
-
-    while(container.children.length > 50){
-        container.removeChild(
-            container.lastChild
-        );
-    }
 }
 
 
@@ -716,25 +700,26 @@ STATUS
 
 function setStatus(ok,text){
 
-    const dot =
-        document.getElementById('statusDot');
+    document
+        .getElementById('statusDot')
+        .classList.toggle('ok',ok);
 
-    const status =
-        document.getElementById('statusText');
-
-    dot.classList.toggle('ok',ok);
-
-    status.textContent = text;
+    document
+        .getElementById('statusText')
+        .textContent = text;
 }
 
 
 /*
 ========================================================
-API REQUEST
+API
 ========================================================
 */
 
-async function apiFetch(endpoint,options = {}){
+async function apiFetch(
+    endpoint,
+    options = {}
+){
 
     const headers = {
         ...(options.headers || {}),
@@ -774,20 +759,21 @@ async function apiFetch(endpoint,options = {}){
 
 /*
 ========================================================
-ADMIN LOGIN
+LOGIN
 ========================================================
 */
 
 async function loginAdmin(){
 
-    const input =
-        document.getElementById('adminKey');
+    const key =
+        document
+            .getElementById('adminKey')
+            .value
+            .trim();
 
     const error =
-        document.getElementById('loginError');
-
-    const key =
-        input.value.trim();
+        document
+            .getElementById('loginError');
 
     error.textContent = '';
 
@@ -803,8 +789,10 @@ async function loginAdmin(){
 
         const response =
             await fetch(
-                API_BASE + '/api/admin/health',
+                API_BASE +
+                '/api/admin/health',
                 {
+                    method:'GET',
                     headers:{
                         'x-admin-key':key
                     }
@@ -814,7 +802,8 @@ async function loginAdmin(){
         let data = {};
 
         try{
-            data = await response.json();
+            data =
+                await response.json();
         }catch{}
 
         if(
@@ -841,7 +830,7 @@ async function loginAdmin(){
 
         setStatus(
             true,
-            '✅ Backend ve PostgreSQL bağlantısı aktif'
+            '✅ PostgreSQL bağlantısı aktif'
         );
 
         addLog(
@@ -861,6 +850,12 @@ async function loginAdmin(){
 }
 
 
+/*
+========================================================
+LOGOUT
+========================================================
+*/
+
 function logoutAdmin(){
 
     adminKey = '';
@@ -876,10 +871,6 @@ function logoutAdmin(){
     document
         .getElementById('adminKey')
         .value = '';
-
-    addLog(
-        'Admin çıkışı yapıldı.'
-    );
 }
 
 
@@ -921,7 +912,8 @@ async function loadAll(){
         );
 
         addLog(
-            'Hata: ' + error.message
+            'Hata: ' +
+            error.message
         );
     }
 }
@@ -936,7 +928,9 @@ USERS
 async function loadUsers(){
 
     const data =
-        await apiFetch('/api/admin/users');
+        await apiFetch(
+            '/api/admin/users'
+        );
 
     usersCache =
         Array.isArray(data.users)
@@ -944,7 +938,9 @@ async function loadUsers(){
             : [];
 
     const body =
-        document.getElementById('usersBody');
+        document.getElementById(
+            'usersBody'
+        );
 
     document.getElementById(
         'statUsers'
@@ -969,56 +965,58 @@ async function loadUsers(){
     body.innerHTML =
         usersCache.map(user => `
 
-        <tr>
+            <tr>
 
-            <td>
+                <td>
 
-                <div class="user-name">
-                    ${escapeHtml(
-                        user.first_name || 'User'
+                    <div class="user-name">
+                        ${escapeHtml(
+                            user.first_name || 'User'
+                        )}
+                    </div>
+
+                    <div class="user-id">
+                        @${escapeHtml(
+                            user.username || '-'
+                        )}
+                        • TG ${escapeHtml(
+                            user.telegram_id
+                        )}
+                    </div>
+
+                </td>
+
+                <td class="green">
+                    ${money(user.balance)}
+                </td>
+
+                <td class="gold">
+                    ${money(user.total_invested)}
+                </td>
+
+                <td class="red">
+                    ${money(user.total_withdrawn)}
+                </td>
+
+                <td>
+                    ${money(
+                        user.referral_earnings
                     )}
-                </div>
+                </td>
 
-                <div class="user-id">
-                    @${escapeHtml(
-                        user.username || '-'
-                    )}
-                    • TG ${escapeHtml(
-                        user.telegram_id
-                    )}
-                </div>
+                <td>
 
-            </td>
+                    <button
+                        class="btn btn-small"
+                        onclick="openBalanceModal(${Number(user.id)})">
+                        💰 Bakiye
+                    </button>
 
-            <td class="green">
-                ${money(user.balance)}
-            </td>
+                </td>
 
-            <td class="gold">
-                ${money(user.total_invested)}
-            </td>
+            </tr>
 
-            <td class="red">
-                ${money(user.total_withdrawn)}
-            </td>
-
-            <td>
-                ${money(user.referral_earnings)}
-            </td>
-
-            <td>
-
-                <button
-                    class="btn btn-small"
-                    onclick="openBalanceModal(${Number(user.id)})">
-                    💰 Bakiye
-                </button>
-
-            </td>
-
-        </tr>
-
-    `).join('');
+        `).join('');
 }
 
 
@@ -1042,7 +1040,7 @@ async function loadInvestments(){
 
     const pending =
         investmentsCache.filter(
-            item => item.status === 'pending'
+            x => x.status === 'pending'
         );
 
     document.getElementById(
@@ -1069,70 +1067,75 @@ async function loadInvestments(){
     container.innerHTML =
         pending.map(item => `
 
-        <div class="card">
+            <div class="card">
 
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                margin-bottom:10px">
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:10px">
 
-                <strong>
-                    ${money(item.amount)}
-                </strong>
+                    <strong>
+                        ${money(item.amount)}
+                    </strong>
 
-                <span class="badge pending">
-                    BEKLEMEDE
-                </span>
+                    <span class="badge pending">
+                        BEKLEMEDE
+                    </span>
 
-            </div>
+                </div>
 
-            <div style="
-                font-size:11px;
-                color:#9da8ca;
-                line-height:1.7">
+                <div style="
+                    font-size:11px;
+                    color:#9da8ca;
+                    line-height:1.7">
 
-                Kullanıcı:
-                <b style="color:#fff">
+                    Kullanıcı:
+                    <b style="color:#fff">
+                        ${escapeHtml(
+                            item.first_name || 'User'
+                        )}
+                    </b>
+                    <br>
+
+                    Telegram:
                     ${escapeHtml(
-                        item.first_name || 'User'
+                        item.telegram_id
                     )}
-                </b><br>
+                    <br>
 
-                Telegram:
-                ${escapeHtml(
-                    item.telegram_id
-                )}<br>
+                    Paket:
+                    ${escapeHtml(
+                        item.package_name || '-'
+                    )}
+                    <br>
 
-                Paket:
-                ${escapeHtml(
-                    item.package_name || '-'
-                )}<br>
+                    Tarih:
+                    ${formatDate(
+                        item.created_at
+                    )}
 
-                Tarih:
-                ${formatDate(item.created_at)}
+                </div>
+
+                <div class="modal-actions"
+                     style="margin-top:12px">
+
+                    <button
+                        class="btn btn-success btn-small"
+                        onclick="approveInvestment(${Number(item.id)})">
+                        ✅ Onayla
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="rejectInvestment(${Number(item.id)})">
+                        ❌ Reddet
+                    </button>
+
+                </div>
 
             </div>
 
-            <div class="modal-actions"
-                 style="margin-top:12px">
-
-                <button
-                    class="btn btn-success btn-small"
-                    onclick="approveInvestment(${Number(item.id)})">
-                    ✅ Onayla
-                </button>
-
-                <button
-                    class="btn btn-danger btn-small"
-                    onclick="rejectInvestment(${Number(item.id)})">
-                    ❌ Reddet
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join('');
+        `).join('');
 }
 
 
@@ -1156,7 +1159,7 @@ async function loadWithdrawals(){
 
     const pending =
         withdrawalsCache.filter(
-            item => item.status === 'pending'
+            x => x.status === 'pending'
         );
 
     document.getElementById(
@@ -1183,90 +1186,97 @@ async function loadWithdrawals(){
     container.innerHTML =
         pending.map(item => `
 
-        <div class="card">
+            <div class="card">
 
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                margin-bottom:10px">
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:10px">
 
-                <strong>
-                    ${money(item.amount)}
-                </strong>
+                    <strong>
+                        ${money(item.amount)}
+                    </strong>
 
-                <span class="badge pending">
-                    BEKLEMEDE
-                </span>
+                    <span class="badge pending">
+                        BEKLEMEDE
+                    </span>
 
-            </div>
+                </div>
 
-            <div style="
-                font-size:11px;
-                color:#9da8ca;
-                line-height:1.7">
+                <div style="
+                    font-size:11px;
+                    color:#9da8ca;
+                    line-height:1.7">
 
-                Kullanıcı:
-                <b style="color:#fff">
+                    Kullanıcı:
+                    <b style="color:#fff">
+                        ${escapeHtml(
+                            item.first_name || 'User'
+                        )}
+                    </b>
+                    <br>
+
+                    Telegram:
                     ${escapeHtml(
-                        item.first_name || 'User'
+                        item.telegram_id
                     )}
-                </b><br>
+                    <br>
 
-                Telegram:
-                ${escapeHtml(
-                    item.telegram_id
-                )}<br>
-
-                Coin:
-                ${escapeHtml(
-                    item.crypto || '-'
-                )}<br>
-
-                Ağ:
-                ${escapeHtml(
-                    item.network || '-'
-                )}<br>
-
-                Cüzdan:
-                <code style="
-                    word-break:break-all;
-                    color:#d9c7ff">
+                    Coin:
                     ${escapeHtml(
-                        item.wallet_address || '-'
+                        item.crypto || '-'
                     )}
-                </code><br>
+                    <br>
 
-                Tarih:
-                ${formatDate(item.created_at)}
+                    Ağ:
+                    ${escapeHtml(
+                        item.network || '-'
+                    )}
+                    <br>
+
+                    Cüzdan:
+                    <code style="
+                        word-break:break-all;
+                        color:#d9c7ff">
+                        ${escapeHtml(
+                            item.wallet_address || '-'
+                        )}
+                    </code>
+                    <br>
+
+                    Tarih:
+                    ${formatDate(
+                        item.created_at
+                    )}
+
+                </div>
+
+                <div class="modal-actions"
+                     style="margin-top:12px">
+
+                    <button
+                        class="btn btn-success btn-small"
+                        onclick="approveWithdrawal(${Number(item.id)})">
+                        ✅ Onayla
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="rejectWithdrawal(${Number(item.id)})">
+                        ❌ Reddet
+                    </button>
+
+                </div>
 
             </div>
 
-            <div class="modal-actions"
-                 style="margin-top:12px">
-
-                <button
-                    class="btn btn-success btn-small"
-                    onclick="approveWithdrawal(${Number(item.id)})">
-                    ✅ Onayla
-                </button>
-
-                <button
-                    class="btn btn-danger btn-small"
-                    onclick="rejectWithdrawal(${Number(item.id)})">
-                    ❌ Reddet
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join('');
+        `).join('');
 }
 
 
 /*
 ========================================================
-DEMO BALANCE
+BALANCE MODAL
 ========================================================
 */
 
@@ -1274,7 +1284,9 @@ function openBalanceModal(id){
 
     const user =
         usersCache.find(
-            x => Number(x.id) === Number(id)
+            x =>
+                Number(x.id) ===
+                Number(id)
         );
 
     if(!user) return;
@@ -1329,36 +1341,42 @@ async function submitBalanceChange(){
         !Number.isFinite(amount) ||
         amount <= 0
     ){
+
         alert(
             'Geçerli bir tutar gir.'
         );
+
         return;
     }
 
     if(!selectedUserId) return;
 
-    const text =
-        operation === 'add'
-            ? `Demo bakiyeye $${amount.toFixed(2)} eklensin mi?`
-            : `Demo bakiyeden $${amount.toFixed(2)} düşülsün mü?`;
-
-    if(!confirm(text)) return;
+    if(
+        !confirm(
+            operation === 'add'
+                ? `Demo bakiyeye $${amount.toFixed(2)} eklensin mi?`
+                : `Demo bakiyeden $${amount.toFixed(2)} düşülsün mü?`
+        )
+    ){
+        return;
+    }
 
     try{
 
-        await apiFetch(
-            `/api/admin/users/${selectedUserId}/balance`,
-            {
-                method:'POST',
-                body:JSON.stringify({
-                    amount,
-                    operation
-                })
-            }
-        );
+        const result =
+            await apiFetch(
+                `/api/admin/users/${selectedUserId}/balance`,
+                {
+                    method:'POST',
+                    body:JSON.stringify({
+                        amount,
+                        operation
+                    })
+                }
+            );
 
         addLog(
-            `Kullanıcı #${selectedUserId} için demo bakiye işlemi yapıldı: ${operation} $${amount.toFixed(2)}`
+            `Demo bakiye güncellendi. Yeni bakiye: ${money(result.newBalance)}`
         );
 
         closeBalanceModal();
@@ -1366,12 +1384,10 @@ async function submitBalanceChange(){
         await loadAll();
 
         alert(
-            '✅ İşlem başarıyla tamamlandı.'
+            '✅ Demo bakiye güncellendi.'
         );
 
     }catch(error){
-
-        console.error(error);
 
         alert(
             '❌ Bakiye işlemi başarısız: ' +
@@ -1395,7 +1411,7 @@ INVESTMENT ACTIONS
 async function approveInvestment(id){
 
     if(!confirm(
-        'Bu demo yatırım talebi onaylansın mı?'
+        'Bu demo yatırım onaylansın mı?'
     )) return;
 
     try{
@@ -1416,11 +1432,7 @@ async function approveInvestment(id){
     }catch(error){
 
         alert(
-            '❌ ' + error.message
-        );
-
-        addLog(
-            'Yatırım onay hatası: ' +
+            '❌ ' +
             error.message
         );
     }
@@ -1430,7 +1442,7 @@ async function approveInvestment(id){
 async function rejectInvestment(id){
 
     if(!confirm(
-        'Bu demo yatırım talebi reddedilsin mi?'
+        'Bu demo yatırım reddedilsin mi?'
     )) return;
 
     try{
@@ -1451,11 +1463,7 @@ async function rejectInvestment(id){
     }catch(error){
 
         alert(
-            '❌ ' + error.message
-        );
-
-        addLog(
-            'Yatırım red hatası: ' +
+            '❌ ' +
             error.message
         );
     }
@@ -1471,7 +1479,7 @@ WITHDRAWAL ACTIONS
 async function approveWithdrawal(id){
 
     if(!confirm(
-        'Bu demo çekim talebi onaylansın mı?'
+        'Bu demo çekim onaylansın mı?'
     )) return;
 
     try{
@@ -1492,11 +1500,7 @@ async function approveWithdrawal(id){
     }catch(error){
 
         alert(
-            '❌ ' + error.message
-        );
-
-        addLog(
-            'Çekim onay hatası: ' +
+            '❌ ' +
             error.message
         );
     }
@@ -1506,7 +1510,7 @@ async function approveWithdrawal(id){
 async function rejectWithdrawal(id){
 
     if(!confirm(
-        'Bu demo çekim talebi reddedilsin mi?'
+        'Bu demo çekim reddedilsin mi?'
     )) return;
 
     try{
@@ -1527,11 +1531,7 @@ async function rejectWithdrawal(id){
     }catch(error){
 
         alert(
-            '❌ ' + error.message
-        );
-
-        addLog(
-            'Çekim red hatası: ' +
+            '❌ ' +
             error.message
         );
     }
@@ -1551,7 +1551,8 @@ function switchTab(tab){
     document
         .querySelectorAll('.tab')
         .forEach(
-            x => x.classList.remove('active')
+            x =>
+                x.classList.remove('active')
         );
 
     const target =
@@ -1601,25 +1602,19 @@ function updateStats(){
     ).textContent =
         usersCache.length;
 
-    const pendingInvestments =
-        investmentsCache.filter(
-            x => x.status === 'pending'
-        ).length;
-
     document.getElementById(
         'statInvestments'
     ).textContent =
-        pendingInvestments;
-
-    const pendingWithdrawals =
-        withdrawalsCache.filter(
+        investmentsCache.filter(
             x => x.status === 'pending'
         ).length;
 
     document.getElementById(
         'statWithdrawals'
     ).textContent =
-        pendingWithdrawals;
+        withdrawalsCache.filter(
+            x => x.status === 'pending'
+        ).length;
 
     const total =
         usersCache.reduce(
@@ -1640,22 +1635,7 @@ function updateStats(){
 
 /*
 ========================================================
-AUTO REFRESH
-========================================================
-*/
-
-setInterval(() => {
-
-    if(adminKey){
-        loadAll();
-    }
-
-},30000);
-
-
-/*
-========================================================
-ENTER TUŞU İLE GİRİŞ
+ENTER
 ========================================================
 */
 
@@ -1664,11 +1644,29 @@ document
     .addEventListener(
         'keydown',
         event => {
+
             if(event.key === 'Enter'){
                 loginAdmin();
             }
+
         }
     );
+
+
+/*
+========================================================
+AUTO REFRESH
+========================================================
+*/
+
+setInterval(
+    () => {
+        if(adminKey){
+            loadAll();
+        }
+    },
+    30000
+);
 
 </script>
 
