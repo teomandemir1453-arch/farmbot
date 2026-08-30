@@ -75,7 +75,7 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .quick-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
 .quick-action-btn{background:#0D1D25;border:1px solid rgba(192,117,77,.4);border-radius:8px;padding:8px 4px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px}
 .quick-action-btn:active{transform:scale(.95)}
-.quick-action-btn .qa-icon{font-size:18px}
+.quick-action-btn .qa-icon{width:26px;height:26px;background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 5px rgba(0,0,0,.35))}.notif-btn .qa-icon{background-image:url(assets/icons/notifications.png)}.bonus-btn .qa-icon{background-image:url(assets/icons/daily-bonus.png)}.tasks-btn .qa-icon{background-image:url(assets/icons/tasks.png)}
 .quick-action-btn .qa-label{font-size:8px;font-weight:700;color:#C6C6D0;text-transform:uppercase}
 .quick-action-btn.notif-btn{border-color:rgba(213,157,128,.5)}
 .quick-action-btn.bonus-btn{border-color:rgba(192,117,77,.5)}
@@ -221,12 +221,12 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .level-progress-fill{height:100%;background:#fff;border-radius:8px}
 .profile-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
 .profile-stat{background:#0D1D25;border:1px solid rgba(192,117,77,.3);border-radius:8px;padding:8px 6px;text-align:center}
-.profile-stat .p-icon{font-size:16px;margin-bottom:2px}
+.profile-stat .p-icon{width:28px;height:28px;margin:0 auto 3px;background-size:contain;background-repeat:no-repeat;background-position:center}.p-icon.balance{background-image:url(assets/icons/balance.png)}.p-icon.investment{background-image:url(assets/icons/investment.png)}.p-icon.withdraw{background-image:url(assets/icons/withdraw.png)}.p-icon.commission{background-image:url(assets/icons/referral.png)}
 .profile-stat .p-label{font-size:8px;color:#C6C6D0;opacity:.8;font-weight:700;text-transform:uppercase}
 .profile-stat .p-value{font-size:13px;font-weight:800;color:#D59D80;margin-top:1px}
 .profile-menu{display:flex;flex-direction:column;gap:4px}
 .profile-menu-item{background:#0D1D25;border:1px solid rgba(192,117,77,.3);border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.profile-menu-item .m-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(192,117,77,.2)}
+.profile-menu-item .m-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(192,117,77,.12);border:1px solid rgba(255,190,90,.18);flex:0 0 38px}.profile-menu-item .m-icon img{width:34px;height:34px;object-fit:contain;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
 .profile-menu-item .m-content{flex:1}
 .profile-menu-item .m-title{font-size:12px;font-weight:700;color:#C6C6D0}
 .profile-menu-item .m-desc{font-size:9px;color:#C6C6D0;opacity:.7;margin-top:1px}
@@ -235,7 +235,7 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .sub-overlay.show{opacity:1;visibility:visible}
 .sub-popup{background:#104C64;border-radius:16px 16px 0 0;width:100%;max-width:400px;max-height:85vh;overflow-y:auto;padding:16px;border-top:1px solid rgba(192,117,77,.4)}
 .sub-popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(192,117,77,.3)}
-.sub-popup-title{font-size:16px;font-weight:800;color:#D59D80}
+.sub-popup-title{font-size:16px;font-weight:800;color:#D59D80;display:flex;align-items:center;gap:7px}.popup-title-icon{width:28px;height:28px;display:inline-block;background-size:contain;background-repeat:no-repeat;background-position:center}.daily-title-icon{background-image:url(assets/icons/daily-bonus.png)}.tasks-title-icon{background-image:url(assets/icons/tasks.png)}.notif-title-icon{background-image:url(assets/icons/notifications.png)}
 .sub-popup-close{width:28px;height:28px;border-radius:50%;background:#0D1D25;border:1px solid rgba(192,117,77,.4);font-size:14px;cursor:pointer;color:#C6C6D0;display:flex;align-items:center;justify-content:center}
 .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#0D1D25;border-radius:8px;margin-bottom:6px;border:1px solid rgba(192,117,77,.3)}
 .toggle-row .t-label{font-size:12px;font-weight:600;color:#C6C6D0}
@@ -257,7 +257,7 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .faq-answer{padding:0 10px 10px;font-size:11px;color:#C6C6D0;opacity:.8;line-height:1.4;display:none}
 .faq-item.open .faq-answer{display:block}
 .daily-bonus-card{background:linear-gradient(135deg,#D59D80,#C0754D);border-radius:10px;padding:12px;text-align:center;margin-bottom:10px}
-.daily-bonus-card .db-icon{font-size:40px;margin-bottom:6px}
+.daily-bonus-card .db-icon{width:68px;height:68px;margin:0 auto 6px;background:url(assets/icons/daily-bonus.png) center/contain no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
 .daily-bonus-card .db-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
 .daily-bonus-card .db-amount{font-size:20px;font-weight:800;color:#fff;margin-bottom:2px}
 .daily-bonus-card .db-streak{font-size:11px;color:#fff;font-weight:600}
@@ -273,7 +273,7 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 /* GÖREVLER KARTLARI - GÜVENLİK DÜZELTMESİ */
 .task-item{background:#0D1D25;border:1px solid rgba(192,117,77,.4);border-radius:8px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .task-item.completed{background:linear-gradient(135deg,#D59D80,#C0754D);border-color:#D59D80}
-.task-item .task-icon{font-size:22px;min-width:24px;text-align:center}
+.task-item .task-icon{width:46px;height:46px;min-width:46px;border-radius:12px;background:rgba(73,23,111,.65);border:1px solid rgba(255,205,90,.22);display:flex;align-items:center;justify-content:center}.task-item .task-icon img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,.4))}
 .task-item .task-content{flex:1}
 .task-item .task-title{font-size:13px;font-weight:700;color:#C6C6D0;margin-bottom:2px}
 .task-item.completed .task-title{color:#fff}
@@ -309,13 +309,13 @@ h3{color:#D59D80;margin:10px 0 6px;font-size:13px;font-weight:700}
 .chart-summary-item .csi-label{font-size:8px;color:#C6C6D0;font-weight:600;margin-top:1px}
 .notif-item{background:#0D1D25;border-radius:8px;padding:10px;margin-bottom:6px;border-left:3px solid #C0754D;display:flex;gap:8px}
 .notif-item.unread{background:#104C64;border-left-color:#D59D80}
-.notif-item .ni-icon{font-size:18px}
+.notif-item .ni-icon{width:38px;height:38px;min-width:38px;border-radius:10px;background:rgba(73,23,111,.65);display:flex;align-items:center;justify-content:center}.notif-item .ni-icon img{width:34px;height:34px;object-fit:contain}
 .notif-item .ni-content{flex:1}
 .notif-item .ni-title{font-size:12px;font-weight:700;color:#C6C6D0}
 .notif-item .ni-message{font-size:10px;color:#C6C6D0;opacity:.8;margin-top:1px;line-height:1.3}
 .notif-item .ni-time{font-size:9px;color:#C6C6D0;opacity:.6;margin-top:2px}
 .notif-empty{text-align:center;padding:20px;color:#C6C6D0;opacity:.6}
-.notif-empty .ne-icon{font-size:40px;margin-bottom:6px}
+.notif-empty .ne-icon{width:64px;height:64px;margin:0 auto 6px;background:url(assets/icons/notifications.png) center/contain no-repeat;opacity:.65}
 .mark-all-read{background:#C0754D;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;margin-bottom:10px}
 
 /* HESAPLAYICI */
@@ -518,19 +518,19 @@ input:focus,select:focus{outline:none;border-color:#D59D80}
 <div class="level-progress-bar"><div class="level-progress-fill" id="levelProgressFill" style="width:0%"></div></div>
 </div>
 <div class="profile-stats-grid">
-<div class="profile-stat"><div class="p-icon">💰</div><div class="p-label" data-i18n="prof_bal">Balance</div><div class="p-value" id="pBalance">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">💵</div><div class="p-label" data-i18n="prof_inv">Investment</div><div class="p-value" id="pInvested">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">💸</div><div class="p-label" data-i18n="prof_wd">Withdrawn</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
-<div class="profile-stat"><div class="p-icon">📈</div><div class="p-label" data-i18n="prof_comm">Commission</div><div class="p-value" id="pCommission">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon balance"></div><div class="p-label" data-i18n="prof_bal">Balance</div><div class="p-value" id="pBalance">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon investment"></div><div class="p-label" data-i18n="prof_inv">Investment</div><div class="p-value" id="pInvested">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon withdraw"></div><div class="p-label" data-i18n="prof_wd">Withdrawn</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon commission"></div><div class="p-label" data-i18n="prof_comm">Commission</div><div class="p-value" id="pCommission">$0.00</div></div>
 </div>
 <div class="profile-menu">
-<div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon"></div><div class="m-content"><div class="m-title" data-i18n="prof_daily">Daily Bonus</div><div class="m-desc" id="dailyBonusDesc">Claim bonus</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon">🎯</div><div class="m-content"><div class="m-title" data-i18n="prof_tasks">Tasks</div><div class="m-desc" id="tasksDesc">Earn bonuses</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon">📈</div><div class="m-content"><div class="m-title" data-i18n="prof_chart">Chart</div><div class="m-desc" data-i18n="prof_chart_desc">View earnings</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon">🔗</div><div class="m-content"><div class="m-title" data-i18n="prof_ref">Referral</div><div class="m-desc" id="referralMenuDesc">Earn 10% commission</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon">❓</div><div class="m-content"><div class="m-title" data-i18n="prof_faq">FAQ</div><div class="m-desc" data-i18n="prof_faq_desc">Help & Support</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openSupport()"><div class="m-icon">📞</div><div class="m-content"><div class="m-title" data-i18n="prof_support">Support</div><div class="m-desc" data-i18n="prof_support_desc">Telegram</div></div><div class="m-arrow">›</div></div>
-<div class="profile-menu-item" onclick="openLanguageSelector()"><div class="m-icon"></div><div class="m-content"><div class="m-title" data-i18n="prof_lang">Language</div><div class="m-desc" id="currentLangDesc">English</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon"><img src="assets/icons/daily-bonus.png" alt="Daily Bonus"></div><div class="m-content"><div class="m-title" data-i18n="prof_daily">Daily Bonus</div><div class="m-desc" id="dailyBonusDesc">Claim bonus</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon"><img src="assets/icons/tasks.png" alt="Tasks"></div><div class="m-content"><div class="m-title" data-i18n="prof_tasks">Tasks</div><div class="m-desc" id="tasksDesc">Earn bonuses</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon"><img src="assets/icons/chart.png" alt="Chart"></div><div class="m-content"><div class="m-title" data-i18n="prof_chart">Chart</div><div class="m-desc" data-i18n="prof_chart_desc">View earnings</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon"><img src="assets/icons/referral.png" alt="Referral"></div><div class="m-content"><div class="m-title" data-i18n="prof_ref">Referral</div><div class="m-desc" id="referralMenuDesc">Earn 10% commission</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon"><img src="assets/icons/faq.png" alt="FAQ"></div><div class="m-content"><div class="m-title" data-i18n="prof_faq">FAQ</div><div class="m-desc" data-i18n="prof_faq_desc">Help & Support</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"><img src="assets/icons/support.png" alt="Support"></div><div class="m-content"><div class="m-title" data-i18n="prof_support">Support</div><div class="m-desc" data-i18n="prof_support_desc">Telegram</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openLanguageSelector()"><div class="m-icon"><img src="assets/icons/language.png" alt="Language"></div><div class="m-content"><div class="m-title" data-i18n="prof_lang">Language</div><div class="m-desc" id="currentLangDesc">English</div></div><div class="m-arrow">›</div></div>
 </div>
 </div>
 </div>
@@ -910,8 +910,8 @@ const nb=DAILY_BONUSES[Math.min(cs,6)];
 let sh='<div class="streak-days">';
 for(let i=0;i<7;i++){const cl=i<cs;const td=i===cs&&cc;sh+=`<div class="streak-day ${cl?'claimed':''} ${td?'today':''}"><div class="sd-num">Day ${i+1}</div><div class="sd-reward">$${DAILY_BONUSES[i].toFixed(2)}</div></div>`}
 sh+='</div>';
-return`<div class="sub-popup-header"><div class="sub-popup-title">🎁 Daily Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>
-<div class="daily-bonus-card"><div class="db-icon">🎁</div><div class="db-title">${cc?'Ready!':'Come back tomorrow!'}</div><div class="db-amount">$${cc?nb.toFixed(2):DAILY_BONUSES[Math.min(cs+1,6)].toFixed(2)}</div><div class="db-streak"> ${cs} day streak</div></div>
+return`<div class="sub-popup-header"><div class="sub-popup-title"><span class="popup-title-icon daily-title-icon"></span> Daily Bonus</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>
+<div class="daily-bonus-card"><div class="db-icon"></div><div class="db-title">${cc?'Ready!':'Come back tomorrow!'}</div><div class="db-amount">$${cc?nb.toFixed(2):DAILY_BONUSES[Math.min(cs+1,6)].toFixed(2)}</div><div class="db-streak"> ${cs} day streak</div></div>
 ${sh}
 ${cc?`<button class="btn btn-approve" style="margin-top:12px" onclick="claimDailyBonus()"> Claim ($${nb.toFixed(2)})</button>`:`<div style="background:#0D1D25;padding:10px;border-radius:8px;text-align:center;margin-top:12px;font-size:11px;color:#C6C6D0;border:1px solid #C0754D"> Come back tomorrow!</div>`}
 <div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:10px;color:#C6C6D0;line-height:1.5;margin-top:10px;border:1px solid #C0754D">💡 <strong>Streak:</strong> Login daily to increase your bonus! Day 7: $0.10!</div>`;
@@ -960,12 +960,12 @@ function getTaskDefinitions(userData={}){
     const streak = Number(userData.dailyBonus?.streak || dailyBonusData.streak || 0);
 
     return [
-        {id:'first_deposit',title:'First Investment',desc:'Make your first approved investment of at least $1',reward:0.50,icon:'💰',completed:verifiedInvestment >= 1},
-        {id:'invest_10',title:'$10 Investment',desc:'Reach $10 in approved investments',reward:1.00,icon:'💵',completed:verifiedInvestment >= 10},
-        {id:'invest_100',title:'$100 Investment',desc:'Reach $100 in approved investments',reward:5.00,icon:'💎',completed:verifiedInvestment >= 100},
-        {id:'refer_1',title:'First Referral',desc:'Invite 1 valid member',reward:0.50,icon:'👥',completed:referrals >= 1},
-        {id:'refer_5',title:'5 Referrals',desc:'Invite 5 valid members',reward:2.50,icon:'🤝',completed:referrals >= 5},
-        {id:'daily_7',title:'7 Day Streak',desc:'Complete a 7 day login streak',reward:1.00,icon:'🔥',completed:streak >= 7}
+        {id:'first_deposit',title:'First Investment',desc:'Make your first approved investment of at least $1',reward:0.50,icon:'investment',completed:verifiedInvestment >= 1},
+        {id:'invest_10',title:'$10 Investment',desc:'Reach $10 in approved investments',reward:1.00,icon:'investment',completed:verifiedInvestment >= 10},
+        {id:'invest_100',title:'$100 Investment',desc:'Reach $100 in approved investments',reward:5.00,icon:'balance',completed:verifiedInvestment >= 100},
+        {id:'refer_1',title:'First Referral',desc:'Invite 1 valid member',reward:0.50,icon:'referral',completed:referrals >= 1},
+        {id:'refer_5',title:'5 Referrals',desc:'Invite 5 valid members',reward:2.50,icon:'referral',completed:referrals >= 5},
+        {id:'daily_7',title:'7 Day Streak',desc:'Complete a 7 day login streak',reward:1.00,icon:'daily-bonus',completed:streak >= 7}
     ];
 }
 
@@ -977,7 +977,7 @@ function renderTasks(){
     };
     const tasks=getTaskDefinitions(localData);
 
-    let h=`<div class="sub-popup-header"><div class="sub-popup-title">🎯 Tasks</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
+    let h=`<div class="sub-popup-header"><div class="sub-popup-title"><span class="popup-title-icon tasks-title-icon"></span> Tasks</div><button class="sub-popup-close" onclick="closeSubPopup()">✕</button></div>
     <div style="background:#0D1D25;padding:10px;border-radius:8px;font-size:11px;color:#C6C6D0;margin-bottom:10px;border:1px solid #C0754D">Complete the requirement first, then the Claim button will unlock.</div>`;
 
     tasks.forEach(t=>{
@@ -990,7 +990,7 @@ function renderTasks(){
                 : `<button class="task-btn locked" disabled>Locked</button>`;
 
         h+=`<div class="task-item ${statusClass}">
-        <div class="task-icon">${t.icon}</div>
+        <div class="task-icon"><img src="assets/icons/${t.icon}.png" alt="${t.title}"></div>
         <div class="task-content"><div class="task-title">${t.title}</div><div class="task-desc">${t.desc}</div><div class="task-reward">+$${t.reward.toFixed(2)}</div></div>
         ${btnHtml}
         </div>`;
@@ -1080,14 +1080,14 @@ function changeChartPeriod(p){currentChartPeriod=p;openSubPopup('chart')}
 
 function renderNotifications(){
 const u=notificationsData.filter(n=>!n.read).length;
-let h=`<div class="sub-popup-header"><div class="sub-popup-title"> Notifications (${u})</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>`;
+let h=`<div class="sub-popup-header"><div class="sub-popup-title"><span class="popup-title-icon notif-title-icon"></span> Notifications (${u})</div><button class="sub-popup-close" onclick="closeSubPopup()"></button></div>`;
 if(u>0)h+=`<button class="mark-all-read" onclick="markAllRead()">✅ Mark All Read</button>`;
 if(notificationsData.length===0)h+=`<div class="notif-empty"><div class="ne-icon"></div><div>No notifications</div></div>`;
-else{notificationsData.slice(0,20).forEach(n=>{const t=new Date(n.timestamp).toLocaleString('en-US');h+=`<div class="notif-item ${n.read?'':'unread'}"><div class="ni-icon">${n.icon||''}</div><div class="ni-content"><div class="ni-title">${n.title}</div><div class="ni-message">${n.message}</div><div class="ni-time">${t}</div></div></div>`})}
+else{notificationsData.slice(0,20).forEach(n=>{const t=new Date(n.timestamp).toLocaleString('en-US');h+=`<div class="notif-item ${n.read?'':'unread'}"><div class="ni-icon"><img src="assets/icons/${n.icon||'notifications'}.png" alt="notification"></div><div class="ni-content"><div class="ni-title">${n.title}</div><div class="ni-message">${n.message}</div><div class="ni-time">${t}</div></div></div>`})}
 return h;
 }
 function markAllRead(){notificationsData=notificationsData.map(n=>({...n,read:true}));saveNotifications();updateQuickNotifBadge();updateProfileData();if(document.getElementById('subOverlay').classList.contains('show'))openSubPopup('notifications')}
-function addNotification(t,m,tp='info'){const ic={success:'✅',error:'',info:'ℹ️',bonus:'',referral:''};notificationsData.unshift({id:'notif_'+Date.now(),title:t,message:m,icon:ic[tp]||'',read:false,timestamp:Date.now()});if(notificationsData.length>50)notificationsData=notificationsData.slice(0,50);saveNotifications();updateQuickNotifBadge()}
+function addNotification(t,m,tp='info'){const ic={success:'notifications',error:'notifications',info:'notifications',bonus:'daily-bonus',referral:'referral'};notificationsData.unshift({id:'notif_'+Date.now(),title:t,message:m,icon:ic[tp]||'',read:false,timestamp:Date.now()});if(notificationsData.length>50)notificationsData=notificationsData.slice(0,50);saveNotifications();updateQuickNotifBadge()}
 function saveNotifications(){try{db.collection('users').doc(userId).set({notifications:notificationsData},{merge:true})}catch(e){console.error(e)}}
 
 async function processReferral(){
