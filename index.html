@@ -2227,6 +2227,12 @@ function showRecentAnnouncements() {
 
 auth.signInAnonymously().then(async()=>{
 userId=auth.currentUser.uid;
+    const backendUser = await registerTelegramUserWithBackend();
+
+if (backendUser) {
+    console.log('✅ PostgreSQL User ID:', backendUser.id);
+    console.log('✅ Telegram ID:', backendUser.telegram_id);
+}
 if(currentUser&&currentUser.id.toString()===ADMIN_ID){
     document.getElementById('adminNavItem').style.display='flex';
 }
