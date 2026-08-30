@@ -450,7 +450,36 @@ body.mr-modal-open{overflow:hidden}
   .mr-modal-body{padding:7px}
 }
 
-.daily-game-reward-card{margin:0 0 12px;padding:13px;border:1px solid rgba(0,230,118,.3);border-radius:16px;background:rgba(0,230,118,.06);text-align:center}.dgr-title{font-size:12px;font-weight:900}.dgr-amount{font-size:25px;font-weight:900;color:#7dffb2}.dgr-sub{font-size:9px;opacity:.65;margin:4px 0 9px}.daily-game-reward-card button{border:0;border-radius:10px;padding:9px 16px;background:#087d49;color:#fff;font-weight:900}.daily-game-reward-card button:disabled{opacity:.4}</style>
+.daily-game-reward-card{margin:0 0 12px;padding:13px;border:1px solid rgba(0,230,118,.3);border-radius:16px;background:rgba(0,230,118,.06);text-align:center}.dgr-title{font-size:12px;font-weight:900}.dgr-amount{font-size:25px;font-weight:900;color:#7dffb2}.dgr-sub{font-size:9px;opacity:.65;margin:4px 0 9px}.daily-game-reward-card button{border:0;border-radius:10px;padding:9px 16px;background:#087d49;color:#fff;font-weight:900}.daily-game-reward-card button:disabled{opacity:.4}
+/* MOBILE / TELEGRAM MINI APP FIXES */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+*{box-sizing:border-box}
+button{touch-action:manipulation}
+@media(max-width:600px){
+  body{font-size:14px}
+  .container,.wrap,.page,.content,.main-content{width:100%;max-width:100%;padding-left:10px;padding-right:10px}
+  .game-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+  .game-card{min-width:0;overflow:hidden}
+  .game-card-body{padding:7px 5px!important}
+  .game-card-body strong,.game-card-body span,.game-card-body b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .mr-modal{padding:0!important;align-items:stretch!important}
+  .mr-modal-dialog{width:100%!important;height:100%!important;max-height:100%!important;border-radius:0!important;overflow-y:auto!important}
+  .mr-modal-header{min-height:54px;padding:8px 10px}
+  .mr-modal-body{padding:7px!important}
+  #mrTransfer{display:block!important;width:100%!important;min-height:48px!important;padding:13px 12px!important;font-size:13px!important;position:relative!important;z-index:20!important}
+  #mrTransferStatus{display:block;width:100%;margin-top:8px;min-height:20px}
+  .mr-actions,.mr-controls,.game-actions{display:flex;flex-wrap:wrap;gap:7px;width:100%}
+  .mr-actions button,.mr-controls button,.game-actions button{flex:1 1 140px;min-height:44px}
+  input,select,textarea{max-width:100%;font-size:16px!important}
+  .stats-grid,.stats,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:380px){
+  .game-grid{gap:4px!important}
+  .game-card-body{padding:5px 3px!important}
+  .game-card-body strong{font-size:8px!important}
+  .game-card-body span,.game-card-body b{font-size:7px!important}
+}
+</style>
 
 
 <style id="mm-finance-reference">
@@ -2592,6 +2621,21 @@ if(mrGoldCard)mrGoldCard.addEventListener('click',openMiningRushModal);
 if(mrCloseBtn)mrCloseBtn.addEventListener('click',closeMiningRushModal);
 if(mrBackdrop)mrBackdrop.addEventListener('click',closeMiningRushModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mrModal&&mrModal.classList.contains('show'))closeMiningRushModal()});
+
+
+(function(){
+  function ensureMobileTransfer(){
+    var b=document.getElementById('mrTransfer');
+    if(!b)return;
+    b.style.display='block';
+    b.style.visibility='visible';
+    b.style.opacity='1';
+    b.style.width='100%';
+    b.style.minHeight='48px';
+  }
+  document.addEventListener('DOMContentLoaded',ensureMobileTransfer);
+  window.addEventListener('resize',ensureMobileTransfer);
+})();
 
 </script>
 
