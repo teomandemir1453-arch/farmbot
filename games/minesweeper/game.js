@@ -30,6 +30,12 @@ let gameOver = false;
 
 function startGame(){
 
+    if(!checkDailyLimit()){
+        return;
+    }
+
+    board.innerHTML = "";
+
     board.innerHTML = "";
 
     cells = [];
