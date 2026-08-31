@@ -494,6 +494,146 @@ button{touch-action:manipulation}
   .game-card-body strong{font-size:8px!important}
   .game-card-body span,.game-card-body b{font-size:7px!important}
 }
+  /* ================= GAME CENTER ================= */
+
+.games-section{
+margin:14px 0;
+padding:14px;
+border-radius:20px;
+background:linear-gradient(145deg,#071426,#0b2038);
+border:1px solid rgba(0,255,255,.25);
+box-shadow:0 0 25px rgba(0,255,255,.08);
+}
+
+.games-title{
+text-align:center;
+margin-bottom:12px;
+}
+
+.games-title h2{
+color:#00ffff;
+font-size:18px;
+font-weight:900;
+text-shadow:0 0 12px #00ffff;
+}
+
+.games-title p{
+font-size:11px;
+color:#9da8ca;
+}
+
+
+.games-container{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:5px;
+scrollbar-width:none;
+}
+
+
+.games-container::-webkit-scrollbar{
+display:none;
+}
+
+
+.game-card{
+
+min-width:160px;
+
+background:#07101f;
+
+border-radius:18px;
+
+padding:10px;
+
+text-align:center;
+
+border:1px solid rgba(0,255,255,.25);
+
+position:relative;
+
+transition:.3s;
+
+}
+
+
+.game-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#00ffff;
+
+box-shadow:
+0 0 15px #00ffff,
+0 0 35px rgba(0,255,255,.5);
+
+}
+
+
+
+.game-card img{
+
+width:100%;
+height:130px;
+
+object-fit:cover;
+
+border-radius:14px;
+
+}
+
+
+
+.game-card h3{
+
+color:white;
+font-size:14px;
+margin:8px 0;
+
+}
+
+
+
+.game-card span{
+
+font-size:10px;
+color:#ffc83d;
+
+}
+
+
+
+.game-play-btn{
+
+margin-top:8px;
+
+width:100%;
+
+border:none;
+
+padding:8px;
+
+border-radius:20px;
+
+background:linear-gradient(135deg,#ffc83d,#ff8c00);
+
+font-weight:900;
+
+}
+
+
+.game-lock{
+
+font-size:22px;
+
+position:absolute;
+
+top:8px;
+
+left:8px;
+
+}
 </style>
 </head>
 
@@ -680,7 +820,114 @@ button{touch-action:manipulation}
 </div>
 <div class="telegram-check" id="telegramCheck">›</div>
 </div>
+<section class="games-section">
 
+<div class="games-title">
+
+<h2>🎮 GAME CENTER</h2>
+
+<p>Play games & earn rewards</p>
+
+</div>
+
+
+<div class="games-container">
+
+
+<div class="game-card"
+onclick="location.href='/games/'">
+
+<img src="assets/games/gold-rush.png">
+
+<h3>GOLD RUSH</h3>
+
+<span>
+30 SANİYE • DAILY REWARD
+</span>
+
+
+<button class="game-play-btn">
+▶ OYNA
+</button>
+
+</div>
+
+
+
+<div class="game-card">
+
+<div class="game-lock">
+🔒
+</div>
+
+<img src="assets/games/crystal.png">
+
+<h3>CRYSTAL HUNT</h3>
+
+<span>
+YAKINDA
+</span>
+
+</div>
+
+
+
+<div class="game-card">
+
+<div class="game-lock">
+🔒
+</div>
+
+<img src="assets/games/miner.png">
+
+<h3>MINER RUN</h3>
+
+<span>
+YAKINDA
+</span>
+
+</div>
+
+
+
+<div class="game-card">
+
+<div class="game-lock">
+🔒
+</div>
+
+<img src="assets/games/treasure.png">
+
+<h3>TREASURE CAVE</h3>
+
+<span>
+YAKINDA
+</span>
+
+</div>
+
+
+
+<div class="game-card">
+
+<div class="game-lock">
+🔒
+</div>
+
+<img src="assets/games/power.png">
+
+<h3>POWER MINE</h3>
+
+<span>
+YAKINDA
+</span>
+
+</div>
+
+
+</div>
+
+</section>
 <div class="mm-promo">
 <h3>EARN MONEY <br><strong>EARN EVERY DAY!</strong></h3>
 <p>Secure • Stable • Profitable</p>
