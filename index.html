@@ -816,7 +816,7 @@ const REFERRAL_COMMISSION=0.10;
 const WELCOME_BONUS=1.00;
 const MIN_INVESTMENT_TO_UNLOCK=3;
 
-const pricesRef=db.collection('settings').doc('cryptoPrices');
+
 
 let currentPrices={
     trx:0.12,
@@ -1948,11 +1948,6 @@ async function getCryptoPrices(){
             xrp:j.ripple?.usd||0.50,
             lastUpdated:Date.now()
         };
-
-        await pricesRef.set(
-            p,
-            {merge:true}
-        );
 
         return p;
 
