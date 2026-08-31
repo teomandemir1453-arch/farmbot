@@ -1009,6 +1009,7 @@ async function syncPostgresAccount(){
 
         const POSTGRES_API =
             'https://works-optional-specify-union.trycloudflare.com';
+      console.log("✅ PostgreSQL API:", POSTGRES_API);
 
         const response = await fetch(
             POSTGRES_API + '/api/user',
@@ -3415,17 +3416,109 @@ function updateBuyTRX(){
 
 async function buyProduct(){
 
-    /*
-     * Burada indirimli tutarı kullan.
-     */
-    const amount=
-        selectedPackageDiscounted>0
-        ? selectedPackageDiscounted
-        : parseFloat(
-            document.getElementById(
-                'buyAmount'
-            ).value
+    const amount =
+        selectedPackageDiscounted > 0
+            ? Number(selectedPackageDiscounted)
+            : parseFloat(
+                document.getElementById('buyAmount').value
+            );
+
+    if(!Number.isFinite(amount)){
+        alert('❌ Geçersiz yatırım tutarı.');
+        return;
+    }
+
+    if(amount < MIN_DEPOSIT){
+        alert(`❌ Minimum yatırım: $${MIN_DEPOSIT}`);
+        return;
+    }
+
+    if(amount > MAX_DEPOSIT){
+        alert(`❌ Maksimum yatırım: $${MAX_DEPOSIT}`);
+        return;
+    }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    const trxAmount =
+        (amount / currentPrices.trx).toFixed(2);
+
+    try{
+
+        const response = await fetch(
+            POSTGRES_API + '/api/investment',
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    initData:tg.initData,
+                    amount:amount,
+                    packageName:selectedPackageName || null
+                }),
+                cache:'no-store'
+            }
         );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.ok){
+
+            console.error(
+                'PostgreSQL yatırım hatası:',
+                data
+            );
+
+            alert(
+                '❌ Yatırım oluşturulamadı:\n' +
+                (data.message || 'Bilinmeyen hata')
+            );
+
+            return;
+        }
+
+        console.log(
+            '✅ PostgreSQL yatırım:',
+            data.investment
+        );
+
+        alert(
+            `✅ Yatırım talebi oluşturuldu!\n\n` +
+            `💰 $${amount.toFixed(2)}\n` +
+            `🔹 ${trxAmount} TRX\n\n` +
+            `⏳ Admin onayı bekleniyor.`
+        );
+
+        selectedPackageName = '';
+        selectedPackageOriginal = 0;
+        selectedPackageDiscounted = 0;
+
+        resetAndGoHome();
+
+        if(
+            tg.HapticFeedback &&
+            tg.HapticFeedback.notificationOccurred
+        ){
+            tg.HapticFeedback.notificationOccurred('success');
+        }
+
+    }catch(error){
+
+        console.error(
+            'Investment error:',
+            error
+        );
+
+        alert(
+            '❌ Yatırım bağlantı hatası:\n' +
+            error.message
+        );
+    }
+}
 
     if(amount<MIN_DEPOSIT){
 
@@ -3593,12 +3686,142 @@ function updateCryptoAmount(){
 
 async function requestWithdrawal(){
 
-    const amount=
+    const amount =
         parseFloat(
-            document.getElementById(
-                'withdrawAmount'
-            ).value
+            document.getElementById('withdrawAmount').value
         );
+
+    const crypto =
+        document.getElementById('withdrawCrypto').value;
+
+    const wallet =
+        document.getElementById('walletAddress').value.trim();
+
+    if(
+        !Number.isFinite(amount) ||
+        amount < 0.25
+    ){
+        alert('❌ Minimum withdrawal is $0.25');
+        return;
+    }
+
+    if(amount > Number(balance || 0)){
+        alert('❌ Insufficient balance!');
+        return;
+    }
+
+    if(!wallet){
+        alert('❌ Wallet address required!');
+        return;
+    }
+
+    const validation =
+        validateAddress(wallet, crypto);
+
+    if(!validation.valid){
+        alert(validation.message);
+        return;
+    }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    const cryptoAmount =
+        (amount / currentPrices[crypto]).toFixed(6);
+
+    try{
+
+        const response =
+            await fetch(
+                POSTGRES_API + '/api/withdrawal',
+                {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        initData:tg.initData,
+                        amount:amount,
+                        crypto:crypto,
+                        cryptoAmount:cryptoAmount,
+                        walletAddress:wallet,
+                        network:NETWORK_INFO[crypto].fullName
+                    }),
+                    cache:'no-store'
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(!response.ok || !data.ok){
+
+            console.error(
+                'PostgreSQL çekim hatası:',
+                data
+            );
+
+            alert(
+                '❌ Çekim oluşturulamadı:\n' +
+                (data.message || 'Bilinmeyen hata')
+            );
+
+            return;
+        }
+
+        if(data.balance !== undefined){
+            balance = Number(data.balance);
+        }else{
+            balance -= amount;
+        }
+
+        renderPostgresBalance();
+        updateUI();
+
+        alert(
+            `✅ Çekim talebi oluşturuldu!\n\n` +
+            `💰 $${amount.toFixed(2)}\n` +
+            `🔹 ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto]}\n\n` +
+            `⏳ Admin onayı bekleniyor.`
+        );
+
+        document.getElementById(
+            'withdrawAmount'
+        ).value = '';
+
+        document.getElementById(
+            'walletAddress'
+        ).value = '';
+
+        clearAddressValidation();
+        updateCryptoAmount();
+
+        loadWithdrawalHistory();
+
+        if(
+            tg.HapticFeedback &&
+            tg.HapticFeedback.notificationOccurred
+        ){
+            tg.HapticFeedback.notificationOccurred(
+                'success'
+            );
+        }
+
+    }catch(error){
+
+        console.error(
+            'Withdrawal error:',
+            error
+        );
+
+        alert(
+            '❌ Çekim bağlantı hatası:\n' +
+            error.message
+        );
+    }
+}
 
     const crypto=
         document.getElementById(
