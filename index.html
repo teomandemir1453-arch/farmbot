@@ -3606,15 +3606,10 @@ async function requestWithdrawal(){
         return;
     }
 
-    if(amount > Number(balance || 0)){
-        alert('❌ Insufficient balance!');
-        return;
-    }
-
-    if(!wallet){
-        alert('❌ Wallet address required!');
-        return;
-    }
+  if(amount > Number(balance || 0)){
+    alert('❌ Insufficient balance!');
+    return;
+}
 
     const validation =
         validateAddress(
@@ -3743,34 +3738,6 @@ async function requestWithdrawal(){
             error.message
         );
     }
-}
-
-    const amount=
-        parseFloat(
-            document.getElementById(
-                'withdrawAmount'
-            ).value
-        )||0;
-
-    const crypto=
-        document.getElementById(
-            'withdrawCrypto'
-        ).value;
-
-    document.getElementById(
-        'cryptoEquivalent'
-    ).textContent=
-        (
-            amount/
-            currentPrices[crypto]
-        ).toFixed(6);
-
-    document.getElementById(
-        'cryptoSymbol'
-    ).textContent=
-        CRYPTO_SYMBOLS[
-            crypto
-        ];
 }
 
 
