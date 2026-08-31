@@ -6,7 +6,9 @@ const restartBtn = document.getElementById("restartBtn");
 
 const GAME_REWARD = 0.00020;
 const DAILY_LIMIT = 3;
-
+const GAME_TIME = 30; // saniye
+let timeLeft = GAME_TIME;
+let timerInterval;
 let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
 let gameEarnings = Number(localStorage.getItem("gameEarnings")) || 0;
 
@@ -29,7 +31,35 @@ let time = 0;
 let timer = null;
 let gameOver = false;
 
+clearInterval(timerInterval);
 
+timeLeft = GAME_TIME;
+
+let timerText = document.getElementById("timer");
+
+if(timerText){
+    timerText.innerHTML = timeLeft;
+}
+
+
+timerInterval = setInterval(()=>{
+
+    timeLeft--;
+
+    if(timerText){
+        timerText.innerHTML = timeLeft;
+    }
+
+
+    if(timeLeft <= 0){
+
+        clearInterval(timerInterval);
+
+        endGame(false);
+
+    }
+
+},1000);
 
 function startGame(){
 
@@ -342,7 +372,10 @@ function endGame(win){
 
 
 
-    if(win){
+if(win){
+
+showReward(cells[Math.floor(Math.random()*cells.length)]);
+
 giveGameReward();
         setTimeout(()=>{
 
@@ -539,7 +572,7 @@ function giveGameReward(){
     document.getElementById(
         "rewardAmount"
     ).innerHTML =
-    GAME_REWARD.toFixed(5);
+    (GAME_REWARD*100).toFixed(5)+" cent"
 
 
 
