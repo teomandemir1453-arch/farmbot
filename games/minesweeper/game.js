@@ -6,7 +6,6 @@ const restartBtn = document.getElementById("restartBtn");
 
 const GAME_REWARD = 0.00020;
 const DAILY_LIMIT = 3;
-const GAME_TIME = 30; // saniye
 let timeLeft = GAME_TIME;
 let timerInterval;
 let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
@@ -17,11 +16,7 @@ const GAME_TIME = 30; // saniye
 const WIN_TARGET = 20; // açılması gereken güvenli kutu
 const MINES = 5; // mayın sayısı
 
-let timeLeft = GAME_TIME;
-let countdown;
 const SIZE = 8;
-const MINES = 10;
-
 
 let cells = [];
 let mines = [];
@@ -31,35 +26,6 @@ let time = 0;
 let timer = null;
 let gameOver = false;
 
-clearInterval(timerInterval);
-
-timeLeft = GAME_TIME;
-
-let timerText = document.getElementById("timer");
-
-if(timerText){
-    timerText.innerHTML = timeLeft;
-}
-
-
-timerInterval = setInterval(()=>{
-
-    timeLeft--;
-
-    if(timerText){
-        timerText.innerHTML = timeLeft;
-    }
-
-
-    if(timeLeft <= 0){
-
-        clearInterval(timerInterval);
-
-        endGame(false);
-
-    }
-
-},1000);
 
 function startGame(){
 
@@ -195,7 +161,6 @@ function openCell(index){
 
     reveal(index);
     
-showReward(cells[index]);
     
 showReward(cells[index]);
     
