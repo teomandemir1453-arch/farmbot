@@ -17,7 +17,8 @@ const SIZE = 8;
 
 let timeLeft = GAME_TIME;
 let timerInterval = null;
-
+let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
+let gameEarnings = Number(localStorage.getItem("gameEarnings")) || 0;
 let cells = [];
 let mines = [];
 let opened = 0;
