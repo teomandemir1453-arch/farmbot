@@ -1073,7 +1073,7 @@ const tg=window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
-
+detectTelegramLanguage();
 /* =========================================================
    TELEGRAM -> POSTGRESQL USER
 ========================================================= */
@@ -1366,7 +1366,24 @@ const langFlags={
     es:'🇪 Español',
     de:'🇩 Deutsch'
 };
+function detectTelegramLanguage(){
 
+    let lang =
+        tg.initDataUnsafe?.user?.language_code || 'en';
+
+    lang = lang.substring(0,2);
+
+    if(!langFlags[lang]){
+        lang='en';
+    }
+
+    currentLang=lang;
+
+    console.log(
+        '🌐 Telegram dili:',
+        currentLang
+    );
+}
 let currentLang =
     tg.initDataUnsafe?.user?.language_code || 'en';
 
