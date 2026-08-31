@@ -931,6 +931,7 @@ async function loadUsers(){
         await apiFetch(
             '/api/admin/users'
         );
+    console.log("ADMIN DATA USERS:", data);
 console.log("ADMIN USERS DATA:", data);
     
    usersCache =
@@ -972,7 +973,7 @@ console.log("ADMIN USERS DATA:", data);
 
                     <div class="user-name">
                         ${escapeHtml(
-                            user.first_name || 'User'
+                            user.userName || 'User'
                         )}
                     </div>
 
@@ -981,18 +982,18 @@ console.log("ADMIN USERS DATA:", data);
                             user.username || '-'
                         )}
                         • TG ${escapeHtml(
-                            user.telegram_id
-                        )}
+    user.telegramId || '-'
+)}
                     </div>
 
                 </td>
 
                 <td class="green">
-                    ${money(user.balance)}
+                    $money(user.lifetimeEarnings || 0)
                 </td>
 
                 <td class="gold">
-                    ${money(user.total_invested)}
+                    $money(user.totalInvested || user.bonusInvestmentTotal || 0)
                 </td>
 
                 <td class="red">
