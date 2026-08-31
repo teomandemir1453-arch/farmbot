@@ -516,3 +516,159 @@ body::before{
     }
 
 }
+/* GAME WALLET */
+
+.game-wallet{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+
+}
+
+
+.wallet-box{
+
+    background:
+    linear-gradient(145deg,#151943,#090d27);
+
+    border:1px solid rgba(199,108,255,.4);
+
+    border-radius:15px;
+
+    padding:12px;
+
+    text-align:center;
+
+    box-shadow:
+    0 0 15px rgba(155,77,255,.35);
+
+}
+
+
+.wallet-box span{
+
+    display:block;
+
+    font-size:11px;
+
+    color:#bfc7ff;
+
+}
+
+
+.wallet-box strong{
+
+    display:block;
+
+    margin-top:5px;
+
+    font-size:18px;
+
+    color:#ffd84d;
+
+    text-shadow:
+    0 0 10px #ffd84d;
+
+}
+
+
+
+/* REWARD POPUP */
+
+.reward-popup{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.75);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:5000;
+
+}
+
+
+.reward-popup.show{
+
+    display:flex;
+
+}
+
+
+
+.reward-card{
+
+    width:85%;
+
+    max-width:350px;
+
+    background:
+    linear-gradient(145deg,#21104a,#090d27);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+    border:1px solid #c76cff;
+
+    box-shadow:
+    0 0 40px #9b4dff;
+
+}
+
+
+.reward-card h2{
+
+    color:#fff;
+
+}
+
+
+
+.reward-amount{
+
+    font-size:28px;
+
+    margin:20px 0;
+
+    color:#ffd84d;
+
+    text-shadow:
+    0 0 15px #ffd84d;
+
+}
+
+
+
+.reward-card button{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:10px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:
+    linear-gradient(135deg,#9b4dff,#c76cff);
+
+    color:white;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
