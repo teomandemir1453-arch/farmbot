@@ -494,105 +494,6 @@ button{touch-action:manipulation}
   .game-card-body strong{font-size:8px!important}
   .game-card-body span,.game-card-body b{font-size:7px!important}
 }
-  /* =========================
-   GAME CARDS
-========================= */
-
-.games-container{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:10px;
-
-margin-bottom:15px;
-
-}
-
-
-.game-box{
-
-height:125px;
-
-border-radius:18px;
-
-background:
-linear-gradient(
-145deg,
-rgba(0,255,220,.18),
-rgba(10,20,40,.95)
-);
-
-border:
-1px solid rgba(0,255,220,.35);
-
-box-shadow:
-0 0 18px rgba(0,255,220,.25);
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-cursor:pointer;
-
-}
-
-
-.game-label{
-
-font-size:13px;
-
-font-weight:800;
-
-color:#fff;
-
-}
-
-
-.game-image{
-
-font-size:35px;
-
-margin:5px;
-
-filter:
-drop-shadow(0 0 10px #00ffff);
-
-}
-
-
-.game-name{
-
-font-size:12px;
-
-opacity:.8;
-
-}
-
-
-.game-btn{
-
-margin-top:5px;
-
-padding:5px 20px;
-
-border:none;
-
-border-radius:12px;
-
-background:#19e6d0;
-
-color:#001;
-
-font-weight:bold;
-
-}
 </style>
 </head>
 
@@ -608,7 +509,7 @@ font-weight:bold;
     🔔<span class="mm-badge" id="topNotifBadge">0</span>
   </button>
 </div>
-  
+
 <div class="mm-marquee">
   <span class="speaker">📢</span>
   <span>Welcome to Micro Monetize! Grow your wealth every day.</span>
@@ -625,6 +526,7 @@ font-weight:bold;
       <div class="mm-finance-sub" id="balanceBtc">≈ 0.000000 BTC</div>
     </div>
   </div>
+
   <div class="mm-finance-side investment-side" onclick="showPage('buy')">
     <div class="mm-finance-icon">
       <img src="assets/icons/investment.png" alt="Investment">
@@ -636,95 +538,104 @@ font-weight:bold;
     </div>
   </div>
 </div>
-<!-- =========================
-     GAMES AREA
-========================= -->
 
-<div class="games-container">
+<div id="gameHub" class="game-hub" style="display:none!important;">
+<div class="game-hub-title">
+<div>
+<strong>🎮 OYUNLAR</strong>
+<span>Bir oyun 30 saniye sürer • Her oyun günlük $0.001 kazanır.</span>
+</div>
+</div>
 
-    <div class="game-box" onclick="openGame1()">
+<div class="game-grid">
+<button class="game-card active" type="button">
+<div class="game-art">⛏️💎🪙</div>
+<div class="game-card-body">
+<strong><i class="game-active-dot"></i>GOLD RUSH</strong>
+<span>30 saniye • Günlük $0.001</span>
+<b>▶ OYNA</b>
+</div>
+</button>
 
-        <div class="game-label">
-            🎮 GAME 1
-        </div>
+<button class="game-card locked" type="button">
+<div class="game-art">💠</div>
+<div class="game-card-body">
+<strong>CRYSTAL HUNT</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
 
-        <div class="game-image">
-            💣
-        </div>
+<button class="game-card locked" type="button">
+<div class="game-art">🏃⛏️</div>
+<div class="game-card-body">
+<strong>MINER RUN</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
 
-        <div class="game-name">
-            Minesweeper
-        </div>
+<button class="game-card locked" type="button">
+<div class="game-art">🏆🪙</div>
+<div class="game-card-body">
+<strong>TREASURE CAVE</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
 
-        <button class="game-btn">
-            Oyna
-        </button>
+<button class="game-card locked" type="button">
+<div class="game-art">⚡💎</div>
+<div class="game-card-body">
+<strong>POWER MINE</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
+</div>
+</div>
 
-    </div>
+<div id="miningRushModal" class="mr-modal" aria-hidden="true">
+<div class="mr-modal-backdrop" id="mrModalBackdrop"></div>
+<div class="mr-modal-dialog" role="dialog" aria-modal="true">
+<div class="mr-modal-header">
+<div><strong>⛏️ GOLD RUSH</strong><span>30 saniyelik madencilik oyunu</span></div>
+<button type="button" id="mrCloseModal" class="mr-modal-close">×</button>
+</div>
 
+<div class="mr-modal-body">
+<div class="mr-card" id="miningRushCard">
 
-    <div class="game-box">
+<div class="mr-head">
+<div>
+<div class="mr-title">⛏️ Mining Rush</div>
+<div class="mr-sub">Break rocks, find rare gems & grow your investment balance.</div>
+</div>
+<div class="mr-live">● LIVE</div>
+</div>
 
-        <div class="game-label">
-            🎮 GAME 2
-        </div>
+<div class="mr-stats">
+<div class="mr-stat"><b id="mrScore">0</b><span>Score</span></div>
+<div class="mr-stat"><b id="mrTime">30s</b><span>Time</span></div>
+<div class="mr-stat"><b id="mrReward">$0.0000</b><span>Reward</span></div>
+</div>
 
-        <div class="game-image">
-            ₿
-        </div>
+<div class="mr-arena" id="mrArena">
+<div class="mr-combo" id="mrCombo">🔥 COMBO x0</div>
+<div class="mr-ground"></div>
 
-        <div class="game-name">
-            Crypto Drop
-        </div>
+<div class="mr-center" id="mrCenter">
+<button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 30s</button>
+</div>
 
-        <button class="game-btn">
-            Oyna
-        </button>
+<div class="mr-result" id="mrResult">
+<div class="mr-result-box">
+<h3>⛏️ Mining Complete!</h3>
+<div class="mr-score" id="mrFinalScore">0</div>
+<div class="mr-reward" id="mrFinalReward">+$0.0000</div>
+<small id="mrFinalNote">Your game reward is calculated from your verified score.</small>
+<button type="button" id="mrTransfer">💰 TRANSFER REWARD</button>
+<div class="mr-transfer-status" id="mrTransferStatus" style="display:none;margin-top:10px;font-weight:700"></div>
+<button type="button" id="mrPlayAgain">Play Again</button>
+</div>
+</div>
+</div>
 
-    </div>
-
-
-    <div class="game-box">
-
-        <div class="game-label">
-            🎮 GAME 3
-        </div>
-
-        <div class="game-image">
-            🪙
-        </div>
-
-        <div class="game-name">
-            Coming Soon
-        </div>
-
-        <button class="game-btn">
-            Oyna
-        </button>
-
-    </div>
-
-
-    <div class="game-box">
-
-        <div class="game-label">
-            🎮 GAME 4
-        </div>
-
-        <div class="game-image">
-            ⚡
-        </div>
-
-        <div class="game-name">
-            Coming Soon
-        </div>
-
-        <button class="game-btn">
-            Oyna
-        </button>
-
-    </div>
-
+<div class="mr-bottom">
+<div class="mr-progress"><i id="mrProgress"></i></div>
+<div class="mr-help"><span>Daily reward</span><b id="mrDaily">$0.000 / $0.001</b></div>
 </div>
 
 </div>
