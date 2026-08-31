@@ -6,12 +6,17 @@ const restartBtn = document.getElementById("restartBtn");
 
 const GAME_REWARD = 0.00020;
 const DAILY_LIMIT = 3;
+
 let lastPlayDate = localStorage.getItem("lastPlayDate");
-const GAME_TIME = 30; // saniye
-const WIN_TARGET = 20; // açılması gereken güvenli kutu
-const MINES = 5; // mayın sayısı
+
+const GAME_TIME = 30;
+const WIN_TARGET = 20;
+const MINES = 5;
 
 const SIZE = 8;
+
+let timeLeft = GAME_TIME;
+let timerInterval = null;
 
 let cells = [];
 let mines = [];
