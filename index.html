@@ -18,6 +18,120 @@ body{background:linear-gradient(135deg,#0D1D25 0%,#104C64 50%,#0D1D25 100%);colo
 .container{max-width:600px;margin:0 auto}
 .card{background:#104C64;border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(192,117,77,.3);box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .hidden{display:none!important}
+  /* BALANCE / INVESTMENT YAN YANA */
+.mm-finance-card{
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:10px;
+    padding:10px;
+    margin:10px 0 14px;
+    border-radius:20px;
+    background:linear-gradient(145deg,#111b3b,#0a112b);
+    border:1px solid rgba(111,132,190,.30);
+    overflow:hidden;
+}
+
+.mm-finance-side{
+    width:100%;
+    min-width:0;
+    min-height:120px;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    overflow:hidden;
+    border-radius:16px;
+    border:1px solid rgba(133,155,231,.25);
+    background:linear-gradient(145deg,#121b3d,#0b1230);
+}
+
+.mm-finance-content{
+    flex:1;
+    min-width:0;
+    overflow:hidden;
+}
+
+.mm-finance-title{
+    font-size:10px;
+    font-weight:900;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.mm-finance-value{
+    font-size:19px;
+    font-weight:900;
+    line-height:1.1;
+    margin-top:5px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.mm-finance-sub{
+    font-size:8px;
+    margin-top:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.mm-finance-icon{
+    flex:0 0 46px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.mm-finance-icon img{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+}
+
+@media(max-width:430px){
+
+    .mm-finance-card{
+        grid-template-columns:1fr 1fr;
+        gap:6px;
+        padding:6px;
+    }
+
+    .mm-finance-side{
+        min-height:105px;
+        padding:7px 5px;
+        gap:5px;
+    }
+
+    .mm-finance-icon{
+        flex:0 0 38px;
+        width:38px;
+        height:38px;
+    }
+
+    .mm-finance-icon img{
+        width:28px;
+        height:28px;
+    }
+
+    .mm-finance-title{
+        font-size:8px;
+    }
+
+    .mm-finance-value{
+        font-size:15px;
+    }
+
+    .mm-finance-sub{
+        font-size:7px;
+    }
+}
 h1{text-align:center;color:#C6C6D0;margin-bottom:12px;font-size:20px;font-weight:800}
 .brand-logo{display:block;width:min(92%,430px);height:auto;max-height:190px;object-fit:contain;margin:0 auto 6px;filter:drop-shadow(0 5px 14px rgba(132,62,255,.35))}
 .brand-version{display:block;text-align:center;font-size:10px;color:#C6C6D0;opacity:.55;margin-bottom:12px}
