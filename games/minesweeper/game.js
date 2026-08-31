@@ -521,12 +521,12 @@ function updateWallet(){
 
 
 
-    if(earnings){
+if(earnings){
 
-        earnings.innerHTML =
-        gameEarnings.toFixed(5);
+    earnings.innerHTML =
+    gameEarnings.toFixed(5) + " cent";
 
-    }
+}
 
 }
 
@@ -537,7 +537,7 @@ function giveGameReward(){
 
 
     gameEarnings += GAME_REWARD;
-
+gameEarnings = Number(gameEarnings.toFixed(5));
 
     localStorage.setItem(
         "gameEarnings",
