@@ -357,3 +357,162 @@ body::before{
     transform:scale(.96);
 
 }
+/* ================================
+   CRYSTAL BITCOIN EFFECTS
+================================ */
+
+
+.cell{
+
+    position:relative;
+    overflow:hidden;
+
+}
+
+
+/* kutu enerji ışığı */
+
+.cell::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle,
+    rgba(199,108,255,.35),
+    transparent 70%);
+
+    opacity:0;
+
+    transition:.3s;
+
+}
+
+
+
+.cell:hover::before{
+
+    opacity:1;
+
+}
+
+
+
+/* açılan kutu kristal efekti */
+
+.cell.open{
+
+    animation:crystalOpen .35s ease;
+
+}
+
+
+
+@keyframes crystalOpen{
+
+    0%{
+        transform:scale(.7);
+        filter:brightness(2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+
+
+/* sayıların parlaması */
+
+.cell.open{
+
+    color:#ffd84d;
+
+    text-shadow:
+
+    0 0 8px #ffd84d,
+    0 0 15px #ff9d00;
+
+}
+
+
+
+/* mayın patlama */
+
+.cell.mine{
+
+    animation:mineBoom .5s infinite alternate;
+
+}
+
+
+
+@keyframes mineBoom{
+
+    from{
+
+        box-shadow:
+        0 0 15px red;
+
+    }
+
+
+    to{
+
+        box-shadow:
+        0 0 40px #ff0000,
+        0 0 70px orange;
+
+    }
+
+}
+
+
+
+
+/* kristal parçacıkları */
+
+.reward{
+
+    position:fixed;
+
+    pointer-events:none;
+
+    font-size:25px;
+
+    animation:rewardFly 1.2s forwards;
+
+    z-index:999;
+
+}
+
+
+
+@keyframes rewardFly{
+
+
+    0%{
+
+        transform:translateY(0) scale(.5);
+
+        opacity:1;
+
+    }
+
+
+    100%{
+
+        transform:
+        translateY(-120px)
+        scale(1.5)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+}
