@@ -1367,7 +1367,8 @@ const langFlags={
     de:'🇩 Deutsch'
 };
 
-let currentLang='en';
+let currentLang =
+    tg.initDataUnsafe?.user?.language_code || 'en';
 
 function setLanguage(lang){
 
