@@ -3408,59 +3408,7 @@ function selectPackage(
     showPage('buy');
 }
 
-    /*
-     * Kullanıcı gerçekten ödeyeceği
-     * indirimli tutarı görür.
-     */
-    input.value=
-        discountedPrice
-            .toFixed(2);
-
-    input.readOnly=true;
-
-    document.getElementById(
-        'amountLabel'
-    ).textContent=
-        'Amount (Discounted)';
-
-    updateBuyTRX();
-
-    document.getElementById(
-        'summaryName'
-    ).textContent=
-        packageName;
-
-    document.getElementById(
-        'summaryOriginal'
-    ).textContent=
-        '$'+
-        originalPrice
-            .toFixed(2);
-
-    document.getElementById(
-        'summaryDiscounted'
-    ).textContent=
-        '$'+
-        discountedPrice
-            .toFixed(2);
-
-    document.getElementById(
-        'summaryRecord'
-    ).textContent=
-        '$'+
-        (
-            originalPrice-
-            discountedPrice
-        ).toFixed(2);
-
-    document.getElementById(
-        'packageSummary'
-    ).classList.add(
-        'active'
-    );
-
-    showPage('buy');
-}
+    
 
 function resetAndGoHome(){
 
