@@ -1094,7 +1094,7 @@ async function registerTelegramUserWithBackend(){
         const response = await fetch(
     POSTGRES_API + '/api/user',
     {
-        method:'POST',
+        method:'POST', 
         headers:{
             'Content-Type':'application/json'
         },
