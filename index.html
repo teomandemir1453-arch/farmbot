@@ -1091,15 +1091,21 @@ async function registerTelegramUserWithBackend(){
             return null;
         }
 
-        const response=await fetch(
-            POSTGRES_API+'/api/user',
-            {
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    initData:tg.initData
+        const response = await fetch(
+    POSTGRES_API + '/api/user',
+    {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            initData: tg.initData,
+            referredBy: referredByUserId || null
+        }),
+        cache:'no-store'
+    }
+);
+        cache:'no-store'
                 }),
                 cache:'no-store'
             }
