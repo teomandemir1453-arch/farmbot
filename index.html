@@ -905,12 +905,42 @@ const NETWORK_INFO={
 };
 
 const packages=[
-    {name:'Mini',price:3,featured:false,discount:0.20},
-    {name:'Micro',price:10,featured:false,discount:0.20},
-    {name:'Ultra',price:100,featured:false,discount:0.20},
-    {name:'PRO Ultra',price:500,featured:false,discount:0.20},
-    {name:'Business',price:1000,featured:false,discount:0.20},
-    {name:'^CEO^',price:5000,featured:true,discount:0.30}
+    {
+        name:'Mini',
+        price:3,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Micro',
+        price:10,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Ultra',
+        price:100,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'PRO Ultra',
+        price:500,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Business',
+        price:1000,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'^CEO^',
+        price:5000,
+        featured:true,
+        discount:0.30
+    }
 ];
 
 const DAILY_BONUSES=[
@@ -3192,86 +3222,110 @@ function renderPackages(){
             'packagesContainer'
         );
 
+    if(!container)return;
+
     container.innerHTML='';
 
-    packages.forEach(p=>{
+    packages.forEach(
+        packageData=>{
 
-        const discounted=
-            p.price*
-            (
-                1-p.discount
-            );
-
-        const saved=
-            p.price-
-            discounted;
-
-        const isCeo=
-            p.name==='^CEO^';
-
-        const card=
-            document.createElement(
-                'div'
-            );
-
-        card.className=
-            `package-card ${
-                isCeo
-                ? 'ceo-package'
-                : 'standard-neon'
-            }`;
-
-        card.onclick=
-            ()=>{
-                selectPackage(
-                    p.price,
-                    discounted,
-                    p.name
+            const original=
+                Number(
+                    packageData.price
                 );
-            };
 
-        card.innerHTML=`
-            ${
-                isCeo
-                ? '<div class="ceo-badge">TOP TIER</div>'
-                : ''
-            }
+            const discount=
+                Number(
+                    packageData.discount
+                );
 
-            <div class="package-name">
-                ${p.name}
-            </div>
+            const discounted=
+                original*
+                (1-discount);
 
-            <div style="text-align:center">
-                <span class="discount-badge">
-                    ${isCeo?'-30%':'-20%'}
-                </span>
-            </div>
+            const saved=
+                original-
+                discounted;
 
-            <div class="package-pricing">
+            const card=
+                document.createElement(
+                    'div'
+                );
 
-                <span class="original-price">
-                    $${p.price.toFixed(2)}
-                </span>
+            card.className=
+                'package-card '+
+                (
+                    packageData.featured
+                    ?'ceo-package'
+                    :'standard-neon'
+                );
 
-                <span class="discounted-price">
-                    $${discounted.toFixed(2)}
-                </span>
+            card.onclick=
+                function(){
 
-            </div>
+                    selectPackage(
+                        original,
+                        discounted,
+                        packageData.name
+                    );
+                };
 
-            <div class="package-savings">
-                Save $${saved.toFixed(2)}
-            </div>
+            card.innerHTML=`
 
-            <div class="package-cta">
-                Select →
-            </div>
-        `;
+                ${
+                    packageData.featured
+                    ?
+                    `
+                    <div class="ceo-badge">
+                        TOP TIER
+                    </div>
+                    `
+                    :
+                    ''
+                }
 
-        container.appendChild(
-            card
-        );
-    });
+                <div class="package-name">
+                    ${packageData.name}
+                </div>
+
+                <div style="text-align:center">
+
+                    <span class="discount-badge">
+                        -
+                        ${Math.round(
+                            discount*100
+                        )}
+                        %
+                    </span>
+
+                </div>
+
+                <div class="package-pricing">
+
+                    <span class="original-price">
+                        $${original.toFixed(2)}
+                    </span>
+
+                    <span class="discounted-price">
+                        $${discounted.toFixed(2)}
+                    </span>
+
+                </div>
+
+                <div class="package-savings">
+                    Save $${saved.toFixed(2)}
+                </div>
+
+                <div class="package-cta">
+                    Select →
+                </div>
+            `;
+
+            container.appendChild(
+                card
+            );
+        }
+    );
 }
 
 function selectPackage(
@@ -3284,15 +3338,75 @@ function selectPackage(
         packageName;
 
     selectedPackageOriginal=
-        originalPrice;
+        Number(originalPrice);
 
     selectedPackageDiscounted=
-        discountedPrice;
+        Number(discountedPrice);
 
     const input=
         document.getElementById(
             'buyAmount'
         );
+
+    if(input){
+
+        input.value=
+            Number(
+                discountedPrice
+            ).toFixed(2);
+
+        input.readOnly=true;
+    }
+
+    const label=
+        document.getElementById(
+            'amountLabel'
+        );
+
+    if(label){
+
+        label.textContent=
+            'Amount (Discounted)';
+    }
+
+    document.getElementById(
+        'summaryName'
+    ).textContent=
+        packageName;
+
+    document.getElementById(
+        'summaryOriginal'
+    ).textContent=
+        '$'+
+        Number(originalPrice)
+            .toFixed(2);
+
+    document.getElementById(
+        'summaryDiscounted'
+    ).textContent=
+        '$'+
+        Number(discountedPrice)
+            .toFixed(2);
+
+    document.getElementById(
+        'summaryRecord'
+    ).textContent=
+        '$'+
+        (
+            Number(originalPrice)-
+            Number(discountedPrice)
+        ).toFixed(2);
+
+    document.getElementById(
+        'packageSummary'
+    ).classList.add(
+        'active'
+    );
+
+    updateBuyTRX();
+
+    showPage('buy');
+}
 
     /*
      * Kullanıcı gerçekten ödeyeceği
