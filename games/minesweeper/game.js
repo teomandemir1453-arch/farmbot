@@ -33,7 +33,7 @@ function startGame(){
     if(!checkDailyLimit()){
         return;
     }
-
+usePlay();
     board.innerHTML = "";
 
     board.innerHTML = "";
