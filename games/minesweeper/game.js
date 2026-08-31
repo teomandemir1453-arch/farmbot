@@ -4,7 +4,8 @@ const timerText = document.getElementById("timer");
 const scoreText = document.getElementById("score");
 const restartBtn = document.getElementById("restartBtn");
 
-const GAME_REWARD = 0.00020;
+const GAME_REWARD = 0.00020; // günlük oyun kazancı
+const REWARD_CENT = 0.00020; // ekranda gösterilecek cent değeri
 const DAILY_LIMIT = 3;
 
 let lastPlayDate = localStorage.getItem("lastPlayDate");
@@ -548,7 +549,7 @@ function giveGameReward(){
     document.getElementById(
         "rewardAmount"
     ).innerHTML =
-    (GAME_REWARD*100).toFixed(5)+" cent"
+    REWARD_CENT.toFixed(5)+" cent"
 
 
 
