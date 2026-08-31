@@ -152,8 +152,11 @@ function openCell(index){
 
 
     reveal(index);
-
-
+    
+showReward(cells[index]);
+    
+showReward(cells[index]);
+    
     score += 10;
 
     scoreText.textContent=score;
@@ -375,3 +378,43 @@ restartBtn.addEventListener("click",startGame);
 
 
 startGame();
+function showReward(cell){
+
+    let reward = document.createElement("div");
+
+    let items=[
+        "💎",
+        "💎",
+        "₿",
+        "✨"
+    ];
+
+
+    reward.className="reward";
+
+    reward.innerHTML=
+    items[Math.floor(Math.random()*items.length)];
+
+
+    let rect=cell.getBoundingClientRect();
+
+
+    reward.style.left=
+    rect.left+"px";
+
+
+    reward.style.top=
+    rect.top+"px";
+
+
+    document.body.appendChild(reward);
+
+
+
+    setTimeout(()=>{
+
+        reward.remove();
+
+    },1200);
+
+}
