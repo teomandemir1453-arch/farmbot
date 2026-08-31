@@ -44,8 +44,29 @@ function startGame(){
     scoreText.textContent = "0";
     mineCountText.textContent = MINES;
 
-    timerText.textContent = "00:00";
+timeLeft = GAME_TIME;
 
+timerText.textContent = timeLeft;
+
+
+clearInterval(timerInterval);
+
+timerInterval = setInterval(()=>{
+
+    timeLeft--;
+
+    timerText.textContent = timeLeft;
+
+
+    if(timeLeft <= 0){
+
+        clearInterval(timerInterval);
+
+        endGame(false);
+
+    }
+
+},1000);
     createMines();
 
     createBoard();
