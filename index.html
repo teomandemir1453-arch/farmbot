@@ -994,25 +994,24 @@ async function registerTelegramUserWithBackend(){
 
 async function syncPostgresAccount(){
 
-    if(
-        postgresSyncBusy ||
-        !currentUser ||
-        !currentUser.id ||
-        !tg.initData
-    ){
+    if(!tg || !tg.initData){
+        console.warn('Telegram initData bulunamadı.');
         return null;
     }
 
-    postgresSyncBusy=true;
+    if(typeof postgresSyncBusy !== 'undefined' && postgresSyncBusy){
+        return postgresAccount || null;
+    }
+
+    postgresSyncBusy = true;
 
     try{
 
-        /*
-         * /api/user zaten Telegram initData doğrulaması yapıyor.
-         * Böylece ayrıca public /account endpointine ihtiyaç kalmaz.
-         */
-        const response=await fetch(
-            POSTGRES_API+'/api/user',
+        const POSTGRES_API =
+            'https://works-optional-specify-union.trycloudflare.com';
+
+        const response = await fetch(
+            POSTGRES_API + '/api/user',
             {
                 method:'POST',
                 headers:{
@@ -1025,7 +1024,7 @@ async function syncPostgresAccount(){
             }
         );
 
-        const data=await response.json();
+        const data = await response.json();
 
         if(!response.ok || !data.ok){
 
@@ -1037,32 +1036,50 @@ async function syncPostgresAccount(){
             return null;
         }
 
-        const account=data.account || data.user;
+        const account = data.account || data.user;
 
         if(!account){
+
+            console.error(
+                'PostgreSQL hesap verisi bulunamadı:',
+                data
+            );
+
             return null;
         }
 
-        postgresAccount=account;
+        postgresAccount = account;
 
         /*
-         * ANA BAKİYE ARTIK POSTGRESQL'DEN
+         * ANA DEĞERLER POSTGRESQL'DEN
          */
-        balance=Number(account.balance || 0);
+        balance = Number(account.balance || 0);
 
-        totalInvested=
+        totalInvested =
             Number(account.total_invested || 0);
 
-        totalWithdrawn=
+        totalWithdrawn =
             Number(account.total_withdrawn || 0);
 
-        referralEarnings=
+        referralEarnings =
             Number(account.referral_earnings || 0);
 
         /*
-         * EKRAN
+         * EKRANI GÜNCELLE
          */
-        renderPostgresBalance();
+        if(typeof renderPostgresBalance === 'function'){
+            renderPostgresBalance();
+        }
+
+        if(typeof updateUI === 'function'){
+            updateUI();
+        }
+
+        if(typeof updateProfileData === 'function'){
+            updateProfileData();
+        }
+
+        console.log('✅ PostgreSQL hesap senkronize edildi:', account);
 
         return account;
 
@@ -1077,10 +1094,9 @@ async function syncPostgresAccount(){
 
     }finally{
 
-        postgresSyncBusy=false;
+        postgresSyncBusy = false;
     }
 }
-
 function renderPostgresBalance(){
 
     const balanceEl=
