@@ -11,7 +11,12 @@ let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
 let gameEarnings = Number(localStorage.getItem("gameEarnings")) || 0;
 
 let lastPlayDate = localStorage.getItem("lastPlayDate");
+const GAME_TIME = 30; // saniye
+const WIN_TARGET = 20; // açılması gereken güvenli kutu
+const MINES = 5; // mayın sayısı
 
+let timeLeft = GAME_TIME;
+let countdown;
 const SIZE = 8;
 const MINES = 10;
 
