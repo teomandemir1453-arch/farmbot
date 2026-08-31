@@ -45,23 +45,6 @@ function startGame(){
 
     timerText.textContent = "00:00";
 
-
-    clearInterval(timer);
-
-    timer = setInterval(()=>{
-
-        time++;
-
-        let min = Math.floor(time / 60);
-        let sec = time % 60;
-
-        timerText.textContent =
-        `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
-
-    },1000);
-
-
-
     createMines();
 
     createBoard();
