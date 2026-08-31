@@ -5967,7 +5967,51 @@ document.addEventListener('DOMContentLoaded', function(){
     renderPackages();
 
 });
-  
+document.addEventListener('DOMContentLoaded', function(){
+
+    renderPackages();
+
+});
+
+
+async function exportFirebaseUsers(){
+
+    try{
+
+        const snap =
+            await db
+            .collection('users')
+            .get();
+
+        let users=[];
+
+        snap.forEach(doc=>{
+
+            users.push({
+                id:doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        console.log(
+            "FIREBASE USERS EXPORT:",
+            JSON.stringify(users,null,2)
+        );
+
+    }catch(error){
+
+        console.error(
+            "Firebase export hatası:",
+            error
+        );
+    }
+}
+
+
+exportFirebaseUsers();
+
+</script>  
 </script>
 
 <div class="mm-bottom-nav">
