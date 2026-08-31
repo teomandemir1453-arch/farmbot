@@ -932,10 +932,10 @@ async function loadUsers(){
             '/api/admin/users'
         );
 
-    usersCache =
-        Array.isArray(data.users)
-            ? data.users
-            : [];
+   usersCache =
+    Array.isArray(data.users)
+        ? data.users.filter(user => user.telegram_id)
+        : [];
 
     const body =
         document.getElementById(
