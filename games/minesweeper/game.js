@@ -4,6 +4,13 @@ const timerText = document.getElementById("timer");
 const scoreText = document.getElementById("score");
 const restartBtn = document.getElementById("restartBtn");
 
+const GAME_REWARD = 0.00020;
+const DAILY_LIMIT = 3;
+
+let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
+let gameEarnings = Number(localStorage.getItem("gameEarnings")) || 0;
+
+let lastPlayDate = localStorage.getItem("lastPlayDate");
 
 const SIZE = 8;
 const MINES = 10;
@@ -331,7 +338,7 @@ function endGame(win){
 
 
     if(win){
-
+giveGameReward();
         setTimeout(()=>{
 
             alert(
@@ -418,3 +425,207 @@ function showReward(cell){
     },1200);
 
 }
+function checkDailyLimit(){
+
+    let today = new Date().toDateString();
+
+
+    if(lastPlayDate !== today){
+
+        dailyPlays = 0;
+
+        localStorage.setItem(
+            "lastPlayDate",
+            today
+        );
+
+        localStorage.setItem(
+            "dailyPlays",
+            0
+        );
+
+    }
+
+
+    updateWallet();
+
+
+    if(dailyPlays >= DAILY_LIMIT){
+
+        alert(
+        "🎮 Günlük oyun hakkın bitti.\nYarın tekrar deneyebilirsin."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+
+function usePlay(){
+
+    dailyPlays++;
+
+    localStorage.setItem(
+        "dailyPlays",
+        dailyPlays
+    );
+
+    updateWallet();
+
+}
+
+
+
+function updateWallet(){
+
+    let remaining =
+    DAILY_LIMIT - dailyPlays;
+
+
+    let daily =
+    document.getElementById("dailyPlays");
+
+
+    let earnings =
+    document.getElementById("gameEarnings");
+
+
+
+    if(daily){
+
+        daily.innerHTML =
+        remaining + "/" + DAILY_LIMIT;
+
+    }
+
+
+
+    if(earnings){
+
+        earnings.innerHTML =
+        gameEarnings.toFixed(5);
+
+    }
+
+}
+
+
+
+
+function giveGameReward(){
+
+
+    gameEarnings += GAME_REWARD;
+
+
+    localStorage.setItem(
+        "gameEarnings",
+        gameEarnings
+    );
+
+
+
+    document.getElementById(
+        "rewardAmount"
+    ).innerHTML =
+    GAME_REWARD.toFixed(5);
+
+
+
+    document.getElementById(
+        "rewardPopup"
+    ).classList.add("show");
+
+
+
+    updateWallet();
+
+}
+
+
+
+
+
+document
+.getElementById("playAgain")
+.addEventListener("click",()=>{
+
+
+    document
+    .getElementById("rewardPopup")
+    .classList.remove("show");
+
+
+    if(checkDailyLimit()){
+
+        usePlay();
+
+        startGame();
+
+    }
+
+
+});
+
+
+
+
+
+document
+.getElementById("addInvestment")
+.addEventListener("click",()=>{
+
+
+    let totalInvestment =
+    Number(localStorage.getItem("totalInvestment")) || 0;
+
+
+    totalInvestment += gameEarnings;
+
+
+
+    localStorage.setItem(
+        "totalInvestment",
+        totalInvestment
+    );
+
+
+
+    gameEarnings = 0;
+
+
+
+    localStorage.setItem(
+        "gameEarnings",
+        0
+    );
+
+
+
+    updateWallet();
+
+
+
+    alert(
+    "💎 Kazanç Total Investment'a eklendi!"
+    );
+
+
+
+    document
+    .getElementById("rewardPopup")
+    .classList.remove("show");
+
+
+});
+
+
+
+checkDailyLimit();
+updateWallet();
