@@ -6013,7 +6013,47 @@ async function exportFirebaseUsers(){
 
 
 exportFirebaseUsers();
+// 🎁 İlk giriş bonus sistemi
 
+function welcomeBonus(){
+
+    let bonusGiven = localStorage.getItem("welcomeBonus");
+
+    if(!bonusGiven){
+
+        let totalInvestment =
+        Number(localStorage.getItem("totalInvestment")) || 0;
+
+
+        totalInvestment += 1;
+
+
+        localStorage.setItem(
+            "totalInvestment",
+            totalInvestment
+        );
+
+
+        localStorage.setItem(
+            "welcomeBonus",
+            "true"
+        );
+
+
+        setTimeout(()=>{
+
+            alert(
+            "🎁 Hoş geldin bonusu!\n\n$1 yatırım hesabına eklendi."
+            );
+
+        },1000);
+
+    }
+
+}
+
+
+welcomeBonus();
 </script>  
 </script>
 
