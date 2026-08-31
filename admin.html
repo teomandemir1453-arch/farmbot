@@ -931,7 +931,8 @@ async function loadUsers(){
         await apiFetch(
             '/api/admin/users'
         );
-
+console.log("ADMIN USERS DATA:", data);
+    
    usersCache =
     Array.isArray(data.users)
         ? data.users.filter(user => user.telegram_id)
