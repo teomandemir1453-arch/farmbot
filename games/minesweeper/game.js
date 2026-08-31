@@ -6,11 +6,6 @@ const restartBtn = document.getElementById("restartBtn");
 
 const GAME_REWARD = 0.00020;
 const DAILY_LIMIT = 3;
-let timeLeft = GAME_TIME;
-let timerInterval;
-let dailyPlays = Number(localStorage.getItem("dailyPlays")) || 0;
-let gameEarnings = Number(localStorage.getItem("gameEarnings")) || 0;
-
 let lastPlayDate = localStorage.getItem("lastPlayDate");
 const GAME_TIME = 30; // saniye
 const WIN_TARGET = 20; // açılması gereken güvenli kutu
