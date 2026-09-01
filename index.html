@@ -3304,13 +3304,18 @@ async function requestWithdrawal(){
         document.getElementById('withdrawAmount')?.value || 0
     );
 
+    const wallet =
+        document.getElementById('walletAddress')?.value?.trim() || '';
+
+    const crypto =
+        document.getElementById('withdrawCrypto')?.value || 'TRX';
+
+    /* ================================
+       KONTROLLER
+    ================================= */
+
     if(!Number.isFinite(amount) || amount <= 0){
         alert('❌ Geçerli bir çekim tutarı girin.');
-        return;
-    }
-
-    if(!tg || !tg.initData){
-        alert('❌ Telegram doğrulaması bulunamadı.');
         return;
     }
 
@@ -3319,81 +3324,233 @@ async function requestWithdrawal(){
         return;
     }
 
+    if(amount > Number(balance || 0)){
+        alert('❌ Yetersiz bakiye!');
+        return;
+    }
+
+    if(!wallet){
+        alert('❌ Cüzdan adresinizi girin.');
+        return;
+    }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    const validation =
+        validateAddress(
+            wallet,
+            crypto
+        );
+
+    if(!validation.valid){
+        alert(validation.message);
+        return;
+    }
+
+    const price =
+        Number(currentPrices[crypto] || 0);
+
+    if(price <= 0){
+        alert('❌ Coin fiyatı alınamadı.');
+        return;
+    }
+
+    const cryptoAmount =
+        (
+            amount / price
+        ).toFixed(6);
+
     try{
 
-        console.log('💸 ÇEKİM İSTEĞİ:', amount);
-
-        const response = await fetch(
-            POSTGRES_API + '/api/withdrawal',
+        console.log(
+            '💸 ÇEKİM İSTEĞİ:',
             {
-                method:'POST',
-
-                headers:{
-                    'Content-Type':'application/json'
-                },
-
-                body:JSON.stringify({
-                    initData:tg.initData,
-                    amount:amount
-                }),
-
-                cache:'no-store'
+                amount,
+                crypto,
+                wallet,
+                cryptoAmount
             }
         );
 
-        const result = await response.json();
+        /* ================================
+           POSTGRESQL
+        ================================= */
+
+        const response =
+            await fetch(
+                POSTGRES_API +
+                '/api/withdrawal',
+                {
+                    method:'POST',
+
+                    headers:{
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:JSON.stringify({
+
+                        initData:
+                            tg.initData,
+
+                        amount:
+                            amount,
+
+                        crypto:
+                            crypto,
+
+                        cryptoAmount:
+                            cryptoAmount,
+
+                        walletAddress:
+                            wallet,
+
+                        network:
+                            NETWORK_INFO[crypto]?.fullName ||
+                            crypto
+
+                    }),
+
+                    cache:'no-store'
+                }
+            );
+
+        const data =
+            await response.json();
 
         console.log(
-            '💸 ÇEKİM CEVABI:',
-            result
+            '💸 POSTGRESQL ÇEKİM CEVABI:',
+            data
         );
+
+        /* ================================
+           API HATASI
+        ================================= */
 
         if(
             !response.ok ||
-            !result.ok
+            !data.ok
         ){
+
             throw new Error(
-                result.message ||
-                'Çekim talebi oluşturulamadı.'
+                data.message ||
+                'Çekim oluşturulamadı.'
             );
         }
 
-        /*
-         * PostgreSQL'in gönderdiği
-         * GÜNCEL BAKİYE
-         */
-        if(result.balance !== undefined){
+        /* ================================
+           GERÇEK YENİ BAKİYE
+        ================================= */
+
+        if(
+            data.balance !== undefined &&
+            data.balance !== null
+        ){
 
             balance =
-                Number(result.balance);
+                Number(
+                    data.balance
+                );
 
+        }else{
+
+            /*
+             * Backend balance döndürmezse
+             * geçici olarak miktarı düşür.
+             */
+            balance =
+                Number(balance || 0) -
+                amount;
         }
 
-        /*
-         * Ekranı güncelle
-         */
+        /* ================================
+           EKRANI GÜNCELLE
+        ================================= */
+
+        if(
+            typeof renderPostgresBalance ===
+            'function'
+        ){
+            renderPostgresBalance();
+        }
+
         updateUI();
 
-        if(typeof syncPostgresAccount === 'function'){
-            await syncPostgresAccount();
-        }
+        /* ================================
+           INPUT TEMİZLE
+        ================================= */
 
-        /*
-         * Input'u temizle
-         */
-        const input =
+        const amountInput =
             document.getElementById(
                 'withdrawAmount'
             );
 
-        if(input){
-            input.value = '';
+        if(amountInput){
+            amountInput.value = '';
         }
 
+        const walletInput =
+            document.getElementById(
+                'walletAddress'
+            );
+
+        if(walletInput){
+            walletInput.value = '';
+        }
+
+        if(
+            typeof clearAddressValidation ===
+            'function'
+        ){
+            clearAddressValidation();
+        }
+
+        if(
+            typeof updateCryptoAmount ===
+            'function'
+        ){
+            updateCryptoAmount();
+        }
+
+        if(
+            typeof loadWithdrawalHistory ===
+            'function'
+        ){
+            loadWithdrawalHistory();
+        }
+
+        /* ================================
+           BAŞARILI
+        ================================= */
+
         alert(
-            '✅ Çekim talebiniz oluşturuldu.\n\n' +
-            '$' + amount.toFixed(5) +
-            ' bakiyenizden düşüldü.'
+            `✅ Çekim talebi oluşturuldu!\n\n` +
+            `💰 $${amount.toFixed(5)}\n` +
+            `🔹 ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto] || crypto}\n\n` +
+            `⏳ Admin onayı bekleniyor.`
+        );
+
+        if(
+            tg.HapticFeedback &&
+            tg.HapticFeedback.notificationOccurred
+        ){
+
+            tg.HapticFeedback
+                .notificationOccurred(
+                    'success'
+                );
+        }
+
+        console.log(
+            '✅ ÇEKİM BAŞARILI',
+            {
+                amount,
+                newBalance:
+                    balance
+            }
         );
 
     }catch(error){
@@ -3412,10 +3569,6 @@ async function requestWithdrawal(){
         );
     }
 }
-
- 
-async function loadDepositHistory(){
-
     const container=
         document.getElementById(
             'depositHistory'
