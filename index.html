@@ -10,10 +10,6 @@
 <link rel="stylesheet" href="style.css">
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <!-- ❌ <style> etiketi ve içindeki tüm CSS kaldırıldı -->
 </head>
@@ -212,7 +208,7 @@
 
         <!-- 1. GOLD RUSH -->
         <div class="game-card active"
-             onclick="location.href='/games/'">
+             onclick="openMiningRushModal()">
 
             <div class="game-active-badge">LIVE</div>
 
@@ -490,23 +486,6 @@ Admin Panel:<br><br>
 
 <script>
 /* =========================================================
-   FIREBASE
-========================================================= */
-const firebaseConfig={
-    apiKey:"AIzaSyBIKI-XSa6OpMQxURyTbNOTRecUTFfuQVQ",
-    authDomain:"hash-power-mining.firebaseapp.com",
-    projectId:"hash-power-mining",
-    storageBucket:"hash-power-mining.firebasestorage.app",
-    messagingSenderId:"266480566753",
-    appId:"1:266480566753:web:835b6e5119e4d3e4eb92a0"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const db=firebase.firestore();
-const auth=firebase.auth();
-
-/* =========================================================
    API
 ========================================================= */
 
@@ -514,7 +493,6 @@ const auth=firebase.auth();
  * Güncel Quick Tunnel adresin.
  * Tunnel değişirse sadece bu satırı değiştir.
  */
-const API_BASE='https://strongly-proxy-perl-builds.trycloudflare.com';
 
 /*
  * Bot tokenlarını GitHub'daki HTML dosyasına koyma.
@@ -755,9 +733,7 @@ async function syncPostgresAccount(){
 
     try{
 
-        const POSTGRES_API =
-            'https://strongly-proxy-perl-builds.trycloudflare.com';
-      console.log("✅ PostgreSQL API:", POSTGRES_API);
+        console.log("✅ PostgreSQL API:", POSTGRES_API);
 
         const response = await fetch(
             POSTGRES_API + '/api/user',
@@ -1855,170 +1831,30 @@ function renderDailyBonus(){
 }
 
 async function claimDailyBonus(){
+    const today=new Date().toDateString();
+    const last=dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
+    if(today===last){ alert('Already claimed today!'); return; }
 
-    const today=
-        new Date().toDateString();
-
-    const last=
-        dailyBonusData.lastClaim
-        ? new Date(
-            dailyBonusData.lastClaim
-        ).toDateString()
-        : '';
-
-    if(today===last){
-
-        alert(
-            'Already claimed today!'
-        );
-
-        return;
-    }
-
-    const streak=
-        Number(
-            dailyBonusData.streak||0
-        );
-
-    const reward=
-        DAILY_BONUSES[
-            Math.min(streak,6)
-        ];
+    const streak=Number(dailyBonusData.streak||0);
+    const reward=Number(DAILY_BONUSES[Math.min(streak,6)]||0);
+    if(reward<=0)return;
 
     try{
-
-        const ur=
-            db.collection('users')
-              .doc(userId);
-
-        const now=
-            Date.now();
-
-        const d=
-            await ur.get();
-
-        const x=
-            d.exists
-            ? d.data()
-            : {};
-
-        const bonuses=
-            Array.isArray(
-                x.gameInvestments
-            )
-            ? x.gameInvestments.slice()
-            : [];
-
-        bonuses.push({
-            id:
-                'bonus_'+
-                now,
-
-            amount:reward,
-
-            principal:reward,
-
-            source:'Daily Bonus',
-
-            roiDays:100,
-
-            startAt:now,
-
-            endAt:
-                now+
-                ROI_MS,
-
-            status:'active',
-
-            createdAt:now
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount:reward}),cache:'no-store'
         });
+        const data=await response.json();
+        if(!response.ok || !data.ok) throw new Error(data.message||'Daily Bonus kaydedilemedi.');
 
-        await ur.set({
-
-            dailyBonus:{
-                lastClaim:now,
-                streak:streak+1
-            },
-
-            gameInvestments:
-                bonuses,
-
-            bonusInvestmentTotal:
-                Number(
-                    x.bonusInvestmentTotal||0
-                )+
-                reward,
-
-            lastActive:now
-
-        },{
-            merge:true
-        });
-
-        totalInvested+=reward;
-
-        dailyBonusData={
-            lastClaim:now,
-            streak:streak+1
-        };
-
-        addNotification(
-            '🎁 Daily Bonus',
-            `$${reward.toFixed(2)} added.`,
-            'bonus'
-        );
-
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+reward));
+        dailyBonusData={lastClaim:Date.now(),streak:streak+1};
+        localStorage.setItem('mm_daily_bonus',JSON.stringify(dailyBonusData));
+        addNotification('🎁 Daily Bonus',`$${reward.toFixed(2)} added to Total Investment.`,'bonus');
+        await syncPostgresAccount();
         updateUI();
-
-        openSubPopup(
-            'dailyBonus'
-        );
-
-    }catch(e){
-
-        console.error(e);
-
-        alert(
-            '❌ '+e.message
-        );
-    }
-}
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-function getVerifiedInvestmentAmount(data){
-
-    const payments=
-        Array.isArray(
-            data?.approvedPayments
-        )
-        ? data.approvedPayments
-        : [];
-
-    return payments.reduce(
-        (sum,p)=>{
-
-            const amount=
-                Number(
-                    p?.amount||
-                    p?.discountedPrice||
-                    0
-                );
-
-            return sum+
-                (
-                    Number.isFinite(amount)
-                    &&
-                    amount>0
-                    ? amount
-                    : 0
-                );
-
-        },
-        0
-    );
+        openSubPopup('dailyBonus');
+    }catch(error){ alert('❌ '+error.message); }
 }
 
 function getTaskDefinitions(data={}){
@@ -2182,548 +2018,40 @@ function renderTasks(){
 }
 
 async function claimTaskReward(id){
-
     if(!userId)return;
+    if(taskClaims[id]===true){ alert('This task has already been claimed.'); return; }
 
-    if(taskClaims[id]===true){
-
-        alert(
-            'This task has already been claimed.'
-        );
-
-        return;
-    }
+    const tasks=getTaskDefinitions({approvedPayments:products,referralCount,dailyBonus:dailyBonusData});
+    const task=tasks.find(t=>t.id===id);
+    if(!task)throw new Error('Task not found.');
+    if(!task.completed){alert('Task requirement is not completed yet.');return;}
 
     try{
-
-        const ur=
-            db.collection('users')
-              .doc(userId);
-
-        const snap=
-            await ur.get();
-
-        if(!snap.exists){
-
-            throw new Error(
-                'User account not found.'
-            );
-        }
-
-        const x=
-            snap.data()||{};
-
-        const tasks=
-            getTaskDefinitions(x);
-
-        const task=
-            tasks.find(
-                t=>t.id===id
-            );
-
-        if(!task){
-
-            throw new Error(
-                'Task not found.'
-            );
-        }
-
-        if(!task.completed){
-
-            throw new Error(
-                'Task requirement is not completed yet.'
-            );
-        }
-
-        const claims={
-            ...(x.taskClaims||{})
-        };
-
-        claims[id]=true;
-
-        const now=
-            Date.now();
-
-        const invs=
-            Array.isArray(
-                x.gameInvestments
-            )
-            ?x.gameInvestments.slice()
-            :[];
-
-        invs.push({
-
-            id:
-                'bonus_task_'+
-                id+'_'+
-                now,
-
-            amount:
-                task.reward,
-
-            principal:
-                task.reward,
-
-            source:
-                'Task Bonus',
-
-            taskId:
-                id,
-
-            roiDays:
-                100,
-
-            startAt:
-                now,
-
-            endAt:
-                now+ROI_MS,
-
-            status:
-                'active',
-
-            createdAt:
-                now
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount:task.reward}),cache:'no-store'
         });
-
-        await ur.set({
-
-            taskClaims:
-                claims,
-
-            taskRewardTotal:
-                Number(
-                    x.taskRewardTotal||0
-                )+
-                task.reward,
-
-            gameInvestments:
-                invs,
-
-            bonusInvestmentTotal:
-                Number(
-                    x.bonusInvestmentTotal||0
-                )+
-                task.reward
-
-        },{
-            merge:true
-        });
-
+        const data=await response.json();
+        if(!response.ok || !data.ok)throw new Error(data.message||'Task reward kaydedilemedi.');
         taskClaims[id]=true;
-
-        totalInvested+=
-            task.reward;
-
-        addNotification(
-            '🎯 Task',
-            `${task.title} claimed.`,
-            'bonus'
-        );
-
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+task.reward));
+        localStorage.setItem('mm_task_claims',JSON.stringify(taskClaims));
+        addNotification('🎯 Task',`${task.title} claimed.`,'bonus');
+        await syncPostgresAccount();
         updateUI();
-
-        closeSubPopup();
-
-    }catch(e){
-
-        console.error(
-            'Task error:',
-            e
-        );
-
-        alert(
-            '❌ '+
-            (
-                e.message||
-                'Unable to claim task.'
-            )
-        );
-    }
-}
-
-/* =========================================================
-   CHART
-========================================================= */
-
-function renderChart(){
-
-    const days=
-        currentChartPeriod==='7d'
-        ?7
-        :30;
-
-    const data=
-        earningsHistory.slice(
-            -days
-        );
-
-    const rows=
-        data.length
-        ?data
-        :Array.from(
-            {length:days},
-            (_,i)=>({
-                date:
-                    Date.now()-
-                    (
-                        days-i
-                    )*
-                    86400000,
-
-                earnings:0
-            })
-        );
-
-    const max=
-        Math.max(
-            ...rows.map(
-                d=>Number(
-                    d.earnings||0
-                )
-            ),
-            0.01
-        );
-
-    const total=
-        rows.reduce(
-            (s,d)=>
-                s+
-                Number(
-                    d.earnings||0
-                ),
-            0
-        );
-
-    const avg=
-        total/
-        rows.length;
-
-    let bars='';
-
-    rows.forEach(d=>{
-
-        const height=
-            Math.max(
-                3,
-                (
-                    Number(
-                        d.earnings||0
-                    )/
-                    max
-                )*100
-            );
-
-        const date=
-            new Date(
-                d.date
-            );
-
-        const label=
-            currentChartPeriod==='7d'
-            ?date.toLocaleDateString(
-                'en-US',
-                {
-                    weekday:'short'
-                }
-            )
-            :date.getDate();
-
-        bars+=`
-        <div class="chart-bar"
-             style="height:${height}%">
-
-            <div class="bar-value">
-                $${Number(
-                    d.earnings||0
-                ).toFixed(2)}
-            </div>
-
-            <div class="bar-label">
-                ${label}
-            </div>
-
-        </div>
-        `;
-    });
-
-    return`
-    <div class="sub-popup-header">
-
-        <div class="sub-popup-title">
-            📈 Chart
-        </div>
-
-        <button class="sub-popup-close"
-            onclick="closeSubPopup()">✕</button>
-
-    </div>
-
-    <div class="chart-container">
-
-        <div class="chart-header">
-
-            <div class="chart-title">
-                Last ${days} Days
-            </div>
-
-            <div class="chart-period">
-
-                <button
-                    class="${
-                        currentChartPeriod==='7d'
-                        ?'active':''
-                    }"
-                    onclick="changeChartPeriod('7d')">
-                    7D
-                </button>
-
-                <button
-                    class="${
-                        currentChartPeriod==='30d'
-                        ?'active':''
-                    }"
-                    onclick="changeChartPeriod('30d')">
-                    30D
-                </button>
-
-            </div>
-        </div>
-
-        <div class="chart-bars">
-            ${bars}
-        </div>
-
-        <div class="chart-summary">
-
-            <div class="chart-summary-item">
-                <div class="csi-value">
-                    $${total.toFixed(2)}
-                </div>
-                <div class="csi-label">
-                    Total
-                </div>
-            </div>
-
-            <div class="chart-summary-item">
-                <div class="csi-value">
-                    $${avg.toFixed(2)}
-                </div>
-                <div class="csi-label">
-                    Avg
-                </div>
-            </div>
-
-            <div class="chart-summary-item">
-                <div class="csi-value">
-                    $${max.toFixed(2)}
-                </div>
-                <div class="csi-label">
-                    Max
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    `;
-}
-
-function changeChartPeriod(p){
-
-    currentChartPeriod=p;
-
-    openSubPopup('chart');
-}
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-function renderNotifications(){
-
-    const unread=
-        notificationsData.filter(
-            n=>!n.read
-        ).length;
-
-    let h=`
-    <div class="sub-popup-header">
-
-        <div class="sub-popup-title">
-            🔔 Notifications (${unread})
-        </div>
-
-        <button
-            class="sub-popup-close"
-            onclick="closeSubPopup()">
-            ✕
-        </button>
-
-    </div>
-    `;
-
-    if(unread>0){
-
-        h+=`
-        <button
-            class="mark-all-read"
-            onclick="markAllRead()">
-            ✅ Mark All Read
-        </button>
-        `;
-    }
-
-    if(!notificationsData.length){
-
-        h+=`
-        <div class="notif-empty">
-            <div class="ne-icon"></div>
-            <div>No notifications</div>
-        </div>
-        `;
-
-    }else{
-
-        notificationsData
-            .slice(0,20)
-            .forEach(n=>{
-
-                h+=`
-                <div class="notif-item ${
-                    n.read
-                    ? ''
-                    : 'unread'
-                }">
-
-                    <div class="ni-icon">
-                        <img
-                            src="assets/icons/${
-                                n.icon||
-                                'notifications'
-                            }.png">
-                    </div>
-
-                    <div class="ni-content">
-
-                        <div class="ni-title">
-                            ${n.title}
-                        </div>
-
-                        <div class="ni-message">
-                            ${n.message}
-                        </div>
-
-                        <div class="ni-time">
-                            ${new Date(
-                                n.timestamp
-                            ).toLocaleString()}
-                        </div>
-
-                    </div>
-
-                </div>
-                `;
-            });
-    }
-
-    return h;
-}
-
-function markAllRead(){
-
-    notificationsData=
-        notificationsData.map(
-            n=>({
-                ...n,
-                read:true
-            })
-        );
-
-    saveNotifications();
-
-    updateQuickNotifBadge();
-
-    if(
-        document
-            .getElementById('subOverlay')
-            .classList.contains('show')
-    ){
-
-        openSubPopup(
-            'notifications'
-        );
-    }
-}
-
-function addNotification(
-    title,
-    message,
-    type='info'
-){
-
-    const icons={
-        success:'notifications',
-        error:'notifications',
-        info:'notifications',
-        bonus:'daily-bonus',
-        referral:'referral'
-    };
-
-    notificationsData.unshift({
-
-        id:
-            'notif_'+
-            Date.now(),
-
-        title,
-
-        message,
-
-        icon:
-            icons[type]||
-            'notifications',
-
-        read:false,
-
-        timestamp:
-            Date.now()
-    });
-
-    if(
-        notificationsData.length>50
-    ){
-
-        notificationsData=
-            notificationsData.slice(
-                0,
-                50
-            );
-    }
-
-    saveNotifications();
-
-    updateQuickNotifBadge();
+        openSubPopup('tasks');
+    }catch(error){alert('❌ '+error.message);}
 }
 
 function saveNotifications(){
-
-    if(!userId)return;
-
-    db.collection(
-        'users'
-    )
-    .doc(userId)
-    .set(
-        {
-            notifications:
-                notificationsData
-        },
-        {
-            merge:true
-        }
-    )
-    .catch(console.error);
+    try{
+        localStorage.setItem(
+            'mm_notifications',
+            JSON.stringify(notificationsData || [])
+        );
+    }catch(error){
+        console.error('Notification local storage error:',error);
+    }
 }
 
 /* =========================================================
@@ -3569,295 +2897,24 @@ async function requestWithdrawal(){
         );
     }
 }
-    const container=
-        document.getElementById(
-            'depositHistory'
-        );
+async function loadDepositHistory(){
 
-    container.innerHTML=
-        '<div class="empty-history">Loading...</div>';
+    const container =
+        document.getElementById('depositHistory');
 
-    try{
+    if(!container) return;
 
-        const snap=
-            await db.collection(
-                'users'
-            )
-            .doc(userId)
-            .get();
-
-        if(!snap.exists){
-
-            container.innerHTML=
-                '<div class="empty-history">No deposits</div>';
-
-            return;
-        }
-
-        const data=
-            snap.data()||{};
-
-        let history=[];
-
-        if(
-            Array.isArray(
-                data.pendingPayments
-            )
-        ){
-
-            data.pendingPayments
-                .forEach(
-                    p=>
-                        history.push({
-                            ...p,
-                            status:
-                                p.status||
-                                'pending'
-                        })
-                );
-        }
-
-        if(
-            Array.isArray(
-                data.approvedPayments
-            )
-        ){
-
-            data.approvedPayments
-                .forEach(
-                    p=>
-                        history.push({
-                            ...p,
-                            status:'approved'
-                        })
-                );
-        }
-
-        history.sort(
-            (a,b)=>
-                (b.timestamp||0)-
-                (a.timestamp||0)
-        );
-
-        if(!history.length){
-
-            container.innerHTML=
-                '<div class="empty-history">No deposits</div>';
-
-            return;
-        }
-
-        let html='';
-
-        history
-            .slice(0,20)
-            .forEach(p=>{
-
-                const status=
-                    p.status||
-                    'pending';
-
-                const cls=
-                    status==='approved'
-                    ?'success'
-                    :status==='rejected'
-                    ?'rejected'
-                    :'pending';
-
-                const label=
-                    status==='approved'
-                    ?'✅ Approved'
-                    :status==='rejected'
-                    ?'❌ Rejected'
-                    :'⏳ Pending';
-
-                html+=`
-                <div class="history-item">
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            ${p.packageName||'Investment'}
-                        </span>
-
-                        <span class="status-badge ${cls}">
-                            ${label}
-                        </span>
-
-                    </div>
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            Amount:
-                        </span>
-
-                        <span class="h-value">
-                            $${Number(
-                                p.amount||0
-                            ).toFixed(2)}
-                        </span>
-
-                    </div>
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            Network:
-                        </span>
-
-                        <span class="h-value">
-                            ${p.network||'TRON'}
-                        </span>
-
-                    </div>
-
-                </div>
-                `;
-            });
-
-        container.innerHTML=
-            html;
-
-    }catch(error){
-
-        console.error(error);
-
-        container.innerHTML=
-            '<div class="empty-history">Failed to load</div>';
-    }
+    // Yatırım geçmişi PostgreSQL'den yönetiliyor.
+    // Backend'de ayrı bir history endpoint'i olmadığı için
+    // burada Firebase çağrısı yapılmaz.
+    container.innerHTML =
+        '<div class=\"empty-history\">Investment history is stored in PostgreSQL.</div>';
 }
 
 async function loadWithdrawalHistory(){
-
-    const container=
-        document.getElementById(
-            'withdrawalHistory'
-        );
-
-    container.innerHTML=
-        '<div class="empty-history">Loading...</div>';
-
-    try{
-
-        const snap=
-            await db.collection(
-                'users'
-            )
-            .doc(userId)
-            .get();
-
-        if(!snap.exists){
-
-            container.innerHTML=
-                '<div class="empty-history">No withdrawals</div>';
-
-            return;
-        }
-
-        const data=
-            snap.data()||{};
-
-        const history=
-            Array.isArray(
-                data.withdrawalRequests
-            )
-            ?data.withdrawalRequests.slice()
-            :[];
-
-        history.sort(
-            (a,b)=>
-                (b.timestamp||0)-
-                (a.timestamp||0)
-        );
-
-        if(!history.length){
-
-            container.innerHTML=
-                '<div class="empty-history">No withdrawals</div>';
-
-            return;
-        }
-
-        let html='';
-
-        history
-            .slice(0,10)
-            .forEach(w=>{
-
-                const status=
-                    w.status||
-                    'pending';
-
-                const cls=
-                    status==='approved'
-                    ?'success'
-                    :status==='rejected'
-                    ?'rejected'
-                    :'pending';
-
-                const label=
-                    status==='approved'
-                    ?'✅ Approved'
-                    :status==='rejected'
-                    ?'❌ Rejected'
-                    :'⏳ Pending';
-
-                html+=`
-                <div class="history-item">
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            💸 Withdrawal
-                        </span>
-
-                        <span class="status-badge ${cls}">
-                            ${label}
-                        </span>
-
-                    </div>
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            Amount:
-                        </span>
-
-                        <span class="h-value">
-                            $${Number(
-                                w.amount||0
-                            ).toFixed(2)}
-                        </span>
-
-                    </div>
-
-                    <div class="h-row">
-
-                        <span class="h-label">
-                            Network:
-                        </span>
-
-                        <span class="h-value">
-                            ${w.network||''}
-                        </span>
-
-                    </div>
-
-                </div>
-                `;
-            });
-
-        container.innerHTML=
-            html;
-
-    }catch(error){
-
-        console.error(error);
-
-        container.innerHTML=
-            '<div class="empty-history">Failed to load</div>';
-    }
+    const container=document.getElementById('withdrawalHistory');
+    if(!container)return;
+    container.innerHTML='<div class="empty-history">Withdrawal history is stored in PostgreSQL.</div>';
 }
 
 /* =========================================================
@@ -4299,172 +3356,12 @@ function updateDashboardVisuals(){
 }
 
 /* =========================================================
-   FIREBASE DATA
+   ACCOUNT DATA
 ========================================================= */
 
 function listenToData(){
-
-    if(!userId)return;
-
-    db.collection(
-        'users'
-    )
-    .doc(userId)
-    .onSnapshot(
-        snapshot=>{
-
-            if(!snapshot.exists){
-
-                return;
-            }
-
-            const data=
-                snapshot.data()||{};
-
-            if(
-                data.userName &&
-                currentUser
-            ){
-
-                currentUser={
-                    ...currentUser,
-                    first_name:
-                        data.userName
-                };
-            }
-
-            products=
-                (
-                    data.approvedPayments||
-                    []
-                ).map(
-                    p=>({
-                        ...p,
-                        earned:0
-                    })
-                );
-
-            gameInvestments=
-                Array.isArray(
-                    data.gameInvestments
-                )
-                ?data.gameInvestments
-                :[];
-
-            /*
-             * BURADA ÖNEMLİ:
-             *
-             * Firebase'in old balance alanlarını
-             * artık ana balance olarak kullanmıyoruz.
-             */
-            referralCount=
-                Number(
-                    data.referralCount||0
-                );
-
-            pendingReferralBonus=
-                Number(
-                    data.pendingReferralBonus||0
-                );
-
-            referralBonusUnlocked=
-                !!data.referralBonusUnlocked;
-
-            if(
-                data.referralEarnings!==
-                undefined
-            ){
-
-                referralEarnings=
-                    Number(
-                        data.referralEarnings||0
-                    );
-            }
-
-            if(data.created_at){
-
-                createdAt=
-                    data.created_at.toDate
-                    ?data.created_at.toDate()
-                    :new Date(
-                        data.created_at
-                    );
-            }
-
-            if(data.dailyBonus){
-
-                dailyBonusData=
-                    data.dailyBonus;
-            }
-
-            if(data.notifications){
-
-                notificationsData=
-                    data.notifications;
-            }
-
-            if(data.earningsHistory){
-
-                earningsHistory=
-                    data.earningsHistory;
-            }
-
-            taskClaims=
-                data.taskClaims||
-                {};
-
-            taskRewardTotal=
-                Number(
-                    data.taskRewardTotal||0
-                );
-
-            estimatedEarnings=
-                Number(
-                    data.estimatedEarnings||0
-                );
-
-            const daily=
-                data.dailyRewardPool||
-                {};
-
-            const today=
-                new Date()
-                    .toISOString()
-                    .slice(0,10);
-
-            dailyRewardPool=
-                daily.date===today
-                ?Math.min(
-                    0.01,
-                    Number(
-                        daily.amount||0
-                    )
-                )
-                :0;
-
-            dailyGameRewards=
-                daily.games||
-                {};
-
-            mr.daily=
-                Number(
-                    dailyGameRewards.gold_rush||0
-                );
-
-            /*
-             * Firebase verisi yüklendi ama
-             * finansal ana değerleri PostgreSQL'den
-             * tekrar getir.
-             */
-            syncPostgresAccount();
-
-            updateUI();
-
-            updateQuickNotifBadge();
-
-            updateProfileData();
-        }
-    );
+    // Firebase kaldırıldı. Hesap verisi PostgreSQL üzerinden yenilenir.
+    return syncPostgresAccount();
 }
 
 /* =========================================================
@@ -5301,152 +4198,34 @@ function mrEndGame(){
 }
 
 async function mrTransferReward(){
+    const button=mrEl('mrTransfer');
+    if(!button || mr.pendingTransfer<=0 || button.dataset.done==='1')return;
 
-    const button=
-        mrEl(
-            'mrTransfer'
-        );
-
-    if(
-        !button||
-        mr.pendingTransfer<=0||
-        button.dataset.done==='1'
-    ){
-
-        return;
-    }
-
-    const amount=
-        Math.min(
-            Number(
-                mr.pendingTransfer||0
-            ),
-            MR_DAILY_LIMIT
-        );
-
+    const amount=Math.min(Number(mr.pendingTransfer||0),MR_DAILY_LIMIT);
     button.disabled=true;
 
     try{
-
-        const ref=
-            db.collection(
-                'users'
-            ).doc(userId);
-
-        const snap=
-            await ref.get();
-
-        const data=
-            snap.data()||{};
-
-        const today=
-            new Date()
-                .toISOString()
-                .slice(0,10);
-
-        const rewardPool=
-            data.dailyRewardPool||
-            {};
-
-        const used=
-            rewardPool.date===today
-            ?Number(
-                rewardPool.amount||0
-            )
-            :0;
-
-        const games=
-            rewardPool.date===today &&
-            rewardPool.games
-            ?{
-                ...rewardPool.games
-            }
-            :{};
-
-        const oldGold=
-            Number(
-                games.gold_rush||0
-            );
-
-        const credit=
-            Math.min(
-                amount,
-                Math.max(
-                    0,
-                    MR_DAILY_LIMIT-
-                    oldGold
-                ),
-                Math.max(
-                    0,
-                    ALL_GAMES_DAILY_LIMIT-
-                    used
-                )
-            );
-
-        if(credit<=0){
-
-            throw new Error(
-                'Daily game limit reached'
-            );
-        }
-
-        games.gold_rush=
-            oldGold+
-            credit;
-
-        await ref.set({
-
-            dailyRewardPool:{
-
-                date:today,
-
-                amount:
-                    used+
-                    credit,
-
-                games
-            },
-
-            lastActive:
-                Date.now()
-
-        },{
-            merge:true
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount}),cache:'no-store'
         });
+        const data=await response.json();
+        if(!response.ok || !data.ok)throw new Error(data.message||'Oyun ödülü kaydedilemedi.');
 
-        dailyRewardPool=
-            used+
-            credit;
-
-        dailyGameRewards=
-            games;
-
-        mr.daily=
-            games.gold_rush;
-
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+amount));
         mr.pendingTransfer=0;
-
-        button.textContent=
-            '✓ DAILY REWARD';
-
-        button.dataset.done=
-            '1';
-
+        mr.daily=Math.min(MR_DAILY_LIMIT,Number(mr.daily||0)+amount);
+        dailyRewardPool=Number(dailyRewardPool||0)+amount;
+        localStorage.setItem('mm_daily_game_reward',String(dailyRewardPool));
+        button.textContent='✓ DAILY REWARD';
+        button.dataset.done='1';
+        await syncPostgresAccount();
         updateUI();
-
         renderDailyGameRewardCard();
-
     }catch(error){
-
+        button.disabled=false;
         console.error(error);
-
-        button.disabled=
-            false;
-
-        alert(
-            '❌ '+
-            error.message
-        );
+        alert('❌ '+error.message);
     }
 }
 
@@ -5602,213 +4381,67 @@ if(
 mrUpdate();
 
 /* =========================================================
-   FIREBASE LOGIN + POSTGRES INIT
+   TELEGRAM + POSTGRES INITIALIZATION
 ========================================================= */
 
-auth
-.signInAnonymously()
-.then(
-    async()=>{
+async function initializeApp(){
 
-        userId=
-            auth.currentUser.uid;
+    try{
 
-        /*
-         * Telegram kullanıcısını PostgreSQL'e
-         * kaydet / güncelle.
-         */
-        const backendUser=
+        if(!tg || !tg.initData){
+            console.warn('⚠️ Telegram initData bulunamadı. Mini App Telegram içinden açılmalı.');
+        }
+
+        const backendUser =
             await registerTelegramUserWithBackend();
 
         if(backendUser){
+            currentUser = backendUser;
+            userId = backendUser.id || tg?.initDataUnsafe?.user?.id || null;
+            postgresAccount = backendUser;
+            balance = Number(backendUser.balance || 0);
+            totalInvested = Number(backendUser.total_invested || 0);
+            totalWithdrawn = Number(backendUser.total_withdrawn || 0);
+            referralEarnings = Number(backendUser.referral_earnings || 0);
+            createdAt = backendUser.created_at || null;
 
-            postgresAccount=
-                backendUser;
-
-            balance=
-                Number(
-                    backendUser.balance||0
-                );
-
-            totalInvested=
-                Number(
-                    backendUser.total_invested||0
-                );
-
-            totalWithdrawn=
-                Number(
-                    backendUser.total_withdrawn||0
-                );
-
-            referralEarnings=
-                Number(
-                    backendUser.referral_earnings||0
-                );
+            referralCount = Number(backendUser.referral_count || 0);
+            pendingReferralBonus = Number(backendUser.pending_referral_bonus || 0);
+            referralBonusUnlocked = !!backendUser.referral_bonus_unlocked;
 
             renderPostgresBalance();
         }
 
-        if(
-            currentUser &&
-            String(currentUser.id)===
-            ADMIN_ID
-        ){
-
-            const adminItem=
-                document.getElementById(
-                    'adminNavItem'
-                );
-
-            if(adminItem){
-
-                adminItem.style.display=
-                    'flex';
-            }
-        }
-
-        /*
-         * Firebase sadece eski kullanıcı/database
-         * yapısını korumak için kullanılmaya devam ediyor.
-         */
-        if(currentUser){
-
-            await db
-                .collection('users')
-                .doc(userId)
-                .set(
-                    {
-                        telegramId:
-                            currentUser.id,
-
-                        userName:
-                            currentUser.first_name||
-                            currentUser.username||
-                            'User'
-                    },
-                    {
-                        merge:true
-                    }
-                );
-        }
-
         await initPrices();
-
         renderPackages();
-
         updateTelegramNotifUI();
 
-        listenToData();
-
         await syncPostgresAccount();
-
         updateUI();
 
-        setInterval(
-            refreshAccountPeriodically,
-            5000
-        );
+        if(typeof loadWithdrawalHistory === 'function'){
+            loadWithdrawalHistory();
+        }
 
-    }
-)
-.catch(
-    error=>{
+        if(typeof loadDepositHistory === 'function'){
+            loadDepositHistory();
+        }
 
-        console.error(
-            'Login error:',
-            error
-        );
-    }
-);
-document.addEventListener('DOMContentLoaded', function(){
-
-    renderPackages();
-
-});
-document.addEventListener('DOMContentLoaded', function(){
-
-    renderPackages();
-
-});
-
-
-async function exportFirebaseUsers(){
-
-    try{
-
-        const snap =
-            await db
-            .collection('users')
-            .get();
-
-        let users=[];
-
-        snap.forEach(doc=>{
-
-            users.push({
-                id:doc.id,
-                ...doc.data()
-            });
-
-        });
-
-        console.log(
-            "FIREBASE USERS EXPORT:",
-            JSON.stringify(users,null,2)
-        );
+        console.log('✅ Mini App → Node.js → PostgreSQL hazır');
 
     }catch(error){
-
-        console.error(
-            "Firebase export hatası:",
-            error
-        );
+        console.error('❌ Mini App başlatma hatası:', error);
     }
 }
 
+document.addEventListener('DOMContentLoaded', ()=>{
+    renderPackages();
+    initializeApp();
+});
 
-exportFirebaseUsers();
-// 🎁 İlk giriş bonus sistemi
+// 🎁 İlk giriş bonusu artık PostgreSQL tarafından yönetilir.
+function welcomeBonus(){ return; }
 
-function welcomeBonus(){
-
-    let bonusGiven = localStorage.getItem("welcomeBonus");
-
-    if(!bonusGiven){
-
-        let totalInvestment =
-        Number(localStorage.getItem("totalInvestment")) || 0;
-
-
-        totalInvestment += 1;
-
-
-        localStorage.setItem(
-            "totalInvestment",
-            totalInvestment
-        );
-
-
-        localStorage.setItem(
-            "welcomeBonus",
-            "true"
-        );
-
-
-        setTimeout(()=>{
-
-            alert(
-            "🎁 Hoş geldin bonusu!\n\n$1 yatırım hesabına eklendi."
-            );
-
-        },1000);
-
-    }
-
-}
-
-
-welcomeBonus();
-</script>  
 </script>
 
 <div class="mm-bottom-nav">
@@ -8767,7 +7400,16 @@ window.addEventListener(
 </script>
   <!-- =========================================================
      PLANET MINER — 3. GAME / POPUP
-     Paste before </body>
+     Paste before 
+<script>
+window.addEventListener('error', function(e){
+    console.error('❌ INDEX JS ERROR:', e.error || e.message);
+});
+window.addEventListener('unhandledrejection', function(e){
+    console.error('❌ UNHANDLED PROMISE:', e.reason);
+});
+</script>
+</body>
 ========================================================= -->
 
 <style>
@@ -10805,6 +9447,15 @@ window.openPlanetMiner=
 
 
 })();
+</script>
+
+<script>
+window.addEventListener('error', function(e){
+    console.error('❌ INDEX JS ERROR:', e.error || e.message);
+});
+window.addEventListener('unhandledrejection', function(e){
+    console.error('❌ UNHANDLED PROMISE:', e.reason);
+});
 </script>
 </body>
 </html>
