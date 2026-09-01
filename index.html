@@ -54,7 +54,7 @@
     </div>
     <div class="mm-finance-content">
       <div class="mm-finance-title">TOTAL INVESTMENT <span class="mm-info">i</span></div>
-      <div class="mm-finance-value investment-value" id="totalInvested">$0</div>
+      <div class="mm-finance-value investment-value" id="totalInvested">$0.00000</div>
       <div class="mm-finance-sub">Active Investments</div>
     </div>
   </div>
@@ -890,7 +890,7 @@ function renderPostgresBalance(){
     if(invested){
 
         invested.textContent=
-            '$'+Number(totalInvested||0).toFixed(4);
+            '$'+Number(totalInvested||0).toFixed(5);
     }
 
     const profileBalance=
