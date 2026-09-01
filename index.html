@@ -2641,7 +2641,11 @@ async function requestWithdrawal(){
     /* ================================
        KONTROLLER
     ================================= */
-
+console.log('🔎 ÇEKİM BAKİYE KONTROLÜ:', {
+    amount: amount,
+    balance: balance,
+    numberBalance: Number(balance || 0)
+});
     if(!Number.isFinite(amount) || amount <= 0){
         alert('❌ Geçerli bir çekim tutarı girin.');
         return;
