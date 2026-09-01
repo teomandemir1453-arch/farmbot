@@ -7106,5 +7106,1551 @@ window.addEventListener(
 
 })();
 </script>
+  <!-- ==============================
+     CRYSTAL HUNT POPUP
+================================ -->
+
+<style>
+#crystalHuntOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+}
+
+#crystalHuntOverlay.active{
+    display:flex;
+}
+
+#crystalHuntWindow{
+    position:relative;
+    width:min(520px,100%);
+    height:min(850px,94vh);
+    overflow:hidden;
+    border-radius:24px;
+    background:#050b16;
+    border:1px solid rgba(80,220,255,.4);
+    box-shadow:0 0 80px rgba(0,160,255,.18);
+}
+
+#crystalCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#crystalClose{
+    position:absolute;
+    z-index:50;
+    top:12px;
+    right:12px;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.65);
+    color:#fff;
+    font-size:25px;
+}
+
+#crystalHud{
+    position:absolute;
+    z-index:20;
+    top:12px;
+    left:12px;
+    right:62px;
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+    pointer-events:none;
+}
+
+.chStat{
+    padding:7px 10px;
+    border-radius:9px;
+    background:rgba(3,12,25,.82);
+    border:1px solid rgba(85,220,255,.28);
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+}
+
+#crystalStart,
+#crystalResult{
+    position:absolute;
+    inset:0;
+    z-index:40;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,13,.72);
+}
+
+#crystalResult{
+    display:none;
+}
+
+.chBox{
+    width:min(370px,92%);
+    padding:28px 20px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(
+        180deg,
+        #102b40,
+        #07101b
+    );
+    border:1px solid rgba(83,220,255,.3);
+    color:#fff;
+}
+
+.chBox h1{
+    margin:8px 0 12px;
+    font-size:29px;
+}
+
+.chBlue{
+    color:#58e8ff;
+}
+
+.chBox p{
+    color:#9db5c8;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.chButton{
+    width:100%;
+    min-height:52px;
+    border:0;
+    border-radius:13px;
+    background:#58e8ff;
+    color:#031019;
+    font-size:15px;
+    font-weight:900;
+}
+
+#crystalControls{
+    position:absolute;
+    z-index:25;
+    left:0;
+    right:0;
+    bottom:16px;
+    display:none;
+    justify-content:space-between;
+    padding:0 18px;
+    pointer-events:none;
+}
+
+.chControl{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:1px solid rgba(88,232,255,.35);
+    background:rgba(3,15,27,.9);
+    color:#b9f6ff;
+    font-size:26px;
+    pointer-events:auto;
+    touch-action:none;
+}
+
+.chCollect{
+    width:82px;
+    height:82px;
+    font-size:28px;
+}
+
+#crystalFinalScore{
+    color:#58e8ff;
+    font-size:46px;
+    font-weight:900;
+    margin:12px;
+}
+</style>
+
+
+<div id="crystalHuntOverlay">
+
+    <div id="crystalHuntWindow">
+
+        <canvas id="crystalCanvas"></canvas>
+
+        <button id="crystalClose">×</button>
+
+        <div id="crystalHud">
+
+            <div class="chStat">
+                💠 <span id="crystalScore">0</span>
+            </div>
+
+            <div class="chStat">
+                ❤️ <span id="crystalLives">3</span>
+            </div>
+
+            <div class="chStat">
+                ⏱️ <span id="crystalTime">30</span>
+            </div>
+
+        </div>
+
+
+        <div id="crystalStart">
+
+            <div class="chBox">
+
+                <div style="font-size:60px">
+                    💠
+                </div>
+
+                <h1>
+                    CRYSTAL
+                    <span class="chBlue">HUNT</span>
+                </h1>
+
+                <p>
+                    Uzay madenindeki değerli
+                    kristalleri topla.
+                    Asteroitlere dikkat et!
+                </p>
+
+                <button
+                    id="crystalStartButton"
+                    class="chButton"
+                >
+                    💠 HUNT'A BAŞLA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="crystalResult">
+
+            <div class="chBox">
+
+                <div style="font-size:52px">
+                    🏆
+                </div>
+
+                <h1>
+                    HUNT
+                    <span class="chBlue">COMPLETE</span>
+                </h1>
+
+                <div id="crystalFinalScore">
+                    0
+                </div>
+
+                <p>
+                    Toplanan kristal:
+                    <b id="crystalTreasures">0</b>
+                </p>
+
+                <button
+                    id="crystalAgain"
+                    class="chButton"
+                >
+                    💠 TEKRAR OYNA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="crystalControls">
+
+            <button
+                id="crystalLeft"
+                class="chControl"
+            >
+                ◀
+            </button>
+
+            <button
+                id="crystalCollect"
+                class="chControl chCollect"
+            >
+                💠
+            </button>
+
+            <button
+                id="crystalRight"
+                class="chControl"
+            >
+                ▶
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+const overlay =
+document.getElementById(
+    "crystalHuntOverlay"
+);
+
+const canvas =
+document.getElementById(
+    "crystalCanvas"
+);
+
+const ctx =
+canvas.getContext("2d");
+
+
+let W=0;
+let H=0;
+
+let running=false;
+
+let score=0;
+let lives=3;
+let crystals=0;
+
+let startTime=0;
+let lastTime=0;
+
+let objects=[];
+
+let particles=[];
+
+let keys={
+    left:false,
+    right:false
+};
+
+
+const player={
+    x:0,
+    y:0,
+    speed:6,
+    invincible:0
+};
+
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    player.x=W/2;
+    player.y=H-120;
+
+}
+
+
+function openCrystalHunt(){
+
+    overlay.classList.add(
+        "active"
+    );
+
+    resize();
+
+    showStart();
+
+    draw();
+
+}
+
+
+function closeCrystalHunt(){
+
+    running=false;
+
+    overlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+function showStart(){
+
+    running=false;
+
+    document
+    .getElementById(
+        "crystalStart"
+    )
+    .style.display="flex";
+
+    document
+    .getElementById(
+        "crystalResult"
+    )
+    .style.display="none";
+
+    document
+    .getElementById(
+        "crystalControls"
+    )
+    .style.display="none";
+
+}
+
+
+function startCrystalGame(){
+
+    score=0;
+    lives=3;
+    crystals=0;
+
+    objects=[];
+    particles=[];
+
+    resize();
+
+    updateHUD();
+
+
+    document
+    .getElementById(
+        "crystalStart"
+    )
+    .style.display="none";
+
+
+    let count=3;
+
+
+    const startScreen =
+    document.getElementById(
+        "crystalStart"
+    );
+
+
+    startScreen.innerHTML=
+    `
+    <div class="chBox">
+        <div
+        id="crystalCountdown"
+        style="
+        font-size:80px;
+        color:#58e8ff;
+        font-weight:900">
+        3
+        </div>
+    </div>
+    `;
+
+
+    startScreen.style.display="flex";
+
+
+    const timer=setInterval(()=>{
+
+        count--;
+
+        const counter =
+        document.getElementById(
+            "crystalCountdown"
+        );
+
+        if(count<=0){
+
+            clearInterval(timer);
+
+            startScreen.style.display=
+                "none";
+
+            document
+            .getElementById(
+                "crystalControls"
+            )
+            .style.display="flex";
+
+            running=true;
+
+            startTime=Date.now();
+
+            lastTime=Date.now();
+
+            requestAnimationFrame(
+                loop
+            );
+
+        }
+        else if(counter){
+
+            counter.textContent=count;
+
+        }
+
+    },650);
+
+}
+
+
+function updateHUD(){
+
+    document
+    .getElementById(
+        "crystalScore"
+    )
+    .textContent=score;
+
+    document
+    .getElementById(
+        "crystalLives"
+    )
+    .textContent=lives;
+
+    document
+    .getElementById(
+        "crystalTreasures"
+    )
+    .textContent=crystals;
+
+}
+
+
+function spawnCrystal(){
+
+    objects.push({
+
+        type:
+        Math.random()<.7
+        ?"crystal"
+        :"big",
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-40,
+
+        size:
+        15+
+        Math.random()*10,
+
+        speed:
+        2+
+        Math.random()*2
+
+    });
+
+}
+
+
+function spawnAsteroid(){
+
+    objects.push({
+
+        type:"asteroid",
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-50,
+
+        size:
+        18+
+        Math.random()*15,
+
+        speed:
+        2.5+
+        Math.random()*3
+
+    });
+
+}
+
+
+function damage(){
+
+    if(player.invincible>0)
+    return;
+
+    lives--;
+
+    player.invincible=1000;
+
+    updateHUD();
+
+    if(lives<=0){
+
+        endGame();
+
+    }
+
+}
+
+
+function collect(object){
+
+    if(
+        object.type==="crystal"
+    ){
+
+        score+=150;
+
+    }
+    else{
+
+        score+=400;
+
+    }
+
+    crystals++;
+
+    object.y=H+999;
+
+
+    for(
+        let i=0;
+        i<10;
+        i++
+    ){
+
+        particles.push({
+
+            x:object.x,
+            y:object.y,
+            vx:
+                -2+
+                Math.random()*4,
+            vy:
+                -3+
+                Math.random()*2,
+            life:1
+
+        });
+
+    }
+
+}
+
+
+function update(){
+
+    const now=Date.now();
+
+    const dt=
+        now-lastTime;
+
+    lastTime=now;
+
+
+    if(keys.left)
+    player.x-=player.speed;
+
+    if(keys.right)
+    player.x+=player.speed;
+
+
+    player.x=
+        Math.max(
+            25,
+            Math.min(
+                W-25,
+                player.x
+            )
+        );
+
+
+    if(
+        player.invincible>0
+    ){
+
+        player.invincible-=dt;
+
+    }
+
+
+    if(
+        Math.random()<.045
+    ){
+
+        spawnCrystal();
+
+    }
+
+
+    if(
+        Math.random()<.025
+    ){
+
+        spawnAsteroid();
+
+    }
+
+
+    for(
+        const object of objects
+    ){
+
+        object.y+=object.speed;
+
+    }
+
+
+    for(
+        const object of objects
+    ){
+
+        const distance=
+        Math.hypot(
+            object.x-player.x,
+            object.y-player.y
+        );
+
+
+        if(
+            distance<
+            object.size+24
+        ){
+
+            if(
+                object.type==="crystal" ||
+                object.type==="big"
+            ){
+
+                collect(object);
+
+            }
+            else{
+
+                object.y=H+999;
+
+                damage();
+
+            }
+
+        }
+
+    }
+
+
+    objects=
+    objects.filter(
+        o=>o.y<H+100
+    );
+
+
+    for(
+        const p of particles
+    ){
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        p.life-=.025;
+
+    }
+
+
+    particles=
+    particles.filter(
+        p=>p.life>0
+    );
+
+
+    const remaining=
+    Math.max(
+        0,
+        30-
+        Math.floor(
+            (now-startTime)/1000
+        )
+    );
+
+
+    document
+    .getElementById(
+        "crystalTime"
+    )
+    .textContent=remaining;
+
+
+    updateHUD();
+
+
+    if(
+        remaining<=0
+    ){
+
+        endGame();
+
+    }
+
+}
+
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* SPACE BACKGROUND */
+
+    const gradient=
+    ctx.createRadialGradient(
+        W/2,
+        H/2,
+        10,
+        W/2,
+        H/2,
+        Math.max(W,H)
+    );
+
+    gradient.addColorStop(
+        0,
+        "#102e45"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#071321"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#02050a"
+    );
+
+    ctx.fillStyle=gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* STARS */
+
+    for(
+        let i=0;
+        i<70;
+        i++
+    ){
+
+        const x=
+            (i*83)%W;
+
+        const y=
+            (i*137+
+            Date.now()*.025*
+            ((i%3)+1))
+            %H;
+
+        ctx.fillStyle=
+            "rgba(190,240,255,.5)";
+
+        ctx.fillRect(
+            x,
+            y,
+            1.5,
+            1.5
+        );
+
+    }
+
+
+    /* OBJECTS */
+
+    for(
+        const o of objects
+    ){
+
+        if(
+            o.type==="crystal" ||
+            o.type==="big"
+        ){
+
+            ctx.save();
+
+            ctx.translate(
+                o.x,
+                o.y
+            );
+
+            ctx.rotate(
+                Math.PI/4
+            );
+
+
+            ctx.shadowColor=
+                "#58e8ff";
+
+            ctx.shadowBlur=
+                o.type==="big"
+                ?25
+                :16;
+
+
+            ctx.fillStyle=
+                o.type==="big"
+                ?"#d7fbff"
+                :"#58e8ff";
+
+
+            ctx.fillRect(
+                -o.size/2,
+                -o.size/2,
+                o.size,
+                o.size
+            );
+
+
+            ctx.restore();
+
+        }
+        else{
+
+            /* asteroid */
+
+            ctx.beginPath();
+
+            ctx.arc(
+                o.x,
+                o.y,
+                o.size,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle=
+                "#59636e";
+
+            ctx.fill();
+
+
+            ctx.strokeStyle=
+                "#9ba7b2";
+
+            ctx.stroke();
+
+        }
+
+    }
+
+
+    /* PARTICLES */
+
+    for(
+        const p of particles
+    ){
+
+        ctx.globalAlpha=
+            p.life;
+
+        ctx.fillStyle=
+            "#58e8ff";
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            3,
+            3
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    /* PLAYER SHIP */
+
+    if(running){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x,
+            player.y
+        );
+
+
+        if(
+            player.invincible>0 &&
+            Math.floor(
+                player.invincible/100
+            )%2===0
+        ){
+
+            ctx.globalAlpha=.35;
+
+        }
+
+
+        /* flame */
+
+        ctx.fillStyle=
+            "#ffbd4a";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -7,
+            18
+        );
+
+        ctx.lineTo(
+            0,
+            33+
+            Math.random()*7
+        );
+
+        ctx.lineTo(
+            7,
+            18
+        );
+
+        ctx.fill();
+
+
+        /* ship */
+
+        ctx.fillStyle=
+            "#d7f7ff";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            -25
+        );
+
+        ctx.lineTo(
+            -20,
+            18
+        );
+
+        ctx.lineTo(
+            0,
+            11
+        );
+
+        ctx.lineTo(
+            20,
+            18
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /* cockpit */
+
+        ctx.fillStyle=
+            "#58e8ff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -5,
+            6,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+function loop(){
+
+    if(!running)
+    return;
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(
+        loop
+    );
+
+}
+
+
+function endGame(){
+
+    if(!running)
+    return;
+
+    running=false;
+
+
+    document
+    .getElementById(
+        "crystalControls"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "crystalFinalScore"
+    )
+    .textContent=score;
+
+
+    document
+    .getElementById(
+        "crystalTreasures"
+    )
+    .textContent=crystals;
+
+
+    document
+    .getElementById(
+        "crystalResult"
+    )
+    .style.display="flex";
+
+}
+
+
+/* CONTROLS */
+
+function holdButton(
+    id,
+    key
+){
+
+    const button =
+    document.getElementById(id);
+
+    function down(e){
+
+        e.preventDefault();
+
+        keys[key]=true;
+
+    }
+
+    function up(e){
+
+        e.preventDefault();
+
+        keys[key]=false;
+
+    }
+
+    button.addEventListener(
+        "pointerdown",
+        down
+    );
+
+    button.addEventListener(
+        "pointerup",
+        up
+    );
+
+    button.addEventListener(
+        "pointercancel",
+        up
+    );
+
+    button.addEventListener(
+        "pointerleave",
+        up
+    );
+
+}
+
+
+holdButton(
+    "crystalLeft",
+    "left"
+);
+
+holdButton(
+    "crystalRight",
+    "right"
+);
+
+
+/* COLLECT */
+
+document
+.getElementById(
+    "crystalCollect"
+)
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        e.preventDefault();
+
+        for(
+            const object of objects
+        ){
+
+            const distance=
+            Math.hypot(
+                object.x-player.x,
+                object.y-player.y
+            );
+
+            if(
+                distance<105 &&
+                (
+                    object.type==="crystal" ||
+                    object.type==="big"
+                )
+            ){
+
+                collect(object);
+
+                updateHUD();
+
+                break;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* BUTTONS */
+
+document
+.getElementById(
+    "crystalStartButton"
+)
+.addEventListener(
+    "click",
+    startCrystalGame
+);
+
+document
+.getElementById(
+    "crystalAgain"
+)
+.addEventListener(
+    "click",
+    startCrystalGame
+);
+
+document
+.getElementById(
+    "crystalClose"
+)
+.addEventListener(
+    "click",
+    closeCrystalHunt
+);
+
+
+/* KEYBOARD */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft"
+        )
+        keys.left=true;
+
+        if(
+            e.key==="ArrowRight"
+        )
+        keys.right=true;
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            closeCrystalHunt();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft"
+        )
+        keys.left=false;
+
+        if(
+            e.key==="ArrowRight"
+        )
+        keys.right=false;
+
+    }
+);
+
+
+/* ==============================
+   CRYSTAL HUNT KARTINI BUL
+================================ */
+
+function findCrystalCard(){
+
+    const elements =
+    document.querySelectorAll(
+        "h1,h2,h3,h4,h5,h6,div,span,p"
+    );
+
+
+    for(
+        const el of elements
+    ){
+
+        if(
+            el.textContent
+            .trim()
+            .toUpperCase()
+            !==
+            "CRYSTAL HUNT"
+        )
+        continue;
+
+
+        let card=el;
+
+
+        for(
+            let i=0;
+            i<6;
+            i++
+        ){
+
+            if(
+                !card.parentElement
+            )
+            break;
+
+
+            card=
+                card.parentElement;
+
+
+            const text=
+                card.textContent
+                .trim()
+                .toUpperCase();
+
+
+            if(
+                text.includes(
+                    "CRYSTAL HUNT"
+                ) &&
+                text.length<220
+            ){
+
+                return card;
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+function activateCrystalCard(){
+
+    const card=
+        findCrystalCard();
+
+
+    if(!card)
+    return;
+
+
+    card.style.cursor=
+        "pointer";
+
+
+    /* SOON / LOCK GİZLE */
+
+    card
+    .querySelectorAll("*")
+    .forEach(el=>{
+
+        const text=
+            el.textContent
+            .trim()
+            .toUpperCase();
+
+
+        if(
+            text==="SOON" ||
+            text==="YAKINDA" ||
+            text==="🔒" ||
+            text==="🔒 YAKINDA"
+        ){
+
+            el.style.display="none";
+
+        }
+
+    });
+
+
+    if(
+        card.dataset
+        .crystalBound==="1"
+    )
+    return;
+
+
+    card.dataset
+        .crystalBound="1";
+
+
+    card.addEventListener(
+        "click",
+        e=>{
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openCrystalHunt();
+
+        },
+        true
+    );
+
+
+    /* PLAY LABEL */
+
+    const label=
+        document.createElement(
+            "div"
+        );
+
+    label.textContent=
+        "💠 PLAY";
+
+    label.style.cssText=`
+        display:inline-block;
+        margin-top:7px;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#58e8ff;
+        color:#031019;
+        font-size:11px;
+        font-weight:900;
+    `;
+
+    card.appendChild(label);
+
+}
+
+
+activateCrystalCard();
+
+
+/* SPA / DİNAMİK SAYFA DEĞİŞİMİ */
+
+const observer=
+new MutationObserver(
+()=>{
+
+    activateCrystalCard();
+
+});
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        if(
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            resize();
+
+        }
+
+    }
+);
+
+
+})();
+</script>
 </body>
 </html>
