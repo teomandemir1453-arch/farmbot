@@ -3300,24 +3300,118 @@ async function buyProduct(){
 
 async function requestWithdrawal(){
 
-    const amount =
-        parseFloat(
-            document.getElementById('withdrawAmount').value
-        );
+    const amount = Number(
+        document.getElementById('withdrawAmount')?.value || 0
+    );
 
-    const crypto =
-        document.getElementById('withdrawCrypto').value;
-
-    const wallet =
-        document.getElementById('walletAddress').value.trim();
-
-    if(
-        !Number.isFinite(amount) ||
-        amount < 0.25
-    ){
-        alert('❌ Minimum withdrawal is $0.25');
+    if(!Number.isFinite(amount) || amount <= 0){
+        alert('❌ Geçerli bir çekim tutarı girin.');
         return;
     }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    if(amount < 0.25){
+        alert('❌ Minimum çekim tutarı $0.25');
+        return;
+    }
+
+    try{
+
+        console.log('💸 ÇEKİM İSTEĞİ:', amount);
+
+        const response = await fetch(
+            POSTGRES_API + '/api/withdrawal',
+            {
+                method:'POST',
+
+                headers:{
+                    'Content-Type':'application/json'
+                },
+
+                body:JSON.stringify({
+                    initData:tg.initData,
+                    amount:amount
+                }),
+
+                cache:'no-store'
+            }
+        );
+
+        const result = await response.json();
+
+        console.log(
+            '💸 ÇEKİM CEVABI:',
+            result
+        );
+
+        if(
+            !response.ok ||
+            !result.ok
+        ){
+            throw new Error(
+                result.message ||
+                'Çekim talebi oluşturulamadı.'
+            );
+        }
+
+        /*
+         * PostgreSQL'in gönderdiği
+         * GÜNCEL BAKİYE
+         */
+        if(result.balance !== undefined){
+
+            balance =
+                Number(result.balance);
+
+        }
+
+        /*
+         * Ekranı güncelle
+         */
+        updateUI();
+
+        if(typeof syncPostgresAccount === 'function'){
+            await syncPostgresAccount();
+        }
+
+        /*
+         * Input'u temizle
+         */
+        const input =
+            document.getElementById(
+                'withdrawAmount'
+            );
+
+        if(input){
+            input.value = '';
+        }
+
+        alert(
+            '✅ Çekim talebiniz oluşturuldu.\n\n' +
+            '$' + amount.toFixed(5) +
+            ' bakiyenizden düşüldü.'
+        );
+
+    }catch(error){
+
+        console.error(
+            '❌ ÇEKİM HATASI:',
+            error
+        );
+
+        alert(
+            '❌ ' +
+            (
+                error.message ||
+                'Çekim işlemi başarısız.'
+            )
+        );
+    }
+}
 
   if(amount > Number(balance || 0)){
     alert('❌ Insufficient balance!');
