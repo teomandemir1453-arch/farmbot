@@ -4531,7 +4531,41 @@ async function claimDailyGameReward(){
     }
 
     try{
+const investmentResponse =
+    await fetch(
+        POSTGRES_API + '/api/game-investment',
+        {
+            method:'POST',
 
+            headers:{
+                'Content-Type':
+                    'application/json'
+            },
+
+            body:JSON.stringify({
+                initData:
+                    tg.initData,
+
+                amount:
+                    amount
+            }),
+
+            cache:'no-store'
+        }
+    );
+
+const investmentResult =
+    await investmentResponse.json();
+
+if(
+    !investmentResponse.ok ||
+    !investmentResult.ok
+){
+    throw new Error(
+        investmentResult.message ||
+        'Oyun yatırımı PostgreSQL kayıt hatası.'
+    );
+}
         const ref=
             db.collection(
                 'users'
