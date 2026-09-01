@@ -8652,5 +8652,2046 @@ window.addEventListener(
 
 })();
 </script>
+  <!-- =========================================================
+     PLANET MINER — 3. GAME / POPUP
+     Paste before </body>
+========================================================= -->
+
+<style>
+#pmOverlay{
+    position:fixed;
+    inset:0;
+    z-index:1000000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    background:rgba(0,0,0,.84);
+    backdrop-filter:blur(10px);
+    font-family:Arial,sans-serif;
+}
+
+#pmOverlay.pm-open{display:flex}
+
+#pmGame{
+    position:relative;
+    width:min(520px,100%);
+    height:min(860px,94vh);
+    overflow:hidden;
+    border-radius:25px;
+    background:#050914;
+    border:1px solid rgba(70,220,255,.35);
+    box-shadow:0 0 80px rgba(0,180,255,.2);
+    color:#fff;
+}
+
+#pmCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#pmClose{
+    position:absolute;
+    z-index:100;
+    right:12px;
+    top:12px;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.7);
+    color:white;
+    font-size:25px;
+}
+
+#pmTop{
+    position:absolute;
+    z-index:20;
+    left:12px;
+    right:62px;
+    top:12px;
+    display:flex;
+    gap:6px;
+}
+
+.pm-stat{
+    flex:1;
+    min-width:0;
+    padding:8px 7px;
+    border-radius:10px;
+    background:rgba(4,13,27,.84);
+    border:1px solid rgba(83,220,255,.2);
+    text-align:center;
+    font-size:11px;
+    font-weight:800;
+}
+
+.pm-stat b{
+    display:block;
+    margin-top:3px;
+    font-size:13px;
+}
+
+#pmBottom{
+    position:absolute;
+    z-index:30;
+    left:10px;
+    right:10px;
+    bottom:10px;
+    padding:10px;
+    border-radius:18px;
+    background:rgba(3,9,18,.92);
+    border:1px solid rgba(83,220,255,.2);
+}
+
+#pmMine{
+    width:100%;
+    height:60px;
+    border:0;
+    border-radius:14px;
+    background:#53e5ff;
+    color:#031019;
+    font-size:18px;
+    font-weight:900;
+    box-shadow:0 0 25px rgba(83,229,255,.2);
+    touch-action:manipulation;
+}
+
+#pmMine:active{
+    transform:scale(.97);
+}
+
+#pmActions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-top:8px;
+}
+
+.pm-action{
+    min-height:42px;
+    border:1px solid rgba(83,220,255,.2);
+    border-radius:10px;
+    background:#0b1829;
+    color:#dffaff;
+    font-size:11px;
+    font-weight:800;
+}
+
+#pmToast{
+    position:absolute;
+    z-index:90;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(.9);
+    opacity:0;
+    pointer-events:none;
+    padding:13px 18px;
+    border-radius:14px;
+    background:rgba(3,12,23,.94);
+    border:1px solid rgba(83,229,255,.45);
+    color:#fff;
+    font-weight:900;
+    transition:.18s;
+    white-space:nowrap;
+}
+
+#pmToast.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+
+#pmStart,
+#pmPanel{
+    position:absolute;
+    inset:0;
+    z-index:70;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,14,.78);
+}
+
+#pmPanel{display:none}
+
+.pm-box{
+    width:min(390px,94%);
+    max-height:90%;
+    overflow:auto;
+    padding:24px 18px;
+    border-radius:22px;
+    background:linear-gradient(180deg,#102840,#07101c);
+    border:1px solid rgba(83,229,255,.25);
+}
+
+.pm-box h1{
+    margin:4px 0 10px;
+    text-align:center;
+    font-size:28px;
+}
+
+.pm-sub{
+    color:#8ea9bc;
+    text-align:center;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.pm-start-btn{
+    width:100%;
+    min-height:52px;
+    margin-top:15px;
+    border:0;
+    border-radius:13px;
+    background:#53e5ff;
+    color:#031019;
+    font-weight:900;
+    font-size:15px;
+}
+
+.pm-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:12px;
+    margin:7px 0;
+    border-radius:12px;
+    background:#0a1726;
+    border:1px solid rgba(83,220,255,.12);
+}
+
+.pm-row small{
+    display:block;
+    color:#7993a7;
+    margin-top:3px;
+}
+
+.pm-up{
+    border:0;
+    border-radius:9px;
+    padding:9px 11px;
+    background:#53e5ff;
+    color:#031019;
+    font-weight:900;
+    font-size:10px;
+}
+
+.pm-planet{
+    cursor:pointer;
+}
+
+.pm-planet.locked{
+    opacity:.45;
+}
+
+.pm-close-panel{
+    width:100%;
+    margin-top:10px;
+    min-height:45px;
+    border:1px solid rgba(83,220,255,.2);
+    border-radius:11px;
+    background:#0a1726;
+    color:white;
+    font-weight:800;
+}
+</style>
+
+
+<div id="pmOverlay">
+
+    <div id="pmGame">
+
+        <canvas id="pmCanvas"></canvas>
+
+        <button id="pmClose">×</button>
+
+        <div id="pmTop">
+
+            <div class="pm-stat">
+                🪨
+                <b id="pmOre">0</b>
+            </div>
+
+            <div class="pm-stat">
+                💠
+                <b id="pmCrystal">0</b>
+            </div>
+
+            <div class="pm-stat">
+                🟡
+                <b id="pmGold">0</b>
+            </div>
+
+            <div class="pm-stat">
+                ⚡
+                <b id="pmEnergy">100</b>
+            </div>
+
+        </div>
+
+
+        <div id="pmToast"></div>
+
+
+        <div id="pmBottom">
+
+            <button id="pmMine">
+                ⛏️ MINE PLANET
+            </button>
+
+            <div id="pmActions">
+
+                <button
+                    class="pm-action"
+                    id="pmSell"
+                >
+                    💰 SELL
+                </button>
+
+                <button
+                    class="pm-action"
+                    id="pmShip"
+                >
+                    🚀 SHIP
+                </button>
+
+                <button
+                    class="pm-action"
+                    id="pmPlanets"
+                >
+                    🪐 PLANETS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- START -->
+
+        <div id="pmStart">
+
+            <div class="pm-box">
+
+                <div
+                    style="
+                    text-align:center;
+                    font-size:65px"
+                >
+                    🪐🚀
+                </div>
+
+                <h1>
+                    PLANET
+                    <span style="color:#53e5ff">
+                        MINER
+                    </span>
+                </h1>
+
+                <p class="pm-sub">
+                    Gezegenlere in, maden çıkar,
+                    gemini geliştir ve yeni
+                    dünyaları keşfet.
+                </p>
+
+                <button
+                    class="pm-start-btn"
+                    id="pmStartBtn"
+                >
+                    🚀 START MINING
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PANEL -->
+
+        <div id="pmPanel">
+
+            <div class="pm-box">
+
+                <h1 id="pmPanelTitle">
+                    PLANET MINER
+                </h1>
+
+                <div id="pmPanelContent"></div>
+
+                <button
+                    class="pm-close-panel"
+                    id="pmPanelClose"
+                >
+                    KAPAT
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const pm = {
+
+    ore:0,
+
+    crystal:0,
+
+    gold:0,
+
+    credits:0,
+
+    energy:100,
+
+    planet:0,
+
+    power:1,
+
+    cargo:100,
+
+    speed:1,
+
+    running:false
+
+};
+
+
+const planets = [
+
+    {
+        name:"EARTH",
+        icon:"🌍",
+        required:0,
+        multiplier:1
+    },
+
+    {
+        name:"MOON",
+        icon:"🌑",
+        required:2,
+        multiplier:1.5
+    },
+
+    {
+        name:"MARS",
+        icon:"🔴",
+        required:5,
+        multiplier:2.2
+    },
+
+    {
+        name:"NEPTUNE",
+        icon:"🔵",
+        required:10,
+        multiplier:4
+    },
+
+    {
+        name:"ALIEN X",
+        icon:"🟢",
+        required:20,
+        multiplier:8
+    }
+
+];
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const overlay =
+document.getElementById("pmOverlay");
+
+const canvas =
+document.getElementById("pmCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const mineBtn =
+document.getElementById("pmMine");
+
+const startBtn =
+document.getElementById("pmStartBtn");
+
+const closeBtn =
+document.getElementById("pmClose");
+
+const sellBtn =
+document.getElementById("pmSell");
+
+const shipBtn =
+document.getElementById("pmShip");
+
+const planetsBtn =
+document.getElementById("pmPlanets");
+
+const panel =
+document.getElementById("pmPanel");
+
+const panelTitle =
+document.getElementById("pmPanelTitle");
+
+const panelContent =
+document.getElementById("pmPanelContent");
+
+const panelClose =
+document.getElementById("pmPanelClose");
+
+const toast =
+document.getElementById("pmToast");
+
+
+let W=0;
+let H=0;
+
+let particles=[];
+
+let miningPulse=0;
+
+let stars=[];
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    createStars();
+
+}
+
+
+function createStars(){
+
+    stars=[];
+
+    for(
+        let i=0;
+        i<90;
+        i++
+    ){
+
+        stars.push({
+
+            x:Math.random()*W,
+
+            y:Math.random()*H,
+
+            r:.5+
+                Math.random()*1.5,
+
+            speed:.1+
+                Math.random()*.4
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+function updateUI(){
+
+    document
+    .getElementById("pmOre")
+    .textContent=pm.ore;
+
+    document
+    .getElementById("pmCrystal")
+    .textContent=pm.crystal;
+
+    document
+    .getElementById("pmGold")
+    .textContent=pm.gold;
+
+    document
+    .getElementById("pmEnergy")
+    .textContent=
+        Math.floor(pm.energy);
+
+}
+
+
+function showToast(text){
+
+    toast.textContent=text;
+
+    toast.classList.add("show");
+
+    clearTimeout(
+        showToast.timer
+    );
+
+    showToast.timer=
+        setTimeout(
+            ()=>{
+                toast.classList.remove(
+                    "show"
+                );
+            },
+            900
+        );
+
+}
+
+
+/* =========================================================
+   OPEN / CLOSE
+========================================================= */
+
+function openPlanetMiner(){
+
+    overlay.classList.add(
+        "pm-open"
+    );
+
+    resize();
+
+    draw();
+
+}
+
+
+function closePlanetMiner(){
+
+    overlay.classList.remove(
+        "pm-open"
+    );
+
+    closePanel();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startGame(){
+
+    pm.running=true;
+
+    document
+    .getElementById("pmStart")
+    .style.display="none";
+
+    pm.energy=100;
+
+    updateUI();
+
+    draw();
+
+}
+
+
+/* =========================================================
+   CARGO
+========================================================= */
+
+function cargoUsed(){
+
+    return pm.ore+
+           pm.crystal+
+           pm.gold;
+
+}
+
+
+function cargoFree(){
+
+    return Math.max(
+        0,
+        pm.cargo-cargoUsed()
+    );
+
+}
+
+
+/* =========================================================
+   MINING
+========================================================= */
+
+function mine(){
+
+    if(!pm.running){
+
+        showToast(
+            "ÖNCE OYUNU BAŞLAT"
+        );
+
+        return;
+
+    }
+
+
+    if(pm.energy<=0){
+
+        showToast(
+            "⚡ ENERJİ BİTTİ"
+        );
+
+        return;
+
+    }
+
+
+    if(cargoFree()<=0){
+
+        showToast(
+            "🎒 KARGO DOLU"
+        );
+
+        return;
+
+    }
+
+
+    const planet =
+        planets[pm.planet];
+
+
+    const amount =
+        Math.max(
+            1,
+            Math.floor(
+                pm.power*
+                (0.8+
+                Math.random()*1.2)
+            )
+        );
+
+
+    let remaining =
+        Math.min(
+            amount,
+            cargoFree()
+        );
+
+
+    /*
+      Farklı kaynakların
+      çıkma olasılıkları
+    */
+
+    const roll=
+        Math.random();
+
+
+    if(
+        roll<.65
+    ){
+
+        pm.ore+=remaining;
+
+    }
+    else if(
+        roll<.9
+    ){
+
+        pm.crystal+=
+            Math.max(
+                1,
+                Math.floor(
+                    remaining/2
+                )
+            );
+
+    }
+    else{
+
+        pm.gold+=
+            Math.max(
+                1,
+                Math.floor(
+                    remaining/3
+                )
+            );
+
+    }
+
+
+    pm.energy=
+        Math.max(
+            0,
+            pm.energy-
+            Math.max(
+                1,
+                Math.ceil(
+                    2/pm.speed
+                )
+            )
+        );
+
+
+    miningPulse=1;
+
+    createMiningParticles();
+
+    updateUI();
+
+    showToast(
+        "⛏️ +"+remaining+
+        " MADEN"
+    );
+
+}
+
+
+/* =========================================================
+   SELL
+========================================================= */
+
+function sellResources(){
+
+    const value=
+        pm.ore*1+
+        pm.crystal*8+
+        pm.gold*20;
+
+
+    if(value<=0){
+
+        showToast(
+            "SATILACAK MADEN YOK"
+        );
+
+        return;
+
+    }
+
+
+    pm.credits+=
+        Math.floor(
+            value*
+            planets[pm.planet]
+            .multiplier
+        );
+
+
+    pm.ore=0;
+    pm.crystal=0;
+    pm.gold=0;
+
+
+    updateUI();
+
+    showToast(
+        "💰 SATIŞ TAMAMLANDI"
+    );
+
+}
+
+
+/* =========================================================
+   SHIP PANEL
+========================================================= */
+
+function openShipPanel(){
+
+    panelTitle.textContent=
+        "🚀 MINING SHIP";
+
+
+    const powerCost=
+        100*pm.power;
+
+    const cargoCost=
+        150*
+        Math.ceil(
+            pm.cargo/100
+        );
+
+    const speedCost=
+        200*pm.speed;
+
+
+    panelContent.innerHTML=
+    `
+
+    <div class="pm-row">
+
+        <div>
+            ⛏️ MINING POWER
+            <small>
+                Level ${pm.power}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="power"
+        >
+            ${powerCost} C
+        </button>
+
+    </div>
+
+
+    <div class="pm-row">
+
+        <div>
+            🎒 CARGO
+            <small>
+                ${cargoUsed()}/${pm.cargo}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="cargo"
+        >
+            ${cargoCost} C
+        </button>
+
+    </div>
+
+
+    <div class="pm-row">
+
+        <div>
+            ⚡ MINING SPEED
+            <small>
+                Level ${pm.speed}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="speed"
+        >
+            ${speedCost} C
+        </button>
+
+    </div>
+
+
+    <div
+        style="
+        text-align:center;
+        margin-top:15px;
+        color:#53e5ff;
+        font-weight:900"
+    >
+        💰 ${pm.credits} CREDITS
+    </div>
+
+    `;
+
+
+    panelContent
+    .querySelectorAll("[data-up]")
+    .forEach(
+        button=>{
+
+            button.addEventListener(
+                "click",
+                ()=>{
+
+                    upgrade(
+                        button.dataset.up
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    panel.style.display="flex";
+
+}
+
+
+function upgrade(type){
+
+    let cost=0;
+
+
+    if(type==="power"){
+
+        cost=100*pm.power;
+
+    }
+    else if(type==="cargo"){
+
+        cost=
+            150*
+            Math.ceil(
+                pm.cargo/100
+            );
+
+    }
+    else{
+
+        cost=200*pm.speed;
+
+    }
+
+
+    if(pm.credits<cost){
+
+        showToast(
+            "💰 YETERSİZ CREDITS"
+        );
+
+        return;
+
+    }
+
+
+    pm.credits-=cost;
+
+
+    if(type==="power"){
+
+        pm.power++;
+
+    }
+
+    else if(type==="cargo"){
+
+        pm.cargo+=100;
+
+    }
+
+    else{
+
+        pm.speed++;
+
+    }
+
+
+    showToast(
+        "🚀 UPGRADE COMPLETE"
+    );
+
+
+    openShipPanel();
+
+}
+
+
+/* =========================================================
+   PLANETS PANEL
+========================================================= */
+
+function openPlanetsPanel(){
+
+    panelTitle.textContent=
+        "🪐 PLANETS";
+
+
+    panelContent.innerHTML=
+        planets.map(
+            (p,index)=>{
+
+                const unlocked=
+                    index<=
+                    Math.floor(
+                        pm.power/2
+                    );
+
+
+                return `
+
+                <div
+                    class="
+                    pm-row
+                    pm-planet
+                    ${unlocked?"":"locked"}
+                    "
+                    data-planet="${index}"
+                >
+
+                    <div>
+
+                        ${p.icon}
+                        <b>
+                            ${p.name}
+                        </b>
+
+                        <small>
+
+                            ${
+                                unlocked
+                                ?
+                                "x"+p.multiplier+
+                                " mining value"
+                                :
+                                "🔒 POWER "+
+                                (p.required*2)
+                            }
+
+                        </small>
+
+                    </div>
+
+                    <div>
+                        ${
+                            unlocked
+                            ?
+                            (
+                                index===
+                                pm.planet
+                                ?
+                                "✓"
+                                :
+                                "GO"
+                            )
+                            :
+                            "🔒"
+                        }
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    panelContent
+    .querySelectorAll(
+        "[data-planet]"
+    )
+    .forEach(
+        el=>{
+
+            el.addEventListener(
+                "click",
+                ()=>{
+
+                    const index=
+                        Number(
+                            el.dataset
+                            .planet
+                        );
+
+                    selectPlanet(
+                        index
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    panel.style.display="flex";
+
+}
+
+
+function selectPlanet(index){
+
+    const unlocked=
+        index<=
+        Math.floor(
+            pm.power/2
+        );
+
+
+    if(!unlocked){
+
+        showToast(
+            "🔒 DAHA GÜÇLÜ GEMİ GEREKİYOR"
+        );
+
+        return;
+
+    }
+
+
+    pm.planet=index;
+
+
+    showToast(
+        planets[index].icon+
+        " "+
+        planets[index].name
+    );
+
+
+    closePanel();
+
+    draw();
+
+}
+
+
+/* =========================================================
+   PANEL CLOSE
+========================================================= */
+
+function closePanel(){
+
+    panel.style.display="none";
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createMiningParticles(){
+
+    const cx=W/2;
+    const cy=H*.54;
+
+
+    for(
+        let i=0;
+        i<16;
+        i++
+    ){
+
+        particles.push({
+
+            x:cx,
+
+            y:cy,
+
+            vx:
+                -3+
+                Math.random()*6,
+
+            vy:
+                -2+
+                Math.random()*4,
+
+            life:1
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   DRAW
+========================================================= */
+
+function draw(){
+
+    if(!W || !H)
+    return;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+      SPACE
+    */
+
+    const bg=
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
+        );
+
+    bg.addColorStop(
+        0,
+        "#020611"
+    );
+
+    bg.addColorStop(
+        .55,
+        "#071729"
+    );
+
+    bg.addColorStop(
+        1,
+        "#02050b"
+    );
+
+    ctx.fillStyle=bg;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+      STARS
+    */
+
+    for(
+        const star of stars
+    ){
+
+        star.y+=star.speed;
+
+        if(star.y>H)
+        star.y=0;
+
+        ctx.globalAlpha=.4;
+
+        ctx.fillStyle="#bdefff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            star.x,
+            star.y,
+            star.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    /*
+      PLANET
+    */
+
+    const planet=
+        planets[pm.planet];
+
+
+    const cx=W/2;
+
+    const cy=H*.51;
+
+    const radius=
+        Math.min(
+            W*.34,
+            155
+        );
+
+
+    const planetGradient=
+        ctx.createRadialGradient(
+            cx-radius*.35,
+            cy-radius*.4,
+            radius*.1,
+            cx,
+            cy,
+            radius
+        );
+
+
+    const colors=[
+        ["#5bd8ff","#12456d"],
+        ["#d5d8e0","#4c5362"],
+        ["#ff8060","#6c1814"],
+        ["#73a8ff","#172c67"],
+        ["#62ff9c","#114f35"]
+    ];
+
+
+    const c=
+        colors[
+            Math.min(
+                pm.planet,
+                colors.length-1
+            )
+        ];
+
+
+    planetGradient.addColorStop(
+        0,
+        c[0]
+    );
+
+    planetGradient.addColorStop(
+        1,
+        c[1]
+    );
+
+
+    ctx.fillStyle=
+        planetGradient;
+
+    ctx.shadowColor=
+        c[0];
+
+    ctx.shadowBlur=35;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        radius,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+
+    /*
+      CRATERS
+    */
+
+    for(
+        let i=0;
+        i<13;
+        i++
+    ){
+
+        const angle=
+            i*2.7;
+
+        const rr=
+            radius*
+            (.25+
+            (i%4)*.13);
+
+        const x=
+            cx+
+            Math.cos(angle)*
+            rr;
+
+        const y=
+            cy+
+            Math.sin(angle)*
+            rr*.7;
+
+
+        ctx.fillStyle=
+            "rgba(0,0,0,.13)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            5+
+            (i%4)*3,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /*
+      MINING BEAM
+    */
+
+    if(miningPulse>0){
+
+        ctx.globalAlpha=
+            miningPulse;
+
+        ctx.strokeStyle=
+            "#53e5ff";
+
+        ctx.lineWidth=4;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx,
+            cy-radius-28
+        );
+
+        ctx.lineTo(
+            cx,
+            cy-radius*.25
+        );
+
+        ctx.stroke();
+
+        ctx.globalAlpha=1;
+
+    }
+
+
+    /*
+      SHIP
+    */
+
+    ctx.save();
+
+    ctx.translate(
+        cx,
+        cy-radius-52
+    );
+
+
+    ctx.fillStyle=
+        "#d9f7ff";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,-24
+    );
+
+    ctx.lineTo(
+        -21,17
+    );
+
+    ctx.lineTo(
+        0,10
+    );
+
+    ctx.lineTo(
+        21,17
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.fillStyle=
+        "#53e5ff";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -4,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle=
+        "#ffbd4a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -7,
+        16
+    );
+
+    ctx.lineTo(
+        0,
+        31+
+        Math.random()*5
+    );
+
+    ctx.lineTo(
+        7,
+        16
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+
+    /*
+      PLANET LABEL
+    */
+
+    ctx.fillStyle=
+        "rgba(3,12,23,.75)";
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        cx-75,
+        cy+radius+18,
+        150,
+        35,
+        10
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle="#fff";
+
+    ctx.font=
+        "bold 13px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        planet.icon+
+        " "+
+        planet.name,
+        cx,
+        cy+radius+40
+    );
+
+
+    /*
+      PARTICLES
+    */
+
+    for(
+        const p of particles
+    ){
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                p.life
+            );
+
+        ctx.fillStyle=
+            "#53e5ff";
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            4,
+            4
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    miningPulse=
+        Math.max(
+            0,
+            miningPulse-.04
+        );
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+function animation(){
+
+    if(
+        overlay.classList.contains(
+            "pm-open"
+        )
+    ){
+
+        draw();
+
+    }
+
+    for(
+        const p of particles
+    ){
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        p.life-=.035;
+
+    }
+
+
+    particles=
+        particles.filter(
+            p=>p.life>0
+        );
+
+
+    requestAnimationFrame(
+        animation
+    );
+
+}
+
+animation();
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+mineBtn.addEventListener(
+    "click",
+    mine
+);
+
+sellBtn.addEventListener(
+    "click",
+    sellResources
+);
+
+shipBtn.addEventListener(
+    "click",
+    openShipPanel
+);
+
+planetsBtn.addEventListener(
+    "click",
+    openPlanetsPanel
+);
+
+closeBtn.addEventListener(
+    "click",
+    closePlanetMiner
+);
+
+panelClose.addEventListener(
+    "click",
+    closePanel
+);
+
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        if(
+            overlay.classList.contains(
+                "pm-open"
+            )
+        ){
+
+            resize();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains(
+                "pm-open"
+            )
+        ){
+
+            if(
+                panel.style.display==="flex"
+            ){
+
+                closePanel();
+
+            }
+            else{
+
+                closePlanetMiner();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FIND 3RD CARD
+========================================================= */
+
+function findPlanetMinerCard(){
+
+    const all=
+        document.querySelectorAll(
+            "h1,h2,h3,h4,h5,h6,div,span,p"
+        );
+
+
+    for(
+        const el of all
+    ){
+
+        const text=
+            el.textContent
+            .trim()
+            .toUpperCase();
+
+
+        if(
+            text==="MINER RUN" ||
+            text==="PLANET MINER"
+        ){
+
+            let card=el;
+
+
+            for(
+                let i=0;
+                i<7;
+                i++
+            ){
+
+                if(
+                    !card.parentElement
+                )
+                break;
+
+
+                card=
+                    card.parentElement;
+
+
+                const cardText=
+                    card.textContent
+                    .trim()
+                    .toUpperCase();
+
+
+                if(
+                    (
+                        cardText.includes(
+                            "MINER RUN"
+                        ) ||
+                        cardText.includes(
+                            "PLANET MINER"
+                        )
+                    )
+                    &&
+                    cardText.length<220
+                ){
+
+                    return card;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   ACTIVATE CARD
+========================================================= */
+
+function activatePlanetMinerCard(){
+
+    const card=
+        findPlanetMinerCard();
+
+
+    if(!card)
+    return;
+
+
+    /*
+      MINER RUN → PLANET MINER
+    */
+
+    card
+    .querySelectorAll("*")
+    .forEach(
+        el=>{
+
+            const t=
+                el.textContent
+                .trim()
+                .toUpperCase();
+
+
+            if(
+                t==="MINER RUN"
+            ){
+
+                el.textContent=
+                    "PLANET MINER";
+
+            }
+
+
+            if(
+                t==="SOON" ||
+                t==="YAKINDA" ||
+                t==="🔒" ||
+                t==="🔒 YAKINDA"
+            ){
+
+                el.style.display=
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    card.style.cursor=
+        "pointer";
+
+
+    if(
+        card.dataset.pmBound==="1"
+    )
+    return;
+
+
+    card.dataset.pmBound="1";
+
+
+    card.addEventListener(
+        "click",
+        e=>{
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openPlanetMiner();
+
+        },
+        true
+    );
+
+
+    /*
+      PLAY LABEL
+    */
+
+    const label=
+        document.createElement(
+            "div"
+        );
+
+    label.textContent=
+        "🪐 PLAY";
+
+
+    label.style.cssText=`
+        display:inline-block;
+        margin-top:7px;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#53e5ff;
+        color:#031019;
+        font-size:11px;
+        font-weight:900;
+    `;
+
+
+    card.appendChild(label);
+
+}
+
+
+/* İlk bağlantı */
+
+activatePlanetMinerCard();
+
+
+/* Dinamik içerik için */
+
+const observer=
+    new MutationObserver(
+        ()=>{
+            activatePlanetMinerCard();
+        }
+    );
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+/* =========================================================
+   OPEN FROM OTHER CODE
+========================================================= */
+
+window.openPlanetMiner=
+    openPlanetMiner;
+
+
+})();
+</script>
 </body>
 </html>
