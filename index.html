@@ -5736,6 +5736,1375 @@ welcomeBonus();
 </button>
 
 </div>
+<!-- ================================
+     TREASURE CAVE MINI GAME
+================================ -->
 
+<style>
+#tcOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(8px);
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+}
+
+#tcOverlay.active{
+    display:flex;
+}
+
+#tcWindow{
+    position:relative;
+    width:min(520px,100%);
+    height:min(850px,94vh);
+    overflow:hidden;
+    border-radius:22px;
+    background:#080502;
+    border:1px solid rgba(255,210,90,.35);
+    box-shadow:0 0 70px rgba(0,0,0,.8);
+}
+
+#tcCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#tcClose{
+    position:absolute;
+    top:12px;
+    right:12px;
+    z-index:20;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.65);
+    color:white;
+    font-size:23px;
+}
+
+#tcHud{
+    position:absolute;
+    z-index:10;
+    top:12px;
+    left:12px;
+    right:60px;
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.tcStat{
+    background:rgba(20,10,2,.8);
+    border:1px solid rgba(255,210,90,.25);
+    border-radius:9px;
+    padding:7px 10px;
+}
+
+#tcStart,
+#tcEnd{
+    position:absolute;
+    inset:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(4,2,0,.72);
+}
+
+#tcEnd{
+    display:none;
+}
+
+.tcBox{
+    width:min(370px,90%);
+    padding:28px 20px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(#35200d,#100803);
+    border:1px solid rgba(255,210,90,.3);
+    color:white;
+}
+
+.tcBox h1{
+    margin:8px 0;
+    font-size:30px;
+}
+
+.tcGold{
+    color:#ffd45a;
+}
+
+.tcBox p{
+    color:#b9a58e;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.tcButton{
+    width:100%;
+    min-height:52px;
+    border:0;
+    border-radius:13px;
+    background:#ffd45a;
+    color:#241300;
+    font-size:15px;
+    font-weight:900;
+}
+
+#tcCount{
+    font-size:80px;
+    color:#ffd45a;
+}
+
+#tcControls{
+    position:absolute;
+    z-index:15;
+    left:0;
+    right:0;
+    bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    padding:0 18px;
+    pointer-events:none;
+}
+
+.tcControl{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:1px solid rgba(255,210,90,.4);
+    background:rgba(35,18,5,.9);
+    color:#ffe8a8;
+    font-size:26px;
+    pointer-events:auto;
+    touch-action:none;
+}
+
+.tcCollect{
+    width:82px;
+    height:82px;
+    font-size:28px;
+}
+</style>
+
+
+<div id="tcOverlay">
+
+    <div id="tcWindow">
+
+        <canvas id="tcCanvas"></canvas>
+
+        <button id="tcClose">×</button>
+
+        <div id="tcHud">
+
+            <div class="tcStat">
+                💎 <span id="tcScore">0</span>
+            </div>
+
+            <div class="tcStat">
+                ❤️ <span id="tcLives">3</span>
+            </div>
+
+            <div class="tcStat">
+                ⏱️ <span id="tcTime">30</span>
+            </div>
+
+        </div>
+
+
+        <div id="tcStart">
+
+            <div class="tcBox">
+
+                <div style="font-size:58px">
+                    💎
+                </div>
+
+                <h1>
+                    TREASURE
+                    <span class="tcGold">CAVE</span>
+                </h1>
+
+                <p>
+                    Mağaranın derinliklerinden
+                    hazineleri topla.
+                    Kayalardan kaç!
+                </p>
+
+                <button
+                    id="tcStartButton"
+                    class="tcButton"
+                >
+                    💎 HAZİNE AVCILIĞINA BAŞLA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="tcEnd">
+
+            <div class="tcBox">
+
+                <div style="font-size:50px">
+                    🏆
+                </div>
+
+                <h1>
+                    TREASURE
+                    <span class="tcGold">FOUND!</span>
+                </h1>
+
+                <div
+                    style="
+                    font-size:44px;
+                    font-weight:900;
+                    color:#ffd45a;
+                    margin:12px"
+                >
+                    <span id="tcFinalScore">0</span>
+                </div>
+
+                <p>
+                    Toplanan hazine:
+                    <b id="tcTreasures">0</b>
+                </p>
+
+                <button
+                    id="tcAgain"
+                    class="tcButton"
+                >
+                    💎 TEKRAR OYNA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="tcControls">
+
+            <button
+                id="tcLeft"
+                class="tcControl"
+            >
+                ◀
+            </button>
+
+            <button
+                id="tcCollect"
+                class="tcControl tcCollect"
+            >
+                💎
+            </button>
+
+            <button
+                id="tcRight"
+                class="tcControl"
+            >
+                ▶
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+/* =========================
+   TREASURE CAVE
+========================= */
+
+const overlay =
+document.getElementById("tcOverlay");
+
+const closeBtn =
+document.getElementById("tcClose");
+
+const startBtn =
+document.getElementById("tcStartButton");
+
+const againBtn =
+document.getElementById("tcAgain");
+
+const canvas =
+document.getElementById("tcCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+
+let W=0;
+let H=0;
+
+let running=false;
+
+let score=0;
+let lives=3;
+let treasures=0;
+
+let startTime=0;
+let lastTime=0;
+
+let objects=[];
+
+let stars=[];
+
+let keys={
+    left:false,
+    right:false
+};
+
+
+const player={
+    x:0,
+    y:0,
+    speed:6,
+    invincible:0
+};
+
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,0,0,ratio,0,0
+    );
+
+    player.x=W/2;
+    player.y=H-125;
+
+}
+
+
+function resetStars(){
+
+    stars=[];
+
+    for(
+        let i=0;
+        i<80;
+        i++
+    ){
+
+        stars.push({
+
+            x:Math.random()*W,
+
+            y:Math.random()*H,
+
+            size:
+                1+Math.random()*2,
+
+            speed:
+                .3+Math.random()
+
+        });
+
+    }
+
+}
+
+
+function openGame(){
+
+    overlay.classList.add("active");
+
+    resize();
+
+    resetStars();
+
+    showStart();
+
+}
+
+
+function closeGame(){
+
+    running=false;
+
+    overlay.classList.remove("active");
+
+}
+
+
+function showStart(){
+
+    running=false;
+
+    document
+    .getElementById("tcStart")
+    .style.display="flex";
+
+    document
+    .getElementById("tcEnd")
+    .style.display="none";
+
+    document
+    .getElementById("tcControls")
+    .style.display="none";
+
+}
+
+
+function startGame(){
+
+    score=0;
+    lives=3;
+    treasures=0;
+
+    objects=[];
+
+    player.x=W/2;
+    player.y=H-125;
+    player.invincible=0;
+
+    updateHUD();
+
+    document
+    .getElementById("tcStart")
+    .style.display="none";
+
+    document
+    .getElementById("tcEnd")
+    .style.display="none";
+
+    document
+    .getElementById("tcControls")
+    .style.display="flex";
+
+
+    let count=3;
+
+    const countBox=
+    document
+    .getElementById("tcStart");
+
+    countBox.innerHTML=
+    '<div class="tcBox">'+
+    '<div id="tcCount">3</div>'+
+    '</div>';
+
+    countBox.style.display="flex";
+
+
+    const timer=setInterval(()=>{
+
+        count--;
+
+        if(count<=0){
+
+            clearInterval(timer);
+
+            document
+            .getElementById("tcStart")
+            .style.display="none";
+
+            document
+            .getElementById("tcControls")
+            .style.display="flex";
+
+            running=true;
+
+            startTime=Date.now();
+
+            lastTime=Date.now();
+
+            requestAnimationFrame(loop);
+
+        }
+        else{
+
+            const c=
+            document.getElementById(
+                "tcCount"
+            );
+
+            if(c)
+            c.textContent=count;
+
+        }
+
+    },650);
+
+}
+
+
+function spawn(type){
+
+    objects.push({
+
+        type:type,
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-40,
+
+        size:
+        type==="rock"
+        ?18+Math.random()*14
+        :20+Math.random()*8,
+
+        speed:
+        type==="rock"
+        ?2.5+Math.random()*3
+        :2+Math.random()*2
+
+    });
+
+}
+
+
+function damage(){
+
+    if(player.invincible>0)
+    return;
+
+    lives--;
+
+    player.invincible=900;
+
+    updateHUD();
+
+    if(lives<=0)
+    endGame();
+
+}
+
+
+function updateHUD(){
+
+    document
+    .getElementById("tcScore")
+    .textContent=score;
+
+    document
+    .getElementById("tcLives")
+    .textContent=lives;
+
+    document
+    .getElementById("tcTreasures")
+    .textContent=treasures;
+
+}
+
+
+function update(){
+
+    const now=Date.now();
+
+    const dt=now-lastTime;
+
+    lastTime=now;
+
+
+    if(keys.left)
+    player.x-=player.speed;
+
+    if(keys.right)
+    player.x+=player.speed;
+
+
+    player.x=
+    Math.max(
+        25,
+        Math.min(
+            W-25,
+            player.x
+        )
+    );
+
+
+    if(player.invincible>0)
+    player.invincible-=dt;
+
+
+    for(const s of stars){
+
+        s.y+=s.speed;
+
+        if(s.y>H)
+        s.y=0;
+
+    }
+
+
+    if(Math.random()<.035)
+    spawn(
+        Math.random()<.55
+        ?"diamond"
+        :"chest"
+    );
+
+
+    if(Math.random()<.022)
+    spawn("rock");
+
+
+    for(const o of objects)
+    o.y+=o.speed;
+
+
+    for(const o of objects){
+
+        const d=
+        Math.hypot(
+            o.x-player.x,
+            o.y-player.y
+        );
+
+
+        if(d<o.size+25){
+
+            if(
+                o.type==="diamond"
+            ){
+
+                score+=250;
+                treasures++;
+
+                o.y=H+999;
+
+            }
+
+            else if(
+                o.type==="chest"
+            ){
+
+                score+=500;
+                treasures++;
+
+                o.y=H+999;
+
+            }
+
+            else{
+
+                o.y=H+999;
+
+                damage();
+
+            }
+
+        }
+
+    }
+
+
+    objects=
+    objects.filter(
+        o=>o.y<H+100
+    );
+
+
+    const remaining=
+    Math.max(
+        0,
+        30-
+        Math.floor(
+            (now-startTime)/1000
+        )
+    );
+
+
+    document
+    .getElementById("tcTime")
+    .textContent=remaining;
+
+
+    updateHUD();
+
+
+    if(remaining<=0)
+    endGame();
+
+}
+
+
+function draw(){
+
+    ctx.clearRect(
+        0,0,W,H
+    );
+
+
+    const gradient=
+    ctx.createRadialGradient(
+        W/2,
+        H/2,
+        20,
+        W/2,
+        H/2,
+        Math.max(W,H)
+    );
+
+    gradient.addColorStop(
+        0,
+        "#4b2910"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#1d1007"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#050301"
+    );
+
+    ctx.fillStyle=gradient;
+
+    ctx.fillRect(
+        0,0,W,H
+    );
+
+
+    for(const s of stars){
+
+        ctx.fillStyle=
+        "rgba(255,218,150,.35)";
+
+        ctx.fillRect(
+            s.x,
+            s.y,
+            s.size,
+            s.size
+        );
+
+    }
+
+
+    for(const o of objects){
+
+        if(o.type==="diamond"){
+
+            ctx.save();
+
+            ctx.translate(
+                o.x,
+                o.y
+            );
+
+            ctx.rotate(
+                Math.PI/4
+            );
+
+            ctx.shadowColor=
+            "#52e6ff";
+
+            ctx.shadowBlur=18;
+
+            ctx.fillStyle=
+            "#52e6ff";
+
+            ctx.fillRect(
+                -o.size/2,
+                -o.size/2,
+                o.size,
+                o.size
+            );
+
+            ctx.restore();
+
+        }
+
+
+        else if(o.type==="chest"){
+
+            ctx.fillStyle=
+            "#a96725";
+
+            ctx.fillRect(
+                o.x-o.size,
+                o.y-o.size*.55,
+                o.size*2,
+                o.size*1.1
+            );
+
+            ctx.fillStyle=
+            "#ffd45a";
+
+            ctx.fillRect(
+                o.x-4,
+                o.y-3,
+                8,
+                8
+            );
+
+        }
+
+
+        else{
+
+            ctx.beginPath();
+
+            ctx.arc(
+                o.x,
+                o.y,
+                o.size,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle=
+            "#66564a";
+
+            ctx.fill();
+
+        }
+
+    }
+
+
+    if(running){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x,
+            player.y
+        );
+
+
+        if(
+            player.invincible>0 &&
+            Math.floor(
+                player.invincible/100
+            )%2===0
+        ){
+
+            ctx.globalAlpha=.35;
+
+        }
+
+
+        /* kafa */
+
+        ctx.fillStyle=
+        "#ffd45a";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -12,
+            14,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        /* gövde */
+
+        ctx.fillStyle=
+        "#704321";
+
+        ctx.fillRect(
+            -13,
+            3,
+            26,
+            28
+        );
+
+
+        /* kafa lambası */
+
+        ctx.fillStyle=
+        "#fff5c0";
+
+        ctx.shadowColor=
+        "#fff0a0";
+
+        ctx.shadowBlur=25;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -15,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+function loop(){
+
+    if(!running)
+    return;
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(loop);
+
+}
+
+
+function endGame(){
+
+    if(!running)
+    return;
+
+    running=false;
+
+    document
+    .getElementById("tcControls")
+    .style.display="none";
+
+    document
+    .getElementById("tcFinalScore")
+    .textContent=score;
+
+    document
+    .getElementById("tcTreasures")
+    .textContent=treasures;
+
+    document
+    .getElementById("tcEnd")
+    .style.display="flex";
+
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+function holdButton(id,key){
+
+    const el=
+    document.getElementById(id);
+
+    const down=e=>{
+
+        e.preventDefault();
+
+        keys[key]=true;
+
+    };
+
+    const up=e=>{
+
+        e.preventDefault();
+
+        keys[key]=false;
+
+    };
+
+    el.addEventListener(
+        "pointerdown",
+        down
+    );
+
+    el.addEventListener(
+        "pointerup",
+        up
+    );
+
+    el.addEventListener(
+        "pointercancel",
+        up
+    );
+
+    el.addEventListener(
+        "pointerleave",
+        up
+    );
+
+}
+
+
+holdButton(
+    "tcLeft",
+    "left"
+);
+
+holdButton(
+    "tcRight",
+    "right"
+);
+
+
+/* ELLE TOPLAMA */
+
+document
+.getElementById("tcCollect")
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        e.preventDefault();
+
+        for(const o of objects){
+
+            const d=
+            Math.hypot(
+                o.x-player.x,
+                o.y-player.y
+            );
+
+            if(
+                d<100 &&
+                (
+                    o.type==="diamond" ||
+                    o.type==="chest"
+                )
+            ){
+
+                score +=
+                o.type==="diamond"
+                ?250
+                :500;
+
+                treasures++;
+
+                o.y=H+999;
+
+                updateHUD();
+
+                break;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* BUTTONS */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+againBtn.addEventListener(
+    "click",
+    startGame
+);
+
+closeBtn.addEventListener(
+    "click",
+    closeGame
+);
+
+
+/* ESC */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains("active")
+        ){
+
+            closeGame();
+
+        }
+
+        if(e.key==="ArrowLeft")
+        keys.left=true;
+
+        if(e.key==="ArrowRight")
+        keys.right=true;
+
+    }
+);
+
+document.addEventListener(
+    "keyup",
+    e=>{
+
+        if(e.key==="ArrowLeft")
+        keys.left=false;
+
+        if(e.key==="ArrowRight")
+        keys.right=false;
+
+    }
+);
+
+
+/* =========================
+   TREASURE CAVE KARTINI BUL
+========================= */
+
+function findTreasureCard(){
+
+    const headings =
+    document.querySelectorAll(
+        "h1,h2,h3,h4,h5,h6,div,span,p"
+    );
+
+
+    for(
+        const el of headings
+    ){
+
+        const text =
+        el.textContent
+        .trim()
+        .toUpperCase();
+
+
+        if(
+            text==="TREASURE CAVE"
+        ){
+
+            let card=el;
+
+
+            for(
+                let i=0;
+                i<5;
+                i++
+            ){
+
+                if(!card.parentElement)
+                break;
+
+                card=card.parentElement;
+
+
+                const cardText=
+                card.textContent
+                .toUpperCase();
+
+
+                if(
+                    cardText.includes(
+                        "TREASURE CAVE"
+                    ) &&
+                    cardText.length<250
+                ){
+
+                    return card;
+
+                }
+
+            }
+
+            return el.parentElement;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+function activateTreasureCard(){
+
+    const card=
+    findTreasureCard();
+
+
+    if(!card)
+    return;
+
+
+    card.style.cursor="pointer";
+
+
+    /*
+      SOON / LOCK
+      yazılarını kaldır
+    */
+
+    const all=
+    card.querySelectorAll("*");
+
+
+    all.forEach(el=>{
+
+        const t=
+        el.textContent
+        .trim()
+        .toUpperCase();
+
+
+        if(
+            t==="SOON" ||
+            t==="YAKINDA" ||
+            t==="🔒"
+        ){
+
+            el.style.display="none";
+
+        }
+
+    });
+
+
+    /*
+      Tıklama
+    */
+
+    card.addEventListener(
+        "click",
+        function(e){
+
+            /*
+              Kartın içindeki
+              mevcut butonlara
+              basıldıysa tekrar
+              çalıştırma
+            */
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openGame();
+
+        },
+        true
+    );
+
+
+    /*
+      PLAY etiketi
+    */
+
+    if(
+        !card.querySelector(
+            ".tcPlayLabel"
+        )
+    ){
+
+        const label=
+        document.createElement(
+            "div"
+        );
+
+        label.className=
+        "tcPlayLabel";
+
+        label.textContent=
+        "💎 PLAY";
+
+        label.style.cssText=
+        `
+        margin-top:8px;
+        display:inline-block;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#ffd45a;
+        color:#241300;
+        font-size:11px;
+        font-weight:900;
+        `;
+
+        card.appendChild(label);
+
+    }
+
+}
+
+
+/*
+  İlk deneme
+*/
+
+activateTreasureCard();
+
+
+/*
+  Site içeriği sonradan
+  yüklenirse tekrar dene
+*/
+
+const observer=
+new MutationObserver(
+()=>{
+    activateTreasureCard();
+});
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+/* resize */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        if(
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            resize();
+
+        }
+    }
+);
+
+
+})();
+</script>
 </body>
 </html>
