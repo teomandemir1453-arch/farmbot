@@ -4516,12 +4516,10 @@ function renderDailyGameRewardCard(){
 
 async function claimDailyGameReward(){
 
-    const amount=
-        Number(
-            dailyRewardPool||0
-        );
+    const amount =
+        Number(dailyRewardPool || 0);
 
-    if(amount<=0){
+    if(amount <= 0){
 
         alert(
             'Daily Reward bakiyeniz henüz birikmedi.'
@@ -4530,126 +4528,139 @@ async function claimDailyGameReward(){
         return;
     }
 
+    if(!tg || !tg.initData){
+
+        alert(
+            '❌ Telegram doğrulaması bulunamadı.'
+        );
+
+        return;
+    }
+
     try{
-const investmentResponse =
-    await fetch(
-        POSTGRES_API + '/api/game-investment',
-        {
-            method:'POST',
 
-            headers:{
-                'Content-Type':
-                    'application/json'
-            },
+        /* =========================================
+           OYUN KAZANCINI POSTGRESQL'E EKLE
+        ========================================= */
 
-            body:JSON.stringify({
-                initData:
-                    tg.initData,
+        const investmentResponse =
+            await fetch(
+                POSTGRES_API +
+                '/api/game-investment',
+                {
+                    method:'POST',
 
-                amount:
-                    amount
-            }),
+                    headers:{
+                        'Content-Type':
+                            'application/json'
+                    },
 
-            cache:'no-store'
+                    body:JSON.stringify({
+
+                        initData:
+                            tg.initData,
+
+                        amount:
+                            amount
+
+                    }),
+
+                    cache:'no-store'
+                }
+            );
+
+
+        const investmentResult =
+            await investmentResponse.json();
+
+
+        if(
+            !investmentResponse.ok ||
+            !investmentResult.ok
+        ){
+
+            throw new Error(
+                investmentResult.message ||
+                'Oyun yatırımı PostgreSQL\'e kaydedilemedi.'
+            );
+
         }
-    );
 
-const investmentResult =
-    await investmentResponse.json();
 
-if(
-    !investmentResponse.ok ||
-    !investmentResult.ok
-){
-    throw new Error(
-        investmentResult.message ||
-        'Oyun yatırımı PostgreSQL kayıt hatası.'
-    );
-}
-        const ref=
-            db.collection(
-                'users'
-            ).doc(userId);
+        /* =========================================
+           POSTGRESQL'DEKİ TOTAL INVESTMENT
+        ========================================= */
 
-        const snap=
-            await ref.get();
+        if(
+            investmentResult.total_invested !==
+            undefined
+        ){
 
-        const data=
-            snap.data()||{};
+            totalInvested =
+                Number(
+                    investmentResult.total_invested
+                );
 
-        const investments=
-            Array.isArray(
-                data.gameInvestments
-            )
-            ?data.gameInvestments.slice()
-            :[];
+        }else{
 
-        const now=
-            Date.now();
+            totalInvested =
+                Number(totalInvested || 0) +
+                amount;
 
-        investments.push({
+        }
 
-            id:
-                'daily_game_'+
-                now,
 
-            amount,
+        /* =========================================
+           ÖDÜLÜ TÜKET
+        ========================================= */
 
-            source:
-                'Daily Reward',
+        dailyRewardPool = 0;
 
-            roiDays:
-                100,
 
-            startAt:
-                now,
-
-            endAt:
-                now+
-                ROI_MS,
-
-            status:
-                'active',
-
-            createdAt:
-                now
-        });
-
-        await ref.set({
-
-            gameInvestments:
-                investments,
-
-            dailyRewardPool:{
-                date:
-                    new Date()
-                        .toISOString()
-                        .slice(0,10),
-                amount:0,
-                games:{}
-            }
-
-        },{
-            merge:true
-        });
-
-        dailyRewardPool=0;
+        /* =========================================
+           EKRANI GÜNCELLE
+        ========================================= */
 
         updateUI();
 
+
+        /* PostgreSQL'den güncel hesabı çek */
+
+        await syncPostgresAccount();
+
+
         alert(
-            '✓ $'+
-            amount.toFixed(4)+
+            '✓ $' +
+            amount.toFixed(5) +
             ' üretime eklendi.'
         );
 
+
+        console.log(
+            '🎮 OYUN YATIRIMI BAŞARILI',
+            {
+                amount: amount,
+                totalInvested:
+                    totalInvested
+            }
+        );
+
+
     }catch(error){
 
-        console.error(error);
+        console.error(
+            '❌ Oyun yatırımı hatası:',
+            error
+        );
 
         alert(
-            '❌ '+error.message
+            '❌ ' +
+            (
+                error.message ||
+                'Oyun yatırımı kaydedilemedi.'
+            )
         );
+
     }
 }
 
