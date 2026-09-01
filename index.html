@@ -4614,48 +4614,7 @@ if(
             createdAt:
                 now
         });
-/* =========================================
-   OYUN KAZANCINI POSTGRESQL'E EKLE
-========================================= */
 
-const gameInvestmentResponse =
-    await fetch('/api/game-investment', {
-
-        method:'POST',
-
-        headers:{
-            'Content-Type':
-                'application/json'
-        },
-
-        body:JSON.stringify({
-
-            initData:
-                tg.initData,
-
-            amount:
-                amount
-
-        })
-
-    });
-
-
-const gameInvestmentResult =
-    await gameInvestmentResponse.json();
-
-
-if(
-    !gameInvestmentResponse.ok ||
-    !gameInvestmentResult.ok
-){
-
-    throw new Error(
-        gameInvestmentResult.message ||
-        'Oyun yatırımı kaydedilemedi.'
-    );
-
-}
         await ref.set({
 
             gameInvestments:
