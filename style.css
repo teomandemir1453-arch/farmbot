@@ -479,3 +479,311 @@ button{touch-action:manipulation}
   .game-card-body strong{font-size:8px!important}
   .game-card-body span,.game-card-body b{font-size:7px!important}
 }
+/* =========================
+   GAME CENTER
+========================= */
+
+.games-section{
+    width:100%;
+    margin:14px 0;
+    padding:14px 10px;
+    border-radius:20px;
+
+    background:
+        radial-gradient(
+            circle at 20% 100%,
+            rgba(0,255,255,.10),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            #071426,
+            #0b2038
+        );
+
+    border:1px solid rgba(0,255,255,.25);
+
+    box-shadow:
+        0 0 25px rgba(0,255,255,.08);
+}
+
+
+/* BAŞLIK */
+
+.games-title{
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.games-title h2{
+    margin:0 0 3px;
+
+    font-size:18px;
+    font-weight:900;
+
+    color:#00ffff;
+
+    text-shadow:
+        0 0 8px #00ffff,
+        0 0 18px rgba(0,255,255,.7);
+}
+
+.games-title p{
+    margin:0;
+
+    font-size:9px;
+    font-weight:700;
+
+    color:#9da8ca;
+    letter-spacing:.5px;
+}
+
+
+/* 4 OYUN */
+
+.games-container{
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:7px;
+}
+
+
+/* OYUN KARTI */
+
+.game-card{
+    min-width:0;
+
+    position:relative;
+
+    padding:6px;
+
+    text-align:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b182b,
+            #07101f
+        );
+
+    border:1px solid rgba(0,255,255,.22);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    overflow:hidden;
+}
+
+
+/* AKTİF OYUN */
+
+.game-card.active{
+    border-color:#00ffff;
+
+    box-shadow:
+        0 0 10px rgba(0,255,255,.35),
+        inset 0 0 15px rgba(0,255,255,.06);
+}
+
+
+/* MOUSE ÜZERİNE GELİNCE */
+
+.game-card:hover{
+    transform:translateY(-4px);
+
+    border-color:#00ffff;
+
+    box-shadow:
+        0 0 12px rgba(0,255,255,.65),
+        0 0 25px rgba(0,255,255,.25);
+}
+
+
+/* MOBİLDE TIKLAMA */
+
+.game-card:active{
+    transform:scale(.96);
+}
+
+
+/* OYUN GÖRSELİ */
+
+.game-card img{
+    display:block;
+
+    width:100%;
+
+    aspect-ratio:1 / 1;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    margin-bottom:6px;
+}
+
+
+/* OYUN ADI */
+
+.game-card h3{
+    margin:0 0 4px;
+
+    font-size:clamp(8px,2.2vw,12px);
+
+    line-height:1.1;
+
+    font-weight:900;
+
+    color:#fff;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+/* ALT BİLGİ */
+
+.game-card span{
+    display:block;
+
+    font-size:7px;
+
+    font-weight:800;
+
+    color:#ffc83d;
+
+    white-space:nowrap;
+}
+
+
+/* PLAY BUTONU */
+
+.game-play-btn{
+    width:100%;
+
+    margin-top:6px;
+
+    padding:6px 2px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc83d,
+            #ff8c00
+        );
+
+    color:#071426;
+
+    font-size:8px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 10px rgba(255,200,61,.45);
+}
+
+
+/* LIVE */
+
+.game-active-badge{
+    position:absolute;
+
+    top:6px;
+    right:6px;
+
+    padding:3px 5px;
+
+    border-radius:8px;
+
+    background:#31e981;
+
+    color:#06120c;
+
+    font-size:6px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 10px rgba(49,233,129,.8);
+
+    z-index:2;
+}
+
+
+/* KİLİT */
+
+.game-lock{
+    position:absolute;
+
+    top:6px;
+    left:6px;
+
+    width:22px;
+    height:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.65);
+
+    font-size:11px;
+
+    z-index:2;
+}
+
+
+/* KÜÇÜK TELEFONLAR */
+
+@media(max-width:360px){
+
+    .games-section{
+        padding:11px 7px;
+    }
+
+    .games-container{
+        gap:5px;
+    }
+
+    .game-card{
+        padding:5px;
+        border-radius:11px;
+    }
+
+    .game-card h3{
+        font-size:7px;
+    }
+
+    .game-card span{
+        font-size:6px;
+    }
+
+    .game-play-btn{
+        font-size:7px;
+        padding:5px 1px;
+    }
+
+    .game-active-badge{
+        font-size:5px;
+        padding:2px 4px;
+    }
+
+}
