@@ -1,1 +1,9967 @@
-fdhgfhfghnghjghj
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Başındaki https: kısmını silerek tarayıcının otomatik eşlemesini sağlayın -->
+<script src="//sad.adsgram.ai/js/adman.js"></script>
+
+
+<!-- HASHMINING_BALANCE_FIX_V3 -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Micro Monetize v1.3.4 Secure</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+
+<!-- ✅ HARİCİ CSS DOSYASI BAĞLANTISI EKLENDİ -->
+<link rel="stylesheet" href="style.css">
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<!-- ❌ <style> etiketi ve içindeki tüm CSS kaldırıldı -->
+</head>
+
+<body>
+<div class="container">
+
+<div id="page-home" class="card">
+
+<div class="mm-topbar">
+  <button class="mm-icon-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <img class="mm-logo" src="assets/logo.png" alt="Micro Monetize">
+  <button class="mm-icon-btn" onclick="openNotificationsQuick()" aria-label="Notifications">
+    🔔<span class="mm-badge" id="topNotifBadge">0</span>
+  </button>
+</div>
+
+<div class="mm-marquee">
+  <span class="speaker">📢</span>
+  <span>Welcome to Micro Monetize! Grow your wealth every day.</span>
+</div>
+
+<div class="mm-finance-card">
+  <div class="mm-finance-side balance-side" onclick="showPage('withdraw')">
+    <div class="mm-finance-icon">
+      <img src="assets/icons/balance.png" alt="Balance">
+    </div>
+    <div class="mm-finance-content">
+      <div class="mm-finance-title">TOTAL BALANCE <span class="mm-info">i</span></div>
+      <div class="mm-finance-value balance-value" id="balance">$0.000000</div>
+      <div class="mm-finance-sub" id="balanceBtc">≈ 0.000000 BTC</div>
+    </div>
+  </div>
+
+  <div class="mm-finance-side investment-side" onclick="showPage('buy')">
+    <div class="mm-finance-icon">
+      <img src="assets/icons/investment.png" alt="Investment">
+    </div>
+    <div class="mm-finance-content">
+      <div class="mm-finance-title">TOTAL INVESTMENT <span class="mm-info">i</span></div>
+      <div class="mm-finance-value investment-value" id="totalInvested">$0.00000</div>
+      <div class="mm-finance-sub">Active Investments</div>
+    </div>
+  </div>
+</div>
+
+<div id="gameHub" class="game-hub" style="display:none!important;">
+<div class="game-hub-title">
+<div>
+<strong>🎮 OYUNLAR</strong>
+<span>Bir oyun 30 saniye sürer • Her oyun günlük $0.001 kazanır.</span>
+</div>
+</div>
+
+<div class="game-grid">
+<button class="game-card active" type="button">
+<div class="game-art">⛏️💎🪙</div>
+<div class="game-card-body">
+<strong><i class="game-active-dot"></i>GOLD RUSH</strong>
+<span>30 saniye • Günlük $0.001</span>
+<b>▶ OYNA</b>
+</div>
+</button>
+
+<button class="game-card locked" type="button">
+<div class="game-art">💠</div>
+<div class="game-card-body">
+<strong>CRYSTAL HUNT</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
+
+<button class="game-card locked" type="button">
+<div class="game-art">🏃⛏️</div>
+<div class="game-card-body">
+<strong>MINER RUN</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
+
+<button class="game-card locked" type="button">
+<div class="game-art">🏆🪙</div>
+<div class="game-card-body">
+<strong>TREASURE CAVE</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
+
+<button class="game-card locked" type="button">
+<div class="game-art">⚡💎</div>
+<div class="game-card-body">
+<strong>POWER MINE</strong><span>Yakında</span><b>🔒 YAKINDA</b>
+</div>
+</button>
+</div>
+</div>
+
+<div id="miningRushModal" class="mr-modal" aria-hidden="true">
+<div class="mr-modal-backdrop" id="mrModalBackdrop"></div>
+<div class="mr-modal-dialog" role="dialog" aria-modal="true">
+<div class="mr-modal-header">
+<div><strong>⛏️ GOLD RUSH</strong><span>30 saniyelik madencilik oyunu</span></div>
+<button type="button" id="mrCloseModal" class="mr-modal-close">×</button>
+</div>
+
+<div class="mr-modal-body">
+<div class="mr-card" id="miningRushCard">
+
+<div class="mr-head">
+<div>
+<div class="mr-title">⛏️ Mining Rush</div>
+<div class="mr-sub">Break rocks, find rare gems & grow your investment balance.</div>
+</div>
+<div class="mr-live">● LIVE</div>
+</div>
+
+<div class="mr-stats">
+<div class="mr-stat"><b id="mrScore">0</b><span>Score</span></div>
+<div class="mr-stat"><b id="mrTime">30s</b><span>Time</span></div>
+<div class="mr-stat"><b id="mrReward">$0.0000</b><span>Reward</span></div>
+</div>
+
+<div class="mr-arena" id="mrArena">
+<div class="mr-combo" id="mrCombo">🔥 COMBO x0</div>
+<div class="mr-ground"></div>
+
+<div class="mr-center" id="mrCenter">
+<button class="mr-start" id="mrStart" type="button">⛏️ START MINING — 30s</button>
+</div>
+
+<div class="mr-result" id="mrResult">
+<div class="mr-result-box">
+<h3>⛏️ Mining Complete!</h3>
+<div class="mr-score" id="mrFinalScore">0</div>
+<div class="mr-reward" id="mrFinalReward">+$0.0000</div>
+<small id="mrFinalNote">Your game reward is calculated from your verified score.</small>
+<button type="button" id="mrTransfer">💰 TRANSFER REWARD</button>
+<div class="mr-transfer-status" id="mrTransferStatus" style="display:none;margin-top:10px;font-weight:700"></div>
+<button type="button" id="mrPlayAgain">Play Again</button>
+</div>
+</div>
+</div>
+
+<div class="mr-bottom">
+<div class="mr-progress"><i id="mrProgress"></i></div>
+<div class="mr-help"><span>Daily reward</span><b id="mrDaily">$0.000 / $0.001</b></div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="dailyGameRewardCard" class="daily-game-reward-card" style="display:none!important;"></div>
+
+<div class="quick-actions">
+<div class="quick-action-btn notif-btn" onclick="openNotificationsQuick()">
+<div class="qa-icon"></div>
+<div class="qa-label">notifications</div>
+<div class="qa-badge hidden" id="quickNotifBadge">0</div>
+</div>
+
+<div class="quick-action-btn bonus-btn" onclick="openSubPopup('dailyBonus')">
+<div class="qa-icon"></div>
+<div class="qa-label">daily bonus</div>
+</div>
+
+<div class="quick-action-btn tasks-btn" onclick="openSubPopup('tasks')">
+<div class="qa-icon"></div>
+<div class="qa-label">tasks</div>
+</div>
+</div>
+
+<div class="earnings-estimate">
+<div class="earnings-title">Estimated Earnings</div>
+<div class="earnings-grid">
+<div class="earnings-item"><div class="icon">⏱️</div><div class="label">Minute</div><div class="value">$<span id="earnPerMin">0.00</span></div></div>
+<div class="earnings-item"><div class="icon">🕐</div><div class="label">Hour</div><div class="value">$<span id="earnPerHour">0.00</span></div></div>
+<div class="earnings-item"><div class="icon">📅</div><div class="label">Day</div><div class="value">$<span id="earnPerDay">0.00</span></div></div>
+</div>
+</div>
+
+<div class="telegram-notif-card inactive" id="telegramNotifCard" onclick="activateTelegramNotif()">
+<div class="telegram-icon">🔔</div>
+<div class="telegram-content">
+<div class="telegram-title" id="telegramTitle">Activate Notifications</div>
+<div class="telegram-desc" id="telegramDesc">Get instant alerts on Telegram!</div>
+</div>
+<div class="telegram-check" id="telegramCheck">›</div>
+</div>
+<section class="games-section">
+
+    <div class="games-title">
+        <h2>🎮 GAME CENTER</h2>
+        <p>PLAY GAMES • EARN REAL MONEY</p>
+    </div>
+
+    <div class="games-container">
+
+        <!-- 1. GOLD RUSH -->
+        <div class="game-card active"
+             onclick="openMiningRushModal()">
+
+            <div class="game-active-badge">LIVE</div>
+
+            <img src="assets/games/gold-rush.png"
+                 alt="Gold Rush">
+
+            <h3>GOLD RUSH</h3>
+
+            <span>30 SEC</span>
+
+            <button class="game-play-btn">
+                ▶ PLAY
+            </button>
+
+        </div>
+
+
+        <!-- 2. CRYSTAL HUNT -->
+        <div class="game-card">
+
+            <div class="game-lock">🔒</div>
+
+            <img src="assets/games/crystal.png"
+                 alt="Crystal Hunt">
+
+            <h3>CRYSTAL HUNT</h3>
+
+            <span>SOON</span>
+
+        </div>
+
+
+        <!-- 3. MINER RUN -->
+        <div class="game-card">
+
+            <div class="game-lock">🔒</div>
+
+            <img src="assets/games/miner.png"
+                 alt="Miner Run">
+
+            <h3>MINER RUN</h3>
+
+            <span>SOON</span>
+
+        </div>
+
+
+        <!-- 4. TREASURE CAVE -->
+        <div class="game-card">
+
+            <div class="game-lock">🔒</div>
+
+            <img src="assets/games/treasure.png"
+                 alt="Treasure Cave">
+
+            <h3>TREASURE CAVE</h3>
+
+            <span>SOON</span>
+
+        </div>
+
+    </div>
+
+</section>
+<div class="mm-promo">
+<h3>EARN MONEY <br><strong>EARN EVERY DAY!</strong></h3>
+<p>Secure • Stable • Profitable</p>
+<button class="promo-btn" onclick="window.location.href='/games/index.html'">
+    GAME CENTER ›
+</button>
+</div>
+
+<div class="packages-section-title">%20-%30 Discounted Packages!</div>
+<div class="packages-grid" id="packagesContainer"></div>
+<button class="calc-main-btn" onclick="openCalcPopup()">📊 Profit Calculator</button>
+</div>
+
+<div id="page-buy" class="card hidden">
+<h2>💎 Buy</h2>
+
+<div class="package-summary" id="packageSummary">
+<div class="package-summary-title">📦 Selected Package</div>
+<div class="package-summary-row"><span class="label">Package:</span><span class="value" id="summaryName">-</span></div>
+<div class="package-summary-row"><span class="label">Original:</span><span class="value" id="summaryOriginal">-</span></div>
+<div class="package-summary-row"><span class="label">Discounted:</span><span class="value" id="summaryDiscounted">-</span></div>
+<div class="package-summary-row"><span class="label">Saved:</span><span class="value" id="summaryRecord">-</span></div>
+</div>
+
+<div class="crypto-info">
+<strong>🌐 Network:</strong> <span class="network-badge">TRON (TRC20)</span><br>
+<strong>🪙 Coin:</strong> TRX<br>
+<strong>📍 Wallet:</strong><br>
+<span id="depositWallet" style="word-break:break-all;color:#D59D80;font-family:monospace;font-size:11px;background:#0D1D25;padding:5px;border-radius:5px;display:block;margin-top:3px;border:1px dashed #C0754D">TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN</span>
+<button class="btn" style="padding:8px;font-size:12px;margin-top:8px" onclick="copyDepositAddress()">📋 Copy</button>
+</div>
+
+<div class="qr-container">
+<img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN" alt="QR">
+<div class="qr-label">📱 Send TRX via QR</div>
+</div>
+
+<div class="network-info">⚠️ <strong>IMPORTANT:</strong> Only TRON (TRC20) network is accepted!</div>
+
+<h3 id="amountLabel">Amount (USD)</h3>
+<div class="amount-control">
+<button class="btn btn-ctrl" onclick="adjustAmount(-1)">−</button>
+<input type="number" id="buyAmount" placeholder="1.00" min="1" max="9999" value="1" oninput="updateBuyTRX()">
+<button class="btn btn-ctrl" onclick="adjustAmount(1)">+</button>
+</div>
+
+<div class="amount-info">
+<span>Min: $1 (<span id="minTrx">8.33</span> TRX)</span>
+<span>Max: $9,999</span>
+</div>
+
+<div class="crypto-info" style="text-align:center">
+<strong>Equivalent:</strong>
+<span id="buyTrxAmount" style="color:#D59D80;font-weight:800;font-size:18px">8.33</span> TRX
+</div>
+
+<button class="btn btn-approve" onclick="buyProduct()">✅ Payment Sent</button>
+<button class="btn btn-secondary" onclick="resetAndGoHome()">← Cancel</button>
+
+<div id="investmentRoiStatus" style="margin:10px 0;padding:9px;border-radius:9px;background:rgba(167,76,255,.10);border:1px solid rgba(167,76,255,.25);color:#cfc7ff;font-size:10px;font-weight:800;text-align:center">100 günlük ROI • Aktif yatırım: $0.00</div>
+
+<div class="history-section">
+<div class="history-title">📜 Deposit History</div>
+<div id="depositHistory"></div>
+</div>
+</div>
+
+<div id="page-withdraw" class="card hidden">
+<h2>💸 Withdraw</h2>
+
+<div class="balance-display">
+<div style="font-size:12px;opacity:.9">Balance</div>
+<div class="amount">$<span id="withdrawBalance">0.00</span></div>
+<div style="font-size:11px;margin-top:2px;opacity:.8">Min: $0.25</div>
+</div>
+
+<h3>Amount (USD)</h3>
+<div style="display:flex;align-items:center;margin-bottom:4px">
+<input type="number" id="withdrawAmount" placeholder="0.00" min="0.25" step="0.01" oninput="updateCryptoAmount()" style="flex:1;margin-right:6px">
+<button class="max-btn" onclick="setMaxAmount()">MAX</button>
+</div>
+
+<h3>🪙 Crypto</h3>
+<select id="withdrawCrypto" onchange="updateCryptoAmount();clearAddressValidation();updateNetworkInfo()">
+<option value="trx">TRX (TRON)</option>
+<option value="bnb">BNB (Binance)</option>
+<option value="xrp">XRP (Ripple)</option>
+</select>
+
+<div class="network-info" id="networkInfo">
+<strong>🌐 Network:</strong> TRON (TRC20)
+</div>
+
+<div class="crypto-info" style="text-align:center">
+<strong>Equivalent:</strong>
+<span id="cryptoEquivalent" style="color:#D59D80;font-weight:800;font-size:16px">0.00</span>
+<span id="cryptoSymbol">TRX</span>
+</div>
+
+<h3>📍 Wallet Address</h3>
+<input type="text" id="walletAddress" placeholder="Enter wallet address..." oninput="validateAddressInput()">
+<div id="addressValidationMsg" style="font-size:10px;margin-top:-6px;margin-bottom:8px;font-weight:600;padding:3px 6px;border-radius:5px;display:none"></div>
+
+<button class="btn btn-withdraw" onclick="requestWithdrawal()">💸 Withdraw</button>
+<button class="btn btn-secondary" onclick="showPage('home')" style="margin-top:8px">← Cancel</button>
+
+<div class="history-section">
+<div class="history-title">📜 Withdrawal History</div>
+<div id="withdrawalHistory"></div>
+</div>
+</div>
+
+<div id="page-admin" class="card hidden">
+<h2>🔐 Admin</h2>
+<p style="text-align:center;color:#C6C6D0;padding:15px">
+Admin Panel:<br><br>
+<a href="admin.html" target="_blank" class="btn">🛡️ Open Admin Panel</a>
+</p>
+</div>
+
+</div>
+
+<div class="profile-overlay" id="profileOverlay" onclick="closeProfileOutside(event)">
+<div class="profile-popup" onclick="event.stopPropagation()">
+<div class="profile-header">
+<button class="profile-close" onclick="closeProfile()">✕</button>
+<div class="profile-name" id="profileName">User</div>
+</div>
+
+<div class="profile-body">
+<div class="profile-register-date">
+📅 <strong>Joined:</strong> <span id="profileRegisterDate">Loading...</span>
+</div>
+
+<div class="level-card">
+<div class="level-header">
+<div class="level-badge"><span class="level-icon" id="levelIcon"></span><span id="levelName">Bronze</span></div>
+<div class="level-progress-info" id="levelProgressInfo">$0 / $50</div>
+</div>
+<div class="level-progress-bar"><div class="level-progress-fill" id="levelProgressFill" style="width:0%"></div></div>
+</div>
+
+<div class="profile-stats-grid">
+<div class="profile-stat"><div class="p-icon balance"></div><div class="p-label">Balance</div><div class="p-value" id="pBalance">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon investment"></div><div class="p-label">Investment</div><div class="p-value" id="pInvested">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon withdraw"></div><div class="p-label">Withdrawn</div><div class="p-value" id="pWithdrawn">$0.00</div></div>
+<div class="profile-stat"><div class="p-icon commission"></div><div class="p-label">Commission</div><div class="p-value" id="pCommission">$0.00</div></div>
+</div>
+
+<div class="profile-menu">
+<div class="profile-menu-item" onclick="openSubPopup('dailyBonus')"><div class="m-icon"><img src="assets/icons/daily-bonus.png"></div><div class="m-content"><div class="m-title">Daily Bonus</div><div class="m-desc" id="dailyBonusDesc">Claim bonus</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('tasks')"><div class="m-icon"><img src="assets/icons/tasks.png"></div><div class="m-content"><div class="m-title">Tasks</div><div class="m-desc">Earn bonuses</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('chart')"><div class="m-icon"><img src="assets/icons/chart.png"></div><div class="m-content"><div class="m-title">Chart</div><div class="m-desc">View earnings</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('referral')"><div class="m-icon"><img src="assets/icons/referral.png"></div><div class="m-content"><div class="m-title">Referral</div><div class="m-desc" id="referralMenuDesc">Earn 10% commission</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSubPopup('faq')"><div class="m-icon"><img src="assets/icons/faq.png"></div><div class="m-content"><div class="m-title">FAQ</div><div class="m-desc">Help & Support</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openSupport()"><div class="m-icon"><img src="assets/icons/support.png"></div><div class="m-content"><div class="m-title">Support</div><div class="m-desc">Telegram</div></div><div class="m-arrow">›</div></div>
+<div class="profile-menu-item" onclick="openLanguageSelector()"><div class="m-icon"><img src="assets/icons/language.png"></div><div class="m-content"><div class="m-title">Language</div><div class="m-desc" id="currentLangDesc">English</div></div><div class="m-arrow">›</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sub-overlay" id="subOverlay" onclick="closeSubOutside(event)">
+<div class="sub-popup" onclick="event.stopPropagation()" id="subPopupContent"></div>
+</div>
+
+<div class="calc-overlay" id="calcOverlay" onclick="closeCalcOutside(event)">
+<div class="calc-popup" onclick="event.stopPropagation()">
+<div class="calc-header">
+<button class="calc-close" onclick="closeCalcPopup()">✕</button>
+<h2>📊 Profit Calculator</h2>
+<p>Enter amount manually!</p>
+</div>
+<div class="calc-body">
+<div class="calc-manual-input">
+<label>💰 Enter Amount (USD)</label>
+<div class="input-wrapper">
+<div class="input-prefix">$</div>
+<input type="number" id="calcCustomAmount" placeholder="50, 250..." min="1" max="9999" oninput="onCustomAmountChange()">
+</div>
+</div>
+<div class="calc-results" id="calcResults"></div>
+<div class="calc-total-box" id="calcTotalBox"></div>
+</div>
+</div>
+</div>
+
+<div id="offlinePopup" class="hidden">
+<div class="offline-overlay" onclick="closeOfflinePopup()"></div>
+<div class="offline-popup">
+<h3>⛏️ Welcome Back!</h3>
+<p style="color:#C6C6D0;font-size:12px">Miners were working:</p>
+<div class="amount">+$<span id="offlineEarnedAmount">0.00</span></div>
+<button class="btn btn-approve" onclick="closeOfflinePopup()">Collect</button>
+</div>
+</div>
+
+<div id="welcomePopup" class="hidden">
+<div class="welcome-overlay" onclick="closeWelcomePopup()"></div>
+<div class="welcome-popup">
+<h3>🎉 Welcome!</h3>
+<p style="color:#C6C6D0;font-size:12px">New member investment bonus:</p>
+<div class="amount">+$<span id="welcomeAmount">1.00</span></div>
+<p style="color:#C6C6D0;font-size:10px;margin-bottom:10px">Added directly to your total investment!</p>
+<button class="btn btn-approve" onclick="closeWelcomePopup()">Great!</button>
+</div>
+</div>
+
+<div id="notifToast" class="notif-toast">🔔 Notification!</div>
+
+<script>
+/* =========================================================
+   API
+========================================================= */
+
+/*
+ * Güncel Quick Tunnel adresin.
+ * Tunnel değişirse sadece bu satırı değiştir.
+ */
+
+/*
+ * Bot tokenlarını GitHub'daki HTML dosyasına koyma.
+ * Bildirim gönderimini mümkün olduğunca server/.env üzerinden yap.
+ */
+const ADMIN_ID="8974010159";
+const GAME_BOT_USERNAME="farm_bot_serik_bot";
+const NOTIFY_BOT_USERNAME="hashmining_notify_bot";
+
+const REFERRAL_COMMISSION=0.10;
+const WELCOME_BONUS=1.00;
+const MIN_INVESTMENT_TO_UNLOCK=3;
+
+
+
+let currentPrices={
+    trx:0.12,
+    bnb:600,
+    xrp:0.50
+};
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+let currentUser=null;
+let userId=null;
+let products=[];
+let lifetimeEarnings=0;
+let totalWithdrawn=0;
+let balance=0;
+let totalInvested=0;
+let estimatedEarnings=0;
+let createdAt=null;
+
+let referralCount=0;
+let pendingReferralBonus=0;
+let referralBonusUnlocked=false;
+let referralEarnings=0;
+
+let selectedPackageName='';
+let selectedPackageOriginal=0;
+let selectedPackageDiscounted=0;
+
+let referredByUserId=null;
+
+let dailyBonusData={
+    lastClaim:0,
+    streak:0
+};
+
+let notificationsData=[];
+let earningsHistory=[];
+let currentChartPeriod='7d';
+
+let taskClaims={};
+let taskRewardTotal=0;
+
+let dailyRewardPool=0;
+let dailyGameRewards={};
+
+let gameInvestments=[];
+
+let postgresAccount=null;
+let postgresSyncBusy=false;
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const ROI_DAYS=100;
+const DAILY_RATE=1/ROI_DAYS;
+const PER_SECOND=DAILY_RATE/86400;
+const ROI_MS=ROI_DAYS*86400000;
+
+const DEPOSIT_WALLET="TEF5upGWeJNx9ViSeoHvG5L1bKKGLjaDUN";
+const DISCOUNT_RATE=0.20;
+const MIN_DEPOSIT=1;
+const MAX_DEPOSIT=9999;
+
+const CRYPTO_SYMBOLS={
+    trx:'TRX',
+    bnb:'BNB',
+    xrp:'XRP'
+};
+
+const NETWORK_INFO={
+    trx:{
+        fullName:'TRON (TRC20)',
+        description:'TRX coin\'leri TRON ağı üzerinden gönderilecektir.'
+    },
+    bnb:{
+        fullName:'BSC (BEP20)',
+        description:'BNB coin\'leri BSC ağı üzerinden gönderilecektir.'
+    },
+    xrp:{
+        fullName:'XRP Ledger',
+        description:'XRP coin\'leri XRP Ledger ağı üzerinden gönderilecektir.'
+    }
+};
+
+const packages=[
+    {
+        name:'Mini',
+        price:3,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Micro',
+        price:10,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Ultra',
+        price:100,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'PRO Ultra',
+        price:500,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'Business',
+        price:1000,
+        featured:false,
+        discount:0.20
+    },
+    {
+        name:'^CEO^',
+        price:5000,
+        featured:true,
+        discount:0.30
+    }
+];
+
+const DAILY_BONUSES=[
+    0.01,0.02,0.03,0.04,0.05,0.08,0.10
+];
+
+const CALC_RATE=0.0111;
+let customAmount=0;
+/* =========================================================
+   POSTGRESQL API
+========================================================= */
+
+const POSTGRES_API = '';
+
+const tg=window.Telegram.WebApp;
+
+tg.ready();
+tg.expand();
+
+/* =========================================================
+   TELEGRAM -> POSTGRESQL USER
+========================================================= */
+
+async function registerTelegramUserWithBackend(){
+
+    try{
+
+        if(!tg.initData){
+
+            console.warn(
+                
+            );
+
+            return null;
+        }
+
+        const response = await fetch(
+    POSTGRES_API + '/api/user',
+    {
+        method:'POST', 
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            initData: tg.initData,
+            referredBy: referredByUserId || null
+        }),
+        cache:'no-store'
+    }
+);
+
+        const data=await response.json();
+
+        if(!response.ok || !data.ok){
+
+            console.error(
+                'PostgreSQL kayıt hatası:',
+                data
+            );
+
+            return null;
+        }
+
+        /*
+         * Yeni backend cevabın:
+         * data.account
+         *
+         * Eski yapı:
+         * data.user
+         */
+        return data.account || data.user || null;
+
+    }catch(error){
+
+        console.error(
+            'Backend bağlantı hatası:',
+            error
+        );
+
+        return null;
+    }
+}
+
+/* =========================================================
+   POSTGRES ACCOUNT SYNC
+========================================================= */
+
+async function syncPostgresAccount(){
+
+    if(!tg || !tg.initData){
+        
+        return null;
+    }
+
+    if(typeof postgresSyncBusy !== 'undefined' && postgresSyncBusy){
+        return postgresAccount || null;
+    }
+
+    postgresSyncBusy = true;
+
+    try{
+
+        console.log("✅ PostgreSQL API:", POSTGRES_API);
+
+        const response = await fetch(
+            POSTGRES_API + '/api/user',
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    initData:tg.initData
+                }),
+                cache:'no-store'
+            }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.ok){
+
+            console.error(
+                'PostgreSQL senkronizasyon hatası:',
+                data
+            );
+
+            return null;
+        }
+
+        const account = data.account || data.user;
+
+        if(!account){
+
+            console.error(
+                'PostgreSQL hesap verisi bulunamadı:',
+                data
+            );
+
+            return null;
+        }
+
+        postgresAccount = account;
+
+        
+        balance = Number(account.balance || 0);
+        if (typeof renderPostgresBalance === 'function') renderPostgresBalance();
+/*
+         * ANA DEĞERLER POSTGRESQL'DEN
+         */
+        balance = Number(account.balance || 0);
+
+        totalInvested =
+            Number(account.total_invested || 0);
+
+        totalWithdrawn =
+            Number(account.total_withdrawn || 0);
+
+        referralEarnings =
+            Number(account.referral_earnings || 0);
+
+        /*
+         * EKRANI GÜNCELLE
+         */
+        if(typeof renderPostgresBalance === 'function'){
+            renderPostgresBalance();
+        }
+
+        if(typeof updateUI === 'function'){
+            updateUI();
+        }
+
+        if(typeof updateProfileData === 'function'){
+            updateProfileData();
+        }
+
+        console.log('✅ PostgreSQL hesap senkronize edildi:', account);
+
+        return account;
+
+    }catch(error){
+
+        console.error(
+            'PostgreSQL sync error:',
+            error
+        );
+
+        return null;
+
+    }finally{
+
+        postgresSyncBusy = false;
+    }
+}
+function renderPostgresBalance(){
+
+    const balanceEl=
+        document.getElementById('balance');
+
+    if(balanceEl){
+
+        const value=
+            '$'+Number(balance||0).toFixed(6);
+
+        if(balanceEl.textContent!==value){
+
+            balanceEl.textContent=value;
+
+            balanceEl.style.textShadow=
+                '0 0 25px rgba(49,233,129,.9)';
+
+            setTimeout(()=>{
+
+                if(balanceEl){
+
+                    balanceEl.style.textShadow=
+                        '0 0 15px rgba(49,233,129,.5)';
+                }
+
+            },180);
+        }
+    }
+
+    const withdrawBalance=
+        document.getElementById('withdrawBalance');
+
+    if(withdrawBalance){
+
+        withdrawBalance.textContent=
+            Number(balance||0).toFixed(2);
+    }
+
+    const invested=
+        document.getElementById('totalInvested');
+
+    if(invested){
+
+        invested.textContent=
+            '$'+Number(totalInvested||0).toFixed(5);
+    }
+
+    const profileBalance=
+        document.getElementById('pBalance');
+
+    if(profileBalance){
+
+        profileBalance.textContent=
+            '$'+Number(balance||0).toFixed(2);
+    }
+
+    const profileInvested=
+        document.getElementById('pInvested');
+
+    if(profileInvested){
+
+        profileInvested.textContent=
+            '$'+Number(totalInvested||0).toFixed(4);
+    }
+
+    const profileWithdrawn=
+        document.getElementById('pWithdrawn');
+
+    if(profileWithdrawn){
+
+        profileWithdrawn.textContent=
+            '$'+Number(totalWithdrawn||0).toFixed(2);
+    }
+
+    const profileCommission=
+        document.getElementById('pCommission');
+
+    if(profileCommission){
+
+        profileCommission.textContent=
+            '$'+Number(referralEarnings||0).toFixed(2);
+    }
+
+    const btcEl=
+        document.getElementById('balanceBtc');
+
+    if(btcEl){
+
+        btcEl.textContent=
+            '≈ '+
+            (Number(balance||0)/60000).toFixed(6)+
+            ' BTC';
+    }
+
+    const roiEl=
+        document.getElementById(
+            'investmentRoiStatus'
+        );
+
+    if(roiEl){
+
+        roiEl.textContent=
+            '100 günlük ROI • Aktif yatırım: $'+
+            Number(totalInvested||0).toFixed(4);
+    }
+}
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+const langFlags={
+    en:'🇺 English',
+    ru:'🇷 Русский',
+    tr:'🇹 Türkçe',
+    es:'🇪 Español',
+    de:'🇩 Deutsch'
+};
+
+let currentLang='en';
+
+function setLanguage(lang){
+
+    if(!langFlags[lang]){
+        lang='en';
+    }
+
+    currentLang=lang;
+
+    const langDesc=
+        document.getElementById(
+            'currentLangDesc'
+        );
+
+    if(langDesc){
+
+        langDesc.textContent=
+            langFlags[lang];
+    }
+}
+
+function openLanguageSelector(){
+
+    let h=`
+    <div class="sub-popup-header">
+        <div class="sub-popup-title">🌐 Select Language</div>
+        <button class="sub-popup-close"
+            onclick="closeSubPopup()">✕</button>
+    </div>
+    `;
+
+    Object.keys(langFlags).forEach(code=>{
+
+        const active=
+            code===currentLang
+            ? 'style="background:#D59D80;color:#fff;"'
+            : '';
+
+        h+=`
+        <div
+            class="profile-menu-item"
+            ${active}
+            onclick="setLanguage('${code}');closeSubPopup()"
+        >
+            <div class="m-icon">
+                ${langFlags[code].split(' ')[0]}
+            </div>
+            <div class="m-content">
+                <div class="m-title">
+                    ${langFlags[code].substring(2)}
+                </div>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById(
+        'subPopupContent'
+    ).innerHTML=h;
+
+    document.getElementById(
+        'subOverlay'
+    ).classList.add('show');
+}
+
+/* =========================================================
+   TELEGRAM USER
+========================================================= */
+
+if(
+    tg.initDataUnsafe &&
+    tg.initDataUnsafe.user
+){
+
+    currentUser=
+        tg.initDataUnsafe.user;
+}
+
+const startParam=
+    tg.initDataUnsafe?.start_param || '';
+
+if(
+    startParam &&
+    startParam.startsWith('ref_')
+){
+
+    referredByUserId=
+        startParam.replace('ref_','');
+}
+
+const addressValidators={
+
+    trx:a=>
+        /^T[a-km-zA-HJ-NP-Z1-9]{33}$/.test(a),
+
+    bnb:a=>
+        /^0x[a-fA-F0-9]{40}$/.test(a),
+
+    xrp:a=>
+        /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(a)
+};
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function openNotificationsQuick(){
+
+    openSubPopup(
+        'notifications'
+    );
+
+    markAllRead();
+}
+
+function updateQuickNotifBadge(){
+
+    const b=
+        document.getElementById(
+            'quickNotifBadge'
+        );
+
+    if(!b)return;
+
+    const unread=
+        notificationsData.filter(
+            n=>!n.read
+        ).length;
+
+    if(unread>0){
+
+        b.textContent=
+            unread>99
+            ? '99+'
+            : unread;
+
+        b.classList.remove('hidden');
+
+    }else{
+
+        b.classList.add('hidden');
+    }
+
+    const top=
+        document.getElementById(
+            'topNotifBadge'
+        );
+
+    if(top){
+
+        top.textContent=unread;
+        top.style.display=
+            unread ? 'flex' : 'none';
+    }
+}
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+function openCalcPopup(){
+
+    document.getElementById(
+        'calcCustomAmount'
+    ).value='';
+
+    customAmount=0;
+
+    renderCalcResults();
+
+    document.getElementById(
+        'calcOverlay'
+    ).classList.add('show');
+}
+
+function closeCalcPopup(){
+
+    document.getElementById(
+        'calcOverlay'
+    ).classList.remove('show');
+}
+
+function closeCalcOutside(e){
+
+    if(
+        e.target===
+        document.getElementById('calcOverlay')
+    ){
+
+        closeCalcPopup();
+    }
+}
+
+function onCustomAmountChange(){
+
+    const v=parseFloat(
+        document.getElementById(
+            'calcCustomAmount'
+        ).value
+    );
+
+    customAmount=
+        v && v>0
+        ? v
+        : 0;
+
+    renderCalcResults();
+}
+
+function renderCalcResults(){
+
+    if(customAmount<=0){
+
+        document.getElementById(
+            'calcResults'
+        ).innerHTML=
+            '<div style="text-align:center;padding:20px;opacity:.6">Enter amount manually!</div>';
+
+        document.getElementById(
+            'calcTotalBox'
+        ).innerHTML='';
+
+        return;
+    }
+
+    const a=customAmount;
+
+    const h=
+        a*CALC_RATE/24;
+
+    const d=
+        a*CALC_RATE;
+
+    const m=
+        d*30;
+
+    const hy=
+        d*180;
+
+    const oy=
+        d*365;
+
+    document.getElementById(
+        'calcResults'
+    ).innerHTML=`
+
+    <div class="calc-result-row">
+        <div class="cr-period">⏱️ Hourly</div>
+        <div class="cr-amount">$${h.toFixed(4)}</div>
+    </div>
+
+    <div class="calc-result-row">
+        <div class="cr-period">📅 Daily</div>
+        <div class="cr-amount">$${d.toFixed(4)}</div>
+    </div>
+
+    <div class="calc-result-row">
+        <div class="cr-period">🗓️ Monthly</div>
+        <div class="cr-amount">$${m.toFixed(2)}</div>
+    </div>
+
+    <div class="calc-result-row">
+        <div class="cr-period">📈 Half Year</div>
+        <div class="cr-amount">$${hy.toFixed(2)}</div>
+    </div>
+
+    <div class="calc-result-row highlight">
+        <div class="cr-period">🎯 1 Year</div>
+        <div class="cr-amount">$${oy.toFixed(2)}</div>
+    </div>
+    `;
+
+    const p=
+        oy-a;
+
+    const pp=
+        ((p/a)*100).toFixed(0);
+
+    document.getElementById(
+        'calcTotalBox'
+    ).innerHTML=`
+
+    <div class="ct-label">
+        1 Year Total
+    </div>
+
+    <div class="ct-value">
+        $${(a+oy).toFixed(2)}
+    </div>
+
+    <div class="ct-sub">
+        Net Profit:
+        $${p.toFixed(2)}
+        (${pp}%)
+    </div>
+    `;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile(){
+
+    updateProfileData();
+
+    document.getElementById(
+        'profileOverlay'
+    ).classList.add('show');
+}
+
+function closeProfile(){
+
+    document.getElementById(
+        'profileOverlay'
+    ).classList.remove('show');
+}
+
+function closeProfileOutside(e){
+
+    if(
+        e.target===
+        document.getElementById(
+            'profileOverlay'
+        )
+    ){
+
+        closeProfile();
+    }
+}
+
+function updateProfileData(){
+
+    const name=
+        currentUser
+        ? (
+            currentUser.first_name ||
+            currentUser.username ||
+            'User'
+        )
+        : 'Guest';
+
+    document.getElementById(
+        'profileName'
+    ).textContent=name;
+
+
+    if(createdAt){
+
+        document.getElementById(
+            'profileRegisterDate'
+        ).textContent=
+            (createdAt instanceof Date ? createdAt : new Date(createdAt)).toLocaleDateString(
+                currentLang==='tr'
+                ? 'tr-TR'
+                : 'en-US',
+                {
+                    day:'2-digit',
+                    month:'long',
+                    year:'numeric'
+                }
+            );
+    }
+
+    renderPostgresBalance();
+
+    updateLevel(totalInvested);
+
+    const today=
+        new Date().toDateString();
+
+    const lc=
+        dailyBonusData.lastClaim
+        ? new Date(
+            dailyBonusData.lastClaim
+        ).toDateString()
+        : '';
+
+    const canClaim=
+        today!==lc;
+
+    const nextBonus=
+        DAILY_BONUSES[
+            Math.min(
+                dailyBonusData.streak,
+                6
+            )
+        ];
+
+    const bonusDesc=
+        document.getElementById(
+            'dailyBonusDesc'
+        );
+
+    if(bonusDesc){
+
+        bonusDesc.textContent=
+            canClaim
+            ? `$${nextBonus.toFixed(2)} claim!`
+            : 'Come back tomorrow!';
+    }
+
+    const refDesc=
+        document.getElementById(
+            'referralMenuDesc'
+        );
+
+    if(refDesc){
+
+        refDesc.textContent=
+            referralCount>0
+            ? `${referralCount} members • $${Number(referralEarnings||0).toFixed(2)} commission`
+            : 'Earn 10% commission';
+    }
+
+    updateQuickNotifBadge();
+}
+
+/* =========================================================
+   LEVEL
+========================================================= */
+
+function updateLevel(inv){
+
+    const icon=
+        document.getElementById(
+            'levelIcon'
+        );
+
+    const name=
+        document.getElementById(
+            'levelName'
+        );
+
+    const info=
+        document.getElementById(
+            'levelProgressInfo'
+        );
+
+    const fill=
+        document.getElementById(
+            'levelProgressFill'
+        );
+
+    if(inv>=5000){
+
+        icon.textContent='💎';
+        name.textContent='Platinum';
+        info.textContent='Max!';
+        fill.style.width='100%';
+
+    }else if(inv>=500){
+
+        icon.textContent='🥇';
+        name.textContent='Gold';
+        info.textContent=
+            `$${inv.toFixed(0)}/$5,000`;
+        fill.style.width=
+            Math.min(
+                100,
+                ((inv-500)/4500)*100
+            )+'%';
+
+    }else if(inv>=50){
+
+        icon.textContent='🥈';
+        name.textContent='Silver';
+        info.textContent=
+            `$${inv.toFixed(0)}/$500`;
+
+        fill.style.width=
+            Math.min(
+                100,
+                ((inv-50)/450)*100
+            )+'%';
+
+    }else{
+
+        icon.textContent='🥉';
+        name.textContent='Bronze';
+
+        info.textContent=
+            `$${inv.toFixed(0)}/$50`;
+
+        fill.style.width=
+            Math.min(
+                100,
+                (inv/50)*100
+            )+'%';
+    }
+}
+
+/* =========================================================
+   SUB POPUPS
+========================================================= */
+
+function openSubPopup(type){
+
+    const c=
+        document.getElementById(
+            'subPopupContent'
+        );
+
+    let h='';
+
+    if(type==='referral'){
+
+        const rc=
+            'ref_'+
+            (
+                currentUser
+                ? currentUser.id
+                : userId
+            );
+
+        const rl=
+            `https://t.me/${GAME_BOT_USERNAME}?start=${rc}`;
+
+        h=`
+        <div class="sub-popup-header">
+            <div class="sub-popup-title">
+                👥 Referral
+            </div>
+            <button class="sub-popup-close"
+                onclick="closeSubPopup()">✕</button>
+        </div>
+
+        <div class="referral-box">
+            <div style="font-size:12px;color:#D59D80;font-weight:700">
+                Your Link
+            </div>
+
+            <div class="referral-link">
+                ${rl}
+            </div>
+
+            <button class="btn"
+                onclick="copyReferralLink()">
+                📋 Copy
+            </button>
+        </div>
+
+        <div class="referral-stats">
+
+            <div class="ref-stat">
+                <div class="rs-value">
+                    ${referralCount}
+                </div>
+                <div class="rs-label">
+                    Invites
+                </div>
+            </div>
+
+            <div class="ref-stat">
+                <div class="rs-value">
+                    $${Number(referralEarnings||0).toFixed(2)}
+                </div>
+                <div class="rs-label">
+                    Commission
+                </div>
+            </div>
+
+        </div>
+        `;
+
+    }else if(type==='faq'){
+
+        h=`
+        <div class="sub-popup-header">
+            <div class="sub-popup-title">
+                ❓ FAQ
+            </div>
+            <button class="sub-popup-close"
+                onclick="closeSubPopup()">✕</button>
+        </div>
+
+        <div class="faq-item"
+             onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span>How to invest?</span>
+                <span>▼</span>
+            </div>
+            <div class="faq-answer">
+                Select a package, send TRX and click Payment Sent.
+            </div>
+        </div>
+
+        <div class="faq-item"
+             onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span>When do earnings start?</span>
+                <span>▼</span>
+            </div>
+            <div class="faq-answer">
+                Earnings start after admin approval.
+            </div>
+        </div>
+
+        <div class="faq-item"
+             onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span>How to withdraw?</span>
+                <span>▼</span>
+            </div>
+            <div class="faq-answer">
+                Open Withdraw, enter amount, choose crypto and wallet.
+            </div>
+        </div>
+        `;
+
+    }else if(type==='dailyBonus'){
+
+        h=renderDailyBonus();
+
+    }else if(type==='tasks'){
+
+        h=renderTasks();
+
+    }else if(type==='chart'){
+
+        h=renderChart();
+
+    }else if(type==='notifications'){
+
+        h=renderNotifications();
+    }
+
+    c.innerHTML=h;
+
+    document.getElementById(
+        'subOverlay'
+    ).classList.add('show');
+}
+
+function closeSubPopup(){
+
+    document.getElementById(
+        'subOverlay'
+    ).classList.remove('show');
+}
+
+function closeSubOutside(e){
+
+    if(
+        e.target===
+        document.getElementById(
+            'subOverlay'
+        )
+    ){
+
+        closeSubPopup();
+    }
+}
+
+function toggleFaq(el){
+
+    el.classList.toggle('open');
+}
+
+function openSupport(){
+
+    const u=
+        `https://t.me/${GAME_BOT_USERNAME}`;
+
+    if(tg.openTelegramLink){
+
+        tg.openTelegramLink(u);
+
+    }else{
+
+        window.open(
+            u,
+            '_blank'
+        );
+    }
+}
+
+/* =========================================================
+   CRYPTO
+========================================================= */
+
+/* =========================================================
+   CRYPTO PRICE SYSTEM
+   PostgreSQL -> /api/prices
+   ========================================================= */
+
+async function getCryptoPrices(){
+
+    try{
+
+        const response = await fetch(
+            POSTGRES_API + '/api/prices',
+            {
+                method:'GET',
+                cache:'no-store'
+            }
+        );
+
+        const data = await response.json();
+
+        if(
+            !response.ok ||
+            !data.ok ||
+            !data.prices
+        ){
+            throw new Error(
+                data.message ||
+                'Coin fiyatları alınamadı.'
+            );
+        }
+
+        const prices = {
+
+            trx: Number(data.prices.trx),
+            bnb: Number(data.prices.bnb),
+            xrp: Number(data.prices.xrp),
+
+            lastUpdated:
+                data.updatedAt || Date.now(),
+
+            source:
+                data.source || 'postgresql'
+        };
+
+        if(
+            !Number.isFinite(prices.trx) ||
+            prices.trx <= 0 ||
+            !Number.isFinite(prices.bnb) ||
+            prices.bnb <= 0 ||
+            !Number.isFinite(prices.xrp) ||
+            prices.xrp <= 0
+        ){
+            throw new Error(
+                'Geçersiz coin fiyatı.'
+            );
+        }
+
+        console.log(
+            '💰 PostgreSQL coin fiyatları:',
+            prices
+        );
+
+        return prices;
+
+    }catch(error){
+
+        console.error(
+            '❌ Coin fiyatları alınamadı:',
+            error
+        );
+
+        /*
+         * Backend çalışmıyorsa sahte fiyat
+         * kullanmak yerine 0 döndürüyoruz.
+         *
+         * Böylece yanlış coin miktarı
+         * oluşturulmaz.
+         */
+
+        return {
+            trx:0,
+            bnb:0,
+            xrp:0,
+            lastUpdated:null,
+            source:'error'
+        };
+    }
+}
+async function initPrices(){
+
+    currentPrices =
+        await getCryptoPrices();
+
+    updatePriceDisplays();
+    updateCryptoAmount();
+}
+
+
+function updatePriceDisplays(){
+
+    const m =
+        document.getElementById('minTrx');
+
+    if(m && currentPrices.trx > 0){
+
+        m.textContent =
+            (1 / currentPrices.trx).toFixed(8);
+    }
+
+    const s =
+        document.getElementById('withdrawCrypto');
+
+    if(s){
+
+        s.options[0].text =
+            `TRX (TRON) - ~$${currentPrices.trx.toFixed(8)}`;
+
+        s.options[1].text =
+            `BNB (Binance) - ~$${currentPrices.bnb.toFixed(8)}`;
+
+        s.options[2].text =
+            `XRP (Ripple) - ~$${currentPrices.xrp.toFixed(8)}`;
+    }
+}
+
+
+/* ÇEKİM COİN HESABI */
+
+function updateCryptoAmount(){
+
+    const amount =
+        Number(
+            document.getElementById('withdrawAmount')?.value || 0
+        );
+
+    const crypto =
+        document.getElementById('withdrawCrypto')?.value || 'trx';
+
+    const equivalent =
+        document.getElementById('cryptoEquivalent');
+
+    const symbol =
+        document.getElementById('cryptoSymbol');
+
+    if(!equivalent || !symbol){
+        return;
+    }
+
+    const symbols = {
+        trx: 'TRX',
+        bnb: 'BNB',
+        xrp: 'XRP'
+    };
+
+    symbol.textContent =
+        symbols[crypto] || crypto.toUpperCase();
+
+    const price =
+        Number(currentPrices[crypto] || 0);
+
+    if(price <= 0){
+
+        equivalent.textContent = '—';
+        return;
+    }
+
+    if(amount <= 0){
+
+        equivalent.textContent = '0.00000000';
+        return;
+    }
+
+    const result =
+        amount / price;
+
+    equivalent.textContent =
+        result.toFixed(8);
+}
+
+
+/* ÇEKİM COİN HESABI */
+
+function updateCryptoAmount(){
+
+    const amount =
+        Number(
+            document.getElementById('withdrawAmount')?.value || 0
+        );
+
+    const crypto =
+        document.getElementById('withdrawCrypto')?.value || 'trx';
+
+    const equivalent =
+        document.getElementById('cryptoEquivalent');
+
+    const symbol =
+        document.getElementById('cryptoSymbol');
+
+    if(!equivalent || !symbol){
+        return;
+    }
+
+    const symbols = {
+        trx: 'TRX',
+        bnb: 'BNB',
+        xrp: 'XRP'
+    };
+
+    symbol.textContent =
+        symbols[crypto] || crypto.toUpperCase();
+
+    const price =
+        Number(currentPrices[crypto] || 0);
+
+    if(price <= 0){
+
+        equivalent.textContent = '—';
+        return;
+    }
+
+    if(amount <= 0){
+
+        equivalent.textContent = '0.00000000';
+        return;
+    }
+
+    const result =
+        amount / price;
+
+    equivalent.textContent =
+        result.toFixed(8);
+}/* =========================================================
+   DAILY BONUS
+========================================================= */
+
+function renderDailyBonus(){
+
+    const today=
+        new Date().toDateString();
+
+    const last=
+        dailyBonusData.lastClaim
+        ? new Date(
+            dailyBonusData.lastClaim
+        ).toDateString()
+        : '';
+
+    const canClaim=
+        today!==last;
+
+    const streak=
+        Number(
+            dailyBonusData.streak||0
+        );
+
+    const reward=
+        DAILY_BONUSES[
+            Math.min(streak,6)
+        ];
+
+    let days='';
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const claimed=
+            i<streak;
+
+        const todayClass=
+            i===streak && canClaim
+            ? 'today'
+            : '';
+
+        days+=`
+        <div class="streak-day
+            ${claimed?'claimed':''}
+            ${todayClass}">
+
+            <div class="sd-num">
+                Day ${i+1}
+            </div>
+
+            <div class="sd-reward">
+                $${DAILY_BONUSES[i].toFixed(2)}
+            </div>
+
+        </div>`;
+    }
+
+    return`
+    <div class="sub-popup-header">
+        <div class="sub-popup-title">
+            🎁 Daily Bonus
+        </div>
+        <button class="sub-popup-close"
+            onclick="closeSubPopup()">✕</button>
+    </div>
+
+    <div class="daily-bonus-card">
+
+        <div class="db-icon"></div>
+
+        <div class="db-title">
+            ${canClaim
+                ? 'Ready!'
+                : 'Come back tomorrow!'}
+        </div>
+
+        <div class="db-amount">
+            $${reward.toFixed(2)}
+        </div>
+
+        <div class="db-streak">
+            🔥 ${streak} day streak
+        </div>
+
+    </div>
+
+    <div class="streak-days">
+        ${days}
+    </div>
+
+    ${
+        canClaim
+        ?
+        `<button class="btn btn-approve"
+            style="margin-top:12px"
+            onclick="claimDailyBonus()">
+            Claim $${reward.toFixed(2)}
+        </button>`
+        :
+        `<div style="background:#0D1D25;padding:10px;border-radius:8px;text-align:center;margin-top:12px;font-size:11px">
+            Come back tomorrow!
+        </div>`
+    }
+    `;
+}
+
+async function claimDailyBonus(){
+    const today=new Date().toDateString();
+    const last=dailyBonusData.lastClaim ? new Date(dailyBonusData.lastClaim).toDateString() : '';
+    if(today===last){ alert('Already claimed today!'); return; }
+
+    const streak=Number(dailyBonusData.streak||0);
+    const reward=Number(DAILY_BONUSES[Math.min(streak,6)]||0);
+    if(reward<=0)return;
+
+    try{
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount:reward}),cache:'no-store'
+        });
+        const data=await response.json();
+        if(!response.ok || !data.ok) throw new Error(data.message||'Daily Bonus kaydedilemedi.');
+
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+reward));
+        dailyBonusData={lastClaim:Date.now(),streak:streak+1};
+        localStorage.setItem('mm_daily_bonus',JSON.stringify(dailyBonusData));
+        addNotification('🎁 Daily Bonus',`$${reward.toFixed(2)} added to Total Investment.`,'bonus');
+        await syncPostgresAccount();
+                if (typeof postgresAccount !== 'undefined' && postgresAccount) {
+                    balance = Number(postgresAccount.balance || 0);
+                    if (typeof renderPostgresBalance === 'function') renderPostgresBalance();
+                    if (typeof updateUI === 'function') updateUI();
+                }
+        updateUI();
+        openSubPopup('dailyBonus');
+    }catch(error){ alert('❌ '+error.message); }
+}
+
+function getTaskDefinitions(data={}){
+
+    const verified=
+        getVerifiedInvestmentAmount(
+            data
+        );
+
+    const referrals=
+        Number(
+            data.referralCount||
+            referralCount||
+            0
+        );
+
+    const streak=
+        Number(
+            data.dailyBonus?.streak||
+            dailyBonusData.streak||
+            0
+        );
+
+    return[
+
+        {
+            id:'first_deposit',
+            title:'First Investment',
+            desc:'Make your first approved investment of at least $1',
+            reward:0.50,
+            icon:'investment',
+            completed:verified>=1
+        },
+
+        {
+            id:'invest_10',
+            title:'$10 Investment',
+            desc:'Reach $10 in approved investments',
+            reward:1.00,
+            icon:'investment',
+            completed:verified>=10
+        },
+
+        {
+            id:'invest_100',
+            title:'$100 Investment',
+            desc:'Reach $100 in approved investments',
+            reward:5.00,
+            icon:'balance',
+            completed:verified>=100
+        },
+
+        {
+            id:'refer_1',
+            title:'First Referral',
+            desc:'Invite 1 valid member',
+            reward:0.50,
+            icon:'referral',
+            completed:referrals>=1
+        },
+
+        {
+            id:'refer_5',
+            title:'5 Referrals',
+            desc:'Invite 5 valid members',
+            reward:2.50,
+            icon:'referral',
+            completed:referrals>=5
+        },
+
+        {
+            id:'daily_7',
+            title:'7 Day Streak',
+            desc:'Complete a 7 day login streak',
+            reward:1.00,
+            icon:'daily-bonus',
+            completed:streak>=7
+        }
+    ];
+}
+
+function renderTasks(){
+
+    const tasks=
+        getTaskDefinitions({
+            approvedPayments:products,
+            referralCount,
+            dailyBonus:dailyBonusData
+        });
+
+    let h=`
+    <div class="sub-popup-header">
+        <div class="sub-popup-title">
+            🎯 Tasks
+        </div>
+        <button
+            class="sub-popup-close"
+            onclick="closeSubPopup()">✕</button>
+    </div>
+    `;
+
+    tasks.forEach(t=>{
+
+        const claimed=
+            taskClaims[t.id]===true;
+
+        const button=
+            claimed
+            ?
+            `<button class="task-btn done" disabled>Claimed</button>`
+            :
+            t.completed
+            ?
+            `<button class="task-btn claim"
+                onclick="claimTaskReward('${t.id}')">
+                Claim $${t.reward.toFixed(2)}
+            </button>`
+            :
+            `<button class="task-btn locked" disabled>
+                Locked
+            </button>`;
+
+        h+=`
+        <div class="task-item ${
+            claimed
+            ? 'completed'
+            : t.completed
+            ? 'ready'
+            : 'locked'
+        }">
+
+            <div class="task-icon">
+                <img
+                    src="assets/icons/${t.icon}.png"
+                    alt="${t.title}">
+            </div>
+
+            <div class="task-content">
+
+                <div class="task-title">
+                    ${t.title}
+                </div>
+
+                <div class="task-desc">
+                    ${t.desc}
+                </div>
+
+                <div class="task-reward">
+                    +$${t.reward.toFixed(2)}
+                </div>
+
+            </div>
+
+            ${button}
+
+        </div>
+        `;
+    });
+
+    return h;
+}
+
+async function claimTaskReward(id){
+    if(!userId)return;
+    if(taskClaims[id]===true){ alert('This task has already been claimed.'); return; }
+
+    const tasks=getTaskDefinitions({approvedPayments:products,referralCount,dailyBonus:dailyBonusData});
+    const task=tasks.find(t=>t.id===id);
+    if(!task)throw new Error('Task not found.');
+    if(!task.completed){alert('Task requirement is not completed yet.');return;}
+
+    try{
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount:task.reward}),cache:'no-store'
+        });
+        const data=await response.json();
+        if(!response.ok || !data.ok)throw new Error(data.message||'Task reward kaydedilemedi.');
+        taskClaims[id]=true;
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+task.reward));
+        localStorage.setItem('mm_task_claims',JSON.stringify(taskClaims));
+        addNotification('🎯 Task',`${task.title} claimed.`,'bonus');
+        await syncPostgresAccount();
+        updateUI();
+        openSubPopup('tasks');
+    }catch(error){alert('❌ '+error.message);}
+}
+
+function saveNotifications(){
+    try{
+        localStorage.setItem(
+            'mm_notifications',
+            JSON.stringify(notificationsData || [])
+        );
+    }catch(error){
+        console.error('Notification local storage error:',error);
+    }
+}
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+function validateAddress(
+    address,
+    crypto
+){
+
+    const validator=
+        addressValidators[
+            crypto
+        ];
+
+    if(!validator){
+
+        return{
+            valid:false,
+            message:'Invalid'
+        };
+    }
+
+    const valid=
+        validator(address);
+
+    return{
+        valid,
+        message:
+            valid
+            ?'✅ Valid'
+            :'❌ Invalid'
+    };
+}
+
+function validateAddressInput(){
+
+    const crypto=
+        document.getElementById(
+            'withdrawCrypto'
+        ).value;
+
+    const address=
+        document.getElementById(
+            'walletAddress'
+        ).value.trim();
+
+    const msg=
+        document.getElementById(
+            'addressValidationMsg'
+        );
+
+    const input=
+        document.getElementById(
+            'walletAddress'
+        );
+
+    if(!address){
+
+        input.style.borderColor=
+            '#C0754D';
+
+        msg.style.display='none';
+
+        return;
+    }
+
+    const result=
+        validateAddress(
+            address,
+            crypto
+        );
+
+    if(result.valid){
+
+        input.style.borderColor=
+            '#D59D80';
+
+        msg.textContent=
+            result.message;
+
+        msg.style.display=
+            'block';
+
+        msg.style.color=
+            '#D59D80';
+
+    }else{
+
+        input.style.borderColor=
+            '#B6410F';
+
+        msg.textContent=
+            result.message;
+
+        msg.style.display=
+            'block';
+
+        msg.style.color=
+            '#B6410F';
+    }
+}
+
+function clearAddressValidation(){
+
+    document.getElementById(
+        'walletAddress'
+    ).style.borderColor=
+        '#C0754D';
+
+    document.getElementById(
+        'addressValidationMsg'
+    ).style.display=
+        'none';
+}
+
+function updateNetworkInfo(){
+
+    const crypto=
+        document.getElementById(
+            'withdrawCrypto'
+        ).value;
+
+    const info=
+        NETWORK_INFO[
+            crypto
+        ];
+
+    document.getElementById(
+        'networkInfo'
+    ).innerHTML=
+        `<strong>🌐 Network:</strong> ${info.fullName}`;
+}
+
+/* =========================================================
+   PACKAGES
+========================================================= */
+
+function adjustAmount(delta){
+
+    const input=
+        document.getElementById(
+            'buyAmount'
+        );
+
+    let value=
+        parseFloat(
+            input.value
+        )||0;
+
+    value=
+        Math.round(
+            (
+                value+
+                delta
+            )*
+            100
+        )/100;
+
+    if(
+        value<
+        MIN_DEPOSIT
+    ){
+
+        value=
+            MIN_DEPOSIT;
+    }
+
+    if(
+        value>
+        MAX_DEPOSIT
+    ){
+
+        value=
+            MAX_DEPOSIT;
+    }
+
+    input.value=
+        value.toFixed(2);
+
+    updateBuyTRX();
+}
+
+function setMaxAmount(){
+
+    if(balance<0.25){
+
+        alert(
+            '❌ Minimum withdrawal is $0.25'
+        );
+
+        return;
+    }
+
+    document.getElementById(
+        'withdrawAmount'
+    ).value=
+        Number(balance)
+            .toFixed(2);
+
+    updateCryptoAmount();
+}
+
+function renderPackages(){
+
+    const container=
+        document.getElementById(
+            'packagesContainer'
+        );
+
+    if(!container)return;
+
+    container.innerHTML='';
+
+    packages.forEach(
+        packageData=>{
+
+            const original=
+                Number(
+                    packageData.price
+                );
+
+            const discount=
+                Number(
+                    packageData.discount
+                );
+
+            const discounted=
+                original*
+                (1-discount);
+
+            const saved=
+                original-
+                discounted;
+
+            const card=
+                document.createElement(
+                    'div'
+                );
+
+            card.className=
+                'package-card '+
+                (
+                    packageData.featured
+                    ?'ceo-package'
+                    :'standard-neon'
+                );
+
+            card.onclick=
+                function(){
+
+                    selectPackage(
+                        original,
+                        discounted,
+                        packageData.name
+                    );
+                };
+
+            card.innerHTML=`
+
+                ${
+                    packageData.featured
+                    ?
+                    `
+                    <div class="ceo-badge">
+                        TOP TIER
+                    </div>
+                    `
+                    :
+                    ''
+                }
+
+                <div class="package-name">
+                    ${packageData.name}
+                </div>
+
+                <div style="text-align:center">
+
+                    <span class="discount-badge">
+                        -
+                        ${Math.round(
+                            discount*100
+                        )}
+                        %
+                    </span>
+
+                </div>
+
+                <div class="package-pricing">
+
+                    <span class="original-price">
+                        $${original.toFixed(2)}
+                    </span>
+
+                    <span class="discounted-price">
+                        $${discounted.toFixed(2)}
+                    </span>
+
+                </div>
+
+                <div class="package-savings">
+                    Save $${saved.toFixed(2)}
+                </div>
+
+                <div class="package-cta">
+                    Select →
+                </div>
+            `;
+
+            container.appendChild(
+                card
+            );
+        }
+    );
+}
+
+function selectPackage(
+    originalPrice,
+    discountedPrice,
+    packageName
+){
+
+    selectedPackageName=
+        packageName;
+
+    selectedPackageOriginal=
+        Number(originalPrice);
+
+    selectedPackageDiscounted=
+        Number(discountedPrice);
+
+    const input=
+        document.getElementById(
+            'buyAmount'
+        );
+
+    if(input){
+
+        input.value=
+            Number(
+                discountedPrice
+            ).toFixed(2);
+
+        input.readOnly=true;
+    }
+
+    const label=
+        document.getElementById(
+            'amountLabel'
+        );
+
+    if(label){
+
+        label.textContent=
+            'Amount (Discounted)';
+    }
+
+    document.getElementById(
+        'summaryName'
+    ).textContent=
+        packageName;
+
+    document.getElementById(
+        'summaryOriginal'
+    ).textContent=
+        '$'+
+        Number(originalPrice)
+            .toFixed(2);
+
+    document.getElementById(
+        'summaryDiscounted'
+    ).textContent=
+        '$'+
+        Number(discountedPrice)
+            .toFixed(2);
+
+    document.getElementById(
+        'summaryRecord'
+    ).textContent=
+        '$'+
+        (
+            Number(originalPrice)-
+            Number(discountedPrice)
+        ).toFixed(2);
+
+    document.getElementById(
+        'packageSummary'
+    ).classList.add(
+        'active'
+    );
+
+    updateBuyTRX();
+
+    showPage('buy');
+}
+
+    
+
+function resetAndGoHome(){
+
+    selectedPackageName='';
+    selectedPackageOriginal=0;
+    selectedPackageDiscounted=0;
+
+    const input=
+        document.getElementById(
+            'buyAmount'
+        );
+
+    input.value='1';
+    input.readOnly=false;
+
+    document.getElementById(
+        'amountLabel'
+    ).textContent=
+        'Amount (USD)';
+
+    document.getElementById(
+        'packageSummary'
+    ).classList.remove(
+        'active'
+    );
+
+    updateBuyTRX();
+
+    showPage('home');
+}
+
+/* =========================================================
+   BUY
+========================================================= */
+
+function copyDepositAddress(){
+
+    navigator.clipboard
+        .writeText(
+            DEPOSIT_WALLET
+        )
+        .then(()=>{
+
+            alert(
+                '✅ Copied!'
+            );
+        });
+}
+
+function updateBuyTRX(){
+
+    const amount=
+        parseFloat(
+            document.getElementById(
+                'buyAmount'
+            ).value
+        )||0;
+
+    document.getElementById(
+        'buyTrxAmount'
+    ).textContent=
+        (
+            amount/
+            currentPrices.trx
+        ).toFixed(2);
+}
+
+async function buyProduct(){
+
+    const amount =
+        selectedPackageDiscounted > 0
+            ? Number(selectedPackageDiscounted)
+            : parseFloat(
+                document.getElementById('buyAmount').value
+            );
+
+    if(!Number.isFinite(amount)){
+        alert('❌ Geçersiz yatırım tutarı.');
+        return;
+    }
+
+    if(amount < MIN_DEPOSIT){
+        alert(`❌ Minimum yatırım: $${MIN_DEPOSIT}`);
+        return;
+    }
+
+    if(amount > MAX_DEPOSIT){
+        alert(`❌ Maksimum yatırım: $${MAX_DEPOSIT}`);
+        return;
+    }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    const trxAmount =
+        (amount / currentPrices.trx).toFixed(2);
+
+    try{
+
+        const response = await fetch(
+            POSTGRES_API + '/api/investment',
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    initData:tg.initData,
+                    amount:amount,
+                    packageName:selectedPackageName || null
+                }),
+                cache:'no-store'
+            }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.ok){
+
+            console.error(
+                'PostgreSQL yatırım hatası:',
+                data
+            );
+
+            alert(
+                '❌ Yatırım oluşturulamadı:\n' +
+                (data.message || 'Bilinmeyen hata')
+            );
+
+            return;
+        }
+
+        console.log(
+            '✅ PostgreSQL yatırım:',
+            data.investment
+        );
+
+        alert(
+            `✅ Yatırım talebi oluşturuldu!\n\n` +
+            `💰 $${amount.toFixed(2)}\n` +
+            `🔹 ${trxAmount} TRX\n\n` +
+            `⏳ Admin onayı bekleniyor.`
+        );
+
+        selectedPackageName = '';
+        selectedPackageOriginal = 0;
+        selectedPackageDiscounted = 0;
+
+        resetAndGoHome();
+
+        if(
+            tg.HapticFeedback &&
+            tg.HapticFeedback.notificationOccurred
+        ){
+            tg.HapticFeedback.notificationOccurred('success');
+        }
+
+    }catch(error){
+
+        console.error(
+            'Investment error:',
+            error
+        );
+
+        alert(
+            '❌ Yatırım bağlantı hatası:\n' +
+            error.message
+        );
+    }
+}
+
+    
+    
+
+async function requestWithdrawal(){
+
+    const amount = Number(
+        document.getElementById('withdrawAmount')?.value || 0
+    );
+
+    const wallet =
+        document.getElementById('walletAddress')?.value?.trim() || '';
+
+    const crypto =
+        document.getElementById('withdrawCrypto')?.value || 'TRX';
+
+    /* ================================
+       KONTROLLER
+    ================================= */
+
+    if(!Number.isFinite(amount) || amount <= 0){
+        alert('❌ Geçerli bir çekim tutarı girin.');
+        return;
+    }
+
+    if(amount < 0.25){
+        alert('❌ Minimum çekim tutarı $0.25');
+        return;
+    }
+
+    if(amount > Number(balance || 0)){
+        alert('❌ Yetersiz bakiye!');
+        return;
+    }
+
+    if(!wallet){
+        alert('❌ Cüzdan adresinizi girin.');
+        return;
+    }
+
+    if(!tg || !tg.initData){
+        alert('❌ Telegram doğrulaması bulunamadı.');
+        return;
+    }
+
+    const validation =
+        validateAddress(
+            wallet,
+            crypto
+        );
+
+    if(!validation.valid){
+        alert(validation.message);
+        return;
+    }
+
+    const price =
+        Number(currentPrices[crypto] || 0);
+
+    if(price <= 0){
+        alert('❌ Coin fiyatı alınamadı.');
+        return;
+    }
+
+    const cryptoAmount =
+        (
+            amount / price
+        ).toFixed(6);
+
+    try{
+
+        console.log(
+            '💸 ÇEKİM İSTEĞİ:',
+            {
+                amount,
+                crypto,
+                wallet,
+                cryptoAmount
+            }
+        );
+
+        /* ================================
+           POSTGRESQL
+        ================================= */
+
+        const response =
+            await fetch(
+                POSTGRES_API +
+                '/api/withdrawal',
+                {
+                    method:'POST',
+
+                    headers:{
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:JSON.stringify({
+
+                        initData:
+                            tg.initData,
+
+                        amount:
+                            amount,
+
+                        crypto:
+                            crypto,
+
+                        cryptoAmount:
+                            cryptoAmount,
+
+                        walletAddress:
+                            wallet,
+
+                        network:
+                            NETWORK_INFO[crypto]?.fullName ||
+                            crypto
+
+                    }),
+
+                    cache:'no-store'
+                }
+            );
+
+        const data =
+            await response.json();
+
+        console.log(
+            '💸 POSTGRESQL ÇEKİM CEVABI:',
+            data
+        );
+
+        /* ================================
+           API HATASI
+        ================================= */
+
+        if(
+            !response.ok ||
+            !data.ok
+        ){
+
+            throw new Error(
+                data.message ||
+                'Çekim oluşturulamadı.'
+            );
+        }
+
+        /* ================================
+           GERÇEK YENİ BAKİYE
+        ================================= */
+
+        if(
+            data.balance !== undefined &&
+            data.balance !== null
+        ){
+
+            balance =
+                Number(
+                    data.balance
+                );
+
+        }else{
+
+            /*
+             * Backend balance döndürmezse
+             * geçici olarak miktarı düşür.
+             */
+            balance =
+                Number(balance || 0) -
+                amount;
+        }
+
+        /* ================================
+           EKRANI GÜNCELLE
+        ================================= */
+
+        if(
+            typeof renderPostgresBalance ===
+            'function'
+        ){
+            renderPostgresBalance();
+        }
+
+        updateUI();
+
+        /* ================================
+           INPUT TEMİZLE
+        ================================= */
+
+        const amountInput =
+            document.getElementById(
+                'withdrawAmount'
+            );
+
+        if(amountInput){
+            amountInput.value = '';
+        }
+
+        const walletInput =
+            document.getElementById(
+                'walletAddress'
+            );
+
+        if(walletInput){
+            walletInput.value = '';
+        }
+
+        if(
+            typeof clearAddressValidation ===
+            'function'
+        ){
+            clearAddressValidation();
+        }
+
+        if(
+            typeof updateCryptoAmount ===
+            'function'
+        ){
+            updateCryptoAmount();
+        }
+
+        if(
+            typeof loadWithdrawalHistory ===
+            'function'
+        ){
+            loadWithdrawalHistory();
+        }
+
+        /* ================================
+           BAŞARILI
+        ================================= */
+
+        alert(
+            `✅ Çekim talebi oluşturuldu!\n\n` +
+            `💰 $${amount.toFixed(5)}\n` +
+            `🔹 ${cryptoAmount} ${CRYPTO_SYMBOLS[crypto] || crypto}\n\n` +
+            `⏳ Admin onayı bekleniyor.`
+        );
+
+        if(
+            tg.HapticFeedback &&
+            tg.HapticFeedback.notificationOccurred
+        ){
+
+            tg.HapticFeedback
+                .notificationOccurred(
+                    'success'
+                );
+        }
+
+        console.log(
+            '✅ ÇEKİM BAŞARILI',
+            {
+                amount,
+                newBalance:
+                    balance
+            }
+        );
+
+    }catch(error){
+
+        console.error(
+            '❌ ÇEKİM HATASI:',
+            error
+        );
+
+        alert(
+            '❌ ' +
+            (
+                error.message ||
+                'Çekim işlemi başarısız.'
+            )
+        );
+    }
+}
+async function loadDepositHistory(){
+
+    const container =
+        document.getElementById('depositHistory');
+
+    if(!container) return;
+
+    // Yatırım geçmişi PostgreSQL'den yönetiliyor.
+    // Backend'de ayrı bir history endpoint'i olmadığı için
+    // burada Firebase çağrısı yapılmaz.
+    container.innerHTML =
+        '<div class=\"empty-history\">Investment history is stored in PostgreSQL.</div>';
+}
+
+async function loadWithdrawalHistory(){
+    const container=document.getElementById('withdrawalHistory');
+    if(!container)return;
+    container.innerHTML='<div class="empty-history">Withdrawal history is stored in PostgreSQL.</div>';
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+function toggleMenu(){
+
+    const fab=
+        document.getElementById(
+            'menuFab'
+        );
+
+    const items=
+        document.getElementById(
+            'menuItems'
+        );
+
+    if(!fab||!items)return;
+
+    fab.classList.toggle(
+        'closed'
+    );
+
+    fab.classList.toggle(
+        'open'
+    );
+
+    items.classList.toggle(
+        'hide'
+    );
+}
+
+function showPage(
+    page,
+    element
+){
+
+    document
+        .querySelectorAll('.card')
+        .forEach(
+            el=>
+                el.classList.add('hidden')
+        );
+
+    const target=
+        document.getElementById(
+            'page-'+page
+        );
+
+    if(target){
+
+        target.classList.remove(
+            'hidden'
+        );
+    }
+
+    if(page==='withdraw'){
+
+        renderPostgresBalance();
+
+        updateCryptoAmount();
+
+        clearAddressValidation();
+
+        updateNetworkInfo();
+
+        loadWithdrawalHistory();
+    }
+
+    if(page==='buy'){
+
+        updateBuyTRX();
+
+        loadDepositHistory();
+    }
+
+    window.scrollTo(
+        0,
+        0
+    );
+}
+
+/* =========================================================
+   OFFLINE / WELCOME
+========================================================= */
+
+function showOfflinePopup(amount){
+
+    const el=
+        document.getElementById(
+            'offlineEarnedAmount'
+        );
+
+    if(el){
+
+        el.textContent=
+            Number(amount||0)
+                .toFixed(4);
+    }
+
+    document.getElementById(
+        'offlinePopup'
+    ).classList.remove(
+        'hidden'
+    );
+}
+
+function closeOfflinePopup(){
+
+    document.getElementById(
+        'offlinePopup'
+    ).classList.add(
+        'hidden'
+    );
+}
+
+function closeWelcomePopup(){
+
+    document.getElementById(
+        'welcomePopup'
+    ).classList.add(
+        'hidden'
+    );
+}
+
+/* =========================================================
+   TELEGRAM NOTIFICATIONS UI
+========================================================= */
+
+function activateTelegramNotif(){
+
+    const active=
+        localStorage.getItem(
+            'telegramNotifActive'
+        )==='true';
+
+    if(active){
+
+        alert(
+            '✅ Already active!'
+        );
+
+        return;
+    }
+
+    const url=
+        `https://t.me/${NOTIFY_BOT_USERNAME}?start=activate`;
+
+    if(tg.openTelegramLink){
+
+        tg.openTelegramLink(
+            url
+        );
+
+    }else{
+
+        window.open(
+            url,
+            '_blank'
+        );
+    }
+
+    localStorage.setItem(
+        'telegramNotifActive',
+        'true'
+    );
+
+    updateTelegramNotifUI();
+}
+
+function updateTelegramNotifUI(){
+
+    const card=
+        document.getElementById(
+            'telegramNotifCard'
+        );
+
+    const title=
+        document.getElementById(
+            'telegramTitle'
+        );
+
+    const desc=
+        document.getElementById(
+            'telegramDesc'
+        );
+
+    const check=
+        document.getElementById(
+            'telegramCheck'
+        );
+
+    if(!card||!title||!desc||!check)return;
+
+    const active=
+        localStorage.getItem(
+            'telegramNotifActive'
+        )==='true';
+
+    if(active){
+
+        card.classList.remove(
+            'inactive'
+        );
+
+        title.textContent=
+            '✅ Active';
+
+        desc.textContent=
+            'Alerts will come to Telegram!';
+
+        check.textContent=
+            '✓';
+
+    }else{
+
+        card.classList.add(
+            'inactive'
+        );
+
+        title.textContent=
+            '🔔 Activate Notifications';
+
+        desc.textContent=
+            'Get instant alerts on Telegram!';
+
+        check.textContent=
+            '›';
+    }
+}
+
+/* =========================================================
+   INVESTMENT CALC
+========================================================= */
+
+function toMs(v){
+
+    if(v==null)return 0;
+
+    if(
+        typeof v===
+        'number'
+    ){
+
+        return v;
+    }
+
+    if(
+        typeof v.toDate===
+        'function'
+    ){
+
+        return v.toDate()
+            .getTime();
+    }
+
+    const n=
+        Date.parse(v);
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
+}
+
+function investmentPrincipal(item){
+
+    const value=
+        Number(
+            item?.principal??
+            item?.amount??
+            item?.discountedPrice??
+            0
+        );
+
+    return Number.isFinite(value)
+        && value>0
+        ? value
+        : 0;
+}
+
+function investmentStart(item){
+
+    return (
+        toMs(
+            item?.startAt??
+            item?.approvedAt??
+            item?.timestamp
+        )
+        ||
+        Date.now()
+    );
+}
+
+function investmentEnd(item){
+
+    return (
+        investmentStart(item)+
+        ROI_MS
+    );
+}
+
+function getAllInvestments(data={}){
+
+    const approved=
+        Array.isArray(
+            data.approvedPayments
+        )
+        ?data.approvedPayments
+        :[];
+
+    const games=
+        Array.isArray(
+            data.gameInvestments
+        )
+        ?data.gameInvestments
+        :[];
+
+    return[
+        ...approved.map(
+            p=>({
+                ...p,
+                sourceType:'deposit'
+            })
+        ),
+        ...games.map(
+            p=>({
+                ...p,
+                sourceType:'game'
+            })
+        )
+    ];
+}
+
+function getActivePrincipal(
+    data={},
+    now=Date.now()
+){
+
+    return getAllInvestments(
+        data
+    ).reduce(
+        (sum,p)=>{
+
+            const principal=
+                investmentPrincipal(
+                    p
+                );
+
+            const start=
+                investmentStart(
+                    p
+                );
+
+            const end=
+                investmentEnd(
+                    p
+                );
+
+            return sum+
+                (
+                    principal>0 &&
+                    now>=start &&
+                    now<end
+                    ? principal
+                    : 0
+                );
+
+        },
+        0
+    );
+}
+
+function refreshActiveInvestmentState(){
+
+    const data={
+        approvedPayments:
+            products,
+
+        gameInvestments:
+            gameInvestments
+    };
+
+    /*
+     * PostgreSQL total_invested varsa
+     * ana gösterimde onu koruyoruz.
+     */
+    if(!postgresAccount){
+
+        totalInvested=
+            getActivePrincipal(
+                data
+            );
+    }
+}
+
+function updateDashboardVisuals(){
+
+    const inv=
+        Number(
+            totalInvested||0
+        );
+
+    const daily=
+        products.reduce(
+            (
+                sum,
+                p
+            )=>
+                sum+
+                Number(
+                    p.earned||0
+                ),
+            0
+        );
+
+    const progress=
+        document.getElementById(
+            'dashProgress'
+        );
+
+    if(progress){
+
+        progress.textContent=
+            Math.min(
+                100,
+                Math.round(
+                    (
+                        inv/
+                        Math.max(
+                            inv,
+                            100
+                        )
+                    )*
+                    100
+                )
+            )+'%';
+    }
+}
+
+/* =========================================================
+   ACCOUNT DATA
+========================================================= */
+
+function listenToData(){
+    // Firebase kaldırıldı. Hesap verisi PostgreSQL üzerinden yenilenir.
+    return syncPostgresAccount();
+}
+
+/* =========================================================
+   UPDATE UI
+========================================================= */
+
+function updateUI(){
+
+    
+    // PostgreSQL balance is authoritative.
+    if (typeof postgresAccount !== 'undefined' && postgresAccount && postgresAccount.balance !== undefined) {
+        balance = Number(postgresAccount.balance || 0);
+    }
+renderPostgresBalance();
+
+    const estimated=
+        document.getElementById(
+            'estimatedEarnings'
+        );
+
+    if(estimated){
+
+        estimated.textContent=
+            '$'+
+            Number(
+                estimatedEarnings||0
+            ).toFixed(4);
+    }
+
+    const dailyRate=
+        Number(
+            totalInvested||0
+        )*
+        PER_SECOND;
+
+    const minute=
+        document.getElementById(
+            'earnPerMin'
+        );
+
+    if(minute){
+
+        minute.textContent=
+            (
+                dailyRate*
+                60
+            ).toFixed(4);
+    }
+
+    const hour=
+        document.getElementById(
+            'earnPerHour'
+        );
+
+    if(hour){
+
+        hour.textContent=
+            (
+                dailyRate*
+                3600
+            ).toFixed(4);
+    }
+
+    const day=
+        document.getElementById(
+            'earnPerDay'
+        );
+
+    if(day){
+
+        day.textContent=
+            (
+                dailyRate*
+                86400
+            ).toFixed(4);
+    }
+
+    updateLevel(
+        Number(
+            totalInvested||0
+        )
+    );
+
+    renderDailyGameRewardCard();
+
+    updateQuickNotifBadge();
+}
+
+/* =========================================================
+   KEEP POSTGRES BALANCE FRESH
+========================================================= */
+
+async function refreshAccountPeriodically(){
+
+    if(
+        !currentUser ||
+        !tg.initData
+    ){
+
+        return;
+    }
+
+    await syncPostgresAccount();
+}
+
+document.addEventListener(
+    'visibilitychange',
+    ()=>{
+        if(
+            document.visibilityState===
+            'visible'
+        ){
+
+            refreshAccountPeriodically();
+        }
+    }
+);
+
+/*
+ * Admin panelinden bakiye değiştirilince
+ * oyunun açık olduğu ekranda birkaç saniye
+ * içinde güncellenir.
+ */
+setInterval(
+    refreshAccountPeriodically,
+    5000
+);
+
+/* =========================================================
+   DAILY GAME REWARD
+========================================================= */
+
+function renderDailyGameRewardCard(){
+
+    const el=
+        document.getElementById(
+            'dailyGameRewardCard'
+        );
+
+    if(!el)return;
+
+    const amount=
+        Number(
+            dailyRewardPool||0
+        );
+
+    el.innerHTML=`
+        <div class="dgr-title">
+            🎁 DAILY REWARD
+        </div>
+
+        <div class="dgr-amount">
+            $${amount.toFixed(4)}
+        </div>
+
+        <div class="dgr-sub">
+            Tüm oyun ödülleri burada birikir.
+        </div>
+
+        <button
+            ${amount>0?'':'disabled'}
+            onclick="claimDailyGameReward()">
+            ⚡ ÜRETİME EKLE
+        </button>
+    `;
+}
+
+async function claimDailyGameReward(){
+console.log('🎮 CLAIM DAILY GAME REWARD ÇALIŞTI');
+    const amount =
+        Number(dailyRewardPool || 0);
+
+    if(amount <= 0){
+
+        alert(
+            'Daily Reward bakiyeniz henüz birikmedi.'
+        );
+
+        return;
+    }
+
+    if(!tg || !tg.initData){
+
+        alert(
+            '❌ Telegram doğrulaması bulunamadı.'
+        );
+
+        return;
+    }
+
+    try{
+
+        /* =========================================
+           OYUN KAZANCINI POSTGRESQL'E EKLE
+        ========================================= */
+
+        const investmentResponse =
+            await fetch(
+                POSTGRES_API +
+                '/api/game-investment',
+                {
+                    method:'POST',
+
+                    headers:{
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:JSON.stringify({
+
+                        initData:
+                            tg.initData,
+
+                        amount:
+                            amount
+
+                    }),
+
+                    cache:'no-store'
+                }
+            );
+
+
+        const investmentResult =
+            await investmentResponse.json();
+
+
+        if(
+            !investmentResponse.ok ||
+            !investmentResult.ok
+        ){
+
+            throw new Error(
+                investmentResult.message ||
+                'Oyun yatırımı PostgreSQL\'e kaydedilemedi.'
+            );
+
+        }
+
+
+        /* =========================================
+           POSTGRESQL'DEKİ TOTAL INVESTMENT
+        ========================================= */
+
+        if(
+            investmentResult.total_invested !==
+            undefined
+        ){
+
+            totalInvested =
+                Number(
+                    investmentResult.total_invested
+                );
+
+        }else{
+
+            totalInvested =
+                Number(totalInvested || 0) +
+                amount;
+
+        }
+
+
+        /* =========================================
+           ÖDÜLÜ TÜKET
+        ========================================= */
+
+        dailyRewardPool = 0;
+
+
+        /* =========================================
+           EKRANI GÜNCELLE
+        ========================================= */
+
+        updateUI();
+
+
+        /* PostgreSQL'den güncel hesabı çek */
+
+        await syncPostgresAccount();
+
+
+        alert(
+            '✓ $' +
+            amount.toFixed(5) +
+            ' üretime eklendi.'
+        );
+
+
+        console.log(
+            '🎮 OYUN YATIRIMI BAŞARILI',
+            {
+                amount: amount,
+                totalInvested:
+                    totalInvested
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(
+            '❌ Oyun yatırımı hatası:',
+            error
+        );
+
+        alert(
+            '❌ ' +
+            (
+                error.message ||
+                'Oyun yatırımı kaydedilemedi.'
+            )
+        );
+
+    }
+}
+
+/* =========================================================
+   MINING RUSH
+========================================================= */
+
+const MR_GAME_SECONDS=30;
+const MR_MAX_SECONDS=30;
+const MR_POINTS_TO_USD=0.0000005;
+const MR_DAILY_LIMIT=0.001;
+const ALL_GAMES_DAILY_LIMIT=0.01;
+
+let mr={
+    running:false,
+    score:0,
+    time:30,
+    combo:0,
+    bestCombo:0,
+    spawnTimer:null,
+    timer:null,
+    remaining:30,
+    earned:0,
+    daily:0,
+    dailyDate:'',
+    pendingTransfer:0
+};
+
+function mrEl(id){
+
+    return document.getElementById(
+        id
+    );
+}
+
+function mrUpdate(){
+
+    if(!mrEl('mrScore'))return;
+
+    mrEl('mrScore').textContent=
+        mr.score.toLocaleString();
+
+    mrEl('mrTime').textContent=
+        mr.running
+        ?mr.remaining+'s'
+        :'30s';
+
+    mrEl('mrReward').textContent=
+        '$'+
+        Math.max(
+            0,
+            mr.score*
+            MR_POINTS_TO_USD
+        ).toFixed(4);
+
+    mrEl('mrProgress').style.width=
+        Math.max(
+            0,
+            Math.min(
+                100,
+                (
+                    1-
+                    mr.remaining/
+                    MR_GAME_SECONDS
+                )*
+                100
+            )
+        )+'%';
+
+    mrEl('mrDaily').textContent=
+        '$'+
+        Number(
+            dailyRewardPool||0
+        ).toFixed(3)+
+        ' / $'+
+        ALL_GAMES_DAILY_LIMIT.toFixed(2);
+}
+
+function mrClearObjects(){
+
+    const arena=
+        document.getElementById(
+            'mrArena'
+        );
+
+    if(!arena)return;
+
+    arena.querySelectorAll(
+        '.mr-object,.mr-float,.mr-burst'
+    ).forEach(
+        el=>el.remove()
+    );
+}
+
+function mrFloat(
+    x,
+    y,
+    text
+){
+
+    const arena=
+        document.getElementById(
+            'mrArena'
+        );
+
+    if(!arena)return;
+
+    const f=
+        document.createElement(
+            'div'
+        );
+
+    f.className='mr-float';
+
+    f.textContent=text;
+
+    f.style.left=
+        Math.max(
+            2,
+            Math.min(
+                90,
+                x
+            )
+        )+'%';
+
+    f.style.top=
+        Math.max(
+            8,
+            Math.min(
+                82,
+                y
+            )
+        )+'%';
+
+    arena.appendChild(f);
+
+    setTimeout(
+        ()=>f.remove(),
+        760
+    );
+}
+
+function mrSpawn(){
+
+    if(!mr.running)return;
+
+    const arena=
+        document.getElementById(
+            'mrArena'
+        );
+
+    if(!arena)return;
+
+    const types=[
+
+        ['rock',10,36,'🪨'],
+        ['rock',15,28,'⛰️'],
+        ['crystal',50,18,'💎'],
+        ['gold',100,9,'🪙'],
+        ['diamond',250,3,'💠'],
+        ['energy',0,4,'⚡'],
+        ['bomb',-75,2,'💣']
+    ];
+
+    let random=
+        Math.random()*100;
+
+    let total=0;
+
+    let chosen=
+        types[0];
+
+    for(
+        const item of types
+    ){
+
+        total+=item[2];
+
+        if(
+            random<=total
+        ){
+
+            chosen=item;
+
+            break;
+        }
+    }
+
+    const button=
+        document.createElement(
+            'button'
+        );
+
+    button.type='button';
+
+    button.className=
+        'mr-object mr-'+
+        chosen[0];
+
+    button.textContent=
+        chosen[3];
+
+    button.dataset.points=
+        chosen[1];
+
+    button.dataset.type=
+        chosen[0];
+
+    button.style.left=
+        (
+            5+
+            Math.random()*82
+        )+'%';
+
+    button.style.top=
+        (
+            12+
+            Math.random()*68
+        )+'%';
+
+    button.addEventListener(
+        'click',
+        ()=>mrHit(button)
+    );
+
+    arena.appendChild(
+        button
+    );
+
+    setTimeout(
+        ()=>{
+            if(button.isConnected){
+                button.remove();
+            }
+        },
+        1500
+    );
+}
+
+function mrHit(button){
+
+    if(!mr.running)return;
+
+    const type=
+        button.dataset.type;
+
+    const points=
+        Number(
+            button.dataset.points
+        );
+
+    const x=
+        parseFloat(
+            button.style.left
+        );
+
+    const y=
+        parseFloat(
+            button.style.top
+        );
+
+    button.remove();
+
+    if(type==='energy'){
+
+        mr.remaining=
+            Math.min(
+                MR_MAX_SECONDS,
+                mr.remaining+5
+            );
+
+        mrFloat(
+            x,
+            y,
+            '+5s  '
+        );
+
+        mr.combo++;
+
+    }else if(type==='bomb'){
+
+        mr.score=
+            Math.max(
+                0,
+                mr.score+
+                points
+            );
+
+        mr.combo=0;
+
+        mrFloat(
+            x,
+            y,
+            '-75 💥'
+        );
+
+    }else{
+
+        mr.combo++;
+
+        mr.bestCombo=
+            Math.max(
+                mr.bestCombo,
+                mr.combo
+            );
+
+        const multiplier=
+            mr.combo>=15
+            ?1.3
+            :mr.combo>=10
+            ?1.2
+            :mr.combo>=5
+            ?1.1
+            :1;
+
+        const earned=
+            Math.round(
+                points*
+                multiplier
+            );
+
+        mr.score+=
+            earned;
+
+        mrFloat(
+            x,
+            y,
+            '+'+
+            earned+
+            (
+                type==='diamond'
+                ?' 💠'
+                :''
+            )
+        );
+    }
+
+    mrUpdate();
+}
+
+function mrStartGame(){
+
+    if(mr.running)return;
+
+    mrClearObjects();
+
+    mr={
+        running:false,
+        score:0,
+        time:30,
+        combo:0,
+        bestCombo:0,
+        spawnTimer:null,
+        timer:null,
+        remaining:30,
+        earned:0,
+        daily:mr.daily,
+        dailyDate:mr.dailyDate,
+        pendingTransfer:0
+    };
+
+    mrEl(
+        'mrResult'
+    ).classList.remove(
+        'show'
+    );
+
+    mrEl(
+        'mrCenter'
+    ).innerHTML=
+        '<div class="mr-count" id="mrCount">3</div>';
+
+    let number=3;
+
+    const countdown=
+        setInterval(
+            ()=>{
+
+                number--;
+
+                if(number>0){
+
+                    const count=
+                        document.getElementById(
+                            'mrCount'
+                        );
+
+                    if(count){
+
+                        count.textContent=
+                            number;
+                    }
+
+                }else{
+
+                    clearInterval(
+                        countdown
+                    );
+
+                    mr.running=true;
+
+                    mrEl(
+                        'mrCenter'
+                    ).innerHTML='';
+
+                    mrStartLoops();
+
+                    mrUpdate();
+                }
+
+            },
+            650
+        );
+}
+
+function mrStartLoops(){
+
+    mr.spawnTimer=
+        setInterval(
+            mrSpawn,
+            520
+        );
+
+    mr.timer=
+        setInterval(
+            ()=>{
+
+                if(!mr.running)return;
+
+                mr.remaining--;
+
+                if(
+                    mr.remaining<=0
+                ){
+
+                    mrEndGame();
+
+                    return;
+                }
+
+                mrUpdate();
+
+            },
+            1000
+        );
+
+    for(
+        let i=0;
+        i<3;
+        i++
+    ){
+
+        setTimeout(
+            mrSpawn,
+            i*220
+        );
+    }
+}
+
+function mrEndGame(){
+
+    if(!mr.running)return;
+
+    mr.running=false;
+
+    clearInterval(
+        mr.spawnTimer
+    );
+
+    clearInterval(
+        mr.timer
+    );
+
+    mr.spawnTimer=null;
+    mr.timer=null;
+
+    mrClearObjects();
+
+    const reward=
+        Math.max(
+            0,
+            mr.score*
+            MR_POINTS_TO_USD
+        );
+
+    mr.earned=
+        reward;
+
+    mr.pendingTransfer=
+        reward;
+
+    mrEl(
+        'mrFinalScore'
+    ).textContent=
+        mr.score.toLocaleString()+
+        ' pts';
+
+    mrEl(
+        'mrFinalReward'
+    ).textContent=
+        '+$'+
+        reward.toFixed(4);
+
+    const button=
+        mrEl(
+            'mrTransfer'
+        );
+
+    if(button){
+
+        button.disabled=
+            reward<=0;
+
+        button.dataset.done=
+            '0';
+    }
+
+    mrEl(
+        'mrResult'
+    ).classList.add(
+        'show'
+    );
+
+    mrUpdate();
+}
+
+async function mrTransferReward(){
+    const button=mrEl('mrTransfer');
+    if(!button || mr.pendingTransfer<=0 || button.dataset.done==='1')return;
+
+    const amount=Math.min(Number(mr.pendingTransfer||0),MR_DAILY_LIMIT);
+    button.disabled=true;
+
+    try{
+        const response=await fetch(POSTGRES_API+'/api/game-investment',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:tg.initData,amount}),cache:'no-store'
+        });
+        const data=await response.json();
+        if(!response.ok || !data.ok)throw new Error(data.message||'Oyun ödülü kaydedilemedi.');
+
+        totalInvested=Number(data.total_invested ?? data.totalInvested ?? (totalInvested+amount));
+        mr.pendingTransfer=0;
+        mr.daily=Math.min(MR_DAILY_LIMIT,Number(mr.daily||0)+amount);
+        dailyRewardPool=Number(dailyRewardPool||0)+amount;
+        localStorage.setItem('mm_daily_game_reward',String(dailyRewardPool));
+        button.textContent='✓ DAILY REWARD';
+        button.dataset.done='1';
+        await syncPostgresAccount();
+        updateUI();
+        renderDailyGameRewardCard();
+    }catch(error){
+        button.disabled=false;
+        console.error(error);
+        alert('❌ '+error.message);
+    }
+}
+
+/* =========================================================
+   MINING MODAL
+========================================================= */
+
+const mrArena=
+    document.getElementById(
+        'mrArena'
+    );
+
+const mrModal=
+    document.getElementById(
+        'miningRushModal'
+    );
+
+const mrGoldCard=
+    document.querySelector(
+        '.game-grid .game-card.active'
+    );
+
+const mrCloseBtn=
+    document.getElementById(
+        'mrCloseModal'
+    );
+
+const mrBackdrop=
+    document.getElementById(
+        'mrModalBackdrop'
+    );
+
+function openMiningRushModal(){
+
+    if(!mrModal)return;
+
+    mrModal.classList.add(
+        'show'
+    );
+
+    mrModal.setAttribute(
+        'aria-hidden',
+        'false'
+    );
+
+    document.body.classList.add(
+        'mr-modal-open'
+    );
+}
+
+function closeMiningRushModal(){
+
+    if(
+        mr&&
+        mr.running
+    ){
+
+        return;
+    }
+
+    if(mrModal){
+
+        mrModal.classList.remove(
+            'show'
+        );
+
+        mrModal.setAttribute(
+            'aria-hidden',
+            'true'
+        );
+    }
+
+    document.body.classList.remove(
+        'mr-modal-open'
+    );
+}
+
+if(mrGoldCard){
+
+    mrGoldCard.addEventListener(
+        'click',
+        openMiningRushModal
+    );
+}
+
+if(mrCloseBtn){
+
+    mrCloseBtn.addEventListener(
+        'click',
+        closeMiningRushModal
+    );
+}
+
+if(mrBackdrop){
+
+    mrBackdrop.addEventListener(
+        'click',
+        closeMiningRushModal
+    );
+}
+
+document.addEventListener(
+    'keydown',
+    event=>{
+
+        if(
+            event.key==='Escape' &&
+            mrModal &&
+            mrModal.classList.contains('show')
+        ){
+
+            closeMiningRushModal();
+        }
+    }
+);
+
+if(
+    mrEl('mrStart')
+){
+
+    mrEl(
+        'mrStart'
+    ).addEventListener(
+        'click',
+        mrStartGame
+    );
+}
+
+if(
+    mrEl('mrPlayAgain')
+){
+
+    mrEl(
+        'mrPlayAgain'
+    ).addEventListener(
+        'click',
+        mrStartGame
+    );
+}
+
+if(
+    mrEl('mrTransfer')
+){
+
+    mrEl(
+        'mrTransfer'
+    ).addEventListener(
+        'click',
+        mrTransferReward
+    );
+}
+
+mrUpdate();
+
+/* =========================================================
+   TELEGRAM + POSTGRES INITIALIZATION
+========================================================= */
+
+async function initializeApp(){
+
+    try{
+
+        if(!tg || !tg.initData){
+            console.warn('⚠️ Telegram initData bulunamadı. Mini App Telegram içinden açılmalı.');
+        }
+
+        const backendUser =
+            await registerTelegramUserWithBackend();
+
+        if(backendUser){
+            currentUser = backendUser;
+            userId = backendUser.id || tg?.initDataUnsafe?.user?.id || null;
+            postgresAccount = backendUser;
+            balance = Number(backendUser.balance || 0);
+            totalInvested = Number(backendUser.total_invested || 0);
+            totalWithdrawn = Number(backendUser.total_withdrawn || 0);
+            referralEarnings = Number(backendUser.referral_earnings || 0);
+            createdAt = backendUser.created_at || null;
+
+            referralCount = Number(backendUser.referral_count || 0);
+            pendingReferralBonus = Number(backendUser.pending_referral_bonus || 0);
+            referralBonusUnlocked = !!backendUser.referral_bonus_unlocked;
+
+            renderPostgresBalance();
+        }
+
+        await initPrices();
+        renderPackages();
+        updateTelegramNotifUI();
+
+        await syncPostgresAccount();
+        updateUI();
+
+        if(typeof loadWithdrawalHistory === 'function'){
+            loadWithdrawalHistory();
+        }
+
+        if(typeof loadDepositHistory === 'function'){
+            loadDepositHistory();
+        }
+
+        console.log('✅ Mini App → Node.js → PostgreSQL hazır');
+
+    }catch(error){
+        console.error('❌ Mini App başlatma hatası:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    renderPackages();
+    initializeApp();
+});
+
+// 🎁 İlk giriş bonusu artık PostgreSQL tarafından yönetilir.
+function welcomeBonus(){ return; }
+
+</script>
+
+<div class="mm-bottom-nav">
+
+<button
+    class="mm-nav-item active"
+    onclick="showPage('home',this)">
+    <img src="assets/icons/home.png" alt="">
+    <span class="nav-label">Home</span>
+</button>
+
+<button
+    class="mm-nav-item"
+    onclick="showPage('buy',this)">
+    <img src="assets/icons/investment.png" alt="">
+    <span class="nav-label">Investment</span>
+</button>
+
+<button
+    class="mm-nav-item"
+    onclick="showPage('withdraw',this)">
+    <img src="assets/icons/withdraw.png" alt="">
+    <span class="nav-label">Withdraw</span>
+</button>
+
+<button
+    class="mm-nav-item"
+    onclick="openProfile()">
+    <img src="assets/icons/profile.png" alt="">
+    <span class="nav-label">Profile</span>
+</button>
+
+<button
+    class="mm-nav-item"
+    onclick="openSupport()">
+    <img src="assets/icons/support.png" alt="">
+    <span class="nav-label">Support</span>
+</button>
+
+</div>
+<!-- ================================
+     TREASURE CAVE MINI GAME
+================================ -->
+
+<style>
+#tcOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(8px);
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+}
+
+#tcOverlay.active{
+    display:flex;
+}
+
+#tcWindow{
+    position:relative;
+    width:min(520px,100%);
+    height:min(850px,94vh);
+    overflow:hidden;
+    border-radius:22px;
+    background:#080502;
+    border:1px solid rgba(255,210,90,.35);
+    box-shadow:0 0 70px rgba(0,0,0,.8);
+}
+
+#tcCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#tcClose{
+    position:absolute;
+    top:12px;
+    right:12px;
+    z-index:20;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.65);
+    color:white;
+    font-size:23px;
+}
+
+#tcHud{
+    position:absolute;
+    z-index:10;
+    top:12px;
+    left:12px;
+    right:60px;
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.tcStat{
+    background:rgba(20,10,2,.8);
+    border:1px solid rgba(255,210,90,.25);
+    border-radius:9px;
+    padding:7px 10px;
+}
+
+#tcStart,
+#tcEnd{
+    position:absolute;
+    inset:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(4,2,0,.72);
+}
+
+#tcEnd{
+    display:none;
+}
+
+.tcBox{
+    width:min(370px,90%);
+    padding:28px 20px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(#35200d,#100803);
+    border:1px solid rgba(255,210,90,.3);
+    color:white;
+}
+
+.tcBox h1{
+    margin:8px 0;
+    font-size:30px;
+}
+
+.tcGold{
+    color:#ffd45a;
+}
+
+.tcBox p{
+    color:#b9a58e;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.tcButton{
+    width:100%;
+    min-height:52px;
+    border:0;
+    border-radius:13px;
+    background:#ffd45a;
+    color:#241300;
+    font-size:15px;
+    font-weight:900;
+}
+
+#tcCount{
+    font-size:80px;
+    color:#ffd45a;
+}
+
+#tcControls{
+    position:absolute;
+    z-index:15;
+    left:0;
+    right:0;
+    bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    padding:0 18px;
+    pointer-events:none;
+}
+
+.tcControl{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:1px solid rgba(255,210,90,.4);
+    background:rgba(35,18,5,.9);
+    color:#ffe8a8;
+    font-size:26px;
+    pointer-events:auto;
+    touch-action:none;
+}
+
+.tcCollect{
+    width:82px;
+    height:82px;
+    font-size:28px;
+}
+</style>
+
+
+<div id="tcOverlay">
+
+    <div id="tcWindow">
+
+        <canvas id="tcCanvas"></canvas>
+
+        <button id="tcClose">×</button>
+
+        <div id="tcHud">
+
+            <div class="tcStat">
+                💎 <span id="tcScore">0</span>
+            </div>
+
+            <div class="tcStat">
+                ❤️ <span id="tcLives">3</span>
+            </div>
+
+            <div class="tcStat">
+                ⏱️ <span id="tcTime">30</span>
+            </div>
+
+        </div>
+
+
+        <div id="tcStart">
+
+            <div class="tcBox">
+
+                <div style="font-size:58px">
+                    💎
+                </div>
+
+                <h1>
+                    TREASURE
+                    <span class="tcGold">CAVE</span>
+                </h1>
+
+                <p>
+                    Mağaranın derinliklerinden
+                    hazineleri topla.
+                    Kayalardan kaç!
+                </p>
+
+                <button
+                    id="tcStartButton"
+                    class="tcButton"
+                >
+                    💎 HAZİNE AVCILIĞINA BAŞLA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="tcEnd">
+
+            <div class="tcBox">
+
+                <div style="font-size:50px">
+                    🏆
+                </div>
+
+                <h1>
+                    TREASURE
+                    <span class="tcGold">FOUND!</span>
+                </h1>
+
+                <div
+                    style="
+                    font-size:44px;
+                    font-weight:900;
+                    color:#ffd45a;
+                    margin:12px"
+                >
+                    <span id="tcFinalScore">0</span>
+                </div>
+
+                <p>
+                    Toplanan hazine:
+                    <b id="tcTreasures">0</b>
+                </p>
+
+                <button
+                    id="tcAgain"
+                    class="tcButton"
+                >
+                    💎 TEKRAR OYNA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="tcControls">
+
+            <button
+                id="tcLeft"
+                class="tcControl"
+            >
+                ◀
+            </button>
+
+            <button
+                id="tcCollect"
+                class="tcControl tcCollect"
+            >
+                💎
+            </button>
+
+            <button
+                id="tcRight"
+                class="tcControl"
+            >
+                ▶
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+/* =========================
+   TREASURE CAVE
+========================= */
+
+const overlay =
+document.getElementById("tcOverlay");
+
+const closeBtn =
+document.getElementById("tcClose");
+
+const startBtn =
+document.getElementById("tcStartButton");
+
+const againBtn =
+document.getElementById("tcAgain");
+
+const canvas =
+document.getElementById("tcCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+
+let W=0;
+let H=0;
+
+let running=false;
+
+let score=0;
+let lives=3;
+let treasures=0;
+
+let startTime=0;
+let lastTime=0;
+
+let objects=[];
+
+let stars=[];
+
+let keys={
+    left:false,
+    right:false
+};
+
+
+const player={
+    x:0,
+    y:0,
+    speed:6,
+    invincible:0
+};
+
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,0,0,ratio,0,0
+    );
+
+    player.x=W/2;
+    player.y=H-125;
+
+}
+
+
+function resetStars(){
+
+    stars=[];
+
+    for(
+        let i=0;
+        i<80;
+        i++
+    ){
+
+        stars.push({
+
+            x:Math.random()*W,
+
+            y:Math.random()*H,
+
+            size:
+                1+Math.random()*2,
+
+            speed:
+                .3+Math.random()
+
+        });
+
+    }
+
+}
+
+
+function openGame(){
+
+    overlay.classList.add("active");
+
+    resize();
+
+    resetStars();
+
+    showStart();
+
+}
+
+
+function closeGame(){
+
+    running=false;
+
+    overlay.classList.remove("active");
+
+}
+
+
+function showStart(){
+
+    running=false;
+
+    document
+    .getElementById("tcStart")
+    .style.display="flex";
+
+    document
+    .getElementById("tcEnd")
+    .style.display="none";
+
+    document
+    .getElementById("tcControls")
+    .style.display="none";
+
+}
+
+
+function startGame(){
+
+    score=0;
+    lives=3;
+    treasures=0;
+
+    objects=[];
+
+    player.x=W/2;
+    player.y=H-125;
+    player.invincible=0;
+
+    updateHUD();
+
+    document
+    .getElementById("tcStart")
+    .style.display="none";
+
+    document
+    .getElementById("tcEnd")
+    .style.display="none";
+
+    document
+    .getElementById("tcControls")
+    .style.display="flex";
+
+
+    let count=3;
+
+    const countBox=
+    document
+    .getElementById("tcStart");
+
+    countBox.innerHTML=
+    '<div class="tcBox">'+
+    '<div id="tcCount">3</div>'+
+    '</div>';
+
+    countBox.style.display="flex";
+
+
+    const timer=setInterval(()=>{
+
+        count--;
+
+        if(count<=0){
+
+            clearInterval(timer);
+
+            document
+            .getElementById("tcStart")
+            .style.display="none";
+
+            document
+            .getElementById("tcControls")
+            .style.display="flex";
+
+            running=true;
+
+            startTime=Date.now();
+
+            lastTime=Date.now();
+
+            requestAnimationFrame(loop);
+
+        }
+        else{
+
+            const c=
+            document.getElementById(
+                "tcCount"
+            );
+
+            if(c)
+            c.textContent=count;
+
+        }
+
+    },650);
+
+}
+
+
+function spawn(type){
+
+    objects.push({
+
+        type:type,
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-40,
+
+        size:
+        type==="rock"
+        ?18+Math.random()*14
+        :20+Math.random()*8,
+
+        speed:
+        type==="rock"
+        ?2.5+Math.random()*3
+        :2+Math.random()*2
+
+    });
+
+}
+
+
+function damage(){
+
+    if(player.invincible>0)
+    return;
+
+    lives--;
+
+    player.invincible=900;
+
+    updateHUD();
+
+    if(lives<=0)
+    endGame();
+
+}
+
+
+function updateHUD(){
+
+    document
+    .getElementById("tcScore")
+    .textContent=score;
+
+    document
+    .getElementById("tcLives")
+    .textContent=lives;
+
+    document
+    .getElementById("tcTreasures")
+    .textContent=treasures;
+
+}
+
+
+function update(){
+
+    const now=Date.now();
+
+    const dt=now-lastTime;
+
+    lastTime=now;
+
+
+    if(keys.left)
+    player.x-=player.speed;
+
+    if(keys.right)
+    player.x+=player.speed;
+
+
+    player.x=
+    Math.max(
+        25,
+        Math.min(
+            W-25,
+            player.x
+        )
+    );
+
+
+    if(player.invincible>0)
+    player.invincible-=dt;
+
+
+    for(const s of stars){
+
+        s.y+=s.speed;
+
+        if(s.y>H)
+        s.y=0;
+
+    }
+
+
+    if(Math.random()<.035)
+    spawn(
+        Math.random()<.55
+        ?"diamond"
+        :"chest"
+    );
+
+
+    if(Math.random()<.022)
+    spawn("rock");
+
+
+    for(const o of objects)
+    o.y+=o.speed;
+
+
+    for(const o of objects){
+
+        const d=
+        Math.hypot(
+            o.x-player.x,
+            o.y-player.y
+        );
+
+
+        if(d<o.size+25){
+
+            if(
+                o.type==="diamond"
+            ){
+
+                score+=250;
+                treasures++;
+
+                o.y=H+999;
+
+            }
+
+            else if(
+                o.type==="chest"
+            ){
+
+                score+=500;
+                treasures++;
+
+                o.y=H+999;
+
+            }
+
+            else{
+
+                o.y=H+999;
+
+                damage();
+
+            }
+
+        }
+
+    }
+
+
+    objects=
+    objects.filter(
+        o=>o.y<H+100
+    );
+
+
+    const remaining=
+    Math.max(
+        0,
+        30-
+        Math.floor(
+            (now-startTime)/1000
+        )
+    );
+
+
+    document
+    .getElementById("tcTime")
+    .textContent=remaining;
+
+
+    updateHUD();
+
+
+    if(remaining<=0)
+    endGame();
+
+}
+
+
+function draw(){
+
+    ctx.clearRect(
+        0,0,W,H
+    );
+
+
+    const gradient=
+    ctx.createRadialGradient(
+        W/2,
+        H/2,
+        20,
+        W/2,
+        H/2,
+        Math.max(W,H)
+    );
+
+    gradient.addColorStop(
+        0,
+        "#4b2910"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#1d1007"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#050301"
+    );
+
+    ctx.fillStyle=gradient;
+
+    ctx.fillRect(
+        0,0,W,H
+    );
+
+
+    for(const s of stars){
+
+        ctx.fillStyle=
+        "rgba(255,218,150,.35)";
+
+        ctx.fillRect(
+            s.x,
+            s.y,
+            s.size,
+            s.size
+        );
+
+    }
+
+
+    for(const o of objects){
+
+        if(o.type==="diamond"){
+
+            ctx.save();
+
+            ctx.translate(
+                o.x,
+                o.y
+            );
+
+            ctx.rotate(
+                Math.PI/4
+            );
+
+            ctx.shadowColor=
+            "#52e6ff";
+
+            ctx.shadowBlur=18;
+
+            ctx.fillStyle=
+            "#52e6ff";
+
+            ctx.fillRect(
+                -o.size/2,
+                -o.size/2,
+                o.size,
+                o.size
+            );
+
+            ctx.restore();
+
+        }
+
+
+        else if(o.type==="chest"){
+
+            ctx.fillStyle=
+            "#a96725";
+
+            ctx.fillRect(
+                o.x-o.size,
+                o.y-o.size*.55,
+                o.size*2,
+                o.size*1.1
+            );
+
+            ctx.fillStyle=
+            "#ffd45a";
+
+            ctx.fillRect(
+                o.x-4,
+                o.y-3,
+                8,
+                8
+            );
+
+        }
+
+
+        else{
+
+            ctx.beginPath();
+
+            ctx.arc(
+                o.x,
+                o.y,
+                o.size,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle=
+            "#66564a";
+
+            ctx.fill();
+
+        }
+
+    }
+
+
+    if(running){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x,
+            player.y
+        );
+
+
+        if(
+            player.invincible>0 &&
+            Math.floor(
+                player.invincible/100
+            )%2===0
+        ){
+
+            ctx.globalAlpha=.35;
+
+        }
+
+
+        /* kafa */
+
+        ctx.fillStyle=
+        "#ffd45a";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -12,
+            14,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        /* gövde */
+
+        ctx.fillStyle=
+        "#704321";
+
+        ctx.fillRect(
+            -13,
+            3,
+            26,
+            28
+        );
+
+
+        /* kafa lambası */
+
+        ctx.fillStyle=
+        "#fff5c0";
+
+        ctx.shadowColor=
+        "#fff0a0";
+
+        ctx.shadowBlur=25;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -15,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+function loop(){
+
+    if(!running)
+    return;
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(loop);
+
+}
+
+
+function endGame(){
+
+    if(!running)
+    return;
+
+    running=false;
+
+    document
+    .getElementById("tcControls")
+    .style.display="none";
+
+    document
+    .getElementById("tcFinalScore")
+    .textContent=score;
+
+    document
+    .getElementById("tcTreasures")
+    .textContent=treasures;
+
+    document
+    .getElementById("tcEnd")
+    .style.display="flex";
+
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+function holdButton(id,key){
+
+    const el=
+    document.getElementById(id);
+
+    const down=e=>{
+
+        e.preventDefault();
+
+        keys[key]=true;
+
+    };
+
+    const up=e=>{
+
+        e.preventDefault();
+
+        keys[key]=false;
+
+    };
+
+    el.addEventListener(
+        "pointerdown",
+        down
+    );
+
+    el.addEventListener(
+        "pointerup",
+        up
+    );
+
+    el.addEventListener(
+        "pointercancel",
+        up
+    );
+
+    el.addEventListener(
+        "pointerleave",
+        up
+    );
+
+}
+
+
+holdButton(
+    "tcLeft",
+    "left"
+);
+
+holdButton(
+    "tcRight",
+    "right"
+);
+
+
+/* ELLE TOPLAMA */
+
+document
+.getElementById("tcCollect")
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        e.preventDefault();
+
+        for(const o of objects){
+
+            const d=
+            Math.hypot(
+                o.x-player.x,
+                o.y-player.y
+            );
+
+            if(
+                d<100 &&
+                (
+                    o.type==="diamond" ||
+                    o.type==="chest"
+                )
+            ){
+
+                score +=
+                o.type==="diamond"
+                ?250
+                :500;
+
+                treasures++;
+
+                o.y=H+999;
+
+                updateHUD();
+
+                break;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* BUTTONS */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+againBtn.addEventListener(
+    "click",
+    startGame
+);
+
+closeBtn.addEventListener(
+    "click",
+    closeGame
+);
+
+
+/* ESC */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains("active")
+        ){
+
+            closeGame();
+
+        }
+
+        if(e.key==="ArrowLeft")
+        keys.left=true;
+
+        if(e.key==="ArrowRight")
+        keys.right=true;
+
+    }
+);
+
+document.addEventListener(
+    "keyup",
+    e=>{
+
+        if(e.key==="ArrowLeft")
+        keys.left=false;
+
+        if(e.key==="ArrowRight")
+        keys.right=false;
+
+    }
+);
+
+
+/* =========================
+   TREASURE CAVE KARTINI BUL
+========================= */
+
+function findTreasureCard(){
+
+    const headings =
+    document.querySelectorAll(
+        "h1,h2,h3,h4,h5,h6,div,span,p"
+    );
+
+
+    for(
+        const el of headings
+    ){
+
+        const text =
+        el.textContent
+        .trim()
+        .toUpperCase();
+
+
+        if(
+            text==="TREASURE CAVE"
+        ){
+
+            let card=el;
+
+
+            for(
+                let i=0;
+                i<5;
+                i++
+            ){
+
+                if(!card.parentElement)
+                break;
+
+                card=card.parentElement;
+
+
+                const cardText=
+                card.textContent
+                .toUpperCase();
+
+
+                if(
+                    cardText.includes(
+                        "TREASURE CAVE"
+                    ) &&
+                    cardText.length<250
+                ){
+
+                    return card;
+
+                }
+
+            }
+
+            return el.parentElement;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+function activateTreasureCard(){
+
+    const card=
+    findTreasureCard();
+
+
+    if(!card)
+    return;
+
+
+    card.style.cursor="pointer";
+
+
+    /*
+      SOON / LOCK
+      yazılarını kaldır
+    */
+
+    const all=
+    card.querySelectorAll("*");
+
+
+    all.forEach(el=>{
+
+        const t=
+        el.textContent
+        .trim()
+        .toUpperCase();
+
+
+        if(
+            t==="SOON" ||
+            t==="YAKINDA" ||
+            t==="🔒"
+        ){
+
+            el.style.display="none";
+
+        }
+
+    });
+
+
+    /*
+      Tıklama
+    */
+
+    card.addEventListener(
+        "click",
+        function(e){
+
+            /*
+              Kartın içindeki
+              mevcut butonlara
+              basıldıysa tekrar
+              çalıştırma
+            */
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openGame();
+
+        },
+        true
+    );
+
+
+    /*
+      PLAY etiketi
+    */
+
+    if(
+        !card.querySelector(
+            ".tcPlayLabel"
+        )
+    ){
+
+        const label=
+        document.createElement(
+            "div"
+        );
+
+        label.className=
+        "tcPlayLabel";
+
+        label.textContent=
+        "💎 PLAY";
+
+        label.style.cssText=
+        `
+        margin-top:8px;
+        display:inline-block;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#ffd45a;
+        color:#241300;
+        font-size:11px;
+        font-weight:900;
+        `;
+
+        card.appendChild(label);
+
+    }
+
+}
+
+
+/*
+  İlk deneme
+*/
+
+activateTreasureCard();
+
+
+/*
+  Site içeriği sonradan
+  yüklenirse tekrar dene
+*/
+
+const observer=
+new MutationObserver(
+()=>{
+    activateTreasureCard();
+});
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+/* resize */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        if(
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            resize();
+
+        }
+    }
+);
+
+
+})();
+</script>
+  <!-- ==============================
+     CRYSTAL HUNT POPUP
+================================ -->
+
+<style>
+#crystalHuntOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+}
+
+#crystalHuntOverlay.active{
+    display:flex;
+}
+
+#crystalHuntWindow{
+    position:relative;
+    width:min(520px,100%);
+    height:min(850px,94vh);
+    overflow:hidden;
+    border-radius:24px;
+    background:#050b16;
+    border:1px solid rgba(80,220,255,.4);
+    box-shadow:0 0 80px rgba(0,160,255,.18);
+}
+
+#crystalCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#crystalClose{
+    position:absolute;
+    z-index:50;
+    top:12px;
+    right:12px;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.65);
+    color:#fff;
+    font-size:25px;
+}
+
+#crystalHud{
+    position:absolute;
+    z-index:20;
+    top:12px;
+    left:12px;
+    right:62px;
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+    pointer-events:none;
+}
+
+.chStat{
+    padding:7px 10px;
+    border-radius:9px;
+    background:rgba(3,12,25,.82);
+    border:1px solid rgba(85,220,255,.28);
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+}
+
+#crystalStart,
+#crystalResult{
+    position:absolute;
+    inset:0;
+    z-index:40;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,13,.72);
+}
+
+#crystalResult{
+    display:none;
+}
+
+.chBox{
+    width:min(370px,92%);
+    padding:28px 20px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(
+        180deg,
+        #102b40,
+        #07101b
+    );
+    border:1px solid rgba(83,220,255,.3);
+    color:#fff;
+}
+
+.chBox h1{
+    margin:8px 0 12px;
+    font-size:29px;
+}
+
+.chBlue{
+    color:#58e8ff;
+}
+
+.chBox p{
+    color:#9db5c8;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.chButton{
+    width:100%;
+    min-height:52px;
+    border:0;
+    border-radius:13px;
+    background:#58e8ff;
+    color:#031019;
+    font-size:15px;
+    font-weight:900;
+}
+
+#crystalControls{
+    position:absolute;
+    z-index:25;
+    left:0;
+    right:0;
+    bottom:16px;
+    display:none;
+    justify-content:space-between;
+    padding:0 18px;
+    pointer-events:none;
+}
+
+.chControl{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:1px solid rgba(88,232,255,.35);
+    background:rgba(3,15,27,.9);
+    color:#b9f6ff;
+    font-size:26px;
+    pointer-events:auto;
+    touch-action:none;
+}
+
+.chCollect{
+    width:82px;
+    height:82px;
+    font-size:28px;
+}
+
+#crystalFinalScore{
+    color:#58e8ff;
+    font-size:46px;
+    font-weight:900;
+    margin:12px;
+}
+</style>
+
+
+<div id="crystalHuntOverlay">
+
+    <div id="crystalHuntWindow">
+
+        <canvas id="crystalCanvas"></canvas>
+
+        <button id="crystalClose">×</button>
+
+        <div id="crystalHud">
+
+            <div class="chStat">
+                💠 <span id="crystalScore">0</span>
+            </div>
+
+            <div class="chStat">
+                ❤️ <span id="crystalLives">3</span>
+            </div>
+
+            <div class="chStat">
+                ⏱️ <span id="crystalTime">30</span>
+            </div>
+
+        </div>
+
+
+        <div id="crystalStart">
+
+            <div class="chBox">
+
+                <div style="font-size:60px">
+                    💠
+                </div>
+
+                <h1>
+                    CRYSTAL
+                    <span class="chBlue">HUNT</span>
+                </h1>
+
+                <p>
+                    Uzay madenindeki değerli
+                    kristalleri topla.
+                    Asteroitlere dikkat et!
+                </p>
+
+                <button
+                    id="crystalStartButton"
+                    class="chButton"
+                >
+                    💠 HUNT'A BAŞLA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="crystalResult">
+
+            <div class="chBox">
+
+                <div style="font-size:52px">
+                    🏆
+                </div>
+
+                <h1>
+                    HUNT
+                    <span class="chBlue">COMPLETE</span>
+                </h1>
+
+                <div id="crystalFinalScore">
+                    0
+                </div>
+
+                <p>
+                    Toplanan kristal:
+                    <b id="crystalTreasures">0</b>
+                </p>
+
+                <button
+                    id="crystalAgain"
+                    class="chButton"
+                >
+                    💠 TEKRAR OYNA
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="crystalControls">
+
+            <button
+                id="crystalLeft"
+                class="chControl"
+            >
+                ◀
+            </button>
+
+            <button
+                id="crystalCollect"
+                class="chControl chCollect"
+            >
+                💠
+            </button>
+
+            <button
+                id="crystalRight"
+                class="chControl"
+            >
+                ▶
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+const overlay =
+document.getElementById(
+    "crystalHuntOverlay"
+);
+
+const canvas =
+document.getElementById(
+    "crystalCanvas"
+);
+
+const ctx =
+canvas.getContext("2d");
+
+
+let W=0;
+let H=0;
+
+let running=false;
+
+let score=0;
+let lives=3;
+let crystals=0;
+
+let startTime=0;
+let lastTime=0;
+
+let objects=[];
+
+let particles=[];
+
+let keys={
+    left:false,
+    right:false
+};
+
+
+const player={
+    x:0,
+    y:0,
+    speed:6,
+    invincible:0
+};
+
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    player.x=W/2;
+    player.y=H-120;
+
+}
+
+
+function openCrystalHunt(){
+
+    overlay.classList.add(
+        "active"
+    );
+
+    resize();
+
+    showStart();
+
+    draw();
+
+}
+
+
+function closeCrystalHunt(){
+
+    running=false;
+
+    overlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+function showStart(){
+
+    running=false;
+
+    document
+    .getElementById(
+        "crystalStart"
+    )
+    .style.display="flex";
+
+    document
+    .getElementById(
+        "crystalResult"
+    )
+    .style.display="none";
+
+    document
+    .getElementById(
+        "crystalControls"
+    )
+    .style.display="none";
+
+}
+
+
+function startCrystalGame(){
+
+    score=0;
+    lives=3;
+    crystals=0;
+
+    objects=[];
+    particles=[];
+
+    resize();
+
+    updateHUD();
+
+
+    document
+    .getElementById(
+        "crystalStart"
+    )
+    .style.display="none";
+
+
+    let count=3;
+
+
+    const startScreen =
+    document.getElementById(
+        "crystalStart"
+    );
+
+
+    startScreen.innerHTML=
+    `
+    <div class="chBox">
+        <div
+        id="crystalCountdown"
+        style="
+        font-size:80px;
+        color:#58e8ff;
+        font-weight:900">
+        3
+        </div>
+    </div>
+    `;
+
+
+    startScreen.style.display="flex";
+
+
+    const timer=setInterval(()=>{
+
+        count--;
+
+        const counter =
+        document.getElementById(
+            "crystalCountdown"
+        );
+
+        if(count<=0){
+
+            clearInterval(timer);
+
+            startScreen.style.display=
+                "none";
+
+            document
+            .getElementById(
+                "crystalControls"
+            )
+            .style.display="flex";
+
+            running=true;
+
+            startTime=Date.now();
+
+            lastTime=Date.now();
+
+            requestAnimationFrame(
+                loop
+            );
+
+        }
+        else if(counter){
+
+            counter.textContent=count;
+
+        }
+
+    },650);
+
+}
+
+
+function updateHUD(){
+
+    document
+    .getElementById(
+        "crystalScore"
+    )
+    .textContent=score;
+
+    document
+    .getElementById(
+        "crystalLives"
+    )
+    .textContent=lives;
+
+    document
+    .getElementById(
+        "crystalTreasures"
+    )
+    .textContent=crystals;
+
+}
+
+
+function spawnCrystal(){
+
+    objects.push({
+
+        type:
+        Math.random()<.7
+        ?"crystal"
+        :"big",
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-40,
+
+        size:
+        15+
+        Math.random()*10,
+
+        speed:
+        2+
+        Math.random()*2
+
+    });
+
+}
+
+
+function spawnAsteroid(){
+
+    objects.push({
+
+        type:"asteroid",
+
+        x:
+        25+
+        Math.random()*
+        (W-50),
+
+        y:-50,
+
+        size:
+        18+
+        Math.random()*15,
+
+        speed:
+        2.5+
+        Math.random()*3
+
+    });
+
+}
+
+
+function damage(){
+
+    if(player.invincible>0)
+    return;
+
+    lives--;
+
+    player.invincible=1000;
+
+    updateHUD();
+
+    if(lives<=0){
+
+        endGame();
+
+    }
+
+}
+
+
+function collect(object){
+
+    if(
+        object.type==="crystal"
+    ){
+
+        score+=150;
+
+    }
+    else{
+
+        score+=400;
+
+    }
+
+    crystals++;
+
+    object.y=H+999;
+
+
+    for(
+        let i=0;
+        i<10;
+        i++
+    ){
+
+        particles.push({
+
+            x:object.x,
+            y:object.y,
+            vx:
+                -2+
+                Math.random()*4,
+            vy:
+                -3+
+                Math.random()*2,
+            life:1
+
+        });
+
+    }
+
+}
+
+
+function update(){
+
+    const now=Date.now();
+
+    const dt=
+        now-lastTime;
+
+    lastTime=now;
+
+
+    if(keys.left)
+    player.x-=player.speed;
+
+    if(keys.right)
+    player.x+=player.speed;
+
+
+    player.x=
+        Math.max(
+            25,
+            Math.min(
+                W-25,
+                player.x
+            )
+        );
+
+
+    if(
+        player.invincible>0
+    ){
+
+        player.invincible-=dt;
+
+    }
+
+
+    if(
+        Math.random()<.045
+    ){
+
+        spawnCrystal();
+
+    }
+
+
+    if(
+        Math.random()<.025
+    ){
+
+        spawnAsteroid();
+
+    }
+
+
+    for(
+        const object of objects
+    ){
+
+        object.y+=object.speed;
+
+    }
+
+
+    for(
+        const object of objects
+    ){
+
+        const distance=
+        Math.hypot(
+            object.x-player.x,
+            object.y-player.y
+        );
+
+
+        if(
+            distance<
+            object.size+24
+        ){
+
+            if(
+                object.type==="crystal" ||
+                object.type==="big"
+            ){
+
+                collect(object);
+
+            }
+            else{
+
+                object.y=H+999;
+
+                damage();
+
+            }
+
+        }
+
+    }
+
+
+    objects=
+    objects.filter(
+        o=>o.y<H+100
+    );
+
+
+    for(
+        const p of particles
+    ){
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        p.life-=.025;
+
+    }
+
+
+    particles=
+    particles.filter(
+        p=>p.life>0
+    );
+
+
+    const remaining=
+    Math.max(
+        0,
+        30-
+        Math.floor(
+            (now-startTime)/1000
+        )
+    );
+
+
+    document
+    .getElementById(
+        "crystalTime"
+    )
+    .textContent=remaining;
+
+
+    updateHUD();
+
+
+    if(
+        remaining<=0
+    ){
+
+        endGame();
+
+    }
+
+}
+
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* SPACE BACKGROUND */
+
+    const gradient=
+    ctx.createRadialGradient(
+        W/2,
+        H/2,
+        10,
+        W/2,
+        H/2,
+        Math.max(W,H)
+    );
+
+    gradient.addColorStop(
+        0,
+        "#102e45"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#071321"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#02050a"
+    );
+
+    ctx.fillStyle=gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* STARS */
+
+    for(
+        let i=0;
+        i<70;
+        i++
+    ){
+
+        const x=
+            (i*83)%W;
+
+        const y=
+            (i*137+
+            Date.now()*.025*
+            ((i%3)+1))
+            %H;
+
+        ctx.fillStyle=
+            "rgba(190,240,255,.5)";
+
+        ctx.fillRect(
+            x,
+            y,
+            1.5,
+            1.5
+        );
+
+    }
+
+
+    /* OBJECTS */
+
+    for(
+        const o of objects
+    ){
+
+        if(
+            o.type==="crystal" ||
+            o.type==="big"
+        ){
+
+            ctx.save();
+
+            ctx.translate(
+                o.x,
+                o.y
+            );
+
+            ctx.rotate(
+                Math.PI/4
+            );
+
+
+            ctx.shadowColor=
+                "#58e8ff";
+
+            ctx.shadowBlur=
+                o.type==="big"
+                ?25
+                :16;
+
+
+            ctx.fillStyle=
+                o.type==="big"
+                ?"#d7fbff"
+                :"#58e8ff";
+
+
+            ctx.fillRect(
+                -o.size/2,
+                -o.size/2,
+                o.size,
+                o.size
+            );
+
+
+            ctx.restore();
+
+        }
+        else{
+
+            /* asteroid */
+
+            ctx.beginPath();
+
+            ctx.arc(
+                o.x,
+                o.y,
+                o.size,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle=
+                "#59636e";
+
+            ctx.fill();
+
+
+            ctx.strokeStyle=
+                "#9ba7b2";
+
+            ctx.stroke();
+
+        }
+
+    }
+
+
+    /* PARTICLES */
+
+    for(
+        const p of particles
+    ){
+
+        ctx.globalAlpha=
+            p.life;
+
+        ctx.fillStyle=
+            "#58e8ff";
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            3,
+            3
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    /* PLAYER SHIP */
+
+    if(running){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x,
+            player.y
+        );
+
+
+        if(
+            player.invincible>0 &&
+            Math.floor(
+                player.invincible/100
+            )%2===0
+        ){
+
+            ctx.globalAlpha=.35;
+
+        }
+
+
+        /* flame */
+
+        ctx.fillStyle=
+            "#ffbd4a";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -7,
+            18
+        );
+
+        ctx.lineTo(
+            0,
+            33+
+            Math.random()*7
+        );
+
+        ctx.lineTo(
+            7,
+            18
+        );
+
+        ctx.fill();
+
+
+        /* ship */
+
+        ctx.fillStyle=
+            "#d7f7ff";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            -25
+        );
+
+        ctx.lineTo(
+            -20,
+            18
+        );
+
+        ctx.lineTo(
+            0,
+            11
+        );
+
+        ctx.lineTo(
+            20,
+            18
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /* cockpit */
+
+        ctx.fillStyle=
+            "#58e8ff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            -5,
+            6,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+function loop(){
+
+    if(!running)
+    return;
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(
+        loop
+    );
+
+}
+
+
+function endGame(){
+
+    if(!running)
+    return;
+
+    running=false;
+
+
+    document
+    .getElementById(
+        "crystalControls"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "crystalFinalScore"
+    )
+    .textContent=score;
+
+
+    document
+    .getElementById(
+        "crystalTreasures"
+    )
+    .textContent=crystals;
+
+
+    document
+    .getElementById(
+        "crystalResult"
+    )
+    .style.display="flex";
+
+}
+
+
+/* CONTROLS */
+
+function holdButton(
+    id,
+    key
+){
+
+    const button =
+    document.getElementById(id);
+
+    function down(e){
+
+        e.preventDefault();
+
+        keys[key]=true;
+
+    }
+
+    function up(e){
+
+        e.preventDefault();
+
+        keys[key]=false;
+
+    }
+
+    button.addEventListener(
+        "pointerdown",
+        down
+    );
+
+    button.addEventListener(
+        "pointerup",
+        up
+    );
+
+    button.addEventListener(
+        "pointercancel",
+        up
+    );
+
+    button.addEventListener(
+        "pointerleave",
+        up
+    );
+
+}
+
+
+holdButton(
+    "crystalLeft",
+    "left"
+);
+
+holdButton(
+    "crystalRight",
+    "right"
+);
+
+
+/* COLLECT */
+
+document
+.getElementById(
+    "crystalCollect"
+)
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        e.preventDefault();
+
+        for(
+            const object of objects
+        ){
+
+            const distance=
+            Math.hypot(
+                object.x-player.x,
+                object.y-player.y
+            );
+
+            if(
+                distance<105 &&
+                (
+                    object.type==="crystal" ||
+                    object.type==="big"
+                )
+            ){
+
+                collect(object);
+
+                updateHUD();
+
+                break;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* BUTTONS */
+
+document
+.getElementById(
+    "crystalStartButton"
+)
+.addEventListener(
+    "click",
+    startCrystalGame
+);
+
+document
+.getElementById(
+    "crystalAgain"
+)
+.addEventListener(
+    "click",
+    startCrystalGame
+);
+
+document
+.getElementById(
+    "crystalClose"
+)
+.addEventListener(
+    "click",
+    closeCrystalHunt
+);
+
+
+/* KEYBOARD */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft"
+        )
+        keys.left=true;
+
+        if(
+            e.key==="ArrowRight"
+        )
+        keys.right=true;
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            closeCrystalHunt();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft"
+        )
+        keys.left=false;
+
+        if(
+            e.key==="ArrowRight"
+        )
+        keys.right=false;
+
+    }
+);
+
+
+/* ==============================
+   CRYSTAL HUNT KARTINI BUL
+================================ */
+
+function findCrystalCard(){
+
+    const elements =
+    document.querySelectorAll(
+        "h1,h2,h3,h4,h5,h6,div,span,p"
+    );
+
+
+    for(
+        const el of elements
+    ){
+
+        if(
+            el.textContent
+            .trim()
+            .toUpperCase()
+            !==
+            "CRYSTAL HUNT"
+        )
+        continue;
+
+
+        let card=el;
+
+
+        for(
+            let i=0;
+            i<6;
+            i++
+        ){
+
+            if(
+                !card.parentElement
+            )
+            break;
+
+
+            card=
+                card.parentElement;
+
+
+            const text=
+                card.textContent
+                .trim()
+                .toUpperCase();
+
+
+            if(
+                text.includes(
+                    "CRYSTAL HUNT"
+                ) &&
+                text.length<220
+            ){
+
+                return card;
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+function activateCrystalCard(){
+
+    const card=
+        findCrystalCard();
+
+
+    if(!card)
+    return;
+
+
+    card.style.cursor=
+        "pointer";
+
+
+    /* SOON / LOCK GİZLE */
+
+    card
+    .querySelectorAll("*")
+    .forEach(el=>{
+
+        const text=
+            el.textContent
+            .trim()
+            .toUpperCase();
+
+
+        if(
+            text==="SOON" ||
+            text==="YAKINDA" ||
+            text==="🔒" ||
+            text==="🔒 YAKINDA"
+        ){
+
+            el.style.display="none";
+
+        }
+
+    });
+
+
+    if(
+        card.dataset
+        .crystalBound==="1"
+    )
+    return;
+
+
+    card.dataset
+        .crystalBound="1";
+
+
+    card.addEventListener(
+        "click",
+        e=>{
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openCrystalHunt();
+
+        },
+        true
+    );
+
+
+    /* PLAY LABEL */
+
+    const label=
+        document.createElement(
+            "div"
+        );
+
+    label.textContent=
+        "💠 PLAY";
+
+    label.style.cssText=`
+        display:inline-block;
+        margin-top:7px;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#58e8ff;
+        color:#031019;
+        font-size:11px;
+        font-weight:900;
+    `;
+
+    card.appendChild(label);
+
+}
+
+
+activateCrystalCard();
+
+
+/* SPA / DİNAMİK SAYFA DEĞİŞİMİ */
+
+const observer=
+new MutationObserver(
+()=>{
+
+    activateCrystalCard();
+
+});
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        if(
+            overlay.classList.contains(
+                "active"
+            )
+        ){
+
+            resize();
+
+        }
+
+    }
+);
+
+
+})();
+</script>
+  <!-- =========================================================
+     PLANET MINER — 3. GAME / POPUP
+     Paste before 
+<script>
+window.addEventListener('error', function(e){
+    console.error('❌ INDEX JS ERROR:', e.error || e.message);
+});
+window.addEventListener('unhandledrejection', function(e){
+    console.error('❌ UNHANDLED PROMISE:', e.reason);
+});
+</script>
+</body>
+========================================================= -->
+
+<style>
+#pmOverlay{
+    position:fixed;
+    inset:0;
+    z-index:1000000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    background:rgba(0,0,0,.84);
+    backdrop-filter:blur(10px);
+    font-family:Arial,sans-serif;
+}
+
+#pmOverlay.pm-open{display:flex}
+
+#pmGame{
+    position:relative;
+    width:min(520px,100%);
+    height:min(860px,94vh);
+    overflow:hidden;
+    border-radius:25px;
+    background:#050914;
+    border:1px solid rgba(70,220,255,.35);
+    box-shadow:0 0 80px rgba(0,180,255,.2);
+    color:#fff;
+}
+
+#pmCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#pmClose{
+    position:absolute;
+    z-index:100;
+    right:12px;
+    top:12px;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.7);
+    color:white;
+    font-size:25px;
+}
+
+#pmTop{
+    position:absolute;
+    z-index:20;
+    left:12px;
+    right:62px;
+    top:12px;
+    display:flex;
+    gap:6px;
+}
+
+.pm-stat{
+    flex:1;
+    min-width:0;
+    padding:8px 7px;
+    border-radius:10px;
+    background:rgba(4,13,27,.84);
+    border:1px solid rgba(83,220,255,.2);
+    text-align:center;
+    font-size:11px;
+    font-weight:800;
+}
+
+.pm-stat b{
+    display:block;
+    margin-top:3px;
+    font-size:13px;
+}
+
+#pmBottom{
+    position:absolute;
+    z-index:30;
+    left:10px;
+    right:10px;
+    bottom:10px;
+    padding:10px;
+    border-radius:18px;
+    background:rgba(3,9,18,.92);
+    border:1px solid rgba(83,220,255,.2);
+}
+
+#pmMine{
+    width:100%;
+    height:60px;
+    border:0;
+    border-radius:14px;
+    background:#53e5ff;
+    color:#031019;
+    font-size:18px;
+    font-weight:900;
+    box-shadow:0 0 25px rgba(83,229,255,.2);
+    touch-action:manipulation;
+}
+
+#pmMine:active{
+    transform:scale(.97);
+}
+
+#pmActions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-top:8px;
+}
+
+.pm-action{
+    min-height:42px;
+    border:1px solid rgba(83,220,255,.2);
+    border-radius:10px;
+    background:#0b1829;
+    color:#dffaff;
+    font-size:11px;
+    font-weight:800;
+}
+
+#pmToast{
+    position:absolute;
+    z-index:90;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(.9);
+    opacity:0;
+    pointer-events:none;
+    padding:13px 18px;
+    border-radius:14px;
+    background:rgba(3,12,23,.94);
+    border:1px solid rgba(83,229,255,.45);
+    color:#fff;
+    font-weight:900;
+    transition:.18s;
+    white-space:nowrap;
+}
+
+#pmToast.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+
+#pmStart,
+#pmPanel{
+    position:absolute;
+    inset:0;
+    z-index:70;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,14,.78);
+}
+
+#pmPanel{display:none}
+
+.pm-box{
+    width:min(390px,94%);
+    max-height:90%;
+    overflow:auto;
+    padding:24px 18px;
+    border-radius:22px;
+    background:linear-gradient(180deg,#102840,#07101c);
+    border:1px solid rgba(83,229,255,.25);
+}
+
+.pm-box h1{
+    margin:4px 0 10px;
+    text-align:center;
+    font-size:28px;
+}
+
+.pm-sub{
+    color:#8ea9bc;
+    text-align:center;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.pm-start-btn{
+    width:100%;
+    min-height:52px;
+    margin-top:15px;
+    border:0;
+    border-radius:13px;
+    background:#53e5ff;
+    color:#031019;
+    font-weight:900;
+    font-size:15px;
+}
+
+.pm-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:12px;
+    margin:7px 0;
+    border-radius:12px;
+    background:#0a1726;
+    border:1px solid rgba(83,220,255,.12);
+}
+
+.pm-row small{
+    display:block;
+    color:#7993a7;
+    margin-top:3px;
+}
+
+.pm-up{
+    border:0;
+    border-radius:9px;
+    padding:9px 11px;
+    background:#53e5ff;
+    color:#031019;
+    font-weight:900;
+    font-size:10px;
+}
+
+.pm-planet{
+    cursor:pointer;
+}
+
+.pm-planet.locked{
+    opacity:.45;
+}
+
+.pm-close-panel{
+    width:100%;
+    margin-top:10px;
+    min-height:45px;
+    border:1px solid rgba(83,220,255,.2);
+    border-radius:11px;
+    background:#0a1726;
+    color:white;
+    font-weight:800;
+}
+</style>
+
+
+<div id="pmOverlay">
+
+    <div id="pmGame">
+
+        <canvas id="pmCanvas"></canvas>
+
+        <button id="pmClose">×</button>
+
+        <div id="pmTop">
+
+            <div class="pm-stat">
+                🪨
+                <b id="pmOre">0</b>
+            </div>
+
+            <div class="pm-stat">
+                💠
+                <b id="pmCrystal">0</b>
+            </div>
+
+            <div class="pm-stat">
+                🟡
+                <b id="pmGold">0</b>
+            </div>
+
+            <div class="pm-stat">
+                ⚡
+                <b id="pmEnergy">100</b>
+            </div>
+
+        </div>
+
+
+        <div id="pmToast"></div>
+
+
+        <div id="pmBottom">
+
+            <button id="pmMine">
+                ⛏️ MINE PLANET
+            </button>
+
+            <div id="pmActions">
+
+                <button
+                    class="pm-action"
+                    id="pmSell"
+                >
+                    💰 SELL
+                </button>
+
+                <button
+                    class="pm-action"
+                    id="pmShip"
+                >
+                    🚀 SHIP
+                </button>
+
+                <button
+                    class="pm-action"
+                    id="pmPlanets"
+                >
+                    🪐 PLANETS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- START -->
+
+        <div id="pmStart">
+
+            <div class="pm-box">
+
+                <div
+                    style="
+                    text-align:center;
+                    font-size:65px"
+                >
+                    🪐🚀
+                </div>
+
+                <h1>
+                    PLANET
+                    <span style="color:#53e5ff">
+                        MINER
+                    </span>
+                </h1>
+
+                <p class="pm-sub">
+                    Gezegenlere in, maden çıkar,
+                    gemini geliştir ve yeni
+                    dünyaları keşfet.
+                </p>
+
+                <button
+                    class="pm-start-btn"
+                    id="pmStartBtn"
+                >
+                    🚀 START MINING
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PANEL -->
+
+        <div id="pmPanel">
+
+            <div class="pm-box">
+
+                <h1 id="pmPanelTitle">
+                    PLANET MINER
+                </h1>
+
+                <div id="pmPanelContent"></div>
+
+                <button
+                    class="pm-close-panel"
+                    id="pmPanelClose"
+                >
+                    KAPAT
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+"use strict";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const pm = {
+
+    ore:0,
+
+    crystal:0,
+
+    gold:0,
+
+    credits:0,
+
+    energy:100,
+
+    planet:0,
+
+    power:1,
+
+    cargo:100,
+
+    speed:1,
+
+    running:false
+
+};
+
+
+const planets = [
+
+    {
+        name:"EARTH",
+        icon:"🌍",
+        required:0,
+        multiplier:1
+    },
+
+    {
+        name:"MOON",
+        icon:"🌑",
+        required:2,
+        multiplier:1.5
+    },
+
+    {
+        name:"MARS",
+        icon:"🔴",
+        required:5,
+        multiplier:2.2
+    },
+
+    {
+        name:"NEPTUNE",
+        icon:"🔵",
+        required:10,
+        multiplier:4
+    },
+
+    {
+        name:"ALIEN X",
+        icon:"🟢",
+        required:20,
+        multiplier:8
+    }
+
+];
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const overlay =
+document.getElementById("pmOverlay");
+
+const canvas =
+document.getElementById("pmCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const mineBtn =
+document.getElementById("pmMine");
+
+const startBtn =
+document.getElementById("pmStartBtn");
+
+const closeBtn =
+document.getElementById("pmClose");
+
+const sellBtn =
+document.getElementById("pmSell");
+
+const shipBtn =
+document.getElementById("pmShip");
+
+const planetsBtn =
+document.getElementById("pmPlanets");
+
+const panel =
+document.getElementById("pmPanel");
+
+const panelTitle =
+document.getElementById("pmPanelTitle");
+
+const panelContent =
+document.getElementById("pmPanelContent");
+
+const panelClose =
+document.getElementById("pmPanelClose");
+
+const toast =
+document.getElementById("pmToast");
+
+
+let W=0;
+let H=0;
+
+let particles=[];
+
+let miningPulse=0;
+
+let stars=[];
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function resize(){
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    W=rect.width;
+    H=rect.height;
+
+    const ratio =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    canvas.width=W*ratio;
+    canvas.height=H*ratio;
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    createStars();
+
+}
+
+
+function createStars(){
+
+    stars=[];
+
+    for(
+        let i=0;
+        i<90;
+        i++
+    ){
+
+        stars.push({
+
+            x:Math.random()*W,
+
+            y:Math.random()*H,
+
+            r:.5+
+                Math.random()*1.5,
+
+            speed:.1+
+                Math.random()*.4
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+function updateUI(){
+
+    document
+    .getElementById("pmOre")
+    .textContent=pm.ore;
+
+    document
+    .getElementById("pmCrystal")
+    .textContent=pm.crystal;
+
+    document
+    .getElementById("pmGold")
+    .textContent=pm.gold;
+
+    document
+    .getElementById("pmEnergy")
+    .textContent=
+        Math.floor(pm.energy);
+
+}
+
+
+function showToast(text){
+
+    toast.textContent=text;
+
+    toast.classList.add("show");
+
+    clearTimeout(
+        showToast.timer
+    );
+
+    showToast.timer=
+        setTimeout(
+            ()=>{
+                toast.classList.remove(
+                    "show"
+                );
+            },
+            900
+        );
+
+}
+
+
+/* =========================================================
+   OPEN / CLOSE
+========================================================= */
+
+function openPlanetMiner(){
+
+    overlay.classList.add(
+        "pm-open"
+    );
+
+    resize();
+
+    draw();
+
+}
+
+
+function closePlanetMiner(){
+
+    overlay.classList.remove(
+        "pm-open"
+    );
+
+    closePanel();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startGame(){
+
+    pm.running=true;
+
+    document
+    .getElementById("pmStart")
+    .style.display="none";
+
+    pm.energy=100;
+
+    updateUI();
+
+    draw();
+
+}
+
+
+/* =========================================================
+   CARGO
+========================================================= */
+
+function cargoUsed(){
+
+    return pm.ore+
+           pm.crystal+
+           pm.gold;
+
+}
+
+
+function cargoFree(){
+
+    return Math.max(
+        0,
+        pm.cargo-cargoUsed()
+    );
+
+}
+
+
+/* =========================================================
+   MINING
+========================================================= */
+
+function mine(){
+
+    if(!pm.running){
+
+        showToast(
+            "ÖNCE OYUNU BAŞLAT"
+        );
+
+        return;
+
+    }
+
+
+    if(pm.energy<=0){
+
+        showToast(
+            "⚡ ENERJİ BİTTİ"
+        );
+
+        return;
+
+    }
+
+
+    if(cargoFree()<=0){
+
+        showToast(
+            "🎒 KARGO DOLU"
+        );
+
+        return;
+
+    }
+
+
+    const planet =
+        planets[pm.planet];
+
+
+    const amount =
+        Math.max(
+            1,
+            Math.floor(
+                pm.power*
+                (0.8+
+                Math.random()*1.2)
+            )
+        );
+
+
+    let remaining =
+        Math.min(
+            amount,
+            cargoFree()
+        );
+
+
+    /*
+      Farklı kaynakların
+      çıkma olasılıkları
+    */
+
+    const roll=
+        Math.random();
+
+
+    if(
+        roll<.65
+    ){
+
+        pm.ore+=remaining;
+
+    }
+    else if(
+        roll<.9
+    ){
+
+        pm.crystal+=
+            Math.max(
+                1,
+                Math.floor(
+                    remaining/2
+                )
+            );
+
+    }
+    else{
+
+        pm.gold+=
+            Math.max(
+                1,
+                Math.floor(
+                    remaining/3
+                )
+            );
+
+    }
+
+
+    pm.energy=
+        Math.max(
+            0,
+            pm.energy-
+            Math.max(
+                1,
+                Math.ceil(
+                    2/pm.speed
+                )
+            )
+        );
+
+
+    miningPulse=1;
+
+    createMiningParticles();
+
+    updateUI();
+
+    showToast(
+        "⛏️ +"+remaining+
+        " MADEN"
+    );
+
+}
+
+
+/* =========================================================
+   SELL
+========================================================= */
+
+function sellResources(){
+
+    const value=
+        pm.ore*1+
+        pm.crystal*8+
+        pm.gold*20;
+
+
+    if(value<=0){
+
+        showToast(
+            "SATILACAK MADEN YOK"
+        );
+
+        return;
+
+    }
+
+
+    pm.credits+=
+        Math.floor(
+            value*
+            planets[pm.planet]
+            .multiplier
+        );
+
+
+    pm.ore=0;
+    pm.crystal=0;
+    pm.gold=0;
+
+
+    updateUI();
+
+    showToast(
+        "💰 SATIŞ TAMAMLANDI"
+    );
+
+}
+
+
+/* =========================================================
+   SHIP PANEL
+========================================================= */
+
+function openShipPanel(){
+
+    panelTitle.textContent=
+        "🚀 MINING SHIP";
+
+
+    const powerCost=
+        100*pm.power;
+
+    const cargoCost=
+        150*
+        Math.ceil(
+            pm.cargo/100
+        );
+
+    const speedCost=
+        200*pm.speed;
+
+
+    panelContent.innerHTML=
+    `
+
+    <div class="pm-row">
+
+        <div>
+            ⛏️ MINING POWER
+            <small>
+                Level ${pm.power}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="power"
+        >
+            ${powerCost} C
+        </button>
+
+    </div>
+
+
+    <div class="pm-row">
+
+        <div>
+            🎒 CARGO
+            <small>
+                ${cargoUsed()}/${pm.cargo}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="cargo"
+        >
+            ${cargoCost} C
+        </button>
+
+    </div>
+
+
+    <div class="pm-row">
+
+        <div>
+            ⚡ MINING SPEED
+            <small>
+                Level ${pm.speed}
+            </small>
+        </div>
+
+        <button
+            class="pm-up"
+            data-up="speed"
+        >
+            ${speedCost} C
+        </button>
+
+    </div>
+
+
+    <div
+        style="
+        text-align:center;
+        margin-top:15px;
+        color:#53e5ff;
+        font-weight:900"
+    >
+        💰 ${pm.credits} CREDITS
+    </div>
+
+    `;
+
+
+    panelContent
+    .querySelectorAll("[data-up]")
+    .forEach(
+        button=>{
+
+            button.addEventListener(
+                "click",
+                ()=>{
+
+                    upgrade(
+                        button.dataset.up
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    panel.style.display="flex";
+
+}
+
+
+function upgrade(type){
+
+    let cost=0;
+
+
+    if(type==="power"){
+
+        cost=100*pm.power;
+
+    }
+    else if(type==="cargo"){
+
+        cost=
+            150*
+            Math.ceil(
+                pm.cargo/100
+            );
+
+    }
+    else{
+
+        cost=200*pm.speed;
+
+    }
+
+
+    if(pm.credits<cost){
+
+        showToast(
+            "💰 YETERSİZ CREDITS"
+        );
+
+        return;
+
+    }
+
+
+    pm.credits-=cost;
+
+
+    if(type==="power"){
+
+        pm.power++;
+
+    }
+
+    else if(type==="cargo"){
+
+        pm.cargo+=100;
+
+    }
+
+    else{
+
+        pm.speed++;
+
+    }
+
+
+    showToast(
+        "🚀 UPGRADE COMPLETE"
+    );
+
+
+    openShipPanel();
+
+}
+
+
+/* =========================================================
+   PLANETS PANEL
+========================================================= */
+
+function openPlanetsPanel(){
+
+    panelTitle.textContent=
+        "🪐 PLANETS";
+
+
+    panelContent.innerHTML=
+        planets.map(
+            (p,index)=>{
+
+                const unlocked=
+                    index<=
+                    Math.floor(
+                        pm.power/2
+                    );
+
+
+                return `
+
+                <div
+                    class="
+                    pm-row
+                    pm-planet
+                    ${unlocked?"":"locked"}
+                    "
+                    data-planet="${index}"
+                >
+
+                    <div>
+
+                        ${p.icon}
+                        <b>
+                            ${p.name}
+                        </b>
+
+                        <small>
+
+                            ${
+                                unlocked
+                                ?
+                                "x"+p.multiplier+
+                                " mining value"
+                                :
+                                "🔒 POWER "+
+                                (p.required*2)
+                            }
+
+                        </small>
+
+                    </div>
+
+                    <div>
+                        ${
+                            unlocked
+                            ?
+                            (
+                                index===
+                                pm.planet
+                                ?
+                                "✓"
+                                :
+                                "GO"
+                            )
+                            :
+                            "🔒"
+                        }
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    panelContent
+    .querySelectorAll(
+        "[data-planet]"
+    )
+    .forEach(
+        el=>{
+
+            el.addEventListener(
+                "click",
+                ()=>{
+
+                    const index=
+                        Number(
+                            el.dataset
+                            .planet
+                        );
+
+                    selectPlanet(
+                        index
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    panel.style.display="flex";
+
+}
+
+
+function selectPlanet(index){
+
+    const unlocked=
+        index<=
+        Math.floor(
+            pm.power/2
+        );
+
+
+    if(!unlocked){
+
+        showToast(
+            "🔒 DAHA GÜÇLÜ GEMİ GEREKİYOR"
+        );
+
+        return;
+
+    }
+
+
+    pm.planet=index;
+
+
+    showToast(
+        planets[index].icon+
+        " "+
+        planets[index].name
+    );
+
+
+    closePanel();
+
+    draw();
+
+}
+
+
+/* =========================================================
+   PANEL CLOSE
+========================================================= */
+
+function closePanel(){
+
+    panel.style.display="none";
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createMiningParticles(){
+
+    const cx=W/2;
+    const cy=H*.54;
+
+
+    for(
+        let i=0;
+        i<16;
+        i++
+    ){
+
+        particles.push({
+
+            x:cx,
+
+            y:cy,
+
+            vx:
+                -3+
+                Math.random()*6,
+
+            vy:
+                -2+
+                Math.random()*4,
+
+            life:1
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   DRAW
+========================================================= */
+
+function draw(){
+
+    if(!W || !H)
+    return;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+      SPACE
+    */
+
+    const bg=
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
+        );
+
+    bg.addColorStop(
+        0,
+        "#020611"
+    );
+
+    bg.addColorStop(
+        .55,
+        "#071729"
+    );
+
+    bg.addColorStop(
+        1,
+        "#02050b"
+    );
+
+    ctx.fillStyle=bg;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+      STARS
+    */
+
+    for(
+        const star of stars
+    ){
+
+        star.y+=star.speed;
+
+        if(star.y>H)
+        star.y=0;
+
+        ctx.globalAlpha=.4;
+
+        ctx.fillStyle="#bdefff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            star.x,
+            star.y,
+            star.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    /*
+      PLANET
+    */
+
+    const planet=
+        planets[pm.planet];
+
+
+    const cx=W/2;
+
+    const cy=H*.51;
+
+    const radius=
+        Math.min(
+            W*.34,
+            155
+        );
+
+
+    const planetGradient=
+        ctx.createRadialGradient(
+            cx-radius*.35,
+            cy-radius*.4,
+            radius*.1,
+            cx,
+            cy,
+            radius
+        );
+
+
+    const colors=[
+        ["#5bd8ff","#12456d"],
+        ["#d5d8e0","#4c5362"],
+        ["#ff8060","#6c1814"],
+        ["#73a8ff","#172c67"],
+        ["#62ff9c","#114f35"]
+    ];
+
+
+    const c=
+        colors[
+            Math.min(
+                pm.planet,
+                colors.length-1
+            )
+        ];
+
+
+    planetGradient.addColorStop(
+        0,
+        c[0]
+    );
+
+    planetGradient.addColorStop(
+        1,
+        c[1]
+    );
+
+
+    ctx.fillStyle=
+        planetGradient;
+
+    ctx.shadowColor=
+        c[0];
+
+    ctx.shadowBlur=35;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        radius,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+
+    /*
+      CRATERS
+    */
+
+    for(
+        let i=0;
+        i<13;
+        i++
+    ){
+
+        const angle=
+            i*2.7;
+
+        const rr=
+            radius*
+            (.25+
+            (i%4)*.13);
+
+        const x=
+            cx+
+            Math.cos(angle)*
+            rr;
+
+        const y=
+            cy+
+            Math.sin(angle)*
+            rr*.7;
+
+
+        ctx.fillStyle=
+            "rgba(0,0,0,.13)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            5+
+            (i%4)*3,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /*
+      MINING BEAM
+    */
+
+    if(miningPulse>0){
+
+        ctx.globalAlpha=
+            miningPulse;
+
+        ctx.strokeStyle=
+            "#53e5ff";
+
+        ctx.lineWidth=4;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx,
+            cy-radius-28
+        );
+
+        ctx.lineTo(
+            cx,
+            cy-radius*.25
+        );
+
+        ctx.stroke();
+
+        ctx.globalAlpha=1;
+
+    }
+
+
+    /*
+      SHIP
+    */
+
+    ctx.save();
+
+    ctx.translate(
+        cx,
+        cy-radius-52
+    );
+
+
+    ctx.fillStyle=
+        "#d9f7ff";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,-24
+    );
+
+    ctx.lineTo(
+        -21,17
+    );
+
+    ctx.lineTo(
+        0,10
+    );
+
+    ctx.lineTo(
+        21,17
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.fillStyle=
+        "#53e5ff";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -4,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle=
+        "#ffbd4a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -7,
+        16
+    );
+
+    ctx.lineTo(
+        0,
+        31+
+        Math.random()*5
+    );
+
+    ctx.lineTo(
+        7,
+        16
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+
+    /*
+      PLANET LABEL
+    */
+
+    ctx.fillStyle=
+        "rgba(3,12,23,.75)";
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        cx-75,
+        cy+radius+18,
+        150,
+        35,
+        10
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle="#fff";
+
+    ctx.font=
+        "bold 13px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        planet.icon+
+        " "+
+        planet.name,
+        cx,
+        cy+radius+40
+    );
+
+
+    /*
+      PARTICLES
+    */
+
+    for(
+        const p of particles
+    ){
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                p.life
+            );
+
+        ctx.fillStyle=
+            "#53e5ff";
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            4,
+            4
+        );
+
+    }
+
+    ctx.globalAlpha=1;
+
+
+    miningPulse=
+        Math.max(
+            0,
+            miningPulse-.04
+        );
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+function animation(){
+
+    if(
+        overlay.classList.contains(
+            "pm-open"
+        )
+    ){
+
+        draw();
+
+    }
+
+    for(
+        const p of particles
+    ){
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        p.life-=.035;
+
+    }
+
+
+    particles=
+        particles.filter(
+            p=>p.life>0
+        );
+
+
+    requestAnimationFrame(
+        animation
+    );
+
+}
+
+animation();
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+mineBtn.addEventListener(
+    "click",
+    mine
+);
+
+sellBtn.addEventListener(
+    "click",
+    sellResources
+);
+
+shipBtn.addEventListener(
+    "click",
+    openShipPanel
+);
+
+planetsBtn.addEventListener(
+    "click",
+    openPlanetsPanel
+);
+
+closeBtn.addEventListener(
+    "click",
+    closePlanetMiner
+);
+
+panelClose.addEventListener(
+    "click",
+    closePanel
+);
+
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        if(
+            overlay.classList.contains(
+                "pm-open"
+            )
+        ){
+
+            resize();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="Escape" &&
+            overlay.classList.contains(
+                "pm-open"
+            )
+        ){
+
+            if(
+                panel.style.display==="flex"
+            ){
+
+                closePanel();
+
+            }
+            else{
+
+                closePlanetMiner();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FIND 3RD CARD
+========================================================= */
+
+function findPlanetMinerCard(){
+
+    const all=
+        document.querySelectorAll(
+            "h1,h2,h3,h4,h5,h6,div,span,p"
+        );
+
+
+    for(
+        const el of all
+    ){
+
+        const text=
+            el.textContent
+            .trim()
+            .toUpperCase();
+
+
+        if(
+            text==="MINER RUN" ||
+            text==="PLANET MINER"
+        ){
+
+            let card=el;
+
+
+            for(
+                let i=0;
+                i<7;
+                i++
+            ){
+
+                if(
+                    !card.parentElement
+                )
+                break;
+
+
+                card=
+                    card.parentElement;
+
+
+                const cardText=
+                    card.textContent
+                    .trim()
+                    .toUpperCase();
+
+
+                if(
+                    (
+                        cardText.includes(
+                            "MINER RUN"
+                        ) ||
+                        cardText.includes(
+                            "PLANET MINER"
+                        )
+                    )
+                    &&
+                    cardText.length<220
+                ){
+
+                    return card;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   ACTIVATE CARD
+========================================================= */
+
+function activatePlanetMinerCard(){
+
+    const card=
+        findPlanetMinerCard();
+
+
+    if(!card)
+    return;
+
+
+    /*
+      MINER RUN → PLANET MINER
+    */
+
+    card
+    .querySelectorAll("*")
+    .forEach(
+        el=>{
+
+            const t=
+                el.textContent
+                .trim()
+                .toUpperCase();
+
+
+            if(
+                t==="MINER RUN"
+            ){
+
+                el.textContent=
+                    "PLANET MINER";
+
+            }
+
+
+            if(
+                t==="SOON" ||
+                t==="YAKINDA" ||
+                t==="🔒" ||
+                t==="🔒 YAKINDA"
+            ){
+
+                el.style.display=
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    card.style.cursor=
+        "pointer";
+
+
+    if(
+        card.dataset.pmBound==="1"
+    )
+    return;
+
+
+    card.dataset.pmBound="1";
+
+
+    card.addEventListener(
+        "click",
+        e=>{
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            openPlanetMiner();
+
+        },
+        true
+    );
+
+
+    /*
+      PLAY LABEL
+    */
+
+    const label=
+        document.createElement(
+            "div"
+        );
+
+    label.textContent=
+        "🪐 PLAY";
+
+
+    label.style.cssText=`
+        display:inline-block;
+        margin-top:7px;
+        padding:5px 12px;
+        border-radius:8px;
+        background:#53e5ff;
+        color:#031019;
+        font-size:11px;
+        font-weight:900;
+    `;
+
+
+    card.appendChild(label);
+
+}
+
+
+/* İlk bağlantı */
+
+activatePlanetMinerCard();
+
+
+/* Dinamik içerik için */
+
+const observer=
+    new MutationObserver(
+        ()=>{
+            activatePlanetMinerCard();
+        }
+    );
+
+
+observer.observe(
+    document.body,
+    {
+        childList:true,
+        subtree:true
+    }
+);
+
+
+/* =========================================================
+   OPEN FROM OTHER CODE
+========================================================= */
+
+window.openPlanetMiner=
+    openPlanetMiner;
+
+
+})();
+</script>
+
+<script>
+window.addEventListener('error', function(e){
+    console.error('❌ INDEX JS ERROR:', e.error || e.message);
+});
+window.addEventListener('unhandledrejection', function(e){
+    console.error('❌ UNHANDLED PROMISE:', e.reason);
+});
+</script>
+
+<script>
+/* =========================================================
+   MICRO MONETIZE FIX PACK
+   - Profile popup links repaired
+   - Referral copy repaired
+   - Notifications/Chart popup renderers restored
+   - Real language switching for common UI text
+   - Language preference persisted
+   ========================================================= */
+
+(function(){
+
+const MM_I18N = {
+  en: {
+    "Profile":"Profile","Support":"Support","Daily Bonus":"Daily Bonus","Tasks":"Tasks",
+    "Chart":"Chart","Referral":"Referral","FAQ":"FAQ","Language":"Language",
+    "Balance":"Balance","Investment":"Investment","Withdrawn":"Withdrawn","Commission":"Commission",
+    "Claim bonus":"Claim bonus","Earn bonuses":"Earn bonuses","View earnings":"View earnings",
+    "Earn 10% commission":"Earn 10% commission","Help & Support":"Help & Support","Telegram":"Telegram",
+    "Select Language":"Select Language","Your Link":"Your Link","Invites":"Invites","Commission":"Commission",
+    "Copy":"Copy","Copied!":"Copied!","Support":"Support",
+    "How to invest?":"How to invest?","When do earnings start?":"When do earnings start?",
+    "How to withdraw?":"How to withdraw?",
+    "Select a package, send TRX and click Payment Sent.":"Select a package, send TRX and click Payment Sent.",
+    "Earnings start after admin approval.":"Earnings start after admin approval.",
+    "Open Withdraw, enter amount, choose crypto and wallet.":"Open Withdraw, enter amount, choose crypto and wallet.",
+    "Estimated Earnings":"Estimated Earnings","Minute":"Minute","Hour":"Hour","Day":"Day",
+    "notifications":"notifications","daily bonus":"daily bonus","tasks":"tasks",
+    "Welcome to Micro Monetize! Grow your wealth every day.":"Welcome to Micro Monetize! Grow your wealth every day.",
+    "PLAY GAMES • EARN REAL MONEY":"PLAY GAMES • EARN REAL MONEY",
+    "GAME CENTER":"GAME CENTER","Profit Calculator":"Profit Calculator",
+    "Enter amount manually!":"Enter amount manually!","Enter Amount (USD)":"Enter Amount (USD)",
+    "Hourly":"Hourly","Daily":"Daily","Monthly":"Monthly","Half Year":"Half Year","1 Year":"1 Year",
+    "1 Year Total":"1 Year Total","Net Profit:":"Net Profit:",
+    "SOON":"SOON","YAKINDA":"YAKINDA","PLAY":"PLAY","LIVE":"LIVE","30 SEC":"30 SEC",
+    "Buy":"Buy","Withdraw":"Withdraw","Amount (USD)":"Amount (USD)","Wallet Address":"Wallet Address",
+    "Withdraw":"Withdraw","Deposit History":"Deposit History","Withdrawal History":"Withdrawal History",
+    "Cancel":"Cancel","Payment Sent":"Payment Sent","Copy":"Copy",
+    "Welcome Back!":"Welcome Back!","Miners were working:":"Miners were working:",
+    "Collect":"Collect","Welcome!":"Welcome!","Great!":"Great!",
+    "New member investment bonus:":"New member investment bonus:",
+    "Added directly to your total investment!":"Added directly to your total investment!",
+    "GAME CENTER ›":"GAME CENTER ›",
+    "EARN MONEY":"EARN MONEY","EARN EVERY DAY!":"EARN EVERY DAY!",
+    "Secure • Stable • Profitable":"Secure • Stable • Profitable",
+    "notifications":"notifications"
+  },
+  tr: {
+    "Profile":"Profil","Support":"Destek","Daily Bonus":"Günlük Bonus","Tasks":"Görevler",
+    "Chart":"Grafik","Referral":"Referans","FAQ":"SSS","Language":"Dil",
+    "Balance":"Bakiye","Investment":"Yatırım","Withdrawn":"Çekilen","Commission":"Komisyon",
+    "Claim bonus":"Bonusu al","Earn bonuses":"Bonus kazan","View earnings":"Kazançları görüntüle",
+    "Earn 10% commission":"%10 komisyon kazan","Help & Support":"Yardım & Destek","Telegram":"Telegram",
+    "Select Language":"Dil Seç","Your Link":"Referans Linkin","Invites":"Davetler","Commission":"Komisyon",
+    "Copy":"Kopyala","Copied!":"Kopyalandı!",
+    "How to invest?":"Nasıl yatırım yapılır?","When do earnings start?":"Kazançlar ne zaman başlar?",
+    "How to withdraw?":"Nasıl çekim yapılır?",
+    "Select a package, send TRX and click Payment Sent.":"Bir paket seç, TRX gönder ve Ödeme Gönderildi butonuna bas.",
+    "Earnings start after admin approval.":"Kazançlar yönetici onayından sonra başlar.",
+    "Open Withdraw, enter amount, choose crypto and wallet.":"Çekim bölümünü aç, tutarı gir, kripto ve cüzdanı seç.",
+    "Estimated Earnings":"Tahmini Kazançlar","Minute":"Dakika","Hour":"Saat","Day":"Gün",
+    "notifications":"bildirimler","daily bonus":"günlük bonus","tasks":"görevler",
+    "Welcome to Micro Monetize! Grow your wealth every day.":"Micro Monetize'a hoş geldin! Her gün kazancını büyüt.",
+    "PLAY GAMES • EARN REAL MONEY":"OYUN OYNA • GERÇEK PARA KAZAN",
+    "GAME CENTER":"OYUN MERKEZİ","Profit Calculator":"Kâr Hesaplayıcı",
+    "Enter amount manually!":"Tutarı manuel girin!","Enter Amount (USD)":"Tutar Gir (USD)",
+    "Hourly":"Saatlik","Daily":"Günlük","Monthly":"Aylık","Half Year":"6 Ay","1 Year":"1 Yıl",
+    "1 Year Total":"1 Yıllık Toplam","Net Profit:":"Net Kâr:",
+    "SOON":"YAKINDA","YAKINDA":"YAKINDA","PLAY":"OYNA","LIVE":"CANLI","30 SEC":"30 SN",
+    "Buy":"Yatırım Yap","Withdraw":"Çekim","Amount (USD)":"Tutar (USD)","Wallet Address":"Cüzdan Adresi",
+    "Payment Sent":"Ödeme Gönderildi","Deposit History":"Yatırım Geçmişi","Withdrawal History":"Çekim Geçmişi",
+    "Cancel":"İptal","Welcome Back!":"Tekrar Hoş Geldin!","Miners were working:":"Madenciler çalışıyordu:",
+    "Collect":"Topla","Welcome!":"Hoş Geldin!","Great!":"Harika!",
+    "New member investment bonus:":"Yeni üye yatırım bonusu:",
+    "Added directly to your total investment!":"Doğrudan toplam yatırımına eklendi!",
+    "GAME CENTER ›":"OYUN MERKEZİ ›","EARN MONEY":"PARA KAZAN","EARN EVERY DAY!":"HER GÜN KAZAN!",
+    "Secure • Stable • Profitable":"Güvenli • Stabil • Kârlı"
+  },
+  ru: {
+    "Profile":"Профиль","Support":"Поддержка","Daily Bonus":"Ежедневный бонус","Tasks":"Задания",
+    "Chart":"График","Referral":"Реферал","FAQ":"FAQ","Language":"Язык",
+    "Balance":"Баланс","Investment":"Инвестиции","Withdrawn":"Выведено","Commission":"Комиссия",
+    "Claim bonus":"Получить бонус","Earn bonuses":"Получать бонусы","View earnings":"Просмотр дохода",
+    "Earn 10% commission":"Получать 10% комиссии","Help & Support":"Помощь и поддержка",
+    "Select Language":"Выберите язык","Your Link":"Ваша ссылка","Invites":"Приглашения","Copy":"Копировать",
+    "Copied!":"Скопировано!","How to invest?":"Как инвестировать?","When do earnings start?":"Когда начинается доход?",
+    "How to withdraw?":"Как вывести средства?","Estimated Earnings":"Расчётный доход",
+    "Minute":"Минута","Hour":"Час","Day":"День","PLAY GAMES • EARN REAL MONEY":"ИГРАЙТЕ • ЗАРАБАТЫВАЙТЕ",
+    "GAME CENTER":"ИГРОВОЙ ЦЕНТР","Profit Calculator":"Калькулятор прибыли","Enter amount manually!":"Введите сумму вручную!",
+    "Enter Amount (USD)":"Введите сумму (USD)","Hourly":"Почасовой","Daily":"Ежедневно","Monthly":"Ежемесячно",
+    "Half Year":"Полгода","1 Year":"1 год","1 Year Total":"Итого за 1 год","Net Profit:":"Чистая прибыль:",
+    "SOON":"СКОРО","YAKINDA":"СКОРО","PLAY":"ИГРАТЬ","LIVE":"LIVE","30 SEC":"30 СЕК",
+    "Buy":"Купить","Withdraw":"Вывод","Amount (USD)":"Сумма (USD)","Wallet Address":"Адрес кошелька",
+    "Deposit History":"История депозитов","Withdrawal History":"История выводов","Cancel":"Отмена",
+    "Payment Sent":"Оплата отправлена"
+  },
+  es: {
+    "Profile":"Perfil","Support":"Soporte","Daily Bonus":"Bono diario","Tasks":"Tareas",
+    "Chart":"Gráfico","Referral":"Referidos","FAQ":"Preguntas frecuentes","Language":"Idioma",
+    "Balance":"Saldo","Investment":"Inversión","Withdrawn":"Retirado","Commission":"Comisión",
+    "Claim bonus":"Reclamar bono","Earn bonuses":"Ganar bonos","View earnings":"Ver ganancias",
+    "Earn 10% commission":"Gana 10% de comisión","Help & Support":"Ayuda y soporte",
+    "Select Language":"Seleccionar idioma","Your Link":"Tu enlace","Invites":"Invitaciones","Copy":"Copiar",
+    "Copied!":"¡Copiado!","How to invest?":"¿Cómo invertir?","When do earnings start?":"¿Cuándo comienzan las ganancias?",
+    "How to withdraw?":"¿Cómo retirar?","Estimated Earnings":"Ganancias estimadas","Minute":"Minuto","Hour":"Hora","Day":"Día",
+    "PLAY GAMES • EARN REAL MONEY":"JUEGA • GANA DINERO REAL","GAME CENTER":"CENTRO DE JUEGOS",
+    "Profit Calculator":"Calculadora de ganancias","Enter amount manually!":"Introduce el importe manualmente",
+    "Enter Amount (USD)":"Introducir importe (USD)","Hourly":"Por hora","Daily":"Diario","Monthly":"Mensual",
+    "Half Year":"6 meses","1 Year":"1 año","1 Year Total":"Total de 1 año","Net Profit:":"Beneficio neto:",
+    "SOON":"PRÓXIMAMENTE","YAKINDA":"PRÓXIMAMENTE","PLAY":"JUGAR","LIVE":"EN VIVO","30 SEC":"30 SEG",
+    "Buy":"Comprar","Withdraw":"Retirar","Amount (USD)":"Importe (USD)","Wallet Address":"Dirección de wallet",
+    "Deposit History":"Historial de depósitos","Withdrawal History":"Historial de retiros","Cancel":"Cancelar",
+    "Payment Sent":"Pago enviado"
+  },
+  de: {
+    "Profile":"Profil","Support":"Support","Daily Bonus":"Tagesbonus","Tasks":"Aufgaben",
+    "Chart":"Diagramm","Referral":"Empfehlungen","FAQ":"FAQ","Language":"Sprache",
+    "Balance":"Guthaben","Investment":"Investition","Withdrawn":"Ausgezahlt","Commission":"Provision",
+    "Claim bonus":"Bonus erhalten","Earn bonuses":"Boni verdienen","View earnings":"Einnahmen anzeigen",
+    "Earn 10% commission":"10% Provision verdienen","Help & Support":"Hilfe & Support",
+    "Select Language":"Sprache auswählen","Your Link":"Dein Link","Invites":"Einladungen","Copy":"Kopieren",
+    "Copied!":"Kopiert!","How to invest?":"Wie investiert man?","When do earnings start?":"Wann beginnen die Einnahmen?",
+    "How to withdraw?":"Wie kann ich auszahlen?","Estimated Earnings":"Geschätzte Einnahmen","Minute":"Minute","Hour":"Stunde","Day":"Tag",
+    "PLAY GAMES • EARN REAL MONEY":"SPIELE • VERDIENE ECHTES GELD","GAME CENTER":"SPIELZENTRUM",
+    "Profit Calculator":"Gewinnrechner","Enter amount manually!":"Betrag manuell eingeben","Enter Amount (USD)":"Betrag eingeben (USD)",
+    "Hourly":"Stündlich","Daily":"Täglich","Monthly":"Monatlich","Half Year":"Halbjahr","1 Year":"1 Jahr",
+    "1 Year Total":"Gesamt 1 Jahr","Net Profit:":"Nettogewinn:","SOON":"BALD","YAKINDA":"BALD","PLAY":"SPIELEN",
+    "LIVE":"LIVE","30 SEC":"30 SEK","Buy":"Kaufen","Withdraw":"Auszahlung","Amount (USD)":"Betrag (USD)",
+    "Wallet Address":"Wallet-Adresse","Deposit History":"Einzahlungsverlauf","Withdrawal History":"Auszahlungsverlauf",
+    "Cancel":"Abbrechen","Payment Sent":"Zahlung gesendet"
+  }
+};
+
+function mmTranslateText(text){
+    const lang=MM_I18N[currentLang] || MM_I18N.en;
+    return lang[text] || text;
+}
+
+function mmTranslateDOM(root=document.body){
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    let n;
+    while((n=walker.nextNode())) nodes.push(n);
+
+    nodes.forEach(node=>{
+        if(!node.nodeValue.trim()) return;
+        const original=node.nodeValue.trim();
+        const translated=mmTranslateText(original);
+        if(translated!==original){
+            node.nodeValue=node.nodeValue.replace(original,translated);
+        }
+    });
+
+    const current=document.getElementById('currentLangDesc');
+    if(current){
+        current.textContent=({
+            en:'English',tr:'Türkçe',ru:'Русский',es:'Español',de:'Deutsch'
+        })[currentLang] || 'English';
+    }
+
+    const bonus=document.getElementById('dailyBonusDesc');
+    if(bonus && !bonus.dataset.dynamicLang){
+        const text=bonus.textContent.trim();
+        if(text==='Claim bonus') bonus.textContent=mmTranslateText(text);
+    }
+
+    const ref=document.getElementById('referralMenuDesc');
+    if(ref){
+        if(ref.textContent.includes('Earn 10%')) ref.textContent=mmTranslateText('Earn 10% commission');
+    }
+}
+
+window.setLanguage=function(lang){
+    if(!MM_I18N[lang]) lang='en';
+    currentLang=lang;
+    try{localStorage.setItem('mm_language',lang);}catch(e){}
+    mmTranslateDOM(document.body);
+    if(typeof updateProfileData==='function') updateProfileData();
+};
+
+function mmLoadLanguage(){
+    let lang='en';
+    try{lang=localStorage.getItem('mm_language')||'en';}catch(e){}
+    if(!MM_I18N[lang]) lang='en';
+    currentLang=lang;
+    mmTranslateDOM(document.body);
+}
+
+/* Missing profile helpers */
+window.copyReferralLink=async function(){
+    const id=currentUser?.id || userId;
+    if(!id){
+        alert(mmTranslateText('Telegram user not found.'));
+        return;
+    }
+
+    const link=`https://t.me/${GAME_BOT_USERNAME}?start=ref_${id}`;
+
+    try{
+        if(navigator.clipboard && window.isSecureContext){
+            await navigator.clipboard.writeText(link);
+        }else{
+            const ta=document.createElement('textarea');
+            ta.value=link;
+            ta.style.position='fixed';
+            ta.style.opacity='0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+        }
+
+        addNotification?.('👥 Referral','Referral link copied.','bonus');
+
+        const buttons=document.querySelectorAll('.sub-popup .btn');
+        buttons.forEach(btn=>{
+            if(btn.textContent.trim()==='Copy' || btn.textContent.trim()==='Kopyala'){
+                btn.textContent='✓ '+mmTranslateText('Copied!');
+                setTimeout(()=>{
+                    if(btn.isConnected) btn.textContent='📋 '+mmTranslateText('Copy');
+                },1600);
+            }
+        });
+    }catch(err){
+        alert('❌ '+(err?.message||'Copy failed.'));
+    }
+};
+
+/* Notifications renderer was referenced but missing */
+window.renderNotifications=function(){
+    const items=Array.isArray(notificationsData)?notificationsData:[];
+    let h=`
+      <div class="sub-popup-header">
+        <div class="sub-popup-title">🔔 ${mmTranslateText('notifications')}</div>
+        <button class="sub-popup-close" onclick="closeSubPopup()">✕</button>
+      </div>
+    `;
+
+    if(!items.length){
+        h+=`<div style="padding:25px;text-align:center;opacity:.65">No notifications yet.</div>`;
+        return h;
+    }
+
+    items.slice().reverse().forEach((n,i)=>{
+        const title=n.title||'Notification';
+        const body=n.message||n.text||'';
+        const date=n.createdAt||n.timestamp||Date.now();
+
+        h+=`
+          <div class="notification-item ${n.read?'read':'unread'}"
+               style="padding:12px;margin:7px 0;border-radius:12px;background:#0D1D25;border:1px solid rgba(255,255,255,.06)">
+            <div style="font-weight:800;font-size:12px">${title}</div>
+            <div style="font-size:11px;color:#9AB0B5;margin-top:4px">${body}</div>
+            <div style="font-size:9px;color:#607980;margin-top:6px">${new Date(date).toLocaleString()}</div>
+          </div>
+        `;
+    });
+
+    return h;
+};
+
+/* Chart renderer was referenced but missing */
+window.renderChart=function(){
+    const items=Array.isArray(earningsHistory)?earningsHistory:[];
+    let h=`
+      <div class="sub-popup-header">
+        <div class="sub-popup-title">📈 ${mmTranslateText('Chart')}</div>
+        <button class="sub-popup-close" onclick="closeSubPopup()">✕</button>
+      </div>
+      <div style="padding:12px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px">
+          <button class="btn" onclick="currentChartPeriod='7d';openSubPopup('chart')">7D</button>
+          <button class="btn" onclick="currentChartPeriod='30d';openSubPopup('chart')">30D</button>
+          <button class="btn" onclick="currentChartPeriod='all';openSubPopup('chart')">ALL</button>
+        </div>
+    `;
+
+    if(!items.length){
+        h+=`<div style="padding:30px 10px;text-align:center;opacity:.65">No earnings data yet.</div>`;
+        h+=`</div>`;
+        return h;
+    }
+
+    const vals=items.map(x=>Number(x.amount??x.earned??x.value??0)).filter(Number.isFinite);
+    const total=vals.reduce((a,b)=>a+b,0);
+
+    h+=`
+      <div style="background:#0D1D25;border-radius:14px;padding:15px">
+        <div style="font-size:10px;color:#819BA1">TOTAL EARNINGS</div>
+        <div style="font-size:25px;font-weight:900;color:#D59D80;margin:4px 0 15px">$${total.toFixed(4)}</div>
+        <div style="display:flex;align-items:flex-end;gap:4px;height:120px">
+    `;
+
+    const max=Math.max(...vals,0.000001);
+    vals.slice(-24).forEach(v=>{
+        const ht=Math.max(4,(v/max)*100);
+        h+=`<div title="$${v.toFixed(4)}" style="flex:1;height:${ht}%;background:#D59D80;border-radius:4px 4px 0 0;min-width:3px"></div>`;
+    });
+
+    h+=`</div></div></div>`;
+    return h;
+};
+
+/* Notification mark-all helper was referenced but missing */
+window.markAllRead=function(){
+    if(!Array.isArray(notificationsData)) notificationsData=[];
+    notificationsData.forEach(n=>n.read=true);
+    try{localStorage.setItem('mm_notifications',JSON.stringify(notificationsData));}catch(e){}
+    if(typeof updateQuickNotifBadge==='function') updateQuickNotifBadge();
+};
+
+/* Re-render dynamic popup content in selected language */
+const originalOpenSubPopup=window.openSubPopup;
+if(typeof originalOpenSubPopup==='function'){
+    window.openSubPopup=function(type){
+        originalOpenSubPopup(type);
+        const c=document.getElementById('subPopupContent');
+        if(c) mmTranslateDOM(c);
+    };
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+    mmLoadLanguage();
+    setTimeout(mmLoadLanguage,500);
+});
+
+})();
+
+<!-- Kütüphaneyi tam bu noktada çağırarak senkronizasyon hatasını çözüyoruz -->
+<script src="https://adsgram.ai"></script>
+
+<script src="https://adsgram.ai"></script>
+<script>
+    window.addEventListener('load', () => {
+        if (window.Adsgram && window.Adsgram.init) {
+            
+            // Kodun başladığını doğrulamak için ilk uyarı
+            alert("AdsGram Sistemi Başlatıldı! Reklam yükleniyor...");
+            
+            const AdController = window.Adsgram.init({ blockId: "45874" });
+
+            AdController.show().then((result) => {
+                alert("Reklam başarıyla ekrana geldi ve kapatıldı!");
+            }).catch((result) => {
+                // Reklamın neden açılmadığını teknik olarak ekrana basar
+                alert("Reklam sunucudan dönemedi. Sebep kodu: " + JSON.stringify(result));
+            });
+
+        } else {
+            alert("Hata: adman.js kütüphanesi yüklenemedi!");
+        }
+    });
+</script>
+
+
+</body>
+</html>
