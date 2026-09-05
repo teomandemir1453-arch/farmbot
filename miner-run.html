@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="telegram-safe-area.js"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Miner Run</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="ad-slot.css"><link rel="stylesheet" href="miner-run.css">
+</head>
+<body>
+<div class="miner-page">
+  <div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="miner-top"><span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div></div>
+  <header class="miner-head">
+    <a class="back-btn" href="index.html" data-game-i18n="back">← GAME CENTER</a>
+    <div class="miner-title"><span>⛏️</span><div><small>MICRO MONETIZE</small><h1>MINER RUN</h1></div></div>
+    <div class="run-wallet"><span>💰</span><b id="wallet">$0.00000</b></div>
+  </header>
+
+  <section class="miner-layout">
+    <aside class="miner-panel info-panel">
+      <div class="panel-title" data-i18n="mission">MADEN KOŞUSU</div>
+      <p class="muted" data-i18n="missionText">Vagonunu raylarda yönlendir, altınları topla ve kayalara yakalanmadan mümkün olduğunca uzağa git.</p>
+      <div class="stat-grid">
+        <div><span data-i18n="score">SKOR</span><strong id="score">0</strong></div>
+        <div><span data-i18n="distance">MESAFE</span><strong id="distance">0 m</strong></div>
+        <div><span data-i18n="combo">KOMBO</span><strong id="combo">x1</strong></div>
+        <div><span data-i18n="collected">TOPLANAN</span><strong id="collected">0</strong></div>
+      </div>
+      <div class="run-progress"><div id="progressBar"></div></div>
+      <div class="small-row"><span data-i18n="best">EN İYİ</span><b id="best">0</b></div>
+    </aside>
+
+    <section class="run-stage-wrap">
+      <div class="run-stage" id="stage" aria-label="Miner Run oyun alanı">
+        <div class="mine-bg"></div><div class="rail rail-a"></div><div class="rail rail-b"></div><div class="rail rail-c"></div>
+        <div class="lane-glow lane-a"></div><div class="lane-glow lane-b"></div><div class="lane-glow lane-c"></div>
+        <div class="distance-mark mark-1">50</div><div class="distance-mark mark-2">100</div><div class="distance-mark mark-3">150</div>
+        <div id="entities"></div>
+        <div class="cart" id="cart"><div class="lamp">💡</div><div class="cart-body">⛏️</div><div class="cart-wheel w1"></div><div class="cart-wheel w2"></div></div>
+        <div class="stage-message" id="stageMessage"><div class="big-icon">⛏️</div><h2 data-i18n="ready">HAZIR MISIN?</h2><p data-i18n="readyText">Doğru şeride geç ve değerli yükleri kaçırma.</p><button id="play" data-game-i18n="start">BAŞLA</button></div>
+        <div class="pause-shade" id="pauseShade"><div><b data-i18n="paused">DURAKLATILDI</b><button id="resume" data-i18n="resume">DEVAM ET</button></div></div>
+      </div>
+      <div class="controls"><button data-dir="left">◀</button><button id="jump">▲</button><button data-dir="right">▶</button></div>
+      <p class="control-hint" data-i18n="controls">Şerit değiştirmek için kaydır veya ok tuşlarını kullan. Ortadaki butonla zıpla.</p>
+    </section>
+
+    <aside class="miner-panel rules-panel">
+      <div class="panel-title" data-i18n="how">NASIL OYNANIR?</div>
+      <div class="rule"><b>🪙</b><span data-i18n="r1">Altınları topla. Değerli yükler daha çok puan verir.</span></div>
+      <div class="rule"><b>💎</b><span data-i18n="r2">Kristalleri toplayınca kombo yükselir.</span></div>
+      <div class="rule"><b>🪨</b><span data-i18n="r3">Kayalara çarpma. Zıplayarak veya şerit değiştirerek kaç.</span></div>
+      <div class="rule"><b>🔥</b><span data-i18n="r4">Arka arkaya topladıkça çarpanın büyür.</span></div>
+      <div class="reward-box"><span data-i18n="session">BU KOŞU</span><strong id="reward">$0.00000</strong><small data-i18n="rewardText">Koşu sonunda uygun ödül cüzdana eklenir.</small></div>
+    </aside>
+  </section>
+
+  <div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="miner-bottom"><span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div></div>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="ad-slot.js"></script><script src="game-i18n.js"></script><script src="game-wallet.js"></script>
+<script src="miner-run.js"></script>
+</body></html>

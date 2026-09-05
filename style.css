@@ -1,0 +1,69 @@
+*{box-sizing:border-box}html{background:#070b22}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0%,rgba(116,52,176,.30),transparent 32%),radial-gradient(circle at 90% 42%,rgba(0,193,220,.16),transparent 30%),#070b22;color:#f5f7ff;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.app-shell{width:100%;max-width:1240px;margin:auto;padding-bottom:34px}.topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;position:sticky;top:0;z-index:20;background:rgba(7,11,34,.90);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}.back{width:38px;height:38px;display:grid;place-items:center;text-decoration:none;font-size:32px;line-height:1;border-radius:12px;background:rgba(255,255,255,.06);color:#fff}.brand{display:flex;align-items:center;gap:7px;font-size:12px;letter-spacing:.9px}.brand span{font-size:18px}.hero{text-align:center;padding:30px 18px 21px}.hero-badge,.eyebrow{font-size:9px;letter-spacing:1.8px;font-weight:800;color:#aeb8da}.hero h1{font-size:clamp(40px,7vw,67px);line-height:.9;letter-spacing:-3px;margin:11px 0 13px;font-weight:900;background:linear-gradient(110deg,#fff 15%,#b875ff 55%,#66e8ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{margin:0;color:#9da8ca;font-size:12px}.finance-row{width:min(1180px,calc(100% - 24px));margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}.wallet,.transfer-card{min-width:0;border-radius:20px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(135deg,rgba(26,34,73,.92),rgba(13,19,49,.88));box-shadow:0 14px 40px rgba(0,0,0,.18)}.wallet{padding:17px}.wallet-head{display:flex;align-items:center;justify-content:space-between}.wallet-value{font-size:27px;font-weight:900;margin-top:4px;letter-spacing:-1px}.wallet-icon,.transfer-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:rgba(98,232,255,.10);font-size:22px}.wallet-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0 11px}.wallet-stats div{padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.045)}.wallet-stats small{display:block;color:#8e9abb;font-size:8px;letter-spacing:1px;font-weight:800}.wallet-stats b{display:block;margin-top:4px;font-size:12px}.progress{height:6px;background:#070b22;border-radius:20px;overflow:hidden}.progress span{display:block;width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#8b5cf6,#62e9ff);transition:width .35s}.progress-label{display:flex;justify-content:space-between;color:#657194;font-size:8px;margin-top:5px}.transfer-card{padding:16px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:11px;border-color:rgba(49,233,129,.13);background:linear-gradient(135deg,rgba(23,45,52,.72),rgba(20,17,52,.86))}.transfer-icon{background:rgba(199,108,255,.12);font-size:21px}.transfer-value{font-size:25px;font-weight:900;color:#e77aff;line-height:1.05;margin-top:3px}.transfer-copy p{margin:5px 0 7px;color:#8290b2;font-size:9px;line-height:1.4}.transfer-meta{display:flex;gap:6px;flex-wrap:wrap}.transfer-meta span{font-size:7px;letter-spacing:.7px;font-weight:900;color:#8390af;background:rgba(255,255,255,.05);padding:5px 7px;border-radius:8px}.transfer-btn{border:0;border-radius:11px;padding:12px 14px;font-weight:900;font-size:9px;letter-spacing:.4px;background:#31e981;color:#04140d;cursor:pointer;white-space:nowrap}.transfer-btn:disabled{background:#27324e;color:#697694;cursor:not-allowed}.section-title{width:min(1180px,calc(100% - 24px));display:flex;align-items:end;justify-content:space-between;margin:27px auto 11px}.section-title h2{margin:4px 0 0;font-size:19px;letter-spacing:-.4px}.limit-pill{font-size:8px;font-weight:900;letter-spacing:1px;color:#72e8ff;border:1px solid rgba(98,232,255,.18);background:rgba(98,232,255,.06);padding:7px 9px;border-radius:9px}.games-grid{width:min(1180px,calc(100% - 24px));margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.game-card{min-width:0;min-height:225px;position:relative;overflow:hidden;text-decoration:none;border-radius:17px;border:1px solid rgba(255,255,255,.09);padding:0 10px 10px;display:flex;flex-direction:column;justify-content:flex-end;background:#111a38;transition:transform .18s,border-color .18s,box-shadow .18s}.game-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.22);box-shadow:0 13px 28px rgba(0,0,0,.25)}.game-card:active{transform:scale(.985)}.playable{background:#101932}.card-art{position:relative;flex:0 0 112px;height:112px;margin:0 -10px 8px;background-size:cover;background-position:center}.image-art{background-image:linear-gradient(180deg,rgba(5,8,20,.02),rgba(5,8,20,.78)),var(--art)}.gold{border-color:rgba(244,187,74,.28)}.crystal{border-color:rgba(80,214,255,.28)}.miner{border-color:rgba(154,118,255,.28)}.treasure{border-color:rgba(199,108,255,.28)}.mines{border-color:rgba(49,233,129,.28)}.card-info{position:relative}.game-number{font-size:8px;color:#687698;letter-spacing:1px;font-weight:900}.card-info h3{font-size:14px;line-height:1.05;margin:2px 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card-info p{font-size:8px;color:#8f9abb;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.play-row{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.07);padding-top:8px;margin-top:9px;font-size:7px;letter-spacing:.55px;font-weight:800;color:#6fe9a0}.play-row b{font-size:8px;color:#fff}.upcoming{padding-bottom:10px;background:#0d1530!important;border-color:rgba(126,234,255,.20)}.upcoming:after{content:'';position:absolute;inset:0;background:rgba(3,6,18,.28);pointer-events:none}.upcoming-art{height:112px;flex:0 0 112px;margin:0 -10px 8px;background-image:linear-gradient(180deg,rgba(5,8,20,.03),rgba(5,8,20,.82)),var(--art);background-size:cover;background-position:center;filter:saturate(.82)}.upcoming .card-info,.upcoming .play-row{position:relative;z-index:2}.upcoming .card-info h3{font-size:13px}.upcoming .card-info p{color:#8996b5}.upcoming .play-row{color:#7684a5}.upcoming .play-row b{color:#8b95ad}.soon-badge{position:absolute;z-index:4;top:8px;right:8px;background:rgba(7,11,34,.82);border:1px solid rgba(126,234,255,.35);color:#79eaff;padding:5px 7px;border-radius:8px;font-size:7px;letter-spacing:.7px;font-weight:900}.security-note{width:min(1180px,calc(100% - 24px));text-align:center;color:#566383;font-size:8px;margin:17px auto 0;padding:0 10px}.coming-divider{width:min(1180px,calc(100% - 24px));margin:16px auto 0;display:flex;align-items:center;justify-content:center;gap:9px;color:#72e8ff;font-size:9px;letter-spacing:1.5px}.coming-divider:before,.coming-divider:after{content:'';height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(98,232,255,.28))}.coming-divider:after{background:linear-gradient(90deg,rgba(98,232,255,.28),transparent)}.coming-divider strong{font-size:9px}@media(max-width:1080px){
+  .games-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .game-card{min-height:205px}
+}
+@media(max-width:760px){
+  /* Mobile: finance panels stay side-by-side */
+  .finance-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .wallet,.transfer-card{border-radius:15px}
+  .wallet{padding:11px}
+  .wallet-head{gap:6px}
+  .wallet-icon,.transfer-icon{width:34px;height:34px;border-radius:10px;font-size:17px;flex:0 0 34px}
+  .eyebrow{font-size:7px;letter-spacing:1px}
+  .wallet-value{font-size:19px;letter-spacing:-.7px}
+  .wallet-stats{grid-template-columns:1fr 1fr;gap:5px;margin:9px 0 8px}
+  .wallet-stats div{padding:7px 6px;border-radius:9px}
+  .wallet-stats small{font-size:6px;letter-spacing:.55px}
+  .wallet-stats b{font-size:9px;margin-top:3px}
+  .transfer-card{grid-template-columns:34px 1fr;gap:7px;padding:10px}
+  .transfer-value{font-size:18px}
+  .transfer-copy p{font-size:7px;margin:4px 0 5px;line-height:1.25}
+  .transfer-meta{gap:3px}
+  .transfer-meta span{font-size:5.5px;padding:4px 5px}
+  .transfer-btn{grid-column:1/-1;width:100%;padding:9px 8px;font-size:8px}
+  /* Keep the game cards in compact 5-across rows on mobile */
+  .games-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:calc(100% - 10px)}
+  .game-card{min-height:170px;border-radius:11px;padding:0 5px 6px}
+  .card-art,.upcoming-art{height:72px;flex-basis:72px;margin:0 -5px 5px}
+  .card-info h3{font-size:9px;margin:2px 0 2px}
+  .card-info p{font-size:5.5px}
+  .play-row{font-size:5px;padding-top:5px;margin-top:5px}
+  .play-row b{font-size:5.5px}
+  .soon-badge{font-size:4.8px;top:4px;right:4px;padding:3px 4px;border-radius:5px}
+  .upcoming .card-info h3{font-size:8.5px}
+  .section-title{width:calc(100% - 12px);margin-top:18px}
+}
+@media(max-width:480px){
+  .topbar{height:54px}
+  .brand strong{font-size:9px}
+  .hero{padding:20px 10px 16px}
+  .hero h1{font-size:36px;letter-spacing:-1.8px}
+  .hero p{font-size:9px}
+  .finance-row{width:calc(100% - 10px);gap:6px}
+  .wallet,.transfer-card{min-height:0}
+  .wallet{padding:9px}
+  .wallet-value{font-size:17px}
+  .wallet-icon,.transfer-icon{width:30px;height:30px;flex-basis:30px;font-size:15px}
+  .wallet-stats{margin:7px 0 6px}
+  .wallet-stats small{font-size:5.3px}
+  .wallet-stats b{font-size:8px}
+  .transfer-card{grid-template-columns:30px 1fr;padding:9px;gap:5px}
+  .transfer-value{font-size:16px}
+  .transfer-copy p{font-size:6.2px}
+  .transfer-meta span{font-size:4.8px}
+  .transfer-btn{padding:8px 5px;font-size:7px}
+  .games-grid{width:calc(100% - 8px);gap:5px}
+  .game-card{min-height:150px;padding:0 4px 5px;border-radius:9px}
+  .card-art,.upcoming-art{height:62px;flex-basis:62px;margin-left:-4px;margin-right:-4px;margin-bottom:4px}
+  .card-info h3{font-size:7.5px}
+  .card-info p{font-size:4.8px}
+  .play-row{font-size:4.4px;padding-top:4px;margin-top:4px}
+  .play-row b{font-size:4.8px}
+  .soon-badge{font-size:4.2px;top:3px;right:3px;padding:2px 3px}
+  .upcoming .card-info h3{font-size:7px}
+  .security-note{font-size:6px;margin-top:11px}
+}
+
+/* v18 Telegram Mini App safe-area fix */
+html.tg-miniapp .topbar{top:var(--tg-top-safe,56px)}
+html.tg-miniapp .app-shell{padding-top:var(--tg-top-safe,56px)}

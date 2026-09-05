@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="telegram-safe-area.js"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Minesweeper</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="minesweeper.css"><link rel="stylesheet" href="ad-slot.css">
+</head>
+<body class="ms-page">
+<a class="back-btn" href="index.html" data-ms="back">← GAME CENTER</a>
+<div class="ad-slot game-ad" aria-label="Ad space"><span class="ad-slot-note" data-ms="ad">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-ms="network">AdsGram</span></div></div>
+<main class="ms-app">
+  <header class="ms-head">
+    <div><div class="ms-kicker">MICRO MONETIZE</div><h1>💣 <span data-ms="title">MINESWEEPER</span></h1><p data-ms="subtitle">Mayınları bul, güvenli hücreleri aç ve ödülünü kazan.</p></div>
+    <div class="ms-stats">
+      <div class="ms-stat"><span>💣</span><b id="mineCount">5</b><small data-ms="mines">MAYIN</small></div>
+      <div class="ms-stat"><span>🚩</span><b id="flagCount">0</b><small data-ms="flags">İŞARET</small></div>
+      <div class="ms-stat"><span>🏆</span><b id="score">0</b><small data-ms="scoreLabel">SKOR</small></div>
+    </div>
+  </header>
+
+  <section class="ms-wallet">
+    <div><small data-ms="wallet">GAME CENTER CÜZDANI</small><strong>$<span id="walletBalance">0.00000</span></strong></div>
+    <div><small data-ms="plays">BUGÜN KALAN OYUN</small><strong><span id="playsLeft">3</span>/3</strong></div>
+    <div><small data-ms="reward">KAZANÇ</small><strong>+$<span id="rewardValue">0.00020</span></strong></div>
+  </section>
+
+  <section class="ms-board-wrap">
+    <div class="ms-topline"><span id="status" data-ms="ready">HAZIR</span><span id="safeCount">59</span> <span data-ms="safe">GÜVENLİ HÜCRE</span></div>
+    <div id="board" class="ms-board" role="grid" aria-label="Minesweeper board"></div>
+    <div class="ms-controls"><button id="restart" data-ms="restart">🔄 YENİ OYUN</button><button id="flagMode" class="secondary" data-ms="flagMode">🚩 İŞARETLEME</button></div>
+    <p class="ms-help" data-ms="help">Hücreyi açmak için dokun. Mayın olabileceğini düşündüğün hücreyi işaretlemek için İşaretle modunu kullan.</p>
+  </section>
+
+  <section id="result" class="ms-result hidden">
+    <div id="resultIcon">🏆</div><h2 id="resultTitle">TEBRİKLER!</h2><p id="resultText"></p><button id="resultBtn" data-ms="playAgain">TEKRAR OYNA</button>
+  </section>
+</main>
+<div class="ad-slot game-ad" aria-label="Ad space"><span class="ad-slot-note" data-ms="ad">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-ms="network">AdsGram</span></div></div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="ad-slot.js"></script>
+<script src="game-wallet.js"></script>
+<script src="minesweeper.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="telegram-safe-area.js"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Treasure Cave</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="ad-slot.css"><link rel="stylesheet" href="treasure-cave.css">
+</head>
+<body>
+<div class="tc-wrap">
+  <div class="ad-slot game-ad" data-ad-slot="treasure-top"><span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div></div>
+  <header class="tc-head">
+    <a class="back-btn" href="index.html" data-game-i18n="back">← GAME CENTER</a>
+    <div><div class="eyebrow">MICRO MONETIZE</div><h1>🗝️ TREASURE CAVE</h1><p data-game-i18n="tcTag">Doğru yolu seç, anahtarları topla, gizli hazineye ulaş.</p></div>
+    <div class="wallet"><span>💰</span><b id="wallet">$0.00000</b><small data-game-i18n="wallet">CÜZDAN</small></div>
+  </header>
+
+  <section class="tc-stats">
+    <div><span>🗝️</span><b id="keys">0</b><small data-game-i18n="keys">ANAHTAR</small></div>
+    <div><span>❤️</span><b id="lives">3</b><small data-game-i18n="lives">CAN</small></div>
+    <div><span>🏆</span><b id="score">0</b><small data-game-i18n="score">SKOR</small></div>
+    <div><span>💎</span><b id="treasures">0</b><small data-game-i18n="treasures">HAZİNE</small></div>
+  </section>
+
+  <main class="tc-game">
+    <div class="cave-card">
+      <div class="room-top"><span id="roomLabel">ODA 1 / 6</span><span id="status" class="status">YOLU SEÇ</span></div>
+      <div class="cave-art" id="caveArt">
+        <div class="torch left">🔥</div><div class="torch right">🔥</div>
+        <div class="arch"><span>🗝️</span><strong id="roomTitle">GİZLİ GEÇİT</strong><small id="roomHint">Üç kapıdan birini seç</small></div>
+      </div>
+      <div class="doors" id="doors"></div>
+      <div class="action-row"><button id="startBtn" class="primary" data-game-i18n="start">MACERAYA BAŞLA</button><button id="resetBtn" class="ghost" data-game-i18n="reset">YENİDEN BAŞLAT</button></div>
+      <div class="result" id="result" hidden></div>
+    </div>
+
+    <aside class="rules">
+      <h2 data-game-i18n="how">NASIL OYNANIR?</h2>
+      <div><b>1</b><span data-game-i18n="rule1">Bir kapı seç ve mağaranın yeni odasına geç.</span></div>
+      <div><b>2</b><span data-game-i18n="rule2">Anahtarları topla; bazı odalarda bonus hazine saklıdır.</span></div>
+      <div><b>3</b><span data-game-i18n="rule3">Tuzaklara dikkat et. Canlarını korursan daha yüksek ödül alırsın.</span></div>
+      <div><b>4</b><span data-game-i18n="rule4">Son odaya ulaşıp hazine sandığını aç ve kazancını al.</span></div>
+      <div class="reward-box"><span>💰</span><strong data-game-i18n="rewardTitle">OYUN ÖDÜLÜ</strong><small id="rewardPreview">$0.00000</small></div>
+    </aside>
+  </main>
+
+  <div class="ad-slot game-ad" data-ad-slot="treasure-bottom"><span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span><div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div></div>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="ad-slot.js"></script>
+<script src="game-i18n.js"></script>
+<script src="game-wallet.js"></script>
+<script src="treasure-cave.js"></script>
+</body></html>

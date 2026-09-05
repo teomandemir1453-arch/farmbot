@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+<script src="telegram-safe-area.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070b22">
+  <title>Game Center • Micro Monetize</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="ad-slot.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="back" href="../" aria-label="Back" data-i18n-aria="back">‹</a>
+      <div class="brand"><span>🎮</span><strong>GAME CENTER</strong></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-badge">MICRO MONETIZE</div>
+        <h1>GAME<br><span>CENTER</span></h1>
+        <p data-i18n="hero">Oyununu seç • kazancını biriktir</p>
+      </section>
+
+      <div class="ad-slot" aria-label="Reklam alanı" data-ad-slot="game-center-top">
+        <span class="ad-slot-note" data-i18n="adPlaceholder">REKLAM ALANI</span>
+        <div class="ad-slot-inner"><span class="ad-slot-label" data-i18n="adNetwork">AdsGram</span></div>
+      </div>
+
+      <section class="finance-row">
+        <section class="wallet" aria-label="Game Center wallet">
+          <div class="wallet-head">
+            <div>
+              <span class="eyebrow" data-i18n="wallet">GAME CENTER CÜZDANI</span>
+              <div class="wallet-value">$<span id="balance">0.00000</span></div>
+            </div>
+            <div class="wallet-icon">💰</div>
+          </div>
+          <div class="wallet-stats">
+            <div><small data-i18n="today">BUGÜNKÜ KAZANÇ</small><b>$<span id="today">0.00000</span></b></div>
+            <div><small data-i18n="dailyLimit">GÜNLÜK LİMİT</small><b>$0.01000</b></div>
+          </div>
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="progress-label"><span>$0.00</span><span>$0.01</span></div>
+        </section>
+
+        <section class="transfer-card">
+          <div class="transfer-icon">📈</div>
+          <div class="transfer-copy">
+            <span class="eyebrow" data-i18n="investment">YATIRIMA AKTAR</span>
+            <div class="transfer-value">$<span id="transferAmount">0.00000</span></div>
+            <p data-i18n="transferInfo">Game Center kazancını $0.01 olduğunda yatırım hesabına aktarabilirsin.</p>
+            <div class="transfer-meta"><span data-i18n="minTransfer">⚡ 0.01 MIN</span></div>
+          </div>
+          <button id="transferBtn" class="transfer-btn" disabled data-i18n="transfer">AKTAR</button>
+        </section>
+      </section>
+
+      <div class="section-title">
+        <div><span class="eyebrow" data-i18n="gamesEyebrow">OYUNLARLA KAZAN</span><h2 data-i18n="choose">Oyununuzu Seçin</h2></div>
+
+      </div>
+
+      <section class="games-grid">
+        <a class="game-card playable gold" href="gold-rush.html">
+          <div class="card-art image-art" style="--art:url('assets/gold-rush.jpg')"></div>
+          <div class="card-info"><h3 data-i18n="gold">Gold Rush</h3><p data-i18n="goldDesc">Altınları topla</p></div>
+          <div class="play-row"><span data-i18n="reward">$0.001’A KADAR</span><b data-i18n="play">OYNA ›</b></div>
+        </a>
+        <a class="game-card playable crystal" href="crystal-hunt.html">
+          <div class="card-art image-art" style="--art:url('assets/crystal-hunt.jpg')"></div>
+          <div class="card-info"><h3 data-i18n="crystal">Crystal Hunt</h3><p data-i18n="crystalDesc">Kristalleri keşfet</p></div>
+          <div class="play-row"><span data-i18n="reward">$0.001’A KADAR</span><b data-i18n="play">OYNA ›</b></div>
+        </a>
+        <a class="game-card playable miner" href="miner-run.html">
+          <div class="card-art image-art" style="--art:url('assets/miner-run.jpg')"></div>
+          <div class="card-info"><h3 data-i18n="miner">Miner Run</h3><p data-i18n="minerDesc">Madende hayatta kal</p></div>
+          <div class="play-row"><span data-i18n="reward">$0.001’A KADAR</span><b data-i18n="play">OYNA ›</b></div>
+        </a>
+        <a class="game-card playable treasure" href="treasure-cave.html">
+          <div class="card-art image-art" style="--art:url('assets/treasure-cave.jpg')"></div>
+          <div class="card-info"><h3 data-i18n="treasure">Treasure Cave</h3><p data-i18n="treasureDesc">Gizli hazineyi bul</p></div>
+          <div class="play-row"><span data-i18n="reward">$0.001’A KADAR</span><b data-i18n="play">OYNA ›</b></div>
+        </a>
+        <a class="game-card playable mines" href="minesweeper.html">
+          <div class="card-art image-art" style="--art:url('assets/minesweeper.jpg')"></div>
+          <div class="card-info"><h3 data-i18n="minesweeper">Minesweeper</h3><p data-i18n="minesDesc">Mayınlara dikkat et</p></div>
+          <div class="play-row"><span data-i18n="classic">KLASİK</span><b data-i18n="play">OYNA ›</b></div>
+        </a>
+
+        <div class="game-card upcoming" style="--art:url('assets/space-defender.jpg')">
+          <div class="upcoming-art"></div><span class="soon-badge" data-i18n="coming">YAKINDA</span>
+          <div class="card-info"><h3 data-i18n="space">Space Defender</h3><p>🔒 <span data-i18n="coming">YAKINDA</span></p></div>
+          <div class="play-row"><span>🔒 <span data-i18n="coming">YAKINDA</span></span><b data-i18n="coming">YAKINDA</b></div>
+        </div>
+        <div class="game-card upcoming" style="--art:url('assets/speed-racer.jpg')">
+          <div class="upcoming-art"></div><span class="soon-badge" data-i18n="coming">YAKINDA</span>
+          <div class="card-info"><h3 data-i18n="racer">Speed Racer</h3><p>🔒 <span data-i18n="coming">YAKINDA</span></p></div>
+          <div class="play-row"><span>🔒 <span data-i18n="coming">YAKINDA</span></span><b data-i18n="coming">YAKINDA</b></div>
+        </div>
+        <div class="game-card upcoming" style="--art:url('assets/bubble-pop.jpg')">
+          <div class="upcoming-art"></div><span class="soon-badge" data-i18n="coming">YAKINDA</span>
+          <div class="card-info"><h3 data-i18n="bubble">Bubble Pop</h3><p>🔒 <span data-i18n="coming">YAKINDA</span></p></div>
+          <div class="play-row"><span>🔒 <span data-i18n="coming">YAKINDA</span></span><b data-i18n="coming">YAKINDA</b></div>
+        </div>
+        <div class="game-card upcoming" style="--art:url('assets/ninja-strike.jpg')">
+          <div class="upcoming-art"></div><span class="soon-badge" data-i18n="coming">YAKINDA</span>
+          <div class="card-info"><h3 data-i18n="ninja">Ninja Strike</h3><p>🔒 <span data-i18n="coming">YAKINDA</span></p></div>
+          <div class="play-row"><span>🔒 <span data-i18n="coming">YAKINDA</span></span><b data-i18n="coming">YAKINDA</b></div>
+        </div>
+        <div class="game-card upcoming" style="--art:url('assets/dragon-hunter.jpg')">
+          <div class="upcoming-art"></div><span class="soon-badge" data-i18n="coming">YAKINDA</span>
+          <div class="card-info"><h3 data-i18n="dragon">Dragon Hunter</h3><p>🔒 <span data-i18n="coming">YAKINDA</span></p></div>
+          <div class="play-row"><span>🔒 <span data-i18n="coming">YAKINDA</span></span><b data-i18n="coming">YAKINDA</b></div>
+        </div>
+      </section>
+
+      <div class="ad-slot" aria-label="Reklam alanı" data-ad-slot="game-center-bottom">
+        <span class="ad-slot-note" data-i18n="adPlaceholder">REKLAM ALANI</span>
+        <div class="ad-slot-inner"><span class="ad-slot-label" data-i18n="adNetwork">AdsGram</span></div>
+      </div>
+
+      <div class="coming-divider"><span>✦</span><strong data-i18n="comingGames">5 YENİ OYUN ÇOK YAKINDA</strong><span>✦</span></div>
+
+      <p class="security-note">🔒 <span data-i18n="secure">Kazanç ve günlük limitler daha sonra sunucu tarafından doğrulanacaktır.</span></p>
+    </main>
+  </div>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="ad-slot.js"></script><script src="game-wallet.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

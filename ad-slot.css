@@ -1,0 +1,8 @@
+.ad-slot{width:min(1180px,calc(100% - 24px));margin:14px auto;position:relative;overflow:hidden;border:1px solid rgba(98,232,255,.22);border-radius:14px;background:#0c1230;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.ad-slot::before{content:'';display:block;padding-top:11.5%}
+.ad-slot-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-image:linear-gradient(90deg,rgba(7,11,34,.55),rgba(7,11,34,.08),rgba(7,11,34,.55)),url('assets/ad-placeholder-banner.jpg');background-size:cover;background-position:center;color:#fff;text-align:center}
+.ad-slot-label{padding:7px 12px;border-radius:9px;background:rgba(7,11,34,.82);border:1px solid rgba(114,232,255,.35);font-size:10px;letter-spacing:1px;font-weight:900;text-shadow:0 2px 8px #000}
+.ad-slot-note{position:absolute;left:9px;top:7px;z-index:2;font-size:6px;letter-spacing:1px;font-weight:900;color:#9eb0d5;background:rgba(7,11,34,.82);padding:4px 6px;border-radius:6px}
+.game-ad{width:min(760px,calc(100% - 24px));margin:18px auto 0}
+.game-ad::before{padding-top:13%}
+@media(max-width:760px){.ad-slot{width:calc(100% - 12px);margin:10px auto}.ad-slot::before{padding-top:18%}.ad-slot-inner{background-image:linear-gradient(90deg,rgba(7,11,34,.58),rgba(7,11,34,.12),rgba(7,11,34,.58)),url('assets/ad-placeholder-mobile.jpg')}.ad-slot-label{font-size:8px;padding:5px 8px}.ad-slot-note{font-size:5px;top:5px;left:6px}.game-ad{width:calc(100% - 16px);margin-top:12px}.game-ad::before{padding-top:20%}}

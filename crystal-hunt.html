@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="telegram-safe-area.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07152a">
+<title>Crystal Hunt • Game Center</title>
+<link rel="stylesheet" href="crystal-hunt.css">
+<link rel="stylesheet" href="ad-slot.css">
+</head>
+<body class="ch-page">
+<div class="ch-shell">
+<header class="ch-topbar">
+  <a class="ch-back" href="index.html">‹ <span data-i18n="back">GAME CENTER</span></a>
+  <div class="ch-brand"><span>💎</span> CRYSTAL HUNT</div>
+  <button class="ch-lang" id="langBtn" type="button">TR</button>
+</header>
+
+<div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="crystal-top">
+  <span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span>
+  <div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div>
+</div>
+
+<section class="ch-hero">
+  <div class="ch-hero-art"><img src="assets/crystal-hunt.jpg" alt="Crystal Hunt"></div>
+  <div class="ch-hero-copy">
+    <span class="ch-kicker" data-i18n="eyebrow">GAME CENTER • KRİSTAL MAĞARASI</span>
+    <h1>CRYSTAL <em>HUNT</em></h1>
+    <p data-i18n="tagline">Aynı kristalleri zincirle, nadir taşları patlat ve puanını büyüt.</p>
+  </div>
+</section>
+
+<section class="ch-stats">
+  <div class="ch-stat"><span>💰</span><div><small data-i18n="wallet">CÜZDAN</small><strong id="wallet">$0.00000</strong></div></div>
+  <div class="ch-stat"><span>📈</span><div><small data-i18n="today">BUGÜNKÜ KAZANÇ</small><strong id="today">$0.00000</strong></div></div>
+  <div class="ch-stat"><span>🏆</span><div><small data-i18n="score">SKOR</small><strong id="score">0</strong></div></div>
+</section>
+
+<main class="ch-layout">
+<section class="ch-game-card">
+  <div class="ch-game-head">
+    <div>
+      <span class="ch-label" data-i18n="huntTitle">KRİSTAL ZİNCİRİ</span>
+      <p data-i18n="hint">Aynı renkte komşu kristallere dokun. Zinciri bitirince kristalleri topla.</p>
+    </div>
+    <div class="ch-state" id="state"><i></i><span data-i18n="ready">HAZIR</span></div>
+  </div>
+
+  <div class="ch-board-wrap">
+    <div class="ch-board" id="board" aria-label="Crystal Hunt oyun alanı"></div>
+  </div>
+
+  <div class="ch-hud">
+    <div><small data-i18n="chain">ZİNCİR</small><b id="chain">0</b></div>
+    <div class="ch-energy"><span id="movesFill"></span></div>
+    <div><small data-i18n="moves">HAMLE</small><b id="moves">18</b></div>
+  </div>
+
+  <div class="ch-actions">
+    <button class="ch-primary" id="startBtn" type="button"><span>💎</span><span data-i18n="start">KRİSTALLERİ AÇ</span></button>
+    <button class="ch-collect" id="collectBtn" type="button" disabled><span>✨</span><span data-i18n="collect">ZİNCİRİ TOPLA</span></button>
+  </div>
+  <div class="ch-current"><span data-i18n="current">SEÇİLİ ZİNCİR</span><b id="currentText">—</b></div>
+</section>
+
+<aside class="ch-side">
+  <section class="ch-info">
+    <div class="ch-info-title"><span>🔷</span><h2 data-i18n="rulesTitle">KRİSTAL KURALLARI</h2></div>
+    <div class="ch-rule"><span>1</span><p data-i18n="rule1">Aynı renkte komşu kristalleri art arda seç.</p></div>
+    <div class="ch-rule"><span>2</span><p data-i18n="rule2">Üçlü zincir puan verir; zincir uzadıkça çarpan artar.</p></div>
+    <div class="ch-rule"><span>3</span><p data-i18n="rule3">Nadir mor kristaller daha yüksek puan kazandırır.</p></div>
+    <div class="ch-rule"><span>4</span><p data-i18n="rule4">Yanlış renge dokunursan zincirin sıfırlanır.</p></div>
+  </section>
+  <section class="ch-target">
+    <div><small data-i18n="target">BUGÜNÜN HEDEFİ</small><strong>$0.00100</strong></div>
+    <div class="ch-target-bar"><span id="targetBar"></span></div>
+    <p id="targetText">$0.00000 / $0.00100</p>
+  </section>
+</aside>
+</main>
+
+<div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="crystal-bottom">
+  <span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span>
+  <div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div>
+</div>
+
+<section class="ch-result" id="result" hidden>
+  <div class="ch-result-gem">💎</div>
+  <small data-i18n="finished">KRİSTAL AVCISI TAMAMLANDI</small>
+  <h2 id="finalScore">0</h2>
+  <p><span data-i18n="earned">Kazanılan ödül</span> <b id="reward">$0.00000</b></p>
+  <button class="ch-secondary" id="againBtn" type="button" data-i18n="again">TEKRAR OYNA</button>
+</section>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="ad-slot.js"></script>
+<script src="game-wallet.js"></script>
+<script src="crystal-hunt.js"></script>
+</body>
+</html>

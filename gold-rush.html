@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="telegram-safe-area.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06121a">
+<title>Gold Rush • Game Center</title>
+<link rel="stylesheet" href="gold-rush.css">
+<link rel="stylesheet" href="ad-slot.css">
+</head>
+<body class="goldrush-page">
+<div class="gr-shell">
+  <header class="gr-topbar">
+    <a class="gr-back" href="index.html">‹ <span data-i18n="back">GAME CENTER</span></a>
+    <div class="gr-brand"><span>⛏</span> MICRO MONETIZE</div>
+    <button class="gr-lang" id="langBtn" type="button">TR</button>
+  </header>
+
+  <div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="gold-top">
+    <span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span>
+    <div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div>
+  </div>
+
+  <section class="gr-hero">
+    <img src="assets/gold-rush.jpg" alt="Gold Rush" class="gr-hero-img">
+    <div class="gr-hero-shade"></div>
+    <div class="gr-hero-content">
+      <span class="gr-kicker" data-i18n="eyebrow">GAME CENTER • ALTIN MADENİ</span>
+      <h1>GOLD <em>RUSH</em></h1>
+      <p data-i18n="tagline">Altınları topla, kayalardan kaç ve en yüksek skoru yakala.</p>
+    </div>
+  </section>
+
+  <section class="gr-stats" aria-label="Game Center bilgileri">
+    <div class="gr-stat"><span class="gr-stat-icon">💰</span><div><small data-i18n="wallet">CÜZDAN</small><strong id="wallet">$0.00000</strong></div></div>
+    <div class="gr-stat"><span class="gr-stat-icon">📈</span><div><small data-i18n="today">BUGÜNKÜ KAZANÇ</small><strong id="today">$0.00000</strong></div></div>
+    <div class="gr-stat"><span class="gr-stat-icon">🏆</span><div><small data-i18n="score">SKOR</small><strong id="score">0</strong></div></div>
+  </section>
+
+  <main class="gr-main">
+    <section class="gr-game-card">
+      <div class="gr-game-head">
+        <div>
+          <span class="gr-label" data-i18n="mineTitle">ALTIN AVI</span>
+          <p data-i18n="mineHint">Parlayan alanları aç. Altın ve sandık buldukça puanın yükselir.</p>
+        </div>
+        <div class="gr-status ready" id="runState"><i></i><span data-i18n="ready">HAZIR</span></div>
+      </div>
+
+      <div class="gr-board-wrap">
+        <div class="gr-board" id="mineGrid" aria-label="Gold Rush oyun alanı"></div>
+      </div>
+
+      <div class="gr-hud">
+        <div><small data-i18n="combo">KOMBO</small><b id="combo">x1</b></div>
+        <div class="gr-progress"><span id="progressBar"></span></div>
+        <div><small data-i18n="found">ALTIN</small><b id="found">0</b></div>
+      </div>
+
+      <button class="gr-primary" id="startBtn" type="button"><span>⛏</span><span data-i18n="start">MADENE GİR</span></button>
+      <p class="gr-note" data-i18n="fair">Ödül ve günlük limitler Game Center kurallarına bağlıdır.</p>
+    </section>
+
+    <aside class="gr-side">
+      <section class="gr-info-card">
+        <div class="gr-info-title"><span>📜</span><h2 data-i18n="rulesTitle">MADEN KURALLARI</h2></div>
+        <div class="gr-rule"><span>🪙</span><p data-i18n="rule1">Altınları açarak puanını artır.</p></div>
+        <div class="gr-rule"><span>🪨</span><p data-i18n="rule2">Kayalar kombo zincirini bozar.</p></div>
+        <div class="gr-rule"><span>🎁</span><p data-i18n="rule3">Sandıklar ekstra puan kazandırır.</p></div>
+        <div class="gr-rule"><span>🔥</span><p data-i18n="rule4">Arka arkaya doğru seçimler çarpanı büyütür.</p></div>
+      </section>
+      <section class="gr-target-card">
+        <small data-i18n="targetTitle">BUGÜNÜN HEDEFİ</small>
+        <strong>$0.00100</strong>
+        <div class="gr-target-bar"><span id="targetBar"></span></div>
+        <p id="targetText">$0.00000 / $0.00100</p>
+      </section>
+    </aside>
+  </main>
+
+  <div class="ad-slot game-ad" aria-label="Reklam alanı" data-ad-slot="gold-bottom">
+    <span class="ad-slot-note" data-game-i18n="adPlaceholder">REKLAM ALANI</span>
+    <div class="ad-slot-inner"><span class="ad-slot-label" data-game-i18n="adNetwork">AdsGram</span></div>
+  </div>
+
+  <section class="gr-result" id="result" hidden>
+    <div class="gr-trophy">🏆</div>
+    <small data-i18n="finished">MADEN TURU TAMAMLANDI</small>
+    <h2 id="finalScore">0</h2>
+    <p><span data-i18n="earned">Kazanılan ödül</span> <b id="reward">$0.00000</b></p>
+    <button class="gr-secondary" id="againBtn" type="button" data-i18n="again">TEKRAR OYNA</button>
+  </section>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="ad-slot.js"></script>
+<script src="game-wallet.js"></script>
+<script src="gold-rush.js"></script>
+</body>
+</html>

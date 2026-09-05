@@ -1,0 +1,8 @@
+AdsGram update
+
+UnitID: int-45961
+Block type: Interstitial
+Provider: AdsGram
+
+This package is based on Game Center v19 and only updates the Game Center advertising integration.
+The existing main index.html and main server.js are not included/modified.

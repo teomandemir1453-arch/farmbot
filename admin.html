@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Micro Monetize - Admin Panel</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+}
+
+body{
+    background:radial-gradient(circle at 50% -10%,#20104d,#090d27 40%,#05091b 100%);
+    color:#eef1ff;
+    min-height:100vh;
+    padding:20px
+}
+
+.container{
+    max-width:1000px;
+    margin:auto
+}
+
+.hidden{
+    display:none!important
+}
+
+.card{
+    background:linear-gradient(145deg,#111a39,#0a102b);
+    border:1px solid rgba(111,132,190,.28);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25)
+}
+
+.header{
+    background:linear-gradient(135deg,#7435d9,#4d1ca8);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 10px 35px rgba(100,50,200,.25)
+}
+
+.header h1{
+    font-size:24px;
+    margin-bottom:5px
+}
+
+.header p{
+    color:#ddd4ff;
+    font-size:12px
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:#0a112b;
+    border:1px solid rgba(111,132,190,.25);
+    margin-bottom:16px;
+    font-size:12px
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+    background:#ff4d5d;
+    border-radius:50%
+}
+
+.status-dot.ok{
+    background:#31e981
+}
+
+.login-box{
+    max-width:420px;
+    margin:60px auto
+}
+
+.login-box h2{
+    margin-bottom:8px
+}
+
+.login-box p{
+    color:#9da8ca;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:15px
+}
+
+input,select{
+    width:100%;
+    padding:11px 12px;
+    margin-bottom:10px;
+    border-radius:9px;
+    border:1px solid rgba(111,132,190,.3);
+    background:#070d22;
+    color:#eef1ff;
+    outline:none
+}
+
+input:focus,select:focus{
+    border-color:#a65cff
+}
+
+.btn{
+    padding:10px 14px;
+    border-radius:9px;
+    color:#fff;
+    background:linear-gradient(135deg,#9b4dff,#6125ce);
+    border:none;
+    cursor:pointer;
+    font-weight:800
+}
+
+.btn:hover{
+    filter:brightness(1.08)
+}
+
+.btn-success{
+    background:linear-gradient(135deg,#1fcf79,#087c49)
+}
+
+.btn-danger{
+    background:linear-gradient(135deg,#ff5262,#a91425)
+}
+
+.btn-secondary{
+    background:#101735;
+    border:1px solid rgba(150,170,220,.25)
+}
+
+.btn-small{
+    padding:7px 10px;
+    font-size:11px;
+    border-radius:7px
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:16px
+}
+
+.tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:16px
+}
+
+.tab{
+    flex:1;
+    min-width:120px;
+    padding:11px;
+    border-radius:9px;
+    background:#0d1530;
+    color:#9da8ca;
+    border:1px solid rgba(111,132,190,.2);
+    cursor:pointer;
+    font-weight:800
+}
+
+.tab.active{
+    background:linear-gradient(135deg,#8f45ee,#6024c8);
+    color:#fff;
+    border-color:#a65cff
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:16px
+}
+
+.stat{
+    background:#0a112b;
+    border:1px solid rgba(111,132,190,.24);
+    border-radius:12px;
+    padding:14px;
+    text-align:center
+}
+
+.stat span{
+    display:block;
+    color:#9da8ca;
+    font-size:10px;
+    margin-bottom:5px
+}
+
+.stat strong{
+    font-size:20px
+}
+
+.table-wrap{
+    overflow:auto
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px
+}
+
+th,td{
+    padding:11px;
+    border-bottom:1px solid rgba(111,132,190,.15);
+    text-align:left;
+    font-size:11px
+}
+
+th{
+    color:#c9b4ff;
+    background:#0a112b
+}
+
+td{
+    color:#dce4ff
+}
+
+.empty{
+    text-align:center;
+    padding:35px 10px;
+    color:#7f8aac;
+    font-size:12px
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:900
+}
+
+.pending{
+    background:rgba(255,200,61,.16);
+    color:#ffd34f
+}
+
+.approved{
+    background:rgba(49,233,129,.15);
+    color:#67f5a6
+}
+
+.rejected{
+    background:rgba(255,75,90,.15);
+    color:#ff7280
+}
+
+.log{
+    max-height:250px;
+    overflow:auto;
+    background:#060b1c;
+    border-radius:10px;
+    padding:10px;
+    border:1px solid rgba(111,132,190,.2)
+}
+
+.log-item{
+    padding:7px 0;
+    border-bottom:1px solid rgba(111,132,190,.1);
+    font-family:monospace;
+    font-size:10px
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(2,5,18,.84);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px
+}
+
+.modal.show{
+    display:flex
+}
+
+.modal-box{
+    width:min(420px,100%);
+    background:#0d1530;
+    border:1px solid rgba(166,116,255,.4);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 20px 70px rgba(0,0,0,.55)
+}
+
+.modal-box h3{
+    margin-bottom:8px
+}
+
+.modal-box p{
+    color:#9da8ca;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:12px
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px
+}
+
+.modal-actions .btn{
+    flex:1
+}
+
+.user-name{
+    font-weight:900;
+    color:#fff
+}
+
+.user-id{
+    color:#8f9dc4;
+    font-size:9px;
+    margin-top:2px
+}
+
+.green{
+    color:#48e79a
+}
+
+.gold{
+    color:#ffd34f
+}
+
+.red{
+    color:#ff6977
+}
+
+@media(max-width:700px){
+    body{
+        padding:10px
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr
+    }
+
+    .header h1{
+        font-size:19px
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="loginScreen" class="card login-box">
+
+        <h2>🔐 Admin Girişi</h2>
+
+        <p>
+            Admin paneli PostgreSQL backend üzerinden çalışır.
+        </p>
+
+        <input
+            type="password"
+            id="adminKey"
+            placeholder="Admin anahtarı"
+            autocomplete="off"
+        >
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="loginAdmin()">
+            🔑 Giriş Yap
+        </button>
+
+        <div
+            id="loginError"
+            style="color:#ff6977;font-size:11px;margin-top:10px">
+        </div>
+
+    </div>
+
+
+    <div id="adminApp" class="hidden">
+
+        <div class="header">
+            <h1>⚡ Micro Monetize Admin</h1>
+            <p>PostgreSQL Yönetim Merkezi</p>
+        </div>
+
+        <div class="status">
+            <span
+                class="status-dot"
+                id="statusDot">
+            </span>
+
+            <span id="statusText">
+                Bağlantı kontrol ediliyor...
+            </span>
+        </div>
+
+        <div class="top-actions">
+
+            <button
+                class="btn"
+                onclick="loadAll()">
+                🔄 Yenile
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="logoutAdmin()">
+                🚪 Çıkış
+            </button>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+                <span>Kullanıcı</span>
+                <strong id="statUsers">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Bekleyen Yatırım</span>
+                <strong id="statInvestments">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Bekleyen Çekim</span>
+                <strong id="statWithdrawals">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Toplam Yatırım</span>
+                <strong id="statTotalInvested">$0.00</strong>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:10px">🪙 Coin Fiyatları</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                <input id="priceTRX" type="number" step="0.00000001" placeholder="TRX USD">
+                <input id="priceBNB" type="number" step="0.00000001" placeholder="BNB USD">
+                <input id="priceXRP" type="number" step="0.00000001" placeholder="XRP USD">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+                <button class="btn btn-success btn-small" onclick="refreshOnlinePrices()">🌐 Online Güncelle</button>
+                <button class="btn btn-secondary btn-small" onclick="saveManualPrices()">✏️ Manuel Kaydet</button>
+            </div>
+            <div id="priceStatus" style="font-size:10px;color:#9da8ca;margin-top:8px"></div>
+        </div>
+
+        <div class="tabs">
+
+            <button
+                class="tab active"
+                id="tabUsers"
+                onclick="switchTab('users')">
+                👥 Kullanıcılar
+            </button>
+
+            <button
+                class="tab"
+                id="tabInvestments"
+                onclick="switchTab('investments')">
+                💳 Yatırımlar
+            </button>
+
+            <button
+                class="tab"
+                id="tabWithdrawals"
+                onclick="switchTab('withdrawals')">
+                💸 Çekimler
+            </button>
+
+            <button
+                class="tab"
+                id="tabGameCenter"
+                onclick="switchTab('gameCenter')">
+                🎮 Game Center Kazanç
+            </button>
+
+        </div>
+
+
+        <div id="panelUsers" class="card">
+
+            <h3 style="margin-bottom:12px">
+                👥 Kullanıcılar
+            </h3>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı</th>
+                            <th>Total Balance</th>
+                            <th>Üretim Balance</th>
+                            <th>Yatırım</th>
+                            <th>Çekim</th>
+                            <th>Komisyon</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="usersBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div id="panelInvestments" class="card hidden">
+
+            <h3 style="margin-bottom:12px">
+                💳 Demo Yatırım Talepleri
+            </h3>
+
+            <div id="investmentsContainer"></div>
+
+        </div>
+
+
+        <div id="panelWithdrawals" class="card hidden">
+
+            <h3 style="margin-bottom:12px">
+                💸 Demo Çekim Talepleri
+            </h3>
+
+            <div id="withdrawalsContainer"></div>
+
+        </div>
+
+
+        <div id="panelGameCenter" class="card hidden">
+
+            <h3 style="margin-bottom:12px">
+                🎮 Game Center Kazanç
+            </h3>
+
+            <div class="stats" style="margin-bottom:14px">
+                <div class="stat">
+                    <span>Game Center Bekleyen</span>
+                    <strong id="gcPending">$0.0000</strong>
+                </div>
+                <div class="stat">
+                    <span>Toplam Kazanç</span>
+                    <strong id="gcLifetime">$0.0000</strong>
+                </div>
+                <div class="stat">
+                    <span>Yatırıma Aktarılan</span>
+                    <strong id="gcTransferred">$0.0000</strong>
+                </div>
+                <div class="stat">
+                    <span>GC Kullanıcı</span>
+                    <strong id="gcUsers">0</strong>
+                </div>
+            </div>
+
+            <div class="card" style="margin:0 0 12px 0">
+                <div style="font-size:11px;color:#9da8ca;line-height:1.7">
+                    <b style="color:#fff">Kurallar:</b>
+                    Her oyun günlük maksimum $0.001, Game Center toplam günlük maksimum $0.01.
+                    Kullanıcı bakiyesi $0.01 olduğunda GAME CENTER yatırımı oluşturulur ve
+                    normal <b style="color:#67f5a6">120 günlük üretime</b> girer.
+                </div>
+            </div>
+
+            <h4 style="margin:12px 0 8px">👥 Kullanıcı Game Center Bakiyeleri</h4>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı</th>
+                            <th>Bekleyen</th>
+                            <th>Bugün</th>
+                            <th>Toplam Kazanç</th>
+                            <th>Yatırıma Aktarılan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gameCenterUsersBody"></tbody>
+                </table>
+            </div>
+
+            <h4 style="margin:18px 0 8px">🎮 Oyun Bazında Kazanç</h4>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Oyun</th>
+                            <th>Oynanış</th>
+                            <th>Toplam Kazanç</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gameCenterGamesBody"></tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3 style="margin-bottom:10px">
+                📋 İşlem Günlüğü
+            </h3>
+
+            <div
+                class="log"
+                id="logContainer">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="modal"
+    id="balanceModal">
+
+    <div class="modal-box">
+
+        <h3>💰 Demo Bakiye İşlemi</h3>
+
+        <p id="balanceModalUser"></p>
+
+        <input
+            type="number"
+            id="balanceAmount"
+            placeholder="Tutar"
+            min="0.00000001"
+            step="0.00000001">
+
+        <select id="balanceType">
+            <option value="total">💰 Total Balance</option>
+            <option value="production">⚙️ Üretim Balance</option>
+        </select>
+
+        <select id="balanceOperation">
+
+            <option value="add">
+                Demo bakiye ekle
+            </option>
+
+            <option value="remove">
+                Demo bakiye düş
+            </option>
+
+        </select>
+
+        <div class="modal-actions">
+
+            <button
+                class="btn btn-success"
+                onclick="submitBalanceChange()">
+                ✅ Uygula
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeBalanceModal()">
+                İptal
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+========================================================
+BURASI ÖNEMLİ
+========================================================
+PC'deki server.js'ye Cloudflare Tunnel üzerinden bağlanıyoruz.
+========================================================
+*/
+
+const API_BASE = '';
+
+let adminKey = '';
+let currentTab = 'users';
+let selectedUserId = null;
+
+let usersCache = [];
+let investmentsCache = [];
+let withdrawalsCache = [];
+
+
+/*
+========================================================
+YARDIMCI
+========================================================
+*/
+
+function money(value){
+
+    return '$' +
+        Number(value || 0)
+        .toFixed(2);
+}
+
+
+function formatDate(value){
+
+    if(!value) return '-';
+
+    const date =
+        new Date(value);
+
+    if(Number.isNaN(
+        date.getTime()
+    )){
+        return '-';
+    }
+
+    return date.toLocaleString(
+        'tr-TR'
+    );
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+}
+
+
+/*
+========================================================
+LOG
+========================================================
+*/
+
+function addLog(message){
+
+    const container =
+        document.getElementById(
+            'logContainer'
+        );
+
+    const item =
+        document.createElement('div');
+
+    item.className =
+        'log-item';
+
+    item.textContent =
+        '[' +
+        new Date().toLocaleTimeString('tr-TR') +
+        '] ' +
+        message;
+
+    container.prepend(item);
+}
+
+
+/*
+========================================================
+STATUS
+========================================================
+*/
+
+function setStatus(ok,text){
+
+    document
+        .getElementById('statusDot')
+        .classList.toggle('ok',ok);
+
+    document
+        .getElementById('statusText')
+        .textContent = text;
+}
+
+
+/*
+========================================================
+API
+========================================================
+*/
+
+async function apiFetch(
+    endpoint,
+    options = {}
+){
+
+    const headers = {
+        ...(options.headers || {}),
+        'x-admin-key': adminKey,
+        'Content-Type':'application/json'
+    };
+
+    const response =
+        await fetch(
+            API_BASE + endpoint,
+            {
+                ...options,
+                headers
+            }
+        );
+
+    let data = {};
+
+    try{
+        data = await response.json();
+    }catch{}
+
+    if(
+        !response.ok ||
+        data.ok === false
+    ){
+
+        throw new Error(
+            data.message ||
+            `HTTP ${response.status}`
+        );
+    }
+
+    return data;
+}
+
+
+/*
+========================================================
+LOGIN
+========================================================
+*/
+
+async function loginAdmin(){
+
+    const key =
+        document
+            .getElementById('adminKey')
+            .value
+            .trim();
+
+    const error =
+        document
+            .getElementById('loginError');
+
+    error.textContent = '';
+
+    if(!key){
+
+        error.textContent =
+            'Admin anahtarı gerekli.';
+
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                API_BASE +
+                '/api/admin/health',
+                {
+                    method:'GET',
+                    headers:{
+                        'x-admin-key':key
+                    }
+                }
+            );
+
+        let data = {};
+
+        try{
+            data =
+                await response.json();
+        }catch{}
+
+        if(
+            !response.ok ||
+            !data.ok
+        ){
+
+            error.textContent =
+                data.message ||
+                'Admin doğrulaması başarısız.';
+
+            return;
+        }
+
+        adminKey = key;
+
+        document
+            .getElementById('loginScreen')
+            .classList.add('hidden');
+
+        document
+            .getElementById('adminApp')
+            .classList.remove('hidden');
+
+        setStatus(
+            true,
+            '✅ PostgreSQL bağlantısı aktif'
+        );
+
+        addLog(
+            'Admin girişi başarılı.'
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        console.error(error);
+
+        error.textContent =
+            'Backend bağlantısı kurulamadı: ' +
+            error.message;
+    }
+}
+
+
+/*
+========================================================
+LOGOUT
+========================================================
+*/
+
+function logoutAdmin(){
+
+    adminKey = '';
+
+    document
+        .getElementById('adminApp')
+        .classList.add('hidden');
+
+    document
+        .getElementById('loginScreen')
+        .classList.remove('hidden');
+
+    document
+        .getElementById('adminKey')
+        .value = '';
+}
+
+
+/*
+========================================================
+LOAD ALL
+========================================================
+*/
+
+async function loadAll(){
+
+    try{
+
+        setStatus(
+            true,
+            '🔄 Veriler yükleniyor...'
+        );
+
+        await Promise.all([
+            loadUsers(),
+            loadInvestments(),
+            loadWithdrawals(),
+            loadGameCenter(),
+            loadPrices()
+        ]);
+
+        updateStats();
+
+        setStatus(
+            true,
+            '✅ Veriler güncel'
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        setStatus(
+            false,
+            '❌ Veri yükleme hatası'
+        );
+
+        addLog(
+            'Hata: ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+USERS
+========================================================
+*/
+
+async function loadUsers(){
+
+    const data =
+        await apiFetch(
+            '/api/admin/users'
+        );
+    console.log("ADMIN DATA USERS:", data);
+console.log("ADMIN USERS DATA:", data);
+    
+   usersCache =
+    Array.isArray(data.users)
+        ? data.users.filter(user => user.telegram_id)
+        : [];
+
+    const body =
+        document.getElementById(
+            'usersBody'
+        );
+
+    document.getElementById(
+        'statUsers'
+    ).textContent =
+        usersCache.length;
+
+    if(usersCache.length === 0){
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    <div class="empty">
+                        Kayıtlı kullanıcı yok.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    body.innerHTML =
+        usersCache.map(user => `
+
+            <tr>
+
+                <td>
+
+                    <div class="user-name">
+                        ${escapeHtml(
+                            user.first_name || user.username || 'User'
+                        )}
+                    </div>
+
+                    <div class="user-id">
+                        @${escapeHtml(
+                            user.username || '-'
+                        )}
+                        • TG ${escapeHtml(
+    user.telegramId || '-'
+)}
+                    </div>
+
+                </td>
+
+                <td class="green">
+                    ${money(user.balance || 0)}
+                </td>
+
+                <td class="green">
+                    ${money(user.production_balance || 0)}
+                </td>
+
+                <td class="gold">
+                    ${money(user.total_invested || user.bonusInvestmentTotal || 0)}
+                </td>
+
+                <td class="red">
+                    ${money(user.total_withdrawn)}
+                </td>
+
+                <td>
+                    ${money(
+                        user.referral_earnings
+                    )}
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn btn-small"
+                        onclick="openBalanceModal(${Number(user.id)})">
+                        💰 Bakiye
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `).join('');
+}
+
+
+/*
+========================================================
+INVESTMENTS
+========================================================
+*/
+
+async function loadInvestments(){
+
+    const data =
+        await apiFetch(
+            '/api/admin/investments'
+        );
+
+    investmentsCache =
+        Array.isArray(data.investments)
+            ? data.investments
+            : [];
+
+    const pending =
+        investmentsCache.filter(
+            x => x.status === 'pending'
+        );
+
+    document.getElementById(
+        'statInvestments'
+    ).textContent =
+        pending.length;
+
+    const container =
+        document.getElementById(
+            'investmentsContainer'
+        );
+
+    if(pending.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                ✅ Bekleyen demo yatırım yok.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        pending.map(item => `
+
+            <div class="card">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:10px">
+
+                    <strong>
+                        ${money(item.amount)}
+                    </strong>
+
+                    <span class="badge pending">
+                        BEKLEMEDE
+                    </span>
+
+                </div>
+
+                <div style="
+                    font-size:11px;
+                    color:#9da8ca;
+                    line-height:1.7">
+
+                    Kullanıcı:
+                    <b style="color:#fff">
+                        ${escapeHtml(
+                            item.first_name || 'User'
+                        )}
+                    </b>
+                    <br>
+
+                    Telegram:
+                    ${escapeHtml(
+                        item.telegram_id
+                    )}
+                    <br>
+
+                    Paket:
+                    ${escapeHtml(
+                        item.package_name || '-'
+                    )}
+                    <br>
+
+                    Tarih:
+                    ${formatDate(
+                        item.created_at
+                    )}
+
+                </div>
+
+                <div class="modal-actions"
+                     style="margin-top:12px">
+
+                    <button
+                        class="btn btn-success btn-small"
+                        onclick="approveInvestment(${Number(item.id)})">
+                        ✅ Onayla
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="rejectInvestment(${Number(item.id)})">
+                        ❌ Reddet
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join('');
+}
+
+
+/*
+========================================================
+WITHDRAWALS
+========================================================
+*/
+
+async function loadWithdrawals(){
+
+    const data =
+        await apiFetch(
+            '/api/admin/withdrawals'
+        );
+
+    withdrawalsCache =
+        Array.isArray(data.withdrawals)
+            ? data.withdrawals
+            : [];
+
+    const pending =
+        withdrawalsCache.filter(
+            x => x.status === 'pending'
+        );
+
+    document.getElementById(
+        'statWithdrawals'
+    ).textContent =
+        pending.length;
+
+    const container =
+        document.getElementById(
+            'withdrawalsContainer'
+        );
+
+    if(pending.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                ✅ Bekleyen demo çekim yok.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        pending.map(item => `
+
+            <div class="card">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:10px">
+
+                    <strong>
+                        ${money(item.amount)}
+                    </strong>
+
+                    <span class="badge pending">
+                        BEKLEMEDE
+                    </span>
+
+                </div>
+
+                <div style="
+                    font-size:11px;
+                    color:#9da8ca;
+                    line-height:1.7">
+
+                    Kullanıcı:
+                    <b style="color:#fff">
+                        ${escapeHtml(
+                            item.first_name || 'User'
+                        )}
+                    </b>
+                    <br>
+
+                    Telegram:
+                    ${escapeHtml(
+                        item.telegram_id
+                    )}
+                    <br>
+
+                    Coin:
+                    ${escapeHtml(
+                        item.crypto || '-'
+                    )}
+                    <br>
+
+                    Ağ:
+                    ${escapeHtml(
+                        item.network || '-'
+                    )}
+                    <br>
+
+                    Cüzdan:
+                    <code style="
+                        word-break:break-all;
+                        color:#d9c7ff">
+                        ${escapeHtml(
+                            item.wallet_address || '-'
+                        )}
+                    </code>
+                    <br>
+
+                    Tarih:
+                    ${formatDate(
+                        item.created_at
+                    )}
+
+                </div>
+
+                <div class="modal-actions"
+                     style="margin-top:12px">
+
+                    <button
+                        class="btn btn-success btn-small"
+                        onclick="approveWithdrawal(${Number(item.id)})">
+                        ✅ Onayla
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="rejectWithdrawal(${Number(item.id)})">
+                        ❌ Reddet
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join('');
+}
+
+
+/*
+========================================================
+GAME CENTER
+========================================================
+*/
+
+function gameMoney(value){
+    return '$' + Number(value || 0).toFixed(4);
+}
+
+function gameName(value){
+    const names = {
+        gold_rush:'⛏️ Gold Rush',
+        crystal_hunt:'💎 Crystal Hunt',
+        miner_run:'🏃 Miner Run',
+        treasure_cave:'🏆 Treasure Cave'
+    };
+    return names[String(value)] || String(value || '-');
+}
+
+async function loadGameCenter(){
+
+    const data = await apiFetch('/api/admin/game-center/earnings');
+    const summary = data.summary || {};
+
+    document.getElementById('gcPending').textContent =
+        gameMoney(summary.pending_total);
+
+    document.getElementById('gcLifetime').textContent =
+        gameMoney(summary.lifetime_earned);
+
+    document.getElementById('gcTransferred').textContent =
+        gameMoney(summary.total_transferred);
+
+    document.getElementById('gcUsers').textContent =
+        Number(summary.users || 0);
+
+    const usersBody =
+        document.getElementById('gameCenterUsersBody');
+
+    const users = Array.isArray(data.users) ? data.users : [];
+
+    if(!users.length){
+        usersBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty">Henüz Game Center kazancı yok.</div>
+                </td>
+            </tr>`;
+    }else{
+        usersBody.innerHTML = users.map(user => `
+            <tr>
+                <td>
+                    <div class="user-name">
+                        ${escapeHtml(user.first_name || user.username || 'User')}
+                    </div>
+                    <div class="user-id">
+                        @${escapeHtml(user.username || '-')}
+                        • TG ${escapeHtml(user.telegram_id || '-')}
+                    </div>
+                </td>
+                <td class="gold">${gameMoney(user.pending_amount)}</td>
+                <td class="green">${gameMoney(user.today_earned)}</td>
+                <td>${gameMoney(user.lifetime_earned)}</td>
+                <td>${gameMoney(user.total_transferred)}</td>
+            </tr>
+        `).join('');
+    }
+
+    const gamesBody =
+        document.getElementById('gameCenterGamesBody');
+
+    const games = Array.isArray(data.games) ? data.games : [];
+
+    if(!games.length){
+        gamesBody.innerHTML = `
+            <tr>
+                <td colspan="3">
+                    <div class="empty">Henüz oyun kazancı yok.</div>
+                </td>
+            </tr>`;
+    }else{
+        gamesBody.innerHTML = games.map(item => `
+            <tr>
+                <td>${gameName(item.game)}</td>
+                <td>${Number(item.plays || 0)}</td>
+                <td class="green">${gameMoney(item.amount)}</td>
+            </tr>
+        `).join('');
+    }
+}
+
+
+/*
+========================================================
+BALANCE MODAL
+========================================================
+*/
+
+function openBalanceModal(id){
+
+    const user =
+        usersCache.find(
+            x =>
+                Number(x.id) ===
+                Number(id)
+        );
+
+    if(!user) return;
+
+    selectedUserId =
+        Number(user.id);
+
+    document.getElementById(
+        'balanceModalUser'
+    ).textContent =
+        `${user.first_name || 'User'} • Telegram ID: ${user.telegram_id}`;
+
+    document.getElementById(
+        'balanceAmount'
+    ).value = '';
+
+    document.getElementById(
+        'balanceOperation'
+    ).value = 'add';
+
+    document
+        .getElementById('balanceModal')
+        .classList.add('show');
+}
+
+
+function closeBalanceModal(){
+
+    document
+        .getElementById('balanceModal')
+        .classList.remove('show');
+
+    selectedUserId = null;
+}
+
+
+async function submitBalanceChange(){
+
+    const amount =
+        Number(
+            document.getElementById(
+                'balanceAmount'
+            ).value
+        );
+
+    const operation =
+        document.getElementById(
+            'balanceOperation'
+        ).value;
+
+    if(
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ){
+
+        alert(
+            'Geçerli bir tutar gir.'
+        );
+
+        return;
+    }
+
+    if(!selectedUserId) return;
+
+    if(
+        !confirm(
+            operation === 'add'
+                ? `Demo bakiyeye $${amount.toFixed(2)} eklensin mi?`
+                : `Demo bakiyeden $${amount.toFixed(2)} düşülsün mü?`
+        )
+    ){
+        return;
+    }
+
+    try{
+
+        const result =
+            await apiFetch(
+                `/api/admin/users/${selectedUserId}/balance`,
+                {
+                    method:'POST',
+                    body:JSON.stringify({
+                        amount,
+                        operation,
+                        balanceType: document.getElementById('balanceType').value
+                    })
+                }
+            );
+
+        addLog(
+            `Bakiye güncellendi. ${result.balanceType === 'production' ? 'Üretim' : 'Total'}: ${result.balanceType === 'production' ? money(result.productionBalance) : money(result.totalBalance)}`
+        );
+
+        closeBalanceModal();
+
+        await loadAll();
+
+        alert(
+            '✅ Demo bakiye güncellendi.'
+        );
+
+    }catch(error){
+
+        alert(
+            '❌ Bakiye işlemi başarısız: ' +
+            error.message
+        );
+
+        addLog(
+            'Bakiye hatası: ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+INVESTMENT ACTIONS
+========================================================
+*/
+
+async function approveInvestment(id){
+
+    if(!confirm(
+        'Bu demo yatırım onaylansın mı?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/investments/${id}/approve`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' +
+            error.message
+        );
+    }
+}
+
+
+async function rejectInvestment(id){
+
+    if(!confirm(
+        'Bu demo yatırım reddedilsin mi?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/investments/${id}/reject`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo yatırım #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+WITHDRAWAL ACTIONS
+========================================================
+*/
+
+async function approveWithdrawal(id){
+
+    if(!confirm(
+        'Bu demo çekim onaylansın mı?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/withdrawals/${id}/approve`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} onaylandı.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' +
+            error.message
+        );
+    }
+}
+
+
+async function rejectWithdrawal(id){
+
+    if(!confirm(
+        'Bu demo çekim reddedilsin mi?'
+    )) return;
+
+    try{
+
+        await apiFetch(
+            `/api/admin/withdrawals/${id}/reject`,
+            {
+                method:'POST'
+            }
+        );
+
+        addLog(
+            `Demo çekim #${id} reddedildi.`
+        );
+
+        await loadAll();
+
+    }catch(error){
+
+        alert(
+            '❌ ' +
+            error.message
+        );
+    }
+}
+
+
+/*
+========================================================
+TABS
+========================================================
+*/
+
+function switchTab(tab){
+
+    currentTab = tab;
+
+    document
+        .querySelectorAll('.tab')
+        .forEach(
+            x =>
+                x.classList.remove('active')
+        );
+
+    const target =
+        document.getElementById(
+            'tab' +
+            tab.charAt(0).toUpperCase() +
+            tab.slice(1)
+        );
+
+    if(target){
+        target.classList.add('active');
+    }
+
+    document
+        .getElementById('panelUsers')
+        .classList.toggle(
+            'hidden',
+            tab !== 'users'
+        );
+
+    document
+        .getElementById('panelInvestments')
+        .classList.toggle(
+            'hidden',
+            tab !== 'investments'
+        );
+
+    document
+        .getElementById('panelWithdrawals')
+        .classList.toggle(
+            'hidden',
+            tab !== 'withdrawals'
+        );
+
+    document
+        .getElementById('panelGameCenter')
+        .classList.toggle(
+            'hidden',
+            tab !== 'gameCenter'
+        );
+}
+
+
+/*
+========================================================
+STATS
+========================================================
+*/
+
+function updateStats(){
+
+    document.getElementById(
+        'statUsers'
+    ).textContent =
+        usersCache.length;
+
+    document.getElementById(
+        'statInvestments'
+    ).textContent =
+        investmentsCache.filter(
+            x => x.status === 'pending'
+        ).length;
+
+    document.getElementById(
+        'statWithdrawals'
+    ).textContent =
+        withdrawalsCache.filter(
+            x => x.status === 'pending'
+        ).length;
+
+    const total =
+        usersCache.reduce(
+            (sum,user) =>
+                sum +
+                Number(
+                    user.total_invested || 0
+                ),
+            0
+        );
+
+    document.getElementById(
+        'statTotalInvested'
+    ).textContent =
+        money(total);
+}
+
+
+async function loadPrices(){
+    try{
+        const data=await apiFetch('/api/admin/prices');
+        const p=data.prices||{};
+        document.getElementById('priceTRX').value=Number(p.trx||0);
+        document.getElementById('priceBNB').value=Number(p.bnb||0);
+        document.getElementById('priceXRP').value=Number(p.xrp||0);
+        document.getElementById('priceStatus').textContent=`Kaynak: ${p.source||'-'} • ${formatDate(p.updated_at)}`;
+    }catch(e){
+        document.getElementById('priceStatus').textContent='❌ Fiyatlar yüklenemedi: '+e.message;
+    }
+}
+
+async function refreshOnlinePrices(){
+    try{
+        const data=await apiFetch('/api/admin/prices/online',{method:'POST'});
+        const p=data.prices||{};
+        document.getElementById('priceTRX').value=Number(p.trx||0);
+        document.getElementById('priceBNB').value=Number(p.bnb||0);
+        document.getElementById('priceXRP').value=Number(p.xrp||0);
+        document.getElementById('priceStatus').textContent=`🌐 Online fiyatlar güncellendi • ${formatDate(p.updated_at)}`;
+        addLog('TRX / BNB / XRP online fiyatları güncellendi.');
+    }catch(e){ alert('❌ Online fiyat güncelleme başarısız: '+e.message); }
+}
+
+async function saveManualPrices(){
+    try{
+        const data=await apiFetch('/api/admin/prices/manual',{
+            method:'POST',
+            body:JSON.stringify({
+                trx:Number(document.getElementById('priceTRX').value),
+                bnb:Number(document.getElementById('priceBNB').value),
+                xrp:Number(document.getElementById('priceXRP').value)
+            })
+        });
+        const p=data.prices||{};
+        document.getElementById('priceStatus').textContent=`✏️ Manuel fiyatlar kaydedildi • ${formatDate(p.updated_at)}`;
+        addLog('TRX / BNB / XRP manuel fiyatları kaydedildi.');
+    }catch(e){ alert('❌ Manuel fiyat kaydetme başarısız: '+e.message); }
+}
+
+/*
+========================================================
+ENTER
+========================================================
+*/
+
+document
+    .getElementById('adminKey')
+    .addEventListener(
+        'keydown',
+        event => {
+
+            if(event.key === 'Enter'){
+                loginAdmin();
+            }
+
+        }
+    );
+
+
+/*
+========================================================
+AUTO REFRESH
+========================================================
+*/
+
+setInterval(
+    () => {
+        if(adminKey){
+            loadAll();
+        }
+    },
+    30000
+);
+
+</script>
+
+</body>
+</html>

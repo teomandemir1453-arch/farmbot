@@ -1,0 +1,42 @@
+GAME CENTER v17 — PostgreSQL SECURITY SETUP
+
+1) PostgreSQL database: telegram_game
+
+Run:
+  psql -U postgres -d telegram_game -f game_center_schema.sql
+
+2) server.js'e mevcut sistemi bozmadan ekle:
+
+const { installGameCenter } = require('./server_gamecenter_addon');
+installGameCenter({ app, pool, validateTelegramInitData });
+
+Bu çağrı, app / pool / validateTelegramInitData tanımlandıktan sonra olmalı.
+
+3) Mevcut server.js zaten Telegram initData doğrulaması kullanıyor.
+Game Center endpointleri x-telegram-init-data header'ını zorunlu tutar.
+Telegram ID istemciden serbestçe alınmaz; doğrulanmış Telegram initData içinden alınır.
+
+4) Endpointler:
+  POST /api/game-center/start
+  POST /api/game-center/complete
+  GET  /api/game-center/balance
+  POST /api/game-center/transfer
+  GET  /api/game-center/health
+
+5) Güvenlik:
+  - oyun başına günlük maksimum $0.001
+  - Game Center toplam günlük maksimum $0.01
+  - oyun oturumu sunucuda oluşturulur
+  - tamamlamadan önce minimum 28 saniye gerekir
+  - session UUID tek kullanımlıdır
+  - kullanıcı wallet satırı FOR UPDATE ile kilitlenir
+  - transfer PostgreSQL transaction içinde yapılır
+
+6) NOT:
+Bu add-on mevcut server.js'i değiştirmez ve ikinci bir Express server başlatmaz.
+Elle mevcut server.js'e eklenmek üzere hazırlanmıştır.
+
+7) investments tablosu için mevcut sistemde kullanılan kolonlar esas alınmıştır:
+user_id, amount, package_name, status, approved_at
+
+Eğer senin investments tablon farklı kolonlara sahipse, transfer route'u çalıştırmadan önce tablo yapısına göre uyarlanmalıdır.

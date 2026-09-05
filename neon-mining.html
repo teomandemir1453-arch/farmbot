@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Neon Mining Tycoon</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Courier New', monospace;
+    background: #000;
+    color: #0ff;
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+  }
+
+  /* ============ BOOT SCREEN ============ */
+  .boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: opacity 0.8s;
+  }
+  .boot-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .boot-terminal {
+    width: 100%;
+    max-width: 500px;
+    background: #000;
+    border: 3px solid #0ff;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0,255,255,0.6), inset 0 0 30px rgba(0,255,255,0.1);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .boot-terminal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,255,255,0.04) 0px, rgba(0,255,255,0.04) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .boot-header {
+    text-align: center;
+    color: #0ff;
+    text-shadow: 0 0 8px #0ff;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,255,255,0.3);
+  }
+  .boot-logo {
+    text-align: center;
+    color: #f0f;
+    text-shadow: 0 0 10px #f0f;
+    font-size: 11px;
+    margin-bottom: 15px;
+    line-height: 1.3;
+    letter-spacing: 1px;
+  }
+  .boot-logs {
+    min-height: 180px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #0f0;
+    text-shadow: 0 0 3px #0f0;
+    margin-bottom: 15px;
+  }
+  .boot-log {
+    padding: 2px 0;
+    animation: bootFade 0.3s ease-in;
+  }
+  .boot-log.ok { color: #0f0; text-shadow: 0 0 3px #0f0; }
+  .boot-log.info { color: #0ff; text-shadow: 0 0 3px #0ff; }
+  .boot-log.warn { color: #f80; text-shadow: 0 0 3px #f80; }
+  .boot-log.err { color: #f00; text-shadow: 0 0 3px #f00; }
+  .boot-log.title { color: #ff0; text-shadow: 0 0 5px #ff0; font-weight: bold; }
+  @keyframes bootFade {
+    from { opacity: 0; transform: translateX(-5px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .boot-progress-wrap { margin-top: 10px; }
+  .boot-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #0ff;
+    text-shadow: 0 0 3px #0ff;
+    margin-bottom: 5px;
+  }
+  .boot-progress-bar {
+    width: 100%;
+    height: 18px;
+    background: rgba(0,255,255,0.1);
+    border: 1px solid #0ff;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 8px rgba(0,255,255,0.3);
+  }
+  .boot-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0f0, #0ff, #f0f);
+    box-shadow: 0 0 10px #0ff;
+    transition: width 0.3s ease-out;
+    position: relative;
+  }
+  .boot-progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, rgba(0,0,0,0.3) 8px, rgba(0,0,0,0.3) 10px);
+  }
+  .boot-percent {
+    text-align: center;
+    color: #ff0;
+    text-shadow: 0 0 5px #ff0;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+
+  /* ODA */
+  .room {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, #1a0a2a 0%, #000 100%);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px 10px 40px;
+  }
+
+  .neon-lamp {
+    position: fixed;
+    top: 10px;
+    width: 100px; height: 6px;
+    border-radius: 4px;
+    animation: flicker 3s infinite;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .neon-lamp.l1 { left: 5%; background: linear-gradient(90deg, transparent, #0ff, transparent); box-shadow: 0 0 15px #0ff; }
+  .neon-lamp.l2 { left: 45%; background: linear-gradient(90deg, transparent, #f0f, transparent); box-shadow: 0 0 15px #f0f; }
+  .neon-lamp.l3 { right: 5%; background: linear-gradient(90deg, transparent, #0f0, transparent); box-shadow: 0 0 15px #0f0; }
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+    52% { opacity: 1; }
+    54% { opacity: 0.7; }
+  }
+
+  /* ANA PC KARTI */
+  .main-pc {
+    max-width: 640px;
+    margin: 0 auto 15px;
+    background: linear-gradient(135deg, rgba(40,20,60,0.7), rgba(20,10,30,0.9));
+    border: 3px solid #0ff;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 25px rgba(0,255,255,0.4);
+    transition: all 0.5s;
+  }
+  .main-pc.hot { border-color: #f80; box-shadow: 0 0 30px rgba(255,136,0,0.6); }
+  .main-pc.critical {
+    border-color: #f00;
+    box-shadow: 0 0 35px rgba(255,0,0,0.7);
+    animation: criticalPulse 1s infinite;
+  }
+  @keyframes criticalPulse {
+    0%, 100% { box-shadow: 0 0 35px rgba(255,0,0,0.7); }
+    50% { box-shadow: 0 0 50px rgba(255,0,0,1); }
+  }
+
+  .pc-title {
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,255,255,0.3);
+  }
+  .pc-title .name {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 8px #0ff;
+  }
+  .pc-title .level {
+    display: inline-block;
+    background: #ff0;
+    color: #000;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 8px;
+  }
+
+  /* ============ CÜZDAN ============ */
+  .wallet-display {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .wallet-box {
+    flex: 1;
+    background: rgba(0,0,0,0.5);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .wallet-box.money {
+    border: 2px solid #ff0;
+    box-shadow: 0 0 15px rgba(255,255,0,0.3), inset 0 0 10px rgba(255,255,0,0.1);
+  }
+  .wallet-box.mc {
+    border: 2px solid #0f0;
+    box-shadow: 0 0 15px rgba(0,255,0,0.3), inset 0 0 10px rgba(0,255,0,0.1);
+  }
+  .wallet-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+  }
+  .wallet-box .w-icon { font-size: 22px; margin-bottom: 3px; }
+  .wallet-box .w-label {
+    font-size: 9px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+  .wallet-box.money .w-value {
+    color: #ff0;
+    text-shadow: 0 0 8px #ff0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .wallet-box.mc .w-value {
+    color: #0f0;
+    text-shadow: 0 0 8px #0f0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .wallet-box.mc .w-cap {
+    color: #888;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* ============ NEON TABELA BUTONLARI ============ */
+  .neon-signs {
+    max-width: 640px;
+    margin: 0 auto 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .neon-sign {
+    position: relative;
+    background: #0a0515;
+    border: 3px solid;
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+    user-select: none;
+  }
+  .neon-sign::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+  }
+
+  .neon-sign.shop {
+    border-color: #f0f;
+    box-shadow: 
+      0 0 10px rgba(255,0,255,0.5),
+      0 0 20px rgba(255,0,255,0.3),
+      inset 0 0 15px rgba(255,0,255,0.15);
+    animation: shopSignFlicker 4s infinite;
+  }
+  .neon-sign.shop .sign-icon {
+    color: #f0f;
+    text-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #f0f;
+    font-size: 32px;
+    margin-bottom: 5px;
+    animation: neonGlow 2s infinite alternate;
+  }
+  .neon-sign.shop .sign-title {
+    color: #f0f;
+    text-shadow: 0 0 8px #f0f, 0 0 15px #f0f;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+  }
+  .neon-sign.shop .sign-sub {
+    color: #f8f;
+    text-shadow: 0 0 5px #f0f;
+    font-size: 9px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  .neon-sign.shop:hover {
+    box-shadow: 
+      0 0 15px rgba(255,0,255,0.8),
+      0 0 30px rgba(255,0,255,0.5),
+      0 0 45px rgba(255,0,255,0.3),
+      inset 0 0 20px rgba(255,0,255,0.25);
+    transform: translateY(-2px);
+  }
+  .neon-sign.shop:active { transform: translateY(0); }
+  @keyframes shopSignFlicker {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,0,255,0.5), 0 0 20px rgba(255,0,255,0.3), inset 0 0 15px rgba(255,0,255,0.15); }
+    48% { box-shadow: 0 0 10px rgba(255,0,255,0.5), 0 0 20px rgba(255,0,255,0.3), inset 0 0 15px rgba(255,0,255,0.15); }
+    50% { box-shadow: 0 0 5px rgba(255,0,255,0.3), 0 0 10px rgba(255,0,255,0.2), inset 0 0 8px rgba(255,0,255,0.1); }
+    52% { box-shadow: 0 0 10px rgba(255,0,255,0.5), 0 0 20px rgba(255,0,255,0.3), inset 0 0 15px rgba(255,0,255,0.15); }
+  }
+
+  .neon-sign.exchange {
+    border-color: #0f0;
+    box-shadow: 
+      0 0 10px rgba(0,255,0,0.5),
+      0 0 20px rgba(0,255,0,0.3),
+      inset 0 0 15px rgba(0,255,0,0.15);
+    animation: exchSignFlicker 5s infinite;
+  }
+  .neon-sign.exchange .sign-icon {
+    color: #0f0;
+    text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
+    font-size: 32px;
+    margin-bottom: 5px;
+    animation: neonGlow 2.5s infinite alternate;
+  }
+  .neon-sign.exchange .sign-title {
+    color: #0f0;
+    text-shadow: 0 0 8px #0f0, 0 0 15px #0f0;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+  }
+  .neon-sign.exchange .sign-sub {
+    color: #8f8;
+    text-shadow: 0 0 5px #0f0;
+    font-size: 9px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  .neon-sign.exchange:hover {
+    box-shadow: 
+      0 0 15px rgba(0,255,0,0.8),
+      0 0 30px rgba(0,255,0,0.5),
+      0 0 45px rgba(0,255,0,0.3),
+      inset 0 0 20px rgba(0,255,0,0.25);
+    transform: translateY(-2px);
+  }
+  .neon-sign.exchange:active { transform: translateY(0); }
+  @keyframes exchSignFlicker {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,255,0,0.5), 0 0 20px rgba(0,255,0,0.3), inset 0 0 15px rgba(0,255,0,0.15); }
+    68% { box-shadow: 0 0 10px rgba(0,255,0,0.5), 0 0 20px rgba(0,255,0,0.3), inset 0 0 15px rgba(0,255,0,0.15); }
+    70% { box-shadow: 0 0 5px rgba(0,255,0,0.3), 0 0 10px rgba(0,255,0,0.2), inset 0 0 8px rgba(0,255,0,0.1); }
+    72% { box-shadow: 0 0 10px rgba(0,255,0,0.5), 0 0 20px rgba(0,255,0,0.3), inset 0 0 15px rgba(0,255,0,0.15); }
+  }
+
+  @keyframes neonGlow {
+    from { filter: brightness(1); opacity: 0.95; }
+    to { filter: brightness(1.3); opacity: 1; }
+  }
+
+  .sign-chain {
+    position: absolute;
+    top: -8px;
+    width: 2px;
+    height: 8px;
+    background: linear-gradient(180deg, #888, #444);
+  }
+  .sign-chain.left { left: 25%; }
+  .sign-chain.right { right: 25%; }
+
+  /* ============ PC GÖRSELİ + İSTATİSTİKLER ============ */
+  .pc-visual-wrap {
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(0,255,255,0.15);
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .pc-visual {
+    flex: 1;
+    min-height: 320px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .pc-visual .monitor {
+    width: 220px;
+    height: 160px;
+    margin-right: 10px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* SEVİYE 0-2 */
+  .pc-visual.level-0 .monitor,
+  .pc-visual.level-1 .monitor,
+  .pc-visual.level-2 .monitor {
+    background: #1a1a1a;
+    border: 6px solid #3a3a3a;
+    border-radius: 6px;
+  }
+  .pc-visual.level-0 .pc-case,
+  .pc-visual.level-1 .pc-case,
+  .pc-visual.level-2 .pc-case {
+    width: 110px; height: 150px;
+    background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+    border: 3px solid #555;
+    border-radius: 4px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .pc-visual.level-0 .pc-case::before,
+  .pc-visual.level-1 .pc-case::before,
+  .pc-visual.level-2 .pc-case::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; height: 16px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+  }
+  .pc-visual.level-0 .pc-case::after,
+  .pc-visual.level-1 .pc-case::after,
+  .pc-visual.level-2 .pc-case::after {
+    content: '';
+    position: absolute;
+    bottom: 18px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    background: #0f0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #0f0;
+    animation: blink 1.5s infinite;
+  }
+
+  /* SEVİYE 3-5 */
+  .pc-visual.level-3 .monitor,
+  .pc-visual.level-4 .monitor,
+  .pc-visual.level-5 .monitor {
+    background: #0a0a0a;
+    border: 6px solid #f0f;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255,0,255,0.6);
+  }
+  .pc-visual.level-3 .pc-case,
+  .pc-visual.level-4 .pc-case,
+  .pc-visual.level-5 .pc-case {
+    width: 120px; height: 165px;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    border: 3px solid #f0f;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255,0,255,0.5);
+    flex-shrink: 0;
+  }
+  .pc-visual.level-3 .pc-case::before,
+  .pc-visual.level-4 .pc-case::before,
+  .pc-visual.level-5 .pc-case::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; height: 22px;
+    background: linear-gradient(90deg, #f0f, #0ff, #f0f);
+    border-radius: 3px;
+    animation: rgbShift 3s infinite;
+  }
+  @keyframes rgbShift {
+    0%, 100% { background: linear-gradient(90deg, #f0f, #0ff, #f0f); }
+    50% { background: linear-gradient(90deg, #0ff, #f0f, #0ff); }
+  }
+  .pc-visual.level-3 .pc-case::after,
+  .pc-visual.level-4 .pc-case::after,
+  .pc-visual.level-5 .pc-case::after {
+    content: '';
+    position: absolute;
+    bottom: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 12px; height: 12px;
+    background: #f0f;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #f0f;
+    animation: blink 1.5s infinite;
+  }
+
+  /* SEVİYE 6-8 */
+  .pc-visual.level-6 .monitor,
+  .pc-visual.level-7 .monitor,
+  .pc-visual.level-8 .monitor {
+    background: #000;
+    border: 7px solid #0ff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0,255,255,0.8);
+  }
+  .pc-visual.level-6 .pc-case,
+  .pc-visual.level-7 .pc-case,
+  .pc-visual.level-8 .pc-case {
+    width: 130px; height: 180px;
+    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+    border: 4px solid #0ff;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,255,255,0.7), inset 0 0 20px rgba(0,255,255,0.2);
+    flex-shrink: 0;
+  }
+  .pc-visual.level-6 .pc-case::before,
+  .pc-visual.level-7 .pc-case::before,
+  .pc-visual.level-8 .pc-case::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    background: repeating-linear-gradient(0deg, rgba(0,255,255,0.3) 0px, rgba(0,255,255,0.3) 2px, transparent 2px, transparent 6px);
+    border-radius: 6px;
+    animation: rgbPulse 2s infinite;
+  }
+  @keyframes rgbPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .pc-visual.level-6 .pc-case::after,
+  .pc-visual.level-7 .pc-case::after,
+  .pc-visual.level-8 .pc-case::after {
+    content: '';
+    position: absolute;
+    bottom: 25px; left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    background: #0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #0ff, 0 0 30px #0ff;
+    animation: blink 1s infinite;
+  }
+
+  /* SEVİYE 9-10 */
+  .pc-visual.level-9 .monitor,
+  .pc-visual.level-10 .monitor {
+    background: linear-gradient(135deg, #0a0a2a, #1a0a3a);
+    border: 7px solid #f0f;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255,0,255,0.9);
+  }
+  .pc-visual.level-9 .pc-case,
+  .pc-visual.level-10 .pc-case {
+    width: 145px; height: 195px;
+    background: linear-gradient(135deg, #0a0a2a, #1a0a3a);
+    border: 4px solid #f0f;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255,0,255,0.9), inset 0 0 25px rgba(255,0,255,0.3);
+    animation: quantumPulse 3s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes quantumPulse {
+    0%, 100% { 
+      box-shadow: 0 0 40px rgba(255,0,255,0.9), inset 0 0 25px rgba(255,0,255,0.3);
+      border-color: #f0f;
+    }
+    50% { 
+      box-shadow: 0 0 55px rgba(0,255,255,1), inset 0 0 35px rgba(0,255,255,0.5);
+      border-color: #0ff;
+    }
+  }
+  .pc-visual.level-9 .pc-case::before,
+  .pc-visual.level-10 .pc-case::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(255,0,255,0.5) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(0,255,255,0.5) 0%, transparent 50%);
+    border-radius: 8px;
+    animation: quantumShift 4s infinite;
+  }
+  @keyframes quantumShift {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+  }
+  .pc-visual.level-9 .pc-case::after,
+  .pc-visual.level-10 .pc-case::after {
+    content: '⚛';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 45px;
+    color: #fff;
+    text-shadow: 0 0 20px #f0f, 0 0 35px #0ff;
+    animation: quantumSpin 5s infinite linear;
+  }
+  @keyframes quantumSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  /* CMD MONİTOR */
+  .monitor-content {
+    position: absolute;
+    inset: 5px;
+    background: #000;
+    border-radius: 4px;
+    padding: 8px 10px;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #0f0;
+    text-shadow: 0 0 3px #0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .monitor-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,255,0,0.05) 0px, rgba(0,255,0,0.05) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .monitor-header {
+    color: #0ff;
+    text-shadow: 0 0 4px #0ff;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(0,255,255,0.3);
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+  .monitor-log {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: logFade 0.3s ease-in;
+    padding: 1px 0;
+  }
+  .monitor-log.new { color: #ff0; text-shadow: 0 0 5px #ff0; font-weight: bold; }
+  .monitor-log.warn { color: #f80; text-shadow: 0 0 4px #f80; }
+  .monitor-log.err { color: #f00; text-shadow: 0 0 4px #f00; font-weight: bold; }
+  .monitor-log.good { color: #0f0; text-shadow: 0 0 3px #0f0; }
+  .monitor-log.info { color: #0ff; text-shadow: 0 0 3px #0ff; }
+  @keyframes logFade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .monitor-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 12px;
+    background: #0f0;
+    animation: cursorBlink 1s infinite;
+    vertical-align: middle;
+    margin-left: 3px;
+    box-shadow: 0 0 5px #0f0;
+  }
+
+  /* İSTATİSTİKLER */
+  .stats-grid {
+    width: 180px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 10px;
+    border-left: 1px dashed rgba(0,255,255,0.25);
+  }
+  .stat-box {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(0,255,255,0.3);
+    border-radius: 6px;
+    padding: 8px 6px;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .stat-box .label { color: #888; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-box .value { color: #0f0; font-size: 14px; font-weight: bold; margin-top: 3px; }
+  .stat-box.temp .value.hot { color: #f80; }
+  .stat-box.temp .value.critical { color: #f00; }
+
+  /* GPU SLOTLARI */
+  .gpu-slots {
+    margin-bottom: 12px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255,0,255,0.2);
+  }
+  .gpu-slots-label { font-size: 11px; color: #f0f; margin-bottom: 6px; font-weight: bold; }
+  .gpu-slots-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+  .gpu-slot {
+    width: 38px; height: 38px;
+    background: rgba(0,0,0,0.5);
+    border: 1px dashed rgba(255,0,255,0.3);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .gpu-slot.filled {
+    background: linear-gradient(135deg, #2a1a3a, #1a0a2a);
+    border: 2px solid #f0f;
+    box-shadow: 0 0 10px rgba(255,0,255,0.5);
+  }
+  .gpu-slot.empty:hover {
+    background: rgba(255,0,255,0.15);
+    border-color: #f0f;
+    transform: scale(1.1);
+  }
+
+  /* SSD BAR */
+  .ssd-bar {
+    margin-bottom: 12px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(0,255,0,0.2);
+  }
+  .ssd-label {
+    font-size: 11px;
+    color: #0f0;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+  }
+  .ssd-progress {
+    width: 100%;
+    height: 14px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,255,0,0.3);
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .ssd-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0f0, #0ff);
+    transition: width 0.3s;
+    box-shadow: 0 0 10px #0f0;
+  }
+  .ssd-fill.full {
+    background: linear-gradient(90deg, #f00, #f80);
+    box-shadow: 0 0 10px #f00;
+    animation: fullPulse 1s infinite;
+  }
+  @keyframes fullPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* AKSİYON BUTONLARI */
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .action-btn {
+    background: rgba(0,255,255,0.1);
+    border: 2px solid #0ff;
+    color: #0ff;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    font-weight: bold;
+  }
+  .action-btn:hover { background: rgba(0,255,255,0.2); box-shadow: 0 0 12px #0ff; }
+  .action-btn.gpu { border-color: #f0f; color: #f0f; }
+  .action-btn.gpu:hover { background: rgba(255,0,255,0.2); box-shadow: 0 0 12px #f0f; }
+  .action-btn.ssd { border-color: #0f0; color: #0f0; }
+  .action-btn.ssd:hover { background: rgba(0,255,0,0.2); box-shadow: 0 0 12px #0f0; }
+  .action-btn.cool { border-color: #08f; color: #08f; }
+  .action-btn.cool:hover { background: rgba(0,136,255,0.2); box-shadow: 0 0 12px #08f; }
+  .action-btn.clean { border-color: #ff0; color: #ff0; }
+  .action-btn.clean:hover { background: rgba(255,255,0,0.2); box-shadow: 0 0 12px #ff0; }
+
+  /* ============ MODAL (ORTAK) ============ */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 150;
+    padding: 20px;
+  }
+  .modal.show { display: flex; }
+  .modal-content {
+    background: #000;
+    border: 3px solid #0ff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 0 40px #0ff;
+    position: relative;
+  }
+  .modal-content.shop-modal {
+    border-color: #f0f;
+    box-shadow: 0 0 40px #f0f, inset 0 0 20px rgba(255,0,255,0.1);
+  }
+  .modal-content.exchange-modal {
+    border-color: #0f0;
+    box-shadow: 0 0 40px #0f0, inset 0 0 20px rgba(0,255,0,0.1);
+  }
+  .modal-content h2 {
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,255,255,0.3);
+  }
+  .modal-content.shop-modal h2 {
+    color: #f0f;
+    text-shadow: 0 0 10px #f0f;
+    border-bottom-color: rgba(255,0,255,0.3);
+  }
+  .modal-content.exchange-modal h2 {
+    color: #0f0;
+    text-shadow: 0 0 10px #0f0;
+    border-bottom-color: rgba(0,255,0,0.3);
+  }
+  .modal-close {
+    background: #f00;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .modal-close:hover {
+    background: #ff3333;
+    box-shadow: 0 0 10px #f00;
+  }
+
+  /* PAKET KARTI */
+  .package-item {
+    background: rgba(30,15,50,0.8);
+    border: 1px solid #0ff;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .package-item:hover:not(.locked):not(.used):not(.current) {
+    background: rgba(50,25,80,0.9);
+    box-shadow: 0 0 12px #0ff;
+  }
+  .package-item.locked { opacity: 0.5; border-color: #888; cursor: not-allowed; }
+  .package-item.used { opacity: 0.3; border-color: #555; cursor: not-allowed; }
+  .package-item.current { border-color: #0f0; background: rgba(0,255,0,0.1); cursor: default; }
+  .package-item .p-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .package-item .p-name { color: #fff; font-weight: bold; font-size: 11px; }
+  .package-item .p-level {
+    background: #ff0;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: bold;
+  }
+  .package-item.current .p-level { background: #0f0; }
+  .package-item .p-stats { font-size: 9px; color: #0f0; margin-bottom: 4px; }
+  .package-item .p-desc { font-size: 8px; color: #888; margin-bottom: 6px; }
+  .package-item .p-price { color: #ff0; font-size: 11px; font-weight: bold; }
+
+  .part-item {
+    background: rgba(30,15,50,0.8);
+    border: 1px solid #f0f;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .part-item:hover:not(.disabled) {
+    background: rgba(50,25,80,0.9);
+    box-shadow: 0 0 10px #f0f;
+  }
+  .part-item.disabled { opacity: 0.4; cursor: not-allowed; }
+  .part-item .p-icon { font-size: 20px; }
+  .part-item .p-name { color: #fff; font-weight: bold; font-size: 10px; }
+  .part-item .p-stats { color: #0f0; font-size: 9px; }
+  .part-item .p-price { color: #ff0; font-size: 10px; font-weight: bold; }
+
+  .stat-row {
+    display: flex; justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed #0ff;
+    font-size: 12px;
+  }
+  .stat-row .label { color: #888; }
+  .stat-row .value { color: #0f0; text-shadow: 0 0 5px #0f0; }
+
+  .exchange-rate {
+    text-align: center;
+    font-size: 16px;
+    color: #0f0;
+    text-shadow: 0 0 10px #0f0;
+    margin: 15px 0;
+    padding: 12px;
+    background: rgba(0,255,0,0.1);
+    border: 1px solid #0f0;
+    border-radius: 6px;
+  }
+  .exchange-btn {
+    background: linear-gradient(135deg, #0f0, #0ff);
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    width: 100%;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  .exchange-btn:hover { box-shadow: 0 0 15px #0f0; }
+
+  .toast {
+    position: fixed;
+    top: 80px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.95);
+    border: 1px solid #0ff;
+    color: #0ff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    text-shadow: 0 0 5px #0ff;
+    max-width: 90%;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; }
+
+  /* MOBİL */
+  @media (max-width: 600px) {
+    .pc-visual-wrap {
+      flex-direction: column;
+    }
+    .pc-visual {
+      min-height: 280px;
+    }
+    .pc-visual .monitor { width: 180px; height: 130px; }
+    .pc-visual.level-0 .pc-case,
+    .pc-visual.level-1 .pc-case,
+    .pc-visual.level-2 .pc-case { width: 90px; height: 120px; }
+    .pc-visual.level-3 .pc-case,
+    .pc-visual.level-4 .pc-case,
+    .pc-visual.level-5 .pc-case { width: 100px; height: 135px; }
+    .pc-visual.level-6 .pc-case,
+    .pc-visual.level-7 .pc-case,
+    .pc-visual.level-8 .pc-case { width: 110px; height: 150px; }
+    .pc-visual.level-9 .pc-case,
+    .pc-visual.level-10 .pc-case { width: 120px; height: 165px; }
+    .monitor-content { font-size: 10px; padding: 6px 8px; }
+    .monitor-header { font-size: 9px; }
+    .monitor-cursor { width: 6px; height: 10px; }
+    
+    .stats-grid {
+      width: 100%;
+      flex-direction: row;
+      padding-left: 0;
+      padding-top: 10px;
+      border-left: none;
+      border-top: 1px dashed rgba(0,255,255,0.25);
+    }
+    .stat-box .value { font-size: 12px; }
+    .stat-box .label { font-size: 8px; }
+    
+    .wallet-box .w-value { font-size: 16px; }
+    .wallet-box.mc .w-value { font-size: 14px; }
+    
+    .neon-sign .sign-icon { font-size: 26px; }
+    .neon-sign .sign-title { font-size: 12px; }
+    .neon-sign .sign-sub { font-size: 8px; }
+    
+    .modal-content { padding: 15px; max-height: 90vh; }
+    .modal-content h2 { font-size: 16px; }
+    
+    .boot-terminal { padding: 15px; }
+    .boot-logs { font-size: 10px; min-height: 140px; }
+    .boot-logo { font-size: 9px; }
+    .boot-header { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ BOOT SCREEN ============ -->
+<div class="boot-screen" id="bootScreen">
+  <div class="boot-terminal">
+    <div class="boot-logo">
+╔═══════════════════════════╗<br>
+║   NEON MINING TYCOON   ║<br>
+║         v4.0           ║<br>
+╚═══════════════════════════╝
+    </div>
+    <div class="boot-header">SYSTEM BOOT SEQUENCE</div>
+    <div class="boot-logs" id="bootLogs"></div>
+    <div class="boot-progress-wrap">
+      <div class="boot-progress-label">
+        <span>LOADING SYSTEM</span>
+        <span id="bootStatus">INITIALIZING...</span>
+      </div>
+      <div class="boot-progress-bar">
+        <div class="boot-progress-fill" id="bootProgressFill"></div>
+      </div>
+      <div class="boot-percent" id="bootPercent">0%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OYUN ============ -->
+<div class="neon-lamp l1"></div>
+<div class="neon-lamp l2"></div>
+<div class="neon-lamp l3"></div>
+
+<div class="room">
+  <div class="main-pc" id="mainPC"></div>
+  
+  <!-- NEON TABELA BUTONLARI -->
+  <div class="neon-signs">
+    <div class="neon-sign shop" onclick="openShop()">
+      <div class="sign-chain left"></div>
+      <div class="sign-chain right"></div>
+      <div class="sign-icon">🛒</div>
+      <div class="sign-title">MAĞAZA</div>
+      <div class="sign-sub">▼ YÜKSELTME ▼</div>
+    </div>
+    <div class="neon-sign exchange" onclick="openExchange()">
+      <div class="sign-chain left"></div>
+      <div class="sign-chain right"></div>
+      <div class="sign-icon">💱</div>
+      <div class="sign-title">BORSА</div>
+      <div class="sign-sub">▼ MC BOZDUR ▼</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAĞAZA MODAL -->
+<div class="modal" id="shopModal">
+  <div class="modal-content shop-modal">
+    <h2>🛒 YÜKSELTME MAĞAZASI</h2>
+    <p style="font-size:10px;color:#ff0;text-align:center;margin-bottom:12px;">Paket satın al → Mevcut PC'ye entegre olur<br>Görsel + üretim yükselir</p>
+    <div id="packageList"></div>
+    <div style="text-align:center;">
+      <button class="modal-close" onclick="closeShop()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<!-- BORSAL MODAL -->
+<div class="modal" id="exchangeModal">
+  <div class="modal-content exchange-modal">
+    <h2>💱 MC BORSASI</h2>
+    <div class="exchange-rate">
+      1 MC = $<span id="exchangeRate">0.0100</span><br>
+      <span style="font-size:10px;color:#888;">(Dalgalanma: ±5%)</span>
+    </div>
+    <div class="stat-row">
+      <span class="label">Cüzdandaki MC:</span>
+      <span class="value" id="walletMC">0</span>
+    </div>
+    <div class="stat-row">
+      <span class="label">Toplam Değer:</span>
+      <span class="value">$<span id="walletValue">0.00</span></span>
+    </div>
+    <button class="exchange-btn" onclick="exchangeAllMC()">TÜM MC'Yİ BOZDUR</button>
+    <div style="text-align:center;">
+      <button class="modal-close" onclick="closeExchange()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<!-- GPU MODAL -->
+<div class="modal" id="gpuModal">
+  <div class="modal-content">
+    <h2>🎮 EKRAN KARTI EKLE</h2>
+    <p style="font-size:10px;color:#f0f;text-align:center;margin-bottom:12px;">
+      Boş Slot: <span id="gpuEmptySlots"></span> | Takılı: <span id="gpuFilledSlots"></span>
+    </p>
+    <div id="gpuList"></div>
+    <div style="text-align:center;">
+      <button class="modal-close" onclick="closeGPUModal()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<!-- SSD MODAL -->
+<div class="modal" id="ssdModal">
+  <div class="modal-content">
+    <h2>💾 SSD YÜKSELTME</h2>
+    <p style="font-size:10px;color:#0f0;text-align:center;margin-bottom:12px;">Mevcut: <span id="ssdCurrent"></span> MC</p>
+    <div id="ssdList"></div>
+    <div style="text-align:center;">
+      <button class="modal-close" onclick="closeSSDModal()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOĞUTMA MODAL -->
+<div class="modal" id="coolModal">
+  <div class="modal-content">
+    <h2>🌀 SOĞUTMA YÜKSELTME</h2>
+    <p style="font-size:10px;color:#08f;text-align:center;margin-bottom:12px;">Mevcut: <span id="coolCurrent"></span></p>
+    <div id="coolList"></div>
+    <div style="text-align:center;">
+      <button class="modal-close" onclick="closeCoolModal()">KAPAT</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PACKAGES = [
+  { level: 0, name: 'Çırak Kutusu', price: 0, free: true, baseIncome: 0.04, maxIncome: 0.10, gpuSlots: 1, ssdCapacity: 50, cooling: 1, desc: 'Ücretsiz başlangıç (1 kez)' },
+  { level: 1, name: 'Ofis Çıkması Eski Rig', price: 20, baseIncome: 0.10, maxIncome: 0.20, gpuSlots: 1, ssdCapacity: 100, cooling: 1, desc: 'Eski ama çalışır' },
+  { level: 2, name: 'Giriş Seviyesi Tek Fanlı', price: 50, baseIncome: 0.25, maxIncome: 0.50, gpuSlots: 2, ssdCapacity: 200, cooling: 2, desc: 'Tek fanlı temel sistem' },
+  { level: 3, name: 'Standart Oyuncu Kasası', price: 150, baseIncome: 0.75, maxIncome: 1.50, gpuSlots: 3, ssdCapacity: 400, cooling: 3, desc: 'Oyuncu kasası' },
+  { level: 4, name: 'Çift Ekran Kartlı Canavar', price: 400, baseIncome: 2.00, maxIncome: 4.00, gpuSlots: 4, ssdCapacity: 800, cooling: 4, desc: 'Çift GPU destekli' },
+  { level: 5, name: 'Orta Seviye Maden İstasyonu', price: 1000, baseIncome: 5.00, maxIncome: 10.00, gpuSlots: 6, ssdCapacity: 1500, cooling: 5, desc: 'Profesyonel madencilik' },
+  { level: 6, name: 'İleri Performans Rig\'i', price: 2500, baseIncome: 12.50, maxIncome: 25.00, gpuSlots: 8, ssdCapacity: 3000, cooling: 6, desc: 'Yüksek performans' },
+  { level: 7, name: 'Pro Serisi Sıvı Soğutmalı', price: 6000, baseIncome: 30.00, maxIncome: 60.00, gpuSlots: 10, ssdCapacity: 6000, cooling: 8, desc: 'Sıvı soğutma sistemi' },
+  { level: 8, name: 'Endüstriyel Veri Merkezi', price: 15000, baseIncome: 75.00, maxIncome: 150.00, gpuSlots: 12, ssdCapacity: 12000, cooling: 10, desc: 'Veri merkezi ünitesi' },
+  { level: 9, name: 'Titanium Elit Sistem', price: 35000, baseIncome: 175.00, maxIncome: 350.00, gpuSlots: 14, ssdCapacity: 25000, cooling: 12, desc: 'Titanium elit' },
+  { level: 10, name: 'Kuantum Madencilik Üssü', price: 80000, baseIncome: 400.00, maxIncome: 800.00, gpuSlots: 16, ssdCapacity: 50000, cooling: 15, desc: 'Kuantum teknoloji' }
+];
+
+const GPUS = [
+  { id: 'gpu1', name: 'GT 710', icon: '🎮', price: 10, income: 0.02, heat: 5 },
+  { id: 'gpu2', name: 'GTX 1050', icon: '🎯', price: 30, income: 0.08, heat: 8 },
+  { id: 'gpu3', name: 'GTX 1660', icon: '🎲', price: 80, income: 0.20, heat: 12 },
+  { id: 'gpu4', name: 'RTX 3060', icon: '🎰', price: 200, income: 0.50, heat: 18 },
+  { id: 'gpu5', name: 'RTX 3080', icon: '🎪', price: 500, income: 1.30, heat: 25 },
+  { id: 'gpu6', name: 'RTX 4080', icon: '🎭', price: 1200, income: 3.20, heat: 32 },
+  { id: 'gpu7', name: 'RTX 4090', icon: '🎬', price: 3000, income: 8.00, heat: 40 },
+  { id: 'gpu8', name: 'RTX 5090', icon: '🎨', price: 7500, income: 20.00, heat: 50 },
+  { id: 'gpu9', name: 'Titan RTX', icon: '🎫', price: 18000, income: 48.00, heat: 60 },
+  { id: 'gpu10', name: 'Quantum GPU', icon: '🚀', price: 45000, income: 120.00, heat: 75 }
+];
+
+const SSDS = [
+  { id: 'ssd1', name: 'SSD 120GB', icon: '💾', price: 15, capacity: 100 },
+  { id: 'ssd2', name: 'SSD 500GB', icon: '💿', price: 40, capacity: 400 },
+  { id: 'ssd3', name: 'SSD 1TB', icon: '📀', price: 100, capacity: 1000 },
+  { id: 'ssd4', name: 'SSD 2TB', icon: '💽', price: 250, capacity: 2500 },
+  { id: 'ssd5', name: 'SSD 4TB', icon: '🗄️', price: 600, capacity: 6000 },
+  { id: 'ssd6', name: 'SSD 8TB', icon: '🗃️', price: 1500, capacity: 15000 },
+  { id: 'ssd7', name: 'SSD 16TB', icon: '📦', price: 3800, capacity: 38000 },
+  { id: 'ssd8', name: 'Quantum SSD', icon: '🗳️', price: 9500, capacity: 100000 }
+];
+
+const COOLINGS = [
+  { id: 'cool1', name: 'Temel Fan', icon: '🌀', price: 20, coolingPower: 5 },
+  { id: 'cool2', name: 'Çift Fan', icon: '🌬️', price: 60, coolingPower: 12 },
+  { id: 'cool3', name: 'Tower Cooler', icon: '🗼', price: 150, coolingPower: 25 },
+  { id: 'cool4', name: 'AIO 240mm', icon: '💧', price: 400, coolingPower: 50 },
+  { id: 'cool5', name: 'AIO 360mm', icon: '🌊', price: 1000, coolingPower: 100 },
+  { id: 'cool6', name: 'Custom Loop', icon: '⚗️', price: 2500, coolingPower: 200 },
+  { id: 'cool7', name: 'Cryo Cooling', icon: '❄️', price: 6000, coolingPower: 400 },
+  { id: 'cool8', name: 'Quantum Cooler', icon: '🧊', price: 15000, coolingPower: 800 }
+];
+
+let state = {
+  money: Infinity,
+  mc: 0,
+  pc: {
+    packageLevel: 0,
+    gpus: [],
+    ssdCapacity: 50,
+    ssdUsed: 0,
+    coolingPower: 10,
+    temperature: 25,
+    dust: 0,
+    overclock: 0
+  },
+  exchangeRate: 0.01,
+  efficiency: 1.0,
+  freePackageUsed: false,
+  logs: [],
+  blockCount: 1000,
+  tickCount: 0
+};
+
+function $(id) { return document.getElementById(id); }
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+function formatMoney(n) { 
+  if (n === Infinity) return '∞';
+  if (n >= 1000) return n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return n.toFixed(2); 
+}
+function randHex(len) {
+  let s = '0x';
+  for (let i = 0; i < len; i++) s += Math.floor(Math.random() * 16).toString(16);
+  return s;
+}
+
+// ============ BOOT SEQUENCE ============
+const BOOT_LOGS = [
+  { text: 'BIOS POST CHECK...', type: 'info', delay: 200 },
+  { text: '> CPU: NEON-X 2.4GHz .......... [OK]', type: 'ok', delay: 300 },
+  { text: '> RAM: 64MB DDR ............... [OK]', type: 'ok', delay: 250 },
+  { text: '> GPU: DETECTING .............. [OK]', type: 'ok', delay: 300 },
+  { text: '> STORAGE: 50MB SSD ........... [OK]', type: 'ok', delay: 250 },
+  { text: '', type: 'info', delay: 150 },
+  { text: 'LOADING NEON-OS v4.0 KERNEL...', type: 'title', delay: 400 },
+  { text: '[■■■■■■■■■■] 100% KERNEL LOADED', type: 'ok', delay: 300 },
+  { text: '', type: 'info', delay: 100 },
+  { text: 'INIT MINING DAEMON...', type: 'info', delay: 350 },
+  { text: 'CONNECTING TO POOL: neon-pool.io', type: 'info', delay: 400 },
+  { text: 'HANDSHAKE SUCCESS ✓', type: 'ok', delay: 250 },
+  { text: 'WALLET: 0xNE0N...TYC00N', type: 'ok', delay: 300 },
+  { text: '', type: 'info', delay: 100 },
+  { text: 'STARTING HASH ENGINE...', type: 'warn', delay: 400 },
+  { text: 'ALL SYSTEMS OPERATIONAL ✓', type: 'title', delay: 300 }
+];
+
+function runBootSequence() {
+  const logsContainer = $('bootLogs');
+  const progressFill = $('bootProgressFill');
+  const percentEl = $('bootPercent');
+  const statusEl = $('bootStatus');
+  let currentStep = 0;
+  const totalSteps = BOOT_LOGS.length;
+  
+  function addBootLog() {
+    if (currentStep >= totalSteps) {
+      statusEl.textContent = 'SYSTEM READY ✓';
+      statusEl.style.color = '#0f0';
+      percentEl.textContent = '100%';
+      progressFill.style.width = '100%';
+      setTimeout(() => {
+        $('bootScreen').classList.add('hidden');
+        setTimeout(() => {
+          $('bootScreen').style.display = 'none';
+          startGame();
+        }, 800);
+      }, 800);
+      return;
+    }
+    const log = BOOT_LOGS[currentStep];
+    const div = document.createElement('div');
+    div.className = 'boot-log ' + log.type;
+    div.textContent = log.text || ' ';
+    logsContainer.appendChild(div);
+    const progress = Math.round(((currentStep + 1) / totalSteps) * 100);
+    progressFill.style.width = progress + '%';
+    percentEl.textContent = progress + '%';
+    if (currentStep < 5) statusEl.textContent = 'HARDWARE CHECK...';
+    else if (currentStep < 8) statusEl.textContent = 'LOADING OS...';
+    else if (currentStep < 13) statusEl.textContent = 'CONNECTING...';
+    else statusEl.textContent = 'STARTING...';
+    logsContainer.scrollTop = logsContainer.scrollHeight;
+    currentStep++;
+    setTimeout(addBootLog, log.delay);
+  }
+  setTimeout(addBootLog, 500);
+}
+
+function addLog(text, type = 'good') {
+  state.logs.push({ text, type, time: Date.now() });
+  if (state.logs.length > 10) state.logs.shift();
+  renderMonitorLogs();
+}
+
+function renderMonitorLogs() {
+  const logContainer = document.getElementById('monitorLogs');
+  if (!logContainer) return;
+  let html = '';
+  state.logs.forEach((log, i) => {
+    const isNew = i === state.logs.length - 1;
+    html += `<div class="monitor-log ${log.type} ${isNew ? 'new' : ''}">${log.text}</div>`;
+  });
+  html += `<div class="monitor-log" style="color:#0f0;">C:\\&gt;<span class="monitor-cursor"></span></div>`;
+  logContainer.innerHTML = html;
+}
+
+function startGame() {
+  state.freePackageUsed = true;
+  addLog('NEON-OS v4.0 READY', 'info');
+  addLog('MINING STARTED', 'good');
+  addLog('POOL: CONNECTED ✓', 'good');
+  addLog('HASH ENGINE: ONLINE', 'good');
+  renderAll();
+}
+
+function calculateIncome() {
+  const pkg = PACKAGES[state.pc.packageLevel];
+  let gpuIncome = 0;
+  state.pc.gpus.forEach(gpu => { gpuIncome += gpu.income; });
+  const overclockBonus = 1 + (state.pc.overclock * 0.05);
+  const dustPenalty = 1 - (state.pc.dust / 200);
+  let thermalPenalty = 1;
+  if (state.pc.temperature > 70) {
+    thermalPenalty = 1 - ((state.pc.temperature - 70) / 60);
+    thermalPenalty = Math.max(0.5, thermalPenalty);
+  }
+  return (pkg.baseIncome + gpuIncome) * overclockBonus * dustPenalty * thermalPenalty * state.efficiency;
+}
+
+function miningLoop() {
+  const pc = state.pc;
+  state.tickCount++;
+  let gpuHeat = 0;
+  pc.gpus.forEach(gpu => { gpuHeat += gpu.heat; });
+  const heatGenerated = gpuHeat + (pc.overclock * 3);
+  const coolingEffect = pc.coolingPower;
+  const tempChange = (heatGenerated - coolingEffect) * 0.1;
+  pc.temperature = Math.max(25, Math.min(100, pc.temperature + tempChange));
+  const income = calculateIncome();
+  const mcPerSecond = income / 100;
+  let mcAdded = 0;
+  if (pc.ssdUsed < pc.ssdCapacity) {
+    const mcToAdd = Math.min(mcPerSecond, pc.ssdCapacity - pc.ssdUsed);
+    pc.ssdUsed += mcToAdd;
+    state.mc += mcToAdd;
+    mcAdded = mcToAdd;
+  }
+  pc.dust = Math.min(pc.dust + 0.05, 100);
+
+  const logType = Math.random();
+  if (logType < 0.4) {
+    state.blockCount++;
+    addLog(`MINE #${state.blockCount} ${randHex(8)}`, 'good');
+  } else if (logType < 0.6) {
+    if (mcAdded > 0) addLog(`+${mcAdded.toFixed(3)} MC`, 'good');
+  } else if (logType < 0.75) {
+    if (pc.gpus.length > 0) {
+      const gpuIdx = Math.floor(Math.random() * pc.gpus.length);
+      const gpu = pc.gpus[gpuIdx];
+      const mh = (gpu.income * 50 + Math.random() * 10).toFixed(1);
+      addLog(`GPU#${gpuIdx}:${mh}MH/s`, 'info');
+    } else {
+      addLog(`CPU:${(income * 30).toFixed(1)}MH/s`, 'info');
+    }
+  } else if (logType < 0.85) {
+    addLog(`T:${Math.round(pc.temperature)}°C D:${Math.round(pc.dust)}%`, 'info');
+  } else if (logType < 0.92) {
+    const ssdPct = Math.round((pc.ssdUsed / pc.ssdCapacity) * 100);
+    addLog(`SSD:${Math.floor(pc.ssdUsed)}/${pc.ssdCapacity}[${ssdPct}%]`, 'info');
+  } else if (logType < 0.97) {
+    addLog(`HASH:${randHex(6)}`, 'good');
+  } else {
+    if (pc.temperature > 85) addLog('⚠ CRITICAL TEMP!', 'err');
+    else if (pc.temperature > 70) addLog('⚠ THROTTLE ACTIVE', 'warn');
+    else if (pc.ssdUsed >= pc.ssdCapacity) addLog('⚠ SSD FULL!', 'err');
+    else if (pc.dust > 70) addLog('⚠ CLEAN NEEDED', 'warn');
+    else addLog('SYS:OK', 'good');
+  }
+
+  renderMainPC();
+}
+
+function renderAll() {
+  renderMainPC();
+  renderPackages();
+}
+
+function renderMainPC() {
+  const pc = state.pc;
+  const pkg = PACKAGES[pc.packageLevel];
+  const card = $('mainPC');
+  card.className = 'main-pc';
+  if (pc.temperature > 85) card.classList.add('critical');
+  else if (pc.temperature > 70) card.classList.add('hot');
+
+  const ssdPercent = (pc.ssdUsed / pc.ssdCapacity) * 100;
+  const ssdFull = ssdPercent >= 100;
+  const income = calculateIncome();
+  const monitorTitle = pkg.level >= 9 ? 'QUANTUM-OS' : pkg.level >= 6 ? 'NEON-OS v4.0' : pkg.level >= 3 ? 'GAMING-OS' : 'BASIC-OS';
+
+  card.innerHTML = `
+    <div class="pc-title">
+      <span class="name">${pkg.name}</span>
+      <span class="level ${pkg.free ? 'free' : ''}">Lv.${pkg.level}</span>
+    </div>
+
+    <div class="wallet-display">
+      <div class="wallet-box money">
+        <div class="w-icon">💰</div>
+        <div class="w-label">PARA</div>
+        <div class="w-value">${formatMoney(state.money)}</div>
+      </div>
+      <div class="wallet-box mc">
+        <div class="w-icon">🪙</div>
+        <div class="w-label">MICRO COIN</div>
+        <div class="w-value">${Math.floor(state.mc)} <span class="w-cap">/ ${Math.floor(pc.ssdCapacity)}</span></div>
+      </div>
+    </div>
+
+    <div class="pc-visual-wrap">
+      <div class="pc-visual level-${pkg.level}">
+        <div class="monitor">
+          <div class="monitor-content">
+            <div class="monitor-header">═══ ${monitorTitle} ═══</div>
+            <div id="monitorLogs"></div>
+          </div>
+        </div>
+        <div class="pc-case"></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="label">💰 GELİR</div>
+          <div class="value">$${income.toFixed(2)}/g</div>
+        </div>
+        <div class="stat-box temp">
+          <div class="label">🌡️ SICAKLIK</div>
+          <div class="value ${pc.temperature > 85 ? 'critical' : pc.temperature > 70 ? 'hot' : ''}">${Math.round(pc.temperature)}°C</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">💨 TOZ</div>
+          <div class="value" style="color:${pc.dust > 50 ? '#f80' : '#0f0'}">%${Math.round(pc.dust)}</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">❄️ SOĞUTMA</div>
+          <div class="value">${pc.coolingPower}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gpu-slots">
+      <div class="gpu-slots-label">🎮 GPU SLOTLARI (${pc.gpus.length}/${pkg.gpuSlots})</div>
+      <div class="gpu-slots-grid">
+        ${Array(pkg.gpuSlots).fill(0).map((_, i) => {
+          const gpu = pc.gpus[i];
+          return `<div class="gpu-slot ${gpu ? 'filled' : 'empty'}" onclick="openGPUModal()" title="${gpu ? gpu.name : 'Boş Slot - Tıkla'}">
+            ${gpu ? gpu.icon : '+'}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="ssd-bar">
+      <div class="ssd-label">
+        <span>💾 SSD: ${Math.floor(pc.ssdUsed)}/${pc.ssdCapacity} MC</span>
+        <span>${ssdFull ? '⚠️ DOLU!' : Math.round(ssdPercent) + '%'}</span>
+      </div>
+      <div class="ssd-progress">
+        <div class="ssd-fill ${ssdFull ? 'full' : ''}" style="width:${Math.min(100, ssdPercent)}%"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn gpu" onclick="openGPUModal()">🎮 GPU EKLE</button>
+      <button class="action-btn ssd" onclick="openSSDModal()">💾 SSD YÜKSELT</button>
+      <button class="action-btn cool" onclick="openCoolModal()">🌀 SOĞUTMA</button>
+      <button class="action-btn clean" onclick="cleanPC()">🧹 TEMİZLE</button>
+    </div>
+  `;
+  renderMonitorLogs();
+}
+
+function renderPackages() {
+  const list = $('packageList');
+  if (!list) return;
+  list.innerHTML = '';
+  PACKAGES.forEach(pkg => {
+    const item = document.createElement('div');
+    item.className = 'package-item';
+    const isCurrent = pkg.level === state.pc.packageLevel;
+    const isLower = pkg.level < state.pc.packageLevel;
+    const isFreeUsed = pkg.free && state.freePackageUsed && !isCurrent;
+    if (isCurrent) item.classList.add('current');
+    else if (isLower || isFreeUsed) item.classList.add('used');
+    let statusText = '';
+    if (isCurrent) statusText = '🟢 MEVCUT';
+    else if (isLower) statusText = '✓ ALT SEVİYE';
+    else if (isFreeUsed) statusText = '✓ ALINDI';
+    else statusText = pkg.free ? '🎁 ÜCRETSİZ' : '$' + formatMoney(pkg.price);
+    item.innerHTML = `
+      <div class="p-header">
+        <div class="p-name">${pkg.name}</div>
+        <div class="p-level">Lv.${pkg.level}</div>
+      </div>
+      <div class="p-stats">
+        💰 $${pkg.baseIncome.toFixed(2)}/g → $${pkg.maxIncome.toFixed(2)}/g<br>
+        🎮 ${pkg.gpuSlots} GPU Slot | 💾 ${pkg.ssdCapacity} MC | 🌀 ${pkg.cooling} Soğutma
+      </div>
+      <div class="p-desc">${pkg.desc}</div>
+      <div class="p-price">${statusText}</div>
+    `;
+    if (!isCurrent && !isLower && !isFreeUsed) item.onclick = () => buyPackage(pkg);
+    list.appendChild(item);
+  });
+}
+
+function buyPackage(pkg) {
+  if (pkg.level <= state.pc.packageLevel) { toast('❌ Bu seviye mevcut PC\'nden düşük!'); return; }
+  if (pkg.free && state.freePackageUsed) { toast('❌ Ücretsiz paketi zaten aldın!'); return; }
+  if (state.money < pkg.price) { toast('❌ Yetersiz bakiye!'); return; }
+  state.money -= pkg.price;
+  if (pkg.free) state.freePackageUsed = true;
+  const oldLevel = state.pc.packageLevel;
+  state.pc.packageLevel = pkg.level;
+  state.pc.ssdCapacity = Math.max(state.pc.ssdCapacity, pkg.ssdCapacity);
+  state.pc.coolingPower = Math.max(state.pc.coolingPower, pkg.cooling * 10);
+  addLog('═══════════════════', 'info');
+  addLog(`UPGRADE: Lv.${oldLevel} → Lv.${pkg.level}`, 'new');
+  addLog(`SYS: ${pkg.name}`, 'info');
+  addLog('REBOOTING...', 'warn');
+  addLog('SYSTEM ONLINE ✓', 'good');
+  toast(`✓ PC YÜKSELTİLDİ! Lv.${oldLevel} → Lv.${pkg.level} 🎉`);
+  renderAll();
+}
+
+// ============ MAĞAZA MODAL ============
+function openShop() {
+  renderPackages();
+  $('shopModal').classList.add('show');
+}
+function closeShop() {
+  $('shopModal').classList.remove('show');
+}
+
+// ============ GPU MODAL ============
+function openGPUModal() {
+  const pc = state.pc;
+  const pkg = PACKAGES[pc.packageLevel];
+  $('gpuEmptySlots').textContent = pkg.gpuSlots - pc.gpus.length;
+  $('gpuFilledSlots').textContent = pc.gpus.length;
+  const list = $('gpuList');
+  list.innerHTML = '';
+  if (pc.gpus.length >= pkg.gpuSlots) {
+    list.innerHTML = '<p style="text-align:center;color:#f80;padding:15px;">Tüm GPU slotları dolu!<br><br>Daha yüksek seviye paket alarak slot sayısını artır.</p>';
+  } else {
+    GPUS.forEach(gpu => {
+      const item = document.createElement('div');
+      item.className = 'part-item';
+      item.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="p-icon">${gpu.icon}</div>
+          <div style="flex:1;">
+            <div class="p-name">${gpu.name}</div>
+            <div class="p-stats">+$${gpu.income.toFixed(2)}/g | 🌡️+${gpu.heat}°C</div>
+          </div>
+          <div class="p-price">$${gpu.price}</div>
+        </div>
+      `;
+      item.onclick = () => buyGPU(gpu);
+      list.appendChild(item);
+    });
+  }
+  $('gpuModal').classList.add('show');
+}
+function closeGPUModal() { $('gpuModal').classList.remove('show'); }
+function buyGPU(gpu) {
+  if (state.money < gpu.price) { toast('❌ Yetersiz bakiye!'); return; }
+  const pc = state.pc;
+  const pkg = PACKAGES[pc.packageLevel];
+  if (pc.gpus.length >= pkg.gpuSlots) { toast('❌ GPU slotu dolu!'); return; }
+  state.money -= gpu.price;
+  pc.gpus.push({ ...gpu });
+  addLog(`GPU INSTALLED: ${gpu.name}`, 'new');
+  addLog(`+${gpu.income.toFixed(2)}$/g income`, 'good');
+  toast('✓ ' + gpu.name + ' takıldı!');
+  closeGPUModal();
+  renderAll();
+}
+
+function openSSDModal() {
+  const pc = state.pc;
+  $('ssdCurrent').textContent = pc.ssdCapacity;
+  const list = $('ssdList');
+  list.innerHTML = '';
+  SSDS.forEach(ssd => {
+    const isUpgrade = ssd.capacity > pc.ssdCapacity;
+    const item = document.createElement('div');
+    item.className = 'part-item';
+    if (!isUpgrade) item.classList.add('disabled');
+    item.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="p-icon">${ssd.icon}</div>
+        <div style="flex:1;">
+          <div class="p-name">${ssd.name}</div>
+          <div class="p-stats">💾 ${ssd.capacity} MC kapasite ${!isUpgrade ? '(DÜŞÜK)' : '✓ YÜKSELTME'}</div>
+        </div>
+        <div class="p-price">$${ssd.price}</div>
+      </div>
+    `;
+    if (isUpgrade) item.onclick = () => buySSD(ssd);
+    list.appendChild(item);
+  });
+  $('ssdModal').classList.add('show');
+}
+function closeSSDModal() { $('ssdModal').classList.remove('show'); }
+function buySSD(ssd) {
+  if (state.money < ssd.price) { toast('❌ Yetersiz bakiye!'); return; }
+  state.money -= ssd.price;
+  state.pc.ssdCapacity = ssd.capacity;
+  addLog(`SSD UPGRADE: ${ssd.name}`, 'new');
+  addLog(`CAP: ${ssd.capacity} MC`, 'good');
+  toast('✓ SSD yükseltildi: ' + ssd.capacity + ' MC');
+  closeSSDModal();
+  renderAll();
+}
+
+function openCoolModal() {
+  const pc = state.pc;
+  $('coolCurrent').textContent = pc.coolingPower + ' soğutma gücü';
+  const list = $('coolList');
+  list.innerHTML = '';
+  COOLINGS.forEach(cool => {
+    const isUpgrade = cool.coolingPower > pc.coolingPower;
+    const item = document.createElement('div');
+    item.className = 'part-item';
+    if (!isUpgrade) item.classList.add('disabled');
+    item.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="p-icon">${cool.icon}</div>
+        <div style="flex:1;">
+          <div class="p-name">${cool.name}</div>
+          <div class="p-stats">🌀 ${cool.coolingPower} soğutma gücü ${!isUpgrade ? '(DÜŞÜK)' : '✓ YÜKSELTME'}</div>
+        </div>
+        <div class="p-price">$${cool.price}</div>
+      </div>
+    `;
+    if (isUpgrade) item.onclick = () => buyCooling(cool);
+    list.appendChild(item);
+  });
+  $('coolModal').classList.add('show');
+}
+function closeCoolModal() { $('coolModal').classList.remove('show'); }
+function buyCooling(cool) {
+  if (state.money < cool.price) { toast('❌ Yetersiz bakiye!'); return; }
+  state.money -= cool.price;
+  state.pc.coolingPower = cool.coolingPower;
+  addLog(`COOLING: ${cool.name}`, 'new');
+  addLog(`POWER: ${cool.coolingPower}`, 'info');
+  toast('✓ Soğutma yükseltildi: ' + cool.coolingPower);
+  closeCoolModal();
+  renderAll();
+}
+
+function cleanPC() {
+  const pc = state.pc;
+  const cost = 5 + (pc.packageLevel * 2);
+  if (state.money < cost) { toast('❌ Yetersiz bakiye! ($' + cost + ' gerekli)'); return; }
+  if (pc.dust < 10) { toast('✓ Sistem zaten temiz!'); return; }
+  state.money -= cost;
+  pc.dust = 0;
+  addLog('CLEANING SYSTEM...', 'info');
+  addLog('FANS: OK', 'good');
+  addLog('THERMAL PASTE: OK', 'good');
+  addLog('DUST: 0%', 'good');
+  toast('✓ Sistem temizlendi! (-$' + cost + ')');
+  renderAll();
+}
+
+function updateExchangeRate() {
+  const change = (Math.random() - 0.5) * 0.1;
+  state.exchangeRate = Math.max(0.005, state.exchangeRate * (1 + change));
+}
+
+function openExchange() {
+  updateExchangeRate();
+  $('exchangeRate').textContent = state.exchangeRate.toFixed(4);
+  $('walletMC').textContent = Math.floor(state.mc);
+  $('walletValue').textContent = (state.mc * state.exchangeRate).toFixed(2);
+  $('exchangeModal').classList.add('show');
+}
+function closeExchange() { $('exchangeModal').classList.remove('show'); }
+function exchangeAllMC() {
+  if (state.mc < 1) { toast('❌ Yetersiz MC!'); return; }
+  const dollars = state.mc * state.exchangeRate;
+  state.money += dollars;
+  addLog('═══════════════════', 'info');
+  addLog(`EXCHANGE: ${Math.floor(state.mc)} MC`, 'new');
+  addLog(`RATE: $${state.exchangeRate.toFixed(4)}`, 'info');
+  addLog(`+$${dollars.toFixed(2)} USD`, 'good');
+  addLog('SSD CLEARED', 'good');
+  state.pc.ssdUsed = 0;
+  state.mc = 0;
+  toast('✓ MC bozduruldu → $' + dollars.toFixed(2));
+  closeExchange();
+  renderAll();
+}
+
+runBootSequence();
+setInterval(miningLoop, 1000);
+setInterval(updateExchangeRate, 10000);
+</script>
+</body>
+</html>
